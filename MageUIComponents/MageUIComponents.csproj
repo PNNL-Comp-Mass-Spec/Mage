@@ -1,0 +1,281 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EDB6F464-3FA4-4919-9851-D7521D42B27A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MageUIComponents</RootNamespace>
+    <AssemblyName>MageUIComponents</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ColumnMappingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ColumnMappingForm.Designer.cs">
+      <DependentUpon>ColumnMappingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ColumnMapSelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ColumnMapSelectionForm.Designer.cs">
+      <DependentUpon>ColumnMapSelectionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DatasetIDListPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DatasetIDListPanel.Designer.cs">
+      <DependentUpon>DatasetIDListPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FileCopyPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FileCopyPanel.Designer.cs">
+      <DependentUpon>FileCopyPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FilterSelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FilterSelectionForm.Designer.cs">
+      <DependentUpon>FilterSelectionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FlexQueryItemPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FlexQueryItemPanel.designer.cs">
+      <DependentUpon>FlexQueryItemPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FlexQueryPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FlexQueryPanel.designer.cs">
+      <DependentUpon>FlexQueryPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IncrementalParameterLitSubPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IncrementalParameterLitSubPanel.Designer.cs">
+      <DependentUpon>IncrementalParameterLitSubPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IncrementalParameterSubPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="IncrementalParameterSubPanel.Designer.cs">
+      <DependentUpon>IncrementalParameterSubPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LocalManifestPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LocalManifestPanel.Designer.cs">
+      <DependentUpon>LocalManifestPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DatasetQueryPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DatasetQueryPanel.Designer.cs">
+      <DependentUpon>DatasetQueryPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FileProcessingPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FileProcessingPanel.designer.cs">
+      <DependentUpon>FileProcessingPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FolderDestinationPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FolderDestinationPanel.designer.cs">
+      <DependentUpon>FolderDestinationPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="JobDataPackagePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="JobDataPackagePanel.designer.cs">
+      <DependentUpon>JobDataPackagePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EntityFilePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EntityFilePanel.designer.cs">
+      <DependentUpon>EntityFilePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="JobIDListPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="JobIDListPanel.designer.cs">
+      <DependentUpon>JobIDListPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="JobListPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="JobListPanel.designer.cs">
+      <DependentUpon>JobListPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LocalFolderPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LocalFolderPanel.designer.cs">
+      <DependentUpon>LocalFolderPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimpleFilePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SimpleFilePanel.Designer.cs">
+      <DependentUpon>SimpleFilePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SimpleSQLitePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SimpleSQLitePanel.Designer.cs">
+      <DependentUpon>SimpleSQLitePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SQLiteDestinationPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SQLiteDestinationPanel.Designer.cs">
+      <DependentUpon>SQLiteDestinationPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SQLiteTableSelectionPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SQLiteTableSelectionPanel.Designer.cs">
+      <DependentUpon>SQLiteTableSelectionPanel.cs</DependentUpon>
+    </Compile>
+    <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ColumnMappingForm.resx">
+      <DependentUpon>ColumnMappingForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ColumnMapSelectionForm.resx">
+      <DependentUpon>ColumnMapSelectionForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DatasetIDListPanel.resx">
+      <DependentUpon>DatasetIDListPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DatasetQueryPanel.resx">
+      <DependentUpon>DatasetQueryPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FileCopyPanel.resx">
+      <DependentUpon>FileCopyPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FileProcessingPanel.resx">
+      <DependentUpon>FileProcessingPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FilterSelectionForm.resx">
+      <DependentUpon>FilterSelectionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FlexQueryItemPanel.resx">
+      <DependentUpon>FlexQueryItemPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FlexQueryPanel.resx">
+      <DependentUpon>FlexQueryPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FolderDestinationPanel.resx">
+      <DependentUpon>FolderDestinationPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IncrementalParameterLitSubPanel.resx">
+      <DependentUpon>IncrementalParameterLitSubPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IncrementalParameterSubPanel.resx">
+      <DependentUpon>IncrementalParameterSubPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="JobDataPackagePanel.resx">
+      <DependentUpon>JobDataPackagePanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EntityFilePanel.resx">
+      <DependentUpon>EntityFilePanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="JobIDListPanel.resx">
+      <DependentUpon>JobIDListPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="JobListPanel.resx">
+      <DependentUpon>JobListPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalFolderPanel.resx">
+      <DependentUpon>LocalFolderPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LocalManifestPanel.resx">
+      <DependentUpon>LocalManifestPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SimpleFilePanel.resx">
+      <DependentUpon>SimpleFilePanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SimpleSQLitePanel.resx">
+      <DependentUpon>SimpleSQLitePanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SQLiteDestinationPanel.resx">
+      <DependentUpon>SQLiteDestinationPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SQLiteTableSelectionPanel.resx">
+      <DependentUpon>SQLiteTableSelectionPanel.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MageDisplayLib\MageDisplayLib.csproj">
+      <Project>{367DBD6A-E07A-42F5-BBD6-A425C4907F9D}</Project>
+      <Name>MageDisplayLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mage\Mage.csproj">
+      <Project>{F6A69A88-0B7A-459F-83AB-9DA0560F9949}</Project>
+      <Name>Mage</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

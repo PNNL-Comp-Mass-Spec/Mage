@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<queries>
+  
+  <query name='Factors'>
+    <description>Get factors</description>
+    <connection server='' database='Metadata.db'/>
+    <table name='factors' cols='*'/>
+    <predicate rel='AND' col='Factor' cmp='MatchesText' val=''>Name of factor</predicate>
+  </query>
+  
+</queries>

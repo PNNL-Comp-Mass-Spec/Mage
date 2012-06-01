@@ -1,0 +1,63 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using Mage;
+using System.Reflection;
+
+namespace MageUIComponents {
+
+    public partial class JobListPanel : UserControl, IModuleParameters {
+
+        public event EventHandler<MageCommandEventArgs> OnAction;
+
+        public JobListPanel() {
+            InitializeComponent();
+        }
+
+        #region IModuleParameters Members
+
+        public Dictionary<string, string> GetParameters() {
+            return new Dictionary<string, string>() { 
+                { "Dataset", DatasetCtl.Text },
+                { "Tool", ToolCtl.Text },
+                { "Settings_File", SettingsFileCtl.Text },
+                { "Parameter_File", ParameterFileCtl.Text }
+            };
+        }
+
+        public void SetParameters(Dictionary<string, string> paramList) {
+            foreach (KeyValuePair<string, string> paramDef in paramList) {
+                switch (paramDef.Key) {
+                    case "Dataset":
+                        DatasetCtl.Text = paramDef.Value;
+                        break;
+                    case "Tool":
+                        ToolCtl.Text = paramDef.Value;
+                        break;
+                    case "Settings_File":
+                        SettingsFileCtl.Text = paramDef.Value;
+                        break;
+                    case "Parameter_File":
+                        ParameterFileCtl.Text = paramDef.Value;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        #endregion
+
+		private void GetJobsCtl_Click(object sender, EventArgs e) {
+            if (OnAction != null) {
+                OnAction(this, new MageCommandEventArgs("get_entities_from_query", "Jobs"));
+            }
+        }
+
+    }
+}

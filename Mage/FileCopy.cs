@@ -1,0 +1,189 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.IO;
+
+namespace Mage {
+
+    /// <summary>
+    /// this module copies one or more input files to an output folder
+    ///
+    /// its FileContentProcessor base class provides the basic functionality
+    ///
+    /// the OutputMode parameter tells this module whether or not to append a prefix to
+    /// each output file name to avoid name collisions when input files can come from
+    /// more than one input folder
+    ///
+    /// if IDColumnName parameter is set, it specifies a column in the standard input data
+    /// whose value should be used in the prefix.  Otherwise the prefix is generated.
+    /// </summary>
+    public class FileCopy : FileContentProcessor {
+
+        #region Member Variables
+
+        private int tagIndex = 0; // used to provide unique prefix for duplicate file names
+
+        #endregion
+
+        #region Properties
+
+
+        /// <summary>
+        /// Name of column to be used for output file name prefix (optional)
+        /// </summary>
+        public string ColumnToUseForPrefix { get; set; }
+
+        /// <summary>
+        /// Whether or not to apply prefix to output file ("Yes" or "No")
+        /// </summary>
+        public string ApplyPrefixToFileName { set; get; }
+
+        /// <summary>
+        /// literal text to apply as first part of prefix (optional)
+        /// </summary>
+        public string PrefixLeader { set; get; }
+
+		/// <summary>
+		/// Whether or not to overwrite existing files ("Yes" or "No")
+		/// </summary>
+		public bool OverwriteExistingFiles { set; get; }
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// construct a new Mage file copy module
+        /// </summary>
+        public FileCopy() {
+            ColumnToUseForPrefix = "";
+            ApplyPrefixToFileName = "";
+            SetOutputFileNamer(new OutputFileNamer(GetDestFile));
+            PrefixLeader = "";
+			OverwriteExistingFiles = false;
+        }
+
+        #endregion
+
+        #region Overrides
+
+        /// <summary>
+        /// copy given file to output
+        /// </summary>
+        /// <param name="sourceFile">name of input file</param>
+        /// <param name="sourcePath">containing folder for input file</param>
+        /// <param name="destPath">containing folder for output file</param>
+        /// <param name="context">metadata associated with input file (used for column mapping)</param>
+        protected override void ProcessFile(string sourceFile, string sourcePath, string destPath, Dictionary<string, string> context) {
+            try {
+				bool bShowDoneMsg = true;
+
+                UpdateStatus(this, new MageStatusEventArgs("Start Copy->" + sourceFile));
+				if (OverwriteExistingFiles) {
+					bool bFileExists = System.IO.File.Exists(destPath);
+					File.Copy(sourcePath, destPath, true);
+					if (bFileExists) {
+						UpdateStatus(this, new MageStatusEventArgs("NOTE->Copy replaced existing file: " + destPath, 0));
+						System.Threading.Thread.Sleep(1);
+						bShowDoneMsg = false;
+					}
+				} else {
+					if (System.IO.File.Exists(destPath)) {
+						UpdateStatus(this, new MageStatusEventArgs("WARNING->Skipping existing file: " + destPath, 0));
+						OnWarningMessage(new MageStatusEventArgs("WARNING->Skipping existing file: " + destPath));
+						System.Threading.Thread.Sleep(1);
+						bShowDoneMsg = false;
+					} else {
+						File.Copy(sourcePath, destPath, false);
+					}
+				}
+				
+				if (bShowDoneMsg)
+					UpdateStatus(this, new MageStatusEventArgs("Done->" + sourceFile));
+
+            } catch (FileNotFoundException) {
+                UpdateStatus(this, new MageStatusEventArgs("FAILED->File Not Found: "+ sourceFile, 1));
+                OnWarningMessage(new MageStatusEventArgs("Copy failed->File Not Found: " + sourcePath));
+            } catch (DirectoryNotFoundException) {
+                UpdateStatus(this, new MageStatusEventArgs("FAILED->Folder Not Found: " + sourcePath, 1));
+                OnWarningMessage(new MageStatusEventArgs("Copy failed->Folder Not Found: " + sourcePath));
+            } catch (IOException e) {
+                UpdateStatus(this, new MageStatusEventArgs("FAILED->I/O Exception: " + e.Message +" -- " + sourceFile, 1));
+                OnWarningMessage(new MageStatusEventArgs("Copy failed->I/O Exception: " + e.Message + " -- " + sourceFile));
+            } catch (Exception e) {
+                UpdateStatus(this, new MageStatusEventArgs("FAILED->" + e.Message + " -- " + sourceFile, 1));
+                OnWarningMessage(new MageStatusEventArgs("Copy failed->" + e.Message + " -- " + sourceFile));
+            }
+        }
+
+        /// <summary>
+        /// copy given folder to output
+        /// </summary>
+        /// <param name="sourceFile">(not currently used)</param>
+        /// <param name="sourcePath">input folder</param>
+        /// <param name="destPath">output folder</param>
+        protected override void ProcessFolder(string sourceFile, string sourcePath, string destPath) {
+            DirectoryInfo source = new DirectoryInfo(sourcePath);
+            DirectoryInfo target = new DirectoryInfo(destPath);
+            CopyAll(source, target);
+        }
+
+
+        /// <summary>
+        /// determine the name to be used for the destination file
+        /// </summary>
+        /// <param name="sourceFile"></param>
+        /// <param name="fieldPos"></param>
+        /// <param name="fields"></param>
+        /// <returns></returns>
+        protected string GetDestFile(string sourceFile, Dictionary<string, int> fieldPos, object[] fields) {
+            if (ApplyPrefixToFileName == "Yes") {
+                string prefix = "";
+                if (InputColumnPos.ContainsKey(ColumnToUseForPrefix)) {
+                    string leader = (!string.IsNullOrEmpty(PrefixLeader))?PrefixLeader + "_": "";
+                    prefix = leader + fields[fieldPos[ColumnToUseForPrefix]].ToString();
+
+					// Replace any invalid characters with an underscore
+					foreach (char chInvalidChar in System.IO.Path.GetInvalidFileNameChars())
+						prefix = prefix.Replace(chInvalidChar, '_');
+
+                } else {
+                    prefix = "Tag_" + (tagIndex++).ToString();
+                }
+                return prefix + "_" + sourceFile;
+            } else {
+                return sourceFile;
+            }
+        }
+
+        /// <summary>
+        /// Copy folder given by source to target 
+        /// and its contents
+        /// </summary>
+        /// <param name="source">Path to folder to be copied</param>
+        /// <param name="target">Path that folder will be copied to</param>
+        protected void CopyAll(DirectoryInfo source, DirectoryInfo target) {
+            // Check if the target directory exists, if not, create it.
+            if (Directory.Exists(target.FullName) == false) {
+                Directory.CreateDirectory(target.FullName);
+            }
+
+            // Copy each file into it’s new directory.
+            foreach (FileInfo fi in source.GetFiles()) {
+                UpdateStatus(this, new MageStatusEventArgs("Start Copy->" + fi.Name));
+                fi.CopyTo(Path.Combine(target.ToString(), fi.Name), true);
+                UpdateStatus(this, new MageStatusEventArgs("Done->" + fi.Name));
+            }
+
+            // Copy each subdirectory using recursion.
+            foreach (DirectoryInfo diSourceSubDir in source.GetDirectories()) {
+                DirectoryInfo nextTargetSubDir = target.CreateSubdirectory(diSourceSubDir.Name);
+                CopyAll(diSourceSubDir, nextTargetSubDir);
+            }
+        }
+
+        #endregion
+
+    }
+}

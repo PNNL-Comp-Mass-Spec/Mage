@@ -1,0 +1,62 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+
+namespace MageUIComponents {
+
+    public partial class FlexQueryItemPanel : UserControl {
+
+        public FlexQueryItemPanel() {
+            InitializeComponent();
+            RelationCtl.Items.Add("AND");
+            RelationCtl.Items.Add("OR");
+            RelationCtl.Items.Add("(off)");
+        }
+
+        public string Value {
+            get { return ValueCtl.Text; }
+            set { ValueCtl.Text = value; }
+        }
+
+        public string Comparision {
+            get { return ComparisonCtl.Text; }
+            set { ComparisonCtl.Text = value; }
+        }
+
+        public string Column {
+            get { return ColumnCtl.Text; }
+            set { ColumnCtl.Text = value; }
+        }
+
+        public string Relation {
+            get { return (RelationCtl.Text != "(off)") ? RelationCtl.Text : ""; }
+            set { RelationCtl.Text = value; }
+        }
+
+
+        public void SetColumnPickList(string[] items) {
+            // ColumnCtl.Items.Add("");
+            ColumnCtl.Items.AddRange(items);
+        }
+
+        public void SetComparisionPickList(string[] items) {
+            // ComparisonCtl.Items.Add("");
+            ComparisonCtl.Items.AddRange(items);
+        }
+
+        private void ColumnCtl_SelectedIndexChanged(object sender, EventArgs e) {
+            if (string.IsNullOrEmpty(ComparisonCtl.Text)) {
+                ComparisonCtl.Text = "ContainsText";
+            }
+        }
+
+        private void RelationCtl_SelectedIndexChanged(object sender, EventArgs e) {
+            // do nothing for now
+        }
+    }
+}

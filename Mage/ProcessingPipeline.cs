@@ -1,0 +1,662 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Xml;
+using System.IO;
+using System.Reflection;
+using log4net;
+using System.Collections.ObjectModel;
+
+
+namespace Mage {
+
+    /// <summary>
+    /// Container that builds and operates chain of modules
+    /// Allows client to:
+    /// - Create processing modules and chain them together
+    /// - Set module parameters
+    /// - Connect client handlers to pipeline modules
+    /// - Run process chain in separate thread
+    /// Modules
+    /// - Must implement IBaseModule in order to be managed by pipeline
+    /// - Can extend BaseModule class (but don’t have to)
+    /// - Can be in external DLL and be dynamically loaded
+    /// </summary>
+    public class ProcessingPipeline {
+
+        private static readonly ILog traceLog = LogManager.GetLogger("TraceLog");
+
+        /// <summary>
+        /// event that is fired during execution of pipeline
+        /// (pass-through for status messages from modules contained in the pipeline)
+        /// </summary>
+        public event EventHandler<MageStatusEventArgs> OnStatusMessageUpdated;
+
+        /// <summary>
+        /// event that is fired during execution of pipeline
+        /// (pass-through for warning messages from modules contained in the pipeline)
+        /// </summary>
+        public event EventHandler<MageStatusEventArgs> OnWarningMessageUpdated;
+
+        /// <summary>
+        /// event that is fired when pipeline run terminates (normally or abnormally)
+        /// </summary>
+        public event EventHandler<MageStatusEventArgs> OnRunCompleted;
+
+        #region Member Variables
+
+        /// <summary>
+        /// Ordered list of modules managed by this pipeline object
+        /// </summary>
+        private List<IBaseModule> mModuleList = new List<IBaseModule>();
+
+        /// <summary>
+        /// Lookup reference for modules managed by this pipeline object (indexed by module name)
+        /// </summary>
+        private Dictionary<string, IBaseModule> mModuleIndex = new Dictionary<string, IBaseModule>();
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Message available to client after pipeline execution completes.
+        /// </summary>
+        public string CompletionCode { get; set; }
+
+        /// <summary>
+        /// Module whose Run method will be called to begin pipeline execution
+        /// </summary>
+        public IBaseModule RootModule { get; set; }
+
+        /// <summary>
+        /// Is pipeline currently executing or not
+        /// </summary>
+        public bool Running { get; set; }
+
+        /// <summary>
+        /// Arbitrary name for pipeline that client can set (shows up in log entries)
+        /// </summary>
+        public string PipelineName { get; set; }
+
+        /// <summary>
+        /// Return list of module in pipeline
+        /// </summary>
+        public Collection<IBaseModule> ModuleList { get { return new Collection<IBaseModule>(mModuleList); } }
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// construct a new Mage pipeline object
+        /// </summary>
+        /// <param name="name">Name of the pipeline (appears in log messages)</param>
+        public ProcessingPipeline(string name) {
+            PipelineName = name;
+            traceLog.Debug(string.Format("Building pipeline '{0}'", PipelineName));
+        }
+
+        #endregion
+
+        #region Private Functions
+
+
+        #endregion
+
+        #region Functions Available to Clients
+
+        /// <summary>
+        /// invoke the run method on the root module of pipeline in separate thread from thread pool
+        /// </summary>
+        public void Run() {
+            // fire off the pipeline
+            ThreadPool.QueueUserWorkItem(RunRoot);
+        }
+
+        /// <summary>
+        /// call the Run method on the root module of pipeline (execution will be in caller's thread)
+        /// </summary>
+        /// <param name="state">Provided so that this function has necessary signature to be target of ThreadPool.QueueUserWorkItem</param>
+        public void RunRoot(Object state) {
+			bool bError = false;
+
+            Running = true;
+            CompletionCode = "";
+            HandleStatusMessageUpdated(this, new MageStatusEventArgs("Running..."));
+            traceLog.Info(string.Format("Pipeline {0} started...", PipelineName));
+
+            // give all modules in pipeline a chance to prepare themselves
+            foreach (KeyValuePair<string, IBaseModule> modDef in mModuleIndex) {
+				try {
+					modDef.Value.Prepare();
+				} catch (MageException e) {
+					CompletionCode = e.Message;
+					HandleStatusMessageUpdated(this, new MageStatusEventArgs(e.Message, 2));
+					string msg = string.Format("Pipeline {0} failed: {1}", PipelineName, e.Message);
+					traceLog.Error(msg);
+					HandleWarningMessageUpdated(this, new MageStatusEventArgs(msg));
+					bError = true;
+				}
+            }
+
+			if (!bError) {
+				try {
+					RootModule.Run(this);
+
+					if (string.IsNullOrEmpty(CompletionCode)) {
+						if (Globals.AbortRequested) {
+							HandleStatusMessageUpdated(this, new MageStatusEventArgs("Processing Aborted"));
+							traceLog.Info(string.Format("Pipeline {0} aborted...", PipelineName));
+						} else {
+							HandleStatusMessageUpdated(this, new MageStatusEventArgs("Process Complete"));
+							traceLog.Info(string.Format("Pipeline {0} completed...", PipelineName));
+						}
+					} else {
+						HandleStatusMessageUpdated(this, new MageStatusEventArgs(CompletionCode, 1));
+						traceLog.Info(string.Format("Pipeline {0} completed... " + CompletionCode, PipelineName));
+					}
+
+				} catch (MageException e) {
+					CompletionCode = e.Message;
+					HandleStatusMessageUpdated(this, new MageStatusEventArgs(e.Message, 2));
+					traceLog.Error(string.Format("Pipeline {0} failed: {1}", PipelineName, e.Message));
+				} catch (NotImplementedException e) {
+					CompletionCode = e.Message;
+					HandleStatusMessageUpdated(this, new MageStatusEventArgs(e.Message, 2));
+					traceLog.Error(string.Format("Pipeline {0} failed: {1}", PipelineName, e.Message));
+				}
+			}
+
+            // give all modules in pipeline a chance to clean up after themselves
+            foreach (KeyValuePair<string, IBaseModule> modDef in mModuleIndex) {
+                modDef.Value.Cleanup();
+            }
+
+            Running = false;
+            if (OnRunCompleted != null) {
+                OnRunCompleted(this, new MageStatusEventArgs(CompletionCode));
+            }
+        }
+
+
+        /// <summary>
+        /// Terminate exection of pipleline
+        /// </summary>
+        public void Cancel() {
+            CompletionCode = "Processing aborted";
+            foreach (KeyValuePair<string, IBaseModule> modDef in mModuleIndex) {
+                modDef.Value.Cancel();
+            }
+        }
+        /// <summary>
+        /// Set parameters for given module for a list of parameters
+        /// </summary>
+        /// <param name="moduleName">The name of the module to set parameters for</param>
+        /// <param name="moduleParams">Key/value list of parameters</param>
+        public void SetModuleParameters(string moduleName, Dictionary<string, string> moduleParams) {
+            // get reference to module by name and send it the list of parameters
+            IBaseModule mod = mModuleIndex[moduleName];
+            if (mod != null) {
+                mod.SetParameters(moduleParams);
+            } else {
+                traceLog.Error(string.Format("Could not find module '{0}' to set parameters ({1})", moduleName, PipelineName));
+            }
+        }
+
+        /// <summary>
+        /// Set a single parameter for a given module 
+        /// </summary>
+        /// <param name="moduleName">The name of the module to set parameters for</param>
+        /// <param name="paramName">Key</param>
+        /// <param name="paramValue">Value</param>
+        public void SetModuleParameter(string moduleName, string paramName, string paramValue) {
+            // get reference to module by name, package the parameter, and send it to the module
+            IBaseModule mod = mModuleIndex[moduleName];
+            if (mod != null) {
+                mod.SetPropertyByName(paramName, paramValue);
+            } else {
+                traceLog.Error(string.Format("Could not find module '{0}' to set parameter '{1}'.", moduleName, paramName));
+            }
+        }
+
+        /// <summary>
+        /// Connect the standard tabular output events (column definition and row data)
+        /// of the upstream module to the standard tablular input handlers of the downstream module
+        /// </summary>
+        /// <param name="upstreamModule">Module name of upstream module</param>
+        /// <param name="downstreamModule">Module name of downstream module</param>
+        public void ConnectModules(string upstreamModule, string downstreamModule) {
+            // get reference to both the upstream and downstream modules by name
+            // and wire the downstream module's pipeline event handlers to the upstream module's pipeline events
+            try {
+                IBaseModule modUp = mModuleIndex[upstreamModule];
+                IBaseModule modDn = mModuleIndex[downstreamModule];
+                ConnectModules(modUp, modDn);
+            } catch (Exception e) {
+                string msg = string.Format("Failed to connect module '{0}' to module '{1} ({2}): {3}", downstreamModule, upstreamModule, PipelineName, e.Message);
+                traceLog.Error(msg);
+                throw new MageException(msg);
+            }
+        }
+
+        /// <summary>
+        /// Connect the standard tabular output events (column definition and row data)
+        /// of the upstream module to the standard tablular input handlers of the downstream module
+        /// </summary>
+        /// <param name="modUp">Upstream module</param>
+        /// <param name="modDn">Downstream module</param>
+        private void ConnectModules(IBaseModule modUp, IBaseModule modDn) {
+            modUp.ColumnDefAvailable += modDn.HandleColumnDef;
+            modUp.DataRowAvailable += modDn.HandleDataRow;
+            traceLog.Debug(string.Format("Connected input of module '{0}' to output of module '{1} ({2})", modDn.ModuleName, modUp.ModuleName, PipelineName));
+        }
+
+        /// <summary>
+        /// Connect the standard tabular input event handler delegates
+        /// to the pipeline module identified by name
+        /// </summary>
+        /// <param name="moduleName">Module name of the upstream module</param>
+        /// <param name="colHandler">Delegate function to receive column definition events</param>
+        /// <param name="rowHandler">Delegate function to receive row data events</param>
+        public void ConnectExternalModule(string moduleName, EventHandler<MageColumnEventArgs> colHandler, EventHandler<MageDataEventArgs> rowHandler) {
+            IBaseModule mod = mModuleIndex[moduleName];
+            ConnectExternalModule(mod, colHandler, rowHandler);
+        }
+
+        /// <summary>
+        /// Connect the standard tabular input event handler delegates
+        /// to the given module
+        /// </summary>
+        /// <param name="mod">Module</param>
+        /// <param name="colHandler">Delegate function to receive column definition events</param>
+        /// <param name="rowHandler">Delegate function to receive row data events</param>
+        private void ConnectExternalModule(IBaseModule mod, EventHandler<MageColumnEventArgs> colHandler, EventHandler<MageDataEventArgs> rowHandler) {
+            if (mod != null) {
+                mod.ColumnDefAvailable += colHandler;
+                mod.DataRowAvailable += rowHandler;
+                traceLog.Debug(string.Format("Connected external handler to module '{0}' ({1})", mod.ModuleName, PipelineName));
+            } else {
+                traceLog.Error(string.Format("Could not connect handler module to module '{0}' ({1})", mod.ModuleName, PipelineName));
+            }
+        }
+
+        /// <summary>
+        /// Connect the given ISinkModule object
+        /// to the pipeline object identified by name
+        /// </summary>
+        /// <param name="moduleName">Module name of the upstream module</param>
+        /// <param name="sink">Object to be connected</param>
+        public void ConnectExternalModule(string moduleName, ISinkModule sink) {
+            ConnectExternalModule(moduleName, sink.HandleColumnDef, sink.HandleDataRow);
+        }
+
+        /// <summary>
+        /// Connect the given ISinkModule object
+        /// to the last module in the pipeline
+        /// </summary>
+        /// <param name="sink">O</param>
+        public void ConnectExternalModule(ISinkModule sink) {
+            IBaseModule mod = mModuleList.Last();
+            ConnectExternalModule(mod, sink.HandleColumnDef, sink.HandleDataRow);
+        }
+
+        /// <summary>
+        /// Connect given module to last module currently in pipeline
+        /// and add the module to the pipeline
+        /// </summary>
+        /// <param name="mod"></param>
+        public void AppendModule(IBaseModule mod) {
+            ConnectExternalModule(mod);
+            string name = (!string.IsNullOrEmpty(mod.ModuleName)) ? mod.ModuleName : string.Format("Module{0}", mModuleList.Count + 1);
+            AddModule(name, mod);
+        }
+
+        /// <summary>
+        /// Create a new module of class named by moduleType 
+        /// and set its name as given by moduleName, and add it to pipeline
+        /// </summary>
+        /// <param name="moduleName">Arbitrary name to set for new moudle</param>
+        /// <param name="moduleType">name of class to instantiate the module from</param>
+        /// <returns>Module</returns>
+        public IBaseModule MakeModule(string moduleName, string moduleType) {
+            IBaseModule module = null;
+            string className = moduleType;
+            try {
+                module = MakeModule(className);
+                if (module == null) {
+                    throw new MageException("Class not found in searched assemblies");
+                }
+                return AddModule(moduleName, module);
+            } catch (Exception e) {
+                string msg = "Module '" + moduleName + ":" + moduleType + "' could not be created - " + e.Message;
+                traceLog.Error(msg);
+                throw new MageException(msg);
+            }
+        }
+
+        /// <summary>
+        /// Create module from class name
+        /// </summary>
+        /// <param name="className"></param>
+        /// <returns></returns>
+        public static IBaseModule MakeModule(string className) {
+            IBaseModule module = null;
+            Type modType = null;
+            modType = ModuleDiscovery.GetModuleTypeFromClassName(className);
+            if (modType != null) {
+                module = (IBaseModule)Activator.CreateInstance(modType);
+            }
+            return module;
+        }
+
+        /// <summary>
+        /// Add the module object to the pipeline and give it the specified module name
+        /// </summary>
+        /// <param name="moduleName">Module name</param>
+        /// <param name="module">Module object</param>
+        /// <returns>Reference to the module</returns>
+        public IBaseModule AddModule(string moduleName, IBaseModule module) {
+            ModuleDef modDef = new ModuleDef(moduleName, module);
+            return AddModule(modDef);
+        }
+
+        /// <summary>
+        /// Add the module object to the pipeline
+        /// </summary>
+        /// <param name="modDef"></param>
+        /// <returns></returns>
+        public IBaseModule AddModule(ModuleDef modDef) {
+            IBaseModule module = modDef.ModuleObject as IBaseModule;
+            mModuleList.Add(module);
+            mModuleIndex.Add(modDef.ModuleName, module);
+            module.StatusMessageUpdated += HandleStatusMessageUpdated;
+            module.WarningMessageUpdated += HandleWarningMessageUpdated;
+            traceLog.Debug(string.Format("Added module '{0}' ({1})", modDef.ModuleName, PipelineName));
+            return module;
+        }
+
+        /// <summary>
+        /// Return a reference to the given module
+        /// </summary>
+        /// <param name="moduleName">Module name</param>
+        /// <returns></returns>
+        public IBaseModule GetModule(string moduleName) {
+            return mModuleIndex[moduleName];
+        }
+
+        #endregion
+
+        #region Error Messages
+
+        /// <summary>
+        /// buffer to accumulate error messages from status update stream
+        /// </summary>
+        private List<string> mErrorMessages = new List<string>();
+
+        /// <summary>
+        /// Get error messages
+        /// </summary>
+        public Collection<string> ErrorMessages {
+            get {
+                return new Collection<string>(mErrorMessages);
+            }
+        }
+
+        #endregion
+
+        #region Event Handlers
+
+        /// <summary>
+        /// Handler to receive OnStatusMessageUpdated events from modules in the pipeline
+        /// </summary>
+        /// <param name="sender">(ignored)</param>
+        /// <param name="args">Contains status information to be displayed</param>
+        private void HandleStatusMessageUpdated(object sender, MageStatusEventArgs args) {
+            if (args.ErrorCode > 0) {
+                mErrorMessages.Add(args.Message);
+            }
+            if (OnStatusMessageUpdated != null) {
+                ////                OnStatusMessageUpdated(this, new MageStatusEventArgs(args.Message));
+                OnStatusMessageUpdated(this, args);
+            }
+        }
+
+        /// <summary>
+        /// Handler to receive OnWarningMessageUpdated events from modules in the pipeline
+        /// </summary>
+        /// <param name="sender">(ignored)</param>
+        /// <param name="args">Contains status information to be displayed</param>
+        private void HandleWarningMessageUpdated(object sender, MageStatusEventArgs args) {
+            if (args.ErrorCode > 0) {
+                mErrorMessages.Add(args.Message);
+            }
+            if (OnWarningMessageUpdated != null) {
+                OnWarningMessageUpdated(this, args);
+            }
+        }
+        
+        #endregion
+
+        #region Build Pipeline From XML definitions
+
+        /// <summary>
+        /// Construct a pipeline from an XML description
+        /// </summary>
+        /// <param name="pipelineSpec">Path to the XML defintion file</param>
+        public void Build(string pipelineSpec) {
+            // step through XML module specification document
+            // and build and wire modules as specified
+            //
+            string moduleName = "";
+            string moduleType = "";
+            string connectedTo = "";
+
+            //            pipelineSpec = "<root>" + pipelineSpec + "</root>";
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(pipelineSpec);
+            XmlNodeList xnl = doc.SelectNodes(".//module");
+
+            // get next module description from specification
+            foreach (XmlNode n in xnl) {
+                moduleName = n.Attributes["name"].InnerText;
+                moduleType = n.Attributes["type"].InnerText;
+                // create the module
+                IBaseModule mod = MakeModule(moduleName, moduleType);
+                // wire it to an upstream module, if required
+                XmlNode cn = n.Attributes["connectedTo"];
+                if (cn != null) {
+                    connectedTo = cn.InnerText;
+                    ConnectModules(connectedTo, moduleName);
+                } else {
+                    // module with no upstream module 
+                    // is assumed to be the root of the pipeline
+                    // (we play by Highlander rules - there can be only one)
+                    RootModule = mod;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Set the parameters for all the modules in the pipeline from an XML definition file
+        /// </summary>
+        /// <param name="pipelineModuleParams">Path to the XML defintion file</param>
+        public void SetAllModuleParameters(string pipelineModuleParams) {
+            // step though XML document that defines parameters for modules,
+            // and for each module in the document, extract a key/value list of paramters
+            // and send them to the module
+
+            // parse the XML definition of the module parameters
+            pipelineModuleParams = "<root>" + pipelineModuleParams + "</root>";
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(pipelineModuleParams);
+
+            // step through list of module sections in specification
+            XmlNodeList xnl = doc.SelectNodes(".//module");
+            // do section for current module in specifiction
+            foreach (XmlNode modNode in xnl) {
+                // get the name of the module that the paramters belong to
+                string moduleName = modNode.Attributes["name"].InnerText;
+                // build list of parameters for the module
+                Dictionary<string, string> moduleParams = new Dictionary<string, string>();
+                foreach (XmlNode parmNode in modNode.ChildNodes) {
+                    string paramName = parmNode.Attributes["name"].InnerText;
+                    string paramVal = parmNode.InnerText;
+                    moduleParams.Add(paramName, paramVal);
+                }
+                // send list of parameters to module
+                SetModuleParameters(moduleName, moduleParams);
+            }
+        }
+        #endregion
+
+        #region Assemble Common Pipeline Configurations
+
+        /// <summary>
+        /// Assemble a linear processing pipeline from a list of modules.
+        /// Modules will added and interconnected in the order in which they
+        /// appear in the list.  The first module is assumed to be the root module.
+        /// Modules that implement ISinkModule, but not IBaseModule, are connected
+        /// as external modules.  Module names are generated automatically
+        /// </summary>
+        /// <param name="name">Name of the pipeline</param>
+        /// <param name="moduleList">List of modules to build pipeline from</param>
+        /// <returns>Pipeline</returns>
+        public static ProcessingPipeline Assemble(string name, Collection<object> moduleList) {
+            Collection<ModuleDef> namedModuleList = new Collection<ModuleDef>();
+            int seq = 0;
+            string moduleName = "";
+            foreach (object moduleObject in moduleList) {
+                if (moduleObject is string) {
+                    moduleName = moduleObject as string + (++seq).ToString(); ;
+                } else {
+                    moduleName = moduleObject.GetType().Name + (++seq).ToString();
+                }
+                namedModuleList.Add(new ModuleDef(moduleName, moduleObject));
+            }
+            return Assemble(name, namedModuleList);
+        }
+
+        /// <summary>
+        /// Assemble a linear processing pipeline from a list of modules.
+        /// Modules will added and interconnected in the order in which they
+        /// appear in the list.  The first module is assumed to be the root module.
+        /// Modules that implement ISinkModule, but not IBaseModule, are connected
+        /// as external modules.
+        /// </summary>
+        /// <param name="name">Name of the pipeline</param>
+        /// <param name="namedModuleList">List of modules to add, with name of module</param>
+        /// <returns>Pipeline</returns>
+        public static ProcessingPipeline Assemble(string name, Collection<ModuleDef> namedModuleList) {
+            ProcessingPipeline pipeline = new ProcessingPipeline(name);
+            string precedingModName = "";
+            string currentModName = "";
+            object moduleObject = null;
+            foreach (ModuleDef mod in namedModuleList) {
+                precedingModName = currentModName;
+                currentModName = mod.ModuleName;
+                moduleObject = mod.ModuleObject;
+                if (moduleObject is string) {
+                    moduleObject = MakeModule(moduleObject as string);
+                }
+                if (moduleObject is IBaseModule) {
+                    pipeline.AddModule(currentModName, moduleObject as IBaseModule);
+                    if (pipeline.RootModule == null) {
+                        pipeline.RootModule = moduleObject as IBaseModule;
+                    }
+                    if (!string.IsNullOrEmpty(precedingModName)) {
+                        pipeline.ConnectModules(precedingModName, currentModName);
+                    }
+                } else {
+                    if (moduleObject is ISinkModule && !string.IsNullOrEmpty(precedingModName)) {
+                        pipeline.ConnectExternalModule(precedingModName, moduleObject as ISinkModule);
+                    }
+                }
+            }
+            return pipeline;
+        }
+
+        /// <summary>
+        /// Assemble a linear processing pipeline from a list of modules.
+        /// Modules will be added and interconnected in the order in which they
+        /// appear in the list.  The first module is assumed to be the root module.
+        /// Modules that implement ISinkModule, but not IBaseModule, are connected
+        /// as external modules.  Module names are generated automatically
+        /// </summary>
+        /// <param name="name">Name of the pipeline</param>
+        /// <param name="moduleList">comma-delimited list of modules as arguments</param>
+        /// <returns></returns>
+        public static ProcessingPipeline Assemble(string name, params object[] moduleList) {
+            Collection<object> moduleCollection = new Collection<object>(moduleList);
+            return Assemble(name, moduleCollection);
+        }
+
+		/// <summary>
+		/// Assemble a linear processing pipeline from an XML spec
+		/// </summary>
+		/// <param name="pipelineSpecXML"></param>
+		/// <returns></returns>
+        public static ProcessingPipeline Assemble(string pipelineSpecXML) {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(pipelineSpecXML);
+            XmlNodeList xnl = doc.SelectNodes(".//module");
+
+            XmlNode p = doc.SelectSingleNode("/pipeline");
+            string pipelineName = p.Attributes["name"].InnerText;
+
+            Collection<ModuleDef> namedModuleList = new Collection<ModuleDef>();
+            foreach (XmlNode n in xnl) {
+                // create the module
+                XmlAttribute nameAttr = n.Attributes["name"];
+                string moduleName = (nameAttr != null) ? nameAttr.InnerText : string.Format("Module{0}", namedModuleList.Count + 1);
+                string moduleType = n.Attributes["type"].InnerText;
+                IBaseModule mod = MakeModule(moduleType);
+
+                XmlNodeList pnl = n.SelectNodes(".//param");
+                foreach (XmlNode parmNode in pnl) {
+                    string paramName = parmNode.Attributes["name"].InnerText;
+                    string paramVal = parmNode.InnerText;
+                    mod.SetPropertyByName(paramName, paramVal);
+                }
+                namedModuleList.Add(new ModuleDef(moduleName, mod));
+            }
+            return Assemble(pipelineName, namedModuleList);
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// Class that encapsulates a minimum definition of a pipeline
+    /// module for pipeline creation.
+    /// 
+    /// It contains a reference to a pipeline module and the
+    /// name that the module will have in the pipeline
+    /// </summary>
+    public class ModuleDef {
+
+        /// <summary>
+        /// pipeline name of Mage module object
+        /// </summary>
+        public string ModuleName { get; set; }
+
+        /// <summary>
+        /// Mage module object wrapped by this object
+        /// </summary>
+        public object ModuleObject { get; set; }
+
+        /// <summary>
+        /// construct a new ModuleDef object
+        /// from given module with given module name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="module"></param>
+        public ModuleDef(string name, object module) {
+            ModuleName = name;
+            ModuleObject = module;
+        }
+    }
+
+}

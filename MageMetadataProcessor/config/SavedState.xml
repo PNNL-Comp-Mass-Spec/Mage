@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<parameters>
+<parameter panel='JobListPanel1' name='Dataset' value='' />
+<parameter panel='JobListPanel1' name='Tool' value='sequest' />
+<parameter panel='JobListPanel1' name='Settings_File' value='' />
+<parameter panel='JobListPanel1' name='Parameter_File' value='' />
+<parameter panel='JobIDListPanel1' name='Job' value='618017, 620685' />
+<parameter panel='JobDatasetIDList1' name='Dataset_ID' value='' />
+<parameter panel='JobDataPackagePanel1' name='Data_Package_ID' value='189' />
+<parameter panel='DatasetQueryPanel1' name='Dataset' value='sarc_ms' />
+<parameter panel='DatasetQueryPanel1' name='Instrument' value='' />
+<parameter panel='DatasetQueryPanel1' name='State' value='Complete' />
+<parameter panel='DatasetQueryPanel1' name='Dataset Type' value='' />
+<parameter panel='DatasetIDListPanel1' name='Dataset_ID' value='191492, 190489' />
+<parameter panel='EntityFilePanel1' name='FileSelectors' value='*fht.txt' />
+<parameter panel='EntityFilePanel1' name='FileSelectionMode' value='FileSearch' />
+<parameter panel='EntityFilePanel1' name='IncludeFilesOrFolders' value='File' />
+<parameter panel='LocalFolderPanel1' name='FileNameFilter' value='syn.txt' />
+<parameter panel='LocalFolderPanel1' name='Folder' value='C:\Data\syn' />
+<parameter panel='LocalManifestPanel1' name='ManifestFilePath' value='C:\Data\syn\Manifest_101112020324.txt' />
+<parameter panel='FileProcessingPanel1' name='SelectedFilterClassName' value='PassThroughFilter' />
+<parameter panel='FileCopyPanel1' name='OutputFolder' value='C:\Dev\AScoreApp\Validation' />
+<parameter panel='FolderDestinationPanel1' name='OutputFolder' value='C:\Data\Junk' />
+</parameters>
+

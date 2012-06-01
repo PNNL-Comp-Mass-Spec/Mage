@@ -1,0 +1,5 @@
+JobListFile	ExtractionType	FilterSetID	MSGFCutoff	KeepAll	DestinationType	Container	Name
+xtandem_test_job_list_1.txt	X!Tandem First Protein	All Pass	All Pass	No	File_Output		r1.txt
+xtandem_dtar_test_job_list_1.txt	X!Tandem First Protein	All Pass	All Pass	No	File_Output		r2.txt
+sequest_test_job_list_1.txt	Sequest First Hits	All Pass	All Pass	No	File_Output		r3.txt
+sequest_dtar_test_job_list_1.txt	Sequest First Hits	All Pass	All Pass	No	File_Output		r4.txt

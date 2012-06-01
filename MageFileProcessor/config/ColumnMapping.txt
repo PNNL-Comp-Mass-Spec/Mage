@@ -1,0 +1,3 @@
+name	description	column_list
+Add Job Column	Add new column that will contain Job number	Job|+|text, *
+Syn Mapping	Reduced-column synopis file	HitNum, ChargeState||int, XCorr, DelCn||double, Peptide

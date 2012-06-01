@@ -1,0 +1,6 @@
+JobListFile	ExtractionType	FilterSetID	MSGFCutoff	KeepAll	DestinationType	Container	Name
+local_xt_jobs.txt	X!Tandem First Protein	All Pass	All Pass	No	File_Output		xt_fp.txt
+local_xt_jobs.txt	X!Tandem All Proteins	All Pass	All Pass	No	File_Output		xt_ap.txt
+local_seq_jobs.txt	Sequest Synopsis	All Pass	All Pass	No	File_Output		seq_syn_ap.txt
+local_seq_jobs.txt	Sequest First Hits	All Pass	All Pass	No	File_Output		seq_fht_ap.txt
+local_seq_jobs.txt	Sequest Synopsis	106	All Pass	No	File_Output		seq_syn_106.txt

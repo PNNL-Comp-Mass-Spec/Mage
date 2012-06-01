@@ -1,0 +1,183 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Collections.ObjectModel;
+
+namespace Mage {
+
+    /// <summary>
+    /// Mage module that can generate a simulated data stream on Mage standard tabular output
+    /// or accept a set of data that it will stream to ouput
+    /// </summary>
+    public class DataGenerator : BaseModule {
+
+        #region Member Variables
+
+        private List<string[]> mAdHocRows = new List<string[]>();
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Add a data row to the internal row buffer
+        /// </summary>
+        public string[] AddAdHocRow { set { mAdHocRows.Add(value); } }
+
+        /// <summary>
+        /// Get the contents of the internal row buffer
+        /// </summary>
+        public Collection<string[]> AdHocRows { get { return new Collection<string[]>(mAdHocRows); } }
+
+        /// <summary>
+        /// Include header row in generated data
+        /// </summary>
+        public bool IncludeHeaderInOutput { get; set; }
+
+        /// <summary>
+        /// Number of rows in generated data
+        /// </summary>
+        public int Rows { get; set; }
+
+        /// <summary>
+        /// Number of columns in generated data
+        /// </summary>
+        public int Cols { get; set; }
+
+        /// <summary>
+        /// Template to use for fields in generated header row
+        /// (must be valid for string.Format)
+        /// </summary>
+        public static string SimulatedHeaderTemplate { get; set; }
+
+        /// <summary>
+        /// Template to use for fields in generated rows
+        /// (must be valid for string.Format)
+        /// </summary>
+        public static string SimulatedDataTemplate { get; set; }
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Static constructor
+        /// </summary>
+        static DataGenerator() {
+            SimulatedHeaderTemplate = "Column {0} Header";
+            SimulatedDataTemplate = "Data for row-{0} column-{1}";
+        }
+
+        /// <summary>
+        /// construct a new Mage data generator object
+        /// </summary>
+        public DataGenerator() {
+            Initialize();
+        }
+
+        /// <summary>
+        /// construct a new Mage data generator object
+        /// with Rows and Cols properties set
+        /// </summary>
+        public DataGenerator(int rows, int cols) {
+            Initialize();
+            Rows = rows;
+            Cols = cols;
+        }
+
+        private void Initialize() {
+            IncludeHeaderInOutput = true;
+            Rows = 20;
+            Cols = 5;
+        }
+        #endregion
+
+
+        #region IBaseModule Members
+
+        /// <summary>
+        /// Pass execution to module instead of having it respond to standard tabular input stream events
+        /// (override of base class)
+        /// </summary>
+        /// <param name="state">Mage ProcessingPipeline object that contains the module (if there is one)</param>
+        public override void Run(object state) {
+            if (mAdHocRows.Count > 0) {
+                OutputAdHocRows();
+            } else {
+                OutputGeneratedRows();
+            }
+        }
+
+        private void OutputAdHocRows() {
+            bool hx = IncludeHeaderInOutput;
+            foreach (string[] row in mAdHocRows) {
+                if (hx) {
+                    hx = false;
+                    OutputHeaderLine(row);
+                } else {
+                    OutputDataLine(row);
+                }
+            }
+            OutputDataLine(null);
+        }
+
+        private void OutputGeneratedRows() {
+            string[] fields = null;
+            for (int i = 0; i < Rows; i++) {
+                if (i == 0 && IncludeHeaderInOutput) {
+                    fields = MakeSimulatedHeaderRow(Cols);
+                    OutputHeaderLine(fields);
+                }
+                fields = MakeSimulatedDataRow(i, Cols);
+                OutputDataLine(fields);
+            }
+            OutputDataLine(null);
+        }
+
+        /// <summary>
+        /// return a simulted row of data with the given number of columns
+        /// </summary>
+        /// <param name="numCols"></param>
+        /// <returns></returns>
+        public static string[] MakeSimulatedHeaderRow(int numCols) {
+            string[] row = new string[numCols];
+            for (int j = 0; j < numCols; j++) {
+                row[j] = string.Format(SimulatedHeaderTemplate, j + 1);
+            }
+            return row;
+        }
+
+        /// <summary>
+        /// return a simulated row of data based on the given row number and number of columns
+        /// </summary>
+        /// <param name="i"></param>
+        /// <param name="numCols"></param>
+        /// <returns></returns>
+        public static string[] MakeSimulatedDataRow(int i, int numCols) {
+            string[] row = new string[numCols];
+            for (int j = 0; j < numCols; j++) {
+                row[j] = string.Format(SimulatedDataTemplate, i + 1, j + 1);
+            }
+            return row;
+        }
+
+        private void OutputHeaderLine(string[] fields) {
+            // output the column definitions
+            List<MageColumnDef> columnDefs = new List<MageColumnDef>();
+            foreach (string field in fields) {
+                MageColumnDef colDef = new MageColumnDef(field, "text", "10");
+                columnDefs.Add(colDef);
+            }
+            OnColumnDefAvailable(new MageColumnEventArgs(columnDefs.ToArray()));
+        }
+
+        private void OutputDataLine(string[] fields) {
+            OnDataRowAvailable(new MageDataEventArgs(fields));
+        }
+
+        #endregion
+
+    }
+
+}

@@ -1,0 +1,5 @@
+JobListFile	ExtractionType
+xtandem_test_job_list_1.txt	X!Tandem First Protein
+xtandem_dtar_test_job_list_1.txt	X!Tandem First Protein
+sequest_test_job_list_1.txt	Sequest First Hits
+sequest_dtar_test_job_list_1.txt	Sequest First Hits

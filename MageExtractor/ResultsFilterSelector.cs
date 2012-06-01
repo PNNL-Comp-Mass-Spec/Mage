@@ -1,0 +1,123 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using Mage;
+
+namespace MageExtractor {
+    public partial class ResultsFilterSelector : Form , IModuleParameters {
+		       
+
+		#region Member Variables
+
+		Dictionary<string, string> mParameters = new Dictionary<string, string>();
+
+		string mFilterSetIDToAutoSelect = string.Empty;
+
+		ProcessingPipeline mGetFilterSetsPipeline;
+
+		#endregion
+
+		#region Properties
+		
+		public string FilterSetID {
+            get { return FilterSetIDCtl.Text; }
+            set { FilterSetIDCtl.Text = value; }
+        }
+
+		public string FilterSetIDToSelect {
+			set {
+				FilterSetIDCtl.Text = value;
+				mFilterSetIDToAutoSelect = FilterSetIDCtl.Text;
+			}
+		}
+
+		#endregion
+
+		#region IModuleParameters Members
+
+		public Dictionary<string, string> GetParameters() {
+            mParameters["FilterSetID"] = FilterSetIDCtl.Text;
+            return mParameters;
+        }
+
+        public void SetParameters(Dictionary<string, string> paramList) {
+            FilterSetIDCtl.Text = paramList["FilterSetID"];
+        }
+
+        #endregion
+
+        public ResultsFilterSelector() {
+            InitializeComponent();
+            gridViewDisplayControl1.List.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            gridViewDisplayControl1.MultiSelect = false;
+            gridViewDisplayControl1.List.AllowDelete = false;
+        }
+
+        private void GetFilterSetList() {
+            // create Mage module to query DMS
+            MSSQLReader reader = new MSSQLReader();
+            reader.Database = "DMS5";
+            reader.Server = "gigasax";
+            reader.SQLText = "SELECT Filter_Set_ID, Name, Description FROM V_PDE_Filter_Sets";
+
+            // create Mage module to receive query results
+            ISinkModule filters = gridViewDisplayControl1.MakeSink("Filter Sets", 20);
+
+            // build pipeline and run it
+            mGetFilterSetsPipeline = ProcessingPipeline.Assemble("GetFilters", reader, filters);
+			mGetFilterSetsPipeline.OnRunCompleted += HandlePipelineCompletion;
+			mGetFilterSetsPipeline.RunRoot(null);
+        }
+
+        private void List_SelectionChanged(object sender, EventArgs e) {
+            if (gridViewDisplayControl1.List.SelectedRows.Count > 0) {
+                FilterSetIDCtl.Text = gridViewDisplayControl1.List.SelectedRows[0].Cells[0].Value.ToString() ;
+            }
+        }
+
+        private void FilterPanel_Load(object sender, EventArgs e) {
+            GetFilterSetList();
+        }
+
+		private void UpdateSelectedFilterSetID() {
+			if (!string.IsNullOrEmpty(mFilterSetIDToAutoSelect)) {
+
+				List<DataGridViewRow> toSelect = new List<DataGridViewRow>(1);
+
+				// Find the row with the given filter set ID
+				foreach (DataGridViewRow item in gridViewDisplayControl1.List.Rows) {
+					if (item.Cells[0].Value.ToString() == mFilterSetIDToAutoSelect) {
+						item.Selected = true;
+						FilterSetIDCtl.Text = mFilterSetIDToAutoSelect;
+						gridViewDisplayControl1.List.FirstDisplayedCell = item.Cells[0];
+						break;
+					}
+				}
+			}
+		}
+
+
+		#region Functions for handling status updates
+
+		private delegate void VoidFnDelegate();
+
+		/// <summary>
+		/// Handle updating filter set id on completion of running pipeline
+		/// </summary>
+		/// <param name="sender">(ignored)</param>
+		/// <param name="args">Contains status information to be displayed</param>
+		private void HandlePipelineCompletion(object sender, MageStatusEventArgs args) {
+			// Must use a delegate and Invoke to avoid "cross-thread operation not valid" exceptions
+			VoidFnDelegate uf = UpdateSelectedFilterSetID;
+			Invoke(uf);
+		}
+
+		#endregion
+        
+   }
+}

@@ -1,0 +1,62 @@
+Mage Revision History
+
+Version 1.4.4311; October 21, 2011
+	- Now auto-deleting the SavedState.xml file if an error occurs while loading it
+
+Version 1.4.4304; October 14, 2011
+	- Now logging a warning message if a database connection attempt fails
+
+Version 1.4.4300; October 10, 2011
+	- Added tab "Datasets from Data Pkg" to Mage File Processor
+
+Version 1.4.4288; September 28, 2011
+	- Now displaying version info on the About tab instead of in the form title
+
+Version 1.4.4287; September 27, 2011
+	- Added about tab to Mage Extractor and Mage File Processor
+	- Added Globals.cs so all threads can monitor abort processing requests
+	- Fixed bug that prevented user from resizing column in the GridView control when "Use Shift+Click, Ctrl+Click" is unchecked
+
+Version 1.4.4286; September 26, 2011
+	- Added option "Overwrite existing files" to the "Copy Files to Local Folder" tab in Mage File Processor
+	- Fixed rounding bug writing filter threshold values to the _filter_criteria.txt file in Mage Extractor
+	- Updated Mage Extractor to support processing Inspect synopsis files
+	- Now storing blank cells in a column if MSGF values are missing
+	- Added validation of the MSGF filter threshold
+	- Updated to keep the cancel button visible until the final pipeline in a pipeline queue finishes
+
+Version 1.4.4283; September 23, 2011
+	- Fixed bug in Mage Extractor that displayed file size in the Job column
+	- Now using case-insensitive comparison for column names
+
+Version 1.4.4282; September 22, 2011
+	- Now caching warning messages
+		- Click the "Warnings" button in the status bar to see the warning messages
+		- At present, only used by Mage File Processor to warn that existing files were found and not overwritten
+
+Version 1.4.4281; September 21, 2011
+	- Various UI improvements, in particular now highlighting the previously chosen filter set, filter, or column mapping when a filter selection-type window is opened
+
+Version 1.4.4275; September 15, 2011
+	- Switch from .Now to .UtcNow
+	- Add comments to functions
+
+Version 1.4.4269; September 9, 2011
+	- Initial release of Mage 1.4
+	- Added support for MSGFDB results
+
+Version 1.4.4267; September 7, 2011
+	- Added ability to left+click rows to select/deselect rows (instead of Ctrl+Click, Shift+Click)
+	- Now writing out a text file with the filter set details
+
+Version 1.3; April 29, 2011
+	- Production release of Mage 1.3
+
+Version 1.2; April 24, 2011
+	- Production release of Mage 1.2
+
+Version 1.1; April 11, 2011
+	- Production release of Mage 1.1
+
+Version 1.0; March 6, 2011
+	- Added Mage Extractor

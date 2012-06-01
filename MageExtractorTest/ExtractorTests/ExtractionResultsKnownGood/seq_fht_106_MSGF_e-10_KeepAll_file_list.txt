@@ -1,0 +1,5 @@
+Job	Item	Folder	Name	MSGF_Name
+667059	file	C:\Data\ExtractorTests\JobResultsFolders\Seq201102081206_Auto667059	QC_Shew_10_10_pt5_3_30Jan11_Sphinx_10-11-03_fht.txt	QC_Shew_10_10_pt5_3_30Jan11_Sphinx_10-11-03_fht_MSGF.txt
+667060	file	C:\Data\ExtractorTests\JobResultsFolders\Seq201102081206_Auto667060	QC_Shew_10_10_pt5_1a_30Jan11_Earth_10-12-29_fht.txt	QC_Shew_10_10_pt5_1a_30Jan11_Earth_10-12-29_fht_MSGF.txt
+667061	file	C:\Data\ExtractorTests\JobResultsFolders\Seq201102081206_Auto667061	QC_Shew_10_10_pt5_2b_30Jan11_Earth_10-12-30_fht.txt	QC_Shew_10_10_pt5_2b_30Jan11_Earth_10-12-30_fht_MSGF.txt
+667062	file	C:\Data\ExtractorTests\JobResultsFolders\Seq201102081206_Auto667062	QC_Shew_10_10_pt5_4_30Jan11_Sphinx_10-09-30_fht.txt	QC_Shew_10_10_pt5_4_30Jan11_Sphinx_10-09-30_fht_MSGF.txt

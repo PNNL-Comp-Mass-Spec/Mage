@@ -1,0 +1,11 @@
+syntax: glob
+_ReSharper.Mage/*
+DeployedFiles/*
+*.suo
+*.pdb
+*.user
+*.obj
+bin/*
+*.cache
+[Dd]ebug*/
+[Rr]elease*/

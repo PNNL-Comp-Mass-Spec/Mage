@@ -1,0 +1,16 @@
+I occasionally see this error when compiling the application:
+	Unable to copy file "obj\Debug\MageExtractor.exe" to "bin\Debug\MageExtractor.exe". 
+	The process cannot access the file 'bin\Debug\MageExtractor.exe' because it is being used by another process.	MageExtractor
+
+One poster suggests this occurs when you re-compile the application too quickly after closing it.
+
+The most straightforward solution appears to be to not use [assembly: AssemblyVersion("1.4.*")] in the AssemblyInfo.cs file 
+and instead use a fixed version number, e.g. [assembly: AssemblyVersion("1.4.1")]
+
+Relevant web pages describing the problem and possible solutions:
+http://stackoverflow.com/questions/2895898/visual-studio-build-fails-unable-to-copy-exe-file-from-obj-debug-to-bin-debug
+
+http://www.sturmnet.org/blog/2010/05/07/msb3021-is-back-file-locked-by-other-pro#c250325
+
+https://connect.microsoft.com/VisualStudio/feedback/details/558848/vsip-rebuilding-a-project-with-open-designers-twice-causes-an-error-with-locked-bin-debug-dlls
+

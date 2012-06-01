@@ -1,0 +1,1189 @@
+Dataset	Dataset_ID	Factor	Value
+Sarc_MS_7_27Aug10_Cheetah_10-08-04_0000	189166	Age	<=75 years
+Sarc_MS_7_27Aug10_Cheetah_10-08-04_0000	189166	Batch	1
+Sarc_MS_7_27Aug10_Cheetah_10-08-04_0000	189166	BatchRun	7
+Sarc_MS_7_27Aug10_Cheetah_10-08-04_0000	189166	Group	SarcBase
+Sarc_MS_7_27Aug10_Cheetah_10-08-04_0000	189166	LC_column	4
+Sarc_MS_7_27Aug10_Cheetah_10-08-04_0000	189166	Plate	1
+Sarc_MS_7_27Aug10_Cheetah_10-08-04_0000	189166	Sample_Number	7
+Sarc_MS_7_27Aug10_Cheetah_10-08-04_0000	189166	Site	PO
+Sarc_MS_22_28Aug10_Cheetah_10-08-01_0000	189178	Age	>75 years
+Sarc_MS_22_28Aug10_Cheetah_10-08-01_0000	189178	Batch	2
+Sarc_MS_22_28Aug10_Cheetah_10-08-01_0000	189178	BatchRun	9
+Sarc_MS_22_28Aug10_Cheetah_10-08-01_0000	189178	Group	SarcBase
+Sarc_MS_22_28Aug10_Cheetah_10-08-01_0000	189178	LC_column	1
+Sarc_MS_22_28Aug10_Cheetah_10-08-01_0000	189178	Plate	1
+Sarc_MS_22_28Aug10_Cheetah_10-08-01_0000	189178	Sample_Number	22
+Sarc_MS_22_28Aug10_Cheetah_10-08-01_0000	189178	Site	BI
+Sarc_MS_56_28Aug10_Cheetah_10-08-03_0000	189342	Age	<=75 years
+Sarc_MS_56_28Aug10_Cheetah_10-08-03_0000	189342	Batch	5
+Sarc_MS_56_28Aug10_Cheetah_10-08-03_0000	189342	BatchRun	2
+Sarc_MS_56_28Aug10_Cheetah_10-08-03_0000	189342	Group	SarcBase
+Sarc_MS_56_28Aug10_Cheetah_10-08-03_0000	189342	LC_column	3
+Sarc_MS_56_28Aug10_Cheetah_10-08-03_0000	189342	Plate	1
+Sarc_MS_56_28Aug10_Cheetah_10-08-03_0000	189342	Sample_Number	56
+Sarc_MS_56_28Aug10_Cheetah_10-08-03_0000	189342	Site	PA
+Sarc_MS_58_21Aug10_Cheetah_10-08-02_0000	189344	Age	<=75 years
+Sarc_MS_58_21Aug10_Cheetah_10-08-02_0000	189344	Batch	5
+Sarc_MS_58_21Aug10_Cheetah_10-08-02_0000	189344	BatchRun	4
+Sarc_MS_58_21Aug10_Cheetah_10-08-02_0000	189344	Group	NonSarc
+Sarc_MS_58_21Aug10_Cheetah_10-08-02_0000	189344	LC_column	2
+Sarc_MS_58_21Aug10_Cheetah_10-08-02_0000	189344	Plate	1
+Sarc_MS_58_21Aug10_Cheetah_10-08-02_0000	189344	Sample_Number	58
+Sarc_MS_58_21Aug10_Cheetah_10-08-02_0000	189344	Site	SD
+Sarc_MS_73_21Aug10_Cheetah_10-08-04_0000	189497	Batch	6
+Sarc_MS_73_21Aug10_Cheetah_10-08-04_0000	189497	BatchRun	5
+Sarc_MS_73_21Aug10_Cheetah_10-08-04_0000	189497	Group	Control
+Sarc_MS_73_21Aug10_Cheetah_10-08-04_0000	189497	LC_column	4
+Sarc_MS_73_21Aug10_Cheetah_10-08-04_0000	189497	Plate	1
+Sarc_MS_73_21Aug10_Cheetah_10-08-04_0000	189497	Sample_Number	73
+Sarc_MS_92_24Aug10_Cheetah_10-08-04_0000	189516	Age	>75 years
+Sarc_MS_92_24Aug10_Cheetah_10-08-04_0000	189516	Batch	7
+Sarc_MS_92_24Aug10_Cheetah_10-08-04_0000	189516	BatchRun	10
+Sarc_MS_92_24Aug10_Cheetah_10-08-04_0000	189516	Group	DevSarc
+Sarc_MS_92_24Aug10_Cheetah_10-08-04_0000	189516	LC_column	4
+Sarc_MS_92_24Aug10_Cheetah_10-08-04_0000	189516	Plate	1
+Sarc_MS_92_24Aug10_Cheetah_10-08-04_0000	189516	Sample_Number	92
+Sarc_MS_92_24Aug10_Cheetah_10-08-04_0000	189516	Site	SD
+Sarc_MS_107_01Sept10_Cheetah_10-08-03_0000	189901	Age	>75 years
+Sarc_MS_107_01Sept10_Cheetah_10-08-03_0000	189901	Batch	8
+Sarc_MS_107_01Sept10_Cheetah_10-08-03_0000	189901	BatchRun	11
+Sarc_MS_107_01Sept10_Cheetah_10-08-03_0000	189901	Group	SarcBase
+Sarc_MS_107_01Sept10_Cheetah_10-08-03_0000	189901	LC_column	3
+Sarc_MS_107_01Sept10_Cheetah_10-08-03_0000	189901	Plate	2
+Sarc_MS_107_01Sept10_Cheetah_10-08-03_0000	189901	Sample_Number	107
+Sarc_MS_107_01Sept10_Cheetah_10-08-03_0000	189901	Site	PA
+Sarc_MS_122_02Sept10_Cheetah_10-08-03_0000	190173	Age	>75 years
+Sarc_MS_122_02Sept10_Cheetah_10-08-03_0000	190173	Batch	9
+Sarc_MS_122_02Sept10_Cheetah_10-08-03_0000	190173	BatchRun	12
+Sarc_MS_122_02Sept10_Cheetah_10-08-03_0000	190173	Group	NonSarc
+Sarc_MS_122_02Sept10_Cheetah_10-08-03_0000	190173	LC_column	3
+Sarc_MS_122_02Sept10_Cheetah_10-08-03_0000	190173	Plate	2
+Sarc_MS_122_02Sept10_Cheetah_10-08-03_0000	190173	Sample_Number	122
+Sarc_MS_122_02Sept10_Cheetah_10-08-03_0000	190173	Site	MN
+Sarc_MS_12_24Aug10_Cheetah_10-08-02_0000	189170	Age	>75 years
+Sarc_MS_12_24Aug10_Cheetah_10-08-02_0000	189170	Batch	1
+Sarc_MS_12_24Aug10_Cheetah_10-08-02_0000	189170	BatchRun	12
+Sarc_MS_12_24Aug10_Cheetah_10-08-02_0000	189170	Group	DevSarc
+Sarc_MS_12_24Aug10_Cheetah_10-08-02_0000	189170	LC_column	2
+Sarc_MS_12_24Aug10_Cheetah_10-08-02_0000	189170	Plate	1
+Sarc_MS_12_24Aug10_Cheetah_10-08-02_0000	189170	Sample_Number	12
+Sarc_MS_12_24Aug10_Cheetah_10-08-02_0000	189170	Site	PO
+Sarc_MS_17_3Sep10_Cheetah_10-08-03_0000	190189	Age	<=75 years
+Sarc_MS_17_3Sep10_Cheetah_10-08-03_0000	190189	Batch	2
+Sarc_MS_17_3Sep10_Cheetah_10-08-03_0000	190189	BatchRun	4
+Sarc_MS_17_3Sep10_Cheetah_10-08-03_0000	190189	Group	SarcBase
+Sarc_MS_17_3Sep10_Cheetah_10-08-03_0000	190189	LC_column	3
+Sarc_MS_17_3Sep10_Cheetah_10-08-03_0000	190189	Plate	1
+Sarc_MS_17_3Sep10_Cheetah_10-08-03_0000	190189	Sample_Number	17
+Sarc_MS_17_3Sep10_Cheetah_10-08-03_0000	190189	Site	PA
+Sarc_MS_21_24Aug10_Cheetah_10-08-03_0000	189177	Age	<=75 years
+Sarc_MS_21_24Aug10_Cheetah_10-08-03_0000	189177	Batch	2
+Sarc_MS_21_24Aug10_Cheetah_10-08-03_0000	189177	BatchRun	8
+Sarc_MS_21_24Aug10_Cheetah_10-08-03_0000	189177	Group	SarcBase
+Sarc_MS_21_24Aug10_Cheetah_10-08-03_0000	189177	LC_column	3
+Sarc_MS_21_24Aug10_Cheetah_10-08-03_0000	189177	Plate	1
+Sarc_MS_21_24Aug10_Cheetah_10-08-03_0000	189177	Sample_Number	21
+Sarc_MS_21_24Aug10_Cheetah_10-08-03_0000	189177	Site	PA
+Sarc_MS_42_21Aug10_Cheetah_10-08-04_0000	189207	Age	>75 years
+Sarc_MS_42_21Aug10_Cheetah_10-08-04_0000	189207	Batch	4
+Sarc_MS_42_21Aug10_Cheetah_10-08-04_0000	189207	BatchRun	2
+Sarc_MS_42_21Aug10_Cheetah_10-08-04_0000	189207	Group	SarcBase
+Sarc_MS_42_21Aug10_Cheetah_10-08-04_0000	189207	LC_column	4
+Sarc_MS_42_21Aug10_Cheetah_10-08-04_0000	189207	Plate	1
+Sarc_MS_42_21Aug10_Cheetah_10-08-04_0000	189207	Sample_Number	42
+Sarc_MS_42_21Aug10_Cheetah_10-08-04_0000	189207	Site	SD
+Sarc_MS_46_27Aug10_Cheetah_10-08-01_0000	189211	Age	<=75 years
+Sarc_MS_46_27Aug10_Cheetah_10-08-01_0000	189211	Batch	4
+Sarc_MS_46_27Aug10_Cheetah_10-08-01_0000	189211	BatchRun	6
+Sarc_MS_46_27Aug10_Cheetah_10-08-01_0000	189211	Group	DevSarc
+Sarc_MS_46_27Aug10_Cheetah_10-08-01_0000	189211	LC_column	1
+Sarc_MS_46_27Aug10_Cheetah_10-08-01_0000	189211	Plate	1
+Sarc_MS_46_27Aug10_Cheetah_10-08-01_0000	189211	Sample_Number	46
+Sarc_MS_46_27Aug10_Cheetah_10-08-01_0000	189211	Site	MN
+Sarc_MS_51_24Aug10_Cheetah_10-08-03_0000	189337	Age	>75 years
+Sarc_MS_51_24Aug10_Cheetah_10-08-03_0000	189337	Batch	4
+Sarc_MS_51_24Aug10_Cheetah_10-08-03_0000	189337	BatchRun	11
+Sarc_MS_51_24Aug10_Cheetah_10-08-03_0000	189337	Group	NonSarc
+Sarc_MS_51_24Aug10_Cheetah_10-08-03_0000	189337	LC_column	3
+Sarc_MS_51_24Aug10_Cheetah_10-08-03_0000	189337	Plate	1
+Sarc_MS_51_24Aug10_Cheetah_10-08-03_0000	189337	Sample_Number	51
+Sarc_MS_51_24Aug10_Cheetah_10-08-03_0000	189337	Site	PA
+Sarc_MS_76_24Aug10_Cheetah_10-08-02_0000	189500	Age	>75 years
+Sarc_MS_76_24Aug10_Cheetah_10-08-02_0000	189500	Batch	6
+Sarc_MS_76_24Aug10_Cheetah_10-08-02_0000	189500	BatchRun	8
+Sarc_MS_76_24Aug10_Cheetah_10-08-02_0000	189500	Group	SarcBase
+Sarc_MS_76_24Aug10_Cheetah_10-08-02_0000	189500	LC_column	2
+Sarc_MS_76_24Aug10_Cheetah_10-08-02_0000	189500	Plate	1
+Sarc_MS_76_24Aug10_Cheetah_10-08-02_0000	189500	Sample_Number	76
+Sarc_MS_76_24Aug10_Cheetah_10-08-02_0000	189500	Site	PI
+Sarc_MS_85_26Aug10_Cheetah_10-08-01_0000	189509	Age	>75 years
+Sarc_MS_85_26Aug10_Cheetah_10-08-01_0000	189509	Batch	7
+Sarc_MS_85_26Aug10_Cheetah_10-08-01_0000	189509	BatchRun	3
+Sarc_MS_85_26Aug10_Cheetah_10-08-01_0000	189509	Group	SarcBase
+Sarc_MS_85_26Aug10_Cheetah_10-08-01_0000	189509	LC_column	1
+Sarc_MS_85_26Aug10_Cheetah_10-08-01_0000	189509	Plate	1
+Sarc_MS_85_26Aug10_Cheetah_10-08-01_0000	189509	Sample_Number	85
+Sarc_MS_85_26Aug10_Cheetah_10-08-01_0000	189509	Site	PO
+Sarc_MS_110_01Sept10_Cheetah_10-08-02_0000	189904	Batch	8
+Sarc_MS_110_01Sept10_Cheetah_10-08-02_0000	189904	BatchRun	14
+Sarc_MS_110_01Sept10_Cheetah_10-08-02_0000	189904	Group	NonSarc
+Sarc_MS_110_01Sept10_Cheetah_10-08-02_0000	189904	LC_column	2
+Sarc_MS_110_01Sept10_Cheetah_10-08-02_0000	189904	Plate	2
+Sarc_MS_110_01Sept10_Cheetah_10-08-02_0000	189904	Sample_Number	110
+Sarc_MS_110_01Sept10_Cheetah_10-08-02_0000	189904	Site	PO
+Sarc_MS_110_01Sept10_Cheetah_10-08-02_0000	189904	Age	>75 years
+Sarc_MS_119_02Sept10_Cheetah_10-08-04_0000	190170	Batch	9
+Sarc_MS_119_02Sept10_Cheetah_10-08-04_0000	190170	BatchRun	9
+Sarc_MS_119_02Sept10_Cheetah_10-08-04_0000	190170	Group	Control
+Sarc_MS_119_02Sept10_Cheetah_10-08-04_0000	190170	LC_column	4
+Sarc_MS_119_02Sept10_Cheetah_10-08-04_0000	190170	Plate	2
+Sarc_MS_119_02Sept10_Cheetah_10-08-04_0000	190170	Sample_Number	119
+Sarc_MS_144_3Sep10_Cheetah_10-08-01_0000	190200	Group	SarcBase
+Sarc_MS_144_3Sep10_Cheetah_10-08-01_0000	190200	LC_column	1
+Sarc_MS_144_3Sep10_Cheetah_10-08-01_0000	190200	Plate	2
+Sarc_MS_144_3Sep10_Cheetah_10-08-01_0000	190200	Sample_Number	144
+Sarc_MS_144_3Sep10_Cheetah_10-08-01_0000	190200	Site	SD
+Sarc_MS_144_3Sep10_Cheetah_10-08-01_0000	190200	Age	>75 years
+Sarc_MS_144_3Sep10_Cheetah_10-08-01_0000	190200	Batch	9
+Sarc_MS_144_3Sep10_Cheetah_10-08-01_0000	190200	BatchRun	7
+Sarc_MS_29_24Aug10_Cheetah_10-08-04_0000	189196	Age	<=75 years
+Sarc_MS_29_24Aug10_Cheetah_10-08-04_0000	189196	Batch	3
+Sarc_MS_29_24Aug10_Cheetah_10-08-04_0000	189196	BatchRun	2
+Sarc_MS_29_24Aug10_Cheetah_10-08-04_0000	189196	Group	SarcBase
+Sarc_MS_29_24Aug10_Cheetah_10-08-04_0000	189196	LC_column	4
+Sarc_MS_29_24Aug10_Cheetah_10-08-04_0000	189196	Plate	1
+Sarc_MS_29_24Aug10_Cheetah_10-08-04_0000	189196	Sample_Number	29
+Sarc_MS_29_24Aug10_Cheetah_10-08-04_0000	189196	Site	PO
+Sarc_MS_36_24Aug10_Cheetah_10-08-01_0000	189202	Age	>75 years
+Sarc_MS_36_24Aug10_Cheetah_10-08-01_0000	189202	Batch	3
+Sarc_MS_36_24Aug10_Cheetah_10-08-01_0000	189202	BatchRun	9
+Sarc_MS_36_24Aug10_Cheetah_10-08-01_0000	189202	Group	DevSarc
+Sarc_MS_36_24Aug10_Cheetah_10-08-01_0000	189202	LC_column	1
+Sarc_MS_36_24Aug10_Cheetah_10-08-01_0000	189202	Plate	1
+Sarc_MS_36_24Aug10_Cheetah_10-08-01_0000	189202	Sample_Number	36
+Sarc_MS_36_24Aug10_Cheetah_10-08-01_0000	189202	Site	MN
+Sarc_MS_43_24Aug10_Cheetah_10-08-02_0000	189208	Plate	1
+Sarc_MS_43_24Aug10_Cheetah_10-08-02_0000	189208	Sample_Number	43
+Sarc_MS_43_24Aug10_Cheetah_10-08-02_0000	189208	Site	MN
+Sarc_MS_43_24Aug10_Cheetah_10-08-02_0000	189208	Age	>75 years
+Sarc_MS_43_24Aug10_Cheetah_10-08-02_0000	189208	Batch	4
+Sarc_MS_43_24Aug10_Cheetah_10-08-02_0000	189208	BatchRun	3
+Sarc_MS_43_24Aug10_Cheetah_10-08-02_0000	189208	Group	NonSarc
+Sarc_MS_43_24Aug10_Cheetah_10-08-02_0000	189208	LC_column	2
+Sarc_MS_79_27Aug10_Cheetah_10-08-03_0000	189503	Age	>75 years
+Sarc_MS_79_27Aug10_Cheetah_10-08-03_0000	189503	Batch	6
+Sarc_MS_79_27Aug10_Cheetah_10-08-03_0000	189503	BatchRun	11
+Sarc_MS_79_27Aug10_Cheetah_10-08-03_0000	189503	Group	DevSarc
+Sarc_MS_79_27Aug10_Cheetah_10-08-03_0000	189503	LC_column	3
+Sarc_MS_79_27Aug10_Cheetah_10-08-03_0000	189503	Plate	1
+Sarc_MS_79_27Aug10_Cheetah_10-08-03_0000	189503	Sample_Number	79
+Sarc_MS_79_27Aug10_Cheetah_10-08-03_0000	189503	Site	PO
+Sarc_MS_86_27Aug10_Cheetah_10-08-02_0000	189510	Age	>75 years
+Sarc_MS_86_27Aug10_Cheetah_10-08-02_0000	189510	Batch	7
+Sarc_MS_86_27Aug10_Cheetah_10-08-02_0000	189510	BatchRun	4
+Sarc_MS_86_27Aug10_Cheetah_10-08-02_0000	189510	Group	SarcBase
+Sarc_MS_86_27Aug10_Cheetah_10-08-02_0000	189510	LC_column	2
+Sarc_MS_86_27Aug10_Cheetah_10-08-02_0000	189510	Plate	1
+Sarc_MS_86_27Aug10_Cheetah_10-08-02_0000	189510	Sample_Number	86
+Sarc_MS_86_27Aug10_Cheetah_10-08-02_0000	189510	Site	PO
+Sarc_MS_93_26Aug10_Cheetah_10-08-02_0000	189517	Age	>75 years
+Sarc_MS_93_26Aug10_Cheetah_10-08-02_0000	189517	Batch	7
+Sarc_MS_93_26Aug10_Cheetah_10-08-02_0000	189517	BatchRun	11
+Sarc_MS_93_26Aug10_Cheetah_10-08-02_0000	189517	Group	DevSarc
+Sarc_MS_93_26Aug10_Cheetah_10-08-02_0000	189517	LC_column	2
+Sarc_MS_93_26Aug10_Cheetah_10-08-02_0000	189517	Plate	1
+Sarc_MS_93_26Aug10_Cheetah_10-08-02_0000	189517	Sample_Number	93
+Sarc_MS_93_26Aug10_Cheetah_10-08-02_0000	189517	Site	SD
+Sarc_MS_129_02Sept10_Cheetah_10-08-02_0000	190180	Age	>75 years
+Sarc_MS_129_02Sept10_Cheetah_10-08-02_0000	190180	Batch	10
+Sarc_MS_129_02Sept10_Cheetah_10-08-02_0000	190180	BatchRun	5
+Sarc_MS_129_02Sept10_Cheetah_10-08-02_0000	190180	Group	NonSarc
+Sarc_MS_129_02Sept10_Cheetah_10-08-02_0000	190180	LC_column	2
+Sarc_MS_129_02Sept10_Cheetah_10-08-02_0000	190180	Plate	2
+Sarc_MS_129_02Sept10_Cheetah_10-08-02_0000	190180	Sample_Number	129
+Sarc_MS_129_02Sept10_Cheetah_10-08-02_0000	190180	Site	MN
+Sarc_MS_136_3Sep10_Cheetah_10-08-01_0000	190193	Age	>75 years
+Sarc_MS_136_3Sep10_Cheetah_10-08-01_0000	190193	Batch	10
+Sarc_MS_136_3Sep10_Cheetah_10-08-01_0000	190193	BatchRun	12
+Sarc_MS_136_3Sep10_Cheetah_10-08-01_0000	190193	Group	NonSarc
+Sarc_MS_136_3Sep10_Cheetah_10-08-01_0000	190193	LC_column	1
+Sarc_MS_136_3Sep10_Cheetah_10-08-01_0000	190193	Plate	2
+Sarc_MS_136_3Sep10_Cheetah_10-08-01_0000	190193	Sample_Number	136
+Sarc_MS_136_3Sep10_Cheetah_10-08-01_0000	190193	Site	PO
+Sarc_MS_143_3Sep10_Cheetah_10-08-04_0000	190199	Age	<=75 years
+Sarc_MS_143_3Sep10_Cheetah_10-08-04_0000	190199	Batch	9
+Sarc_MS_143_3Sep10_Cheetah_10-08-04_0000	190199	BatchRun	6
+Sarc_MS_143_3Sep10_Cheetah_10-08-04_0000	190199	Group	SarcBase
+Sarc_MS_143_3Sep10_Cheetah_10-08-04_0000	190199	LC_column	4
+Sarc_MS_143_3Sep10_Cheetah_10-08-04_0000	190199	Plate	2
+Sarc_MS_143_3Sep10_Cheetah_10-08-04_0000	190199	Sample_Number	143
+Sarc_MS_143_3Sep10_Cheetah_10-08-04_0000	190199	Site	BI
+Sarc_MS_13_24Aug10_Cheetah_10-08-02_0000	189171	Batch	1
+Sarc_MS_13_24Aug10_Cheetah_10-08-02_0000	189171	BatchRun	13
+Sarc_MS_13_24Aug10_Cheetah_10-08-02_0000	189171	Group	Control
+Sarc_MS_13_24Aug10_Cheetah_10-08-02_0000	189171	LC_column	2
+Sarc_MS_13_24Aug10_Cheetah_10-08-02_0000	189171	Plate	1
+Sarc_MS_13_24Aug10_Cheetah_10-08-02_0000	189171	Sample_Number	13
+Sarc_MS_16_28Aug10_Cheetah_10-08-02_0000	189173	Group	SarcBase
+Sarc_MS_16_28Aug10_Cheetah_10-08-02_0000	189173	LC_column	2
+Sarc_MS_16_28Aug10_Cheetah_10-08-02_0000	189173	Plate	1
+Sarc_MS_16_28Aug10_Cheetah_10-08-02_0000	189173	Sample_Number	16
+Sarc_MS_16_28Aug10_Cheetah_10-08-02_0000	189173	Site	PI
+Sarc_MS_16_28Aug10_Cheetah_10-08-02_0000	189173	Age	>75 years
+Sarc_MS_16_28Aug10_Cheetah_10-08-02_0000	189173	Batch	2
+Sarc_MS_16_28Aug10_Cheetah_10-08-02_0000	189173	BatchRun	3
+Sarc_MS_30_27Aug10_Cheetah_10-08-03_0000	189197	Age	>75 years
+Sarc_MS_30_27Aug10_Cheetah_10-08-03_0000	189197	Batch	3
+Sarc_MS_30_27Aug10_Cheetah_10-08-03_0000	189197	BatchRun	3
+Sarc_MS_30_27Aug10_Cheetah_10-08-03_0000	189197	Group	SarcBase
+Sarc_MS_30_27Aug10_Cheetah_10-08-03_0000	189197	LC_column	3
+Sarc_MS_30_27Aug10_Cheetah_10-08-03_0000	189197	Plate	1
+Sarc_MS_30_27Aug10_Cheetah_10-08-03_0000	189197	Sample_Number	30
+Sarc_MS_30_27Aug10_Cheetah_10-08-03_0000	189197	Site	PO
+Sarc_MS_63_27Aug10_Cheetah_10-08-01_0000	189349	Age	>75 years
+Sarc_MS_63_27Aug10_Cheetah_10-08-01_0000	189349	Batch	5
+Sarc_MS_63_27Aug10_Cheetah_10-08-01_0000	189349	BatchRun	9
+Sarc_MS_63_27Aug10_Cheetah_10-08-01_0000	189349	Group	SarcBase
+Sarc_MS_63_27Aug10_Cheetah_10-08-01_0000	189349	LC_column	1
+Sarc_MS_63_27Aug10_Cheetah_10-08-01_0000	189349	Plate	1
+Sarc_MS_63_27Aug10_Cheetah_10-08-01_0000	189349	Sample_Number	63
+Sarc_MS_63_27Aug10_Cheetah_10-08-01_0000	189349	Site	MN
+Sarc_MS_67_24Aug10_Cheetah_10-08-01_0000	189353	Age	>75 years
+Sarc_MS_67_24Aug10_Cheetah_10-08-01_0000	189353	Batch	5
+Sarc_MS_67_24Aug10_Cheetah_10-08-01_0000	189353	BatchRun	13
+Sarc_MS_67_24Aug10_Cheetah_10-08-01_0000	189353	Group	NonSarc
+Sarc_MS_67_24Aug10_Cheetah_10-08-01_0000	189353	LC_column	1
+Sarc_MS_67_24Aug10_Cheetah_10-08-01_0000	189353	Plate	1
+Sarc_MS_67_24Aug10_Cheetah_10-08-01_0000	189353	Sample_Number	67
+Sarc_MS_67_24Aug10_Cheetah_10-08-01_0000	189353	Site	PA
+Sarc_MS_80_28Aug10_Cheetah_10-08-02_0000	189504	Age	>75 years
+Sarc_MS_80_28Aug10_Cheetah_10-08-02_0000	189504	Batch	6
+Sarc_MS_80_28Aug10_Cheetah_10-08-02_0000	189504	BatchRun	12
+Sarc_MS_80_28Aug10_Cheetah_10-08-02_0000	189504	Group	DevSarc
+Sarc_MS_80_28Aug10_Cheetah_10-08-02_0000	189504	LC_column	2
+Sarc_MS_80_28Aug10_Cheetah_10-08-02_0000	189504	Plate	1
+Sarc_MS_80_28Aug10_Cheetah_10-08-02_0000	189504	Sample_Number	80
+Sarc_MS_80_28Aug10_Cheetah_10-08-02_0000	189504	Site	SD
+Sarc_MS_81_21Aug10_Cheetah_10-08-01_0000	189505	Age	>75 years
+Sarc_MS_81_21Aug10_Cheetah_10-08-01_0000	189505	Batch	6
+Sarc_MS_81_21Aug10_Cheetah_10-08-01_0000	189505	BatchRun	13
+Sarc_MS_81_21Aug10_Cheetah_10-08-01_0000	189505	Group	DevSarc
+Sarc_MS_81_21Aug10_Cheetah_10-08-01_0000	189505	LC_column	1
+Sarc_MS_81_21Aug10_Cheetah_10-08-01_0000	189505	Plate	1
+Sarc_MS_81_21Aug10_Cheetah_10-08-01_0000	189505	Sample_Number	81
+Sarc_MS_81_21Aug10_Cheetah_10-08-01_0000	189505	Site	PI
+Sarc_MS_98_3Sep10_Cheetah_10-08-02_0000	190192	Age	>75 years
+Sarc_MS_98_3Sep10_Cheetah_10-08-02_0000	190192	Batch	8
+Sarc_MS_98_3Sep10_Cheetah_10-08-02_0000	190192	BatchRun	2
+Sarc_MS_98_3Sep10_Cheetah_10-08-02_0000	190192	Group	NonSarc
+Sarc_MS_98_3Sep10_Cheetah_10-08-02_0000	190192	LC_column	2
+Sarc_MS_98_3Sep10_Cheetah_10-08-02_0000	190192	Plate	2
+Sarc_MS_98_3Sep10_Cheetah_10-08-02_0000	190192	Sample_Number	98
+Sarc_MS_98_3Sep10_Cheetah_10-08-02_0000	190192	Site	PA
+Sarc_MS_131_02Sept10_Cheetah_10-08-04_0000	190182	Age	>75 years
+Sarc_MS_131_02Sept10_Cheetah_10-08-04_0000	190182	Batch	10
+Sarc_MS_131_02Sept10_Cheetah_10-08-04_0000	190182	BatchRun	7
+Sarc_MS_131_02Sept10_Cheetah_10-08-04_0000	190182	Group	NonSarc
+Sarc_MS_131_02Sept10_Cheetah_10-08-04_0000	190182	LC_column	4
+Sarc_MS_131_02Sept10_Cheetah_10-08-04_0000	190182	Plate	2
+Sarc_MS_131_02Sept10_Cheetah_10-08-04_0000	190182	Sample_Number	131
+Sarc_MS_131_02Sept10_Cheetah_10-08-04_0000	190182	Site	PO
+Sarc_MS_148_3Sep10_Cheetah_10-08-01_0000	190204	Age	>75 years
+Sarc_MS_148_3Sep10_Cheetah_10-08-01_0000	190204	Batch	9
+Sarc_MS_148_3Sep10_Cheetah_10-08-01_0000	190204	BatchRun	11
+Sarc_MS_148_3Sep10_Cheetah_10-08-01_0000	190204	Group	NonSarc
+Sarc_MS_148_3Sep10_Cheetah_10-08-01_0000	190204	LC_column	1
+Sarc_MS_148_3Sep10_Cheetah_10-08-01_0000	190204	Plate	2
+Sarc_MS_148_3Sep10_Cheetah_10-08-01_0000	190204	Sample_Number	148
+Sarc_MS_148_3Sep10_Cheetah_10-08-01_0000	190204	Site	PI
+Sarc_MS_149_3Sep10_Cheetah_10-08-02_0000	190205	Age	>75 years
+Sarc_MS_149_3Sep10_Cheetah_10-08-02_0000	190205	Batch	9
+Sarc_MS_149_3Sep10_Cheetah_10-08-02_0000	190205	BatchRun	12
+Sarc_MS_149_3Sep10_Cheetah_10-08-02_0000	190205	Group	NonSarc
+Sarc_MS_149_3Sep10_Cheetah_10-08-02_0000	190205	LC_column	2
+Sarc_MS_149_3Sep10_Cheetah_10-08-02_0000	190205	Plate	2
+Sarc_MS_149_3Sep10_Cheetah_10-08-02_0000	190205	Sample_Number	149
+Sarc_MS_149_3Sep10_Cheetah_10-08-02_0000	190205	Site	MN
+Sarc_MS_32_28Aug10_Cheetah_10-08-04_0000	189199	Age	>75 years
+Sarc_MS_32_28Aug10_Cheetah_10-08-04_0000	189199	Batch	3
+Sarc_MS_32_28Aug10_Cheetah_10-08-04_0000	189199	BatchRun	5
+Sarc_MS_32_28Aug10_Cheetah_10-08-04_0000	189199	Group	DevSarc
+Sarc_MS_32_28Aug10_Cheetah_10-08-04_0000	189199	LC_column	4
+Sarc_MS_32_28Aug10_Cheetah_10-08-04_0000	189199	Plate	1
+Sarc_MS_32_28Aug10_Cheetah_10-08-04_0000	189199	Sample_Number	32
+Sarc_MS_32_28Aug10_Cheetah_10-08-04_0000	189199	Site	PI
+Sarc_MS_33_3Sep10_Cheetah_10-08-04_0000	190190	Age	>75 years
+Sarc_MS_33_3Sep10_Cheetah_10-08-04_0000	190190	Batch	3
+Sarc_MS_33_3Sep10_Cheetah_10-08-04_0000	190190	BatchRun	6
+Sarc_MS_33_3Sep10_Cheetah_10-08-04_0000	190190	Group	SarcBase
+Sarc_MS_33_3Sep10_Cheetah_10-08-04_0000	190190	LC_column	4
+Sarc_MS_33_3Sep10_Cheetah_10-08-04_0000	190190	Plate	1
+Sarc_MS_33_3Sep10_Cheetah_10-08-04_0000	190190	Sample_Number	33
+Sarc_MS_33_3Sep10_Cheetah_10-08-04_0000	190190	Site	BI
+Sarc_MS_47_27Aug10_Cheetah_10-08-03_0000	189212	Age	<=75 years
+Sarc_MS_47_27Aug10_Cheetah_10-08-03_0000	189212	Batch	4
+Sarc_MS_47_27Aug10_Cheetah_10-08-03_0000	189212	BatchRun	7
+Sarc_MS_47_27Aug10_Cheetah_10-08-03_0000	189212	Group	NonSarc
+Sarc_MS_47_27Aug10_Cheetah_10-08-03_0000	189212	LC_column	3
+Sarc_MS_47_27Aug10_Cheetah_10-08-03_0000	189212	Plate	1
+Sarc_MS_47_27Aug10_Cheetah_10-08-03_0000	189212	Sample_Number	47
+Sarc_MS_47_27Aug10_Cheetah_10-08-03_0000	189212	Site	MN
+Sarc_MS_82_21Aug10_Cheetah_10-08-01_0000	189506	Plate	1
+Sarc_MS_82_21Aug10_Cheetah_10-08-01_0000	189506	Sample_Number	82
+Sarc_MS_82_21Aug10_Cheetah_10-08-01_0000	189506	Site	SD
+Sarc_MS_82_21Aug10_Cheetah_10-08-01_0000	189506	Age	>75 years
+Sarc_MS_82_21Aug10_Cheetah_10-08-01_0000	189506	Batch	6
+Sarc_MS_82_21Aug10_Cheetah_10-08-01_0000	189506	BatchRun	14
+Sarc_MS_82_21Aug10_Cheetah_10-08-01_0000	189506	Group	DevSarc
+Sarc_MS_82_21Aug10_Cheetah_10-08-01_0000	189506	LC_column	1
+Sarc_MS_83_24Aug10_Cheetah_10-08-03_0000	189507	Age	<=75 years
+Sarc_MS_83_24Aug10_Cheetah_10-08-03_0000	189507	Batch	7
+Sarc_MS_83_24Aug10_Cheetah_10-08-03_0000	189507	BatchRun	1
+Sarc_MS_83_24Aug10_Cheetah_10-08-03_0000	189507	Group	DevSarc
+Sarc_MS_83_24Aug10_Cheetah_10-08-03_0000	189507	LC_column	3
+Sarc_MS_83_24Aug10_Cheetah_10-08-03_0000	189507	Plate	1
+Sarc_MS_83_24Aug10_Cheetah_10-08-03_0000	189507	Sample_Number	83
+Sarc_MS_83_24Aug10_Cheetah_10-08-03_0000	189507	Site	PI
+Sarc_MS_97_28Aug10_Cheetah_10-08-01_0000	189521	Age	>75 years
+Sarc_MS_97_28Aug10_Cheetah_10-08-01_0000	189521	Batch	8
+Sarc_MS_97_28Aug10_Cheetah_10-08-01_0000	189521	BatchRun	1
+Sarc_MS_97_28Aug10_Cheetah_10-08-01_0000	189521	Group	NonSarc
+Sarc_MS_97_28Aug10_Cheetah_10-08-01_0000	189521	LC_column	1
+Sarc_MS_97_28Aug10_Cheetah_10-08-01_0000	189521	Plate	2
+Sarc_MS_97_28Aug10_Cheetah_10-08-01_0000	189521	Sample_Number	97
+Sarc_MS_97_28Aug10_Cheetah_10-08-01_0000	189521	Site	BI
+Sarc_MS_132_02Sept10_Cheetah_10-08-01_0000	190183	Age	>75 years
+Sarc_MS_132_02Sept10_Cheetah_10-08-01_0000	190183	Batch	10
+Sarc_MS_132_02Sept10_Cheetah_10-08-01_0000	190183	BatchRun	8
+Sarc_MS_132_02Sept10_Cheetah_10-08-01_0000	190183	Group	DevSarc
+Sarc_MS_132_02Sept10_Cheetah_10-08-01_0000	190183	LC_column	1
+Sarc_MS_132_02Sept10_Cheetah_10-08-01_0000	190183	Plate	2
+Sarc_MS_132_02Sept10_Cheetah_10-08-01_0000	190183	Sample_Number	132
+Sarc_MS_132_02Sept10_Cheetah_10-08-01_0000	190183	Site	BI
+Sarc_MS_133_3Sep10_Cheetah_10-08-04_0000	191492	Age	>75 years
+Sarc_MS_133_3Sep10_Cheetah_10-08-04_0000	191492	Batch	10
+Sarc_MS_133_3Sep10_Cheetah_10-08-04_0000	191492	BatchRun	9
+Sarc_MS_133_3Sep10_Cheetah_10-08-04_0000	191492	Group	NonSarc
+Sarc_MS_133_3Sep10_Cheetah_10-08-04_0000	191492	LC_column	4
+Sarc_MS_133_3Sep10_Cheetah_10-08-04_0000	191492	Plate	2
+Sarc_MS_133_3Sep10_Cheetah_10-08-04_0000	191492	Sample_Number	133
+Sarc_MS_133_3Sep10_Cheetah_10-08-04_0000	191492	Site	BI
+Sarc_MS_147_3Sep10_Cheetah_10-08-04_0000	190203	Age	>75 years
+Sarc_MS_147_3Sep10_Cheetah_10-08-04_0000	190203	Batch	9
+Sarc_MS_147_3Sep10_Cheetah_10-08-04_0000	190203	BatchRun	10
+Sarc_MS_147_3Sep10_Cheetah_10-08-04_0000	190203	Group	SarcBase
+Sarc_MS_147_3Sep10_Cheetah_10-08-04_0000	190203	LC_column	4
+Sarc_MS_147_3Sep10_Cheetah_10-08-04_0000	190203	Plate	2
+Sarc_MS_147_3Sep10_Cheetah_10-08-04_0000	190203	Sample_Number	147
+Sarc_MS_147_3Sep10_Cheetah_10-08-04_0000	190203	Site	SD
+Sarc_MS_28_24Aug10_Cheetah_10-08-04_0000	189195	Age	<=75 years
+Sarc_MS_28_24Aug10_Cheetah_10-08-04_0000	189195	Batch	3
+Sarc_MS_28_24Aug10_Cheetah_10-08-04_0000	189195	BatchRun	1
+Sarc_MS_28_24Aug10_Cheetah_10-08-04_0000	189195	Group	SarcBase
+Sarc_MS_28_24Aug10_Cheetah_10-08-04_0000	189195	LC_column	4
+Sarc_MS_28_24Aug10_Cheetah_10-08-04_0000	189195	Plate	1
+Sarc_MS_28_24Aug10_Cheetah_10-08-04_0000	189195	Sample_Number	28
+Sarc_MS_28_24Aug10_Cheetah_10-08-04_0000	189195	Site	PA
+Sarc_MS_35_24Aug10_Cheetah_10-08-01_0000	189201	Age	<=75 years
+Sarc_MS_35_24Aug10_Cheetah_10-08-01_0000	189201	Batch	3
+Sarc_MS_35_24Aug10_Cheetah_10-08-01_0000	189201	BatchRun	8
+Sarc_MS_35_24Aug10_Cheetah_10-08-01_0000	189201	Group	NonSarc
+Sarc_MS_35_24Aug10_Cheetah_10-08-01_0000	189201	LC_column	1
+Sarc_MS_35_24Aug10_Cheetah_10-08-01_0000	189201	Plate	1
+Sarc_MS_35_24Aug10_Cheetah_10-08-01_0000	189201	Sample_Number	35
+Sarc_MS_35_24Aug10_Cheetah_10-08-01_0000	189201	Site	PO
+Sarc_MS_37_24Aug10_Cheetah_10-08-01_0000	189203	Age	>75 years
+Sarc_MS_37_24Aug10_Cheetah_10-08-01_0000	189203	Batch	3
+Sarc_MS_37_24Aug10_Cheetah_10-08-01_0000	189203	BatchRun	10
+Sarc_MS_37_24Aug10_Cheetah_10-08-01_0000	189203	Group	SarcBase
+Sarc_MS_37_24Aug10_Cheetah_10-08-01_0000	189203	LC_column	1
+Sarc_MS_37_24Aug10_Cheetah_10-08-01_0000	189203	Plate	1
+Sarc_MS_37_24Aug10_Cheetah_10-08-01_0000	189203	Sample_Number	37
+Sarc_MS_37_24Aug10_Cheetah_10-08-01_0000	189203	Site	PO
+Sarc_MS_71_27Aug10_Cheetah_10-08-02_0000	189357	Batch	6
+Sarc_MS_71_27Aug10_Cheetah_10-08-02_0000	189357	BatchRun	3
+Sarc_MS_71_27Aug10_Cheetah_10-08-02_0000	189357	Group	DevSarc
+Sarc_MS_71_27Aug10_Cheetah_10-08-02_0000	189357	LC_column	2
+Sarc_MS_71_27Aug10_Cheetah_10-08-02_0000	189357	Plate	1
+Sarc_MS_71_27Aug10_Cheetah_10-08-02_0000	189357	Sample_Number	71
+Sarc_MS_71_27Aug10_Cheetah_10-08-02_0000	189357	Site	BI
+Sarc_MS_71_27Aug10_Cheetah_10-08-02_0000	189357	Age	<=75 years
+Sarc_MS_94_27Aug10_Cheetah_10-08-03_0000	189518	Age	<=75 years
+Sarc_MS_94_27Aug10_Cheetah_10-08-03_0000	189518	Batch	7
+Sarc_MS_94_27Aug10_Cheetah_10-08-03_0000	189518	BatchRun	12
+Sarc_MS_94_27Aug10_Cheetah_10-08-03_0000	189518	Group	DevSarc
+Sarc_MS_94_27Aug10_Cheetah_10-08-03_0000	189518	LC_column	3
+Sarc_MS_94_27Aug10_Cheetah_10-08-03_0000	189518	Plate	1
+Sarc_MS_94_27Aug10_Cheetah_10-08-03_0000	189518	Sample_Number	94
+Sarc_MS_94_27Aug10_Cheetah_10-08-03_0000	189518	Site	SD
+Sarc_MS_101_01Sept10_Cheetah_10-08-01_0000	189895	Age	<=75 years
+Sarc_MS_101_01Sept10_Cheetah_10-08-01_0000	189895	Batch	8
+Sarc_MS_101_01Sept10_Cheetah_10-08-01_0000	189895	BatchRun	5
+Sarc_MS_101_01Sept10_Cheetah_10-08-01_0000	189895	Group	SarcBase
+Sarc_MS_101_01Sept10_Cheetah_10-08-01_0000	189895	LC_column	1
+Sarc_MS_101_01Sept10_Cheetah_10-08-01_0000	189895	Plate	2
+Sarc_MS_101_01Sept10_Cheetah_10-08-01_0000	189895	Sample_Number	101
+Sarc_MS_101_01Sept10_Cheetah_10-08-01_0000	189895	Site	MN
+Sarc_MS_128_02Sept10_Cheetah_10-08-01_0000	190179	Plate	2
+Sarc_MS_128_02Sept10_Cheetah_10-08-01_0000	190179	Sample_Number	128
+Sarc_MS_128_02Sept10_Cheetah_10-08-01_0000	190179	Site	PI
+Sarc_MS_128_02Sept10_Cheetah_10-08-01_0000	190179	Age	>75 years
+Sarc_MS_128_02Sept10_Cheetah_10-08-01_0000	190179	Batch	10
+Sarc_MS_128_02Sept10_Cheetah_10-08-01_0000	190179	BatchRun	4
+Sarc_MS_128_02Sept10_Cheetah_10-08-01_0000	190179	Group	NonSarc
+Sarc_MS_128_02Sept10_Cheetah_10-08-01_0000	190179	LC_column	1
+Sarc_MS_135_02Sept10_Cheetah_10-08-04_0000	190186	Group	SarcBase
+Sarc_MS_135_02Sept10_Cheetah_10-08-04_0000	190186	LC_column	4
+Sarc_MS_135_02Sept10_Cheetah_10-08-04_0000	190186	Plate	2
+Sarc_MS_135_02Sept10_Cheetah_10-08-04_0000	190186	Sample_Number	135
+Sarc_MS_135_02Sept10_Cheetah_10-08-04_0000	190186	Site	PO
+Sarc_MS_135_02Sept10_Cheetah_10-08-04_0000	190186	Age	>75 years
+Sarc_MS_135_02Sept10_Cheetah_10-08-04_0000	190186	Batch	10
+Sarc_MS_135_02Sept10_Cheetah_10-08-04_0000	190186	BatchRun	11
+Sarc_MS_137_8Sep10_Cheetah_10-08-04_0000	190489	Age	<=75 years
+Sarc_MS_137_8Sep10_Cheetah_10-08-04_0000	190489	Batch	10
+Sarc_MS_137_8Sep10_Cheetah_10-08-04_0000	190489	BatchRun	13
+Sarc_MS_137_8Sep10_Cheetah_10-08-04_0000	190489	Group	SarcBase
+Sarc_MS_137_8Sep10_Cheetah_10-08-04_0000	190489	LC_column	4
+Sarc_MS_137_8Sep10_Cheetah_10-08-04_0000	190489	Plate	2
+Sarc_MS_137_8Sep10_Cheetah_10-08-04_0000	190489	Sample_Number	137
+Sarc_MS_137_8Sep10_Cheetah_10-08-04_0000	190489	Site	SD
+Sarc_MS_9_3Sep10_Cheetah_10-08-02_0000	190188	Age	>75 years
+Sarc_MS_9_3Sep10_Cheetah_10-08-02_0000	190188	Batch	1
+Sarc_MS_9_3Sep10_Cheetah_10-08-02_0000	190188	BatchRun	9
+Sarc_MS_9_3Sep10_Cheetah_10-08-02_0000	190188	Group	SarcBase
+Sarc_MS_9_3Sep10_Cheetah_10-08-02_0000	190188	LC_column	2
+Sarc_MS_9_3Sep10_Cheetah_10-08-02_0000	190188	Plate	1
+Sarc_MS_9_3Sep10_Cheetah_10-08-02_0000	190188	Sample_Number	9
+Sarc_MS_9_3Sep10_Cheetah_10-08-02_0000	190188	Site	MN
+Sarc_MS_20_24Aug10_Cheetah_10-08-03_0000	189176	Site	PA
+Sarc_MS_20_24Aug10_Cheetah_10-08-03_0000	189176	Age	>75 years
+Sarc_MS_20_24Aug10_Cheetah_10-08-03_0000	189176	Batch	2
+Sarc_MS_20_24Aug10_Cheetah_10-08-03_0000	189176	BatchRun	7
+Sarc_MS_20_24Aug10_Cheetah_10-08-03_0000	189176	Group	NonSarc
+Sarc_MS_20_24Aug10_Cheetah_10-08-03_0000	189176	LC_column	3
+Sarc_MS_20_24Aug10_Cheetah_10-08-03_0000	189176	Plate	1
+Sarc_MS_20_24Aug10_Cheetah_10-08-03_0000	189176	Sample_Number	20
+Sarc_MS_34_21Aug10_Cheetah_10-08-03_0000	189200	Age	<=75 years
+Sarc_MS_34_21Aug10_Cheetah_10-08-03_0000	189200	Batch	3
+Sarc_MS_34_21Aug10_Cheetah_10-08-03_0000	189200	BatchRun	7
+Sarc_MS_34_21Aug10_Cheetah_10-08-03_0000	189200	Group	SarcBase
+Sarc_MS_34_21Aug10_Cheetah_10-08-03_0000	189200	LC_column	3
+Sarc_MS_34_21Aug10_Cheetah_10-08-03_0000	189200	Plate	1
+Sarc_MS_34_21Aug10_Cheetah_10-08-03_0000	189200	Sample_Number	34
+Sarc_MS_34_21Aug10_Cheetah_10-08-03_0000	189200	Site	PI
+Sarc_MS_59_24Aug10_Cheetah_10-08-04_0000	189345	Site	PO
+Sarc_MS_59_24Aug10_Cheetah_10-08-04_0000	189345	Age	<=75 years
+Sarc_MS_59_24Aug10_Cheetah_10-08-04_0000	189345	Batch	5
+Sarc_MS_59_24Aug10_Cheetah_10-08-04_0000	189345	BatchRun	5
+Sarc_MS_59_24Aug10_Cheetah_10-08-04_0000	189345	Group	DevSarc
+Sarc_MS_59_24Aug10_Cheetah_10-08-04_0000	189345	LC_column	4
+Sarc_MS_59_24Aug10_Cheetah_10-08-04_0000	189345	Plate	1
+Sarc_MS_59_24Aug10_Cheetah_10-08-04_0000	189345	Sample_Number	59
+Sarc_MS_77_24Aug10_Cheetah_10-08-02_0000	189501	Age	>75 years
+Sarc_MS_77_24Aug10_Cheetah_10-08-02_0000	189501	Batch	6
+Sarc_MS_77_24Aug10_Cheetah_10-08-02_0000	189501	BatchRun	9
+Sarc_MS_77_24Aug10_Cheetah_10-08-02_0000	189501	Group	DevSarc
+Sarc_MS_77_24Aug10_Cheetah_10-08-02_0000	189501	LC_column	2
+Sarc_MS_77_24Aug10_Cheetah_10-08-02_0000	189501	Plate	1
+Sarc_MS_77_24Aug10_Cheetah_10-08-02_0000	189501	Sample_Number	77
+Sarc_MS_77_24Aug10_Cheetah_10-08-02_0000	189501	Site	BI
+Sarc_MS_84_24Aug10_Cheetah_10-08-03_0000	189508	Site	PI
+Sarc_MS_84_24Aug10_Cheetah_10-08-03_0000	189508	Age	>75 years
+Sarc_MS_84_24Aug10_Cheetah_10-08-03_0000	189508	Batch	7
+Sarc_MS_84_24Aug10_Cheetah_10-08-03_0000	189508	BatchRun	2
+Sarc_MS_84_24Aug10_Cheetah_10-08-03_0000	189508	Group	SarcBase
+Sarc_MS_84_24Aug10_Cheetah_10-08-03_0000	189508	LC_column	3
+Sarc_MS_84_24Aug10_Cheetah_10-08-03_0000	189508	Plate	1
+Sarc_MS_84_24Aug10_Cheetah_10-08-03_0000	189508	Sample_Number	84
+Sarc_MS_102_01Sept10_Cheetah_10-08-02_0000	189896	Batch	8
+Sarc_MS_102_01Sept10_Cheetah_10-08-02_0000	189896	BatchRun	6
+Sarc_MS_102_01Sept10_Cheetah_10-08-02_0000	189896	Group	Control
+Sarc_MS_102_01Sept10_Cheetah_10-08-02_0000	189896	LC_column	2
+Sarc_MS_102_01Sept10_Cheetah_10-08-02_0000	189896	Plate	2
+Sarc_MS_102_01Sept10_Cheetah_10-08-02_0000	189896	Sample_Number	102
+Sarc_MS_127_02Sept10_Cheetah_10-08-04_0000	190178	Age	<=75 years
+Sarc_MS_127_02Sept10_Cheetah_10-08-04_0000	190178	Batch	10
+Sarc_MS_127_02Sept10_Cheetah_10-08-04_0000	190178	BatchRun	3
+Sarc_MS_127_02Sept10_Cheetah_10-08-04_0000	190178	Group	DevSarc
+Sarc_MS_127_02Sept10_Cheetah_10-08-04_0000	190178	LC_column	4
+Sarc_MS_127_02Sept10_Cheetah_10-08-04_0000	190178	Plate	2
+Sarc_MS_127_02Sept10_Cheetah_10-08-04_0000	190178	Sample_Number	127
+Sarc_MS_127_02Sept10_Cheetah_10-08-04_0000	190178	Site	BI
+Sarc_MS_145_3Sep10_Cheetah_10-08-02_0000	190201	Age	>75 years
+Sarc_MS_145_3Sep10_Cheetah_10-08-02_0000	190201	Batch	9
+Sarc_MS_145_3Sep10_Cheetah_10-08-02_0000	190201	BatchRun	8
+Sarc_MS_145_3Sep10_Cheetah_10-08-02_0000	190201	Group	NonSarc
+Sarc_MS_145_3Sep10_Cheetah_10-08-02_0000	190201	LC_column	2
+Sarc_MS_145_3Sep10_Cheetah_10-08-02_0000	190201	Plate	2
+Sarc_MS_145_3Sep10_Cheetah_10-08-02_0000	190201	Sample_Number	145
+Sarc_MS_145_3Sep10_Cheetah_10-08-02_0000	190201	Site	MN
+Sarc_MS_1_3Sep10_Cheetah_10-08-01_0000	190187	Age	>75 years
+Sarc_MS_1_3Sep10_Cheetah_10-08-01_0000	190187	Batch	1
+Sarc_MS_1_3Sep10_Cheetah_10-08-01_0000	190187	BatchRun	1
+Sarc_MS_1_3Sep10_Cheetah_10-08-01_0000	190187	Group	NonSarc
+Sarc_MS_1_3Sep10_Cheetah_10-08-01_0000	190187	LC_column	1
+Sarc_MS_1_3Sep10_Cheetah_10-08-01_0000	190187	Plate	1
+Sarc_MS_1_3Sep10_Cheetah_10-08-01_0000	190187	Sample_Number	1
+Sarc_MS_1_3Sep10_Cheetah_10-08-01_0000	190187	Site	PA
+Sarc_MS_4_24Aug10_Cheetah_10-08-01_0000	189163	Site	BI
+Sarc_MS_4_24Aug10_Cheetah_10-08-01_0000	189163	Age	>75 years
+Sarc_MS_4_24Aug10_Cheetah_10-08-01_0000	189163	Batch	1
+Sarc_MS_4_24Aug10_Cheetah_10-08-01_0000	189163	BatchRun	4
+Sarc_MS_4_24Aug10_Cheetah_10-08-01_0000	189163	Group	NonSarc
+Sarc_MS_4_24Aug10_Cheetah_10-08-01_0000	189163	LC_column	1
+Sarc_MS_4_24Aug10_Cheetah_10-08-01_0000	189163	Plate	1
+Sarc_MS_4_24Aug10_Cheetah_10-08-01_0000	189163	Sample_Number	4
+Sarc_MS_11_24Aug10_Cheetah_10-08-02_0000	189169	Age	>75 years
+Sarc_MS_11_24Aug10_Cheetah_10-08-02_0000	189169	Batch	1
+Sarc_MS_11_24Aug10_Cheetah_10-08-02_0000	189169	BatchRun	11
+Sarc_MS_11_24Aug10_Cheetah_10-08-02_0000	189169	Group	SarcBase
+Sarc_MS_11_24Aug10_Cheetah_10-08-02_0000	189169	LC_column	2
+Sarc_MS_11_24Aug10_Cheetah_10-08-02_0000	189169	Plate	1
+Sarc_MS_11_24Aug10_Cheetah_10-08-02_0000	189169	Sample_Number	11
+Sarc_MS_11_24Aug10_Cheetah_10-08-02_0000	189169	Site	BI
+Sarc_MS_18_21Aug10_Cheetah_10-08-01_0000	189174	Age	>75 years
+Sarc_MS_18_21Aug10_Cheetah_10-08-01_0000	189174	Batch	2
+Sarc_MS_18_21Aug10_Cheetah_10-08-01_0000	189174	BatchRun	5
+Sarc_MS_18_21Aug10_Cheetah_10-08-01_0000	189174	Group	DevSarc
+Sarc_MS_18_21Aug10_Cheetah_10-08-01_0000	189174	LC_column	1
+Sarc_MS_18_21Aug10_Cheetah_10-08-01_0000	189174	Plate	1
+Sarc_MS_18_21Aug10_Cheetah_10-08-01_0000	189174	Sample_Number	18
+Sarc_MS_18_21Aug10_Cheetah_10-08-01_0000	189174	Site	PO
+Sarc_MS_54_27Aug10_Cheetah_10-08-02_0000	189340	Batch	4
+Sarc_MS_54_27Aug10_Cheetah_10-08-02_0000	189340	BatchRun	14
+Sarc_MS_54_27Aug10_Cheetah_10-08-02_0000	189340	Group	Control
+Sarc_MS_54_27Aug10_Cheetah_10-08-02_0000	189340	LC_column	2
+Sarc_MS_54_27Aug10_Cheetah_10-08-02_0000	189340	Plate	1
+Sarc_MS_54_27Aug10_Cheetah_10-08-02_0000	189340	Sample_Number	54
+Sarc_MS_61_24Aug10_Cheetah_10-08-04_0000	189347	Age	>75 years
+Sarc_MS_61_24Aug10_Cheetah_10-08-04_0000	189347	Batch	5
+Sarc_MS_61_24Aug10_Cheetah_10-08-04_0000	189347	BatchRun	7
+Sarc_MS_61_24Aug10_Cheetah_10-08-04_0000	189347	Group	NonSarc
+Sarc_MS_61_24Aug10_Cheetah_10-08-04_0000	189347	LC_column	4
+Sarc_MS_61_24Aug10_Cheetah_10-08-04_0000	189347	Plate	1
+Sarc_MS_61_24Aug10_Cheetah_10-08-04_0000	189347	Sample_Number	61
+Sarc_MS_61_24Aug10_Cheetah_10-08-04_0000	189347	Site	PO
+Sarc_MS_68_24Aug10_Cheetah_10-08-01_0000	189354	Age	>75 years
+Sarc_MS_68_24Aug10_Cheetah_10-08-01_0000	189354	Batch	5
+Sarc_MS_68_24Aug10_Cheetah_10-08-01_0000	189354	BatchRun	14
+Sarc_MS_68_24Aug10_Cheetah_10-08-01_0000	189354	Group	DevSarc
+Sarc_MS_68_24Aug10_Cheetah_10-08-01_0000	189354	LC_column	1
+Sarc_MS_68_24Aug10_Cheetah_10-08-01_0000	189354	Plate	1
+Sarc_MS_68_24Aug10_Cheetah_10-08-01_0000	189354	Sample_Number	68
+Sarc_MS_68_24Aug10_Cheetah_10-08-01_0000	189354	Site	MN
+Sarc_MS_104_01Sept10_Cheetah_10-08-04_0000	189898	Age	<=75 years
+Sarc_MS_104_01Sept10_Cheetah_10-08-04_0000	189898	Batch	8
+Sarc_MS_104_01Sept10_Cheetah_10-08-04_0000	189898	BatchRun	8
+Sarc_MS_104_01Sept10_Cheetah_10-08-04_0000	189898	Group	SarcBase
+Sarc_MS_104_01Sept10_Cheetah_10-08-04_0000	189898	LC_column	4
+Sarc_MS_104_01Sept10_Cheetah_10-08-04_0000	189898	Plate	2
+Sarc_MS_104_01Sept10_Cheetah_10-08-04_0000	189898	Sample_Number	104
+Sarc_MS_104_01Sept10_Cheetah_10-08-04_0000	189898	Site	BI
+Sarc_MS_111_01Sept10_Cheetah_10-08-03_0000	189905	Age	>75 years
+Sarc_MS_111_01Sept10_Cheetah_10-08-03_0000	189905	Batch	9
+Sarc_MS_111_01Sept10_Cheetah_10-08-03_0000	189905	BatchRun	1
+Sarc_MS_111_01Sept10_Cheetah_10-08-03_0000	189905	Group	SarcBase
+Sarc_MS_111_01Sept10_Cheetah_10-08-03_0000	189905	LC_column	3
+Sarc_MS_111_01Sept10_Cheetah_10-08-03_0000	189905	Plate	2
+Sarc_MS_111_01Sept10_Cheetah_10-08-03_0000	189905	Sample_Number	111
+Sarc_MS_111_01Sept10_Cheetah_10-08-03_0000	189905	Site	PA
+Sarc_MS_118_02Sept10_Cheetah_10-08-03_0000	190169	Age	>75 years
+Sarc_MS_118_02Sept10_Cheetah_10-08-03_0000	190169	Batch	9
+Sarc_MS_118_02Sept10_Cheetah_10-08-03_0000	190169	BatchRun	8
+Sarc_MS_118_02Sept10_Cheetah_10-08-03_0000	190169	Group	NonSarc
+Sarc_MS_118_02Sept10_Cheetah_10-08-03_0000	190169	LC_column	3
+Sarc_MS_118_02Sept10_Cheetah_10-08-03_0000	190169	Plate	2
+Sarc_MS_118_02Sept10_Cheetah_10-08-03_0000	190169	Sample_Number	118
+Sarc_MS_118_02Sept10_Cheetah_10-08-03_0000	190169	Site	MN
+Sarc_MS_8_27Aug10_Cheetah_10-08-02_0000	189167	Age	>75 years
+Sarc_MS_8_27Aug10_Cheetah_10-08-02_0000	189167	Batch	1
+Sarc_MS_8_27Aug10_Cheetah_10-08-02_0000	189167	BatchRun	8
+Sarc_MS_8_27Aug10_Cheetah_10-08-02_0000	189167	Group	DevSarc
+Sarc_MS_8_27Aug10_Cheetah_10-08-02_0000	189167	LC_column	2
+Sarc_MS_8_27Aug10_Cheetah_10-08-02_0000	189167	Plate	1
+Sarc_MS_8_27Aug10_Cheetah_10-08-02_0000	189167	Sample_Number	8
+Sarc_MS_8_27Aug10_Cheetah_10-08-02_0000	189167	Site	MN
+Sarc_MS_25_24Aug10_Cheetah_10-08-04_0000	189192	Age	>75 years
+Sarc_MS_25_24Aug10_Cheetah_10-08-04_0000	189192	Batch	2
+Sarc_MS_25_24Aug10_Cheetah_10-08-04_0000	189192	BatchRun	12
+Sarc_MS_25_24Aug10_Cheetah_10-08-04_0000	189192	Group	DevSarc
+Sarc_MS_25_24Aug10_Cheetah_10-08-04_0000	189192	LC_column	4
+Sarc_MS_25_24Aug10_Cheetah_10-08-04_0000	189192	Plate	1
+Sarc_MS_25_24Aug10_Cheetah_10-08-04_0000	189192	Sample_Number	25
+Sarc_MS_25_24Aug10_Cheetah_10-08-04_0000	189192	Site	SD
+Sarc_MS_38_27Aug10_Cheetah_10-08-04_0000	189204	Age	>75 years
+Sarc_MS_38_27Aug10_Cheetah_10-08-04_0000	189204	Batch	3
+Sarc_MS_38_27Aug10_Cheetah_10-08-04_0000	189204	BatchRun	11
+Sarc_MS_38_27Aug10_Cheetah_10-08-04_0000	189204	Group	NonSarc
+Sarc_MS_38_27Aug10_Cheetah_10-08-04_0000	189204	LC_column	4
+Sarc_MS_38_27Aug10_Cheetah_10-08-04_0000	189204	Plate	1
+Sarc_MS_38_27Aug10_Cheetah_10-08-04_0000	189204	Sample_Number	38
+Sarc_MS_38_27Aug10_Cheetah_10-08-04_0000	189204	Site	BI
+Sarc_MS_55_27Aug10_Cheetah_10-08-04_0000	189341	BatchRun	1
+Sarc_MS_55_27Aug10_Cheetah_10-08-04_0000	189341	Group	Control
+Sarc_MS_55_27Aug10_Cheetah_10-08-04_0000	189341	LC_column	4
+Sarc_MS_55_27Aug10_Cheetah_10-08-04_0000	189341	Plate	1
+Sarc_MS_55_27Aug10_Cheetah_10-08-04_0000	189341	Sample_Number	55
+Sarc_MS_55_27Aug10_Cheetah_10-08-04_0000	189341	Batch	5
+Sarc_MS_72_28Aug10_Cheetah_10-08-01_0000	189358	Age	<=75 years
+Sarc_MS_72_28Aug10_Cheetah_10-08-01_0000	189358	Batch	6
+Sarc_MS_72_28Aug10_Cheetah_10-08-01_0000	189358	BatchRun	4
+Sarc_MS_72_28Aug10_Cheetah_10-08-01_0000	189358	Group	DevSarc
+Sarc_MS_72_28Aug10_Cheetah_10-08-01_0000	189358	LC_column	1
+Sarc_MS_72_28Aug10_Cheetah_10-08-01_0000	189358	Plate	1
+Sarc_MS_72_28Aug10_Cheetah_10-08-01_0000	189358	Sample_Number	72
+Sarc_MS_72_28Aug10_Cheetah_10-08-01_0000	189358	Site	SD
+Sarc_MS_89_21Aug10_Cheetah_10-08-02_0000	189513	Group	SarcBase
+Sarc_MS_89_21Aug10_Cheetah_10-08-02_0000	189513	LC_column	2
+Sarc_MS_89_21Aug10_Cheetah_10-08-02_0000	189513	Plate	1
+Sarc_MS_89_21Aug10_Cheetah_10-08-02_0000	189513	Sample_Number	89
+Sarc_MS_89_21Aug10_Cheetah_10-08-02_0000	189513	Site	SD
+Sarc_MS_89_21Aug10_Cheetah_10-08-02_0000	189513	Age	>75 years
+Sarc_MS_89_21Aug10_Cheetah_10-08-02_0000	189513	Batch	7
+Sarc_MS_89_21Aug10_Cheetah_10-08-02_0000	189513	BatchRun	7
+Sarc_MS_106_01Sept10_Cheetah_10-08-02_0000	189900	Age	>75 years
+Sarc_MS_106_01Sept10_Cheetah_10-08-02_0000	189900	Batch	8
+Sarc_MS_106_01Sept10_Cheetah_10-08-02_0000	189900	BatchRun	10
+Sarc_MS_106_01Sept10_Cheetah_10-08-02_0000	189900	Group	SarcBase
+Sarc_MS_106_01Sept10_Cheetah_10-08-02_0000	189900	LC_column	2
+Sarc_MS_106_01Sept10_Cheetah_10-08-02_0000	189900	Plate	2
+Sarc_MS_106_01Sept10_Cheetah_10-08-02_0000	189900	Sample_Number	106
+Sarc_MS_106_01Sept10_Cheetah_10-08-02_0000	189900	Site	MN
+Sarc_MS_123_02Sept10_Cheetah_10-08-04_0000	190174	Site	PA
+Sarc_MS_123_02Sept10_Cheetah_10-08-04_0000	190174	Age	<=75 years
+Sarc_MS_123_02Sept10_Cheetah_10-08-04_0000	190174	Batch	9
+Sarc_MS_123_02Sept10_Cheetah_10-08-04_0000	190174	BatchRun	13
+Sarc_MS_123_02Sept10_Cheetah_10-08-04_0000	190174	Group	DevSarc
+Sarc_MS_123_02Sept10_Cheetah_10-08-04_0000	190174	LC_column	4
+Sarc_MS_123_02Sept10_Cheetah_10-08-04_0000	190174	Plate	2
+Sarc_MS_123_02Sept10_Cheetah_10-08-04_0000	190174	Sample_Number	123
+Sarc_MS_140_3Sep10_Cheetah_10-08-01_0000	190196	Age	>75 years
+Sarc_MS_140_3Sep10_Cheetah_10-08-01_0000	190196	Batch	9
+Sarc_MS_140_3Sep10_Cheetah_10-08-01_0000	190196	BatchRun	3
+Sarc_MS_140_3Sep10_Cheetah_10-08-01_0000	190196	Group	DevSarc
+Sarc_MS_140_3Sep10_Cheetah_10-08-01_0000	190196	LC_column	1
+Sarc_MS_140_3Sep10_Cheetah_10-08-01_0000	190196	Plate	2
+Sarc_MS_140_3Sep10_Cheetah_10-08-01_0000	190196	Sample_Number	140
+Sarc_MS_140_3Sep10_Cheetah_10-08-01_0000	190196	Site	PA
+Sarc_MS_14_31Aug10_Cheetah_10-08-01_0000	189191	Batch	2
+Sarc_MS_14_31Aug10_Cheetah_10-08-01_0000	189191	BatchRun	1
+Sarc_MS_14_31Aug10_Cheetah_10-08-01_0000	189191	Group	DevSarc
+Sarc_MS_14_31Aug10_Cheetah_10-08-01_0000	189191	LC_column	1
+Sarc_MS_14_31Aug10_Cheetah_10-08-01_0000	189191	Plate	1
+Sarc_MS_14_31Aug10_Cheetah_10-08-01_0000	189191	Sample_Number	14
+Sarc_MS_14_31Aug10_Cheetah_10-08-01_0000	189191	Site	PI
+Sarc_MS_14_31Aug10_Cheetah_10-08-01_0000	189191	Age	<=75 years
+Sarc_MS_15_27Aug10_Cheetah_10-08-01_0000	189172	Age	<=75 years
+Sarc_MS_15_27Aug10_Cheetah_10-08-01_0000	189172	Batch	2
+Sarc_MS_15_27Aug10_Cheetah_10-08-01_0000	189172	BatchRun	2
+Sarc_MS_15_27Aug10_Cheetah_10-08-01_0000	189172	Group	NonSarc
+Sarc_MS_15_27Aug10_Cheetah_10-08-01_0000	189172	LC_column	1
+Sarc_MS_15_27Aug10_Cheetah_10-08-01_0000	189172	Plate	1
+Sarc_MS_15_27Aug10_Cheetah_10-08-01_0000	189172	Sample_Number	15
+Sarc_MS_15_27Aug10_Cheetah_10-08-01_0000	189172	Site	MN
+Sarc_MS_50_21Aug10_Cheetah_10-08-01_0000	189336	Group	NonSarc
+Sarc_MS_50_21Aug10_Cheetah_10-08-01_0000	189336	LC_column	1
+Sarc_MS_50_21Aug10_Cheetah_10-08-01_0000	189336	Plate	1
+Sarc_MS_50_21Aug10_Cheetah_10-08-01_0000	189336	Sample_Number	50
+Sarc_MS_50_21Aug10_Cheetah_10-08-01_0000	189336	Site	PI
+Sarc_MS_50_21Aug10_Cheetah_10-08-01_0000	189336	Age	>75 years
+Sarc_MS_50_21Aug10_Cheetah_10-08-01_0000	189336	Batch	4
+Sarc_MS_50_21Aug10_Cheetah_10-08-01_0000	189336	BatchRun	10
+Sarc_MS_64_28Aug10_Cheetah_10-08-04_0000	189350	Group	DevSarc
+Sarc_MS_64_28Aug10_Cheetah_10-08-04_0000	189350	LC_column	4
+Sarc_MS_64_28Aug10_Cheetah_10-08-04_0000	189350	Plate	1
+Sarc_MS_64_28Aug10_Cheetah_10-08-04_0000	189350	Sample_Number	64
+Sarc_MS_64_28Aug10_Cheetah_10-08-04_0000	189350	Site	BI
+Sarc_MS_64_28Aug10_Cheetah_10-08-04_0000	189350	Age	>75 years
+Sarc_MS_64_28Aug10_Cheetah_10-08-04_0000	189350	Batch	5
+Sarc_MS_64_28Aug10_Cheetah_10-08-04_0000	189350	BatchRun	10
+Sarc_MS_65_21Aug10_Cheetah_10-08-03_0000	189351	Age	>75 years
+Sarc_MS_65_21Aug10_Cheetah_10-08-03_0000	189351	Batch	5
+Sarc_MS_65_21Aug10_Cheetah_10-08-03_0000	189351	BatchRun	11
+Sarc_MS_65_21Aug10_Cheetah_10-08-03_0000	189351	Group	NonSarc
+Sarc_MS_65_21Aug10_Cheetah_10-08-03_0000	189351	LC_column	3
+Sarc_MS_65_21Aug10_Cheetah_10-08-03_0000	189351	Plate	1
+Sarc_MS_65_21Aug10_Cheetah_10-08-03_0000	189351	Sample_Number	65
+Sarc_MS_65_21Aug10_Cheetah_10-08-03_0000	189351	Site	SD
+Sarc_MS_100_01Sept10_Cheetah_10-08-03_0000	189894	Site	PI
+Sarc_MS_100_01Sept10_Cheetah_10-08-03_0000	189894	Age	>75 years
+Sarc_MS_100_01Sept10_Cheetah_10-08-03_0000	189894	Batch	8
+Sarc_MS_100_01Sept10_Cheetah_10-08-03_0000	189894	BatchRun	4
+Sarc_MS_100_01Sept10_Cheetah_10-08-03_0000	189894	Group	DevSarc
+Sarc_MS_100_01Sept10_Cheetah_10-08-03_0000	189894	LC_column	3
+Sarc_MS_100_01Sept10_Cheetah_10-08-03_0000	189894	Plate	2
+Sarc_MS_100_01Sept10_Cheetah_10-08-03_0000	189894	Sample_Number	100
+Sarc_MS_114_01Sept10_Cheetah_10-08-02_0000	189908	Age	>75 years
+Sarc_MS_114_01Sept10_Cheetah_10-08-02_0000	189908	Batch	9
+Sarc_MS_114_01Sept10_Cheetah_10-08-02_0000	189908	BatchRun	4
+Sarc_MS_114_01Sept10_Cheetah_10-08-02_0000	189908	Group	DevSarc
+Sarc_MS_114_01Sept10_Cheetah_10-08-02_0000	189908	LC_column	2
+Sarc_MS_114_01Sept10_Cheetah_10-08-02_0000	189908	Plate	2
+Sarc_MS_114_01Sept10_Cheetah_10-08-02_0000	189908	Sample_Number	114
+Sarc_MS_114_01Sept10_Cheetah_10-08-02_0000	189908	Site	MN
+Sarc_MS_115_01Sept10_Cheetah_10-08-03_0000	189909	Age	>75 years
+Sarc_MS_115_01Sept10_Cheetah_10-08-03_0000	189909	Batch	9
+Sarc_MS_115_01Sept10_Cheetah_10-08-03_0000	189909	BatchRun	5
+Sarc_MS_115_01Sept10_Cheetah_10-08-03_0000	189909	Group	NonSarc
+Sarc_MS_115_01Sept10_Cheetah_10-08-03_0000	189909	LC_column	3
+Sarc_MS_115_01Sept10_Cheetah_10-08-03_0000	189909	Plate	2
+Sarc_MS_115_01Sept10_Cheetah_10-08-03_0000	189909	Sample_Number	115
+Sarc_MS_115_01Sept10_Cheetah_10-08-03_0000	189909	Site	PI
+Sarc_MS_150_3Sep10_Cheetah_10-08-03_0000	190206	Age	<=75 years
+Sarc_MS_150_3Sep10_Cheetah_10-08-03_0000	190206	Batch	9
+Sarc_MS_150_3Sep10_Cheetah_10-08-03_0000	190206	BatchRun	13
+Sarc_MS_150_3Sep10_Cheetah_10-08-03_0000	190206	Group	DevSarc
+Sarc_MS_150_3Sep10_Cheetah_10-08-03_0000	190206	LC_column	3
+Sarc_MS_150_3Sep10_Cheetah_10-08-03_0000	190206	Plate	2
+Sarc_MS_150_3Sep10_Cheetah_10-08-03_0000	190206	Sample_Number	150
+Sarc_MS_150_3Sep10_Cheetah_10-08-03_0000	190206	Site	PA
+Sarc_MS_3_24Aug10_Cheetah_10-08-01_0000	189162	Age	>75 years
+Sarc_MS_3_24Aug10_Cheetah_10-08-01_0000	189162	Batch	1
+Sarc_MS_3_24Aug10_Cheetah_10-08-01_0000	189162	BatchRun	3
+Sarc_MS_3_24Aug10_Cheetah_10-08-01_0000	189162	Group	DevSarc
+Sarc_MS_3_24Aug10_Cheetah_10-08-01_0000	189162	LC_column	1
+Sarc_MS_3_24Aug10_Cheetah_10-08-01_0000	189162	Plate	1
+Sarc_MS_3_24Aug10_Cheetah_10-08-01_0000	189162	Sample_Number	3
+Sarc_MS_3_24Aug10_Cheetah_10-08-01_0000	189162	Site	BI
+Sarc_MS_26_21Aug10_Cheetah_10-08-02_0000	189193	Age	>75 years
+Sarc_MS_26_21Aug10_Cheetah_10-08-02_0000	189193	Batch	2
+Sarc_MS_26_21Aug10_Cheetah_10-08-02_0000	189193	BatchRun	13
+Sarc_MS_26_21Aug10_Cheetah_10-08-02_0000	189193	Group	DevSarc
+Sarc_MS_26_21Aug10_Cheetah_10-08-02_0000	189193	LC_column	2
+Sarc_MS_26_21Aug10_Cheetah_10-08-02_0000	189193	Plate	1
+Sarc_MS_26_21Aug10_Cheetah_10-08-02_0000	189193	Sample_Number	26
+Sarc_MS_26_21Aug10_Cheetah_10-08-02_0000	189193	Site	BI
+Sarc_MS_60_24Aug10_Cheetah_10-08-04_0000	189346	Age	>75 years
+Sarc_MS_60_24Aug10_Cheetah_10-08-04_0000	189346	Batch	5
+Sarc_MS_60_24Aug10_Cheetah_10-08-04_0000	189346	BatchRun	6
+Sarc_MS_60_24Aug10_Cheetah_10-08-04_0000	189346	Group	DevSarc
+Sarc_MS_60_24Aug10_Cheetah_10-08-04_0000	189346	LC_column	4
+Sarc_MS_60_24Aug10_Cheetah_10-08-04_0000	189346	Plate	1
+Sarc_MS_60_24Aug10_Cheetah_10-08-04_0000	189346	Sample_Number	60
+Sarc_MS_60_24Aug10_Cheetah_10-08-04_0000	189346	Site	PA
+Sarc_MS_62_27Aug10_Cheetah_10-08-03_0000	189348	Age	>75 years
+Sarc_MS_62_27Aug10_Cheetah_10-08-03_0000	189348	Batch	5
+Sarc_MS_62_27Aug10_Cheetah_10-08-03_0000	189348	BatchRun	8
+Sarc_MS_62_27Aug10_Cheetah_10-08-03_0000	189348	Group	DevSarc
+Sarc_MS_62_27Aug10_Cheetah_10-08-03_0000	189348	LC_column	3
+Sarc_MS_62_27Aug10_Cheetah_10-08-03_0000	189348	Plate	1
+Sarc_MS_62_27Aug10_Cheetah_10-08-03_0000	189348	Sample_Number	62
+Sarc_MS_62_27Aug10_Cheetah_10-08-03_0000	189348	Site	MN
+Sarc_MS_69_24Aug10_Cheetah_10-08-01_0000	189355	Age	<=75 years
+Sarc_MS_69_24Aug10_Cheetah_10-08-01_0000	189355	Batch	6
+Sarc_MS_69_24Aug10_Cheetah_10-08-01_0000	189355	BatchRun	1
+Sarc_MS_69_24Aug10_Cheetah_10-08-01_0000	189355	Group	DevSarc
+Sarc_MS_69_24Aug10_Cheetah_10-08-01_0000	189355	LC_column	1
+Sarc_MS_69_24Aug10_Cheetah_10-08-01_0000	189355	Plate	1
+Sarc_MS_69_24Aug10_Cheetah_10-08-01_0000	189355	Sample_Number	69
+Sarc_MS_69_24Aug10_Cheetah_10-08-01_0000	189355	Site	PA
+Sarc_MS_96_28Aug10_Cheetah_10-08-04_0000	189520	Age	<=75 years
+Sarc_MS_96_28Aug10_Cheetah_10-08-04_0000	189520	Batch	7
+Sarc_MS_96_28Aug10_Cheetah_10-08-04_0000	189520	BatchRun	14
+Sarc_MS_96_28Aug10_Cheetah_10-08-04_0000	189520	Group	NonSarc
+Sarc_MS_96_28Aug10_Cheetah_10-08-04_0000	189520	LC_column	4
+Sarc_MS_96_28Aug10_Cheetah_10-08-04_0000	189520	Plate	1
+Sarc_MS_96_28Aug10_Cheetah_10-08-04_0000	189520	Sample_Number	96
+Sarc_MS_96_28Aug10_Cheetah_10-08-04_0000	189520	Site	PO
+Sarc_MS_103_01Sept10_Cheetah_10-08-03_0000	189897	Group	DevSarc
+Sarc_MS_103_01Sept10_Cheetah_10-08-03_0000	189897	LC_column	3
+Sarc_MS_103_01Sept10_Cheetah_10-08-03_0000	189897	Plate	2
+Sarc_MS_103_01Sept10_Cheetah_10-08-03_0000	189897	Sample_Number	103
+Sarc_MS_103_01Sept10_Cheetah_10-08-03_0000	189897	Site	PA
+Sarc_MS_103_01Sept10_Cheetah_10-08-03_0000	189897	Age	>75 years
+Sarc_MS_103_01Sept10_Cheetah_10-08-03_0000	189897	Batch	8
+Sarc_MS_103_01Sept10_Cheetah_10-08-03_0000	189897	BatchRun	7
+Sarc_MS_126_02Sept10_Cheetah_10-08-03_0000	190177	Age	>75 years
+Sarc_MS_126_02Sept10_Cheetah_10-08-03_0000	190177	Batch	10
+Sarc_MS_126_02Sept10_Cheetah_10-08-03_0000	190177	BatchRun	2
+Sarc_MS_126_02Sept10_Cheetah_10-08-03_0000	190177	Group	SarcBase
+Sarc_MS_126_02Sept10_Cheetah_10-08-03_0000	190177	LC_column	3
+Sarc_MS_126_02Sept10_Cheetah_10-08-03_0000	190177	Plate	2
+Sarc_MS_126_02Sept10_Cheetah_10-08-03_0000	190177	Sample_Number	126
+Sarc_MS_126_02Sept10_Cheetah_10-08-03_0000	190177	Site	PA
+Sarc_MS_6_26Aug10_Cheetah_10-08-03_0000	189165	Age	>75 years
+Sarc_MS_6_26Aug10_Cheetah_10-08-03_0000	189165	Batch	1
+Sarc_MS_6_26Aug10_Cheetah_10-08-03_0000	189165	BatchRun	6
+Sarc_MS_6_26Aug10_Cheetah_10-08-03_0000	189165	Group	SarcBase
+Sarc_MS_6_26Aug10_Cheetah_10-08-03_0000	189165	LC_column	3
+Sarc_MS_6_26Aug10_Cheetah_10-08-03_0000	189165	Plate	1
+Sarc_MS_6_26Aug10_Cheetah_10-08-03_0000	189165	Sample_Number	6
+Sarc_MS_6_26Aug10_Cheetah_10-08-03_0000	189165	Site	MN
+Sarc_MS_23_27Aug10_Cheetah_10-08-02_0000	189179	Batch	2
+Sarc_MS_23_27Aug10_Cheetah_10-08-02_0000	189179	BatchRun	10
+Sarc_MS_23_27Aug10_Cheetah_10-08-02_0000	189179	Group	SarcBase
+Sarc_MS_23_27Aug10_Cheetah_10-08-02_0000	189179	LC_column	2
+Sarc_MS_23_27Aug10_Cheetah_10-08-02_0000	189179	Plate	1
+Sarc_MS_23_27Aug10_Cheetah_10-08-02_0000	189179	Sample_Number	23
+Sarc_MS_23_27Aug10_Cheetah_10-08-02_0000	189179	Site	SD
+Sarc_MS_23_27Aug10_Cheetah_10-08-02_0000	189179	Age	>75 years
+Sarc_MS_40_28Aug10_Cheetah_10-08-01_0000	189206	Age	>75 years
+Sarc_MS_40_28Aug10_Cheetah_10-08-01_0000	189206	Batch	3
+Sarc_MS_40_28Aug10_Cheetah_10-08-01_0000	189206	BatchRun	13
+Sarc_MS_40_28Aug10_Cheetah_10-08-01_0000	189206	Group	NonSarc
+Sarc_MS_40_28Aug10_Cheetah_10-08-01_0000	189206	LC_column	1
+Sarc_MS_40_28Aug10_Cheetah_10-08-01_0000	189206	Plate	1
+Sarc_MS_40_28Aug10_Cheetah_10-08-01_0000	189206	Sample_Number	40
+Sarc_MS_40_28Aug10_Cheetah_10-08-01_0000	189206	Site	SD
+Sarc_MS_57_21Aug10_Cheetah_10-08-02_0000	189343	Plate	1
+Sarc_MS_57_21Aug10_Cheetah_10-08-02_0000	189343	Sample_Number	57
+Sarc_MS_57_21Aug10_Cheetah_10-08-02_0000	189343	Site	PA
+Sarc_MS_57_21Aug10_Cheetah_10-08-02_0000	189343	Age	<=75 years
+Sarc_MS_57_21Aug10_Cheetah_10-08-02_0000	189343	Batch	5
+Sarc_MS_57_21Aug10_Cheetah_10-08-02_0000	189343	BatchRun	3
+Sarc_MS_57_21Aug10_Cheetah_10-08-02_0000	189343	Group	SarcBase
+Sarc_MS_57_21Aug10_Cheetah_10-08-02_0000	189343	LC_column	2
+Sarc_MS_74_21Aug10_Cheetah_10-08-04_0000	189498	Age	>75 years
+Sarc_MS_74_21Aug10_Cheetah_10-08-04_0000	189498	Batch	6
+Sarc_MS_74_21Aug10_Cheetah_10-08-04_0000	189498	BatchRun	6
+Sarc_MS_74_21Aug10_Cheetah_10-08-04_0000	189498	Group	SarcBase
+Sarc_MS_74_21Aug10_Cheetah_10-08-04_0000	189498	LC_column	4
+Sarc_MS_74_21Aug10_Cheetah_10-08-04_0000	189498	Plate	1
+Sarc_MS_74_21Aug10_Cheetah_10-08-04_0000	189498	Sample_Number	74
+Sarc_MS_74_21Aug10_Cheetah_10-08-04_0000	189498	Site	PI
+Sarc_MS_91_24Aug10_Cheetah_10-08-04_0000	189515	Age	>75 years
+Sarc_MS_91_24Aug10_Cheetah_10-08-04_0000	189515	Batch	7
+Sarc_MS_91_24Aug10_Cheetah_10-08-04_0000	189515	BatchRun	9
+Sarc_MS_91_24Aug10_Cheetah_10-08-04_0000	189515	Group	DevSarc
+Sarc_MS_91_24Aug10_Cheetah_10-08-04_0000	189515	LC_column	4
+Sarc_MS_91_24Aug10_Cheetah_10-08-04_0000	189515	Plate	1
+Sarc_MS_91_24Aug10_Cheetah_10-08-04_0000	189515	Sample_Number	91
+Sarc_MS_91_24Aug10_Cheetah_10-08-04_0000	189515	Site	PO
+Sarc_MS_108_01Sept10_Cheetah_10-08-04_0000	189902	Age	>75 years
+Sarc_MS_108_01Sept10_Cheetah_10-08-04_0000	189902	Batch	8
+Sarc_MS_108_01Sept10_Cheetah_10-08-04_0000	189902	BatchRun	12
+Sarc_MS_108_01Sept10_Cheetah_10-08-04_0000	189902	Group	DevSarc
+Sarc_MS_108_01Sept10_Cheetah_10-08-04_0000	189902	LC_column	4
+Sarc_MS_108_01Sept10_Cheetah_10-08-04_0000	189902	Plate	2
+Sarc_MS_108_01Sept10_Cheetah_10-08-04_0000	189902	Sample_Number	108
+Sarc_MS_108_01Sept10_Cheetah_10-08-04_0000	189902	Site	PO
+Sarc_MS_125_02Sept10_Cheetah_10-08-02_0000	190176	Batch	10
+Sarc_MS_125_02Sept10_Cheetah_10-08-02_0000	190176	BatchRun	1
+Sarc_MS_125_02Sept10_Cheetah_10-08-02_0000	190176	Group	Control
+Sarc_MS_125_02Sept10_Cheetah_10-08-02_0000	190176	LC_column	2
+Sarc_MS_125_02Sept10_Cheetah_10-08-02_0000	190176	Plate	2
+Sarc_MS_125_02Sept10_Cheetah_10-08-02_0000	190176	Sample_Number	125
+Sarc_MS_142_3Sep10_Cheetah_10-08-03_0000	190198	Batch	9
+Sarc_MS_142_3Sep10_Cheetah_10-08-03_0000	190198	BatchRun	5
+Sarc_MS_142_3Sep10_Cheetah_10-08-03_0000	190198	Group	NonSarc
+Sarc_MS_142_3Sep10_Cheetah_10-08-03_0000	190198	LC_column	3
+Sarc_MS_142_3Sep10_Cheetah_10-08-03_0000	190198	Plate	2
+Sarc_MS_142_3Sep10_Cheetah_10-08-03_0000	190198	Sample_Number	142
+Sarc_MS_142_3Sep10_Cheetah_10-08-03_0000	190198	Site	PI
+Sarc_MS_142_3Sep10_Cheetah_10-08-03_0000	190198	Age	>75 years
+Sarc_MS_10_21Aug10_Cheetah_10-08-04_0000	189168	Age	>75 years
+Sarc_MS_10_21Aug10_Cheetah_10-08-04_0000	189168	Batch	1
+Sarc_MS_10_21Aug10_Cheetah_10-08-04_0000	189168	BatchRun	10
+Sarc_MS_10_21Aug10_Cheetah_10-08-04_0000	189168	Group	NonSarc
+Sarc_MS_10_21Aug10_Cheetah_10-08-04_0000	189168	LC_column	4
+Sarc_MS_10_21Aug10_Cheetah_10-08-04_0000	189168	Plate	1
+Sarc_MS_10_21Aug10_Cheetah_10-08-04_0000	189168	Sample_Number	10
+Sarc_MS_10_21Aug10_Cheetah_10-08-04_0000	189168	Site	PI
+Sarc_MS_19_24Aug10_Cheetah_10-08-03_0000	189175	Age	>75 years
+Sarc_MS_19_24Aug10_Cheetah_10-08-03_0000	189175	Batch	2
+Sarc_MS_19_24Aug10_Cheetah_10-08-03_0000	189175	BatchRun	6
+Sarc_MS_19_24Aug10_Cheetah_10-08-03_0000	189175	Group	SarcBase
+Sarc_MS_19_24Aug10_Cheetah_10-08-03_0000	189175	LC_column	3
+Sarc_MS_19_24Aug10_Cheetah_10-08-03_0000	189175	Plate	1
+Sarc_MS_19_24Aug10_Cheetah_10-08-03_0000	189175	Sample_Number	19
+Sarc_MS_19_24Aug10_Cheetah_10-08-03_0000	189175	Site	PA
+Sarc_MS_44_24Aug10_Cheetah_10-08-02_0000	189209	Age	>75 years
+Sarc_MS_44_24Aug10_Cheetah_10-08-02_0000	189209	Batch	4
+Sarc_MS_44_24Aug10_Cheetah_10-08-02_0000	189209	BatchRun	4
+Sarc_MS_44_24Aug10_Cheetah_10-08-02_0000	189209	Group	SarcBase
+Sarc_MS_44_24Aug10_Cheetah_10-08-02_0000	189209	LC_column	2
+Sarc_MS_44_24Aug10_Cheetah_10-08-02_0000	189209	Plate	1
+Sarc_MS_44_24Aug10_Cheetah_10-08-02_0000	189209	Sample_Number	44
+Sarc_MS_44_24Aug10_Cheetah_10-08-02_0000	189209	Site	BI
+Sarc_MS_53_24Aug10_Cheetah_10-08-03_0000	189339	Age	>75 years
+Sarc_MS_53_24Aug10_Cheetah_10-08-03_0000	189339	Batch	4
+Sarc_MS_53_24Aug10_Cheetah_10-08-03_0000	189339	BatchRun	13
+Sarc_MS_53_24Aug10_Cheetah_10-08-03_0000	189339	Group	SarcBase
+Sarc_MS_53_24Aug10_Cheetah_10-08-03_0000	189339	LC_column	3
+Sarc_MS_53_24Aug10_Cheetah_10-08-03_0000	189339	Plate	1
+Sarc_MS_53_24Aug10_Cheetah_10-08-03_0000	189339	Sample_Number	53
+Sarc_MS_53_24Aug10_Cheetah_10-08-03_0000	189339	Site	PA
+Sarc_MS_78_27Aug10_Cheetah_10-08-01_0000	189502	Age	>75 years
+Sarc_MS_78_27Aug10_Cheetah_10-08-01_0000	189502	Batch	6
+Sarc_MS_78_27Aug10_Cheetah_10-08-01_0000	189502	BatchRun	10
+Sarc_MS_78_27Aug10_Cheetah_10-08-01_0000	189502	Group	NonSarc
+Sarc_MS_78_27Aug10_Cheetah_10-08-01_0000	189502	LC_column	1
+Sarc_MS_78_27Aug10_Cheetah_10-08-01_0000	189502	Plate	1
+Sarc_MS_78_27Aug10_Cheetah_10-08-01_0000	189502	Sample_Number	78
+Sarc_MS_78_27Aug10_Cheetah_10-08-01_0000	189502	Site	SD
+Sarc_MS_87_27Aug10_Cheetah_10-08-04_0000	189511	Age	>75 years
+Sarc_MS_87_27Aug10_Cheetah_10-08-04_0000	189511	Batch	7
+Sarc_MS_87_27Aug10_Cheetah_10-08-04_0000	189511	BatchRun	5
+Sarc_MS_87_27Aug10_Cheetah_10-08-04_0000	189511	Group	NonSarc
+Sarc_MS_87_27Aug10_Cheetah_10-08-04_0000	189511	LC_column	4
+Sarc_MS_87_27Aug10_Cheetah_10-08-04_0000	189511	Plate	1
+Sarc_MS_87_27Aug10_Cheetah_10-08-04_0000	189511	Sample_Number	87
+Sarc_MS_87_27Aug10_Cheetah_10-08-04_0000	189511	Site	PO
+Sarc_MS_112_01Sept10_Cheetah_10-08-04_0000	189906	Group	SarcBase
+Sarc_MS_112_01Sept10_Cheetah_10-08-04_0000	189906	LC_column	4
+Sarc_MS_112_01Sept10_Cheetah_10-08-04_0000	189906	Plate	2
+Sarc_MS_112_01Sept10_Cheetah_10-08-04_0000	189906	Sample_Number	112
+Sarc_MS_112_01Sept10_Cheetah_10-08-04_0000	189906	Site	PI
+Sarc_MS_112_01Sept10_Cheetah_10-08-04_0000	189906	Age	<=75 years
+Sarc_MS_112_01Sept10_Cheetah_10-08-04_0000	189906	Batch	9
+Sarc_MS_112_01Sept10_Cheetah_10-08-04_0000	189906	BatchRun	2
+Sarc_MS_121_02Sept10_Cheetah_10-08-02_0000	190172	Plate	2
+Sarc_MS_121_02Sept10_Cheetah_10-08-02_0000	190172	Sample_Number	121
+Sarc_MS_121_02Sept10_Cheetah_10-08-02_0000	190172	Site	PI
+Sarc_MS_121_02Sept10_Cheetah_10-08-02_0000	190172	Age	>75 years
+Sarc_MS_121_02Sept10_Cheetah_10-08-02_0000	190172	Batch	9
+Sarc_MS_121_02Sept10_Cheetah_10-08-02_0000	190172	BatchRun	11
+Sarc_MS_121_02Sept10_Cheetah_10-08-02_0000	190172	Group	NonSarc
+Sarc_MS_121_02Sept10_Cheetah_10-08-02_0000	190172	LC_column	2
+Sarc_MS_146_3Sep10_Cheetah_10-08-03_0000	190202	Batch	9
+Sarc_MS_146_3Sep10_Cheetah_10-08-03_0000	190202	BatchRun	9
+Sarc_MS_146_3Sep10_Cheetah_10-08-03_0000	190202	Group	Control
+Sarc_MS_146_3Sep10_Cheetah_10-08-03_0000	190202	LC_column	3
+Sarc_MS_146_3Sep10_Cheetah_10-08-03_0000	190202	Plate	2
+Sarc_MS_146_3Sep10_Cheetah_10-08-03_0000	190202	Sample_Number	146
+Sarc_MS_151_3Sep10_Cheetah_10-08-04_0000	190207	Group	DevSarc
+Sarc_MS_151_3Sep10_Cheetah_10-08-04_0000	190207	LC_column	4
+Sarc_MS_151_3Sep10_Cheetah_10-08-04_0000	190207	Plate	2
+Sarc_MS_151_3Sep10_Cheetah_10-08-04_0000	190207	Sample_Number	151
+Sarc_MS_151_3Sep10_Cheetah_10-08-04_0000	190207	Site	SD
+Sarc_MS_151_3Sep10_Cheetah_10-08-04_0000	190207	Age	<=75 years
+Sarc_MS_151_3Sep10_Cheetah_10-08-04_0000	190207	Batch	9
+Sarc_MS_151_3Sep10_Cheetah_10-08-04_0000	190207	BatchRun	14
+Sarc_MS_31_27Aug10_Cheetah_10-08-01_0000	189198	Age	>75 years
+Sarc_MS_31_27Aug10_Cheetah_10-08-01_0000	189198	Batch	3
+Sarc_MS_31_27Aug10_Cheetah_10-08-01_0000	189198	BatchRun	4
+Sarc_MS_31_27Aug10_Cheetah_10-08-01_0000	189198	Group	SarcBase
+Sarc_MS_31_27Aug10_Cheetah_10-08-01_0000	189198	LC_column	1
+Sarc_MS_31_27Aug10_Cheetah_10-08-01_0000	189198	Plate	1
+Sarc_MS_31_27Aug10_Cheetah_10-08-01_0000	189198	Sample_Number	31
+Sarc_MS_31_27Aug10_Cheetah_10-08-01_0000	189198	Site	PI
+Sarc_MS_48_28Aug10_Cheetah_10-08-02_0000	189213	Batch	4
+Sarc_MS_48_28Aug10_Cheetah_10-08-02_0000	189213	BatchRun	8
+Sarc_MS_48_28Aug10_Cheetah_10-08-02_0000	189213	Group	DevSarc
+Sarc_MS_48_28Aug10_Cheetah_10-08-02_0000	189213	LC_column	2
+Sarc_MS_48_28Aug10_Cheetah_10-08-02_0000	189213	Plate	1
+Sarc_MS_48_28Aug10_Cheetah_10-08-02_0000	189213	Sample_Number	48
+Sarc_MS_48_28Aug10_Cheetah_10-08-02_0000	189213	Site	PA
+Sarc_MS_48_28Aug10_Cheetah_10-08-02_0000	189213	Age	>75 years
+Sarc_MS_49_21Aug10_Cheetah_10-08-01_0000	189335	Age	>75 years
+Sarc_MS_49_21Aug10_Cheetah_10-08-01_0000	189335	Batch	4
+Sarc_MS_49_21Aug10_Cheetah_10-08-01_0000	189335	BatchRun	9
+Sarc_MS_49_21Aug10_Cheetah_10-08-01_0000	189335	Group	SarcBase
+Sarc_MS_49_21Aug10_Cheetah_10-08-01_0000	189335	LC_column	1
+Sarc_MS_49_21Aug10_Cheetah_10-08-01_0000	189335	Plate	1
+Sarc_MS_49_21Aug10_Cheetah_10-08-01_0000	189335	Sample_Number	49
+Sarc_MS_49_21Aug10_Cheetah_10-08-01_0000	189335	Site	BI
+Sarc_MS_66_21Aug10_Cheetah_10-08-03_0000	189352	Plate	1
+Sarc_MS_66_21Aug10_Cheetah_10-08-03_0000	189352	Sample_Number	66
+Sarc_MS_66_21Aug10_Cheetah_10-08-03_0000	189352	Site	PI
+Sarc_MS_66_21Aug10_Cheetah_10-08-03_0000	189352	Age	>75 years
+Sarc_MS_66_21Aug10_Cheetah_10-08-03_0000	189352	Batch	5
+Sarc_MS_66_21Aug10_Cheetah_10-08-03_0000	189352	BatchRun	12
+Sarc_MS_66_21Aug10_Cheetah_10-08-03_0000	189352	Group	DevSarc
+Sarc_MS_66_21Aug10_Cheetah_10-08-03_0000	189352	LC_column	3
+Sarc_MS_99_01Sept10_Cheetah_10-08-02_0000	189893	Age	<=75 years
+Sarc_MS_99_01Sept10_Cheetah_10-08-02_0000	189893	Batch	8
+Sarc_MS_99_01Sept10_Cheetah_10-08-02_0000	189893	BatchRun	3
+Sarc_MS_99_01Sept10_Cheetah_10-08-02_0000	189893	Group	SarcBase
+Sarc_MS_99_01Sept10_Cheetah_10-08-02_0000	189893	LC_column	2
+Sarc_MS_99_01Sept10_Cheetah_10-08-02_0000	189893	Plate	2
+Sarc_MS_99_01Sept10_Cheetah_10-08-02_0000	189893	Sample_Number	99
+Sarc_MS_99_01Sept10_Cheetah_10-08-02_0000	189893	Site	MN
+Sarc_MS_116_01Sept10_Cheetah_10-08-04_0000	189910	Age	<=75 years
+Sarc_MS_116_01Sept10_Cheetah_10-08-04_0000	189910	Batch	9
+Sarc_MS_116_01Sept10_Cheetah_10-08-04_0000	189910	BatchRun	6
+Sarc_MS_116_01Sept10_Cheetah_10-08-04_0000	189910	Group	SarcBase
+Sarc_MS_116_01Sept10_Cheetah_10-08-04_0000	189910	LC_column	4
+Sarc_MS_116_01Sept10_Cheetah_10-08-04_0000	189910	Plate	2
+Sarc_MS_116_01Sept10_Cheetah_10-08-04_0000	189910	Sample_Number	116
+Sarc_MS_116_01Sept10_Cheetah_10-08-04_0000	189910	Site	BI
+Sarc_MS_117_02Sept10_Cheetah_10-08-02_0000	190168	Age	>75 years
+Sarc_MS_117_02Sept10_Cheetah_10-08-02_0000	190168	Batch	9
+Sarc_MS_117_02Sept10_Cheetah_10-08-02_0000	190168	BatchRun	7
+Sarc_MS_117_02Sept10_Cheetah_10-08-02_0000	190168	Group	SarcBase
+Sarc_MS_117_02Sept10_Cheetah_10-08-02_0000	190168	LC_column	2
+Sarc_MS_117_02Sept10_Cheetah_10-08-02_0000	190168	Plate	2
+Sarc_MS_117_02Sept10_Cheetah_10-08-02_0000	190168	Sample_Number	117
+Sarc_MS_117_02Sept10_Cheetah_10-08-02_0000	190168	Site	SD
+Sarc_MS_130_02Sept10_Cheetah_10-08-03_0000	190181	Age	<=75 years
+Sarc_MS_130_02Sept10_Cheetah_10-08-03_0000	190181	Batch	10
+Sarc_MS_130_02Sept10_Cheetah_10-08-03_0000	190181	BatchRun	6
+Sarc_MS_130_02Sept10_Cheetah_10-08-03_0000	190181	Group	DevSarc
+Sarc_MS_130_02Sept10_Cheetah_10-08-03_0000	190181	LC_column	3
+Sarc_MS_130_02Sept10_Cheetah_10-08-03_0000	190181	Plate	2
+Sarc_MS_130_02Sept10_Cheetah_10-08-03_0000	190181	Sample_Number	130
+Sarc_MS_130_02Sept10_Cheetah_10-08-03_0000	190181	Site	PI
+Sarc_MS_2_21Aug10_Cheetah_10-08-03_0000	189161	Plate	1
+Sarc_MS_2_21Aug10_Cheetah_10-08-03_0000	189161	Sample_Number	2
+Sarc_MS_2_21Aug10_Cheetah_10-08-03_0000	189161	Site	SD
+Sarc_MS_2_21Aug10_Cheetah_10-08-03_0000	189161	Age	<=75 years
+Sarc_MS_2_21Aug10_Cheetah_10-08-03_0000	189161	Batch	1
+Sarc_MS_2_21Aug10_Cheetah_10-08-03_0000	189161	BatchRun	2
+Sarc_MS_2_21Aug10_Cheetah_10-08-03_0000	189161	Group	SarcBase
+Sarc_MS_2_21Aug10_Cheetah_10-08-03_0000	189161	LC_column	3
+Sarc_MS_27_24Aug10_Cheetah_10-08-04_0000	189194	Sample_Number	27
+Sarc_MS_27_24Aug10_Cheetah_10-08-04_0000	189194	Batch	2
+Sarc_MS_27_24Aug10_Cheetah_10-08-04_0000	189194	BatchRun	14
+Sarc_MS_27_24Aug10_Cheetah_10-08-04_0000	189194	Group	Control
+Sarc_MS_27_24Aug10_Cheetah_10-08-04_0000	189194	LC_column	4
+Sarc_MS_27_24Aug10_Cheetah_10-08-04_0000	189194	Plate	1
+Sarc_MS_45_24Aug10_Cheetah_10-08-02_0000	189210	Site	PO
+Sarc_MS_45_24Aug10_Cheetah_10-08-02_0000	189210	Age	<=75 years
+Sarc_MS_45_24Aug10_Cheetah_10-08-02_0000	189210	Batch	4
+Sarc_MS_45_24Aug10_Cheetah_10-08-02_0000	189210	BatchRun	5
+Sarc_MS_45_24Aug10_Cheetah_10-08-02_0000	189210	Group	SarcBase
+Sarc_MS_45_24Aug10_Cheetah_10-08-02_0000	189210	LC_column	2
+Sarc_MS_45_24Aug10_Cheetah_10-08-02_0000	189210	Plate	1
+Sarc_MS_45_24Aug10_Cheetah_10-08-02_0000	189210	Sample_Number	45
+Sarc_MS_52_24Aug10_Cheetah_10-08-03_0000	189338	Plate	1
+Sarc_MS_52_24Aug10_Cheetah_10-08-03_0000	189338	Sample_Number	52
+Sarc_MS_52_24Aug10_Cheetah_10-08-03_0000	189338	Site	PA
+Sarc_MS_52_24Aug10_Cheetah_10-08-03_0000	189338	Age	>75 years
+Sarc_MS_52_24Aug10_Cheetah_10-08-03_0000	189338	Batch	4
+Sarc_MS_52_24Aug10_Cheetah_10-08-03_0000	189338	BatchRun	12
+Sarc_MS_52_24Aug10_Cheetah_10-08-03_0000	189338	Group	NonSarc
+Sarc_MS_52_24Aug10_Cheetah_10-08-03_0000	189338	LC_column	3
+Sarc_MS_70_27Aug10_Cheetah_10-08-04_0000	189356	Age	<=75 years
+Sarc_MS_70_27Aug10_Cheetah_10-08-04_0000	189356	Batch	6
+Sarc_MS_70_27Aug10_Cheetah_10-08-04_0000	189356	BatchRun	2
+Sarc_MS_70_27Aug10_Cheetah_10-08-04_0000	189356	Group	DevSarc
+Sarc_MS_70_27Aug10_Cheetah_10-08-04_0000	189356	LC_column	4
+Sarc_MS_70_27Aug10_Cheetah_10-08-04_0000	189356	Plate	1
+Sarc_MS_70_27Aug10_Cheetah_10-08-04_0000	189356	Sample_Number	70
+Sarc_MS_70_27Aug10_Cheetah_10-08-04_0000	189356	Site	PA
+Sarc_MS_95_27Aug10_Cheetah_10-08-01_0000	189519	Age	<=75 years
+Sarc_MS_95_27Aug10_Cheetah_10-08-01_0000	189519	Batch	7
+Sarc_MS_95_27Aug10_Cheetah_10-08-01_0000	189519	BatchRun	13
+Sarc_MS_95_27Aug10_Cheetah_10-08-01_0000	189519	Group	SarcBase
+Sarc_MS_95_27Aug10_Cheetah_10-08-01_0000	189519	LC_column	1
+Sarc_MS_95_27Aug10_Cheetah_10-08-01_0000	189519	Plate	1
+Sarc_MS_95_27Aug10_Cheetah_10-08-01_0000	189519	Sample_Number	95
+Sarc_MS_95_27Aug10_Cheetah_10-08-01_0000	189519	Site	MN
+Sarc_MS_109_01Sept10_Cheetah_10-08-01_0000	189903	Age	<=75 years
+Sarc_MS_109_01Sept10_Cheetah_10-08-01_0000	189903	Batch	8
+Sarc_MS_109_01Sept10_Cheetah_10-08-01_0000	189903	BatchRun	13
+Sarc_MS_109_01Sept10_Cheetah_10-08-01_0000	189903	Group	DevSarc
+Sarc_MS_109_01Sept10_Cheetah_10-08-01_0000	189903	LC_column	1
+Sarc_MS_109_01Sept10_Cheetah_10-08-01_0000	189903	Plate	2
+Sarc_MS_109_01Sept10_Cheetah_10-08-01_0000	189903	Sample_Number	109
+Sarc_MS_109_01Sept10_Cheetah_10-08-01_0000	189903	Site	PI
+Sarc_MS_113_01Sept10_Cheetah_10-08-01_0000	189907	Age	>75 years
+Sarc_MS_113_01Sept10_Cheetah_10-08-01_0000	189907	Batch	9
+Sarc_MS_113_01Sept10_Cheetah_10-08-01_0000	189907	BatchRun	3
+Sarc_MS_113_01Sept10_Cheetah_10-08-01_0000	189907	Group	DevSarc
+Sarc_MS_113_01Sept10_Cheetah_10-08-01_0000	189907	LC_column	1
+Sarc_MS_113_01Sept10_Cheetah_10-08-01_0000	189907	Plate	2
+Sarc_MS_113_01Sept10_Cheetah_10-08-01_0000	189907	Sample_Number	113
+Sarc_MS_113_01Sept10_Cheetah_10-08-01_0000	189907	Site	PA
+Sarc_MS_120_02Sept10_Cheetah_10-08-01_0000	190171	Age	>75 years
+Sarc_MS_120_02Sept10_Cheetah_10-08-01_0000	190171	Batch	9
+Sarc_MS_120_02Sept10_Cheetah_10-08-01_0000	190171	BatchRun	10
+Sarc_MS_120_02Sept10_Cheetah_10-08-01_0000	190171	Group	SarcBase
+Sarc_MS_120_02Sept10_Cheetah_10-08-01_0000	190171	LC_column	1
+Sarc_MS_120_02Sept10_Cheetah_10-08-01_0000	190171	Plate	2
+Sarc_MS_120_02Sept10_Cheetah_10-08-01_0000	190171	Sample_Number	120
+Sarc_MS_120_02Sept10_Cheetah_10-08-01_0000	190171	Site	SD
+Sarc_MS_134_02Sept10_Cheetah_10-08-03_0000	190185	Age	>75 years
+Sarc_MS_134_02Sept10_Cheetah_10-08-03_0000	190185	Batch	10
+Sarc_MS_134_02Sept10_Cheetah_10-08-03_0000	190185	BatchRun	10
+Sarc_MS_134_02Sept10_Cheetah_10-08-03_0000	190185	Group	DevSarc
+Sarc_MS_134_02Sept10_Cheetah_10-08-03_0000	190185	LC_column	3
+Sarc_MS_134_02Sept10_Cheetah_10-08-03_0000	190185	Plate	2
+Sarc_MS_134_02Sept10_Cheetah_10-08-03_0000	190185	Sample_Number	134
+Sarc_MS_134_02Sept10_Cheetah_10-08-03_0000	190185	Site	PI
+Sarc_MS_138_3Sep10_Cheetah_10-08-03_0000	190194	Age	>75 years
+Sarc_MS_138_3Sep10_Cheetah_10-08-03_0000	190194	Batch	9
+Sarc_MS_138_3Sep10_Cheetah_10-08-03_0000	190194	BatchRun	1
+Sarc_MS_138_3Sep10_Cheetah_10-08-03_0000	190194	Group	SarcBase
+Sarc_MS_138_3Sep10_Cheetah_10-08-03_0000	190194	LC_column	3
+Sarc_MS_138_3Sep10_Cheetah_10-08-03_0000	190194	Plate	2
+Sarc_MS_138_3Sep10_Cheetah_10-08-03_0000	190194	Sample_Number	138
+Sarc_MS_138_3Sep10_Cheetah_10-08-03_0000	190194	Site	PA
+Sarc_MS_5_24Aug10_Cheetah_10-08-01_0000	189164	Age	<=75 years
+Sarc_MS_5_24Aug10_Cheetah_10-08-01_0000	189164	Batch	1
+Sarc_MS_5_24Aug10_Cheetah_10-08-01_0000	189164	BatchRun	5
+Sarc_MS_5_24Aug10_Cheetah_10-08-01_0000	189164	Group	NonSarc
+Sarc_MS_5_24Aug10_Cheetah_10-08-01_0000	189164	LC_column	1
+Sarc_MS_5_24Aug10_Cheetah_10-08-01_0000	189164	Plate	1
+Sarc_MS_5_24Aug10_Cheetah_10-08-01_0000	189164	Sample_Number	5
+Sarc_MS_5_24Aug10_Cheetah_10-08-01_0000	189164	Site	PO
+Sarc_MS_24_28Aug10_Cheetah_10-08-03_0000	189180	Age	>75 years
+Sarc_MS_24_28Aug10_Cheetah_10-08-03_0000	189180	Batch	2
+Sarc_MS_24_28Aug10_Cheetah_10-08-03_0000	189180	BatchRun	11
+Sarc_MS_24_28Aug10_Cheetah_10-08-03_0000	189180	Group	NonSarc
+Sarc_MS_24_28Aug10_Cheetah_10-08-03_0000	189180	LC_column	3
+Sarc_MS_24_28Aug10_Cheetah_10-08-03_0000	189180	Plate	1
+Sarc_MS_24_28Aug10_Cheetah_10-08-03_0000	189180	Sample_Number	24
+Sarc_MS_24_28Aug10_Cheetah_10-08-03_0000	189180	Site	PO
+Sarc_MS_39_27Aug10_Cheetah_10-08-02_0000	189205	Age	>75 years
+Sarc_MS_39_27Aug10_Cheetah_10-08-02_0000	189205	Batch	3
+Sarc_MS_39_27Aug10_Cheetah_10-08-02_0000	189205	BatchRun	12
+Sarc_MS_39_27Aug10_Cheetah_10-08-02_0000	189205	Group	NonSarc
+Sarc_MS_39_27Aug10_Cheetah_10-08-02_0000	189205	LC_column	2
+Sarc_MS_39_27Aug10_Cheetah_10-08-02_0000	189205	Plate	1
+Sarc_MS_39_27Aug10_Cheetah_10-08-02_0000	189205	Sample_Number	39
+Sarc_MS_39_27Aug10_Cheetah_10-08-02_0000	189205	Site	BI
+Sarc_MS_41_3Sep10_Cheetah_10-08-01_0000	190191	Age	<=75 years
+Sarc_MS_41_3Sep10_Cheetah_10-08-01_0000	190191	Batch	4
+Sarc_MS_41_3Sep10_Cheetah_10-08-01_0000	190191	BatchRun	1
+Sarc_MS_41_3Sep10_Cheetah_10-08-01_0000	190191	Group	SarcBase
+Sarc_MS_41_3Sep10_Cheetah_10-08-01_0000	190191	LC_column	1
+Sarc_MS_41_3Sep10_Cheetah_10-08-01_0000	190191	Plate	1
+Sarc_MS_41_3Sep10_Cheetah_10-08-01_0000	190191	Sample_Number	41
+Sarc_MS_41_3Sep10_Cheetah_10-08-01_0000	190191	Site	PI
+Sarc_MS_75_24Aug10_Cheetah_10-08-02_0000	189499	Age	>75 years
+Sarc_MS_75_24Aug10_Cheetah_10-08-02_0000	189499	Batch	6
+Sarc_MS_75_24Aug10_Cheetah_10-08-02_0000	189499	BatchRun	7
+Sarc_MS_75_24Aug10_Cheetah_10-08-02_0000	189499	Group	NonSarc
+Sarc_MS_75_24Aug10_Cheetah_10-08-02_0000	189499	LC_column	2
+Sarc_MS_75_24Aug10_Cheetah_10-08-02_0000	189499	Plate	1
+Sarc_MS_75_24Aug10_Cheetah_10-08-02_0000	189499	Sample_Number	75
+Sarc_MS_75_24Aug10_Cheetah_10-08-02_0000	189499	Site	PI
+Sarc_MS_88_28Aug10_Cheetah_10-08-03_0000	189512	Age	>75 years
+Sarc_MS_88_28Aug10_Cheetah_10-08-03_0000	189512	Batch	7
+Sarc_MS_88_28Aug10_Cheetah_10-08-03_0000	189512	BatchRun	6
+Sarc_MS_88_28Aug10_Cheetah_10-08-03_0000	189512	Group	DevSarc
+Sarc_MS_88_28Aug10_Cheetah_10-08-03_0000	189512	LC_column	3
+Sarc_MS_88_28Aug10_Cheetah_10-08-03_0000	189512	Plate	1
+Sarc_MS_88_28Aug10_Cheetah_10-08-03_0000	189512	Sample_Number	88
+Sarc_MS_88_28Aug10_Cheetah_10-08-03_0000	189512	Site	PO
+Sarc_MS_90_21Aug10_Cheetah_10-08-02_0000	189514	Batch	7
+Sarc_MS_90_21Aug10_Cheetah_10-08-02_0000	189514	BatchRun	8
+Sarc_MS_90_21Aug10_Cheetah_10-08-02_0000	189514	Group	Control
+Sarc_MS_90_21Aug10_Cheetah_10-08-02_0000	189514	LC_column	2
+Sarc_MS_90_21Aug10_Cheetah_10-08-02_0000	189514	Plate	1
+Sarc_MS_90_21Aug10_Cheetah_10-08-02_0000	189514	Sample_Number	90
+Sarc_MS_105_01Sept10_Cheetah_10-08-01_0000	189899	Plate	2
+Sarc_MS_105_01Sept10_Cheetah_10-08-01_0000	189899	Sample_Number	105
+Sarc_MS_105_01Sept10_Cheetah_10-08-01_0000	189899	Site	MN
+Sarc_MS_105_01Sept10_Cheetah_10-08-01_0000	189899	Age	>75 years
+Sarc_MS_105_01Sept10_Cheetah_10-08-01_0000	189899	Batch	8
+Sarc_MS_105_01Sept10_Cheetah_10-08-01_0000	189899	BatchRun	9
+Sarc_MS_105_01Sept10_Cheetah_10-08-01_0000	189899	Group	SarcBase
+Sarc_MS_105_01Sept10_Cheetah_10-08-01_0000	189899	LC_column	1
+Sarc_MS_124_02Sept10_Cheetah_10-08-01_0000	190175	Age	<=75 years
+Sarc_MS_124_02Sept10_Cheetah_10-08-01_0000	190175	Batch	9
+Sarc_MS_124_02Sept10_Cheetah_10-08-01_0000	190175	BatchRun	14
+Sarc_MS_124_02Sept10_Cheetah_10-08-01_0000	190175	Group	DevSarc
+Sarc_MS_124_02Sept10_Cheetah_10-08-01_0000	190175	LC_column	1
+Sarc_MS_124_02Sept10_Cheetah_10-08-01_0000	190175	Plate	2
+Sarc_MS_124_02Sept10_Cheetah_10-08-01_0000	190175	Sample_Number	124
+Sarc_MS_124_02Sept10_Cheetah_10-08-01_0000	190175	Site	SD
+Sarc_MS_139_3Sep10_Cheetah_10-08-04_0000	190195	Age	<=75 years
+Sarc_MS_139_3Sep10_Cheetah_10-08-04_0000	190195	Batch	9
+Sarc_MS_139_3Sep10_Cheetah_10-08-04_0000	190195	BatchRun	2
+Sarc_MS_139_3Sep10_Cheetah_10-08-04_0000	190195	Group	SarcBase
+Sarc_MS_139_3Sep10_Cheetah_10-08-04_0000	190195	LC_column	4
+Sarc_MS_139_3Sep10_Cheetah_10-08-04_0000	190195	Plate	2
+Sarc_MS_139_3Sep10_Cheetah_10-08-04_0000	190195	Sample_Number	139
+Sarc_MS_139_3Sep10_Cheetah_10-08-04_0000	190195	Site	PI
+Sarc_MS_141_3Sep10_Cheetah_10-08-02_0000	190197	Age	>75 years
+Sarc_MS_141_3Sep10_Cheetah_10-08-02_0000	190197	Batch	9
+Sarc_MS_141_3Sep10_Cheetah_10-08-02_0000	190197	BatchRun	4
+Sarc_MS_141_3Sep10_Cheetah_10-08-02_0000	190197	Group	DevSarc
+Sarc_MS_141_3Sep10_Cheetah_10-08-02_0000	190197	LC_column	2
+Sarc_MS_141_3Sep10_Cheetah_10-08-02_0000	190197	Plate	2
+Sarc_MS_141_3Sep10_Cheetah_10-08-02_0000	190197	Sample_Number	141
+Sarc_MS_141_3Sep10_Cheetah_10-08-02_0000	190197	Site	MN
