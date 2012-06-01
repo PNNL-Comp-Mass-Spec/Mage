@@ -67,10 +67,16 @@
     <Compile Include="ColumnMapSelectionForm.Designer.cs">
       <DependentUpon>ColumnMapSelectionForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataPackageDetailsListPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DataPackageDetailsListPanel.Designer.cs">
+      <DependentUpon>DataPackageDetailsListPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="DatasetIDListPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="DatasetIDListPanel.Designer.cs">
+    <Compile Include="DatasetIDListPanel.designer.cs">
       <DependentUpon>DatasetIDListPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="FileCopyPanel.cs">
@@ -199,6 +205,9 @@
       <DependentUpon>ColumnMapSelectionForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="DataPackageDetailsListPanel.resx">
+      <DependentUpon>DataPackageDetailsListPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DatasetIDListPanel.resx">
       <DependentUpon>DatasetIDListPanel.cs</DependentUpon>
     </EmbeddedResource>
@@ -269,6 +278,12 @@
       <Project>{F6A69A88-0B7A-459F-83AB-9DA0560F9949}</Project>
       <Name>Mage</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="QueryDefinitions.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -26,15 +26,15 @@ namespace Mage {
         /// <summary>
         /// flag that is set by client (via pipeline infrastructure call to Cancel) to abort operation of module
         /// </summary>
-		protected bool Abort {
-			get { return Globals.AbortRequested; }
-            set { 
-				if (value)
-					Globals.AbortRequested = true;
-				else
-					Globals.AbortRequested = false;
-			}
-		}
+        protected bool Abort {
+            get { return Globals.AbortRequested; }
+            set {
+                if (value)
+                    Globals.AbortRequested = true;
+                else
+                    Globals.AbortRequested = false;
+            }
+        }
 
         /// <summary>
         /// master list of input column definitions
@@ -46,7 +46,7 @@ namespace Mage {
         /// master list of input column position keyed to column name (for lookup of column index by column name)
         /// (default HandleColumnDef will build this)
         /// </summary>
-		protected Dictionary<string, int> InputColumnPos = new Dictionary<string, int>(StringComparer.CurrentCultureIgnoreCase);
+        protected Dictionary<string, int> InputColumnPos = new Dictionary<string, int>(StringComparer.CurrentCultureIgnoreCase);
 
         /// <summary>
         /// temporary working reference to input column field used during output column mapping
@@ -150,7 +150,7 @@ namespace Mage {
                 handler(this, e);
             }
         }
-        
+
         /// <summary>
         /// Event-invoking method for status message updates
         /// </summary>
@@ -307,19 +307,18 @@ namespace Mage {
             }
         }
 
-		/// <summary>
-		/// Raise a status message event that processing was aborted
-		/// </summary>
+        /// <summary>
+        /// Raise a status message event that processing was aborted
+        /// </summary>
         protected void ReportProcessingAborted() {
             ReportProcessingAborted(this.ModuleName);
         }
 
-		/// <summary>
-		/// Raise a status message event that processing was aborted
-		/// </summary>
-		/// <param name="source">The source procedure name</param>
-		protected void ReportProcessingAborted(string source)
-		{
+        /// <summary>
+        /// Raise a status message event that processing was aborted
+        /// </summary>
+        /// <param name="source">The source procedure name</param>
+        protected void ReportProcessingAborted(string source) {
             if (string.IsNullOrEmpty(source))
                 OnStatusMessageUpdated(new MageStatusEventArgs("Processing aborted"));
             else
@@ -331,73 +330,73 @@ namespace Mage {
 
         #region helper functions
 
-		/// <summary>
-		/// Returns the index of columnName in columnPos
-		/// </summary>
-		/// <param name="columnPos">Dictionary of column position information</param>
-		/// <param name="columnName">Column to find</param>
-		/// <returns>Index if defined; otherwise, returns -1</returns>
-		protected int GetColumnIndex(Dictionary<string, int> columnPos, string columnName) {
-			int value;
+        /// <summary>
+        /// Returns the index of columnName in columnPos
+        /// </summary>
+        /// <param name="columnPos">Dictionary of column position information</param>
+        /// <param name="columnName">Column to find</param>
+        /// <returns>Index if defined; otherwise, returns -1</returns>
+        protected int GetColumnIndex(Dictionary<string, int> columnPos, string columnName) {
+            int value;
 
-			if (columnPos.TryGetValue(columnName, out value))
-				return value;
-			else
-				return -1;
-		}
+            if (columnPos.TryGetValue(columnName, out value))
+                return value;
+            else
+                return -1;
+        }
 
-		/// <summary>
-		/// Returns the value at the given index in the columnVals array
-		/// </summary>
-		/// <param name="columnVals">Column Data</param>
-		/// <param name="columnIndex">Index of the column to return</param>
-		/// <param name="defaultValue">Value to return if columnIndex is less than 0 or if the entry is not numeric</param>
-		/// <returns>Value (integer) if defined; otherwise, returns defaultValue</returns>
-		protected int GetColumnValue(ref object[] columnVals, int columnIndex, int defaultValue) {
-			if (columnIndex > -1) {
-				int value;
-				if (columnVals[columnIndex] != null && int.TryParse(columnVals[columnIndex].ToString(), out value))
-					return value;
-				else
-					return defaultValue;
-			}
-			return defaultValue;
-		}
+        /// <summary>
+        /// Returns the value at the given index in the columnVals array
+        /// </summary>
+        /// <param name="columnVals">Column Data</param>
+        /// <param name="columnIndex">Index of the column to return</param>
+        /// <param name="defaultValue">Value to return if columnIndex is less than 0 or if the entry is not numeric</param>
+        /// <returns>Value (integer) if defined; otherwise, returns defaultValue</returns>
+        protected int GetColumnValue(ref object[] columnVals, int columnIndex, int defaultValue) {
+            if (columnIndex > -1) {
+                int value;
+                if (columnVals[columnIndex] != null && int.TryParse(columnVals[columnIndex].ToString(), out value))
+                    return value;
+                else
+                    return defaultValue;
+            }
+            return defaultValue;
+        }
 
-		/// <summary>
-		/// Returns the value at the given index in the columnVals array
-		/// </summary>
-		/// <param name="columnVals">Column Data</param>
-		/// <param name="columnIndex">Index of the column to return</param>
-		/// <param name="defaultValue">Value to return if columnIndex is less than 0 or if the entry is not numeric</param>
-		/// <returns>Value (double) if defined; otherwise, returns defaultValue</returns>
-		protected double GetColumnValue(ref object[] columnVals, int columnIndex, double defaultValue) {
-			if (columnIndex > -1) {
-				double value;
-				if (columnVals[columnIndex] != null && double.TryParse(columnVals[columnIndex].ToString(), out value))
-					return value;
-				else
-					return defaultValue;
-			}
-			return defaultValue;
-		}
+        /// <summary>
+        /// Returns the value at the given index in the columnVals array
+        /// </summary>
+        /// <param name="columnVals">Column Data</param>
+        /// <param name="columnIndex">Index of the column to return</param>
+        /// <param name="defaultValue">Value to return if columnIndex is less than 0 or if the entry is not numeric</param>
+        /// <returns>Value (double) if defined; otherwise, returns defaultValue</returns>
+        protected double GetColumnValue(ref object[] columnVals, int columnIndex, double defaultValue) {
+            if (columnIndex > -1) {
+                double value;
+                if (columnVals[columnIndex] != null && double.TryParse(columnVals[columnIndex].ToString(), out value))
+                    return value;
+                else
+                    return defaultValue;
+            }
+            return defaultValue;
+        }
 
-		/// <summary>
-		/// Returns the value at the given index in the columnVals array
-		/// </summary>
-		/// <param name="columnVals">Column Data</param>
-		/// <param name="columnIndex">Index of the column to return</param>
-		/// <param name="defaultValue">Value to return if columnIndex is less than 0</param>
-		/// <returns>Value (string) if defined; otherwise, returns defaultValue</returns>
-		protected string GetColumnValue(ref object[] columnVals, int columnIndex, string defaultValue) {
-			if (columnIndex > -1) {
-				if (columnVals[columnIndex] != null)
-					return columnVals[columnIndex].ToString();
-				else
-					return string.Empty;
-			}
-			return defaultValue;
-		}
+        /// <summary>
+        /// Returns the value at the given index in the columnVals array
+        /// </summary>
+        /// <param name="columnVals">Column Data</param>
+        /// <param name="columnIndex">Index of the column to return</param>
+        /// <param name="defaultValue">Value to return if columnIndex is less than 0</param>
+        /// <returns>Value (string) if defined; otherwise, returns defaultValue</returns>
+        protected string GetColumnValue(ref object[] columnVals, int columnIndex, string defaultValue) {
+            if (columnIndex > -1) {
+                if (columnVals[columnIndex] != null)
+                    return columnVals[columnIndex].ToString();
+                else
+                    return string.Empty;
+            }
+            return defaultValue;
+        }
 
         /// <summary>
         /// Perform case insenstive replacement string replace
@@ -462,7 +461,7 @@ namespace Mage {
 
             return result.ToString();
         }
- 
+
 
         /// <summary>
         /// Setup position map list of new output columns 
@@ -487,10 +486,10 @@ namespace Mage {
         protected void SetupOutputColumns() {
             if (string.IsNullOrEmpty(OutputColumnList)) return;
 
-			OutputColumnPos = new Dictionary<string, int>(StringComparer.CurrentCultureIgnoreCase);
+            OutputColumnPos = new Dictionary<string, int>(StringComparer.CurrentCultureIgnoreCase);
             OutputColumnDefs = new List<MageColumnDef>();
             OutputToInputColumnPosMap = new List<KeyValuePair<int, int>>();
-			NewOutputColumnPos = new Dictionary<string, int>(StringComparer.CurrentCultureIgnoreCase);
+            NewOutputColumnPos = new Dictionary<string, int>(StringComparer.CurrentCultureIgnoreCase);
 
             int outColIdx = 0;
             // process each column spec from spec list
@@ -503,7 +502,7 @@ namespace Mage {
                     string type = (colSpecFlds.Length > 2) ? colSpecFlds[2].Trim() : "";
                     string size = (colSpecFlds.Length > 3) ? colSpecFlds[3].Trim() : "";
 
-                     if (outputColName == "*") {
+                    if (outputColName == "*") {
                         // wildcard
                         // copy input column def to output col def for any input columns
                         // not already in output colums list
@@ -520,7 +519,7 @@ namespace Mage {
                     } else {
                         // output column is mapped to input column
                         // copy input column def to output col def for this column
-                        string colName = (string.IsNullOrEmpty(inputColName)) ? outputColName : inputColName ;
+                        string colName = (string.IsNullOrEmpty(inputColName)) ? outputColName : inputColName;
                         MapOutputColumnToInputColumn(colName, outColIdx);
                         // and do any necessary overrides
                         AdjustOutputColumnProperties(outColIdx, outputColName, type, size);
@@ -582,6 +581,9 @@ namespace Mage {
         /// Add output column defintion that is pass-through of an input column
         /// </summary>
         private void MapOutputColumnToInputColumn(string inputColName, int outColIdx) {
+            if (!InputColumnPos.ContainsKey(inputColName)) {
+                throw new Exception(string.Format("Tried to map input column '{0}' which does not exist", inputColName));
+            }
             int inputColIdx = InputColumnPos[inputColName];
             MageColumnDef colDef = InputColumnDefs[inputColIdx];
             AddOutputColumnDefinition(colDef, outColIdx, inputColIdx);
@@ -592,7 +594,7 @@ namespace Mage {
         /// and to output-to-input column map
         /// </summary>
         private void AddOutputColumnDefinition(MageColumnDef colDef, int outColIdx, int inputColIdx) {
-            AddOutputColumnDefinition(colDef, outColIdx);
+            AddOutputColumnDefinition(new MageColumnDef(colDef.Name, colDef.DataType, colDef.Size), outColIdx);
             OutputToInputColumnPosMap.Add(new KeyValuePair<int, int>(outColIdx, inputColIdx));
         }
 
@@ -647,7 +649,7 @@ namespace Mage {
                 if (OutputColumnPos.TryGetValue(columnName, out colIndex))
                     return true;
             }
-			colIndex = -1;
+            colIndex = -1;
             return false;
         }
 
