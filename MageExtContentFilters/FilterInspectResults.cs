@@ -12,7 +12,7 @@ namespace MageExtContentFilters {
             : base(filterCriteria, filterSetID) {
         }
 
-        public bool EvaluateInspect(string peptideSequence, int chargeState, double peptideMass, double MQScore, double TotalPRMScore, double FScore, double PValue, double msgfSpecProb) {
+        public bool EvaluateInspect(string peptideSequence, int chargeState, double peptideMass, double MQScore, double TotalPRMScore, double FScore, double PValue, double msgfSpecProb, int rankTotalPRMScore) {
             string currCritName = null;
             string currCritOperator = null;
 
@@ -112,6 +112,16 @@ namespace MageExtContentFilters {
                                 }
                             }
                             break;
+						case "RankScore":
+							if (rankTotalPRMScore > 0)
+							{
+								if (rankTotalPRMScore > filterRow.CriteriaValueInt)
+								{
+									currEval = false;
+									break;
+								}
+							}
+							break;
                         default:
                             currEval = true;
                             break;

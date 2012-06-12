@@ -33,6 +33,7 @@ namespace MageExtContentFilters {
         ////private int NETAbsoluteDifferenceIndex = 0;
         private int cleavageStateIndex = 0;
 		private int msgfSpecProbIndex = 0;
+		private int rankXcIndex = 0;
 
         #endregion
 
@@ -81,12 +82,13 @@ namespace MageExtContentFilters {
 			double peptideMass = GetColumnValue(ref fields, peptideMassIndex, -1d);
 			int cleavageState = GetColumnValue(ref fields, cleavageStateIndex, -1);
 			double msgfSpecProb = GetColumnValue(ref fields, msgfSpecProbIndex, -1d);
-			
+			int rankXc = GetColumnValue(ref fields, rankXcIndex, -1);
+
 			int spectrumCount = -1;
 			double discriminantScore = -1;
 			double NETAbsoluteDifference = -1;
 
-			accepted = mSeqFilter.EvaluateSequest(peptideSequence, xCorrValue, delCNValue, delCN2Value, chargeState, peptideMass, spectrumCount, discriminantScore, NETAbsoluteDifference, cleavageState, msgfSpecProb);
+			accepted = mSeqFilter.EvaluateSequest(peptideSequence, xCorrValue, delCNValue, delCN2Value, chargeState, peptideMass, spectrumCount, discriminantScore, NETAbsoluteDifference, cleavageState, msgfSpecProb, rankXc);
 
             if (accepted && OutputColumnDefs != null) {
                 object[] outRow = MapDataRow(fields);
@@ -131,6 +133,8 @@ namespace MageExtContentFilters {
             peptideMassIndex = GetColumnIndex(InputColumnPos, "MH");
             cleavageStateIndex = GetColumnIndex(InputColumnPos, "NumTrypticEnds");
 			msgfSpecProbIndex = GetColumnIndex(InputColumnPos, "MSGF_SpecProb");
+			rankXcIndex = GetColumnIndex(InputColumnPos, "RankXc");
+			
         }
 
     }

@@ -26,6 +26,7 @@ namespace MageExtExtractionFilters {
         private int peptideMassIndex = 0;
         private int cleavageStateIndex = 0;
         private int msgfSpecProbIndex = 0;
+		private int rankXCIndex = 0;
 
         #endregion
 
@@ -108,13 +109,14 @@ namespace MageExtExtractionFilters {
                 double peptideMass = GetColumnValue(ref vals, peptideMassIndex, -1d);
                 int cleavageState = GetColumnValue(ref vals, cleavageStateIndex, -1);
                 double msgfSpecProb = GetColumnValue(ref vals, msgfSpecProbIndex, -1d);
+				int rankXC = GetColumnValue(ref vals, rankXCIndex, -1);
 
                 // Legacy columns; no longer used
                 int spectrumCount = -1;
                 double discriminantScore = -1;
                 double NETAbsoluteDifference = -1;
-                
-                bool pass = mSeqFilter.EvaluateSequest(peptideSequence, xCorrValue, delCNValue, delCN2Value, chargeState, peptideMass, spectrumCount, discriminantScore, NETAbsoluteDifference, cleavageState, msgfSpecProb);
+
+				bool pass = mSeqFilter.EvaluateSequest(peptideSequence, xCorrValue, delCNValue, delCN2Value, chargeState, peptideMass, spectrumCount, discriminantScore, NETAbsoluteDifference, cleavageState, msgfSpecProb, rankXC);
 
                 accept = pass || mKeepAllResults;
                 if (mFilterResultsColIdx >= 0) {
@@ -145,6 +147,7 @@ namespace MageExtExtractionFilters {
             peptideMassIndex = GetColumnIndex(columnPos, "MH");
             cleavageStateIndex = GetColumnIndex(columnPos, "NumTrypticEnds");
             msgfSpecProbIndex = GetColumnIndex(columnPos, "MSGF_SpecProb");
+			rankXCIndex = GetColumnIndex(columnPos, "RankXc");
         }
 
         /// <summary>

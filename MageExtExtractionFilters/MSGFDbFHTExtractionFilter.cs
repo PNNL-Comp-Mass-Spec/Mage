@@ -111,8 +111,9 @@ namespace MageExtExtractionFilters {
                 double FDR = GetColumnValue(ref vals, FDRIndex, -1d);
                 double PepFDR = GetColumnValue(ref vals, pepFDRIndex, -1d);
                 double msgfSpecProb = GetColumnValue(ref vals, msgfSpecProbIndex, -1d);
+				int rankMSGFDbSpecProb = 1;
 
-                bool pass = mMSGFDbFilter.EvaluateMSGFDB(peptideSequence, chargeState, peptideMass, SpecProb, PValue, FDR, PepFDR, msgfSpecProb);
+				bool pass = mMSGFDbFilter.EvaluateMSGFDB(peptideSequence, chargeState, peptideMass, SpecProb, PValue, FDR, PepFDR, msgfSpecProb, rankMSGFDbSpecProb);
 
                 accept = pass || mKeepAllResults;
                 if (mFilterResultsColIdx >= 0) {

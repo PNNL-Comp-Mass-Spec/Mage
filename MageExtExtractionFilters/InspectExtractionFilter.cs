@@ -22,10 +22,10 @@ namespace MageExtExtractionFilters {
         private int mqScoreIndex = 0;
         private int totalPRMScoreIndex = 0;
 		private int fScoreIndex = 0;
-        private int pValueIndex = 0;
-	
+        private int pValueIndex = 0;	
      
         private int msgfSpecProbIndex = -1;
+		private int rankTotalPRMScoreIndex = -1;
 
         private MergeProteinData mProteinMerger = null;
         private bool mOutputAllProteins = false;
@@ -141,8 +141,9 @@ namespace MageExtExtractionFilters {
 		        double PValue = GetColumnValue(ref vals, pValueIndex, -1d);
 
                 double msgfSpecProb = GetColumnValue(ref vals, msgfSpecProbIndex, -1d);
-                
-                bool pass = mInspectFilter.EvaluateInspect(peptideSequence, chargeState, peptideMass, MQScore, TotalPRMScore, FScore, PValue, msgfSpecProb);
+				int rankTotalPRMScore = GetColumnValue(ref vals, rankTotalPRMScoreIndex, -1);
+
+				bool pass = mInspectFilter.EvaluateInspect(peptideSequence, chargeState, peptideMass, MQScore, TotalPRMScore, FScore, PValue, msgfSpecProb, rankTotalPRMScore);
 
                 accept = pass || mKeepAllResults;
                 if (mFilterResultsColIdx >= 0) {
@@ -180,7 +181,8 @@ namespace MageExtExtractionFilters {
 	        fScoreIndex = GetColumnIndex(columnPos, "FScore");
 	        pValueIndex = GetColumnIndex(columnPos, "PValue");
 
-            msgfSpecProbIndex = GetColumnIndex(columnPos, "MSGF_SpecProb");        
+            msgfSpecProbIndex = GetColumnIndex(columnPos, "MSGF_SpecProb");
+			rankTotalPRMScoreIndex = GetColumnIndex(columnPos, "RankTotalPRMScore");
         }
 
         /// <summary>

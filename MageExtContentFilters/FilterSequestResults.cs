@@ -17,11 +17,11 @@ namespace MageExtContentFilters {
         public bool EvaluateSequest(string peptideSequence, double xCorrValue, double delCNValue, double delCN2Value, int chargeState, double peptideMass, int cleavageState) {
             //Implements IFilterResults.EvaluatePeptide
 
-            return this.EvaluateSequest(peptideSequence, xCorrValue, delCNValue, delCN2Value, chargeState, peptideMass, -1, -1, -1, -1, -1);
+            return this.EvaluateSequest(peptideSequence, xCorrValue, delCNValue, delCN2Value, chargeState, peptideMass, -1, -1, -1, -1, -1, -1);
         }
 
 
-        public bool EvaluateSequest(string peptideSequence, double xCorrValue, double delCNValue, double delCN2Value, int chargeState, double peptideMass, int spectrumCount, double discriminantScore, double NETAbsoluteDifference, int cleavageState, double msgfSpecProb) {
+        public bool EvaluateSequest(string peptideSequence, double xCorrValue, double delCNValue, double delCN2Value, int chargeState, double peptideMass, int spectrumCount, double discriminantScore, double NETAbsoluteDifference, int cleavageState, double msgfSpecProb, int rankXc) {
             //Implements IFilterResults.EvaluatePeptide
             
             string currCritName = null;
@@ -141,6 +141,16 @@ namespace MageExtContentFilters {
                                 }
                             }
                             break;
+						case "RankScore":
+							if (rankXc > 0)
+							{
+								if (rankXc > filterRow.CriteriaValueInt)
+								{
+									currEval = false;
+									break;
+								}
+							}
+							break;
                         default:
                             currEval = true;
                             break;

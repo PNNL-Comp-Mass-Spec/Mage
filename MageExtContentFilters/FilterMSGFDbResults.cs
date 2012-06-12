@@ -12,7 +12,7 @@ namespace MageExtContentFilters {
             : base(filterCriteria, filterSetID) {
         }
 
-        public bool EvaluateMSGFDB(string peptideSequence, int chargeState, double peptideMass, double SpecProb, double PValue, double FDR, double PepFDR, double msgfSpecProb) {
+		public bool EvaluateMSGFDB(string peptideSequence, int chargeState, double peptideMass, double SpecProb, double PValue, double FDR, double PepFDR, double msgfSpecProb, int rankMSGFDbSpecProb) {
             string currCritName = null;
             string currCritOperator = null;
 
@@ -111,8 +111,18 @@ namespace MageExtContentFilters {
                                     break;
                                 }
                             }
-                            break;                        
-                        default:
+                            break;
+						 case "RankScore":
+							if (rankMSGFDbSpecProb > 0)
+							{
+								if (rankMSGFDbSpecProb > filterRow.CriteriaValueInt)
+								{
+									currEval = false;
+									break;
+								}
+							}
+							break;
+						default:
                             currEval = true;
                             break;
                     }

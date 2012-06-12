@@ -27,6 +27,7 @@ namespace MageExtExtractionFilters {
         private int pepFDRIndex = -1;
 
         private int msgfSpecProbIndex = -1;
+		private int rankMSGFDbSpecProbIndex = -1;
 
         private MergeProteinData mProteinMerger = null;
         private bool mOutputAllProteins = false;
@@ -141,8 +142,9 @@ namespace MageExtExtractionFilters {
                 double FDR = GetColumnValue(ref vals, FDRIndex, -1d);
                 double PepFDR = GetColumnValue(ref vals, pepFDRIndex, -1d);
                 double msgfSpecProb = GetColumnValue(ref vals, msgfSpecProbIndex, -1d);
-                
-                bool pass = mMSGFDbFilter.EvaluateMSGFDB(peptideSequence, chargeState, peptideMass, SpecProb, PValue, FDR, PepFDR, msgfSpecProb);
+				int rankMSGFDbSpecProb = GetColumnValue(ref vals, rankMSGFDbSpecProbIndex, -1);
+
+				bool pass = mMSGFDbFilter.EvaluateMSGFDB(peptideSequence, chargeState, peptideMass, SpecProb, PValue, FDR, PepFDR, msgfSpecProb, rankMSGFDbSpecProb);
 
                 accept = pass || mKeepAllResults;
                 if (mFilterResultsColIdx >= 0) {
@@ -179,7 +181,8 @@ namespace MageExtExtractionFilters {
             // Note that FDR and PepFDR may not be present
             FDRIndex = GetColumnIndex(columnPos, "FDR");
             pepFDRIndex = GetColumnIndex(columnPos, "PepFDR");
-            msgfSpecProbIndex = GetColumnIndex(columnPos, "MSGF_SpecProb");        
+            msgfSpecProbIndex = GetColumnIndex(columnPos, "MSGF_SpecProb");
+			rankMSGFDbSpecProbIndex = GetColumnIndex(columnPos, "Rank_MSGFDB_SpecProb");
         }
 
         /// <summary>
