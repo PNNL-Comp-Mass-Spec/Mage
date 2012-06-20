@@ -55,7 +55,7 @@ namespace MageExtractor {
 			InitializeComponent();
 
 			bool isBetaVersion = false;
-			SetFormTitle("2012-06-12", isBetaVersion);
+			SetFormTitle("2012-06-19", isBetaVersion);
 
 			SetTags();
 
@@ -194,41 +194,64 @@ namespace MageExtractor {
 			SavedState.SaveParameters(PanelSupport.GetParameterPanelList(this));
 		}
 
-		private void HandleExtractionCommand(object sender, MageCommandEventArgs command) {
-			mExtractionParms = GetExtractionParameters();
-			mDestination = GetDestinationParameters();
+		private void HandleExtractionCommand(object sender, MageCommandEventArgs command) {	
+			try
+			{
+				mExtractionParms = GetExtractionParameters();
+				mDestination = GetDestinationParameters();
 
-			if (!CheckForJobsToProcess()) return;
+				if (!CheckForJobsToProcess()) return;
 
-			DisplaySourceMode mode = (command.Mode == "all") ? DisplaySourceMode.All : DisplaySourceMode.Selected;
-			string msg = ExtractionPipelines.CheckJobResultType(new GVPipelineSource(JobListDisplayCtl, mode), "Tool", mExtractionParms);
-			if (!string.IsNullOrEmpty(msg)) {
-				MessageBox.Show(msg, "Invalid Seletion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-				return;
-			}
-
-			if (!DestinationType.VerifyDestinationOptionsWithUser(mDestination)) return;
-
-			// Validate mExtractionParms.MSGFCutoff
-			if (mExtractionParms.MSGFCutoff.ToLower() != "All Pass".ToLower()) {
-				double result = -1;
-				if (!double.TryParse(mExtractionParms.MSGFCutoff, out result)) {
-					result = -1;
-				} else {
-					if (result < 0 || result > 1)
-						result = -1;
-				}
-
-				if (result < 0) {
-					msg = "Invalid value specified for MSGF Cutoff: '" + mExtractionParms.MSGFCutoff + "'; must either be 'All Pass' or a number between 0 and 1";
-					MessageBox.Show(msg, "Invalid Value", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				DisplaySourceMode mode = (command.Mode == "all") ? DisplaySourceMode.All : DisplaySourceMode.Selected;
+				string msg = ExtractionPipelines.CheckJobResultType(new GVPipelineSource(JobListDisplayCtl, mode), "Tool", mExtractionParms);
+				if (!string.IsNullOrEmpty(msg))
+				{
+					MessageBox.Show(msg, "Invalid Seletion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 					return;
 				}
+
+				if (!DestinationType.VerifyDestinationOptionsWithUser(mDestination)) return;
+
+				// Validate mExtractionParms.MSGFCutoff
+				if (mExtractionParms.MSGFCutoff.ToLower() != "All Pass".ToLower())
+				{
+					double result = -1;
+					if (!double.TryParse(mExtractionParms.MSGFCutoff, out result))
+					{
+						result = -1;
+					}
+					else
+					{
+						if (result < 0 || result > 1)
+							result = -1;
+					}
+
+					if (result < 0)
+					{
+						msg = "Invalid value specified for MSGF Cutoff: '" + mExtractionParms.MSGFCutoff + "'; must either be 'All Pass' or a number between 0 and 1";
+						MessageBox.Show(msg, "Invalid Value", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+						return;
+					}
+				}
+
+				try
+				{
+					BaseModule jobList = new GVPipelineSource(JobListDisplayCtl, mode);
+					ExtractFileContents(jobList);
+					SavedState.SaveParameters(PanelSupport.GetParameterPanelList(this));
+				}
+				catch (Exception ex)
+				{
+					System.Windows.Forms.MessageBox.Show("Error extracting results: " + ex.Message + "; " + ex.StackTrace, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				}
+
+			}
+			catch (Exception ex)
+			{
+				System.Windows.Forms.MessageBox.Show("Error initializing extraction: " + ex.Message + "; " + ex.StackTrace, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
 
-			BaseModule jobList = new GVPipelineSource(JobListDisplayCtl, mode);
-			ExtractFileContents(jobList);
-			SavedState.SaveParameters(PanelSupport.GetParameterPanelList(this));
+	
 		}
 
 		private void HandleCancelCommand(object sender, MageCommandEventArgs command) {

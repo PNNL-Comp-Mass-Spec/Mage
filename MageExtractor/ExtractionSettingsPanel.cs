@@ -100,10 +100,17 @@ namespace MageExtractor {
 
         private void ExtractFromSelectedBtn_Click(object sender, EventArgs e) {
             if (OnAction != null) {
-                MageCommandEventArgs command = new MageCommandEventArgs();
-                command.Mode = "selected";
-                command.Action = "extract_results";
-                OnAction(this, command);
+				try
+				{
+					MageCommandEventArgs command = new MageCommandEventArgs();
+					command.Mode = "selected";
+					command.Action = "extract_results";
+					OnAction(this, command);
+				}
+				catch (Exception ex)
+				{
+					System.Windows.Forms.MessageBox.Show("Error extracting results: " + ex.Message + "; " + ex.StackTrace, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				}
             }
 
         }
