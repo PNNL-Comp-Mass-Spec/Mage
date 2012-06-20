@@ -1,6 +1,5 @@
 syntax: glob
 _ReSharper.Mage/*
-DeployedFiles/*
 *.suo
 *.pdb
 *.user
@@ -9,3 +8,18 @@ bin/*
 *.cache
 [Dd]ebug*/
 [Rr]elease*/
+DeployedFiles/MageExtractor/*.dll
+DeployedFiles/MageExtractor/*.exe
+DeployedFiles/MageExtractor/*.xml
+DeployedFiles/MageFileProcessor/*.dll
+DeployedFiles/MageFileProcessor/*.exe
+DeployedFiles/MageFileProcessor/*.xml
+DeployedFiles/MageMetaDataProcessor/*.dll
+DeployedFiles/MageMetaDataProcessor/*.exe
+DeployedFiles/MageMetaDataProcessor/*.xml
+DeployedFiles/Ranger/*.dll
+DeployedFiles/Ranger/*.exe
+DeployedFiles/Ranger/*.xml
+DeployedFiles/MageFilePackager/*.dll
+DeployedFiles/MageFilePackager/*.exe
+DeployedFiles/MageFilePackager/*.xml

@@ -1,0 +1,1 @@
+This folder holds subfolders that will be created and populated by the various project post-build event commands
