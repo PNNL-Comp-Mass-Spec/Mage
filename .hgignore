@@ -23,3 +23,5 @@ DeployedFiles/Ranger/*.xml
 DeployedFiles/MageFilePackager/*.dll
 DeployedFiles/MageFilePackager/*.exe
 DeployedFiles/MageFilePackager/*.xml
+DeployedFiles/MageExtractor/Cause_Crash/*
+DeployedFiles/MageExtractor/Good DLLs/*

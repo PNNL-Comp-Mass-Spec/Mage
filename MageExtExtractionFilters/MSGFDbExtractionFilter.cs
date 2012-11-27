@@ -10,6 +10,21 @@ namespace MageExtExtractionFilters {
 
     public class MSGFDbExtractionFilter : ExtractionFilter {
 
+		#region "Enums"
+		public enum MSGFDBColumns {
+			Peptide,
+			Charge,
+			MH,
+			MSGF_SpecProb,
+			PValueOrEValue,
+			FDROrQValue,
+			PepFDROrPepQValue,
+			MSGFDB_SpecProbOrEValue,
+			Rank_MSGFDB_SpecProbOrEValue
+		}
+
+		#endregion
+
         #region Member Variables
 
         // working copy of MSGFDB filter object
@@ -19,20 +34,20 @@ namespace MageExtExtractionFilters {
         private int peptideSequenceIndex = 0;
         private int chargeStateIndex = 0;
         private int peptideMassIndex = 0;
-        private int msgfDbSpecProbValueIndex = 0;
-        private int pValueIndex = 0;
+		private int msgfDbSpecProbValueIndex = 0;		// MSGFDB_SpecProb for MSGFDB, MSGFDB_SpecEValue for MSGF+
+		private int rankMSGFDbSpecProbIndex = -1;		// Rank_MSGFDB_SpecProb for MSGFDB, Rank_MSGFDB_SpecEValue for MSGF+
+
+		private int pValueIndex = 0;					// PValue for MSGFDB,          EValue for MSGF+
 
         // Note that FDR and PepFDR may not be present
-        private int FDRIndex = -1;
-        private int pepFDRIndex = -1;
+        private int FDRIndex = -1;						// FDR for MSGFDB,             QValue for MSGF+
+		private int pepFDRIndex = -1;					// PepFDR for MSGFDB,          PepQValue for MSGF+
 
         private int msgfSpecProbIndex = -1;
-		private int rankMSGFDbSpecProbIndex = -1;
 
         private MergeProteinData mProteinMerger = null;
         private bool mOutputAllProteins = false;
-
-
+		
         #endregion
 
         #region Properties
@@ -160,6 +175,61 @@ namespace MageExtExtractionFilters {
             return accept;
         }
 
+		public static void DetermineFieldIndexes(Dictionary<string, int> columnHeaders, out Dictionary<MSGFDBColumns, int> dctColumnMapping)
+		{
+			int columnIndex;
+			bool msgfPlus = false;
+
+			dctColumnMapping = new Dictionary<MSGFDBColumns, int>();
+
+			dctColumnMapping.Add(MSGFDBColumns.Peptide, GetColumnIndex(columnHeaders, "Peptide"));
+			dctColumnMapping.Add(MSGFDBColumns.Charge, GetColumnIndex(columnHeaders, "Charge"));
+			dctColumnMapping.Add(MSGFDBColumns.MH, GetColumnIndex(columnHeaders, "MH"));
+			columnIndex = GetColumnIndex(columnHeaders, "MSGFDB_SpecProb");
+
+			// MSGF+ has MSGFDB_SpecEValue instead of MSGFDB_SpecProb; need to check for this
+			if (columnIndex < 0)
+			{
+				columnIndex = GetColumnIndex(columnHeaders, "MSGFDB_SpecEValue");
+				if (columnIndex >= 0)
+					msgfPlus = true;
+			}
+			else
+			{
+				msgfPlus = false;
+			}
+
+			dctColumnMapping.Add(MSGFDBColumns.MSGFDB_SpecProbOrEValue, columnIndex);
+
+			// Note that FDR and PepFDR (QValue and PepQValue in MSGF+) may not be present in MSGFDB results
+			if (msgfPlus)
+			{
+				dctColumnMapping.Add(MSGFDBColumns.PValueOrEValue, GetColumnIndex(columnHeaders, "EValue"));
+				dctColumnMapping.Add(MSGFDBColumns.FDROrQValue, GetColumnIndex(columnHeaders, "QValue"));
+				dctColumnMapping.Add(MSGFDBColumns.PepFDROrPepQValue, GetColumnIndex(columnHeaders, "PepQValue"));
+				dctColumnMapping.Add(MSGFDBColumns.Rank_MSGFDB_SpecProbOrEValue, GetColumnIndex(columnHeaders, "Rank_MSGFDB_SpecEValue"));
+			}
+			else
+			{
+				dctColumnMapping.Add(MSGFDBColumns.PValueOrEValue, GetColumnIndex(columnHeaders, "PValue"));
+				dctColumnMapping.Add(MSGFDBColumns.FDROrQValue, GetColumnIndex(columnHeaders, "FDR"));
+				dctColumnMapping.Add(MSGFDBColumns.PepFDROrPepQValue, GetColumnIndex(columnHeaders, "PepFDR"));
+				dctColumnMapping.Add(MSGFDBColumns.Rank_MSGFDB_SpecProbOrEValue, GetColumnIndex(columnHeaders, "Rank_MSGFDB_SpecProb"));
+			}
+
+			dctColumnMapping.Add(MSGFDBColumns.MSGF_SpecProb, GetColumnIndex(columnHeaders, "MSGF_SpecProb"));
+		}
+
+		public static int GetMSGFDBColumnIndex(Dictionary<MSGFDBColumns, int> columnPos, MSGFDBColumns columnName)
+		{
+			int value;
+
+			if (columnPos.TryGetValue(columnName, out value))
+				return value;
+			else
+				return -1;
+		}
+
         /// <summary>
         /// set up indexes into row fields array based on column name
         /// (saves time when referencing result columns later)
@@ -173,16 +243,26 @@ namespace MageExtExtractionFilters {
         }
 
         private void PrecalculateFieldIndexes(Dictionary<string, int> columnPos) {
-            peptideSequenceIndex = GetColumnIndex(columnPos, "Peptide");
-            chargeStateIndex = GetColumnIndex(columnPos, "Charge");
-            peptideMassIndex = GetColumnIndex(columnPos, "MH");
-            msgfDbSpecProbValueIndex = GetColumnIndex(columnPos, "MSGFDB_SpecProb");
-            pValueIndex = GetColumnIndex(columnPos, "PValue");
-            // Note that FDR and PepFDR may not be present
-            FDRIndex = GetColumnIndex(columnPos, "FDR");
-            pepFDRIndex = GetColumnIndex(columnPos, "PepFDR");
-            msgfSpecProbIndex = GetColumnIndex(columnPos, "MSGF_SpecProb");
-			rankMSGFDbSpecProbIndex = GetColumnIndex(columnPos, "Rank_MSGFDB_SpecProb");
+
+			Dictionary<MSGFDBColumns, int> dctColumnMapping;
+					
+			DetermineFieldIndexes(columnPos, out dctColumnMapping);
+
+			peptideSequenceIndex = GetMSGFDBColumnIndex(dctColumnMapping, MSGFDBColumns.Peptide);
+			chargeStateIndex = GetMSGFDBColumnIndex(dctColumnMapping, MSGFDBColumns.Charge);
+			peptideMassIndex = GetMSGFDBColumnIndex(dctColumnMapping, MSGFDBColumns.MH);
+			
+			msgfDbSpecProbValueIndex = GetMSGFDBColumnIndex(dctColumnMapping, MSGFDBColumns.MSGFDB_SpecProbOrEValue);
+			rankMSGFDbSpecProbIndex = GetMSGFDBColumnIndex(dctColumnMapping, MSGFDBColumns.Rank_MSGFDB_SpecProbOrEValue);
+
+			pValueIndex = GetMSGFDBColumnIndex(dctColumnMapping, MSGFDBColumns.PValueOrEValue);
+			
+			// Note that FDR and PepFDR may not be present
+			FDRIndex = GetMSGFDBColumnIndex(dctColumnMapping, MSGFDBColumns.FDROrQValue);
+			pepFDRIndex = GetMSGFDBColumnIndex(dctColumnMapping, MSGFDBColumns.PepFDROrPepQValue);
+			
+			msgfSpecProbIndex = GetMSGFDBColumnIndex(dctColumnMapping, MSGFDBColumns.MSGF_SpecProb);
+			
         }
 
         /// <summary>

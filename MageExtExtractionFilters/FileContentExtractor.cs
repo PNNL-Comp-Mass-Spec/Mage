@@ -72,9 +72,9 @@ namespace MageExtExtractionFilters {
         private Dictionary<string, ResultType.MergeFile> mMergeFiles;
 
         private void PrecalculateColumnIndexes() {
-			mInputFolderIdx = base.GetColumnIndex(InputColumnPos, SourceFolderColumnName);
-			mInputFileIdx = base.GetColumnIndex(InputColumnPos, SourceFileColumnName);
-			mJobIdx = base.GetColumnIndex(InputColumnPos, "Job");
+			mInputFolderIdx = GetColumnIndex(InputColumnPos, SourceFolderColumnName);
+			mInputFileIdx = GetColumnIndex(InputColumnPos, SourceFileColumnName);
+			mJobIdx = GetColumnIndex(InputColumnPos, "Job");
         }
 
         private void PrecalculateMergeFileColumnIndexes() {

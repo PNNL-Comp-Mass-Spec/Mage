@@ -1,5 +1,10 @@
 Mage Revision History
 
+Version 1.4.4713
+	- Added support for MSGF+ column names
+		- MSGF+ synopsis (and first hits) files are similar to MSGFDB synopsis files, but with some column name changes and a new IsotopeError column
+	- Bug fix when evaluating the RankScore criterion
+
 Version 1.4.4546; June 12, 2012
 	- Added support for DMS Filter Set criterion RankScore
 

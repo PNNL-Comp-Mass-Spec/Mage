@@ -115,7 +115,7 @@ namespace MageExtContentFilters {
 						 case "RankScore":
 							if (rankMSGFDbSpecProb > 0)
 							{
-								if (rankMSGFDbSpecProb > filterRow.CriteriaValueInt)
+								if (!CompareInteger(rankMSGFDbSpecProb, currCritOperator, filterRow.CriteriaValueInt))
 								{
 									currEval = false;
 									break;

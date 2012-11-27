@@ -136,15 +136,24 @@ namespace MageExtExtractionFilters {
         }
 
         private void PrecalculateFieldIndexes(Dictionary<string, int> columnPos) {
-            peptideSequenceIndex = GetColumnIndex(columnPos, "Peptide");
-            chargeStateIndex = GetColumnIndex(columnPos, "Charge");
-            peptideMassIndex = GetColumnIndex(columnPos, "MH");
-            msgfDbSpecProbValueIndex = GetColumnIndex(columnPos, "MSGFDB_SpecProb");
-            pValueIndex = GetColumnIndex(columnPos, "PValue");
-            // Note that FDR and PepFDR may not be present
-            FDRIndex = GetColumnIndex(columnPos, "FDR");
-            pepFDRIndex = GetColumnIndex(columnPos, "PepFDR");
-            msgfSpecProbIndex = GetColumnIndex(columnPos, "MSGF_SpecProb");
+			Dictionary<MSGFDbExtractionFilter.MSGFDBColumns, int> dctColumnMapping;
+
+			MSGFDbExtractionFilter.DetermineFieldIndexes(columnPos, out dctColumnMapping);
+
+			peptideSequenceIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.Peptide);
+			chargeStateIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.Charge);
+			peptideMassIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.MH);
+
+			msgfDbSpecProbValueIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.MSGFDB_SpecProbOrEValue);
+			// rankMSGFDbSpecProbIndex = 1;
+
+			pValueIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.PValueOrEValue);
+
+			// Note that FDR and PepFDR may not be present
+			FDRIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.FDROrQValue);
+			pepFDRIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.PepFDROrPepQValue);
+
+			msgfSpecProbIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.MSGF_SpecProb);
         }
 
         /// <summary>

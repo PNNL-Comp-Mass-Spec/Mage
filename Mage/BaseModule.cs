@@ -336,7 +336,7 @@ namespace Mage {
         /// <param name="columnPos">Dictionary of column position information</param>
         /// <param name="columnName">Column to find</param>
         /// <returns>Index if defined; otherwise, returns -1</returns>
-        protected int GetColumnIndex(Dictionary<string, int> columnPos, string columnName) {
+        protected static int GetColumnIndex(Dictionary<string, int> columnPos, string columnName) {
             int value;
 
             if (columnPos.TryGetValue(columnName, out value))
