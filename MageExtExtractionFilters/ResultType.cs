@@ -16,7 +16,7 @@ namespace MageExtExtractionFilters {
         #region Constants
         
         public const string XTANDEM_ALL_PROTEINS = "X!Tandem All Proteins";
-        public const string MSGFDB_SYN_ALL_PROTEINS = "MSGFDB Synopsis All Proteins";
+        public const string MSGFDB_SYN_ALL_PROTEINS = "MSGF+ Synopsis All Proteins";
 		public const string INSPECT_SYN_ALL_PROTEINS = "Inspect Synopsis All Proteins";
 
         #endregion
@@ -36,15 +36,15 @@ namespace MageExtExtractionFilters {
         }
 
         private static List<ResultType> Types = new List<ResultType>() {
-            //                 Name                         Tag        Filter     resultsFileTag      ResultsFileTag           IDColumnName
-            new ResultType("Sequest Synopsis",              "syn",     "sequest",    "_syn.txt",         "_syn_MSGF.txt",         "HitNum"),
-            new ResultType("Sequest First Hits",            "fht",     "sequest",    "_fht.txt",         "_fht_MSGF.txt",         "HitNum"),
-            new ResultType("X!Tandem First Protein",        "xt",      "xtandem",    "_xt.txt",          "_xt_MSGF.txt",          "Result_ID"),
-            new ResultType(XTANDEM_ALL_PROTEINS,            "xt",      "xtandem",    "_xt.txt",          "_xt_MSGF.txt",          "Result_ID"),
-            new ResultType(INSPECT_SYN_ALL_PROTEINS,        "ins_syn", "inspect",    "_inspect_syn.txt", "_inspect_syn_MSGF.txt", "ResultID"),
-            new ResultType("MSGFDB First Hits",             "msg_fht", "msgfdbFHT",  "_msgfdb_fht.txt",  "_msgfdb_fht_MSGF.txt",  "ResultID"),
-            new ResultType("MSGFDB Synopsis First Protein", "msg_syn", "msgfdb",     "_msgfdb_syn.txt",  "_msgfdb_syn_MSGF.txt",  "ResultID"),
-            new ResultType(MSGFDB_SYN_ALL_PROTEINS,         "msg_syn", "msgfdb",     "_msgfdb_syn.txt",  "_msgfdb_syn_MSGF.txt",  "ResultID") 
+            //                 Name                         Tag        Filter          resultsFileTag      ResultsFileTag           IDColumnName
+            new ResultType("Sequest Synopsis",              "syn",     "sequest",      "_syn.txt",         "_syn_MSGF.txt",         "HitNum"),
+            new ResultType("Sequest First Hits",            "fht",     "sequest",      "_fht.txt",         "_fht_MSGF.txt",         "HitNum"),
+            new ResultType("X!Tandem First Protein",        "xt",      "xtandem",      "_xt.txt",          "_xt_MSGF.txt",          "Result_ID"),
+            new ResultType(XTANDEM_ALL_PROTEINS,            "xt",      "xtandem",      "_xt.txt",          "_xt_MSGF.txt",          "Result_ID"),
+            new ResultType(INSPECT_SYN_ALL_PROTEINS,        "ins_syn", "inspect",      "_inspect_syn.txt", "_inspect_syn_MSGF.txt", "ResultID"),
+            new ResultType("MSGF+ First Hits",              "msg_fht", "msgfplusFHT",  "_msgfdb_fht.txt",  "_msgfdb_fht_MSGF.txt",  "ResultID"),
+            new ResultType("MSGF+ Synopsis First Protein",  "msg_syn", "msgfplus",     "_msgfdb_syn.txt",  "_msgfdb_syn_MSGF.txt",  "ResultID"),
+            new ResultType(MSGFDB_SYN_ALL_PROTEINS,         "msg_syn", "msgfplus",     "_msgfdb_syn.txt",  "_msgfdb_syn_MSGF.txt",  "ResultID") 
         };
 
         private static List<MergeFile> mMergeTypes = new List<MergeFile>() {
@@ -65,11 +65,11 @@ namespace MageExtExtractionFilters {
             { new MergeFile(INSPECT_SYN_ALL_PROTEINS, "SeqToProteinMap", "Unique_Seq_ID", "_inspect_syn_SeqToProteinMap.txt") },
             { new MergeFile(INSPECT_SYN_ALL_PROTEINS, "MSGF_Name",       "Result_ID",     "_inspect_syn_MSGF.txt") },
 
-            { new MergeFile("MSGFDB First Hits",      "MSGF_Name",       "Result_ID",     "_msgfdb_fht_MSGF.txt") },
+            { new MergeFile("MSGF+ First Hits",      "MSGF_Name",       "Result_ID",     "_msgfdb_fht_MSGF.txt") },
 
-            { new MergeFile("MSGFDB Synopsis First Protein", "ResultToSeqMap",  "Result_ID",     "_msgfdb_syn_ResultToSeqMap.txt") },
-            { new MergeFile("MSGFDB Synopsis First Protein", "SeqToProteinMap", "Unique_Seq_ID", "_msgfdb_syn_SeqToProteinMap.txt") },
-            { new MergeFile("MSGFDB Synopsis First Protein", "MSGF_Name",       "Result_ID",     "_msgfdb_syn_MSGF.txt") },
+            { new MergeFile("MSGF+ Synopsis First Protein",  "ResultToSeqMap",  "Result_ID",     "_msgfdb_syn_ResultToSeqMap.txt") },
+            { new MergeFile("MSGF+ Synopsis First Protein",  "SeqToProteinMap", "Unique_Seq_ID", "_msgfdb_syn_SeqToProteinMap.txt") },
+            { new MergeFile("MSGF+ Synopsis First Protein",  "MSGF_Name",       "Result_ID",     "_msgfdb_syn_MSGF.txt") },
 
             { new MergeFile(MSGFDB_SYN_ALL_PROTEINS,         "ResultToSeqMap",  "Result_ID",     "_msgfdb_syn_ResultToSeqMap.txt") },
             { new MergeFile(MSGFDB_SYN_ALL_PROTEINS,         "SeqToProteinMap", "Unique_Seq_ID", "_msgfdb_syn_SeqToProteinMap.txt") },
@@ -156,13 +156,13 @@ namespace MageExtExtractionFilters {
 					ixf.ResultChecker = resultsChecker as FilterInspectResults;
 					exf = ixf;
                     break;
-                case "msgfdbFHT":
+				case "msgfplusFHT":
                     MSGFDbFHTExtractionFilter mxf1 = new MSGFDbFHTExtractionFilter();
                     mxf1.ResultChecker = resultsChecker as FilterMSGFDbResults;
                     exf = mxf1;
                     break;
 
-                case "msgfdb":
+                case "msgfplus":
                     MSGFDbExtractionFilter mxf2 = new MSGFDbExtractionFilter();
                     mxf2.ResultChecker = resultsChecker as FilterMSGFDbResults;
                     exf = mxf2;
@@ -192,10 +192,10 @@ namespace MageExtExtractionFilters {
                 case "inspect":
 					frb = InspectExtractionFilter.MakeInspectResultChecker(filterSetID);
                     break;
-                case "msgfdbFHT":
+                case "msgfplusFHT":
                     frb = MSGFDbFHTExtractionFilter.MakeMSGFDbResultChecker(filterSetID);
                     break;
-                case "msgfdb":
+                case "msgfplus":
                     frb = MSGFDbExtractionFilter.MakeMSGFDbResultChecker(filterSetID);
                     break;
                 default:

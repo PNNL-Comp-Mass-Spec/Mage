@@ -129,15 +129,15 @@ namespace MageExtExtractionFilters {
             }
             if (tools.Count > 1) {
                 string toolRollup = "(" + string.Join(", ", tools.Keys.ToArray()) + ")";
-                msg = "Cannot work on a mix of job types " + toolRollup + Environment.NewLine + "Select only Sequest, X!Tandem, Inspect, or MSGFDB jobs";
+                msg = "Cannot work on a mix of job types " + toolRollup + Environment.NewLine + "Select only Sequest, X!Tandem, Inspect, or MSGFPlus jobs";
             } else {
                 string f = extractionParams.RType.Filter;
                 string t = tools.Keys.ElementAt(0);
                 if (f.ToLower() != t.ToLower()) {
                     bool bInvalid = true;
 
-                    if (t.ToLower() == "msgfdb" && f.ToLower().StartsWith("msgfdb")) {
-                        // MSGFDB results can be processed by two different extractors: msgfdb and msgfdbFHT
+                    if (t.ToLower() == "msgfplus" && f.ToLower().StartsWith("msgfplus")) {
+                        // MSGF+ results can be processed by two different extractors: msgfdb and msgfdbFHT
                         bInvalid = false;
                     }
 
