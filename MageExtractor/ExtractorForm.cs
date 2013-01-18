@@ -55,7 +55,7 @@ namespace MageExtractor {
 			InitializeComponent();
 
 			bool isBetaVersion = false;
-			SetFormTitle("2013-01-14", isBetaVersion);
+			SetFormTitle("2013-01-18", isBetaVersion);
 
 			SetTags();
 
@@ -105,7 +105,7 @@ namespace MageExtractor {
 		}
 
 		private void SetAboutText() {
-			txtAbout1.Text = "Mage Extractor can extract MS/MS search results from SEQUEST, X!Tandem, Inspect, or MSFBDB analysis jobs and combine the results into a single tab-delimited text file or a single SQLite database.";
+			txtAbout1.Text = "Mage Extractor can extract MS/MS search results from SEQUEST, X!Tandem, Inspect, or MSGF+ analysis jobs and combine the results into a single tab-delimited text file or a single SQLite database.";
 			txtAbout2.Text = "Written by Gary Kiebel and Matthew Monroe in 2011 for the Department of Energy (PNNL, Richland, WA)";
 			lblAboutLink.Text = "http://prismwiki.pnl.gov/wiki/Mage_Extractor";
 		}
@@ -206,7 +206,7 @@ namespace MageExtractor {
 				string msg = ExtractionPipelines.CheckJobResultType(new GVPipelineSource(JobListDisplayCtl, mode), "Tool", mExtractionParms);
 				if (!string.IsNullOrEmpty(msg))
 				{
-					MessageBox.Show(msg, "Invalid Seletion", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+					MessageBox.Show(msg, "Invalid Selection", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 					return;
 				}
 

@@ -1,9 +1,13 @@
 Mage Revision History
 
-Vresion 1.4.4762
+Version 1.4.4766; January 18, 2013
+	- Fixed bugs that included extra lines when when processing MSGF+ Synopsis files
+	- Updated to .NET 4
+
+Version 1.4.4762; January 14, 2013
 	- Renamed MSGFDB to MSGFPlus to reflect name change in DMS
 
-Version 1.4.4713
+Version 1.4.4713; November 26, 2012
 	- Added support for MSGF+ column names
 		- MSGF+ synopsis (and first hits) files are similar to MSGFDB synopsis files, but with some column name changes and a new IsotopeError column
 	- Bug fix when evaluating the RankScore criterion
