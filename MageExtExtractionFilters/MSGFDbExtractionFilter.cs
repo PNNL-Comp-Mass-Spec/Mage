@@ -20,7 +20,9 @@ namespace MageExtExtractionFilters {
 			FDROrQValue,
 			PepFDROrPepQValue,
 			MSGFDB_SpecProbOrEValue,
-			Rank_MSGFDB_SpecProbOrEValue
+			Rank_MSGFDB_SpecProbOrEValue,
+			Scan,
+			Protein
 		}
 
 		#endregion
@@ -31,9 +33,11 @@ namespace MageExtExtractionFilters {
         private FilterMSGFDbResults mMSGFDbFilter = null;
 
         // indexes into the synopsis row field array
+		private int scanNumberIndex = 0;
         private int peptideSequenceIndex = 0;
         private int chargeStateIndex = 0;
         private int peptideMassIndex = 0;
+		private int proteinIndex = 0;
 		private int msgfDbSpecProbValueIndex = 0;		// MSGFDB_SpecProb for MSGFDB, MSGFDB_SpecEValue for MSGF+
 		private int rankMSGFDbSpecProbIndex = -1;		// Rank_MSGFDB_SpecProb for MSGFDB, Rank_MSGFDB_SpecEValue for MSGF+
 
@@ -47,7 +51,8 @@ namespace MageExtExtractionFilters {
 
         private MergeProteinData mProteinMerger = null;
         private bool mOutputAllProteins = false;
-		
+		private SortedSet<string> mDataWrittenRowTags;
+
         #endregion
 
         #region Properties
@@ -69,6 +74,7 @@ namespace MageExtExtractionFilters {
             // ResultType.MergeFile mfProt = mMergeFiles["SeqToProteinMap"];
             mProteinMerger = new MergeProteinData(MergeProteinData.MergeModeConstants.Inspect);
             mOutputAllProteins = (mExtractionType.RType.ResultName == ResultType.MSGFDB_SYN_ALL_PROTEINS);
+			mDataWrittenRowTags = new SortedSet<string>();
         }
 
         public override void Prepare() {
@@ -115,18 +121,41 @@ namespace MageExtExtractionFilters {
 
                 if (!mOutputAllProteins) {
                     mProteinMerger.MergeFirstProtein(ref outRow);
-                    accepted = CheckFilter(ref outRow);
+
+					string sScanChargePeptide = CreateRowTag(outRow, includeProtein: false);
+					if (mDataWrittenRowTags.Contains(sScanChargePeptide))
+						accepted = false;
+					else
+					{
+						mDataWrittenRowTags.Add(sScanChargePeptide);
+						accepted = CheckFilter(ref outRow);
+					}
                 } else {
                     Collection<object[]> rows = null;
 
                     rows = mProteinMerger.MergeAllProteins(ref outRow);
                     if (rows == null) {
-                        accepted = CheckFilter(ref outRow);
-						OnWarningMessage(new MageStatusEventArgs("ProteinMerger did not find a match for row " + mTotalRowsCounter));
+						string sScanChargePeptideProtein = CreateRowTag(outRow, includeProtein: true);
+						if (mDataWrittenRowTags.Contains(sScanChargePeptideProtein))
+							accepted = false;
+						else
+						{
+							mDataWrittenRowTags.Add(sScanChargePeptideProtein);
+							accepted = CheckFilter(ref outRow);
+							OnWarningMessage(new MageStatusEventArgs("ProteinMerger did not find a match for row " + mTotalRowsCounter));
+						}
                     } else {
                         for (int i = 0; i < rows.Count; i++) {
                             object[] row = rows[i];
-                            accepted = CheckFilter(ref row);
+
+							string sScanChargePeptideProtein = CreateRowTag(row, includeProtein: true);
+							if (mDataWrittenRowTags.Contains(sScanChargePeptideProtein))
+								accepted = false;
+							else
+							{
+								mDataWrittenRowTags.Add(sScanChargePeptideProtein);
+								accepted = CheckFilter(ref row);
+							}
                         }
                     }
                 }
@@ -175,6 +204,25 @@ namespace MageExtExtractionFilters {
             return accept;
         }
 
+		protected string CreateRowTag(object[] vals, bool includeProtein)
+		{
+			int scanNumber = GetColumnValue(ref vals, scanNumberIndex, -1);
+			int chargeState = GetColumnValue(ref vals, chargeStateIndex, 0);
+			string peptideSequence = GetColumnValue(ref vals, peptideSequenceIndex, string.Empty);
+			string proteinName = GetColumnValue(ref vals, proteinIndex, string.Empty);
+
+			if (includeProtein)
+			{
+				return scanNumber + "_" + chargeState + "_" + peptideSequence + "_" + proteinName;
+			}
+			else
+			{
+				peptideSequence = RemovePrefixAndSuffixResidues(peptideSequence);
+				return scanNumber + "_" + chargeState + "_" + peptideSequence;
+			}
+
+		}
+
 		public static void DetermineFieldIndexes(Dictionary<string, int> columnHeaders, out Dictionary<MSGFDBColumns, int> dctColumnMapping)
 		{
 			int columnIndex;
@@ -182,9 +230,12 @@ namespace MageExtExtractionFilters {
 
 			dctColumnMapping = new Dictionary<MSGFDBColumns, int>();
 
+			dctColumnMapping.Add(MSGFDBColumns.Scan, GetColumnIndex(columnHeaders, "Scan"));
 			dctColumnMapping.Add(MSGFDBColumns.Peptide, GetColumnIndex(columnHeaders, "Peptide"));
 			dctColumnMapping.Add(MSGFDBColumns.Charge, GetColumnIndex(columnHeaders, "Charge"));
 			dctColumnMapping.Add(MSGFDBColumns.MH, GetColumnIndex(columnHeaders, "MH"));
+			dctColumnMapping.Add(MSGFDBColumns.Protein, GetColumnIndex(columnHeaders, "Protein"));
+
 			columnIndex = GetColumnIndex(columnHeaders, "MSGFDB_SpecProb");
 
 			// MSGF+ has MSGFDB_SpecEValue instead of MSGFDB_SpecProb; need to check for this
@@ -248,10 +299,12 @@ namespace MageExtExtractionFilters {
 					
 			DetermineFieldIndexes(columnPos, out dctColumnMapping);
 
+			scanNumberIndex = GetMSGFDBColumnIndex(dctColumnMapping, MSGFDBColumns.Scan);
 			peptideSequenceIndex = GetMSGFDBColumnIndex(dctColumnMapping, MSGFDBColumns.Peptide);
 			chargeStateIndex = GetMSGFDBColumnIndex(dctColumnMapping, MSGFDBColumns.Charge);
 			peptideMassIndex = GetMSGFDBColumnIndex(dctColumnMapping, MSGFDBColumns.MH);
-			
+			proteinIndex = GetMSGFDBColumnIndex(dctColumnMapping, MSGFDBColumns.Protein);
+
 			msgfDbSpecProbValueIndex = GetMSGFDBColumnIndex(dctColumnMapping, MSGFDBColumns.MSGFDB_SpecProbOrEValue);
 			rankMSGFDbSpecProbIndex = GetMSGFDBColumnIndex(dctColumnMapping, MSGFDBColumns.Rank_MSGFDB_SpecProbOrEValue);
 
@@ -264,6 +317,32 @@ namespace MageExtExtractionFilters {
 			msgfSpecProbIndex = GetMSGFDBColumnIndex(dctColumnMapping, MSGFDBColumns.MSGF_SpecProb);
 			
         }
+
+		protected string RemovePrefixAndSuffixResidues(string peptide)
+		{
+			int periodIndex1;
+			int periodIndex2;
+
+			if (peptide.StartsWith("..") && peptide.Length > 2)
+				peptide = '.' + peptide.Substring(2);
+
+			if (peptide.EndsWith("..") && peptide.Length > 2)
+				peptide = peptide.Substring(0, peptide.Length - 2) + '.';
+
+			periodIndex1 = peptide.IndexOf('.');
+			periodIndex2 = peptide.IndexOf('.', periodIndex1 + 1);
+
+			// See if strSequenceIn contains two periods
+			if (periodIndex1 > -1 && periodIndex2 > -1 && periodIndex2 > periodIndex1 + 1)
+			{
+				// Sequence contains two periods with letters between the periods, 
+				// For example, A.BCDEFGHIJK.L or ABCD.BCDEFGHIJK.L
+				// Extract out the text between the periods
+				peptide = peptide.Substring(periodIndex1 + 1, periodIndex2 - periodIndex1 - 1);
+			} 
+
+			return peptide;
+		}
 
         /// <summary>
         /// Return an MSGFDB filter object that is preset with filter criteria
