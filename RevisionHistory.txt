@@ -1,5 +1,9 @@
 Mage Revision History
 
+Version 1.4.4806; February 27, 2013
+	- Fixed bug when copying folders using Mage File Processor
+	- Updated code that reads the saved settings to enable "Include Folders" if applicable
+
 Version 1.4.4766; January 18, 2013
 	- Fixed bugs that included extra lines when when processing MSGF+ Synopsis files
 	- Updated to .NET 4

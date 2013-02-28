@@ -125,16 +125,59 @@ namespace Mage {
                 bool concatenateOutput = !string.IsNullOrEmpty(OutputFileName);
                 string sourceFolder = args.Fields[InputColumnPos[SourceFolderColumnName]].ToString();
                 string sourceFile = args.Fields[InputColumnPos[SourceFileColumnName]].ToString();
-                string sourcePath = Path.GetFullPath(Path.Combine(sourceFolder, sourceFile));
+
+				string fileType;
+				bool sourceIsFolder = false;
+
+				if (string.IsNullOrWhiteSpace(FileTypeColumnName))
+				{
+					if (System.IO.Directory.Exists(sourceFolder))
+					{
+						if (System.IO.File.Exists(Path.Combine(sourceFolder, sourceFile)))
+							fileType = "file";
+						else
+						{
+							UpdateStatus(this, new MageStatusEventArgs("FAILED->Cannot process folders with this processing mode", 1));
+							OnWarningMessage(new MageStatusEventArgs("Cannot process folders with this processing mode"));
+							System.Threading.Thread.Sleep(500);
+							return;
+						}
+					}
+					else
+					{
+						UpdateStatus(this, new MageStatusEventArgs("FAILED->Folder Not Found: " + sourceFolder, 1));
+						OnWarningMessage(new MageStatusEventArgs("Copy failed->Folder Not Found: " + sourceFolder));
+						System.Threading.Thread.Sleep(250);
+						return;
+					}
+				}
+				else
+					fileType = args.Fields[InputColumnPos[FileTypeColumnName]].ToString();
+
+				if (fileType == "folder")
+					sourceIsFolder = true;
+
+                string sourcePath;
+
+				if (sourceIsFolder)
+					sourcePath = sourceFolder;
+				else
+					sourcePath = Path.GetFullPath(Path.Combine(sourceFolder, sourceFile));
+
                 string destFolder = OutputFolderPath;
 				string destFile;
                 string destPath;
 
 				if (sourceFile == BaseModule.kNoFilesFound) {
 					destFile = kNoFilesFound;
-				} else {
-					destFile = (concatenateOutput) ? OutputFileName : GetOutputFileName(sourceFile, InputColumnPos, args.Fields);
+				} else 
+				{
+					if (concatenateOutput && !sourceIsFolder)
+						destFile = OutputFileName;
+					else
+						destFile = GetOutputFileName(sourceFile, InputColumnPos, args.Fields);
 				}
+
 				destPath =  Path.GetFullPath(Path.Combine(destFolder, destFile));
 
                 // package fields as dictionary
@@ -149,18 +192,18 @@ namespace Mage {
                 // process file
                 if (sourceFile == BaseModule.kNoFilesFound) {
 					// skip
-                } else 
-                if (string.IsNullOrEmpty(FileTypeColumnName)) {
-                    ProcessFile(sourceFile, sourcePath, destPath, context);
-                } else {
-                    string fileType = args.Fields[InputColumnPos[FileTypeColumnName]].ToString();
-                    if (fileType == "file") {
-                        ProcessFile(sourceFile, sourcePath, destPath, context);
-                    }
-                    if (fileType == "folder") {
-                        ProcessFolder(sourceFile, sourcePath, destPath);
-                    }
-                }
+                } else
+					if (string.IsNullOrEmpty(FileTypeColumnName) && fileType != "folder")
+					{
+						ProcessFile(sourceFile, sourcePath, destPath, context);
+					} else {
+						if (fileType == "file") {
+							ProcessFile(sourceFile, sourcePath, destPath, context);
+						}
+						if (fileType == "folder") {
+							ProcessFolder(sourceFile, sourcePath, destPath);
+						}
+					}
 
                 object[] outRow = MapDataRow(args.Fields);
                 int fileNameOutColIndx = OutputColumnPos[OutputFileColumnName];

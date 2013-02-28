@@ -95,12 +95,15 @@ namespace MageUIComponents {
                     case "FileSelectionMode":
                         FileSelectionMode = paramDef.Value;
                         break;
+					case "IncludeFilesOrFolders":
+						IncludeFilesOrFolders = paramDef.Value;
+						break;
                     case "SearchInSubfolders":
                         SearchInSubfolders = paramDef.Value;
                         break;
                     case "SubfolderSearchName":
                         SubfolderSearchName = paramDef.Value;
-                        break;
+                        break;				
                     default:
                         break;
                 }

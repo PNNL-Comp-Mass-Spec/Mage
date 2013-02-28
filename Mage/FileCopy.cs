@@ -105,15 +105,19 @@ namespace Mage {
             } catch (FileNotFoundException) {
                 UpdateStatus(this, new MageStatusEventArgs("FAILED->File Not Found: "+ sourceFile, 1));
                 OnWarningMessage(new MageStatusEventArgs("Copy failed->File Not Found: " + sourcePath));
+				System.Threading.Thread.Sleep(250);
             } catch (DirectoryNotFoundException) {
                 UpdateStatus(this, new MageStatusEventArgs("FAILED->Folder Not Found: " + sourcePath, 1));
                 OnWarningMessage(new MageStatusEventArgs("Copy failed->Folder Not Found: " + sourcePath));
+				System.Threading.Thread.Sleep(250);
             } catch (IOException e) {
                 UpdateStatus(this, new MageStatusEventArgs("FAILED->I/O Exception: " + e.Message +" -- " + sourceFile, 1));
                 OnWarningMessage(new MageStatusEventArgs("Copy failed->I/O Exception: " + e.Message + " -- " + sourceFile));
+				System.Threading.Thread.Sleep(250);
             } catch (Exception e) {
                 UpdateStatus(this, new MageStatusEventArgs("FAILED->" + e.Message + " -- " + sourceFile, 1));
                 OnWarningMessage(new MageStatusEventArgs("Copy failed->" + e.Message + " -- " + sourceFile));
+				System.Threading.Thread.Sleep(250);
             }
         }
 
@@ -164,23 +168,73 @@ namespace Mage {
         /// <param name="source">Path to folder to be copied</param>
         /// <param name="target">Path that folder will be copied to</param>
         protected void CopyAll(DirectoryInfo source, DirectoryInfo target) {
-            // Check if the target directory exists, if not, create it.
-            if (Directory.Exists(target.FullName) == false) {
-                Directory.CreateDirectory(target.FullName);
-            }
 
-            // Copy each file into it’s new directory.
-            foreach (FileInfo fi in source.GetFiles()) {
-                UpdateStatus(this, new MageStatusEventArgs("Start Copy->" + fi.Name));
-                fi.CopyTo(Path.Combine(target.ToString(), fi.Name), true);
-                UpdateStatus(this, new MageStatusEventArgs("Done->" + fi.Name));
-            }
+			string sourceFile = "??";
+			string sourcePath = "??";
 
-            // Copy each subdirectory using recursion.
-            foreach (DirectoryInfo diSourceSubDir in source.GetDirectories()) {
-                DirectoryInfo nextTargetSubDir = target.CreateSubdirectory(diSourceSubDir.Name);
-                CopyAll(diSourceSubDir, nextTargetSubDir);
+			try
+			{
+				// Check if the target directory exists, if not, create it.
+				if (Directory.Exists(target.FullName) == false)
+				{
+					Directory.CreateDirectory(target.FullName);
+				}
+			}
+			catch (Exception e)
+			{
+				UpdateStatus(this, new MageStatusEventArgs("FAILED->" + e.Message + " -- " + target.Name, 1));
+				OnWarningMessage(new MageStatusEventArgs("Directory copy failed->" + e.Message + " -- " + target.FullName));
+				System.Threading.Thread.Sleep(250);
+				return;
+			}
+
+			try
+			{
+				// Copy each file into its new directory.
+				foreach (FileInfo fi in source.GetFiles())
+				{
+					sourceFile = fi.Name;
+					sourcePath = fi.FullName;
+
+					UpdateStatus(this, new MageStatusEventArgs("Start Copy->" + fi.Name));
+					fi.CopyTo(Path.Combine(target.ToString(), fi.Name), true);
+					UpdateStatus(this, new MageStatusEventArgs("Done->" + fi.Name));
+				}
+
+				// Copy each subdirectory using recursion.
+				foreach (DirectoryInfo diSourceSubDir in source.GetDirectories())
+				{
+					try
+					{
+						DirectoryInfo nextTargetSubDir = target.CreateSubdirectory(diSourceSubDir.Name);
+						CopyAll(diSourceSubDir, nextTargetSubDir);
+
+					} catch (Exception e) {
+						UpdateStatus(this, new MageStatusEventArgs("FAILED->" + e.Message + " -- " + diSourceSubDir.Name, 1));
+						OnWarningMessage(new MageStatusEventArgs("Subdirectory copy failed->" + e.Message + " -- " + diSourceSubDir.FullName));
+						System.Threading.Thread.Sleep(250);
+					}
+
+				}
+
+			} catch (FileNotFoundException) {
+                UpdateStatus(this, new MageStatusEventArgs("FAILED->File Not Found: "+ sourceFile, 1));
+                OnWarningMessage(new MageStatusEventArgs("Copy failed->File Not Found: " + sourcePath));
+				System.Threading.Thread.Sleep(250);
+            } catch (DirectoryNotFoundException) {
+				UpdateStatus(this, new MageStatusEventArgs("FAILED->Folder Not Found: " + sourcePath, 1));
+                OnWarningMessage(new MageStatusEventArgs("Copy failed->Folder Not Found: " + sourcePath));
+				System.Threading.Thread.Sleep(250);
+            } catch (IOException e) {
+                UpdateStatus(this, new MageStatusEventArgs("FAILED->I/O Exception: " + e.Message +" -- " + sourceFile, 1));
+                OnWarningMessage(new MageStatusEventArgs("Copy failed->I/O Exception: " + e.Message + " -- " + sourceFile));
+				System.Threading.Thread.Sleep(250);
+            } catch (Exception e) {
+                UpdateStatus(this, new MageStatusEventArgs("FAILED->" + e.Message + " -- " + sourceFile, 1));
+                OnWarningMessage(new MageStatusEventArgs("Copy failed->" + e.Message + " -- " + sourceFile));
+				System.Threading.Thread.Sleep(250);
             }
+      
         }
 
         #endregion

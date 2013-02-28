@@ -178,6 +178,12 @@
         "Entry"
         {
         "MsmKey" = "8:_7B1337A336FDE600F6117517E6FC9B02"
+        "OwnerKey" = "8:_ADD04AF299554FF9AF85B72E7C50CF41"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_7B1337A336FDE600F6117517E6FC9B02"
         "OwnerKey" = "8:_36DAA23730E94D9A80AD60FDF1698E22"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -221,6 +227,12 @@
         {
         "MsmKey" = "8:_82ECFBE0E4E0E75B081F0179B63BCEAE"
         "OwnerKey" = "8:_DB11AAED024249738DEB15B6FF75736F"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_82ECFBE0E4E0E75B081F0179B63BCEAE"
+        "OwnerKey" = "8:_ADD04AF299554FF9AF85B72E7C50CF41"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -274,6 +286,18 @@
         "Entry"
         {
         "MsmKey" = "8:_9043DF47108549BEF75171B99D34EEB3"
+        "OwnerKey" = "8:_ADD04AF299554FF9AF85B72E7C50CF41"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_9043DF47108549BEF75171B99D34EEB3"
+        "OwnerKey" = "8:_92D105ABAB1ECE33C1E239A07D94DB1C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_9043DF47108549BEF75171B99D34EEB3"
         "OwnerKey" = "8:_36DAA23730E94D9A80AD60FDF1698E22"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -293,6 +317,12 @@
         {
         "MsmKey" = "8:_9043DF47108549BEF75171B99D34EEB3"
         "OwnerKey" = "8:_CE69D6BDD6246A98F88E1CC54A4F01B8"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_92D105ABAB1ECE33C1E239A07D94DB1C"
+        "OwnerKey" = "8:_ADD04AF299554FF9AF85B72E7C50CF41"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -340,6 +370,12 @@
         "Entry"
         {
         "MsmKey" = "8:_CBEAF102DDFD8C4D86C42F8BA882F4B0"
+        "OwnerKey" = "8:_ADD04AF299554FF9AF85B72E7C50CF41"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CBEAF102DDFD8C4D86C42F8BA882F4B0"
         "OwnerKey" = "8:_36DAA23730E94D9A80AD60FDF1698E22"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -347,6 +383,18 @@
         {
         "MsmKey" = "8:_CE69D6BDD6246A98F88E1CC54A4F01B8"
         "OwnerKey" = "8:_18B4A43A422C416B83CD55243280572C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CE69D6BDD6246A98F88E1CC54A4F01B8"
+        "OwnerKey" = "8:_92D105ABAB1ECE33C1E239A07D94DB1C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CE69D6BDD6246A98F88E1CC54A4F01B8"
+        "OwnerKey" = "8:_ADD04AF299554FF9AF85B72E7C50CF41"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -413,6 +461,12 @@
         {
         "MsmKey" = "8:_E0DA0C85ADCAC40E0F43A71DD2EBEA06"
         "OwnerKey" = "8:_DB11AAED024249738DEB15B6FF75736F"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E0DA0C85ADCAC40E0F43A71DD2EBEA06"
+        "OwnerKey" = "8:_ADD04AF299554FF9AF85B72E7C50CF41"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -569,6 +623,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_ADD04AF299554FF9AF85B72E7C50CF41"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_92D105ABAB1ECE33C1E239A07D94DB1C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -753,7 +813,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MageUIComponents, Version=1.2.4766.25436, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:MageUIComponents, Version=1.4.4806.36360, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_12E6F4793DF14EDBAFBC7C01B6247FF7"
@@ -784,7 +844,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:RangerLib, Version=1.0.4766.22971, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:RangerLib, Version=1.0.4806.36269, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_1A139B57115D5452BE381498B13FDF1A"
@@ -815,7 +875,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Mage, Version=1.3.4766.22657, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:Mage, Version=1.4.4806.36342, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_1D3AD408FE844EC695AD3F9E137F2259"
@@ -846,7 +906,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MageDisplayLib, Version=1.3.4766.25430, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:MageDisplayLib, Version=1.4.4806.36344, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_2585672770F1790E819C2B4FBD095C79"
@@ -877,7 +937,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MageDisplayLib, Version=1.3.4766.25430, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:MageDisplayLib, Version=1.4.4806.36344, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_28C4942E1263462197316002C7C97D16"
@@ -908,7 +968,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Mage, Version=1.3.4766.22657, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:Mage, Version=1.4.4806.36342, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_3114B5FEC5254F4E90AA4CD6E85FABFE"
@@ -939,7 +999,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MageExtContentFilters, Version=1.3.4766.25431, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:MageExtContentFilters, Version=1.4.4806.36357, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_3AB75ED94E284336883804D87076BC9D"
@@ -1061,7 +1121,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MageUIComponents, Version=1.2.4766.25436, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:MageUIComponents, Version=1.4.4806.36360, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_4CB095463B854249BB5A2DA33CA6B0E7"
@@ -1092,7 +1152,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MageDisplayLib, Version=1.3.4766.25430, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:MageDisplayLib, Version=1.4.4806.36344, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_65152DFD973D4487972E7B160C3CC4CE"
@@ -1276,7 +1336,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MageDisplayLib, Version=1.3.4766.25430, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:MageDisplayLib, Version=1.4.4806.36344, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_8A4F14834DAE4606A2AA9D1BE0496522"
@@ -1307,7 +1367,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Mage, Version=1.3.4766.22970, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:Mage, Version=1.4.4806.36266, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_9043DF47108549BEF75171B99D34EEB3"
@@ -1320,6 +1380,37 @@
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_13D8982CD1D84C4884C85115AC81A497"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_92D105ABAB1ECE33C1E239A07D94DB1C"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:MageExtExtractionFilters, Version=1.4.4806.36274, Culture=neutral, processorArchitecture=x86"
+                "ScatterAssemblies"
+                {
+                    "_92D105ABAB1ECE33C1E239A07D94DB1C"
+                    {
+                    "Name" = "8:MageExtExtractionFilters.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:MageExtExtractionFilters.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_057AD5CA807A46E8986EE13523678AA6"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1369,7 +1460,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MageUIComponents, Version=1.2.4766.25436, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:MageUIComponents, Version=1.4.4806.36360, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_B83B64EBB89B430791AD91657AA94CA0"
@@ -1462,7 +1553,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MageUIComponents, Version=1.2.4766.22973, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:MageUIComponents, Version=1.4.4806.36273, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_CBEAF102DDFD8C4D86C42F8BA882F4B0"
@@ -1493,7 +1584,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MageExtContentFilters, Version=1.3.4766.22972, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:MageExtContentFilters, Version=1.4.4806.36270, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_CE69D6BDD6246A98F88E1CC54A4F01B8"
@@ -1524,7 +1615,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Mage, Version=1.3.4766.22657, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:Mage, Version=1.4.4806.36342, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_D056D8BBE4D7355040B6A41BE09BF7EF"
@@ -1555,7 +1646,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MageDisplayLib, Version=1.3.4766.22971, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:MageDisplayLib, Version=1.4.4806.36268, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_E0DA0C85ADCAC40E0F43A71DD2EBEA06"
@@ -1586,7 +1677,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Mage, Version=1.3.4766.22657, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:Mage, Version=1.4.4806.36342, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_F0B8365E6E4E479584A8328AF825E8A6"
@@ -1724,15 +1815,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Mage"
-        "ProductCode" = "8:{FE13EA1B-A73D-45EA-831D-687CAA17DC83}"
-        "PackageCode" = "8:{4242C812-5614-4056-BD85-92A0AD32E8B3}"
+        "ProductCode" = "8:{A89AF5D6-9599-4FF2-A0EA-4CCB3F204DD8}"
+        "PackageCode" = "8:{C8137FA7-14B9-4F97-B19F-BE0DCE5FDBC9}"
         "UpgradeCode" = "8:{FDED06AE-BF64-4DD9-AA5A-97897D0F54B2}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.5.0"
+        "ProductVersion" = "8:1.5.1"
         "Manufacturer" = "8:PNNL"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
