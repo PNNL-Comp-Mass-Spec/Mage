@@ -128,22 +128,16 @@ namespace MageMetadataProcessor
           mCurrentPipeline = MakeRawQueryPipeline(display, server, database, sql);
           break;
         case "factor_count":
-          //                    sql = "SELECT COUNT(*) AS Rows FROM V_Custom_Factors_List_Report WHERE (Dataset LIKE '%{0}%')";
-          //                    sql = string.Format(sql, datasetFactorsPanel1.DatasetName);
           sql = GetDatasetSql("COUNT(*) AS Rows");
           display = gridViewDisplayControl1.MakeSink("Metadata", 25);
           mCurrentPipeline = MakeRawQueryPipeline(display, server, database, sql);
           break;
         case "factor_list":
-          //         sql = "SELECT Dataset, Dataset_ID, Factor, Value FROM V_Custom_Factors_List_Report WHERE (Dataset LIKE '%{0}%')";
-          //         sql = string.Format(sql, datasetFactorsPanel1.DatasetName);
           sql = GetDatasetSql("Dataset, Dataset_ID, Factor, Value");
           display = gridViewDisplayControl1.MakeSink("Metadata", 25);
           mCurrentPipeline = MakeRawQueryPipeline(display, server, database, sql);
           break;
         case "factor_crosstab":
-          //          sql = "SELECT Dataset, Dataset_ID, Factor, Value FROM V_Custom_Factors_List_Report WHERE (Dataset LIKE '%{0}%')";
-          //          sql = string.Format(sql, datasetFactorsPanel1.DatasetName);
           sql = GetDatasetSql("Dataset, Dataset_ID, Factor, Value");
           display = gridViewDisplayControl1.MakeSink("Metadata", 25);
           mCurrentPipeline = MakeCrosstabQueryPipeline(display, server, database, sql);
