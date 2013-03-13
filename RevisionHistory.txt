@@ -1,5 +1,8 @@
 Mage Revision History
 
+Version 1.4.4820; March 13, 2013
+	- Mage Metadata Processor now supports obtaining factors for all items in a given data package
+
 Version 1.4.4806; February 27, 2013
 	- Fixed bug when copying folders using Mage File Processor
 	- Updated code that reads the saved settings to enable "Include Folders" if applicable
