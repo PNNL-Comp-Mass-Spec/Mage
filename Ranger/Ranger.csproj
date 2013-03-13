@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -114,9 +114,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetPath)" "$(ProjectDir)..\DeployedFiles\Ranger"
-copy "$(TargetDir)*.dll" "$(ProjectDir)..\DeployedFiles\Ranger"
-copy "$(TargetDir)QueryDefinitions.xml" "$(ProjectDir)..\DeployedFiles\Ranger"</PostBuildEvent>
+    <PostBuildEvent>copy "$(TargetPath)" "$(ProjectDir)..\DeployedFiles\$(ProjectName)"
+copy "$(TargetDir)*.dll" "$(ProjectDir)..\DeployedFiles\$(ProjectName)"
+copy "$(TargetDir)QueryDefinitions.xml" "$(ProjectDir)..\DeployedFiles\$(ProjectName)"
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

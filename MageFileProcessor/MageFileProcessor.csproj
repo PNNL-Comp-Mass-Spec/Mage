@@ -135,9 +135,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetPath)" "$(ProjectDir)..\DeployedFiles\MageFileProcessor"
-copy "$(TargetDir)*.dll" "$(ProjectDir)..\DeployedFiles\MageFileProcessor"
-copy "$(TargetDir)QueryDefinitions.xml" "$(ProjectDir)..\DeployedFiles\MageFileProcessor"</PostBuildEvent>
+    <PostBuildEvent>copy "$(TargetPath)" "$(ProjectDir)..\DeployedFiles\$(ProjectName)"
+copy "$(TargetDir)*.dll" "$(ProjectDir)..\DeployedFiles\$(ProjectName)"
+copy "$(TargetDir)QueryDefinitions.xml" "$(ProjectDir)..\DeployedFiles\$(ProjectName)"
+copy "$(TargetFileName).config" "$(ProjectDir)..\DeployedFiles\$(ProjectName)"
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
