@@ -76,7 +76,8 @@ namespace MageExtExtractionFilters {
             fileFinder.FileSelectorMode = "RegEx";
             fileFinder.FileColumnName = "Name";
             fileFinder.FileNameSelector = extractionParms.RType.ResultsFileNamePattern;
-            fileFinder.OutputColumnList = "Job, Item|+|text, Folder, Name|+|text, File_Size_KB|+|text";
+			fileFinder.OutputColumnList = string.Format("Job, {0}|+|text, Folder, {1}|+|text, {2}|+|text, {3}|+|text", FileListFilter.COLUMN_NAME_FILE_TYPE, fileFinder.FileColumnName, FileListFilter.COLUMN_NAME_FILE_SIZE, FileListFilter.COLUMN_NAME_FILE_DATE);
+
             modules.Add(fileFinder);
 
             foreach (ResultType.MergeFile mf in extractionParms.RType.MergeFileTypes) {

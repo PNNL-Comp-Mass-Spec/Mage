@@ -329,7 +329,7 @@ namespace MageFilePackager {
         /// <param name="entityType"></param>
         /// <returns></returns>
         private FilePackageFilter GetPackageFilter(string entityType) {
-            const string baseColMap = "Item, Name, KB|File_Size_KB, Path|+|text, Source|+|text, ";
+            const string baseColMap = "Item, Name, KB|" + FileListFilter.COLUMN_NAME_FILE_SIZE + ", Path|+|text, Source|+|text, ";
             string idColMap = "ID";
             string sourceType = "unknown";
             switch (entityType) {

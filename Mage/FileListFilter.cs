@@ -40,6 +40,7 @@ namespace Mage {
         private int mPathColIndx = -1;
         private int mFileNameOutColIndx = -1;
         private int mFileSizeOutColIndx = -1;
+		private int mFileDateOutColIndx = -1;
         private int mFileTypeOutColIndex = -1;
         private bool mIncludeFiles;
         private bool mIncludeFolders;
@@ -47,9 +48,38 @@ namespace Mage {
 
         #endregion
 
-        #region Properties
+		#region "Constants"
 
-        /// <summary>
+		/// <summary>
+		/// Default column name for the item type column
+		/// </summary>
+		public const string COLUMN_NAME_FILE_TYPE = "Item";
+
+		/// <summary>
+		/// Default column name for the file name column
+		/// </summary>
+		public const string COLUMN_NAME_FILE_NAME = "File";
+
+		/// <summary>
+		/// Default column name for the file size column
+		/// </summary>
+		public const string COLUMN_NAME_FILE_SIZE = "File_Size_KB";
+
+		/// <summary>
+		/// Default column name for the file date column
+		/// </summary>
+		public const string COLUMN_NAME_FILE_DATE = "File_Date";
+
+		/// <summary>
+		/// Default column name for the source folder column
+		/// </summary>
+		public const string COLUMN_NAME_SOURCE_FOLDER = "Folder";
+
+		#endregion
+
+		#region Properties
+
+		/// <summary>
         /// the name of the input column that contains the folder path to search for files
         /// </summary>
         public string SourceFolderColumnName { get; set; }
@@ -64,7 +94,12 @@ namespace Mage {
         /// </summary>
         public string FileSizeColumnName { get; set; }
 
-        /// <summary>
+		/// <summary>
+		/// name of output column that will receive file date
+		/// </summary>
+		public string FileDateColumnName { get; set; }
+
+		/// <summary>
         /// the name of the output column that will contain the file type
         /// </summary>
         public string FileTypeColumnName { get; set; }
@@ -125,14 +160,15 @@ namespace Mage {
         #region Constructors
 
         /// <summary>
-        /// construct a new Mage file list filer module
+        /// construct a new Mage file list filter module
         /// </summary>
         public FileListFilter() {
-            FileTypeColumnName = "Item";
-            FileColumnName = "File";
-            FileSizeColumnName = "File_Size_KB";
-            SourceFolderColumnName = "Folder";
-            OutputColumnList = string.Format("{0}|+|text, {1}|+|text, {2}|+|text, {3}|+|text", FileTypeColumnName, FileColumnName, FileSizeColumnName, SourceFolderColumnName);
+			FileTypeColumnName = COLUMN_NAME_FILE_TYPE;				// Item
+            FileColumnName = COLUMN_NAME_FILE_NAME;					// File
+            FileSizeColumnName = COLUMN_NAME_FILE_SIZE;				// File_Size_KB
+			FileDateColumnName = COLUMN_NAME_FILE_DATE;				// File_Date
+			SourceFolderColumnName = COLUMN_NAME_SOURCE_FOLDER;		// Folder
+			OutputColumnList = string.Format("{0}|+|text, {1}|+|text, {2}|+|text, {3}|+|text, {4}|+|text", FileTypeColumnName, FileColumnName, FileSizeColumnName, FileDateColumnName, SourceFolderColumnName);
             FileSelectorMode = "RegEx";
             IncludeFilesOrFolders = "File";
             RecursiveSearch = "No";
@@ -213,6 +249,7 @@ namespace Mage {
             TryGetOutputColumnPos(SourceFolderColumnName, out mPathColIndx);
             TryGetOutputColumnPos(FileColumnName, out mFileNameOutColIndx);
             TryGetOutputColumnPos(FileSizeColumnName, out mFileSizeOutColIndx);
+			TryGetOutputColumnPos(FileDateColumnName, out mFileDateOutColIndx);
 
             if (string.IsNullOrEmpty(FileTypeColumnName))
                 mFileTypeOutColIndex = -1;
@@ -324,7 +361,8 @@ namespace Mage {
                         string fileName = entry.Key;
                         string folderPath = entry.Value.DirectoryName;
                         string fileSizeKB = FileSizeBytesToString(entry.Value.Length);
-                        ReportFileFound(outputBufferRowIdx, folderPath, fileName, fileSizeKB);
+						string fileDate = entry.Value.LastWriteTime.ToString("yyyy-MM-dd hh:mm:ss tt");
+                        ReportFileFound(outputBufferRowIdx, folderPath, fileName, fileSizeKB, fileDate);
                     }
                     foreach (KeyValuePair<string, DirectoryInfo> entry in subfolderInfo) {
                         string subfolderName = entry.Key;
@@ -540,7 +578,8 @@ namespace Mage {
         /// <param name="folderPath"></param>
         /// <param name="fileName"></param>
         /// <param name="fileSizeKB"></param>
-        private void ReportFileFound(int outputBufferRowIdx, string folderPath, string fileName, string fileSizeKB) {
+		/// /// <param name="fileDate"></param>
+        private void ReportFileFound(int outputBufferRowIdx, string folderPath, string fileName, string fileSizeKB, string fileDate) {
             object[] outRow = (object[])mOutputBuffer[outputBufferRowIdx].Clone(); // yes, we do want a shallow copy
             if (mFileTypeOutColIndex > -1) {
                 outRow[mFileTypeOutColIndex] = "file";
@@ -549,6 +588,10 @@ namespace Mage {
             outRow[mFileNameOutColIndx] = fileName;
             if (mFileSizeOutColIndx > -1) 
                 outRow[mFileSizeOutColIndx] = fileSizeKB;
+
+			if (mFileDateOutColIndx > -1)
+				outRow[mFileDateOutColIndx] = fileDate;
+
             OnDataRowAvailable(new MageDataEventArgs(outRow));
         }
 

@@ -79,11 +79,12 @@ namespace MageFileProcessor {
 			if (runtimeParms.ContainsKey("SubfolderSearchName"))
 				reader.SubfolderSearchName = runtimeParms["SubfolderSearchName"];
 
-            reader.FileTypeColumnName = "Item";
-            reader.FileColumnName = "Name";
-            reader.SourceFolderColumnName = "Folder";
-            reader.FileSizeColumnName = "File_Size_KB";
-            reader.OutputColumnList = string.Format("{0}|+|text, {1}|+|text, {2}|+|text, {3}|+|text", reader.FileTypeColumnName, reader.FileColumnName, reader.FileSizeColumnName, reader.SourceFolderColumnName);
+			reader.FileTypeColumnName = FileListFilter.COLUMN_NAME_FILE_TYPE;			// Item
+			reader.FileColumnName = FileListFilter.COLUMN_NAME_FILE_NAME;				// File
+			reader.SourceFolderColumnName = FileListFilter.COLUMN_NAME_SOURCE_FOLDER;	// Folder
+			reader.FileSizeColumnName = FileListFilter.COLUMN_NAME_FILE_SIZE;			// File_Size_KB
+			reader.FileDateColumnName = FileListFilter.COLUMN_NAME_FILE_DATE;			// File_Date
+			reader.OutputColumnList = string.Format("{0}|+|text, {1}|+|text, {2}|+|text, {3}|+|text, {4}|+|text", reader.FileTypeColumnName, reader.FileColumnName, reader.FileSizeColumnName, reader.FileDateColumnName, reader.SourceFolderColumnName);
             reader.IncludeFilesOrFolders = "File";
 
             // build and wire pipeline

@@ -51,7 +51,7 @@ namespace MageFileProcessor {
             InitializeComponent();
 
 			bool isBetaVersion = false;
-			SetFormTitle("2013-03-13", isBetaVersion);
+			SetFormTitle("2013-04-08", isBetaVersion);
 			
 			SetTags();
 
@@ -604,15 +604,15 @@ namespace MageFileProcessor {
             rp.Add("FileColumnName", "Name");
             switch (entityType) {
                 case "Jobs":
-                    rp.Add("OutputColumnList", "Item|+|text, Name|+|text, File_Size_KB|+|text, Folder, Job, Dataset, Dataset_ID, Tool, Settings_File, Parameter_File, Instrument");
+                    rp.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListFilter.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListFilter.COLUMN_NAME_FILE_DATE + "|+|text, Folder, Job, Dataset, Dataset_ID, Tool, Settings_File, Parameter_File, Instrument");
                     break;
                 case "Datasets":
-                    rp.Add("OutputColumnList", "Item|+|text, Name|+|text, File_Size_KB|+|text, Folder, Dataset, Dataset_ID, Experiment, Campaign, State, Instrument, Created, Type, Comment");
+                    rp.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListFilter.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListFilter.COLUMN_NAME_FILE_DATE + "|+|text, Folder, Dataset, Dataset_ID, Experiment, Campaign, State, Instrument, Created, Type, Comment");
                     break;
             }
             return rp;
         }
-
+	
         /// <summary>
         /// Get "best" column name to use for naming prefix according to hueristec
         /// </summary>

@@ -510,18 +510,18 @@ namespace MageFilePackager {
                          };
             switch (entityType) {
                 case "Jobs":
-                    rp.Add("OutputColumnList", "Item|+|text, Name|+|text, File_Size_KB|+|text, Folder, Job, Dataset, Dataset_ID, Tool, Settings_File, Parameter_File, Instrument, Storage_Path, Purged, Archive_Path");
+					rp.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListFilter.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListFilter.COLUMN_NAME_FILE_DATE + "|+|text, Folder, Job, Dataset, Dataset_ID, Tool, Settings_File, Parameter_File, Instrument, Storage_Path, Purged, Archive_Path");
                     break;
                 case "Datasets":
-                    rp.Add("OutputColumnList", "Item|+|text, Name|+|text, File_Size_KB|+|text, Folder, Dataset, Dataset_ID, State, Instrument, Type, Storage_Path, Purged, Archive_Path");
+					rp.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListFilter.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListFilter.COLUMN_NAME_FILE_DATE + "|+|text, Folder, Dataset, Dataset_ID, State, Instrument, Type, Storage_Path, Purged, Archive_Path");
                     break;
                 default:
-                    rp.Add("OutputColumnList", "Item|+|text, Name|+|text, File_Size_KB|+|text, Folder, *");
+					rp.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListFilter.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListFilter.COLUMN_NAME_FILE_DATE + "|+|text, Folder, *");
                     break;
             }
             return rp;
         }
-
+	
         #endregion
 
         #region Functions for handling status updates

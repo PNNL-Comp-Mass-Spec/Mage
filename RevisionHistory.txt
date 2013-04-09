@@ -1,5 +1,8 @@
 Mage Revision History
 
+Version 1.4.4846; April 8, 2013
+	- Added column File_Date to the file list in Mage File Processor
+
 Version 1.4.4820; March 13, 2013
 	- Mage Metadata Processor now supports obtaining factors for all items in a given data package
 
