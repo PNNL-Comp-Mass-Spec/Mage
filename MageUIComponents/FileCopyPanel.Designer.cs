@@ -53,51 +53,57 @@
 			this.panel3.Controls.Add(this.label1);
 			this.panel3.Controls.Add(this.OutputFolderCtl);
 			this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel3.Location = new System.Drawing.Point(5, 5);
+			this.panel3.Location = new System.Drawing.Point(7, 6);
+			this.panel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.panel3.Name = "panel3";
-			this.panel3.Size = new System.Drawing.Size(634, 64);
+			this.panel3.Size = new System.Drawing.Size(845, 79);
 			this.panel3.TabIndex = 4;
 			// 
 			// OverwriteExistingCtl
 			// 
 			this.OverwriteExistingCtl.AutoSize = true;
-			this.OverwriteExistingCtl.Location = new System.Drawing.Point(566, 36);
+			this.OverwriteExistingCtl.Location = new System.Drawing.Point(681, 43);
+			this.OverwriteExistingCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.OverwriteExistingCtl.Name = "OverwriteExistingCtl";
-			this.OverwriteExistingCtl.Size = new System.Drawing.Size(130, 17);
+			this.OverwriteExistingCtl.Size = new System.Drawing.Size(170, 21);
 			this.OverwriteExistingCtl.TabIndex = 13;
 			this.OverwriteExistingCtl.Text = "Overwrite existing files";
 			this.OverwriteExistingCtl.UseVisualStyleBackColor = true;
 			// 
 			// prefixLeaderCtl
 			// 
-			this.prefixLeaderCtl.Location = new System.Drawing.Point(399, 34);
+			this.prefixLeaderCtl.Location = new System.Drawing.Point(532, 42);
+			this.prefixLeaderCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.prefixLeaderCtl.Name = "prefixLeaderCtl";
-			this.prefixLeaderCtl.Size = new System.Drawing.Size(140, 20);
+			this.prefixLeaderCtl.Size = new System.Drawing.Size(131, 22);
 			this.prefixLeaderCtl.TabIndex = 12;
 			// 
 			// prefixLeaderLabelCtl
 			// 
 			this.prefixLeaderLabelCtl.AutoSize = true;
-			this.prefixLeaderLabelCtl.Location = new System.Drawing.Point(335, 38);
+			this.prefixLeaderLabelCtl.Location = new System.Drawing.Point(447, 47);
+			this.prefixLeaderLabelCtl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.prefixLeaderLabelCtl.Name = "prefixLeaderLabelCtl";
-			this.prefixLeaderLabelCtl.Size = new System.Drawing.Size(58, 13);
+			this.prefixLeaderLabelCtl.Size = new System.Drawing.Size(76, 17);
 			this.prefixLeaderLabelCtl.TabIndex = 11;
 			this.prefixLeaderLabelCtl.Text = "with leader";
 			// 
 			// prefixColNameLabelCtl
 			// 
 			this.prefixColNameLabelCtl.AutoSize = true;
-			this.prefixColNameLabelCtl.Location = new System.Drawing.Point(138, 38);
+			this.prefixColNameLabelCtl.Location = new System.Drawing.Point(184, 47);
+			this.prefixColNameLabelCtl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.prefixColNameLabelCtl.Name = "prefixColNameLabelCtl";
-			this.prefixColNameLabelCtl.Size = new System.Drawing.Size(69, 13);
+			this.prefixColNameLabelCtl.Size = new System.Drawing.Size(91, 17);
 			this.prefixColNameLabelCtl.TabIndex = 10;
 			this.prefixColNameLabelCtl.Text = "using column";
 			// 
 			// prefixColNameCtl
 			// 
-			this.prefixColNameCtl.Location = new System.Drawing.Point(212, 34);
+			this.prefixColNameCtl.Location = new System.Drawing.Point(283, 42);
+			this.prefixColNameCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.prefixColNameCtl.Name = "prefixColNameCtl";
-			this.prefixColNameCtl.Size = new System.Drawing.Size(117, 20);
+			this.prefixColNameCtl.Size = new System.Drawing.Size(155, 22);
 			this.prefixColNameCtl.TabIndex = 9;
 			// 
 			// usePrefixCtl
@@ -105,9 +111,10 @@
 			this.usePrefixCtl.AutoSize = true;
 			this.usePrefixCtl.Checked = true;
 			this.usePrefixCtl.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.usePrefixCtl.Location = new System.Drawing.Point(6, 36);
+			this.usePrefixCtl.Location = new System.Drawing.Point(8, 44);
+			this.usePrefixCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.usePrefixCtl.Name = "usePrefixCtl";
-			this.usePrefixCtl.Size = new System.Drawing.Size(137, 17);
+			this.usePrefixCtl.Size = new System.Drawing.Size(180, 21);
 			this.usePrefixCtl.TabIndex = 8;
 			this.usePrefixCtl.Text = "Apply prefix to file name";
 			this.usePrefixCtl.UseVisualStyleBackColor = true;
@@ -116,9 +123,10 @@
 			// CopyAllCtl
 			// 
 			this.CopyAllCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.CopyAllCtl.Location = new System.Drawing.Point(433, 6);
+			this.CopyAllCtl.Location = new System.Drawing.Point(577, 7);
+			this.CopyAllCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.CopyAllCtl.Name = "CopyAllCtl";
-			this.CopyAllCtl.Size = new System.Drawing.Size(95, 23);
+			this.CopyAllCtl.Size = new System.Drawing.Size(127, 28);
 			this.CopyAllCtl.TabIndex = 7;
 			this.CopyAllCtl.Text = "Copy All";
 			this.CopyAllCtl.UseVisualStyleBackColor = true;
@@ -127,9 +135,10 @@
 			// CopySelectedCtl
 			// 
 			this.CopySelectedCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.CopySelectedCtl.Location = new System.Drawing.Point(534, 6);
+			this.CopySelectedCtl.Location = new System.Drawing.Point(712, 7);
+			this.CopySelectedCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.CopySelectedCtl.Name = "CopySelectedCtl";
-			this.CopySelectedCtl.Size = new System.Drawing.Size(95, 23);
+			this.CopySelectedCtl.Size = new System.Drawing.Size(127, 28);
 			this.CopySelectedCtl.TabIndex = 7;
 			this.CopySelectedCtl.Text = "Copy Selected";
 			this.CopySelectedCtl.UseVisualStyleBackColor = true;
@@ -138,9 +147,10 @@
 			// SelectFolderCtl
 			// 
 			this.SelectFolderCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.SelectFolderCtl.Location = new System.Drawing.Point(388, 6);
+			this.SelectFolderCtl.Location = new System.Drawing.Point(517, 7);
+			this.SelectFolderCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.SelectFolderCtl.Name = "SelectFolderCtl";
-			this.SelectFolderCtl.Size = new System.Drawing.Size(30, 23);
+			this.SelectFolderCtl.Size = new System.Drawing.Size(40, 28);
 			this.SelectFolderCtl.TabIndex = 6;
 			this.SelectFolderCtl.Text = "...";
 			this.SelectFolderCtl.UseVisualStyleBackColor = true;
@@ -149,9 +159,10 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(3, 11);
+			this.label1.Location = new System.Drawing.Point(4, 14);
+			this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(92, 13);
+			this.label1.Size = new System.Drawing.Size(123, 17);
 			this.label1.TabIndex = 2;
 			this.label1.Text = "Destination Folder";
 			// 
@@ -160,19 +171,21 @@
 			this.OutputFolderCtl.AcceptsReturn = true;
 			this.OutputFolderCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.OutputFolderCtl.Location = new System.Drawing.Point(100, 8);
+			this.OutputFolderCtl.Location = new System.Drawing.Point(133, 10);
+			this.OutputFolderCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.OutputFolderCtl.Name = "OutputFolderCtl";
-			this.OutputFolderCtl.Size = new System.Drawing.Size(282, 20);
+			this.OutputFolderCtl.Size = new System.Drawing.Size(375, 22);
 			this.OutputFolderCtl.TabIndex = 1;
 			// 
 			// FileCopyPanel
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.panel3);
+			this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.Name = "FileCopyPanel";
-			this.Padding = new System.Windows.Forms.Padding(5);
-			this.Size = new System.Drawing.Size(644, 74);
+			this.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
+			this.Size = new System.Drawing.Size(859, 91);
 			this.panel3.ResumeLayout(false);
 			this.panel3.PerformLayout();
 			this.ResumeLayout(false);

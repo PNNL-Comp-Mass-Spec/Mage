@@ -56,9 +56,10 @@
 			this.panel1.Controls.Add(this.label2);
 			this.panel1.Controls.Add(this.FileSelectorsCtl);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel1.Location = new System.Drawing.Point(5, 5);
+			this.panel1.Location = new System.Drawing.Point(7, 6);
+			this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(868, 65);
+			this.panel1.Size = new System.Drawing.Size(1157, 80);
 			this.panel1.TabIndex = 1;
 			// 
 			// SearchGroupBoxCtl
@@ -66,17 +67,20 @@
 			this.SearchGroupBoxCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.SearchGroupBoxCtl.Controls.Add(this.SubfolderSearchNameCtl);
 			this.SearchGroupBoxCtl.Controls.Add(this.SearchInSubfoldersCtl);
-			this.SearchGroupBoxCtl.Location = new System.Drawing.Point(342, 1);
+			this.SearchGroupBoxCtl.Location = new System.Drawing.Point(456, 1);
+			this.SearchGroupBoxCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.SearchGroupBoxCtl.Name = "SearchGroupBoxCtl";
-			this.SearchGroupBoxCtl.Size = new System.Drawing.Size(134, 54);
+			this.SearchGroupBoxCtl.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.SearchGroupBoxCtl.Size = new System.Drawing.Size(179, 66);
 			this.SearchGroupBoxCtl.TabIndex = 13;
 			this.SearchGroupBoxCtl.TabStop = false;
 			// 
 			// SubfolderSearchNameCtl
 			// 
-			this.SubfolderSearchNameCtl.Location = new System.Drawing.Point(10, 29);
+			this.SubfolderSearchNameCtl.Location = new System.Drawing.Point(13, 36);
+			this.SubfolderSearchNameCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.SubfolderSearchNameCtl.Name = "SubfolderSearchNameCtl";
-			this.SubfolderSearchNameCtl.Size = new System.Drawing.Size(114, 20);
+			this.SubfolderSearchNameCtl.Size = new System.Drawing.Size(151, 22);
 			this.SubfolderSearchNameCtl.TabIndex = 1;
 			this.SubfolderSearchNameCtl.Text = "*";
 			// 
@@ -84,9 +88,10 @@
 			// 
 			this.SearchInSubfoldersCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.SearchInSubfoldersCtl.AutoSize = true;
-			this.SearchInSubfoldersCtl.Location = new System.Drawing.Point(10, 10);
+			this.SearchInSubfoldersCtl.Location = new System.Drawing.Point(13, 12);
+			this.SearchInSubfoldersCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.SearchInSubfoldersCtl.Name = "SearchInSubfoldersCtl";
-			this.SearchInSubfoldersCtl.Size = new System.Drawing.Size(122, 17);
+			this.SearchInSubfoldersCtl.Size = new System.Drawing.Size(160, 21);
 			this.SearchInSubfoldersCtl.TabIndex = 0;
 			this.SearchInSubfoldersCtl.Text = "Search in subfolders";
 			this.SearchInSubfoldersCtl.UseVisualStyleBackColor = true;
@@ -96,18 +101,21 @@
 			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox1.Controls.Add(this.IncludeFoldersCtl);
 			this.groupBox1.Controls.Add(this.IncludefilesCtl);
-			this.groupBox1.Location = new System.Drawing.Point(479, 1);
+			this.groupBox1.Location = new System.Drawing.Point(639, 1);
+			this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(112, 54);
+			this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.groupBox1.Size = new System.Drawing.Size(149, 66);
 			this.groupBox1.TabIndex = 12;
 			this.groupBox1.TabStop = false;
 			// 
 			// IncludeFoldersCtl
 			// 
 			this.IncludeFoldersCtl.AutoSize = true;
-			this.IncludeFoldersCtl.Location = new System.Drawing.Point(10, 33);
+			this.IncludeFoldersCtl.Location = new System.Drawing.Point(13, 41);
+			this.IncludeFoldersCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.IncludeFoldersCtl.Name = "IncludeFoldersCtl";
-			this.IncludeFoldersCtl.Size = new System.Drawing.Size(98, 17);
+			this.IncludeFoldersCtl.Size = new System.Drawing.Size(126, 21);
 			this.IncludeFoldersCtl.TabIndex = 1;
 			this.IncludeFoldersCtl.Text = "Include Folders";
 			this.IncludeFoldersCtl.UseVisualStyleBackColor = true;
@@ -117,9 +125,10 @@
 			this.IncludefilesCtl.AutoSize = true;
 			this.IncludefilesCtl.Checked = true;
 			this.IncludefilesCtl.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.IncludefilesCtl.Location = new System.Drawing.Point(10, 10);
+			this.IncludefilesCtl.Location = new System.Drawing.Point(13, 12);
+			this.IncludefilesCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.IncludefilesCtl.Name = "IncludefilesCtl";
-			this.IncludefilesCtl.Size = new System.Drawing.Size(85, 17);
+			this.IncludefilesCtl.Size = new System.Drawing.Size(108, 21);
 			this.IncludefilesCtl.TabIndex = 0;
 			this.IncludefilesCtl.Text = "Include Files";
 			this.IncludefilesCtl.UseVisualStyleBackColor = true;
@@ -127,9 +136,10 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(8, 36);
+			this.label1.Location = new System.Drawing.Point(11, 44);
+			this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(283, 13);
+			this.label1.Size = new System.Drawing.Size(382, 17);
 			this.label1.TabIndex = 11;
 			this.label1.Text = "Multiple file filters can be used (separate with semi-colon \';\')";
 			// 
@@ -138,18 +148,21 @@
 			this.FileSelectorRadioGroupBoxCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.FileSelectorRadioGroupBoxCtl.Controls.Add(this.FileSearchRadioBtn);
 			this.FileSelectorRadioGroupBoxCtl.Controls.Add(this.RegExRadioBtn);
-			this.FileSelectorRadioGroupBoxCtl.Location = new System.Drawing.Point(594, 1);
+			this.FileSelectorRadioGroupBoxCtl.Location = new System.Drawing.Point(792, 1);
+			this.FileSelectorRadioGroupBoxCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.FileSelectorRadioGroupBoxCtl.Name = "FileSelectorRadioGroupBoxCtl";
-			this.FileSelectorRadioGroupBoxCtl.Size = new System.Drawing.Size(91, 54);
+			this.FileSelectorRadioGroupBoxCtl.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.FileSelectorRadioGroupBoxCtl.Size = new System.Drawing.Size(121, 66);
 			this.FileSelectorRadioGroupBoxCtl.TabIndex = 10;
 			this.FileSelectorRadioGroupBoxCtl.TabStop = false;
 			// 
 			// FileSearchRadioBtn
 			// 
 			this.FileSearchRadioBtn.AutoSize = true;
-			this.FileSearchRadioBtn.Location = new System.Drawing.Point(10, 33);
+			this.FileSearchRadioBtn.Location = new System.Drawing.Point(13, 41);
+			this.FileSearchRadioBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.FileSearchRadioBtn.Name = "FileSearchRadioBtn";
-			this.FileSearchRadioBtn.Size = new System.Drawing.Size(78, 17);
+			this.FileSearchRadioBtn.Size = new System.Drawing.Size(100, 21);
 			this.FileSearchRadioBtn.TabIndex = 1;
 			this.FileSearchRadioBtn.Text = "File Search";
 			this.FileSearchRadioBtn.UseVisualStyleBackColor = true;
@@ -159,9 +172,10 @@
 			// 
 			this.RegExRadioBtn.AutoSize = true;
 			this.RegExRadioBtn.Checked = true;
-			this.RegExRadioBtn.Location = new System.Drawing.Point(10, 10);
+			this.RegExRadioBtn.Location = new System.Drawing.Point(13, 12);
+			this.RegExRadioBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.RegExRadioBtn.Name = "RegExRadioBtn";
-			this.RegExRadioBtn.Size = new System.Drawing.Size(57, 17);
+			this.RegExRadioBtn.Size = new System.Drawing.Size(70, 21);
 			this.RegExRadioBtn.TabIndex = 0;
 			this.RegExRadioBtn.TabStop = true;
 			this.RegExRadioBtn.Text = "RegEx";
@@ -171,9 +185,10 @@
 			// GetFilesForAllEntriesCtl
 			// 
 			this.GetFilesForAllEntriesCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.GetFilesForAllEntriesCtl.Location = new System.Drawing.Point(691, 33);
+			this.GetFilesForAllEntriesCtl.Location = new System.Drawing.Point(921, 41);
+			this.GetFilesForAllEntriesCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.GetFilesForAllEntriesCtl.Name = "GetFilesForAllEntriesCtl";
-			this.GetFilesForAllEntriesCtl.Size = new System.Drawing.Size(172, 23);
+			this.GetFilesForAllEntriesCtl.Size = new System.Drawing.Size(229, 28);
 			this.GetFilesForAllEntriesCtl.TabIndex = 9;
 			this.GetFilesForAllEntriesCtl.Text = "Get Files For &All Entities";
 			this.GetFilesForAllEntriesCtl.UseVisualStyleBackColor = true;
@@ -182,9 +197,10 @@
 			// GetFilesForSelectedEntriesCtl
 			// 
 			this.GetFilesForSelectedEntriesCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.GetFilesForSelectedEntriesCtl.Location = new System.Drawing.Point(691, 4);
+			this.GetFilesForSelectedEntriesCtl.Location = new System.Drawing.Point(921, 5);
+			this.GetFilesForSelectedEntriesCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.GetFilesForSelectedEntriesCtl.Name = "GetFilesForSelectedEntriesCtl";
-			this.GetFilesForSelectedEntriesCtl.Size = new System.Drawing.Size(172, 23);
+			this.GetFilesForSelectedEntriesCtl.Size = new System.Drawing.Size(229, 28);
 			this.GetFilesForSelectedEntriesCtl.TabIndex = 8;
 			this.GetFilesForSelectedEntriesCtl.Text = "Get Files For &Selected Entities";
 			this.GetFilesForSelectedEntriesCtl.UseVisualStyleBackColor = true;
@@ -193,9 +209,10 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(3, 9);
+			this.label2.Location = new System.Drawing.Point(4, 11);
+			this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(79, 13);
+			this.label2.Size = new System.Drawing.Size(106, 17);
 			this.label2.TabIndex = 7;
 			this.label2.Text = "File Name Filter";
 			// 
@@ -203,19 +220,21 @@
 			// 
 			this.FileSelectorsCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.FileSelectorsCtl.Location = new System.Drawing.Point(88, 6);
+			this.FileSelectorsCtl.Location = new System.Drawing.Point(117, 7);
+			this.FileSelectorsCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.FileSelectorsCtl.Name = "FileSelectorsCtl";
-			this.FileSelectorsCtl.Size = new System.Drawing.Size(248, 20);
+			this.FileSelectorsCtl.Size = new System.Drawing.Size(329, 22);
 			this.FileSelectorsCtl.TabIndex = 6;
 			// 
 			// EntityFilePanel
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.panel1);
+			this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.Name = "EntityFilePanel";
-			this.Padding = new System.Windows.Forms.Padding(5);
-			this.Size = new System.Drawing.Size(878, 75);
+			this.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
+			this.Size = new System.Drawing.Size(1171, 92);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.SearchGroupBoxCtl.ResumeLayout(false);

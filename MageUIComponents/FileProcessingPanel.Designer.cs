@@ -51,9 +51,10 @@
 			this.panel3.Controls.Add(this.ProcessAllFilesCtl);
 			this.panel3.Controls.Add(this.ProcessSelectedFilesCtl);
 			this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel3.Location = new System.Drawing.Point(5, 5);
+			this.panel3.Location = new System.Drawing.Point(7, 6);
+			this.panel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.panel3.Name = "panel3";
-			this.panel3.Size = new System.Drawing.Size(942, 80);
+			this.panel3.Size = new System.Drawing.Size(1255, 93);
 			this.panel3.TabIndex = 9;
 			// 
 			// panel2
@@ -66,17 +67,19 @@
 			this.panel2.Controls.Add(this.FilterParametersCtl);
 			this.panel2.Controls.Add(this.FilterSelectionCtl);
 			this.panel2.Controls.Add(this.SelectFilterBtn);
-			this.panel2.Location = new System.Drawing.Point(5, 3);
+			this.panel2.Location = new System.Drawing.Point(7, 4);
+			this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(772, 33);
+			this.panel2.Size = new System.Drawing.Size(1029, 40);
 			this.panel2.TabIndex = 19;
 			// 
 			// ClearFilterBtn
 			// 
 			this.ClearFilterBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.ClearFilterBtn.Location = new System.Drawing.Point(487, 4);
+			this.ClearFilterBtn.Location = new System.Drawing.Point(649, 5);
+			this.ClearFilterBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.ClearFilterBtn.Name = "ClearFilterBtn";
-			this.ClearFilterBtn.Size = new System.Drawing.Size(133, 23);
+			this.ClearFilterBtn.Size = new System.Drawing.Size(177, 28);
 			this.ClearFilterBtn.TabIndex = 17;
 			this.ClearFilterBtn.Text = "Clear Filter";
 			this.ClearFilterBtn.UseVisualStyleBackColor = true;
@@ -85,18 +88,20 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(3, 9);
+			this.label1.Location = new System.Drawing.Point(4, 11);
+			this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(29, 13);
+			this.label1.Size = new System.Drawing.Size(39, 17);
 			this.label1.TabIndex = 2;
 			this.label1.Text = "Filter";
 			// 
 			// FilterParametersCtl
 			// 
 			this.FilterParametersCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.FilterParametersCtl.Location = new System.Drawing.Point(400, 4);
+			this.FilterParametersCtl.Location = new System.Drawing.Point(533, 5);
+			this.FilterParametersCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.FilterParametersCtl.Name = "FilterParametersCtl";
-			this.FilterParametersCtl.Size = new System.Drawing.Size(81, 23);
+			this.FilterParametersCtl.Size = new System.Drawing.Size(108, 28);
 			this.FilterParametersCtl.TabIndex = 9;
 			this.FilterParametersCtl.Text = "Parameters...";
 			this.FilterParametersCtl.UseVisualStyleBackColor = true;
@@ -105,9 +110,10 @@
 			// FilterSelectionCtl
 			// 
 			this.FilterSelectionCtl.AutoSize = true;
-			this.FilterSelectionCtl.Location = new System.Drawing.Point(100, 9);
+			this.FilterSelectionCtl.Location = new System.Drawing.Point(133, 11);
+			this.FilterSelectionCtl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.FilterSelectionCtl.Name = "FilterSelectionCtl";
-			this.FilterSelectionCtl.Size = new System.Drawing.Size(44, 13);
+			this.FilterSelectionCtl.Size = new System.Drawing.Size(58, 17);
 			this.FilterSelectionCtl.TabIndex = 16;
 			this.FilterSelectionCtl.Text = "All Pass";
 			this.FilterSelectionCtl.TextChanged += new System.EventHandler(this.FilterSelectionCtl_TextChanged);
@@ -115,9 +121,10 @@
 			// SelectFilterBtn
 			// 
 			this.SelectFilterBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.SelectFilterBtn.Location = new System.Drawing.Point(626, 4);
+			this.SelectFilterBtn.Location = new System.Drawing.Point(835, 5);
+			this.SelectFilterBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.SelectFilterBtn.Name = "SelectFilterBtn";
-			this.SelectFilterBtn.Size = new System.Drawing.Size(141, 23);
+			this.SelectFilterBtn.Size = new System.Drawing.Size(188, 28);
 			this.SelectFilterBtn.TabIndex = 15;
 			this.SelectFilterBtn.Text = "Select Filter...";
 			this.SelectFilterBtn.UseVisualStyleBackColor = true;
@@ -133,17 +140,19 @@
 			this.panel1.Controls.Add(this.SelectColMapBtn);
 			this.panel1.Controls.Add(this.ColumnMapSelectionCtl);
 			this.panel1.Controls.Add(this.ClearColMapBtn);
-			this.panel1.Location = new System.Drawing.Point(5, 42);
+			this.panel1.Location = new System.Drawing.Point(7, 43);
+			this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(772, 33);
+			this.panel1.Size = new System.Drawing.Size(1029, 41);
 			this.panel1.TabIndex = 18;
 			// 
 			// EditColumnMappingBtn
 			// 
 			this.EditColumnMappingBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.EditColumnMappingBtn.Location = new System.Drawing.Point(400, 3);
+			this.EditColumnMappingBtn.Location = new System.Drawing.Point(533, 4);
+			this.EditColumnMappingBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.EditColumnMappingBtn.Name = "EditColumnMappingBtn";
-			this.EditColumnMappingBtn.Size = new System.Drawing.Size(80, 23);
+			this.EditColumnMappingBtn.Size = new System.Drawing.Size(107, 28);
 			this.EditColumnMappingBtn.TabIndex = 15;
 			this.EditColumnMappingBtn.Text = "Edit...";
 			this.EditColumnMappingBtn.UseVisualStyleBackColor = true;
@@ -152,18 +161,20 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(3, 9);
+			this.label2.Location = new System.Drawing.Point(4, 11);
+			this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(86, 13);
+			this.label2.Size = new System.Drawing.Size(113, 17);
 			this.label2.TabIndex = 11;
 			this.label2.Text = "Column Mapping";
 			// 
 			// SelectColMapBtn
 			// 
 			this.SelectColMapBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.SelectColMapBtn.Location = new System.Drawing.Point(626, 4);
+			this.SelectColMapBtn.Location = new System.Drawing.Point(835, 5);
+			this.SelectColMapBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.SelectColMapBtn.Name = "SelectColMapBtn";
-			this.SelectColMapBtn.Size = new System.Drawing.Size(141, 23);
+			this.SelectColMapBtn.Size = new System.Drawing.Size(188, 28);
 			this.SelectColMapBtn.TabIndex = 12;
 			this.SelectColMapBtn.Text = "Select Column Mapping...";
 			this.SelectColMapBtn.UseVisualStyleBackColor = true;
@@ -172,18 +183,20 @@
 			// ColumnMapSelectionCtl
 			// 
 			this.ColumnMapSelectionCtl.AutoSize = true;
-			this.ColumnMapSelectionCtl.Location = new System.Drawing.Point(100, 9);
+			this.ColumnMapSelectionCtl.Location = new System.Drawing.Point(133, 11);
+			this.ColumnMapSelectionCtl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.ColumnMapSelectionCtl.Name = "ColumnMapSelectionCtl";
-			this.ColumnMapSelectionCtl.Size = new System.Drawing.Size(59, 13);
+			this.ColumnMapSelectionCtl.Size = new System.Drawing.Size(79, 17);
 			this.ColumnMapSelectionCtl.TabIndex = 13;
 			this.ColumnMapSelectionCtl.Text = "(automatic)";
 			// 
 			// ClearColMapBtn
 			// 
 			this.ClearColMapBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.ClearColMapBtn.Location = new System.Drawing.Point(487, 4);
+			this.ClearColMapBtn.Location = new System.Drawing.Point(649, 5);
+			this.ClearColMapBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.ClearColMapBtn.Name = "ClearColMapBtn";
-			this.ClearColMapBtn.Size = new System.Drawing.Size(133, 23);
+			this.ClearColMapBtn.Size = new System.Drawing.Size(177, 28);
 			this.ClearColMapBtn.TabIndex = 14;
 			this.ClearColMapBtn.Text = "Clear Column Mapping";
 			this.ClearColMapBtn.UseVisualStyleBackColor = true;
@@ -192,9 +205,10 @@
 			// ProcessAllFilesCtl
 			// 
 			this.ProcessAllFilesCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.ProcessAllFilesCtl.Location = new System.Drawing.Point(793, 42);
+			this.ProcessAllFilesCtl.Location = new System.Drawing.Point(1057, 41);
+			this.ProcessAllFilesCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.ProcessAllFilesCtl.Name = "ProcessAllFilesCtl";
-			this.ProcessAllFilesCtl.Size = new System.Drawing.Size(140, 23);
+			this.ProcessAllFilesCtl.Size = new System.Drawing.Size(187, 28);
 			this.ProcessAllFilesCtl.TabIndex = 8;
 			this.ProcessAllFilesCtl.Text = "&Process All Files";
 			this.ProcessAllFilesCtl.UseVisualStyleBackColor = true;
@@ -203,9 +217,10 @@
 			// ProcessSelectedFilesCtl
 			// 
 			this.ProcessSelectedFilesCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.ProcessSelectedFilesCtl.Location = new System.Drawing.Point(793, 17);
+			this.ProcessSelectedFilesCtl.Location = new System.Drawing.Point(1057, 10);
+			this.ProcessSelectedFilesCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.ProcessSelectedFilesCtl.Name = "ProcessSelectedFilesCtl";
-			this.ProcessSelectedFilesCtl.Size = new System.Drawing.Size(140, 23);
+			this.ProcessSelectedFilesCtl.Size = new System.Drawing.Size(187, 28);
 			this.ProcessSelectedFilesCtl.TabIndex = 0;
 			this.ProcessSelectedFilesCtl.Text = "Process Selected &Files";
 			this.ProcessSelectedFilesCtl.UseVisualStyleBackColor = true;
@@ -213,12 +228,13 @@
 			// 
 			// FileProcessingPanel
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.panel3);
+			this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.Name = "FileProcessingPanel";
-			this.Padding = new System.Windows.Forms.Padding(5);
-			this.Size = new System.Drawing.Size(952, 90);
+			this.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
+			this.Size = new System.Drawing.Size(1269, 105);
 			this.panel3.ResumeLayout(false);
 			this.panel2.ResumeLayout(false);
 			this.panel2.PerformLayout();

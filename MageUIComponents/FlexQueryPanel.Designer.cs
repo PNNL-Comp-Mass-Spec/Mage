@@ -45,12 +45,13 @@
 			this.tableLayoutPanel1.Controls.Add(this.flexQueryItemPanel2, 1, 0);
 			this.tableLayoutPanel1.Controls.Add(this.flexQueryItemPanel3, 0, 1);
 			this.tableLayoutPanel1.Controls.Add(this.flexQueryItemPanel4, 1, 1);
-			this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+			this.tableLayoutPanel1.Location = new System.Drawing.Point(4, 4);
+			this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 2;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(769, 60);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(837, 74);
 			this.tableLayoutPanel1.TabIndex = 0;
 			// 
 			// flexQueryItemPanel1
@@ -63,7 +64,7 @@
 			this.flexQueryItemPanel1.Margin = new System.Windows.Forms.Padding(1);
 			this.flexQueryItemPanel1.Name = "flexQueryItemPanel1";
 			this.flexQueryItemPanel1.Relation = "AND";
-			this.flexQueryItemPanel1.Size = new System.Drawing.Size(382, 24);
+			this.flexQueryItemPanel1.Size = new System.Drawing.Size(416, 30);
 			this.flexQueryItemPanel1.TabIndex = 0;
 			this.flexQueryItemPanel1.Value = "";
 			// 
@@ -73,11 +74,11 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.flexQueryItemPanel2.Column = "";
 			this.flexQueryItemPanel2.Comparision = "";
-			this.flexQueryItemPanel2.Location = new System.Drawing.Point(385, 1);
+			this.flexQueryItemPanel2.Location = new System.Drawing.Point(419, 1);
 			this.flexQueryItemPanel2.Margin = new System.Windows.Forms.Padding(1);
 			this.flexQueryItemPanel2.Name = "flexQueryItemPanel2";
 			this.flexQueryItemPanel2.Relation = "AND";
-			this.flexQueryItemPanel2.Size = new System.Drawing.Size(383, 24);
+			this.flexQueryItemPanel2.Size = new System.Drawing.Size(417, 30);
 			this.flexQueryItemPanel2.TabIndex = 1;
 			this.flexQueryItemPanel2.Value = "";
 			// 
@@ -87,11 +88,11 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.flexQueryItemPanel3.Column = "";
 			this.flexQueryItemPanel3.Comparision = "";
-			this.flexQueryItemPanel3.Location = new System.Drawing.Point(1, 31);
+			this.flexQueryItemPanel3.Location = new System.Drawing.Point(1, 38);
 			this.flexQueryItemPanel3.Margin = new System.Windows.Forms.Padding(1);
 			this.flexQueryItemPanel3.Name = "flexQueryItemPanel3";
 			this.flexQueryItemPanel3.Relation = "AND";
-			this.flexQueryItemPanel3.Size = new System.Drawing.Size(382, 24);
+			this.flexQueryItemPanel3.Size = new System.Drawing.Size(416, 30);
 			this.flexQueryItemPanel3.TabIndex = 2;
 			this.flexQueryItemPanel3.Value = "";
 			// 
@@ -101,20 +102,21 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.flexQueryItemPanel4.Column = "";
 			this.flexQueryItemPanel4.Comparision = "";
-			this.flexQueryItemPanel4.Location = new System.Drawing.Point(385, 31);
+			this.flexQueryItemPanel4.Location = new System.Drawing.Point(419, 38);
 			this.flexQueryItemPanel4.Margin = new System.Windows.Forms.Padding(1);
 			this.flexQueryItemPanel4.Name = "flexQueryItemPanel4";
 			this.flexQueryItemPanel4.Relation = "AND";
-			this.flexQueryItemPanel4.Size = new System.Drawing.Size(383, 24);
+			this.flexQueryItemPanel4.Size = new System.Drawing.Size(417, 30);
 			this.flexQueryItemPanel4.TabIndex = 3;
 			this.flexQueryItemPanel4.Value = "";
 			// 
 			// GetJobsCtl
 			// 
 			this.GetJobsCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.GetJobsCtl.Location = new System.Drawing.Point(695, 67);
+			this.GetJobsCtl.Location = new System.Drawing.Point(849, 53);
+			this.GetJobsCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.GetJobsCtl.Name = "GetJobsCtl";
-			this.GetJobsCtl.Size = new System.Drawing.Size(76, 23);
+			this.GetJobsCtl.Size = new System.Drawing.Size(101, 28);
 			this.GetJobsCtl.TabIndex = 1;
 			this.GetJobsCtl.Text = "&Get Jobs";
 			this.GetJobsCtl.UseVisualStyleBackColor = true;
@@ -126,19 +128,21 @@
 			this.panel1.Controls.Add(this.tableLayoutPanel1);
 			this.panel1.Controls.Add(this.GetJobsCtl);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel1.Location = new System.Drawing.Point(5, 5);
+			this.panel1.Location = new System.Drawing.Point(7, 6);
+			this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(777, 95);
+			this.panel1.Size = new System.Drawing.Size(956, 87);
 			this.panel1.TabIndex = 2;
 			// 
 			// FlexQueryPanel
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.panel1);
+			this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.Name = "FlexQueryPanel";
-			this.Padding = new System.Windows.Forms.Padding(5);
-			this.Size = new System.Drawing.Size(787, 105);
+			this.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
+			this.Size = new System.Drawing.Size(970, 99);
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.panel1.ResumeLayout(false);
 			this.ResumeLayout(false);
