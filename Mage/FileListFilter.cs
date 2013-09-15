@@ -317,7 +317,7 @@ namespace Mage
 			if (searchMyEMSL)
 			{
 				foreach (var datasetName in dctRowDatasets.Values.Distinct())
-					m_MyEMSLDatastInfoCache.AddDataset(datasetName);
+					m_MyEMSLDatasetInfoCache.AddDataset(datasetName);
 			}
 				
 
@@ -376,10 +376,10 @@ namespace Mage
 				{
 					foreach (KeyValuePair<string, FileInfo> entry in fileInfo)
 					{
-						string fileName;
-						string folderPath;
-						string fileSizeKB; 
-						string fileDate;
+						string fileName = string.Empty;
+						string folderPath = string.Empty;
+						string fileSizeKB = string.Empty;
+						string fileDate = string.Empty;
 
 						if (entry.Value.DirectoryName.StartsWith(MYEMSL_PATH_FLAG))
 						{
@@ -393,10 +393,13 @@ namespace Mage
 							if (!GetCachedArchivedFileInfo(myEMSLFileID, out archiveFileInfo))
 								throw new MageException("Cached ArchiveFileInfo does not contain MyEMSL File ID " + myEMSLFileID);
 
-							fileName = archiveFileInfo.Filename;
-							folderPath = MYEMSL_PATH_FLAG + "\\" + archiveFileInfo.PathWithInstrumentAndDatasetWindows;
+							fileName = MyEMSLReader.DatasetInfo.AppendMyEMSLFileID(archiveFileInfo.Filename, myEMSLFileID);
+							var fiMyEMSLFile = new FileInfo(MYEMSL_PATH_FLAG + "\\" + archiveFileInfo.PathWithInstrumentAndDatasetWindows);
+							folderPath = fiMyEMSLFile.Directory.FullName;
 							fileSizeKB = FileSizeBytesToString(archiveFileInfo.FileSizeBytes);
 							fileDate = archiveFileInfo.SubmissionTime;
+
+							CacheFilterPassingFile(archiveFileInfo);
 						}
 						else
 						{
@@ -670,13 +673,19 @@ namespace Mage
 			return FilterFileNamesFromList(fiList, fileNameRegExSpecs);
 		}
 
-		private List<FileSystemInfo> GetMyEMSLFilesOrFolders(FolderSearchMode searchMode, string fileSelector, string datasetName, bool recurse, string subDir, string parentFolders)
+		private List<FileSystemInfo> GetMyEMSLFilesOrFolders(
+			FolderSearchMode searchMode, 
+			string fileSelector, 
+			string datasetName, 
+			bool recurse, 
+			string subDir, 
+			string parentFolders)
 		{
 
 			var fiList = new List<FileSystemInfo>();
 			if (searchMode == FolderSearchMode.Files)
 			{
-				m_RecentlyFoundMyEMSLFiles = m_MyEMSLDatastInfoCache.FindFiles(fileSelector, subDir, datasetName, recurse);
+				m_RecentlyFoundMyEMSLFiles = m_MyEMSLDatasetInfoCache.FindFiles(fileSelector, subDir, datasetName, recurse);
 				foreach (var archiveFile in m_RecentlyFoundMyEMSLFiles)
 				{
 					string encodedFilePath = DatasetInfoBase.AppendMyEMSLFileID(Path.Combine(parentFolders, archiveFile.FileInfo.RelativePathWindows), archiveFile.FileID);
@@ -686,7 +695,7 @@ namespace Mage
 
 			if (searchMode == FolderSearchMode.Folders)
 			{
-				m_RecentlyFoundMyEMSLFiles = m_MyEMSLDatastInfoCache.FindFolders(fileSelector, datasetName);
+				m_RecentlyFoundMyEMSLFiles = m_MyEMSLDatasetInfoCache.FindFolders(fileSelector, datasetName);
 
 				foreach (var archiveFolder in m_RecentlyFoundMyEMSLFiles)
 				{

@@ -28,7 +28,8 @@ namespace Mage {
     /// 
     /// this module outputs a record of each file processed on stardard tabular output
     /// </summary>
-    public class FileContentProcessor : BaseModule {
+	public class FileContentProcessor : FileProcessingBase
+	{
 
         #region Member Variables
 
@@ -206,9 +207,17 @@ namespace Mage {
 					}
 
                 object[] outRow = MapDataRow(args.Fields);
+				
                 int fileNameOutColIndx = OutputColumnPos[OutputFileColumnName];
                 outRow[fileNameOutColIndx] = (concatenateOutput) ? sourceFile : destFile;
-                OnDataRowAvailable(new MageDataEventArgs(outRow));
+
+				// Strip off the MyEMSLID from the filename
+				string newFilePath;
+				Int64 myEMSLFileID = MyEMSLReader.DatasetInfoBase.ExtractMyEMSLFileID(outRow[fileNameOutColIndx].ToString(), out newFilePath);
+				if (myEMSLFileID > 0)
+					outRow[fileNameOutColIndx] = newFilePath;
+
+				OnDataRowAvailable(new MageDataEventArgs(outRow));
             } else {
                 OnDataRowAvailable(new MageDataEventArgs(null));
             }

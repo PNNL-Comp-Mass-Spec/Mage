@@ -20,6 +20,11 @@ namespace Mage {
         /// </summary>
         void Prepare();
 
+		/// <summary>
+		/// Called after pipeline completes processing all of the data rows
+		/// </summary>
+		void PostProcess();
+
         /// <summary>
         /// called after pipeline run is complete - module can do any special cleanup
         /// </summary>

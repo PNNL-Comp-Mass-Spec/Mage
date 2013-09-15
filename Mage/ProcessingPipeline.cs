@@ -146,6 +146,15 @@ namespace Mage {
 				try {
 					RootModule.Run(this);
 
+					// Give all modules in pipeline a chance to run post-processing
+					// In particular, FileProcessingBase will call m_MyEMSLDatasetInfoCache.ProcessDownloadQueue
+					foreach (KeyValuePair<string, IBaseModule> modDef in mModuleIndex)
+					{
+						modDef.Value.PostProcess();
+					}
+
+					MyEMSLReader.MyEMSLBase.GarbageCollectNow();
+
 					if (string.IsNullOrEmpty(CompletionCode)) {
 						if (Globals.AbortRequested) {
 							HandleStatusMessageUpdated(this, new MageStatusEventArgs("Processing Aborted"));

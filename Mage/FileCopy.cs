@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using MyEMSLReader;
 
 namespace Mage {
 
@@ -18,7 +19,8 @@ namespace Mage {
     /// if IDColumnName parameter is set, it specifies a column in the standard input data
     /// whose value should be used in the prefix.  Otherwise the prefix is generated.
     /// </summary>
-    public class FileCopy : FileContentProcessor {
+	public class FileCopy : FileContentProcessor
+	{
 
         #region Member Variables
 
@@ -79,26 +81,68 @@ namespace Mage {
             try {
 				bool bShowDoneMsg = true;
 
-                UpdateStatus(this, new MageStatusEventArgs("Start Copy->" + sourceFile));
-				if (OverwriteExistingFiles) {
-					bool bFileExists = System.IO.File.Exists(destPath);
-					File.Copy(sourcePath, destPath, true);
-					if (bFileExists) {
-						UpdateStatus(this, new MageStatusEventArgs("NOTE->Copy replaced existing file: " + destPath, 0));
+				if (sourcePath.StartsWith(MYEMSL_PATH_FLAG))
+				{
+					Int64 myEMSLFileID = DatasetInfoBase.ExtractMyEMSLFileID(sourcePath);
+					string destPathClean;
+					DatasetInfoBase.ExtractMyEMSLFileID(destPath, out destPathClean);
+
+					if (!OverwriteExistingFiles && System.IO.File.Exists(destPathClean))
+					{
+						UpdateStatus(this, new MageStatusEventArgs("WARNING->Skipping existing file: " + destPathClean, 0));
+						OnWarningMessage(new MageStatusEventArgs("WARNING->Skipping existing file: " + destPathClean));
 						System.Threading.Thread.Sleep(1);
 						bShowDoneMsg = false;
 					}
-				} else {
-					if (System.IO.File.Exists(destPath)) {
-						UpdateStatus(this, new MageStatusEventArgs("WARNING->Skipping existing file: " + destPath, 0));
-						OnWarningMessage(new MageStatusEventArgs("WARNING->Skipping existing file: " + destPath));
-						System.Threading.Thread.Sleep(1);
-						bShowDoneMsg = false;
-					} else {
-						File.Copy(sourcePath, destPath, false);
+					else
+					{
+						DatasetFolderOrFileInfo cachedFileInfo;
+						if (m_FilterPassingMyEMSLFiles.TryGetValue(myEMSLFileID, out cachedFileInfo))
+						{
+							UpdateStatus(this, new MageStatusEventArgs("Queuing file for Download->" + sourceFile));
+							bool unzipRequired = false;
+							m_MyEMSLDatasetInfoCache.AddFileToDownloadQueue(myEMSLFileID, cachedFileInfo.FileInfo, unzipRequired, destPathClean);
+						}
+						else
+						{
+							UpdateStatus(this, new MageStatusEventArgs("WARNING->Skipping file since not in MyEMSL Memory Cache: " + destPathClean, 0));
+							OnWarningMessage(new MageStatusEventArgs("WARNING->Skipping file since not in MyEMSL Memory Cache: " + destPathClean));
+							System.Threading.Thread.Sleep(1);
+							bShowDoneMsg = false;
+						}
+						
 					}
 				}
-				
+				else
+				{
+					UpdateStatus(this, new MageStatusEventArgs("Start Copy->" + sourceFile));
+					if (OverwriteExistingFiles)
+					{
+						bool bFileExists = System.IO.File.Exists(destPath);
+						File.Copy(sourcePath, destPath, true);
+						if (bFileExists)
+						{
+							UpdateStatus(this, new MageStatusEventArgs("NOTE->Copy replaced existing file: " + destPath, 0));
+							System.Threading.Thread.Sleep(1);
+							bShowDoneMsg = false;
+						}
+					}
+					else
+					{
+						if (System.IO.File.Exists(destPath))
+						{
+							UpdateStatus(this, new MageStatusEventArgs("WARNING->Skipping existing file: " + destPath, 0));
+							OnWarningMessage(new MageStatusEventArgs("WARNING->Skipping existing file: " + destPath));
+							System.Threading.Thread.Sleep(1);
+							bShowDoneMsg = false;
+						}
+						else
+						{
+							File.Copy(sourcePath, destPath, false);
+						}
+					}
+				}
+
 				if (bShowDoneMsg)
 					UpdateStatus(this, new MageStatusEventArgs("Done->" + sourceFile));
 

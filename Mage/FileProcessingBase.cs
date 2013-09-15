@@ -19,12 +19,23 @@ namespace Mage
 		// protected const string COLUMN_NAME_DATASET_ID = "Dataset_ID";
 
 		/// <summary>
-		/// cache of files in MyEMSL for datasets
+		/// Cache of files stored in MyEMSL for datasets that the user searches for
 		/// </summary>
 		/// <remarks>Initially does not have any datasets; add them as data is processed</remarks>
-		protected DatasetListInfo m_MyEMSLDatastInfoCache = new DatasetListInfo();
+		protected static DatasetListInfo m_MyEMSLDatasetInfoCache = new DatasetListInfo();
+		protected bool m_MyEMSLEventsAttached = false;
 
-		protected List<DatasetFolderOrFileInfo> m_RecentlyFoundMyEMSLFiles;
+		/// <summary>
+		/// Recently found MyEMSL files
+		/// </summary>
+		/// <remarks>This list is cleared each time .FindFiles is called</remarks>
+		protected static List<DatasetFolderOrFileInfo> m_RecentlyFoundMyEMSLFiles;
+
+		/// <summary>
+		/// All MyEMSL Files pass filters; keys are MyEMSL File IDs, values are the MyEMSL Info.  Items will be auto-purged from this list if the list grows to over 1 million records
+		/// </summary>
+		/// <remarks>This dictionary is used by the FileCopy class to determine the archived file info for a file in MyEMSL using MyEMSLFile ID</remarks>
+		protected static Dictionary<Int64, DatasetFolderOrFileInfo> m_FilterPassingMyEMSLFiles;
 
 		/// <summary>
 		/// RegEx to extract the dataset name from a path of the form \\MyEMSL\VPro01\2013_3\QC_Shew_13_04d_500ng_10Sep13_Tiger_13-07-34
@@ -44,6 +55,48 @@ namespace Mage
 		/// </summary>
 		private Regex mDatasetMatchLoose = new Regex(@"(^|\\)2[0-9][0-9][0-9]_[1-4]\\([^\\]+)", RegexOptions.Compiled);
 
+		public FileProcessingBase()
+		{
+			if (!m_MyEMSLEventsAttached)
+			{
+				m_MyEMSLEventsAttached = true;
+				m_MyEMSLDatasetInfoCache.ErrorEvent += new MessageEventHandler(m_MyEMSLDatasetInfoCache_ErrorEvent);
+				m_MyEMSLDatasetInfoCache.MessageEvent += new MessageEventHandler(m_MyEMSLDatasetInfoCache_MessageEvent);
+				m_MyEMSLDatasetInfoCache.ProgressEvent += new ProgressEventHandler(m_MyEMSLDatasetInfoCache_ProgressEvent);
+			}
+		}
+
+		protected static void CacheFilterPassingFile(ArchivedFileInfo fileInfo)
+		{
+			if (fileInfo.FileID == 0)
+				return;
+
+			if (m_FilterPassingMyEMSLFiles == null)
+				m_FilterPassingMyEMSLFiles = new Dictionary<long, DatasetFolderOrFileInfo>();
+
+			DatasetFolderOrFileInfo fileInfoCached;
+			if (m_FilterPassingMyEMSLFiles.TryGetValue(fileInfo.FileID, out fileInfoCached))
+			{
+				fileInfoCached = new DatasetFolderOrFileInfo(fileInfo.FileID, false, fileInfo);
+			}
+			else
+			{
+				m_FilterPassingMyEMSLFiles.Add(fileInfo.FileID, new DatasetFolderOrFileInfo(fileInfo.FileID, false, fileInfo));
+			}
+
+			if (m_FilterPassingMyEMSLFiles.Count > 1000000)
+			{
+				// Remove any entries over 3 hours old
+				var fileIDsToRemove = (from item in m_FilterPassingMyEMSLFiles
+									   where DateTime.UtcNow.Subtract(item.Value.CacheDateUTC).TotalMinutes > 180
+									   select item.Key).ToList();
+
+				foreach (var fileID in fileIDsToRemove)
+					m_FilterPassingMyEMSLFiles.Remove(fileID);
+
+			}
+		}
+
 		protected string DetermineDatasetName(object[] bufferRow, string folderPath)
 		{
 			string datasetName = string.Empty;
@@ -53,7 +106,7 @@ namespace Mage
 			datasetColNames.Add(COLUMN_NAME_DATASET_NAME);
 			datasetColNames.Add(COLUMN_NAME_DATASET_NUM);
 
-			int datasetColIndex=-1;
+			int datasetColIndex = -1;
 			foreach (string datasetColName in datasetColNames)
 			{
 				if (TryGetOutputColumnPos(datasetColName, out datasetColIndex))
@@ -119,6 +172,51 @@ namespace Mage
 				return true;
 			}
 		}
-								
+
+		public override void PostProcess()
+		{
+			if (m_MyEMSLDatasetInfoCache.FilesToDownload.Count > 0)
+			{
+				if (m_MyEMSLDatasetInfoCache.FilesToDownload.Count == 1)
+					OnStatusMessageUpdated(new MageStatusEventArgs("Downloading one file from MyEMSL"));
+				else
+					OnStatusMessageUpdated(new MageStatusEventArgs("Downloading " + m_MyEMSLDatasetInfoCache.FilesToDownload.Count + " files from MyEMSL"));
+
+				m_MyEMSLDatasetInfoCache.ProcessDownloadQueue(".", Downloader.DownloadFolderLayout.SingleDataset);
+
+				System.Threading.Thread.Sleep(10);
+			}
+		}
+
+		#region "Event Handlers"
+
+
+		void m_MyEMSLDatasetInfoCache_ErrorEvent(object sender, MessageEventArgs e)
+		{
+			OnWarningMessage(new MageStatusEventArgs("MyEMSL downloader: " + e.Message));
+		}
+
+		void m_MyEMSLDatasetInfoCache_MessageEvent(object sender, MessageEventArgs e)
+		{
+			if (!e.Message.Contains("Downloading ") && !e.Message.Contains("Overwriting ") && !e.Message.Contains("Skipping "))
+			{
+				if (e.Message.Contains("Warning,") || e.Message.Contains("Error ") || e.Message.Contains("Failure downloading") || e.Message.Contains("Failed to"))
+					OnWarningMessage(new MageStatusEventArgs("MyEMSL downloader: " + e.Message));
+				else
+					OnStatusMessageUpdated(new MageStatusEventArgs("MyEMSL downloader: " + e.Message));
+			}
+		}
+
+		void m_MyEMSLDatasetInfoCache_ProgressEvent(object sender, ProgressEventArgs e)
+		{
+			if (e.PercentComplete < 100)
+				OnStatusMessageUpdated(new MageStatusEventArgs("Downloading files from MyEMSL: 100% complete"));
+			else
+				OnStatusMessageUpdated(new MageStatusEventArgs("Downloading files from MyEMSL: " + e.PercentComplete.ToString("0.00") + "% complete"));
+		}
+		#endregion
+
 	}
+
+
 }

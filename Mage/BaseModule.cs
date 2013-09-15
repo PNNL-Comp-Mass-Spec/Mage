@@ -197,7 +197,7 @@ namespace Mage {
         }
 
         /// <summary>
-        /// Called by pipeline container after to pipeline execution terminates
+        /// Called by pipeline container after pipeline execution terminates
         /// (even for error terminations)
         /// Modules that need to do clean up resources should override this function. 
         /// </summary>
@@ -306,6 +306,13 @@ namespace Mage {
                 Pipeline.Cancel();
             }
         }
+
+		/// <summary>
+		/// Called by pipeline container after to pipeline execution has processed all of the data rows
+		/// </summary>
+		public virtual void PostProcess()
+		{
+		}
 
         /// <summary>
         /// Raise a status message event that processing was aborted
