@@ -325,7 +325,7 @@
             this.JobIDListPanel1.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.JobIDListPanel1.BackColor = System.Drawing.SystemColors.Control;
             this.JobIDListPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.JobIDListPanel1.Legend = "(Paste in list of job IDs)";
+            this.JobIDListPanel1.Legend = "(Job IDs)";
             this.JobIDListPanel1.ListName = "Job";
             this.JobIDListPanel1.Location = new System.Drawing.Point(3, 3);
             this.JobIDListPanel1.Name = "JobIDListPanel1";
@@ -348,7 +348,7 @@
             // 
             this.JobDatasetIDList1.BackColor = System.Drawing.SystemColors.Control;
             this.JobDatasetIDList1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.JobDatasetIDList1.Legend = "(Paste in list of job IDs)";
+            this.JobDatasetIDList1.Legend = "(Job IDs)";
             this.JobDatasetIDList1.ListName = "Job";
             this.JobDatasetIDList1.Location = new System.Drawing.Point(3, 3);
             this.JobDatasetIDList1.Name = "JobDatasetIDList1";

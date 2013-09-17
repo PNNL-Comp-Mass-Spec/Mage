@@ -337,7 +337,7 @@ namespace MageFilePackager {
             // initial labels for display list control panels
             JobListDisplayControl.PageTitle = "Entities";
             FileListDisplayControl.PageTitle = "Files";
-            JobDatasetIDList1.Legend = "(Paste in list of Dataset IDs)";
+            JobDatasetIDList1.Legend = "(Dataset IDs)";
             JobDatasetIDList1.ListName = "Dataset_ID";
 
             // disable certain UI component panels 

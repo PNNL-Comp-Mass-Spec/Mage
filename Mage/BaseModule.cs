@@ -102,7 +102,32 @@ namespace Mage {
         /// </summary>
         /// <param name="context">Set of parameters</param>
         public virtual void SetContext(Dictionary<string, string> context) {
-            Context = context;
+
+			if (Context == null)
+				Context = context;
+			else
+			{
+				var mergedContext = new Dictionary<string, string>();
+
+				// Update existing values
+				foreach (var setting in Context)
+				{
+					string newValue;
+					if (context.TryGetValue(setting.Key, out newValue))
+						mergedContext.Add(setting.Key, newValue);
+					else
+						mergedContext.Add(setting.Key, setting.Value);
+				}
+
+				// Add new values
+				foreach (var setting in context)
+				{
+					if (!Context.ContainsKey(setting.Key))
+						mergedContext.Add(setting.Key, setting.Value);
+				}
+
+				Context = mergedContext;
+			}
         }
 
         #region IBaseModule Members

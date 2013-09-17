@@ -71,7 +71,7 @@ namespace MageUIComponents {
             openFileDialog1.DefaultExt = "db3";
             openFileDialog1.Filter = "SQLite3|*.db;*.db3|All files (*.*)|*.*";
             if (openFileDialog1.ShowDialog() == DialogResult.OK) {
-                DatabaseName = openFileDialog1.FileName;
+                DatabaseName = ValidateFileExtension(openFileDialog1.FileName);
             }
         }
 
@@ -82,6 +82,33 @@ namespace MageUIComponents {
                 TableName = selectionForm.TableName;
             }
         }
+
+		private string ValidateFileExtension(string filePath)
+		{
+			var fiFile = new FileInfo(filePath);
+			string extension = fiFile.Extension.ToLower();			
+
+			if (extension != ".db3" && extension != ".db" && extension != ".sqlite3" && extension != ".sqlite")
+			{
+				extension = ".db3";
+				filePath = Path.ChangeExtension(filePath, extension);
+			}
+
+			if (Path.GetFileNameWithoutExtension(filePath).Length == 0)
+			{
+				if (filePath.Length == extension.Length)
+					filePath = Path.Combine("MageResults") + extension;
+				else
+					filePath = filePath.Substring(0, filePath.Length - extension.Length) + Path.Combine("MageExtractorResults") + extension;
+			}
+
+			return filePath;
+		}
+
+		private void ValidateSQLiteDBPath(object sender, CancelEventArgs e)
+		{
+			DatabaseNameCtl.Text = ValidateFileExtension(DatabaseNameCtl.Text);
+		}
 
     }
 }

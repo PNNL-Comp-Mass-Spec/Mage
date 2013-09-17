@@ -61,7 +61,7 @@
 			this.panel1.Controls.Add(this.textBox1);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel1.Location = new System.Drawing.Point(7, 6);
-			this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.panel1.Margin = new System.Windows.Forms.Padding(4);
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(997, 77);
 			this.panel1.TabIndex = 6;
@@ -72,9 +72,9 @@
 			this.SearchGroupBoxCtl.Controls.Add(this.SubfolderSearchNameCtl);
 			this.SearchGroupBoxCtl.Controls.Add(this.SearchInSubfoldersCtl);
 			this.SearchGroupBoxCtl.Location = new System.Drawing.Point(812, 0);
-			this.SearchGroupBoxCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.SearchGroupBoxCtl.Margin = new System.Windows.Forms.Padding(4);
 			this.SearchGroupBoxCtl.Name = "SearchGroupBoxCtl";
-			this.SearchGroupBoxCtl.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.SearchGroupBoxCtl.Padding = new System.Windows.Forms.Padding(4);
 			this.SearchGroupBoxCtl.Size = new System.Drawing.Size(179, 66);
 			this.SearchGroupBoxCtl.TabIndex = 14;
 			this.SearchGroupBoxCtl.TabStop = false;
@@ -82,7 +82,7 @@
 			// SubfolderSearchNameCtl
 			// 
 			this.SubfolderSearchNameCtl.Location = new System.Drawing.Point(13, 36);
-			this.SubfolderSearchNameCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.SubfolderSearchNameCtl.Margin = new System.Windows.Forms.Padding(4);
 			this.SubfolderSearchNameCtl.Name = "SubfolderSearchNameCtl";
 			this.SubfolderSearchNameCtl.Size = new System.Drawing.Size(151, 22);
 			this.SubfolderSearchNameCtl.TabIndex = 1;
@@ -93,7 +93,7 @@
 			this.SearchInSubfoldersCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.SearchInSubfoldersCtl.AutoSize = true;
 			this.SearchInSubfoldersCtl.Location = new System.Drawing.Point(13, 12);
-			this.SearchInSubfoldersCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.SearchInSubfoldersCtl.Margin = new System.Windows.Forms.Padding(4);
 			this.SearchInSubfoldersCtl.Name = "SearchInSubfoldersCtl";
 			this.SearchInSubfoldersCtl.Size = new System.Drawing.Size(160, 21);
 			this.SearchInSubfoldersCtl.TabIndex = 0;
@@ -104,7 +104,7 @@
 			// 
 			this.SelectFolderCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.SelectFolderCtl.Location = new System.Drawing.Point(679, 7);
-			this.SelectFolderCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.SelectFolderCtl.Margin = new System.Windows.Forms.Padding(4);
 			this.SelectFolderCtl.Name = "SelectFolderCtl";
 			this.SelectFolderCtl.Size = new System.Drawing.Size(40, 28);
 			this.SelectFolderCtl.TabIndex = 5;
@@ -116,11 +116,11 @@
 			// 
 			this.GetFilesCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.GetFilesCtl.Location = new System.Drawing.Point(679, 38);
-			this.GetFilesCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.GetFilesCtl.Margin = new System.Windows.Forms.Padding(4);
 			this.GetFilesCtl.Name = "GetFilesCtl";
 			this.GetFilesCtl.Size = new System.Drawing.Size(125, 28);
 			this.GetFilesCtl.TabIndex = 1;
-			this.GetFilesCtl.Text = "Get Files";
+			this.GetFilesCtl.Text = "Find Files";
 			this.GetFilesCtl.UseVisualStyleBackColor = true;
 			this.GetFilesCtl.Click += new System.EventHandler(this.GetFilesCtl_Click);
 			// 
@@ -129,7 +129,7 @@
 			this.LocalFileNameFilterCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.LocalFileNameFilterCtl.Location = new System.Drawing.Point(120, 42);
-			this.LocalFileNameFilterCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.LocalFileNameFilterCtl.Margin = new System.Windows.Forms.Padding(4);
 			this.LocalFileNameFilterCtl.Name = "LocalFileNameFilterCtl";
 			this.LocalFileNameFilterCtl.Size = new System.Drawing.Size(549, 22);
 			this.LocalFileNameFilterCtl.TabIndex = 4;
@@ -139,7 +139,7 @@
 			this.LocalDirectoryCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.LocalDirectoryCtl.Location = new System.Drawing.Point(120, 10);
-			this.LocalDirectoryCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.LocalDirectoryCtl.Margin = new System.Windows.Forms.Padding(4);
 			this.LocalDirectoryCtl.Name = "LocalDirectoryCtl";
 			this.LocalDirectoryCtl.Size = new System.Drawing.Size(549, 22);
 			this.LocalDirectoryCtl.TabIndex = 4;
@@ -149,7 +149,7 @@
 			this.textBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBox3.Location = new System.Drawing.Point(100, -32);
-			this.textBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.textBox3.Margin = new System.Windows.Forms.Padding(4);
 			this.textBox3.Name = "textBox3";
 			this.textBox3.Size = new System.Drawing.Size(925, 22);
 			this.textBox3.TabIndex = 3;
@@ -199,7 +199,7 @@
 			this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBox2.Location = new System.Drawing.Point(100, -62);
-			this.textBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.textBox2.Margin = new System.Windows.Forms.Padding(4);
 			this.textBox2.Name = "textBox2";
 			this.textBox2.Size = new System.Drawing.Size(925, 22);
 			this.textBox2.TabIndex = 3;
@@ -220,7 +220,7 @@
 			this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBox1.Location = new System.Drawing.Point(100, -94);
-			this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.textBox1.Margin = new System.Windows.Forms.Padding(4);
 			this.textBox1.Name = "textBox1";
 			this.textBox1.Size = new System.Drawing.Size(925, 22);
 			this.textBox1.TabIndex = 3;
@@ -231,7 +231,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.panel1);
-			this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.Margin = new System.Windows.Forms.Padding(4);
 			this.Name = "LocalFolderPanel";
 			this.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
 			this.Size = new System.Drawing.Size(1011, 89);

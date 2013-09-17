@@ -155,6 +155,16 @@ namespace Mage {
             OnDataRowAvailable(new MageDataEventArgs(null));
         }
 
+		/// <summary>
+		/// This function can be used to override the data values in a given row; use with caution
+		/// </summary>
+		/// <param name="rowIndex"></param>
+		/// <param name="newData"></param>
+		public void UpdateSavedRowData(int rowIndex, object[] newData)
+		{
+			SavedRows[rowIndex] = newData;
+		}
+
         #endregion
 
         #region Utility_Functions

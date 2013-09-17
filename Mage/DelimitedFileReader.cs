@@ -136,6 +136,9 @@ namespace Mage {
             bool checkDelimiter = true;
             bool tabDelimited = true;
             char[] delim = "\t".ToCharArray();
+
+			// This RegEx is used to parse CSV files
+			// It assures that we only split on commas that are not inside double-quoted strings
             Regex r = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
             string[] fields;
 

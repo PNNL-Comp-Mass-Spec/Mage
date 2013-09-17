@@ -9,6 +9,9 @@ namespace Mage
 {
 	public class FileProcessingBase : BaseModule
 	{
+		public const string MAGE_TEMP_FILES_FOLDER = "Mage_Temp_Files";
+		public const string DESTINATION_CONTAINER_PATH = "destinationContainerPath";
+
 		protected const string MYEMSL_PATH_FLAG = @"\\MyEMSL";
 
 		protected const string COLUMN_NAME_DATASET = "Dataset";
@@ -23,7 +26,9 @@ namespace Mage
 		/// </summary>
 		/// <remarks>Initially does not have any datasets; add them as data is processed</remarks>
 		protected static DatasetListInfo m_MyEMSLDatasetInfoCache = new DatasetListInfo();
-		protected bool m_MyEMSLEventsAttached = false;
+		
+		// This variable cannot be static (if it is static, then the progress messages displayed by m_MyEMSLDatasetInfoCache_ProgressEvent
+		protected static bool m_MyEMSLEventsAttached = false;
 
 		/// <summary>
 		/// Recently found MyEMSL files
@@ -32,7 +37,7 @@ namespace Mage
 		protected static List<DatasetFolderOrFileInfo> m_RecentlyFoundMyEMSLFiles;
 
 		/// <summary>
-		/// All MyEMSL Files pass filters; keys are MyEMSL File IDs, values are the MyEMSL Info.  Items will be auto-purged from this list if the list grows to over 1 million records
+		/// All MyEMSL fils that pass filters; keys are MyEMSL File IDs, values are the MyEMSL Info.  Items will be auto-purged from this list if the list grows to over 1 million records
 		/// </summary>
 		/// <remarks>This dictionary is used by the FileCopy class to determine the archived file info for a file in MyEMSL using MyEMSLFile ID</remarks>
 		protected static Dictionary<Int64, DatasetFolderOrFileInfo> m_FilterPassingMyEMSLFiles;
@@ -59,11 +64,16 @@ namespace Mage
 		{
 			if (!m_MyEMSLEventsAttached)
 			{
+				// We only want to attach these events once since m_MyEMSLDatasetInfoCache is static
+				// However, I have found that if I only attach the Progress Event once, the GUI form does not display the progress messages (even though they are, in fact, being actively handled by this class)
 				m_MyEMSLEventsAttached = true;
 				m_MyEMSLDatasetInfoCache.ErrorEvent += new MessageEventHandler(m_MyEMSLDatasetInfoCache_ErrorEvent);
 				m_MyEMSLDatasetInfoCache.MessageEvent += new MessageEventHandler(m_MyEMSLDatasetInfoCache_MessageEvent);
-				m_MyEMSLDatasetInfoCache.ProgressEvent += new ProgressEventHandler(m_MyEMSLDatasetInfoCache_ProgressEvent);
 			}
+
+			// As mentioned above, we need to attach this event every time the class is instantiated
+			// This will result in duplicate calls to m_MyEMSLDatasetInfoCache_ProgressEvent by m_MyEMSLDatasetInfoCache.ProgressEvent but that doesn't hurt anything
+			m_MyEMSLDatasetInfoCache.ProgressEvent += new ProgressEventHandler(m_MyEMSLDatasetInfoCache_ProgressEvent);			
 		}
 
 		protected static void CacheFilterPassingFile(ArchivedFileInfo fileInfo)
@@ -73,6 +83,7 @@ namespace Mage
 
 			if (m_FilterPassingMyEMSLFiles == null)
 				m_FilterPassingMyEMSLFiles = new Dictionary<long, DatasetFolderOrFileInfo>();
+
 
 			DatasetFolderOrFileInfo fileInfoCached;
 			if (m_FilterPassingMyEMSLFiles.TryGetValue(fileInfo.FileID, out fileInfoCached))
@@ -97,6 +108,27 @@ namespace Mage
 			}
 		}
 
+		protected string DetermineDatasetName(string folderPath)
+		{
+			string datasetName = string.Empty;
+
+			// Parse the folderPath with a RegEx to extract the dataset name
+			var reMatch = mDatasetMatchStrict1.Match(folderPath);
+
+			if (!reMatch.Success)
+				reMatch = mDatasetMatchStrict2.Match(folderPath);
+
+			if (!reMatch.Success)
+				reMatch = mDatasetMatchLoose.Match(folderPath);
+
+			if (reMatch.Success)
+			{
+				datasetName = reMatch.Groups[1].ToString();
+			}
+
+			return datasetName;
+		}
+
 		protected string DetermineDatasetName(object[] bufferRow, string folderPath)
 		{
 			string datasetName = string.Empty;
@@ -119,19 +151,7 @@ namespace Mage
 			}
 			else
 			{
-				// Parse the folderPath with a RegEx to extract the dataset name
-				var reMatch = mDatasetMatchStrict1.Match(folderPath);
-
-				if (!reMatch.Success)
-					reMatch = mDatasetMatchStrict2.Match(folderPath);
-
-				if (!reMatch.Success)
-					reMatch = mDatasetMatchLoose.Match(folderPath);
-
-				if (reMatch.Success)
-				{
-					datasetName = reMatch.Groups[1].ToString();
-				}
+				datasetName = DetermineDatasetName(folderPath);
 			}
 
 			return datasetName;
@@ -157,6 +177,7 @@ namespace Mage
 
 			return parentFolders;
 		}
+
 		protected bool GetCachedArchivedFileInfo(Int64 myEMSLFileID, out ArchivedFileInfo fileInfo)
 		{
 			var fileInfoMatch = (from item in m_RecentlyFoundMyEMSLFiles where item.FileID == myEMSLFileID select item.FileInfo).ToList();
@@ -173,19 +194,56 @@ namespace Mage
 			}
 		}
 
+		/// <summary>
+		/// Examines the path to determine the parent folders and possible subdirectory for a given dataset
+		/// </summary>
+		/// <param name="path"></param>
+		/// <param name="datasetName"></param>
+		/// <param name="subDir"></param>
+		/// <param name="parentFolders"></param>
+		protected void GetMyEMSLParentFoldersAndSubDir(string path, string datasetName, out string subDir, out string parentFolders)
+		{
+			subDir = string.Empty;
+
+			parentFolders = ExtractParentDatasetFolders(path);
+			if (string.IsNullOrEmpty(parentFolders))
+			{
+				parentFolders = MYEMSL_PATH_FLAG + @"\Instrument\2013_1\" + datasetName;
+			}
+			else
+			{
+				if (path.Length > parentFolders.Length)
+				{
+					subDir = path.Substring(parentFolders.Length);
+					subDir = subDir.TrimStart('\\');
+				}
+				parentFolders = parentFolders.TrimEnd('\\');
+			}
+		}
+		
 		public override void PostProcess()
 		{
-			if (m_MyEMSLDatasetInfoCache.FilesToDownload.Count > 0)
-			{
-				if (m_MyEMSLDatasetInfoCache.FilesToDownload.Count == 1)
-					OnStatusMessageUpdated(new MageStatusEventArgs("Downloading one file from MyEMSL"));
-				else
-					OnStatusMessageUpdated(new MageStatusEventArgs("Downloading " + m_MyEMSLDatasetInfoCache.FilesToDownload.Count + " files from MyEMSL"));
+			// Note that the target folder path will most likely be ignored since explicit destination file paths were likely used when files were added to the queue
+			ProcessMyEMSLDownloadQueue(".", Downloader.DownloadFolderLayout.SingleDataset);
+		}
 
-				m_MyEMSLDatasetInfoCache.ProcessDownloadQueue(".", Downloader.DownloadFolderLayout.SingleDataset);
+		protected bool ProcessMyEMSLDownloadQueue(string downloadFolderPath, Downloader.DownloadFolderLayout folderLayout)
+		{
+			bool success = false;
 
-				System.Threading.Thread.Sleep(10);
-			}
+			if (m_MyEMSLDatasetInfoCache.FilesToDownload.Count == 0)
+				return true;
+			
+			if (m_MyEMSLDatasetInfoCache.FilesToDownload.Count == 1)
+				OnStatusMessageUpdated(new MageStatusEventArgs("Downloading one file from MyEMSL"));
+			else
+				OnStatusMessageUpdated(new MageStatusEventArgs("Downloading " + m_MyEMSLDatasetInfoCache.FilesToDownload.Count + " files from MyEMSL"));
+
+			success = m_MyEMSLDatasetInfoCache.ProcessDownloadQueue(downloadFolderPath, folderLayout);
+
+			System.Threading.Thread.Sleep(10);
+
+			return success;
 		}
 
 		#region "Event Handlers"
@@ -209,7 +267,7 @@ namespace Mage
 
 		void m_MyEMSLDatasetInfoCache_ProgressEvent(object sender, ProgressEventArgs e)
 		{
-			if (e.PercentComplete < 100)
+			if (e.PercentComplete == 100)
 				OnStatusMessageUpdated(new MageStatusEventArgs("Downloading files from MyEMSL: 100% complete"));
 			else
 				OnStatusMessageUpdated(new MageStatusEventArgs("Downloading files from MyEMSL: " + e.PercentComplete.ToString("0.00") + "% complete"));

@@ -52,7 +52,7 @@
 			this.panel1.Controls.Add(this.textBox1);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel1.Location = new System.Drawing.Point(7, 6);
-			this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.panel1.Margin = new System.Windows.Forms.Padding(4);
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(855, 80);
 			this.panel1.TabIndex = 7;
@@ -61,7 +61,7 @@
 			// 
 			this.DefineManifestFileCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.DefineManifestFileCtl.Location = new System.Drawing.Point(794, 11);
-			this.DefineManifestFileCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.DefineManifestFileCtl.Margin = new System.Windows.Forms.Padding(4);
 			this.DefineManifestFileCtl.Name = "DefineManifestFileCtl";
 			this.DefineManifestFileCtl.Size = new System.Drawing.Size(40, 28);
 			this.DefineManifestFileCtl.TabIndex = 5;
@@ -74,7 +74,7 @@
 			this.LocalManifestFileCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.LocalManifestFileCtl.Location = new System.Drawing.Point(120, 14);
-			this.LocalManifestFileCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.LocalManifestFileCtl.Margin = new System.Windows.Forms.Padding(4);
 			this.LocalManifestFileCtl.Name = "LocalManifestFileCtl";
 			this.LocalManifestFileCtl.Size = new System.Drawing.Size(665, 22);
 			this.LocalManifestFileCtl.TabIndex = 4;
@@ -84,7 +84,7 @@
 			this.textBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBox3.Location = new System.Drawing.Point(100, -32);
-			this.textBox3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.textBox3.Margin = new System.Windows.Forms.Padding(4);
 			this.textBox3.Name = "textBox3";
 			this.textBox3.Size = new System.Drawing.Size(783, 22);
 			this.textBox3.TabIndex = 3;
@@ -123,11 +123,11 @@
 			// 
 			this.GetFilesCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.GetFilesCtl.Location = new System.Drawing.Point(641, 43);
-			this.GetFilesCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.GetFilesCtl.Margin = new System.Windows.Forms.Padding(4);
 			this.GetFilesCtl.Name = "GetFilesCtl";
 			this.GetFilesCtl.Size = new System.Drawing.Size(193, 28);
 			this.GetFilesCtl.TabIndex = 1;
-			this.GetFilesCtl.Text = "Get Files";
+			this.GetFilesCtl.Text = "Find Files";
 			this.GetFilesCtl.UseVisualStyleBackColor = true;
 			this.GetFilesCtl.Click += new System.EventHandler(this.GetFilesCtl_Click);
 			// 
@@ -136,7 +136,7 @@
 			this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBox2.Location = new System.Drawing.Point(100, -62);
-			this.textBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.textBox2.Margin = new System.Windows.Forms.Padding(4);
 			this.textBox2.Name = "textBox2";
 			this.textBox2.Size = new System.Drawing.Size(783, 22);
 			this.textBox2.TabIndex = 3;
@@ -157,7 +157,7 @@
 			this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBox1.Location = new System.Drawing.Point(100, -94);
-			this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.textBox1.Margin = new System.Windows.Forms.Padding(4);
 			this.textBox1.Name = "textBox1";
 			this.textBox1.Size = new System.Drawing.Size(783, 22);
 			this.textBox1.TabIndex = 3;
@@ -168,7 +168,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.panel1);
-			this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.Margin = new System.Windows.Forms.Padding(4);
 			this.Name = "LocalManifestPanel";
 			this.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
 			this.Size = new System.Drawing.Size(869, 92);

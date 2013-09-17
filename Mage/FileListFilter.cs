@@ -393,11 +393,11 @@ namespace Mage
 							if (!GetCachedArchivedFileInfo(myEMSLFileID, out archiveFileInfo))
 								throw new MageException("Cached ArchiveFileInfo does not contain MyEMSL File ID " + myEMSLFileID);
 
-							fileName = MyEMSLReader.DatasetInfo.AppendMyEMSLFileID(archiveFileInfo.Filename, myEMSLFileID);
+							fileName = DatasetInfoBase.AppendMyEMSLFileID(archiveFileInfo.Filename, myEMSLFileID);
 							var fiMyEMSLFile = new FileInfo(MYEMSL_PATH_FLAG + "\\" + archiveFileInfo.PathWithInstrumentAndDatasetWindows);
 							folderPath = fiMyEMSLFile.Directory.FullName;
 							fileSizeKB = FileSizeBytesToString(archiveFileInfo.FileSizeBytes);
-							fileDate = archiveFileInfo.SubmissionTime;
+							fileDate = archiveFileInfo.SubmissionTimeODBC12hr;
 
 							CacheFilterPassingFile(archiveFileInfo);
 						}
@@ -699,33 +699,11 @@ namespace Mage
 
 				foreach (var archiveFolder in m_RecentlyFoundMyEMSLFiles)
 				{
-					string encodedFilePath = DatasetInfoBase.AppendMyEMSLFileID(Path.Combine(parentFolders, archiveFolder.FileInfo.RelativePathWindows), archiveFolder.FileID);
-					fiList.Add(new DirectoryInfo(encodedFilePath));
+					fiList.Add(new DirectoryInfo(Path.Combine(parentFolders, archiveFolder.FileInfo.RelativePathWindows)));
 				}
 			}
 			return fiList;
 		}
-
-		private void GetMyEMSLParentFoldersAndSubDir(string path, string datasetName, out string subDir, out string parentFolders)
-		{
-			subDir = string.Empty;
-
-			parentFolders = ExtractParentDatasetFolders(path);
-			if (string.IsNullOrEmpty(parentFolders))
-			{
-				parentFolders = MYEMSL_PATH_FLAG + @"\Instrument\2013_1\" + datasetName;
-			}
-			else
-			{
-				if (path.Length > parentFolders.Length)
-				{
-					subDir = path.Substring(parentFolders.Length);
-					subDir = subDir.TrimStart('\\');
-				}
-				parentFolders = parentFolders.TrimEnd('\\');
-			}
-		}
-
 
 		/// <summary>
 		/// search files in folder and return list of files 

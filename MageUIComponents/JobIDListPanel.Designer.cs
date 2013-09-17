@@ -33,9 +33,9 @@
 			// panel1
 			// 
 			this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.panel1.Controls.Add(this.LegendCtl);
 			this.panel1.Controls.Add(this.JobListCtl);
 			this.panel1.Controls.Add(this.GetJobsCtl);
-			this.panel1.Controls.Add(this.LegendCtl);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel1.Location = new System.Drawing.Point(7, 6);
 			this.panel1.Margin = new System.Windows.Forms.Padding(4);
@@ -74,11 +74,11 @@
 			// 
 			this.LegendCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.LegendCtl.AutoSize = true;
-			this.LegendCtl.Location = new System.Drawing.Point(693, 9);
+			this.LegendCtl.Location = new System.Drawing.Point(690, 12);
 			this.LegendCtl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.LegendCtl.Name = "LegendCtl";
 			this.LegendCtl.Size = new System.Drawing.Size(65, 17);
-			this.LegendCtl.TabIndex = 9;
+			this.LegendCtl.TabIndex = 13;
 			this.LegendCtl.Text = "(Job IDs)";
 			// 
 			// JobIDListPanel
@@ -100,7 +100,7 @@
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TextBox JobListCtl;
-        private System.Windows.Forms.Button GetJobsCtl;
-        private System.Windows.Forms.Label LegendCtl;
+		private System.Windows.Forms.Button GetJobsCtl;
+		private System.Windows.Forms.Label LegendCtl;
     }
 }

@@ -45,6 +45,11 @@ namespace MageExtractor {
 		/// </summary>
 		private DestinationType mDestination = null;
 
+		/// <summary>
+		/// Keeps track of the target folders to which files were saved; used by ClearTempFiles
+		/// </summary>
+		private SortedSet<string> mOutputFolderPaths = new SortedSet<string>();
+
 		private string mFinalPipelineName = string.Empty;
 
 		#endregion
@@ -55,7 +60,7 @@ namespace MageExtractor {
 			InitializeComponent();
 
 			bool isBetaVersion = false;
-			SetFormTitle("2013-04-08", isBetaVersion);
+			SetFormTitle("2013-09-16", isBetaVersion);
 
 			SetTags();
 
@@ -236,9 +241,13 @@ namespace MageExtractor {
 
 				try
 				{
+					if (!mOutputFolderPaths.Contains(mDestination.ContainerPath))
+						mOutputFolderPaths.Add(mDestination.ContainerPath);
+
 					BaseModule jobList = new GVPipelineSource(JobListDisplayCtl, mode);
 					ExtractFileContents(jobList);
 					SavedState.SaveParameters(PanelSupport.GetParameterPanelList(this));
+
 				}
 				catch (Exception ex)
 				{
@@ -358,10 +367,6 @@ namespace MageExtractor {
 
 			if (args.Message.StartsWith(Mage.MSSQLReader.SQL_COMMAND_ERROR))
 				System.Windows.Forms.MessageBox.Show(args.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-
-			//// If instructed to load results into Access, we could do that now
-			//if (true)
-			//    LoadDataIntoAccess(mPipelineQueue, mDestination);
 
 		}
 
@@ -559,8 +564,46 @@ namespace MageExtractor {
 			return ok;
 		}
 
+		private void ClearMageTempFiles(string folderPath)
+		{
+			try
+			{
+				var targetFolder = new DirectoryInfo(Path.Combine(folderPath, FileProcessingBase.MAGE_TEMP_FILES_FOLDER));
+				if (targetFolder.Exists)
+				{
+					targetFolder.Delete(true);
+				}
+				else
+				{
+					var fiFileCheck = new FileInfo(folderPath);
+					if (fiFileCheck.Exists)
+					{
+						ClearMageTempFiles(fiFileCheck.Directory.FullName);
+					}
+				}
+			}
+			catch
+			{
+				// Ignore errors here
+			}
+		}
 
-		#endregion
+		private void ClearTempFiles(object sender, FormClosingEventArgs e)
+		{
+			try
+			{
+				foreach (string folderPath in mOutputFolderPaths)
+				{
+					ClearMageTempFiles(folderPath);
+				}
+			}
+			catch
+			{
+				// Ignore errors here
+			}			
+		}
+
+		#endregion		
 
 	}
 }

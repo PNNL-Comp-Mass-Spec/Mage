@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Mage;
 using System.IO;
+using MyEMSLReader;
 
 namespace Mage {
 
@@ -12,7 +13,8 @@ namespace Mage {
     /// looks for an associated file for each one and adds that file's
     /// name to standard ouput stream
     /// </summary>
-    public class AddAssociatedFile : BaseModule {
+	public class AddAssociatedFile : FileProcessingBase
+	{
 
         #region Member Variables
 
@@ -117,8 +119,30 @@ namespace Mage {
                     }
 
                     foreach (string resultFolderPath in folderPaths)
-                    {                    
-                        if (File.Exists(Path.Combine(resultFolderPath, assocFileName)))
+                    {
+						if (resultFolderPath.StartsWith(MYEMSL_PATH_FLAG))
+						{
+							string subDir;
+							string parentFolders;
+							string datasetName = DetermineDatasetName(resultFolderPath);
+
+							GetMyEMSLParentFoldersAndSubDir(resultFolderPath, datasetName, out subDir, out parentFolders);
+
+							string assocFileNameClean;
+							DatasetInfoBase.ExtractMyEMSLFileID(assocFileName, out assocFileNameClean);
+
+							m_RecentlyFoundMyEMSLFiles = m_MyEMSLDatasetInfoCache.FindFiles(assocFileNameClean, subDir, datasetName, recurse: false);
+							if (m_RecentlyFoundMyEMSLFiles.Count > 0)
+							{
+								var archiveFileInfo = m_RecentlyFoundMyEMSLFiles[0];
+								string encodedFilePath = DatasetInfoBase.AppendMyEMSLFileID(archiveFileInfo.FileInfo.Filename, archiveFileInfo.FileID);
+								args.Fields[mAssocFileIdx] = encodedFilePath;
+
+								CacheFilterPassingFile(archiveFileInfo.FileInfo);
+								
+							}
+						}
+						else if (File.Exists(Path.Combine(resultFolderPath, assocFileName)))
                         {
                             args.Fields[mAssocFileIdx] = assocFileName;
                             break;

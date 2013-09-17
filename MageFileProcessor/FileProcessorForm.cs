@@ -51,7 +51,7 @@ namespace MageFileProcessor {
             InitializeComponent();
 
 			bool isBetaVersion = false;
-			SetFormTitle("2013-04-08", isBetaVersion);
+			SetFormTitle("2013-09-16", isBetaVersion);
 			
 			SetTags();
 
@@ -113,7 +113,7 @@ namespace MageFileProcessor {
 
 		private void SetAboutText() {
 			txtAbout1.Text = "Mage File Processor can search for files associated with DMS analysis jobs or datasets, then copy those files to the local computer.  The files can optionally be combined into a single tab-delimited text file or a single SQLite database.";
-			txtAbout2.Text = "Written by Gary Kiebel and Matthew Monroe in 2011 for the Department of Energy (PNNL, Richland, WA)";
+			txtAbout2.Text = "Written by Gary Kiebel and Matthew Monroe in 2011 for the Department of Energy (PNNL, Richland, WA).";
 			lblAboutLink.Text = "http://prismwiki.pnl.gov/wiki/Mage_Suite";
 		}
 
@@ -258,6 +258,7 @@ namespace MageFileProcessor {
                         runtimeParms = GetRuntimeParmsForCopyFiles();
                         source = new GVPipelineSource(FileListDisplayControl, mode);
                         mCurrentPipeline = Pipelines.MakeFileCopyPipeline(source, runtimeParms);
+						
                         break;
                     case "process_file_contents":
                         Dictionary<string, string> filterParms = FileProcessingPanel1.GetParameters();
@@ -273,6 +274,7 @@ namespace MageFileProcessor {
                     default:
                         return;
                 }
+
                 if (mCurrentPipeline == null) {
                     MessageBox.Show(string.Format("Could not build pipeline for '{0}' operation", command.Action), "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 } else {
@@ -281,9 +283,8 @@ namespace MageFileProcessor {
 					// Clear any warnings
 					statusPanel1.ClearWarnings();
 
-                    mCurrentPipeline.OnStatusMessageUpdated += statusPanel1.HandleStatusMessageUpdated;
-					mCurrentPipeline.OnWarningMessageUpdated += statusPanel1.HandleWarningMessageUpdated;
-                    mCurrentPipeline.OnRunCompleted += statusPanel1.HandleCompletionMessageUpdate;
+					mCurrentPipeline.OnStatusMessageUpdated += HandlePipelineUpdate;
+					mCurrentPipeline.OnWarningMessageUpdated += HandlePipelineWarning;                    
                     mCurrentPipeline.OnRunCompleted += HandlePipelineCompletion;
 					EnableCancel(true);
                     mCurrentPipeline.Run();
@@ -292,7 +293,7 @@ namespace MageFileProcessor {
                 MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
-
+	
         private bool ValidQueryParameters(string queryName, Dictionary<string, string> queryParameters) {
             string msg = string.Empty;
             bool bFilterDefined = false;
@@ -379,7 +380,7 @@ namespace MageFileProcessor {
             // initial labels for display list control panels
             JobListDisplayControl.PageTitle = "Entities";
             FileListDisplayControl.PageTitle = "Files";
-            JobDatasetIDList1.Legend = "(Paste in list of Dataset IDs)";
+            JobDatasetIDList1.Legend = "(Dataset IDs)";
             JobDatasetIDList1.ListName = "Dataset_ID";
 
             // disable certain UI component panels 
@@ -646,12 +647,27 @@ namespace MageFileProcessor {
         private delegate void CompletionStateUpdated(object status);
 		private delegate void VoidFnDelegate();
 
+		private void HandlePipelineUpdate(object sender, MageStatusEventArgs args)
+		{
+			statusPanel1.HandleStatusMessageUpdated(this, new MageStatusEventArgs(args.Message));
+			Console.WriteLine(args.Message);
+		}
+
+		private void HandlePipelineWarning(object sender, MageStatusEventArgs args)
+		{
+			statusPanel1.HandleWarningMessageUpdated(this, new MageStatusEventArgs(args.Message));
+			Console.WriteLine("Warning: " + args.Message);
+		}
+
         /// <summary>
         /// handle updating control enable status on completion of running pipeline
         /// </summary>
         /// <param name="sender">(ignored)</param>
         /// <param name="args">Contains status information to be displayed</param>
         private void HandlePipelineCompletion(object sender, MageStatusEventArgs args) {
+			mCurrentPipeline.OnRunCompleted += statusPanel1.HandleCompletionMessageUpdate;
+			Console.WriteLine(args.Message);
+
             CompletionStateUpdated csu = AdjusttPostCommndUIState;
             Invoke(csu, new object[] { null });
 

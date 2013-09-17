@@ -5,80 +5,84 @@ using System.Text;
 using System.IO;
 using MyEMSLReader;
 
-namespace Mage {
+namespace Mage
+{
 
-    /// <summary>
-    /// this module copies one or more input files to an output folder
-    ///
-    /// its FileContentProcessor base class provides the basic functionality
-    ///
-    /// the OutputMode parameter tells this module whether or not to append a prefix to
-    /// each output file name to avoid name collisions when input files can come from
-    /// more than one input folder
-    ///
-    /// if IDColumnName parameter is set, it specifies a column in the standard input data
-    /// whose value should be used in the prefix.  Otherwise the prefix is generated.
-    /// </summary>
+	/// <summary>
+	/// this module copies one or more input files to an output folder
+	///
+	/// its FileContentProcessor base class provides the basic functionality
+	///
+	/// the OutputMode parameter tells this module whether or not to append a prefix to
+	/// each output file name to avoid name collisions when input files can come from
+	/// more than one input folder
+	///
+	/// if IDColumnName parameter is set, it specifies a column in the standard input data
+	/// whose value should be used in the prefix.  Otherwise the prefix is generated.
+	/// </summary>
 	public class FileCopy : FileContentProcessor
 	{
 
-        #region Member Variables
+		#region Member Variables
 
-        private int tagIndex = 0; // used to provide unique prefix for duplicate file names
+		private int tagIndex = 0; // used to provide unique prefix for duplicate file names
 
-        #endregion
+		#endregion
 
-        #region Properties
+		#region Properties
 
 
-        /// <summary>
-        /// Name of column to be used for output file name prefix (optional)
-        /// </summary>
-        public string ColumnToUseForPrefix { get; set; }
+		/// <summary>
+		/// Name of column to be used for output file name prefix (optional)
+		/// </summary>
+		public string ColumnToUseForPrefix { get; set; }
 
-        /// <summary>
-        /// Whether or not to apply prefix to output file ("Yes" or "No")
-        /// </summary>
-        public string ApplyPrefixToFileName { set; get; }
+		/// <summary>
+		/// Whether or not to apply prefix to output file ("Yes" or "No")
+		/// </summary>
+		public string ApplyPrefixToFileName { set; get; }
 
-        /// <summary>
-        /// literal text to apply as first part of prefix (optional)
-        /// </summary>
-        public string PrefixLeader { set; get; }
+		/// <summary>
+		/// literal text to apply as first part of prefix (optional)
+		/// </summary>
+		public string PrefixLeader { set; get; }
 
 		/// <summary>
 		/// Whether or not to overwrite existing files ("Yes" or "No")
 		/// </summary>
 		public bool OverwriteExistingFiles { set; get; }
 
-        #endregion
+		#endregion
 
-        #region Constructors
+		#region Constructors
 
-        /// <summary>
-        /// construct a new Mage file copy module
-        /// </summary>
-        public FileCopy() {
-            ColumnToUseForPrefix = "";
-            ApplyPrefixToFileName = "";
-            SetOutputFileNamer(new OutputFileNamer(GetDestFile));
-            PrefixLeader = "";
+		/// <summary>
+		/// construct a new Mage file copy module
+		/// </summary>
+		public FileCopy()
+		{
+			ColumnToUseForPrefix = "";
+			ApplyPrefixToFileName = "";
+			SetOutputFileNamer(new OutputFileNamer(GetDestFile));
+			PrefixLeader = "";
 			OverwriteExistingFiles = false;
-        }
+		}
 
-        #endregion
+		#endregion
 
-        #region Overrides
+		#region Overrides
 
-        /// <summary>
-        /// copy given file to output
-        /// </summary>
-        /// <param name="sourceFile">name of input file</param>
-        /// <param name="sourcePath">containing folder for input file</param>
-        /// <param name="destPath">containing folder for output file</param>
-        /// <param name="context">metadata associated with input file (used for column mapping)</param>
-        protected override void ProcessFile(string sourceFile, string sourcePath, string destPath, Dictionary<string, string> context) {
-            try {
+		/// <summary>
+		/// copy given file to output
+		/// </summary>
+		/// <param name="sourceFile">name of input file</param>
+		/// <param name="sourcePath">containing folder for input file</param>
+		/// <param name="destPath">containing folder for output file</param>
+		/// <param name="context">metadata associated with input file (used for column mapping)</param>
+		protected override void ProcessFile(string sourceFile, string sourcePath, string destPath, Dictionary<string, string> context)
+		{
+			try
+			{
 				bool bShowDoneMsg = true;
 
 				if (sourcePath.StartsWith(MYEMSL_PATH_FLAG))
@@ -110,7 +114,7 @@ namespace Mage {
 							System.Threading.Thread.Sleep(1);
 							bShowDoneMsg = false;
 						}
-						
+
 					}
 				}
 				else
@@ -146,72 +150,95 @@ namespace Mage {
 				if (bShowDoneMsg)
 					UpdateStatus(this, new MageStatusEventArgs("Done->" + sourceFile));
 
-            } catch (FileNotFoundException) {
-                UpdateStatus(this, new MageStatusEventArgs("FAILED->File Not Found: "+ sourceFile, 1));
-                OnWarningMessage(new MageStatusEventArgs("Copy failed->File Not Found: " + sourcePath));
+			}
+			catch (FileNotFoundException)
+			{
+				UpdateStatus(this, new MageStatusEventArgs("FAILED->File Not Found: " + sourceFile, 1));
+				OnWarningMessage(new MageStatusEventArgs("Copy failed->File Not Found: " + sourcePath));
 				System.Threading.Thread.Sleep(250);
-            } catch (DirectoryNotFoundException) {
-                UpdateStatus(this, new MageStatusEventArgs("FAILED->Folder Not Found: " + sourcePath, 1));
-                OnWarningMessage(new MageStatusEventArgs("Copy failed->Folder Not Found: " + sourcePath));
+			}
+			catch (DirectoryNotFoundException)
+			{
+				UpdateStatus(this, new MageStatusEventArgs("FAILED->Folder Not Found: " + sourcePath, 1));
+				OnWarningMessage(new MageStatusEventArgs("Copy failed->Folder Not Found: " + sourcePath));
 				System.Threading.Thread.Sleep(250);
-            } catch (IOException e) {
-                UpdateStatus(this, new MageStatusEventArgs("FAILED->I/O Exception: " + e.Message +" -- " + sourceFile, 1));
-                OnWarningMessage(new MageStatusEventArgs("Copy failed->I/O Exception: " + e.Message + " -- " + sourceFile));
+			}
+			catch (IOException e)
+			{
+				UpdateStatus(this, new MageStatusEventArgs("FAILED->I/O Exception: " + e.Message + " -- " + sourceFile, 1));
+				OnWarningMessage(new MageStatusEventArgs("Copy failed->I/O Exception: " + e.Message + " -- " + sourceFile));
 				System.Threading.Thread.Sleep(250);
-            } catch (Exception e) {
-                UpdateStatus(this, new MageStatusEventArgs("FAILED->" + e.Message + " -- " + sourceFile, 1));
-                OnWarningMessage(new MageStatusEventArgs("Copy failed->" + e.Message + " -- " + sourceFile));
+			}
+			catch (Exception e)
+			{
+				UpdateStatus(this, new MageStatusEventArgs("FAILED->" + e.Message + " -- " + sourceFile, 1));
+				OnWarningMessage(new MageStatusEventArgs("Copy failed->" + e.Message + " -- " + sourceFile));
 				System.Threading.Thread.Sleep(250);
-            }
-        }
+			}
+		}
 
-        /// <summary>
-        /// copy given folder to output
-        /// </summary>
-        /// <param name="sourceFile">(not currently used)</param>
-        /// <param name="sourcePath">input folder</param>
-        /// <param name="destPath">output folder</param>
-        protected override void ProcessFolder(string sourceFile, string sourcePath, string destPath) {
-            DirectoryInfo source = new DirectoryInfo(sourcePath);
-            DirectoryInfo target = new DirectoryInfo(destPath);
-            CopyAll(source, target);
-        }
+		/// <summary>
+		/// copy given folder to output
+		/// </summary>
+		/// <param name="sourceFile">(not currently used)</param>
+		/// <param name="sourcePath">input folder</param>
+		/// <param name="destPath">output folder</param>
+		protected override void ProcessFolder(string sourceFile, string sourcePath, string destPath)
+		{
+
+			DirectoryInfo source = new DirectoryInfo(sourcePath);
+			DirectoryInfo target = new DirectoryInfo(destPath);
+
+			if (sourcePath.StartsWith(MYEMSL_PATH_FLAG))
+				CopyAllMyEMSL(source, target);
+			else
+				CopyAll(source, target);
+
+		}
 
 
-        /// <summary>
-        /// determine the name to be used for the destination file
-        /// </summary>
-        /// <param name="sourceFile"></param>
-        /// <param name="fieldPos"></param>
-        /// <param name="fields"></param>
-        /// <returns></returns>
-        protected string GetDestFile(string sourceFile, Dictionary<string, int> fieldPos, object[] fields) {
-            if (ApplyPrefixToFileName == "Yes") {
-                string prefix = "";
-                if (InputColumnPos.ContainsKey(ColumnToUseForPrefix)) {
-                    string leader = (!string.IsNullOrEmpty(PrefixLeader))?PrefixLeader + "_": "";
-                    prefix = leader + fields[fieldPos[ColumnToUseForPrefix]].ToString();
+		/// <summary>
+		/// determine the name to be used for the destination file
+		/// </summary>
+		/// <param name="sourceFile"></param>
+		/// <param name="fieldPos"></param>
+		/// <param name="fields"></param>
+		/// <returns></returns>
+		protected string GetDestFile(string sourceFile, Dictionary<string, int> fieldPos, object[] fields)
+		{
+			if (ApplyPrefixToFileName == "Yes")
+			{
+				string prefix = "";
+				if (InputColumnPos.ContainsKey(ColumnToUseForPrefix))
+				{
+					string leader = (!string.IsNullOrEmpty(PrefixLeader)) ? PrefixLeader + "_" : "";
+					prefix = leader + fields[fieldPos[ColumnToUseForPrefix]].ToString();
 
 					// Replace any invalid characters with an underscore
 					foreach (char chInvalidChar in System.IO.Path.GetInvalidFileNameChars())
 						prefix = prefix.Replace(chInvalidChar, '_');
 
-                } else {
-                    prefix = "Tag_" + (tagIndex++).ToString();
-                }
-                return prefix + "_" + sourceFile;
-            } else {
-                return sourceFile;
-            }
-        }
+				}
+				else
+				{
+					prefix = "Tag_" + (tagIndex++).ToString();
+				}
+				return prefix + "_" + sourceFile;
+			}
+			else
+			{
+				return sourceFile;
+			}
+		}
 
-        /// <summary>
-        /// Copy folder given by source to target 
-        /// and its contents
-        /// </summary>
-        /// <param name="source">Path to folder to be copied</param>
-        /// <param name="target">Path that folder will be copied to</param>
-        protected void CopyAll(DirectoryInfo source, DirectoryInfo target) {
+		/// <summary>
+		/// Copy folder given by source to target 
+		/// and its contents
+		/// </summary>
+		/// <param name="source">Path to folder to be copied</param>
+		/// <param name="target">Path that folder will be copied to</param>
+		protected void CopyAll(DirectoryInfo source, DirectoryInfo target)
+		{
 
 			string sourceFile = "??";
 			string sourcePath = "??";
@@ -219,9 +246,9 @@ namespace Mage {
 			try
 			{
 				// Check if the target directory exists, if not, create it.
-				if (Directory.Exists(target.FullName) == false)
+				if (!target.Exists)
 				{
-					Directory.CreateDirectory(target.FullName);
+					target.Create();
 				}
 			}
 			catch (Exception e)
@@ -253,7 +280,9 @@ namespace Mage {
 						DirectoryInfo nextTargetSubDir = target.CreateSubdirectory(diSourceSubDir.Name);
 						CopyAll(diSourceSubDir, nextTargetSubDir);
 
-					} catch (Exception e) {
+					}
+					catch (Exception e)
+					{
 						UpdateStatus(this, new MageStatusEventArgs("FAILED->" + e.Message + " -- " + diSourceSubDir.Name, 1));
 						OnWarningMessage(new MageStatusEventArgs("Subdirectory copy failed->" + e.Message + " -- " + diSourceSubDir.FullName));
 						System.Threading.Thread.Sleep(250);
@@ -261,27 +290,101 @@ namespace Mage {
 
 				}
 
-			} catch (FileNotFoundException) {
-                UpdateStatus(this, new MageStatusEventArgs("FAILED->File Not Found: "+ sourceFile, 1));
-                OnWarningMessage(new MageStatusEventArgs("Copy failed->File Not Found: " + sourcePath));
+			}
+			catch (FileNotFoundException)
+			{
+				UpdateStatus(this, new MageStatusEventArgs("FAILED->File Not Found: " + sourceFile, 1));
+				OnWarningMessage(new MageStatusEventArgs("Copy failed->File Not Found: " + sourcePath));
 				System.Threading.Thread.Sleep(250);
-            } catch (DirectoryNotFoundException) {
+			}
+			catch (DirectoryNotFoundException)
+			{
 				UpdateStatus(this, new MageStatusEventArgs("FAILED->Folder Not Found: " + sourcePath, 1));
-                OnWarningMessage(new MageStatusEventArgs("Copy failed->Folder Not Found: " + sourcePath));
+				OnWarningMessage(new MageStatusEventArgs("Copy failed->Folder Not Found: " + sourcePath));
 				System.Threading.Thread.Sleep(250);
-            } catch (IOException e) {
-                UpdateStatus(this, new MageStatusEventArgs("FAILED->I/O Exception: " + e.Message +" -- " + sourceFile, 1));
-                OnWarningMessage(new MageStatusEventArgs("Copy failed->I/O Exception: " + e.Message + " -- " + sourceFile));
+			}
+			catch (IOException e)
+			{
+				UpdateStatus(this, new MageStatusEventArgs("FAILED->I/O Exception: " + e.Message + " -- " + sourceFile, 1));
+				OnWarningMessage(new MageStatusEventArgs("Copy failed->I/O Exception: " + e.Message + " -- " + sourceFile));
 				System.Threading.Thread.Sleep(250);
+			}
+			catch (Exception e)
+			{
+				UpdateStatus(this, new MageStatusEventArgs("FAILED->" + e.Message + " -- " + sourceFile, 1));
+				OnWarningMessage(new MageStatusEventArgs("Copy failed->" + e.Message + " -- " + sourceFile));
+				System.Threading.Thread.Sleep(250);
+			}
+
+		}
+
+		protected void CopyAllMyEMSL(DirectoryInfo source, DirectoryInfo target) 
+		{
+
+			try
+			{				
+				// Check if the target directory exists, if not, create it.
+				if (!target.Exists)
+				{
+					target.Create();
+				}
+			}
+			catch (Exception e)
+			{
+				UpdateStatus(this, new MageStatusEventArgs("FAILED->" + e.Message + " -- " + target.Name, 1));
+				OnWarningMessage(new MageStatusEventArgs("Directory copy failed->" + e.Message + " -- " + target.FullName));
+				System.Threading.Thread.Sleep(250);
+				return;
+			}
+
+			try
+			{
+				// Download the files 
+				string subDir;
+				string parentFolders;
+				string datasetName = DetermineDatasetName(source.FullName);
+
+				GetMyEMSLParentFoldersAndSubDir(source.FullName, datasetName, out subDir, out parentFolders);
+
+				m_RecentlyFoundMyEMSLFiles = m_MyEMSLDatasetInfoCache.FindFiles("*", subDir, datasetName, true);
+
+				if (m_RecentlyFoundMyEMSLFiles.Count > 0)
+				{
+					foreach (var archiveFile in m_RecentlyFoundMyEMSLFiles)
+					{
+						if (!archiveFile.IsFolder)
+							m_MyEMSLDatasetInfoCache.AddFileToDownloadQueue(archiveFile.FileInfo);
+					}
+
+					if (!string.IsNullOrEmpty(subDir))
+					{
+						// The downloader will append the subfolder name, thus use target.Parent
+						target = target.Parent;
+					}
+
+					bool success = ProcessMyEMSLDownloadQueue(target.FullName, Downloader.DownloadFolderLayout.SingleDataset);
+					
+					if (!success) 
+					{
+						string message = "MyEMSL Download Error";
+						if (m_MyEMSLDatasetInfoCache.ErrorMessages.Count > 0)
+						{
+							message += ": " + m_MyEMSLDatasetInfoCache.ErrorMessages.First();
+						}
+
+						UpdateStatus(this, new MageStatusEventArgs("FAILED->" + message, 1));
+						OnWarningMessage(new MageStatusEventArgs(message));
+					}
+				}
+				
             } catch (Exception e) {
-                UpdateStatus(this, new MageStatusEventArgs("FAILED->" + e.Message + " -- " + sourceFile, 1));
-                OnWarningMessage(new MageStatusEventArgs("Copy failed->" + e.Message + " -- " + sourceFile));
+                UpdateStatus(this, new MageStatusEventArgs("FAILED->" + e.Message, 1));
+                OnWarningMessage(new MageStatusEventArgs("MyEMSL download failed->" + e.Message));
 				System.Threading.Thread.Sleep(250);
             }
-      
-        }
+		}
 
-        #endregion
+		#endregion
 
-    }
+	}
 }
