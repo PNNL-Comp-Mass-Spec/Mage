@@ -417,7 +417,7 @@ namespace MageDisplayLib {
         #region Compatibility with ListDisplayControl
 
         /// <summary>
-        /// return suitable ISinkModule referecet to this object
+        /// return suitable ISinkModule reference to this object
         /// </summary>
         /// <returns>ISinkModule reference</returns>
         public ISinkModule MakeSink() {
@@ -425,7 +425,7 @@ namespace MageDisplayLib {
         }
 
         /// <summary>
-        /// return suitable ISinkModule referecet to this object
+        /// return suitable ISinkModule reference to this object
         /// </summary>
         /// <param name="title"></param>
         /// <param name="blkSz"></param>
@@ -436,7 +436,7 @@ namespace MageDisplayLib {
         }
 
         /// <summary>
-        /// return suitable ISinkModule referecet to this object
+        /// return suitable ISinkModule reference to this object
         /// </summary>
         /// <param name="blkSz"></param>
         /// <returns>ISinkModule reference</returns>

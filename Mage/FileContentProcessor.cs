@@ -132,7 +132,11 @@ namespace Mage {
 
 				if (string.IsNullOrWhiteSpace(FileTypeColumnName))
 				{
-					if (System.IO.Directory.Exists(sourceFolder))
+					if (sourceFolder.StartsWith(MYEMSL_PATH_FLAG))
+					{
+						fileType = "file";
+					}
+					else if (System.IO.Directory.Exists(sourceFolder))
 					{
 						if (System.IO.File.Exists(Path.Combine(sourceFolder, sourceFile)))
 							fileType = "file";

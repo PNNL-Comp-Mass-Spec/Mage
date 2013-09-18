@@ -104,6 +104,8 @@ namespace Mage
 						if (m_FilterPassingMyEMSLFiles.TryGetValue(myEMSLFileID, out cachedFileInfo))
 						{
 							UpdateStatus(this, new MageStatusEventArgs("Queuing file for Download->" + sourceFile));
+
+							// Note: Explicitly defining the target path to save the file at using filePathLocal
 							bool unzipRequired = false;
 							m_MyEMSLDatasetInfoCache.AddFileToDownloadQueue(myEMSLFileID, cachedFileInfo.FileInfo, unzipRequired, destPathClean);
 						}
@@ -233,7 +235,6 @@ namespace Mage
 
 		/// <summary>
 		/// Copy folder given by source to target 
-		/// and its contents
 		/// </summary>
 		/// <param name="source">Path to folder to be copied</param>
 		/// <param name="target">Path that folder will be copied to</param>
@@ -318,7 +319,12 @@ namespace Mage
 
 		}
 
-		protected void CopyAllMyEMSL(DirectoryInfo source, DirectoryInfo target) 
+		/// <summary>
+		/// Copy MyEMSL folder given by source to target 
+		/// </summary>
+		/// <param name="sourceFolder">Path to folder to be copied</param>
+		/// <param name="target">Path that folder will be copied to</param>
+		protected void CopyAllMyEMSL(DirectoryInfo sourceFolder, DirectoryInfo target) 
 		{
 
 			try
@@ -342,9 +348,9 @@ namespace Mage
 				// Download the files 
 				string subDir;
 				string parentFolders;
-				string datasetName = DetermineDatasetName(source.FullName);
+				string datasetName = DetermineDatasetName(sourceFolder.FullName);
 
-				GetMyEMSLParentFoldersAndSubDir(source.FullName, datasetName, out subDir, out parentFolders);
+				GetMyEMSLParentFoldersAndSubDir(sourceFolder.FullName, datasetName, out subDir, out parentFolders);
 
 				m_RecentlyFoundMyEMSLFiles = m_MyEMSLDatasetInfoCache.FindFiles("*", subDir, datasetName, true);
 

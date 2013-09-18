@@ -428,7 +428,6 @@ namespace Mage {
                 mErrorMessages.Add(args.Message);
             }
             if (OnStatusMessageUpdated != null) {
-                ////                OnStatusMessageUpdated(this, new MageStatusEventArgs(args.Message));
                 OnStatusMessageUpdated(this, args);
             }
         }

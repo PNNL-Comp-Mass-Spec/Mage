@@ -38,7 +38,7 @@ namespace Mage {
     /// if the DatabaseName property is set, the SQLite database sub-pipeline will be used
     /// otherwise the delimited file writer sub-pipeline is used
     /// 
-    /// If the DatabaseName propertyis set, and the TableName property is set, all results go into
+    /// If the DatabaseName property is set, and the TableName property is set, all results go into
     /// that table.  If the TableName property is blank, results for each source file go into
     /// a separate table.  Table names will be equivalent to what the output file name would have been
     /// for the source file, minus the file extension.

@@ -32,6 +32,9 @@ namespace MageExtExtractionFilters {
         protected int mPassedRowsCounter = 0;
         protected int mReportRowBlockSize = 1000;
 
+		protected int mMinimumReportIntervalMsec = 100;
+		protected DateTime mLastReportTimeUTC = DateTime.UtcNow;
+
         #endregion
 
         #region Properties
@@ -114,8 +117,13 @@ namespace MageExtExtractionFilters {
 
         protected void ReportProgress() {
             if (mTotalRowsCounter % mReportRowBlockSize == 0) {
-                string msg = "Processed " + mTotalRowsCounter.ToString() + " total rows, passed " + mPassedRowsCounter.ToString();
-                OnStatusMessageUpdated(new MageStatusEventArgs(msg));
+				string msg = "Processed " + mTotalRowsCounter.ToString() + " total rows, passed " + mPassedRowsCounter.ToString();
+				if (DateTime.UtcNow.Subtract(mLastReportTimeUTC).TotalMilliseconds >= mMinimumReportIntervalMsec)
+				{
+					OnStatusMessageUpdated(new MageStatusEventArgs(msg));
+					mLastReportTimeUTC = DateTime.UtcNow;
+				}
+                
             }
         }
     }

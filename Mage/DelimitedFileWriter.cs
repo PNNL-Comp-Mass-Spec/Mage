@@ -92,7 +92,7 @@ namespace Mage {
         #region IBaseModule Members
 
         /// <summary>
-        /// called before pipeline runs - module can do any special setup that it needs
+        /// Called before pipeline runs - module can do any special setup that it needs
         /// (override of base class)
         /// </summary>
         public override void Prepare() {

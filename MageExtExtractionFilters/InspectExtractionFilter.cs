@@ -90,8 +90,6 @@ namespace MageExtExtractionFilters {
         /// <param name="args"></param>
         public override void HandleDataRow(object sender, MageDataEventArgs args) {
             if (args.DataAvailable) {
-                ++mTotalRowsCounter;
-                ReportProgress();
 
                 bool accepted = false;
                 object[] outRow = MapDataRow(args.Fields);
@@ -112,6 +110,10 @@ namespace MageExtExtractionFilters {
                         }
                     }
                 }
+
+				++mTotalRowsCounter;
+				ReportProgress();
+
             } else {
                 OnDataRowAvailable(new MageDataEventArgs(null));
             }

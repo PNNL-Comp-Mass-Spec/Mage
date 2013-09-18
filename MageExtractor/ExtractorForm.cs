@@ -60,7 +60,7 @@ namespace MageExtractor {
 			InitializeComponent();
 
 			bool isBetaVersion = false;
-			SetFormTitle("2013-09-16", isBetaVersion);
+			SetFormTitle("2013-09-18", isBetaVersion);
 
 			SetTags();
 
@@ -88,7 +88,7 @@ namespace MageExtractor {
 			// Connect click events
 			this.lblAboutLink.LinkClicked += lblAboutLink_LinkClicked;
 
-			// connect the pipeline queue to message handlers
+			// Connect the pipeline queue to message handlers
 			ConnectPipelineQueueToStatusDisplay(mPipelineQueue);
 
 			DisableCancelButton();
@@ -592,6 +592,9 @@ namespace MageExtractor {
 		{
 			try
 			{
+				if (!mOutputFolderPaths.Contains(Path.GetTempPath()))
+					mOutputFolderPaths.Add(Path.GetTempPath());
+
 				foreach (string folderPath in mOutputFolderPaths)
 				{
 					ClearMageTempFiles(folderPath);

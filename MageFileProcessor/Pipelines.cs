@@ -170,7 +170,7 @@ namespace MageFileProcessor {
 				filterName = "All Pass";
 
             string reportFileName = string.Format("Runlog_{0}_{1:yyyy-MM-dd_hhmmss}.txt", filterName.Replace(" ", "_"), System.DateTime.Now);
-
+		
             // make file sub-pipeline processing broker module 
             // to run a filter pipeline against files from list
             FileSubPipelineBroker broker = new FileSubPipelineBroker();
@@ -196,8 +196,116 @@ namespace MageFileProcessor {
             writer.FilePath = Path.Combine(outputFolderPath, reportFileName);
 
             // build and wire pipeline
-            return ProcessingPipeline.Assemble("PipelineToFilterSelectedfiles", sourceObject, broker, writer);
+			return ProcessingPipeline.Assemble("PipelineToFilterSelectedfiles", sourceObject, broker, writer);
         }
 
+
+
+		/// <summary>
+		/// Build and return Mage pipeline queue to extract contents of results files
+		/// for jobs given in jobList according to parameters defined in mExtractionParms 
+		/// and deliver output according to mDestination.  Also create metadata file for jobList.
+		/// </summary>
+		/// <param name="mode"></param>
+		public static PipelineQueue MakePipelineQueueToPreProcessThenFilterFiles(
+			BaseModule sourceObject, 
+			Dictionary<string, string> runtimeParms, 
+			Dictionary<string, string> filterParms)
+		{
+			string outputMode = runtimeParms["OutputMode"];
+			string outputFolderPath = runtimeParms["OutputFolder"];
+
+			PipelineQueue pipelineQueue = new PipelineQueue();
+
+			//ProcessingPipeline pxjm = MakePipelineToExportJobMetadata(sourceObject, outputMode, outputFolderPath);
+			//pipelineQueue.Add(pxjm);
+
+			// buffer module to accumulate aggregated file list
+			SimpleSink fileList = new SimpleSink();
+
+			// search job results folders for list of results files to process
+			// and accumulate into buffer module
+			ProcessingPipeline plof = MakePipelineToGetListOfFiles(sourceObject, fileList, runtimeParms);
+			pipelineQueue.Add(plof);
+
+			var sinkWrapper = new MyEMSLSinkWrapper(fileList);
+			sinkWrapper.TempFilesContainerPath = outputFolderPath;
+			sinkWrapper.PredownloadMyEMSLFiles = true;
+
+			ProcessingPipeline pxfl = MakePipelineToFilterSelectedfiles(sinkWrapper, runtimeParms, filterParms);
+			pipelineQueue.Add(pxfl);
+
+			return pipelineQueue;
+		}
+
+		/*
+		/// <summary>
+		/// Make a Mage pipeline to dump contents of job list 
+		/// as metadata file or db table
+		/// </summary>
+		/// <param name="jobList"></param>
+		/// <returns></returns>
+		public static ProcessingPipeline MakePipelineToExportJobMetadata(BaseModule jobList, string outputMode, string outputFolderPath)
+		{
+			if (outputMode == )
+			{
+				broker.DatabaseName = runtimeParms["DatabaseName"];
+				broker.TableName = runtimeParms["TableName"];
+				outputFolderPath = Path.GetDirectoryName(runtimeParms["DatabaseName"]);
+			}
+
+
+			BaseModule writer = null;
+			switch (outputMode)
+			{
+				case "SQLite_Output"
+					SQLiteWriter sw = new SQLiteWriter();
+					sw.DbPath = destination.ContainerPath;
+					sw.TableName = destination.MetadataName;
+					writer = sw;
+					break;
+				case DestinationType.Types.File_Output:
+					DelimitedFileWriter dw = new DelimitedFileWriter();
+					dw.FilePath = Path.Combine(destination.ContainerPath, destination.MetadataName);
+					writer = dw;
+					break;
+			}
+			ProcessingPipeline filePipeline = ProcessingPipeline.Assemble("Job Metadata", jobList, writer);
+			return filePipeline;
+		}
+		 */
+
+		/// <summary>
+		/// Make a Mage pipeline to lookup file info for the source files
+		/// Results are accumulated into the given sink module
+		/// </summary>
+		/// <param name="source">Mage module that contains list of files</param>
+		/// <param name="sink">Mage module to accumulate list of results into</param>
+		/// <returns></returns>
+		public static ProcessingPipeline MakePipelineToGetListOfFiles(BaseModule jobListSource, BaseModule fileListSink, Dictionary<string, string> runtimeParms)
+		{
+			string outputFolder = runtimeParms["OutputFolder"];
+
+			Collection<object> modules = new Collection<object>();
+			modules.Add(jobListSource);
+
+			FileListInfoLookup fileFinder = new FileListInfoLookup();
+			fileFinder.SourceFileColumnName = "Name";
+			fileFinder.SourceFolderColumnName = "Folder";
+
+			fileFinder.FileColumnName = "Name";
+			fileFinder.OutputColumnList = string.Format("Job, Item|{0}, Folder, Name|{1}, File_Size_KB|{2}, File_Date|{3}", FileListFilter.COLUMN_NAME_FILE_TYPE, fileFinder.FileColumnName, FileListFilter.COLUMN_NAME_FILE_SIZE, FileListFilter.COLUMN_NAME_FILE_DATE);
+			modules.Add(fileFinder);
+			modules.Add(fileListSink);
+
+			// create a delimited file writer module to build manifest and initialize it
+			DelimitedFileWriter writer = new DelimitedFileWriter();
+			writer.FilePath = Path.Combine(outputFolder, runtimeParms["ManifestFileName"]);
+			writer.OutputColumnList = "*";
+			modules.Add(writer);
+
+			ProcessingPipeline filePipeline = ProcessingPipeline.Assemble("Search For Files", modules);
+			return filePipeline;
+		}
     }
 }

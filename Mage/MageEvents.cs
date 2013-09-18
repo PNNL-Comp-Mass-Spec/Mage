@@ -52,6 +52,15 @@ namespace Mage {
             DataType = type;
             Size = size;
         }
+
+		/// <summary>
+		/// Overrides the default ToString to return the column def name and data type
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			return Name + ": " + DataType;
+		}
     }
 
     /// <summary>

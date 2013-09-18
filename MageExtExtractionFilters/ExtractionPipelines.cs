@@ -22,7 +22,7 @@ namespace MageExtExtractionFilters
 		{
 			PipelineQueue pipelineQueue = new PipelineQueue();
 
-			ProcessingPipeline pxfl = MakePipelineToExportFileList(new SinkWrapper(fileList), destination);
+			ProcessingPipeline pxfl = MakePipelineToExportFileList(new MyEMSLSinkWrapper(fileList), destination);
 			pipelineQueue.Add(pxfl);
 
 			// extract contents of list of files 
@@ -47,16 +47,13 @@ namespace MageExtExtractionFilters
 
 			// buffer module to accumulate aggregated file list
 			SimpleSink fileList = new SimpleSink();
-
-			var extractionContext = GetExtractionContext(destination);
-			fileList.SetContext(extractionContext);
-
+			
 			// search job results folders for list of results files to process
 			// and accumulate into buffer module
 			ProcessingPipeline plof = MakePipelineToGetListOfFiles(jobList, fileList, extractionParms);
 			pipelineQueue.Add(plof);
 
-			ProcessingPipeline pxfl = MakePipelineToExportFileList(new SinkWrapper(fileList), destination);
+			ProcessingPipeline pxfl = MakePipelineToExportFileList(new MyEMSLSinkWrapper(fileList), destination);
 			pipelineQueue.Add(pxfl);
 
 			// extract contents of list of files 
@@ -114,9 +111,6 @@ namespace MageExtExtractionFilters
 			extractor.Destination = destination;
 			extractor.SourceFolderColumnName = "Folder";
 			extractor.SourceFileColumnName = "Name";
-
-			var extractionContext = GetExtractionContext(destination);
-			fileListSource.SetContext(extractionContext);
 
 			ProcessingPipeline filePipeline = ProcessingPipeline.Assemble("Process Files", fileListSource, extractor);
 			return filePipeline;
@@ -191,7 +185,7 @@ namespace MageExtExtractionFilters
 			return tool;
 		}
 
-		protected static Dictionary<string, string> GetExtractionContext(DestinationType destination)
+		protected static string GetContainerDirectory(DestinationType destination)
 		{
 			string containerPath = destination.ContainerPath;
 			if (containerPath.ToLower().EndsWith(".db3"))
@@ -199,11 +193,8 @@ namespace MageExtExtractionFilters
 				var containerFile = new FileInfo(containerPath);
 				containerPath = containerFile.Directory.FullName;
 			}
-
-			var extractionContext = new Dictionary<string, string>() { { FileProcessingBase.DESTINATION_CONTAINER_PATH, containerPath } };
-
-			return extractionContext;
-		}
+			return containerPath;
+		}	
 
 		/// <summary>
 		/// Make a Mage pipeline to dump contents of job list 
@@ -238,7 +229,7 @@ namespace MageExtExtractionFilters
 		/// </summary>
 		/// <param name="fileList"></param>
 		/// <returns></returns>
-		public static ProcessingPipeline MakePipelineToExportFileList(BaseModule fileList, DestinationType destination)
+		public static ProcessingPipeline MakePipelineToExportFileList(MyEMSLSinkWrapper fileList, DestinationType destination)
 		{
 			BaseModule writer = null;
 			switch (destination.Type)
@@ -256,8 +247,8 @@ namespace MageExtExtractionFilters
 					break;
 			}
 
-			var extractionContext = GetExtractionContext(destination);
-			fileList.SetContext(extractionContext);
+			fileList.TempFilesContainerPath = GetContainerDirectory(destination);
+			fileList.PredownloadMyEMSLFiles = true;
 
 			ProcessingPipeline filePipeline = ProcessingPipeline.Assemble("Job Metadata", fileList, writer);
 			return filePipeline;

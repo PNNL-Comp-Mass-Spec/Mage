@@ -4,247 +4,302 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Text.RegularExpressions;
+using MyEMSLReader;
 
-namespace Mage {
+namespace Mage
+{
 
-    /// <summary>
-    /// Mage module that reads content of a delimited files
-    /// and streams it to Mage standard tabular ouput
-    /// </summary>
-    public class DelimitedFileReader : BaseModule, IDisposable {
+	/// <summary>
+	/// Mage module that reads content of a delimited files
+	/// and streams it to Mage standard tabular ouput
+	/// </summary>
+	public class DelimitedFileReader : FileProcessingBase, IDisposable
+	{
 
-        #region Member Variables
+		#region Member Variables
 
-        private StreamReader mFileReader = null;
+		private StreamReader mFileReader = null;
 
-        private bool doHeaderLine = true;
+		private bool doHeaderLine = true;
 
-        #endregion
+		#endregion
 
-        #region Properties
+		#region Properties
 
-        /// <summary>
-        /// delimiter for input file (default to tab)
-        /// </summary>
-        public string Delimiter { get; set; }
+		/// <summary>
+		/// delimiter for input file (default to tab)
+		/// </summary>
+		public string Delimiter { get; set; }
 
-        /// <summary>
-        /// full path to input files
-        /// </summary>
-        public string FilePath { get; set; }
+		/// <summary>
+		/// full path to input files
+		/// </summary>
+		public string FilePath { get; set; }
 
-        /// <summary>
-        /// whether or not input file has a header line ("Yes" or "No")
-        /// </summary>
-        public string Header { get; set; }
+		/// <summary>
+		/// whether or not input file has a header line ("Yes" or "No")
+		/// </summary>
+		public string Header { get; set; }
 
-        #endregion
+		#endregion
 
-        #region Constructors
+		#region Constructors
 
-        /// <summary>
-        /// construct a new Mage delimited file reader object
-        /// (defaulted to "AutoSense" and expecting a header line
-        /// </summary>
-        public DelimitedFileReader() {
-            Delimiter = "AutoSense"; // "\t";
-            Header = "Yes";
-        }
+		/// <summary>
+		/// construct a new Mage delimited file reader object
+		/// (defaulted to "AutoSense" and expecting a header line
+		/// </summary>
+		public DelimitedFileReader()
+		{
+			Delimiter = "AutoSense"; // "\t";
+			Header = "Yes";
+		}
 
-        #endregion
+		#endregion
 
-        #region IDisposable Members
+		#region IDisposable Members
 
-        /// <summary>
-        /// dispose of held resources
-        /// </summary>
-        public void Dispose() {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+		/// <summary>
+		/// dispose of held resources
+		/// </summary>
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
 
-        /// <summary>
-        /// dispose of held resources
-        /// </summary>
-        /// <param name="disposing"></param>
-        protected virtual void Dispose(bool disposing) {
-            if (disposing) {
-                // Code to dispose the managed resources of the class
-            }
-            // Code to dispose the un-managed resources of the class
-            if (mFileReader != null) {
-                mFileReader.Dispose();
-            }
+		/// <summary>
+		/// dispose of held resources
+		/// </summary>
+		/// <param name="disposing"></param>
+		protected virtual void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				// Code to dispose the managed resources of the class
+			}
+			// Code to dispose the un-managed resources of the class
+			if (mFileReader != null)
+			{
+				mFileReader.Dispose();
+			}
 
-            //           isDisposed = true;
-        }
+			//           isDisposed = true;
+		}
 
-        #endregion
+		#endregion
 
 
-        #region IBaseModule Members
+		#region IBaseModule Members
 
-        /// <summary>
-        /// called before pipeline runs - module can do any special setup that it needs
-        /// (override of base class)
-        /// </summary>
-        public override void Prepare() {
-        }
+		/// <summary>
+		/// called before pipeline runs - module can do any special setup that it needs
+		/// (override of base class)
+		/// </summary>
+		public override void Prepare()
+		{
+		}
 
-        /// <summary>
-        /// called after pipeline run is complete - module can do any special cleanup
-        /// this module closes the input file
-        /// (override of base class)
-        /// </summary>
-        public override void Cleanup() {
-            base.Cleanup();
-            if (mFileReader != null) {
-                mFileReader.Close();
-            }
-        }
+		/// <summary>
+		/// called after pipeline run is complete - module can do any special cleanup
+		/// this module closes the input file
+		/// (override of base class)
+		/// </summary>
+		public override void Cleanup()
+		{
+			base.Cleanup();
+			if (mFileReader != null)
+			{
+				mFileReader.Close();
+			}
+		}
 
-        /// <summary>
-        /// Pass execution to module instead of having it respond to standard tabular input stream events
-        /// (override of base class)
-        /// </summary>
-        /// <param name="state">Mage ProcessingPipeline object that contains the module (if there is one)</param>
-        public override void Run(object state) {
-            UpdateStatus("Reading file " + FilePath);
-            doHeaderLine = (Header == "Yes");
-            switch (Delimiter) {
-                case "AutoSense":
-                    OutputContents();
-                    break;
-                case "CSV":
-                    OutputFileContentsFromCSV();
-                    break;
-                default:
-                    OutputFileContents();
-                    break;
-            }
-        }
+		/// <summary>
+		/// Pass execution to module instead of having it respond to standard tabular input stream events
+		/// (override of base class)
+		/// </summary>
+		/// <param name="state">Mage ProcessingPipeline object that contains the module (if there is one)</param>
+		public override void Run(object state)
+		{
+			UpdateStatus("Reading file " + PRISM.Files.clsFileTools.CompactPathString(FilePath, 60));
+			doHeaderLine = (Header == "Yes");
+			switch (Delimiter)
+			{
+				case "AutoSense":
+					OutputContents();
+					break;
+				case "CSV":
+					OutputFileContentsFromCSV();
+					break;
+				default:
+					OutputFileContents();
+					break;
+			}
+		}
 
-        #endregion
+		#endregion
 
-        #region Support Functions
+		#region Support Functions
 
-        /// <summary>
-        /// output contents of file, automatically deciding 
-        /// whether it is tab-delimited or comma-delimited
-        /// </summary>
-        private void OutputContents() {
-            bool checkDelimiter = true;
-            bool tabDelimited = true;
-            char[] delim = "\t".ToCharArray();
+		/// <summary>
+		/// output contents of file, automatically deciding 
+		/// whether it is tab-delimited or comma-delimited
+		/// </summary>
+		private void OutputContents()
+		{
+			bool checkDelimiter = true;
+			bool tabDelimited = true;
+			char[] delim = "\t".ToCharArray();
 
 			// This RegEx is used to parse CSV files
 			// It assures that we only split on commas that are not inside double-quoted strings
-            Regex r = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
-            string[] fields;
+			Regex r = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
+			string[] fields;
 
-            try {
-                mFileReader = new StreamReader(new System.IO.FileStream(FilePath, FileMode.Open, FileAccess.Read, FileShare.Read));
-                string line;
-                while ((line = mFileReader.ReadLine()) != null) {
-                    if (Abort) {
-                        ReportProcessingAborted();
-                        break;
-                    }
+			string delimitedFilePathLocal = DownloadFileIfRequired(FilePath);
 
-                    // check first line for delimiter type
-                    if (checkDelimiter) {
-                        tabDelimited = !SwitchToCSV(line);
-                        checkDelimiter = false;
-                    }
+			bool downloadedMyEMSLFile = false;
+			if (delimitedFilePathLocal != FilePath)
+			{
+				downloadedMyEMSLFile = true;
+			}			
 
-                    // parse line according to delimiter type
-                    if (tabDelimited) {
-                        fields = line.Split(delim);
-                    } else {
-                        fields = r.Split(line);
-                    }
+			try
+			{
+				mFileReader = new StreamReader(new FileStream(delimitedFilePathLocal, FileMode.Open, FileAccess.Read, FileShare.Read));
+				string line;
+				while ((line = mFileReader.ReadLine()) != null)
+				{
+					if (Abort)
+					{
+						ReportProcessingAborted();
+						break;
+					}
 
-                    // output line
-                    if (doHeaderLine) {
-                        doHeaderLine = false;
-                        OutputHeaderLine(fields);
-                    } else {
-                        OutputDataLine(fields);
-                    }
-                }
-                OutputDataLine(null);
-                mFileReader.Close();
-            } catch (IOException ex) {
-                throw new MageException("Cannot access " + System.IO.Path.GetFileName(FilePath) + ": " + ex.Message, ex);
-            }
-        }
+					// check first line for delimiter type
+					if (checkDelimiter)
+					{
+						tabDelimited = !SwitchToCSV(line);
+						checkDelimiter = false;
+					}
 
-        private static bool SwitchToCSV(string line) {
-            bool tabs = line.Contains("\t");
-            bool commas = line.Contains(",");
-            return commas && !tabs;
-        }
+					// parse line according to delimiter type
+					if (tabDelimited)
+					{
+						fields = line.Split(delim);
+					}
+					else
+					{
+						fields = r.Split(line);
+					}
+
+					// output line
+					if (doHeaderLine)
+					{
+						doHeaderLine = false;
+						OutputHeaderLine(fields);
+					}
+					else
+					{
+						OutputDataLine(fields);
+					}
+				}
+				OutputDataLine(null);
+				mFileReader.Close();
+
+				if (downloadedMyEMSLFile)
+					DeleteFileIfLowDiskSpace(delimitedFilePathLocal);
+
+			}
+			catch (IOException ex)
+			{
+				throw new MageException("Cannot access " + Path.GetFileName(FilePath) + ": " + ex.Message, ex);
+			}
+		}
+
+		private static bool SwitchToCSV(string line)
+		{
+			bool tabs = line.Contains("\t");
+			bool commas = line.Contains(",");
+			return commas && !tabs;
+		}
 
 
-        private void OutputFileContents() {
-            char[] delim = Delimiter.ToCharArray();
-            mFileReader = new StreamReader(FilePath);
-            string line;
-            while ((line = mFileReader.ReadLine()) != null) {
-                if (Abort) {
-                    ReportProcessingAborted();
-                    break;
-                }
-                string[] fields = line.Split(delim);
-                if (doHeaderLine) {
-                    doHeaderLine = false;
-                    OutputHeaderLine(fields);
-                } else {
-                    OutputDataLine(fields);
-                }
-            }
-            OutputDataLine(null);
-            mFileReader.Close();
-        }
+		private void OutputFileContents()
+		{
+			char[] delim = Delimiter.ToCharArray();
+			mFileReader = new StreamReader(FilePath);
+			string line;
+			while ((line = mFileReader.ReadLine()) != null)
+			{
+				if (Abort)
+				{
+					ReportProcessingAborted();
+					break;
+				}
+				string[] fields = line.Split(delim);
+				if (doHeaderLine)
+				{
+					doHeaderLine = false;
+					OutputHeaderLine(fields);
+				}
+				else
+				{
+					OutputDataLine(fields);
+				}
+			}
+			OutputDataLine(null);
+			mFileReader.Close();
+		}
 
-        private void OutputFileContentsFromCSV() {
-            Regex r = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
-            mFileReader = new StreamReader(FilePath);
-            string line;
-            while ((line = mFileReader.ReadLine()) != null) {
-                if (Abort) {
-                    ReportProcessingAborted();
-                    break;
-                }
-                string[] fields = r.Split(line);
-                if (doHeaderLine) {
-                    doHeaderLine = false;
-                    OutputHeaderLine(fields);
-                } else {
-                    OutputDataLine(fields);
-                }
-            }
-            OutputDataLine(null);
-            mFileReader.Close();
-        }
+		private void OutputFileContentsFromCSV()
+		{
+			Regex r = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
+			mFileReader = new StreamReader(FilePath);
+			string line;
+			while ((line = mFileReader.ReadLine()) != null)
+			{
+				if (Abort)
+				{
+					ReportProcessingAborted();
+					break;
+				}
+				string[] fields = r.Split(line);
+				if (doHeaderLine)
+				{
+					doHeaderLine = false;
+					OutputHeaderLine(fields);
+				}
+				else
+				{
+					OutputDataLine(fields);
+				}
+			}
+			OutputDataLine(null);
+			mFileReader.Close();
+		}
 
-        private void OutputHeaderLine(string[] fields) {
-            // output the column definitions
-            List<MageColumnDef> colDefs = new List<MageColumnDef>();
-            foreach (string field in fields) {
-                colDefs.Add(new MageColumnDef(field, "text", "10"));
-            }
-            OnColumnDefAvailable(new MageColumnEventArgs(colDefs.ToArray()));
-        }
+		private void OutputHeaderLine(string[] fields)
+		{
+			// output the column definitions
+			List<MageColumnDef> colDefs = new List<MageColumnDef>();
+			foreach (string field in fields)
+			{
+				colDefs.Add(new MageColumnDef(field, "text", "10"));
+			}
+			OnColumnDefAvailable(new MageColumnEventArgs(colDefs.ToArray()));
+		}
 
-        private void OutputDataLine(string[] fields) {
-            OnDataRowAvailable(new MageDataEventArgs(fields));
-        }
+		private void OutputDataLine(string[] fields)
+		{
+			OnDataRowAvailable(new MageDataEventArgs(fields));
+		}
 
-        private void UpdateStatus(string message) {
-            OnStatusMessageUpdated(new MageStatusEventArgs(message));
-        }
+		private void UpdateStatus(string message)
+		{
+			OnStatusMessageUpdated(new MageStatusEventArgs(message));
+		}
 
-        #endregion
-    }
+		#endregion
+	}
 }

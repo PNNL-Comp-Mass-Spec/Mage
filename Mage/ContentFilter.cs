@@ -52,17 +52,18 @@ namespace Mage {
         /// </summary>
         public override void HandleDataRow(object sender, MageDataEventArgs args) {
             if (args.DataAvailable) {
+				// do filtering here
+				object[] vals = args.Fields;
+				if (CheckFilter(ref vals))
+				{
+					passedRowsCounter++;
+					OnDataRowAvailable(new MageDataEventArgs(vals));
+				}
                 // report progress
                 if (++totalRowsCounter % reportRowBlockSize == 0) {
                     string msg = "Processed " + totalRowsCounter.ToString() + " total rows, passed " + passedRowsCounter.ToString();
                     OnStatusMessageUpdated(new MageStatusEventArgs(msg));
-                }
-                // do filtering here
-                object[] vals = args.Fields;
-                if (CheckFilter(ref vals)) {
-                    passedRowsCounter++;
-                    OnDataRowAvailable(new MageDataEventArgs(vals));
-                }
+                }               
             } else {
                 OnDataRowAvailable(new MageDataEventArgs(null));
             }

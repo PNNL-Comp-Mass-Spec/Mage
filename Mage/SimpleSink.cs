@@ -123,6 +123,8 @@ namespace Mage {
                 } else {
                     CancelPipeline();
                 }
+
+				OnDataRowAvailable(args);
             }
         }
 
@@ -139,11 +141,13 @@ namespace Mage {
                     Console.WriteLine("Column {0}, {1}, {2} ", columnDef.Name, columnDef.DataType, columnDef.Size);
                 }
             }
+
+			OnColumnDefAvailable(args);
         }
 
         /// <summary>
         /// Pass execution to module instead of having it respond to standard tabular input stream events.
-        /// It will output via stantard tabular output any rows it has accumulated
+        /// It will output via standard tabular output any rows it has accumulated
         /// (override of base class)
         /// </summary>
         /// <param name="state">Mage ProcessingPipeline object that contains the module (if there is one)</param>
@@ -154,16 +158,6 @@ namespace Mage {
             }
             OnDataRowAvailable(new MageDataEventArgs(null));
         }
-
-		/// <summary>
-		/// This function can be used to override the data values in a given row; use with caution
-		/// </summary>
-		/// <param name="rowIndex"></param>
-		/// <param name="newData"></param>
-		public void UpdateSavedRowData(int rowIndex, object[] newData)
-		{
-			SavedRows[rowIndex] = newData;
-		}
 
         #endregion
 
