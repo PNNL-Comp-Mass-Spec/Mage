@@ -58,7 +58,6 @@ namespace Mage {
         /// <summary>
         /// Get rows that were accumumlated in the internal row buffer
         /// </summary>
-//        public List<object[]> Rows { get { return SavedRows;  } }
         public Collection<object[]> Rows { get { return new Collection<object[]>(SavedRows); } }
 
         #endregion
@@ -162,6 +161,67 @@ namespace Mage {
         #endregion
 
         #region Utility_Functions
+
+		/// <summary>
+		/// Populates value with the value for column colIndex in row rowIndex
+		/// </summary>
+		/// <param name="colIndex">Column Index</param>
+		/// <param name="rowIndex">Row to examine</param>
+		/// <param name="value">Value (double, Output) </param>
+		/// <returns>True if the column exists and contains a numeric value; otherwise false</returns>
+		public bool TryGetValueViaColumnIndex(int colIndex, int rowIndex, out double value)
+		{
+			value = 0;
+
+			if (colIndex > -1)
+			{
+				if (double.TryParse(Rows[rowIndex][colIndex].ToString(), out value))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		/// <summary>
+		/// Populates value with the value for column colIndex in row rowIndex
+		/// </summary>
+		/// <param name="colIndex">Column Index</param>
+		/// <param name="rowIndex">Row to examine</param>
+		/// <param name="value">Value (integer, Output) </param>
+		/// <returns>True if the column exists and contains a numeric value; otherwise false</returns>
+		public bool TryGetValueViaColumnIndex(int colIndex, int rowIndex, out int value)
+		{
+			value = 0;
+
+			if (colIndex > -1)
+			{
+				if (int.TryParse(Rows[rowIndex][colIndex].ToString(), out value))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		/// <summary>
+		/// Populates value with the value for column colIndex in row rowIndex
+		/// </summary>
+		/// <param name="colIndex">Column Index</param>
+		/// <param name="rowIndex">Row to examine</param>
+		/// <param name="value">Value (string, Output) </param>
+		/// <returns>True if the column exists; otherwise false</returns>
+		public bool TryGetValueViaColumnIndex(int colIndex, int rowIndex, out string value)
+		{
+			value = null;
+
+			if (colIndex > -1)
+			{
+				value = Rows[rowIndex][colIndex].ToString();
+				return true;
+			}
+			return false;
+		}
 
 		/// <summary>
 		/// Populates value with the value for column columnName in row rowIndex

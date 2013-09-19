@@ -269,7 +269,7 @@ namespace Mage
 					sourcePath = fi.FullName;
 
 					UpdateStatus(this, new MageStatusEventArgs("Start Copy->" + fi.Name));
-					fi.CopyTo(Path.Combine(target.ToString(), fi.Name), true);
+					fi.CopyTo(Path.Combine(target.FullName, fi.Name), true);
 					UpdateStatus(this, new MageStatusEventArgs("Done->" + fi.Name));
 				}
 

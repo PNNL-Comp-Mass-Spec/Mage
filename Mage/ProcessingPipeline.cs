@@ -153,8 +153,6 @@ namespace Mage {
 						modDef.Value.PostProcess();
 					}
 
-					MyEMSLReader.MyEMSLBase.GarbageCollectNow();
-
 					if (string.IsNullOrEmpty(CompletionCode)) {
 						if (Globals.AbortRequested) {
 							HandleStatusMessageUpdated(this, new MageStatusEventArgs("Processing Aborted"));

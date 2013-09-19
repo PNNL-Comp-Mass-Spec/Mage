@@ -19,6 +19,9 @@ namespace Mage {
         private int passedRowsCounter = 0;
         private int reportRowBlockSize = 1000;
 
+		private int mMinimumReportIntervalMsec = 500;
+		private DateTime mLastReportTimeUTC = DateTime.UtcNow;
+
         #endregion
 
         #region IBaseModule Members
@@ -61,8 +64,12 @@ namespace Mage {
 				}
                 // report progress
                 if (++totalRowsCounter % reportRowBlockSize == 0) {
-                    string msg = "Processed " + totalRowsCounter.ToString() + " total rows, passed " + passedRowsCounter.ToString();
-                    OnStatusMessageUpdated(new MageStatusEventArgs(msg));
+					string msg = "Processed " + totalRowsCounter.ToString() + " total rows, passed " + passedRowsCounter.ToString();
+					if (DateTime.UtcNow.Subtract(mLastReportTimeUTC).TotalMilliseconds >= mMinimumReportIntervalMsec)
+					{
+						OnStatusMessageUpdated(new MageStatusEventArgs(msg));
+						mLastReportTimeUTC = DateTime.UtcNow;
+					}
                 }               
             } else {
                 OnDataRowAvailable(new MageDataEventArgs(null));

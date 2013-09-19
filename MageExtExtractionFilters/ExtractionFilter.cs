@@ -32,7 +32,7 @@ namespace MageExtExtractionFilters {
         protected int mPassedRowsCounter = 0;
         protected int mReportRowBlockSize = 1000;
 
-		protected int mMinimumReportIntervalMsec = 100;
+		protected int mMinimumReportIntervalMsec = 500;
 		protected DateTime mLastReportTimeUTC = DateTime.UtcNow;
 
         #endregion

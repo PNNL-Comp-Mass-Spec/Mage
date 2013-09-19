@@ -194,6 +194,26 @@ namespace MageExtExtractionFilters {
 				ProcessingPipeline.Assemble("Lookup Protein Data", protFileReader, mProteinData).RunRoot(null);
 			}
 
+			int colIndexUniqueSeqID;
+			int colIndexCleavageState;
+			int colIndexTerminusState;
+			int colIndexProteinName;
+			int colIndexEValue;
+			int colIndexProteinIntensity;
+
+			if (!mProteinData.ColumnIndex.TryGetValue("Unique_Seq_ID", out colIndexUniqueSeqID))
+				colIndexUniqueSeqID = -1;
+			if (!mProteinData.ColumnIndex.TryGetValue("Cleavage_State", out colIndexCleavageState))
+				colIndexCleavageState = -1;
+			if (!mProteinData.ColumnIndex.TryGetValue("Terminus_State", out colIndexTerminusState))
+				colIndexTerminusState = -1;
+			if (!mProteinData.ColumnIndex.TryGetValue("Protein_Name", out colIndexProteinName))
+				colIndexProteinName = -1;
+			if (!mProteinData.ColumnIndex.TryGetValue("Protein_Expectation_Value_Log(e)", out colIndexEValue))
+				colIndexEValue = -1;
+			if (!mProteinData.ColumnIndex.TryGetValue("Protein_Intensity_Log(I)", out colIndexProteinIntensity))
+				colIndexProteinIntensity = -1;
+
 			// Extract the protein data from the SimpleSink so that we can sort it
 			mProteinDataSorted.Clear();
 			for (int rowIdx = 0; rowIdx < mProteinData.Rows.Count; rowIdx++) {
@@ -203,25 +223,26 @@ namespace MageExtExtractionFilters {
 				bool bValidProteinInfo = false;
 				ProteinInfo oProteinInfo = new ProteinInfo();
 
-				if (mProteinData.TryGetValueViaColumnName("Unique_Seq_ID", rowIdx, out iValue)) {
+				if (mProteinData.TryGetValueViaColumnIndex(colIndexUniqueSeqID, rowIdx, out iValue))
+				{
 					bValidProteinInfo = true;
 					oProteinInfo.Unique_Seq_ID = iValue;
 				}
 
 				if (bValidProteinInfo) {
-					if (mProteinData.TryGetValueViaColumnName("Cleavage_State", rowIdx, out iValue))
+					if (mProteinData.TryGetValueViaColumnIndex(colIndexCleavageState, rowIdx, out iValue))
 						oProteinInfo.Cleavage_State = iValue;
 
-					if (mProteinData.TryGetValueViaColumnName("Terminus_State", rowIdx, out iValue))
+					if (mProteinData.TryGetValueViaColumnIndex(colIndexTerminusState, rowIdx, out iValue))
 						oProteinInfo.Terminus_State = iValue;
 
-					if (mProteinData.TryGetValueViaColumnName("Protein_Name", rowIdx, out sValue))
+					if (mProteinData.TryGetValueViaColumnIndex(colIndexProteinName, rowIdx, out sValue))
 						oProteinInfo.Protein_Name = sValue;
 
-					if (mProteinData.TryGetValueViaColumnName("Protein_Expectation_Value_Log(e)", rowIdx, out sValue))
+					if (mProteinData.TryGetValueViaColumnIndex(colIndexEValue, rowIdx, out sValue))
 						oProteinInfo.Protein_Expectation_Value_LogE = sValue;
 
-					if (mProteinData.TryGetValueViaColumnName("Protein_Intensity_Log(I)", rowIdx, out sValue))
+					if (mProteinData.TryGetValueViaColumnIndex(colIndexProteinIntensity, rowIdx, out sValue))
 						oProteinInfo.Protein_Intensity_LogI = sValue;
 
 					mProteinDataSorted.Add(oProteinInfo);
