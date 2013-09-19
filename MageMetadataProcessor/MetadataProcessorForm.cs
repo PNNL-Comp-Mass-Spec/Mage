@@ -10,102 +10,106 @@ using MageUIComponents;
 namespace MageMetadataProcessor
 {
 
-  public partial class MetadataProcessorForm : Form
-  {
+	public partial class MetadataProcessorForm : Form
+	{
 
-    #region Member Variables
+		#region Member Variables
 
-    // current Mage pipeline that is running or has most recently run
-    ProcessingPipeline mCurrentPipeline = null;
+		// current Mage pipeline that is running or has most recently run
+		ProcessingPipeline mCurrentPipeline = null;
 
-    // current command that is being executed or has most recently been executed
-    MageCommandEventArgs mCurrentCmd = null;
+		// current command that is being executed or has most recently been executed
+		MageCommandEventArgs mCurrentCmd = null;
 
-    // object that sent the current command
-    object mCurrentCmdSender = null;
+		// object that sent the current command
+		object mCurrentCmdSender = null;
 
-    //private static readonly ILog traceLog = LogManager.GetLogger("TraceLog");
-    private ILog traceLog; //= LogManager.GetLogger("TraceLog");
+		//private static readonly ILog traceLog = LogManager.GetLogger("TraceLog");
+		private ILog traceLog; //= LogManager.GetLogger("TraceLog");
 
-    #endregion
+		#endregion
 
-    #region Initialization
+		#region Initialization
 
-    public MetadataProcessorForm()
-    {
-      InitializeComponent();
+		public MetadataProcessorForm()
+		{
+			InitializeComponent();
 
-      try {
-        // set up configuration folder and files
-        SavedState.SetupConfigFiles("MageMetadataProcessor");
-      }
-      catch (Exception ex) {
-        System.Windows.Forms.MessageBox.Show("Error loading settings: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-      }
+			try
+			{
+				// set up configuration folder and files
+				SavedState.SetupConfigFiles("MageMetadataProcessor");
+			}
+			catch (Exception ex)
+			{
+				System.Windows.Forms.MessageBox.Show("Error loading settings: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			}
 
-      // tell modules where to look for loadable module DLLs
-      FileInfo fi = new FileInfo(System.Windows.Forms.Application.ExecutablePath);
-      ModuleDiscovery.ExternalModuleFolder = fi.DirectoryName;
+			// tell modules where to look for loadable module DLLs
+			FileInfo fi = new FileInfo(System.Windows.Forms.Application.ExecutablePath);
+			ModuleDiscovery.ExternalModuleFolder = fi.DirectoryName;
 
-      //Set log4net path
-      string LogFileName = Path.Combine(SavedState.DataDirectory, "log.txt");
-      log4net.GlobalContext.Properties["LogName"] = LogFileName;
+			//Set log4net path
+			string LogFileName = Path.Combine(SavedState.DataDirectory, "log.txt");
+			log4net.GlobalContext.Properties["LogName"] = LogFileName;
 
-      traceLog = LogManager.GetLogger("TraceLog");
-      // kick the logger into action
-      traceLog.Info("Starting");
+			traceLog = LogManager.GetLogger("TraceLog");
+			// kick the logger into action
+			traceLog.Info("Starting");
 
 
-      // setup UI component panels
-      SetupCommandHandler();
-      SetupColumnMapping();
-      SetupStatusPanel();
+			// setup UI component panels
+			SetupCommandHandler();
+			SetupColumnMapping();
+			SetupStatusPanel();
 
-      // restore settings to UI component panels
-      ////SavedState.FilePath = Path.Combine(mDataDirectory, "SavedState.xml");
-      ////SavedState.RestoreSavedPanelParameters(GetParameterPanelList());
+			// restore settings to UI component panels
+			////SavedState.FilePath = Path.Combine(mDataDirectory, "SavedState.xml");
+			////SavedState.RestoreSavedPanelParameters(GetParameterPanelList());
 
-      AdjustInitialUIState();
-    }
+			AdjustInitialUIState();
+		}
 
-    #endregion
+		#endregion
 
-    #region Command Processing
+		#region Command Processing
 
-    /// <summary>
-    /// execute a command by building and running 
-    /// the appropriate pipeline (or cancelling
-    /// the current pipeline activity)
-    /// </summary>
-    /// <param name="sender">(ignored)</param>
-    /// <param name="command">Command to execute</param>
-    public void DoCommand(object sender, MageCommandEventArgs command)
-    {
+		/// <summary>
+		/// execute a command by building and running 
+		/// the appropriate pipeline (or cancelling
+		/// the current pipeline activity)
+		/// </summary>
+		/// <param name="sender">(ignored)</param>
+		/// <param name="command">Command to execute</param>
+		public void DoCommand(object sender, MageCommandEventArgs command)
+		{
 
-      // remember who sent us the command
-      mCurrentCmdSender = sender;
+			// remember who sent us the command
+			mCurrentCmdSender = sender;
 
-      // cancel the currently running pipeline
-      if (command.Action == "cancel_operation" && mCurrentPipeline != null && mCurrentPipeline.Running) {
-        mCurrentPipeline.Cancel();
-        return;
-      }
-      // don't allow another pipeline if one is currently running
-      if (mCurrentPipeline != null && mCurrentPipeline.Running) {
-        MessageBox.Show("Pipeline is already active");
-        return;
-      }
+			// cancel the currently running pipeline
+			if (command.Action == "cancel_operation" && mCurrentPipeline != null && mCurrentPipeline.Running)
+			{
+				mCurrentPipeline.Cancel();
+				return;
+			}
+			// don't allow another pipeline if one is currently running
+			if (mCurrentPipeline != null && mCurrentPipeline.Running)
+			{
+				MessageBox.Show("Pipeline is already active");
+				return;
+			}
 
-      // construct suitable Mage pipeline for the given command
-      // and run that pipeline
-      BuildAndRunPipeline(command);
-    }
+			// construct suitable Mage pipeline for the given command
+			// and run that pipeline
+			BuildAndRunPipeline(command);
+		}
 
-    /// <summary>
-    /// Construnct and run a Mage pipeline for the given command
-    /// </summary>
-    /// <param name="command"></param>
-    private void BuildAndRunPipeline(MageCommandEventArgs command)
+		/// <summary>
+		/// Construnct and run a Mage pipeline for the given command
+		/// </summary>
+		/// <param name="command"></param>
+		private void BuildAndRunPipeline(MageCommandEventArgs command)
     {
       mCurrentPipeline = null;
       DisplaySourceMode mode = (command.Mode == "selected") ? DisplaySourceMode.Selected : DisplaySourceMode.All;
@@ -147,6 +151,18 @@ namespace MageMetadataProcessor
           string filePath = sqLiteDBPanel1.DBFilePath;
           string tableName = sqLiteDBPanel1.TableName;
           string outputColumnList = sqLiteDBPanel1.OutputColumnList;
+
+		  if (string.IsNullOrEmpty(filePath))
+		  {
+			  MessageBox.Show("Database file path cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			  return;
+		  }
+		  else if (string.IsNullOrEmpty(tableName))
+		  {
+			  MessageBox.Show("Database table name cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			  return;
+		  }
+
           mCurrentPipeline = MakeSaveToDBPipeline(source, filePath, tableName, outputColumnList);
           break;
         default:
@@ -169,157 +185,167 @@ namespace MageMetadataProcessor
       }
     }
 
-    #endregion
+		#endregion
 
-    private string GetDatasetSql(string cols)
-    {
-      var sql = "SELECT " + cols + " FROM V_Custom_Factors_List_Report ";
-      var datasetName = datasetFactorsPanel1.DatasetName;
-      var dataPackageNumber = datasetFactorsPanel1.DataPackageNumber;
-      var filter = " WHERE ";
-      if (!string.IsNullOrEmpty(datasetName)) {
-        sql += filter + " Dataset LIKE '%" + datasetName + "%' ";
-        filter = " AND ";
-      }
-      if (!string.IsNullOrEmpty(dataPackageNumber)) {
-        sql += filter + "Dataset IN ( SELECT Dataset FROM S_V_Data_Package_Datasets_Export WHERE Data_Package_ID = " + dataPackageNumber + " )";
-      }
-      return sql;
-    }
+		private string GetDatasetSql(string cols)
+		{
+			var sql = "SELECT " + cols + " FROM V_Custom_Factors_List_Report ";
+			var datasetName = datasetFactorsPanel1.DatasetName;
+			var dataPackageNumber = datasetFactorsPanel1.DataPackageNumber;
+			var filter = " WHERE ";
+			if (!string.IsNullOrEmpty(datasetName))
+			{
+				sql += filter + " Dataset LIKE '%" + datasetName + "%' ";
+				filter = " AND ";
+			}
+			if (!string.IsNullOrEmpty(dataPackageNumber))
+			{
+				sql += filter + "Dataset IN ( SELECT Dataset FROM S_V_Data_Package_Datasets_Export WHERE Data_Package_ID = " + dataPackageNumber + " )";
+			}
+			return sql;
+		}
 
-    #region Functions for setting UI state
+		#region Functions for setting UI state
 
-    /// <summary>
-    /// Set initial conditions for display components
-    /// </summary>
-    private void AdjustInitialUIState()
-    {
-      rawQueryPanel1.RawSQL = "SELECT Dataset, Dataset_ID, Factor, Value FROM V_Custom_Factors_List_Report WHERE Dataset LIKE 'sarc_ms%'";
-      sqLiteDBPanel1.DBFilePath = @"C:\Data\Junk\metadata.db";
-      sqLiteDBPanel1.TableName = "factors";
-      EnableCancel(false);
-    }
+		/// <summary>
+		/// Set initial conditions for display components
+		/// </summary>
+		private void AdjustInitialUIState()
+		{
+			rawQueryPanel1.RawSQL = "SELECT Dataset, Dataset_ID, Factor, Value FROM V_Custom_Factors_List_Report WHERE Dataset LIKE 'sarc_ms%'";
+			sqLiteDBPanel1.DBFilePath = @"C:\Data\Junk\metadata.db";
+			sqLiteDBPanel1.TableName = "factors";
+			EnableCancel(false);
+		}
 
-    /// <summary>
-    /// Enable/Disable the cancel button
-    /// </summary>
-    /// <param name="enabled"></param>
-    private void EnableCancel(bool enabled)
-    {
-      statusPanel1.EnableCancel = enabled;
-    }
+		/// <summary>
+		/// Enable/Disable the cancel button
+		/// </summary>
+		/// <param name="enabled"></param>
+		private void EnableCancel(bool enabled)
+		{
+			statusPanel1.EnableCancel = enabled;
+		}
 
-    private void AdjusttPostCommndUIState(object status)
-    {
-      if (mCurrentCmd == null) return;
+		private void AdjusttPostCommndUIState(object status)
+		{
+			EnableCancel(false);
 
-    }
+			if (mCurrentCmd == null) return;
 
-    #endregion
+		}
 
-    #region Functions for handling status updates
+		#endregion
 
-    private delegate void CompletionStateUpdated(object status);
+		#region Functions for handling status updates
 
-    /// <summary>
-    /// handle the status completion message from the currently running pipeline
-    /// </summary>
-    /// <param name="sender">(ignored)</param>
-    /// <param name="args">Contains status information to be displayed</param>
-    private void HandlePipelineCompletion(object sender, MageStatusEventArgs args)
-    {
-      CompletionStateUpdated csu = AdjusttPostCommndUIState;
-      Invoke(csu, new object[] { null });
-    }
+		private delegate void CompletionStateUpdated(object status);
 
-    #endregion
+		/// <summary>
+		/// handle the status completion message from the currently running pipeline
+		/// </summary>
+		/// <param name="sender">(ignored)</param>
+		/// <param name="args">Contains status information to be displayed</param>
+		private void HandlePipelineCompletion(object sender, MageStatusEventArgs args)
+		{
+			statusPanel1.HandleCompletionMessageUpdate(this, new MageStatusEventArgs(args.Message));
+			Console.WriteLine(args.Message);
+			
+			CompletionStateUpdated csu = AdjusttPostCommndUIState;
+			Invoke(csu, new object[] { null });
+		}
+
+		#endregion
 
 
-    #region Mage Pipelines
+		#region Mage Pipelines
 
-    /// <summary>
-    /// Build Mage pipeline to save contents of list display to SQLite database
-    /// </summary>
-    /// <param name="sourceObject">Mage module that can deliver contents of ListView on standard tabular input</param>
-    /// <param name="filePath">File to save contents to</param>
-    /// <returns></returns>
-    private static ProcessingPipeline MakeSaveToDBPipeline(IBaseModule sourceObject, string filePath, string tableName, string outputColumnList)
-    {
-      SQLiteWriter writer = new SQLiteWriter();
-      writer.DbPath = filePath;
-      writer.TableName = tableName;
+		/// <summary>
+		/// Build Mage pipeline to save contents of list display to SQLite database
+		/// </summary>
+		/// <param name="sourceObject">Mage module that can deliver contents of ListView on standard tabular input</param>
+		/// <param name="filePath">File to save contents to</param>
+		/// <returns></returns>
+		private static ProcessingPipeline MakeSaveToDBPipeline(IBaseModule sourceObject, string filePath, string tableName, string outputColumnList)
+		{
+			SQLiteWriter writer = new SQLiteWriter();
+			writer.DbPath = filePath;
+			writer.TableName = tableName;
 
-      ProcessingPipeline pipeline = null;
-      if (string.IsNullOrEmpty(outputColumnList)) {
-        pipeline = ProcessingPipeline.Assemble("SaveListDisplayPipeline", sourceObject, writer);
-      } else {
-        NullFilter filter = new NullFilter();
-        filter.OutputColumnList = outputColumnList;
-        pipeline = ProcessingPipeline.Assemble("SaveListDisplayPipeline", sourceObject, filter, writer);
-      }
-      return pipeline;
-    }
+			ProcessingPipeline pipeline = null;
+			if (string.IsNullOrEmpty(outputColumnList))
+			{
+				pipeline = ProcessingPipeline.Assemble("SaveListDisplayPipeline", sourceObject, writer);
+			}
+			else
+			{
+				NullFilter filter = new NullFilter();
+				filter.OutputColumnList = outputColumnList;
+				pipeline = ProcessingPipeline.Assemble("SaveListDisplayPipeline", sourceObject, filter, writer);
+			}
+			return pipeline;
+		}
 
-    private ProcessingPipeline MakeRawQueryPipeline(ISinkModule display, string server, string database, string sql)
-    {
-      MSSQLReader reader = new MSSQLReader();
-      reader.Server = server;
-      reader.Database = database;
-      reader.SQLText = sql;
+		private ProcessingPipeline MakeRawQueryPipeline(ISinkModule display, string server, string database, string sql)
+		{
+			MSSQLReader reader = new MSSQLReader();
+			reader.Server = server;
+			reader.Database = database;
+			reader.SQLText = sql;
 
-      return ProcessingPipeline.Assemble("MetadataPreview", reader, display);
-    }
+			return ProcessingPipeline.Assemble("MetadataPreview", reader, display);
+		}
 
-    private ProcessingPipeline MakeCrosstabQueryPipeline(ISinkModule display, string server, string database, string sql)
-    {
-      MSSQLReader reader = new MSSQLReader();
-      reader.Server = server;
-      reader.Database = database;
-      reader.SQLText = sql;
+		private ProcessingPipeline MakeCrosstabQueryPipeline(ISinkModule display, string server, string database, string sql)
+		{
+			MSSQLReader reader = new MSSQLReader();
+			reader.Server = server;
+			reader.Database = database;
+			reader.SQLText = sql;
 
-      CrosstabFilter filter = new CrosstabFilter();
-      filter.EntityNameCol = "Dataset";
-      filter.EntityIDCol = "Dataset_ID";
-      filter.FactorNameCol = "Factor";
-      filter.FactorValueCol = "Value";
+			CrosstabFilter filter = new CrosstabFilter();
+			filter.EntityNameCol = "Dataset";
+			filter.EntityIDCol = "Dataset_ID";
+			filter.FactorNameCol = "Factor";
+			filter.FactorValueCol = "Value";
 
-      return ProcessingPipeline.Assemble("MetadataPreview", reader, filter, display);
-    }
+			return ProcessingPipeline.Assemble("MetadataPreview", reader, filter, display);
+		}
 
-    #endregion
+		#endregion
 
-    #region Panel Support Functions
+		#region Panel Support Functions
 
-    /// <summary>
-    /// set up status panel
-    /// </summary>
-    private void SetupStatusPanel()
-    {
-      statusPanel1.OwnerControl = this;
-    }
+		/// <summary>
+		/// set up status panel
+		/// </summary>
+		private void SetupStatusPanel()
+		{
+			statusPanel1.OwnerControl = this;
+		}
 
-    /// <summary>
-    /// wire up the command event in panels that have it
-    /// to the DoCommand event handler method
-    /// </summary>
-    private void SetupCommandHandler()
-    {
-      // get reference to the method that handles command events
-      MethodInfo methodInfo = this.GetType().GetMethod("DoCommand");
-      Control subjectControl = this;
+		/// <summary>
+		/// wire up the command event in panels that have it
+		/// to the DoCommand event handler method
+		/// </summary>
+		private void SetupCommandHandler()
+		{
+			// get reference to the method that handles command events
+			MethodInfo methodInfo = this.GetType().GetMethod("DoCommand");
+			Control subjectControl = this;
 
-      PanelSupport.DiscoverAndConnectCommandHandlers(subjectControl, methodInfo);
-    }
+			PanelSupport.DiscoverAndConnectCommandHandlers(subjectControl, methodInfo);
+		}
 
-    /// <summary>
-    /// setup path to column mapping config file for selection forms
-    /// </summary>
-    private void SetupColumnMapping()
-    {
-      ColumnMapSelectionForm.MappingConfigFilePath = Path.Combine(SavedState.DataDirectory, "ColumnMappingConfig.db");
-    }
+		/// <summary>
+		/// setup path to column mapping config file for selection forms
+		/// </summary>
+		private void SetupColumnMapping()
+		{
+			ColumnMapSelectionForm.MappingConfigFilePath = Path.Combine(SavedState.DataDirectory, "ColumnMappingConfig.db");
+		}
 
-    #endregion
+		#endregion
 
-  }
+	}
 }

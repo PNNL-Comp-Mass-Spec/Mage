@@ -15,9 +15,22 @@ namespace MageExtractor {
         /// </summary>
         [STAThread]
         static void Main() {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ExtractorForm());
+			try
+			{
+				Application.EnableVisualStyles();
+				Application.SetCompatibleTextRenderingDefault(false);
+				Application.Run(new ExtractorForm());
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine("Exception caught: " + ex.Message);
+				Console.WriteLine(ex.StackTrace.ToString());
+				MessageBox.Show("Critical error: " + ex.Message + "\n" + ex.StackTrace.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+				var fiExe = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location);
+				if (fiExe.FullName.StartsWith(@"\\"))
+					MessageBox.Show("You are running this program from a network share.  Try copying folder " + fiExe.Directory.Name + " to your local computer and then re-running " + fiExe.Name, "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
         }
     }
 }

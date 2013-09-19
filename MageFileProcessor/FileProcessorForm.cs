@@ -33,13 +33,6 @@ namespace MageFileProcessor
 
 		#region Member Variables
 
-		/*
-		 * To be deleted
-		 *
-        // current Mage pipeline that is running or has most recently run
-        ProcessingPipeline mCurrentPipeline = null;
-		*/
-
 		/// <summary>
 		/// Pipeline queue for running the multiple pipelines that make up the workflows for this module
 		/// </summary>
@@ -68,7 +61,7 @@ namespace MageFileProcessor
 
 			SetTags();
 
-			SetAboutText();
+			SetAboutText();		
 
 			try
 			{
@@ -235,20 +228,6 @@ namespace MageFileProcessor
 				return;
 			}
 
-			/*
-			 * To be deleted
-            if (command.Action == "cancel_operation" && mCurrentPipeline != null && mCurrentPipeline.Running) {
-                mCurrentPipeline.Cancel();
-                return;
-            }
-			
-			// don't allow another pipeline if one is currently running
-            if (mCurrentPipeline != null && mCurrentPipeline.Running) {
-                MessageBox.Show("Pipeline is already active", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-			*/
-
 			// construct suitable Mage pipeline for the given command
 			// and run that pipeline
 			BuildAndRunPipeline(command);
@@ -357,6 +336,12 @@ namespace MageFileProcessor
 
 					case "copy_files":
 						runtimeParms = GetRuntimeParmsForCopyFiles();
+						if (string.IsNullOrEmpty(runtimeParms["OutputFolder"]))
+						{
+							MessageBox.Show("Destination folder cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+							return;
+						}
+
 						source = new GVPipelineSource(FileListDisplayControl, mode);
 
 						pipeline = Pipelines.MakeFileCopyPipeline(source, runtimeParms);
@@ -367,12 +352,40 @@ namespace MageFileProcessor
 					case "process_file_contents":
 						Dictionary<string, string> filterParms = FileProcessingPanel1.GetParameters();
 						runtimeParms = GetRuntimeParmsForFileProcessing();
-						string sSQLiteFilePath = runtimeParms["DatabaseName"];
-						if (String.IsNullOrEmpty(sSQLiteFilePath))
+
+						switch (FilterOutputTabs.SelectedTab.Tag.ToString())
 						{
-							System.Windows.Forms.MessageBox.Show("Please define an output file path for the SQLite database", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-							return;
+							case "File_Output":
+								if (string.IsNullOrEmpty(runtimeParms["OutputFolder"]))
+								{
+									MessageBox.Show("Destination folder cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+									return;
+								}
+								else if (string.IsNullOrEmpty(runtimeParms["OutputFile"]))
+								{
+									MessageBox.Show("Destination file cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+									return;
+								}
+								break;
+
+							case "SQLite_Output":
+								if (string.IsNullOrEmpty(runtimeParms["DatabaseName"]))
+								{
+									MessageBox.Show("SQLite Database path cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+									return;
+								}
+								else if (string.IsNullOrEmpty(runtimeParms["TableName"]))
+								{
+									MessageBox.Show("SQLite destination table name cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+									return;
+								}
+								break;
+
+							default:
+								MessageBox.Show("Programming bug in BuildAndRunPipeline: control FilterOutputTabs has an unrecognized tab with tag " + FilterOutputTabs.SelectedTab.Tag.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+								return;		
 						}
+						
 						source = new GVPipelineSource(FileListDisplayControl, mode);
 
 						bool useNewPipelineQ = true;
@@ -406,15 +419,7 @@ namespace MageFileProcessor
 					mCurrentCmd = command;
 
 					// Clear any warnings
-					statusPanel1.ClearWarnings();
-
-					/*
-					 * To be deleted
-					 * 
-					mCurrentPipeline.OnStatusMessageUpdated += HandlePipelineUpdate;
-					mCurrentPipeline.OnWarningMessageUpdated += HandlePipelineWarning;
-					mCurrentPipeline.OnRunCompleted += HandlePipelineCompletion;
-					*/
+					statusPanel1.ClearWarnings();				
 
 					foreach (ProcessingPipeline p in mPipelineQueue.Pipelines.ToArray())
 					{
@@ -543,6 +548,7 @@ namespace MageFileProcessor
 			FolderDestinationPanel1.Enabled = false;
 			SQLiteDestinationPanel1.Enabled = false;
 
+			EnableDisableOutputTabs();
 			EnableCancel(false);
 		}
 
@@ -700,12 +706,16 @@ namespace MageFileProcessor
 			if (mode == "Copy_Files")
 			{
 				FileProcessingPanel1.Enabled = false;
+				//FileProcessingPanel1.Visible = false;
+				//panel3.Height = 180;
 			}
 			else
 			{
 				if (FolderDestinationPanel1.Enabled || SQLiteDestinationPanel1.Enabled)
 				{
 					FileProcessingPanel1.Enabled = true;
+					//FileProcessingPanel1.Visible = true;
+					//panel3.Height = 280;
 				}
 			}
 		}

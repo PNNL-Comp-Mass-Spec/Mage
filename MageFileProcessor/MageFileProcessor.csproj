@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -37,6 +37,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>MageFileProcessor.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, processorArchitecture=MSIL">
@@ -130,6 +133,10 @@
     <ProjectReference Include="..\MageExtContentFilters\MageExtContentFilters.csproj">
       <Project>{2AC22986-CA22-49A5-92F4-E0DB9F78180B}</Project>
       <Name>MageExtContentFilters</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MageExtExtractionFilters\MageExtExtractionFilters.csproj">
+      <Project>{D33F4C40-4E04-40CC-BE8A-E7E2C5681F8B}</Project>
+      <Name>MageExtExtractionFilters</Name>
     </ProjectReference>
     <ProjectReference Include="..\MageUIComponents\MageUIComponents.csproj">
       <Project>{EDB6F464-3FA4-4919-9851-D7521D42B27A}</Project>

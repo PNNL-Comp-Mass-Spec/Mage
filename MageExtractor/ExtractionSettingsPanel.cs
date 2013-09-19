@@ -87,15 +87,20 @@ namespace MageExtractor {
         public ExtractionSettingsPanel() {
             InitializeComponent();
 
+			int indexToSelect = 0;
             foreach (string resultType in mResultTypes.Keys) {
                 ResultTypeNameCtl.Items.Add(resultType);
+
+				if (resultType == ResultType.MSGFDB_SYN_ALL_PROTEINS)
+					indexToSelect = ResultTypeNameCtl.Items.Count - 1;
             }
+
             if (string.IsNullOrEmpty(ResultTypeNameCtl.Text)) {
-                ResultTypeNameCtl.Text = ResultTypeNameCtl.Items[0].ToString();
+				ResultTypeNameCtl.SelectedIndex = indexToSelect;				
             }
 
             MSGFCutoffCtl.Items.AddRange(new string[] { "All Pass", "1E-8", "1E-9", "5E-9", "1E-10", "5E-10", "1E-11" });
-            MSGFCutoffCtl.Text = "1E-8";
+            MSGFCutoffCtl.Text = "1E-10";
         }
 
         private void ExtractFromSelectedBtn_Click(object sender, EventArgs e) {

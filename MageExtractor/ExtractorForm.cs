@@ -205,6 +205,9 @@ namespace MageExtractor {
 				mExtractionParms = GetExtractionParameters();
 				mDestination = GetDestinationParameters();
 
+				if (mDestination == null)
+					return;
+
 				if (!CheckForJobsToProcess()) return;
 
 				DisplaySourceMode mode = (command.Mode == "all") ? DisplaySourceMode.All : DisplaySourceMode.Selected;
@@ -489,11 +492,37 @@ namespace MageExtractor {
 			DestinationType dest = null;
 			switch (FilterOutputTabs.SelectedTab.Tag.ToString()) {
 				case "File_Output":
+					if (string.IsNullOrEmpty(FolderDestinationPanel1.OutputFolder))
+					{
+						MessageBox.Show("Destination folder cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+						return null;
+					}
+					else if (string.IsNullOrEmpty(FolderDestinationPanel1.OutputFile))
+					{
+						MessageBox.Show("Destination file cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+						return null;
+					}
 					dest = new DestinationType("File_Output", FolderDestinationPanel1.OutputFolder, FolderDestinationPanel1.OutputFile);
 					break;
+
 				case "SQLite_Output":
+					if (string.IsNullOrEmpty(SQLiteDestinationPanel1.DatabaseName))
+					{
+						MessageBox.Show("SQLite Database path cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+						return null;
+					}
+					else if (string.IsNullOrEmpty(SQLiteDestinationPanel1.TableName))
+					{
+						MessageBox.Show("SQLite destination table name cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+						return null;
+					}
 					dest = new DestinationType("SQLite_Output", SQLiteDestinationPanel1.DatabaseName, SQLiteDestinationPanel1.TableName);
 					break;
+
+				default:
+					MessageBox.Show("Programming bug in GetDestinationParameters: control FilterOutputTabs has an unrecognized tab with tag " + FilterOutputTabs.SelectedTab.Tag.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+					return null;					
+
 			}
 			return dest;
 		}
@@ -604,7 +633,7 @@ namespace MageExtractor {
 			{
 				// Ignore errors here
 			}			
-		}
+		}		
 
 		#endregion		
 
