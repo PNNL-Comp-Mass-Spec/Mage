@@ -23,15 +23,16 @@ namespace MageFilePackager {
         /// </summary>
         /// <param name="vals"></param>
         /// <returns></returns>
-        protected override bool CheckFilter(ref object[] vals) {
+		protected override bool CheckFilter(ref string[] vals)
+		{
 
             // reject any "file not found" rows
-            if (string.IsNullOrEmpty(vals[_itemIdx].ToString()))
+            if (string.IsNullOrEmpty(vals[_itemIdx]))
                 return false;
  
             // apply field mapping to output
             if (OutputColumnDefs != null) {
-                object[] outRow = MapDataRow(vals);
+				string[] outRow = MapDataRow(vals);
                 vals = outRow;
             }
             return true;

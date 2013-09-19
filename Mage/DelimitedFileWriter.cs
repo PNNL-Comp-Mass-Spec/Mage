@@ -174,16 +174,17 @@ namespace Mage {
             mOutFile.WriteLine(string.Join(Delimiter, h.ToArray()));
         }
 
-        private void OutputDataRow(object[] vals) {
+		private void OutputDataRow(string[] vals)
+		{
             string delim = "";
             // remap results according to our output column definitions, if we have them
             // otherwise just use the as-delivered format
-            object[] outRow = vals;
+			string[] outRow = vals;
             if (OutputColumnDefs != null) {
                 outRow = MapDataRow(vals);
             }
-            foreach (object obj in outRow) {
-                mOutFile.Write(delim + ((obj != null) ? obj.ToString() : ""));
+            foreach (var item in outRow) {
+				mOutFile.Write(delim + ((item != null) ? item : ""));
                 delim = Delimiter;
             }
             mOutFile.WriteLine();

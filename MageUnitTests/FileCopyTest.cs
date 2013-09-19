@@ -71,7 +71,7 @@ namespace MageUnitTests {
             string sourceFile = "SourceFile";
 
             Dictionary<string, int> fieldPos = null;
-            object[] fields = null;
+			string[] fields = null;
             string IDColName = "";
 
             // typical usage - ID column in column list and ApplyPrefixToFileName set to "Yes"

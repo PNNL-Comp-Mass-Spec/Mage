@@ -13,9 +13,10 @@ namespace Mage {
         /// <summary>
         /// Pass all rows and apply column mapping
         /// </summary>
-        protected override bool CheckFilter(ref object[] vals) {
+		protected override bool CheckFilter(ref string[] vals)
+		{
             if (OutputColumnDefs != null) {
-                object[] outRow = MapDataRow(vals);
+				string[] outRow = MapDataRow(vals);
                 vals = outRow;
             }
             return true;

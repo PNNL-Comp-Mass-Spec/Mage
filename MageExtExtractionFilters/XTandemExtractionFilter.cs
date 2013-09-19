@@ -90,19 +90,19 @@ namespace MageExtExtractionFilters {
             if (args.DataAvailable) {
 
                 bool accepted = false;
-                object[] outRow = MapDataRow(args.Fields);
+				string[] outRow = MapDataRow(args.Fields);
 
                 if (!mOutputAllProteins) {
                     mProteinMerger.MergeFirstProtein(ref outRow);
                     accepted = CheckFilter(ref outRow);
                 } else {
-                    Collection<object[]> rows = null;
+					Collection<string[]> rows = null;
                     rows = mProteinMerger.MergeAllProteins(ref outRow);
                     if (rows == null) {
                         accepted = CheckFilter(ref outRow);
                     } else {
                         for (int i = 0; i < rows.Count; i++) {
-                            object[] row = rows[i];
+							string[] row = rows[i];
                             accepted = CheckFilter(ref row);
                         }
                     }
@@ -123,7 +123,8 @@ namespace MageExtExtractionFilters {
         /// </summary>
         /// <param name="outRow"></param>
         /// <returns></returns>
-        protected bool CheckFilter(ref object[] vals) {
+		protected bool CheckFilter(ref string[] vals)
+		{
             bool accept = true;
             if (mXTFilter == null) {
                 if (mFilterResultsColIdx >= 0) {

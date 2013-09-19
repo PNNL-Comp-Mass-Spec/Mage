@@ -144,7 +144,7 @@ namespace Mage
 		public override void Run(object state)
 		{
 			OnColumnDefAvailable(new MageColumnEventArgs(mSink.Columns.ToArray()));
-			foreach (object[] row in mSink.Rows)
+			foreach (string[] row in mSink.Rows)
 			{
 				if (Abort) break;
 				OnDataRowAvailable(new MageDataEventArgs(row));
@@ -162,7 +162,7 @@ namespace Mage
 		/// <returns>True if a MyEMSL File was found and the row was updated</returns>
 		protected bool UpdateSinkRowIfMyEMSLFile(int rowIndex, int colIndex, int folderColIndex, string downloadFolderPath)
 		{
-			object[] currentRow = mSink.Rows[rowIndex];
+			string[] currentRow = mSink.Rows[rowIndex];
 
 			if (currentRow[colIndex] == null)
 				return false;
@@ -170,7 +170,7 @@ namespace Mage
 			if (folderColIndex >= 0 && currentRow[folderColIndex] == null)
 				folderColIndex = -1;
 
-			string filePathWithID = currentRow[colIndex].ToString();
+			string filePathWithID = currentRow[colIndex];
 
 			if (filePathWithID == kNoFilesFound)
 				return false;

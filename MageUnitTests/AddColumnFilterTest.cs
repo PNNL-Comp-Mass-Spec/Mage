@@ -95,7 +95,7 @@ namespace MageUnitTests {
 
             Assert.AreNotEqual(gen.AdHocRows.Count, sink.Rows.Count, "Expected number of rows did not match");
 
-            Collection<object[]> rows = sink.Rows;
+			Collection<string[]> rows = sink.Rows;
 
             Assert.AreEqual("Overwrite1", rows[0][1].ToString(), "Expected overwritten values did not match");
             Assert.AreEqual("Overwrite2", rows[0][3].ToString(), "Expected overwritten values did not match");

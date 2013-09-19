@@ -401,7 +401,7 @@ namespace MageUnitTests {
 
             // did the test sink module get the expected number of data rows
             // on its standard tabular input?
-             Collection<object[]> rows = sink.Rows;
+			Collection<string[]> rows = sink.Rows;
 
             Assert.AreEqual(maxRows, rows.Count, "Did not get get the expected number of data rows");
 

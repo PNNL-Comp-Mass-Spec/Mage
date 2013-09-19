@@ -57,7 +57,7 @@ namespace Mage {
         public override void HandleDataRow(object sender, MageDataEventArgs args) {
             if (args.DataAvailable) {
                 if (args.Fields.Length >= mValColIdx) {
-                    mKV[args.Fields[mKeyColIdx].ToString()] = args.Fields[mValColIdx].ToString();
+                    mKV[args.Fields[mKeyColIdx]] = args.Fields[mValColIdx];
                 }
             }
         }

@@ -115,7 +115,7 @@ namespace MageExtExtractionFilters {
             if (args.DataAvailable) {
 
                 bool accepted = false;
-                object[] outRow = MapDataRow(args.Fields);
+				string[] outRow = MapDataRow(args.Fields);
 
                 if (!mOutputAllProteins) {
                     mProteinMerger.MergeFirstProtein(ref outRow);
@@ -129,7 +129,7 @@ namespace MageExtExtractionFilters {
 						accepted = CheckFilter(ref outRow);
 					}
                 } else {
-                    Collection<object[]> rows = null;
+					Collection<string[]> rows = null;
 
                     rows = mProteinMerger.MergeAllProteins(ref outRow);
                     if (rows == null) {
@@ -144,7 +144,7 @@ namespace MageExtExtractionFilters {
 						}
                     } else {
                         for (int i = 0; i < rows.Count; i++) {
-                            object[] row = rows[i];
+							string[] row = rows[i];
 
 							string sScanChargePeptideProtein = CreateRowTag(row, includeProtein: true);
 							if (mDataWrittenRowTags.Contains(sScanChargePeptideProtein))
@@ -173,7 +173,8 @@ namespace MageExtExtractionFilters {
         /// </summary>
         /// <param name="outRow"></param>
         /// <returns></returns>
-        protected bool CheckFilter(ref object[] vals) {
+		protected bool CheckFilter(ref string[] vals)
+		{
             bool accept = true;
             if (mMSGFDbFilter == null) {
                 if (mFilterResultsColIdx >= 0) {
@@ -206,7 +207,7 @@ namespace MageExtExtractionFilters {
             return accept;
         }
 
-		protected string CreateRowTag(object[] vals, bool includeProtein)
+		protected string CreateRowTag(string[] vals, bool includeProtein)
 		{
 			int scanNumber = GetColumnValue(ref vals, scanNumberIndex, -1);
 			int chargeState = GetColumnValue(ref vals, chargeStateIndex, 0);

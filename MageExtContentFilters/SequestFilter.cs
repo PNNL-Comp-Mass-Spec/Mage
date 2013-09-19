@@ -71,7 +71,8 @@ namespace MageExtContentFilters {
         /// </summary>
         /// <param name="fields">Row, as array of fields</param>
         /// <returns>Whether or not row should be included in output</returns>
-        protected override bool CheckFilter(ref object[] fields) {
+		protected override bool CheckFilter(ref string[] fields)
+		{
             bool accepted = false;
          
 			string peptideSequence = GetColumnValue(ref fields, peptideSequenceIndex, string.Empty);
@@ -91,7 +92,7 @@ namespace MageExtContentFilters {
 			accepted = mSeqFilter.EvaluateSequest(peptideSequence, xCorrValue, delCNValue, delCN2Value, chargeState, peptideMass, spectrumCount, discriminantScore, NETAbsoluteDifference, cleavageState, msgfSpecProb, rankXc);
 
             if (accepted && OutputColumnDefs != null) {
-                object[] outRow = MapDataRow(fields);
+				string[] outRow = MapDataRow(fields);
                 fields = outRow;
             }
             return accepted;

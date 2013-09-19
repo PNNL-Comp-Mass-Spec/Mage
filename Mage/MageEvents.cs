@@ -95,7 +95,7 @@ namespace Mage {
     /// Argument for data row event for standard tabular output
     /// </summary>
     public class MageDataEventArgs : EventArgs {
-        private object[] fields = null;
+		private string[] fields = null;
 
         /// <summary>
         /// the event contains a data row to process
@@ -108,7 +108,8 @@ namespace Mage {
         /// <summary>
         /// data row
         /// </summary>
-        public object[] Fields {
+		public string[] Fields
+		{
             get { return fields; }
         }
 
@@ -116,7 +117,8 @@ namespace Mage {
         /// construct new MageDataEventArgs object with given data row
         /// </summary>
         /// <param name="data"></param>
-        public MageDataEventArgs(object[] data) {
+		public MageDataEventArgs(string[] data)
+		{
             fields = data;
         }
     }

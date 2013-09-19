@@ -22,7 +22,7 @@ namespace Mage {
         #region Member Variables
 
         // buffer for accumulating rows into output block
-        private List<object[]> mRows = new List<object[]>();
+		private List<string[]> mRows = new List<string[]>();
 
         // description of table we will be inserting rows into
         private TableSchema mSchema = null;
@@ -249,13 +249,15 @@ namespace Mage {
 
                 SQLiteCommand insert = BuildSQLiteInsert(mSchema);
 
-                foreach (object[] row in mRows) {
+				foreach (string[] row in mRows)
+				{
                     insert.Connection = mConnection;
                     insert.Transaction = tx;
                     List<string> pnames = new List<string>();
                     for (int j = 0; j <= mSchema.Columns.Count - 1; j++) {
                         string pname = "@" + GetNormalizedName(mSchema.Columns[j].ColumnName, pnames);
-                        insert.Parameters[pname].Value = CastValueForColumn(row[j], mSchema.Columns[j]);
+                        // Old: insert.Parameters[pname].Value = CastValueForColumn(row[j], mSchema.Columns[j]);
+						insert.Parameters[pname].Value = row[j];
                         pnames.Add(pname);
                     }
                     insert.ExecuteNonQuery();

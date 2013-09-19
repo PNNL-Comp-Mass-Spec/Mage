@@ -25,15 +25,16 @@ namespace MageExtContentFilters {
             public float CriteriaValueFloat;
             public int CriterionID;
 
-            public FilterCriteriaDef(object[] criteria) {
-                CriteriaName = criteria[CriteriaNameIndex].ToString().Trim();
-                CriteriaOperator = criteria[CriteriaOperatorIndex].ToString().Trim();
-                string value = criteria[CriteriaValueIntIndex].ToString();
+			public FilterCriteriaDef(string[] criteria)
+			{
+                CriteriaName = criteria[CriteriaNameIndex].Trim();
+                CriteriaOperator = criteria[CriteriaOperatorIndex].Trim();
+                string value = criteria[CriteriaValueIntIndex];
                 int.TryParse(value, out CriteriaValueInt);
                 float.TryParse(value, out CriteriaValueFloat);
 
                 if (criteria.Length > 4) {
-                    value = criteria[CriterionIDIndex].ToString().Trim();
+                    value = criteria[CriterionIDIndex].Trim();
                     int.TryParse(value, out CriterionID);
                 } else
                     CriterionID = -1;
@@ -52,8 +53,10 @@ namespace MageExtContentFilters {
             Full = 2
         }
 
-        public FilterResultsBase(Collection<object[]> filterCriteria, string filterSetID) {
-            foreach (object[] criteria in filterCriteria) {
+		public FilterResultsBase(Collection<string[]> filterCriteria, string filterSetID)
+		{
+			foreach (string[] criteria in filterCriteria)
+			{
                 FilterCriteriaDef fc = new FilterCriteriaDef(criteria);
 
                 string groupID = criteria[CriteriaGroupIDIndex].ToString();

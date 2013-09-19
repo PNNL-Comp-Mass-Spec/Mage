@@ -81,7 +81,7 @@ namespace MageUnitTests {
 
             // did the test sink object get the expected number of data rows
             // on its standard tabular input?
-            Collection<object[]> rows = sink.Rows;
+			Collection<string[]> rows = sink.Rows;
             Assert.AreEqual(maxRows, rows.Count);
 
             // are there the expected number of fields in the data row?
@@ -128,7 +128,7 @@ namespace MageUnitTests {
             }
 
             // did the test sink object get the expected number of data rows on its standard tabular input?
-            Collection<object[]> rows = result.Rows;
+			Collection<string[]> rows = result.Rows;
             Assert.AreEqual(maxRows, rows.Count);
 
             // are there the expected number of fields in the data row?
@@ -137,9 +137,10 @@ namespace MageUnitTests {
             // go through the rows and get value in "Factor" and "Value" columns
             int nameIndex = result.ColumnIndex["Factor"];
             int valIndex = result.ColumnIndex["Value"];
-            foreach (object[] row in result.Rows) {
-                string name = (string)row[nameIndex];
-                string value = (string)row[valIndex];
+			foreach (string[] row in result.Rows)
+			{
+                string name = row[nameIndex];
+                string value = row[valIndex];
             }
         }
 

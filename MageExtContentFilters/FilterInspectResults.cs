@@ -8,7 +8,7 @@ namespace MageExtContentFilters {
 
     public class FilterInspectResults : FilterResultsBase {
 
-        public FilterInspectResults(Collection<object[]> filterCriteria, string filterSetID)
+		public FilterInspectResults(Collection<string[]> filterCriteria, string filterSetID)
             : base(filterCriteria, filterSetID) {
         }
 

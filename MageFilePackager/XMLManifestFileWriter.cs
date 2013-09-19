@@ -135,7 +135,8 @@ namespace MageFilePackager {
             //            _mOutFile.WriteLine("</paths>");
         }
 
-        private void OutputDataRow(object[] vals) {
+		private void OutputDataRow(string[] vals)
+		{
             var sb = new StringBuilder();
             sb.Append("<path ");
             for (int i = 0; i < InputColumnDefs.Count; i++) {

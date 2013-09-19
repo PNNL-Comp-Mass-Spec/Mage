@@ -73,8 +73,8 @@ namespace MageUnitTests {
         public static void CompareSinks(SimpleSink source, SimpleSink result) {
             Collection<MageColumnDef> sourceCols = source.Columns;
             Collection<MageColumnDef> resultCols = result.Columns;
-            Collection<object[]> sourceRows = source.Rows;
-            Collection<object[]> resultRows = result.Rows;
+			Collection<string[]> sourceRows = source.Rows;
+			Collection<string[]> resultRows = result.Rows;
 
             Assert.AreEqual(sourceCols.Count, resultCols.Count);
             Assert.AreEqual(sourceRows.Count, resultRows.Count);

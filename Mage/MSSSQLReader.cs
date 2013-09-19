@@ -291,7 +291,12 @@ namespace Mage {
             while (myReader.Read()) {
                 object[] a = new object[myReader.FieldCount];
                 myReader.GetValues(a);
-                OnDataRowAvailable(new MageDataEventArgs(a));
+
+				string[] dataVals = new string[a.Length];
+				for (int i = 0; i < a.Length; i++)
+					dataVals[i] = a[i].ToString();
+
+				OnDataRowAvailable(new MageDataEventArgs(dataVals));
                 totalRows++;
                 if (Abort) {
                     ReportProcessingAborted();

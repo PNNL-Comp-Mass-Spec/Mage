@@ -128,10 +128,10 @@ namespace MageExtExtractionFilters
 			SimpleSink toolList = new SimpleSink();
 			ProcessingPipeline.Assemble("GetToolList", jobList, toolList).RunRoot(null);
 			Dictionary<string, int> tools = new Dictionary<string, int>();
-			foreach (object[] row in toolList.Rows)
+			foreach (string[] row in toolList.Rows)
 			{
 				int idx = toolList.ColumnIndex[toolCol];
-				string tool = GetBaseTool(row[idx].ToString());
+				string tool = GetBaseTool(row[idx]);
 				if (tools.ContainsKey(tool))
 				{
 					tools[tool] = tools[tool] + 1;

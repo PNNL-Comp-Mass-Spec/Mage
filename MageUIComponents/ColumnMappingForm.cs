@@ -506,7 +506,7 @@ namespace MageUIComponents {
                 MessageBox.Show("There is already a column mapping with the same name");
                 return;
             }
-            object[] data = new object[] { MappingName, MappingDescription, GetColListFromEditingPanel(), "", "" };
+			string[] data = new string[] { MappingName, MappingDescription, GetColListFromEditingPanel(), "", "" };
             MageDataEventArgs args = new MageDataEventArgs(data);
             ColumnMappingDisplayList.HandleDataRow(this, args);
             ColumnMappingDisplayList.HandleDataRow(this, new MageDataEventArgs(null));
@@ -559,7 +559,7 @@ namespace MageUIComponents {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void NewColumnBtn_Click(object sender, EventArgs e) {
-            object[] lvi = GetDefaultNewColumn();
+			string[] lvi = GetDefaultNewColumn();
             ColumnSpecEditingDisplayList.List.Rows.Add(lvi);
         }
 
@@ -569,7 +569,7 @@ namespace MageUIComponents {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void InsertColumnBtn_Click(object sender, EventArgs e) {
-            object[] lvi = GetDefaultNewColumn();
+			string[] lvi = GetDefaultNewColumn();
             int idx = 0;
             if (ColumnSpecEditingDisplayList.SelectedItemCount > 0) {
                 idx = ColumnSpecEditingDisplayList.List.SelectedRows[0].Index;
@@ -581,8 +581,9 @@ namespace MageUIComponents {
         /// Get a new column row to insert
         /// </summary>
         /// <returns></returns>
-        private static object[] GetDefaultNewColumn() {
-            object[] newColData = new object[] { "New_Column", "", "text", "" };
+		private static string[] GetDefaultNewColumn()
+		{
+			string[] newColData = new string[] { "New_Column", "", "text", "" };
             return newColData;
         }
 
@@ -757,11 +758,12 @@ namespace MageUIComponents {
                 int intVal = 0;
                 bool floatType = true;
                 float floatVal = 0;
-                foreach (object[] row in sink.Rows) {
-                    if (!int.TryParse(row[i].ToString(), out intVal)) {
+				foreach (string[] row in sink.Rows)
+				{
+                    if (!int.TryParse(row[i], out intVal)) {
                         intType = false;
                     }
-                    if (!float.TryParse(row[i].ToString(), out floatVal)) {
+                    if (!float.TryParse(row[i], out floatVal)) {
                         floatType = false;
                     }
                 }

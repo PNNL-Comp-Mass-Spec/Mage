@@ -87,8 +87,9 @@ namespace MageExtExtractionFilters {
 		/// and merge protein columns into result row
 		/// </summary>
 		/// <param name="outRow"></param>
-		public void MergeFirstProtein(ref object[] outRow) {
-			string resultID = outRow[IDX_Lookup_Col].ToString();
+		public void MergeFirstProtein(ref string[] outRow)
+		{
+			string resultID = outRow[IDX_Lookup_Col];
 			int sequenceID;
 			int rowIdx;
 
@@ -101,8 +102,8 @@ namespace MageExtExtractionFilters {
 				sequenceID = -1;
 			} else {
 				if (mFirstOccurrenceIndex.TryGetValue(sequenceID, out rowIdx)) {
-					outRow[ODX_Cleavage_State] = mProteinDataSorted[rowIdx].Cleavage_State;
-					outRow[ODX_Terminus_State] = mProteinDataSorted[rowIdx].Terminus_State;
+					outRow[ODX_Cleavage_State] = mProteinDataSorted[rowIdx].Cleavage_State.ToString();
+					outRow[ODX_Terminus_State] = mProteinDataSorted[rowIdx].Terminus_State.ToString();
 					outRow[ODX_Protein_Name] = mProteinDataSorted[rowIdx].Protein_Name;
 
 					if (ODX_Protein_Expectation_Value_Log > -1)
@@ -121,9 +122,10 @@ namespace MageExtExtractionFilters {
 		/// </summary>
 		/// <param name="outRow"></param>
 		/// <returns></returns>
-		public Collection<object[]> MergeAllProteins(ref object[] outRow) {
-			Collection<object[]> outRows = null;
-			string resultID = outRow[IDX_Lookup_Col].ToString();
+		public Collection<string[]> MergeAllProteins(ref string[] outRow)
+		{
+			Collection<string[]> outRows = null;
+			string resultID = outRow[IDX_Lookup_Col];
 			int sequenceID;
 			int rowIdx;
 
@@ -146,15 +148,15 @@ namespace MageExtExtractionFilters {
 				if (mProteinDataSorted[rIdx].Unique_Seq_ID == sequenceID) {
 					numberOfProteins++;
 					if (numberOfProteins == 2) {
-						outRows = new Collection<object[]>();
+						outRows = new Collection<string[]>();
 					}
 					if (numberOfProteins >= 2) {
-						object[] row = new object[outRow.Length];
+						string[] row = new string[outRow.Length];
 						Array.Copy(outRow, row, outRow.Length);
 						outRows.Add(row);
 					}
-					outRow[ODX_Cleavage_State] = mProteinDataSorted[rIdx].Cleavage_State;
-					outRow[ODX_Terminus_State] = mProteinDataSorted[rIdx].Terminus_State;
+					outRow[ODX_Cleavage_State] = mProteinDataSorted[rIdx].Cleavage_State.ToString();
+					outRow[ODX_Terminus_State] = mProteinDataSorted[rIdx].Terminus_State.ToString();
 					outRow[ODX_Protein_Name] = mProteinDataSorted[rIdx].Protein_Name;
 					if (ODX_Protein_Expectation_Value_Log > -1)
 						outRow[ODX_Protein_Expectation_Value_Log] = mProteinDataSorted[rIdx].Protein_Expectation_Value_LogE;
@@ -162,7 +164,7 @@ namespace MageExtExtractionFilters {
 						outRow[ODX_Protein_Intensity_Log] = mProteinDataSorted[rIdx].Protein_Intensity_LogI;
 				} else {
 					if (numberOfProteins >= 2) {
-						object[] row = new object[outRow.Length];
+						string[] row = new string[outRow.Length];
 						Array.Copy(outRow, row, outRow.Length);
 						outRows.Add(row);
 						////                           Console.WriteLine("result_id:{0}, sequence_id:{1}, row:{2}, count:{3}", resultID, sequenceID, rIdx, outRows.Count);
@@ -265,9 +267,11 @@ namespace MageExtExtractionFilters {
 			// FUTURE: look up column index based on column header
 			mProtDataLookup = new Dictionary<string, int>();
 			int sID = 0;
-			foreach (object[] row in resultToSequenceMap.Rows) {
-				if (int.TryParse(row[1].ToString(), out sID)) {
-					mProtDataLookup[row[0].ToString()] = sID;
+			foreach (string[] row in resultToSequenceMap.Rows)
+			{
+				if (int.TryParse(row[1], out sID)) 
+				{
+					mProtDataLookup[row[0]] = sID;
 				}
 			}
 		}

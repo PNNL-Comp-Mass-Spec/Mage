@@ -40,7 +40,7 @@ namespace Mage
 		/// It includes the folder path column to be searched for files
 		/// so it also functions as an internal file path buffer 
 		/// </summary>
-		protected List<object[]> mOutputBuffer = new List<object[]>();
+		protected List<string[]> mOutputBuffer = new List<string[]>();
 
 		// these are used by the file/subfolder search logic
 
@@ -248,7 +248,7 @@ namespace Mage
 			// Determine the dataset name to use for each row in mOutputBuffer
 			for (int outputBufferRowIdx = 0; outputBufferRowIdx < mOutputBuffer.Count; outputBufferRowIdx++)
 			{
-				string folderPathSpec = (string)mOutputBuffer[outputBufferRowIdx][mFolderPathColIndx];
+				string folderPathSpec = mOutputBuffer[outputBufferRowIdx][mFolderPathColIndx];
 
 				string datasetName = DetermineDatasetName(mOutputBuffer[outputBufferRowIdx], folderPathSpec);
 
@@ -279,7 +279,7 @@ namespace Mage
 					break;
 				}
 
-				string folderPathSpec = (string)mOutputBuffer[outputBufferRowIdx][mFolderPathColIndx];
+				string folderPathSpec = mOutputBuffer[outputBufferRowIdx][mFolderPathColIndx];
 				List<string> folderPaths = new List<string>();
 
 				// folderPathSpec may contain multiple folders, separated by a vertical bar
@@ -408,7 +408,7 @@ namespace Mage
 		/// <param name="subfolderName"></param>
 		private void ReportSubfolderFound(int outputBufferRowIdx, string folderPath, string subfolderName)
 		{
-			object[] outRow = (object[])mOutputBuffer[outputBufferRowIdx].Clone(); // yes, we do want a shallow copy
+			string[] outRow = (string[])mOutputBuffer[outputBufferRowIdx].Clone(); // yes, we do want a shallow copy
 			if (mFileTypeOutColIndex > -1)
 			{
 				outRow[mFileTypeOutColIndex] = "folder";
@@ -430,7 +430,7 @@ namespace Mage
 		/// /// <param name="fileDate"></param>
 		private void ReportFileFound(int outputBufferRowIdx, string folderPath, string fileName, string fileSizeKB, string fileDate)
 		{
-			object[] outRow = (object[])mOutputBuffer[outputBufferRowIdx].Clone(); // yes, we do want a shallow copy
+			string[] outRow = (string[])mOutputBuffer[outputBufferRowIdx].Clone(); // yes, we do want a shallow copy
 			if (mFileTypeOutColIndex > -1)
 			{
 				outRow[mFileTypeOutColIndex] = "file";

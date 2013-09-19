@@ -203,7 +203,7 @@ namespace Mage {
             if (OutputColumnDefs == null) {
                 OnDataRowAvailable(new MageDataEventArgs(fields));
             } else {
-                object[] outRow = MapDataRow(fields);
+                string[] outRow = MapDataRow(fields);
                 for (int i = 0; i < outRow.Length; i++) {
                     if (outRow[i] == null) {
                         outRow[i] = "";

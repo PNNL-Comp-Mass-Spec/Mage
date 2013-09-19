@@ -221,7 +221,7 @@ namespace Mage
 		/// <param name="bufferRow">Row of data to examine; should contain a dataset column in the OutputColumnPos object</param>
 		/// <param name="folderPath">Folder path use if bufferRow does not contain a dataset column</param>
 		/// <returns>The dataset name if found; empty string if the dataset name could not be determined</returns>
-		protected string DetermineDatasetName(object[] bufferRow, string folderPath)
+		protected string DetermineDatasetName(string[] bufferRow, string folderPath)
 		{
 			string datasetName = string.Empty;
 
@@ -239,7 +239,7 @@ namespace Mage
 
 			if (datasetColIndex >= 0)
 			{
-				datasetName = (string)bufferRow[datasetColIndex];
+				datasetName = bufferRow[datasetColIndex];
 			}
 			else
 			{

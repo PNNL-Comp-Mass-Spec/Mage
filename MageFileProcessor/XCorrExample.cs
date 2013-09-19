@@ -22,14 +22,15 @@ namespace MageFileProcessor {
 
         // This is called for each input data row that is being filtered.
         // the fields array contains value of each column for the row
-        protected override bool CheckFilter(ref object[] fields) {
+		protected override bool CheckFilter(ref string[] fields)
+		{
             bool accepted = false;
 
             // convert XCorr from text to number
             // and accept it if it meets minimum value
             double v = 0;
 			if (xCorrIdx >= 0)
-				double.TryParse((string)fields[xCorrIdx], out v);
+				double.TryParse(fields[xCorrIdx], out v);
 			else
 				v = 0;
 

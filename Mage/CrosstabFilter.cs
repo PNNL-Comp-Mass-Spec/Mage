@@ -118,10 +118,10 @@ namespace Mage {
         private void RememberFactorData(MageDataEventArgs args) {
 
             // get values of critical fields using precalculated indexes
-            string entityName = args.Fields[mEntityIdx].ToString();
-            string entityID = args.Fields[mEntityIDIdx].ToString();
-            string factor = args.Fields[mFactorIdx].ToString();
-            string value = args.Fields[mValueIdx].ToString();
+            string entityName = args.Fields[mEntityIdx];
+            string entityID = args.Fields[mEntityIDIdx];
+            string factor = args.Fields[mFactorIdx];
+            string value = args.Fields[mValueIdx];
 
             // make sure entity ID (and name) are in master list
             mEntityList[entityID] = entityName;

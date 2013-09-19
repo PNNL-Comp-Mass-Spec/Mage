@@ -13,7 +13,7 @@ namespace Mage {
     /// <param name="fieldPos">index to the metadata field to be used in renaming</param>
     /// <param name="fields">list of metadata fields for original file</param>
     /// <returns></returns>
-    public delegate string OutputFileNamer(string sourceFile, Dictionary<string, int> fieldPos, object[] fields);
+	public delegate string OutputFileNamer(string sourceFile, Dictionary<string, int> fieldPos, string[] fields);
 
     /// <summary>
     /// module that provides base functions for processing one or more input files 
@@ -124,8 +124,8 @@ namespace Mage {
         public override void HandleDataRow(object sender, MageDataEventArgs args) {
             if (args.DataAvailable) {
                 bool concatenateOutput = !string.IsNullOrEmpty(OutputFileName);
-                string sourceFolder = args.Fields[InputColumnPos[SourceFolderColumnName]].ToString();
-                string sourceFile = args.Fields[InputColumnPos[SourceFileColumnName]].ToString();
+                string sourceFolder = args.Fields[InputColumnPos[SourceFolderColumnName]];
+                string sourceFile = args.Fields[InputColumnPos[SourceFileColumnName]];
 
 				string fileType;
 				bool sourceIsFolder = false;
@@ -157,7 +157,7 @@ namespace Mage {
 					}
 				}
 				else
-					fileType = args.Fields[InputColumnPos[FileTypeColumnName]].ToString();
+					fileType = args.Fields[InputColumnPos[FileTypeColumnName]];
 
 				if (fileType == "folder")
 					sourceIsFolder = true;
@@ -191,7 +191,7 @@ namespace Mage {
 					if (args.Fields[colPos.Value] == null)
 						context.Add(colPos.Key, String.Empty);
 					else
-						context.Add(colPos.Key, args.Fields[colPos.Value].ToString());
+						context.Add(colPos.Key, args.Fields[colPos.Value]);
                 }
 
                 // process file
@@ -210,14 +210,14 @@ namespace Mage {
 						}
 					}
 
-                object[] outRow = MapDataRow(args.Fields);
+				string[] outRow = MapDataRow(args.Fields);
 				
                 int fileNameOutColIndx = OutputColumnPos[OutputFileColumnName];
                 outRow[fileNameOutColIndx] = (concatenateOutput) ? sourceFile : destFile;
 
 				// Strip off the MyEMSLID from the filename
 				string newFilePath;
-				Int64 myEMSLFileID = MyEMSLReader.DatasetInfoBase.ExtractMyEMSLFileID(outRow[fileNameOutColIndx].ToString(), out newFilePath);
+				Int64 myEMSLFileID = MyEMSLReader.DatasetInfoBase.ExtractMyEMSLFileID(outRow[fileNameOutColIndx], out newFilePath);
 				if (myEMSLFileID > 0)
 					outRow[fileNameOutColIndx] = newFilePath;
 
@@ -275,7 +275,8 @@ namespace Mage {
         /// <param name="fieldPos"></param>
         /// <param name="fields"></param>
         /// <returns></returns>
-        protected string GetDefaultOutputFileName(string sourceFile, Dictionary<string, int> fieldPos, object[] fields) {
+		protected string GetDefaultOutputFileName(string sourceFile, Dictionary<string, int> fieldPos, string[] fields)
+		{
             return sourceFile;
         }
 

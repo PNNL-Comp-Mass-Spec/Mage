@@ -29,7 +29,7 @@ namespace Mage {
         /// <summary>
         /// An internal buffer for accumulating rows passed in via the standard tabular input handler
         /// </summary>
-        private List<object[]> SavedRows = new List<object[]>();
+		private List<string[]> SavedRows = new List<string[]>();
 
         #endregion
 
@@ -58,7 +58,7 @@ namespace Mage {
         /// <summary>
         /// Get rows that were accumumlated in the internal row buffer
         /// </summary>
-        public Collection<object[]> Rows { get { return new Collection<object[]>(SavedRows); } }
+		public Collection<string[]> Rows { get { return new Collection<string[]>(SavedRows); } }
 
         #endregion
 
@@ -112,8 +112,8 @@ namespace Mage {
         public override void HandleDataRow(object sender, MageDataEventArgs args) {
             if (args.DataAvailable) {
                 if (WriteToConsole) {
-                    foreach (object obj in args.Fields) {
-                        System.Console.Write(obj.ToString() + "|");
+                    foreach (string item in args.Fields) {
+                        System.Console.Write(item + "|");
                     }
                     System.Console.WriteLine();
                 }
@@ -152,7 +152,8 @@ namespace Mage {
         /// <param name="state">Mage ProcessingPipeline object that contains the module (if there is one)</param>
         public override void Run(object state) {
             OnColumnDefAvailable(new MageColumnEventArgs(InputColumnDefs.ToArray()));
-            foreach (object[] row in SavedRows) {
+			foreach (string[] row in SavedRows)
+			{
                 OnDataRowAvailable(new MageDataEventArgs(row));
             }
             OnDataRowAvailable(new MageDataEventArgs(null));
@@ -175,7 +176,7 @@ namespace Mage {
 
 			if (colIndex > -1)
 			{
-				if (double.TryParse(Rows[rowIndex][colIndex].ToString(), out value))
+				if (double.TryParse(Rows[rowIndex][colIndex], out value))
 				{
 					return true;
 				}
@@ -196,7 +197,7 @@ namespace Mage {
 
 			if (colIndex > -1)
 			{
-				if (int.TryParse(Rows[rowIndex][colIndex].ToString(), out value))
+				if (int.TryParse(Rows[rowIndex][colIndex], out value))
 				{
 					return true;
 				}
@@ -217,7 +218,7 @@ namespace Mage {
 
 			if (colIndex > -1)
 			{
-				value = Rows[rowIndex][colIndex].ToString();
+				value = Rows[rowIndex][colIndex];
 				return true;
 			}
 			return false;
@@ -235,7 +236,7 @@ namespace Mage {
             value = 0;
 
             if (ColumnIndex.TryGetValue(columnName, out colIndex)) {
-                if (double.TryParse(Rows[rowIndex][colIndex].ToString(), out value)) {
+                if (double.TryParse(Rows[rowIndex][colIndex], out value)) {
                     return true;
                 }
             }
@@ -255,7 +256,7 @@ namespace Mage {
             value = 0;
 
             if (ColumnIndex.TryGetValue(columnName, out colIndex)) {
-                if (int.TryParse(Rows[rowIndex][colIndex].ToString(), out value)) {
+                if (int.TryParse(Rows[rowIndex][colIndex], out value)) {
                     return true;
                 }
             }
@@ -274,7 +275,7 @@ namespace Mage {
             value = null;
 
             if (ColumnIndex.TryGetValue(columnName, out colIndex)) {
-                value = Rows[rowIndex][colIndex].ToString();
+                value = Rows[rowIndex][colIndex];
                 return true;
             }
             return false;

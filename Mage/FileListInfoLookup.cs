@@ -72,7 +72,7 @@ namespace Mage
 			if (mFileNameColIndx < 0)
 				return;
 
-			string sourceFileName = (string)mOutputBuffer[outputBufferRowIdx][mFileNameColIndx];
+			string sourceFileName = mOutputBuffer[outputBufferRowIdx][mFileNameColIndx];
 			GetFileInfo(outputBufferRowIdx, fileInfo, folderPath, sourceFileName, datasetName);
 		}
 

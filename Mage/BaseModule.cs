@@ -294,7 +294,7 @@ namespace Mage {
                     if (InputColumnPos.ContainsKey(columnDef.Name)) {
                         columnDef.Name = columnDef.Name + (++mNameDisambiguatorCount).ToString();
                     }
-                    InputColumnPos.Add(columnDef.Name.ToString(), InputColumnIndex++);
+                    InputColumnPos.Add(columnDef.Name, InputColumnIndex++);
                     InputColumnDefs.Add(columnDef);
                 } catch (Exception e) {
                     traceLog.Error("HandleColumnDef:" + e.Message);
@@ -384,10 +384,11 @@ namespace Mage {
         /// <param name="columnIndex">Index of the column to return</param>
         /// <param name="defaultValue">Value to return if columnIndex is less than 0 or if the entry is not numeric</param>
         /// <returns>Value (integer) if defined; otherwise, returns defaultValue</returns>
-        protected int GetColumnValue(ref object[] columnVals, int columnIndex, int defaultValue) {
+		protected int GetColumnValue(ref string[] columnVals, int columnIndex, int defaultValue)
+		{
             if (columnIndex > -1) {
                 int value;
-                if (columnVals[columnIndex] != null && int.TryParse(columnVals[columnIndex].ToString(), out value))
+                if (columnVals[columnIndex] != null && int.TryParse(columnVals[columnIndex], out value))
                     return value;
                 else
                     return defaultValue;
@@ -402,10 +403,11 @@ namespace Mage {
         /// <param name="columnIndex">Index of the column to return</param>
         /// <param name="defaultValue">Value to return if columnIndex is less than 0 or if the entry is not numeric</param>
         /// <returns>Value (double) if defined; otherwise, returns defaultValue</returns>
-        protected double GetColumnValue(ref object[] columnVals, int columnIndex, double defaultValue) {
+		protected double GetColumnValue(ref string[] columnVals, int columnIndex, double defaultValue)
+		{
             if (columnIndex > -1) {
                 double value;
-                if (columnVals[columnIndex] != null && double.TryParse(columnVals[columnIndex].ToString(), out value))
+                if (columnVals[columnIndex] != null && double.TryParse(columnVals[columnIndex], out value))
                     return value;
                 else
                     return defaultValue;
@@ -420,10 +422,11 @@ namespace Mage {
         /// <param name="columnIndex">Index of the column to return</param>
         /// <param name="defaultValue">Value to return if columnIndex is less than 0</param>
         /// <returns>Value (string) if defined; otherwise, returns defaultValue</returns>
-        protected string GetColumnValue(ref object[] columnVals, int columnIndex, string defaultValue) {
+		protected string GetColumnValue(ref string[] columnVals, int columnIndex, string defaultValue)
+		{
             if (columnIndex > -1) {
                 if (columnVals[columnIndex] != null)
-                    return columnVals[columnIndex].ToString();
+                    return columnVals[columnIndex];
                 else
                     return string.Empty;
             }
@@ -646,9 +649,10 @@ namespace Mage {
         /// </summary>
         /// <param name="vals">An input data row with fields according to input column definitions</param>
         /// <returns></returns>
-        protected object[] MapDataRow(object[] vals) {
+		protected string[] MapDataRow(string[] vals)
+		{
             // remap results according to our output column definitions
-            object[] outRow = new object[OutputColumnDefs.Count];
+			string[] outRow = new string[OutputColumnDefs.Count];
 
             int actualCount = vals.Length;
             // copy over values from remapped input columns

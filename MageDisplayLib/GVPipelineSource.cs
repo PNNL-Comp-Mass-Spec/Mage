@@ -36,7 +36,7 @@ namespace MageDisplayLib {
         /// <summary>
         /// internal buffer for cell contents from our associated GridViewDisplayControl
         /// </summary>
-        private List<object[]> mRowBuffer = new List<object[]>();
+		private List<string[]> mRowBuffer = new List<string[]>();
 
         #endregion
 
@@ -110,11 +110,15 @@ namespace MageDisplayLib {
         /// </summary>
         /// <param name="row"></param>
         /// <returns></returns>
-        private static object[] GetOutputRowFromGridRow(DataGridViewRow row) {
+		private static string[] GetOutputRowFromGridRow(DataGridViewRow row)
+		{
             int n = row.Cells.Count;
-            object[] vals = new object[n];
+			string[] vals = new string[n];
             for (int i = 0; i < n; i++) {
-                vals[i] = row.Cells[i].Value;
+				if (row.Cells[i].Value == null)
+					vals[i] = string.Empty;
+				else
+					vals[i] = row.Cells[i].Value.ToString();
             }
             return vals;
         }
@@ -136,14 +140,14 @@ namespace MageDisplayLib {
                 case DisplaySourceMode.All:
                     DataGridViewRowCollection allRows = myListControl.List.Rows;
                     foreach (DataGridViewRow row in allRows) {
-                        object[] vals = GetOutputRowFromGridRow(row);
+						string[] vals = GetOutputRowFromGridRow(row);
                         mRowBuffer.Add(vals);
                     }
                     break;
                 case DisplaySourceMode.Selected:
                     DataGridViewSelectedRowCollection selRows = myListControl.List.SelectedRows;
                     foreach (DataGridViewRow row in selRows) {
-                        object[] vals = GetOutputRowFromGridRow(row);
+						string[] vals = GetOutputRowFromGridRow(row);
                         mRowBuffer.Add(vals);
                     }
                     break;
@@ -158,7 +162,8 @@ namespace MageDisplayLib {
             OnColumnDefAvailable(new MageColumnEventArgs(mColumnDefs.ToArray()));
 
             // output the rows from the list control according to current mode setting
-            foreach (object[] row in mRowBuffer) {
+			foreach (string[] row in mRowBuffer)
+			{
                 if (Abort) break;
                 OnDataRowAvailable(new MageDataEventArgs(row));
             }

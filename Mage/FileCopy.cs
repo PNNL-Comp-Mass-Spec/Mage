@@ -206,7 +206,7 @@ namespace Mage
 		/// <param name="fieldPos"></param>
 		/// <param name="fields"></param>
 		/// <returns></returns>
-		protected string GetDestFile(string sourceFile, Dictionary<string, int> fieldPos, object[] fields)
+		protected string GetDestFile(string sourceFile, Dictionary<string, int> fieldPos, string[] fields)
 		{
 			if (ApplyPrefixToFileName == "Yes")
 			{
@@ -214,7 +214,7 @@ namespace Mage
 				if (InputColumnPos.ContainsKey(ColumnToUseForPrefix))
 				{
 					string leader = (!string.IsNullOrEmpty(PrefixLeader)) ? PrefixLeader + "_" : "";
-					prefix = leader + fields[fieldPos[ColumnToUseForPrefix]].ToString();
+					prefix = leader + fields[fieldPos[ColumnToUseForPrefix]];
 
 					// Replace any invalid characters with an underscore
 					foreach (char chInvalidChar in System.IO.Path.GetInvalidFileNameChars())

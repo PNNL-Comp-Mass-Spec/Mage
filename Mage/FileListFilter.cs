@@ -25,7 +25,7 @@ namespace Mage
 		private bool mIncludeFolders;
 		private bool mRecurseMyEMSL;
 
-		private List<object[]> mSearchSubfolders = new List<object[]>();
+		private List<string[]> mSearchSubfolders = new List<string[]>();
 
 		#endregion
 
@@ -57,7 +57,7 @@ namespace Mage
 		{
 			get
 			{
-				return (mOutputBuffer.Count > 0) ? mOutputBuffer[0][2].ToString() : "";
+				return (mOutputBuffer.Count > 0) ? mOutputBuffer[0][2] : "";
 			}
 			set
 			{
@@ -74,7 +74,7 @@ namespace Mage
 		/// <param name="path"></param>
 		public void AddFolderPath(string path)
 		{
-			mOutputBuffer.Add(new object[] { "", "", "", path });  // Note: needs to have the same number of columns as OutputColumnList
+			mOutputBuffer.Add(new string[] { "", "", "", path });  // Note: needs to have the same number of columns as OutputColumnList
 		}
 
 		/// <summary>
@@ -125,7 +125,7 @@ namespace Mage
 				{
 					SubfolderSearchName = "*";
 				}
-				foreach (object[] fields in mOutputBuffer)
+				foreach (string[] fields in mOutputBuffer)
 				{
 					AddSearchSubfolders(fields);
 				}
@@ -247,9 +247,9 @@ namespace Mage
 		/// add subdirectories to search list (used in recursive search mode)
 		/// </summary>
 		/// <param name="fields"></param>
-		private void AddSearchSubfolders(object[] fields)
+		private void AddSearchSubfolders(string[] fields)
 		{
-			string path = (string)fields[mFolderPathColIndx];
+			string path = fields[mFolderPathColIndx];
 			if (path.StartsWith(MYEMSL_PATH_FLAG))
 				return;
 
@@ -258,7 +258,7 @@ namespace Mage
 			{
 				foreach (DirectoryInfo sfDi in di.GetDirectories(SubfolderSearchName))
 				{
-					object[] subfolderRow = (object[])fields.Clone();
+					string[] subfolderRow = (string[])fields.Clone();
 					string subfolderPath = Path.Combine(path, sfDi.Name);
 					subfolderRow[mFolderPathColIndx] = subfolderPath;
 					mSearchSubfolders.Add(subfolderRow);

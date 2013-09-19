@@ -40,32 +40,33 @@ namespace MageFilePackager {
         /// </summary>
         /// <param name="vals"></param>
         /// <returns></returns>
-        protected override bool CheckFilter(ref object[] vals) {
+		protected override bool CheckFilter(ref string[] vals)
+		{
 
             // apply field mapping to output
             if (OutputColumnDefs != null) {
-                object[] outRow = MapDataRow(vals);
+				string[] outRow = MapDataRow(vals);
 
                 // what kind DMS entity does the file belong to?
-                string source = outRow[_sourceIdx].ToString();
+                string source = outRow[_sourceIdx];
 
                 if (source == "Data_Package") {
                     // we don't have an actual archive path to work with
                     // - fake one from storage path
-                    string folderPath = vals[_folderIdx].ToString();
+                    string folderPath = vals[_folderIdx];
                     outRow[_pathIdx] = folderPath.Replace(DataPackageShareRoot, "");
                 } else {
                     // we have an actual archive path to work with
-                    string archivePath = vals[_folderIdx].ToString();
+                    string archivePath = vals[_folderIdx];
 
                     // if it is not an archive path, 
                     // replace the storage root path 
                     // with the archive root path
                     string prefix = (PrefixList.ContainsKey(source)) ? PrefixList[source] : "";
-                    string purged = vals[_purgedIdx].ToString();
+                    string purged = vals[_purgedIdx];
                     if (purged == "0") {
-                        string storageRoot = vals[_storagePathIdx].ToString();
-                        string archiveRoot = vals[_archivePathIdx].ToString();
+						string storageRoot = vals[_storagePathIdx];
+                        string archiveRoot = vals[_archivePathIdx];
                         archivePath = archivePath.Replace(storageRoot, archiveRoot);
                     }
 

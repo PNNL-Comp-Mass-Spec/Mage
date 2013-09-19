@@ -71,7 +71,7 @@ namespace MageExtExtractionFilters {
             if (args.DataAvailable) {
 
                 bool accepted = false;
-                object[] outRow = MapDataRow(args.Fields);
+				string[] outRow = MapDataRow(args.Fields);
                 if (mMSGFMerger != null) {
                     accepted = mMSGFMerger.MergeMSGFDataFields(ref outRow);
                 }
@@ -162,10 +162,11 @@ namespace MageExtExtractionFilters {
             /// </summary>
             /// <param name="outRow"></param>
             /// <returns></returns>
-            public bool MergeMSGFDataFields(ref object[] outRow) {
+			public bool MergeMSGFDataFields(ref string[] outRow)
+			{
                 bool accepted = true;
                 if (mMergeValueLookup != null) {
-                    string joinKey = outRow[mMatchColIdx].ToString();
+                    string joinKey = outRow[mMatchColIdx];
                     if (mMergeValueLookup.ContainsKey(joinKey)) {
                         string score = mMergeValueLookup[joinKey];
                         outRow[mMergeColIdx] = score;

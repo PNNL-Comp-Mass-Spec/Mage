@@ -229,8 +229,8 @@ namespace MageUnitTests {
             }
 
             // check remapped data rows
-            List<object[]> inputRows = target.Rows;
-            List<object[]> mappedRows = target.MappedRows;
+			List<string[]> inputRows = target.Rows;
+			List<string[]> mappedRows = target.MappedRows;
             Assert.AreEqual(inputRows.Count, mappedRows.Count, "Input rows and mapped rows count does not match.");
 
             for (int i = 0; i < inputRows.Count; i++) {

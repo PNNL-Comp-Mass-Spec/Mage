@@ -72,7 +72,8 @@ namespace MageFilePackager {
         private void OutputFooter() {
         }
 
-        private void OutputDataRow(object[] vals) {
+		private void OutputDataRow(string[] vals)
+		{
             _text.Append("<path ");
             for (int i = 0; i < InputColumnDefs.Count; i++) {
                 _text.Append(string.Format("{0}='{1}' ", InputColumnDefs[i].Name, vals[i]));

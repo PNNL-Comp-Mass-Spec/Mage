@@ -14,7 +14,8 @@ namespace MageFileProcessor {
         // the fields array contains value of each column for the row
         // the column index of each field can be looked up by field name in columnPos[]
         // to prevent the row from being sent to the ouput, return false
-        protected override bool CheckFilter(ref object[] fields) {
+		protected override bool CheckFilter(ref string[] fields)
+		{
             if (OutputColumnDefs != null) {
                 fields = MapDataRow(fields);
             }
@@ -63,7 +64,8 @@ namespace MageFileProcessor {
         /// <param name="fieldPos"></param>
         /// <param name="fields"></param>
         /// <returns></returns>
-        public override string RenameOutputFile(string sourceFile, Dictionary<string, int> fieldPos, object[] fields) {
+		public override string RenameOutputFile(string sourceFile, Dictionary<string, int> fieldPos, string[] fields)
+		{
             return System.Text.RegularExpressions.Regex.Replace(sourceFile, "_xt", "_fht", System.Text.RegularExpressions.RegexOptions.IgnoreCase);            
         }
 

@@ -213,7 +213,7 @@ namespace MageDisplayLib {
         /// delegates for inter-thread access to DataGridView control
         /// </summary>
         private delegate void DisplayColumnCallback(Collection<MageColumnDef> colDefs);
-        private delegate void DisplayRowBlockCallback(Collection<object[]> rows);
+		private delegate void DisplayRowBlockCallback(Collection<string[]> rows);
 
         /// <summary>
         /// Set up columns for DataGridView control
@@ -230,10 +230,12 @@ namespace MageDisplayLib {
         /// Add a block of rows to DataGridView control
         /// </summary>
         /// <param name="rows"></param>
-        private void HandleDisplayRowBlock(Collection<object[]> rows) {
+		private void HandleDisplayRowBlock(Collection<string[]> rows)
+		{
             if (rows != null) {
                 if (gvQueryResults.Columns.Count > 0) {
-                    foreach (object[] row in rows) {
+					foreach (string[] row in rows)
+					{
                         gvQueryResults.Rows.Add(row);
                     }
                     UpdateNoticeFld(".");
@@ -359,7 +361,7 @@ namespace MageDisplayLib {
         /// <summary>
         /// internal buffer to accumulate data rows from standard tabular input
         /// </summary>
-        private Collection<object[]> mRowBuffer = new Collection<object[]>();
+		private Collection<string[]> mRowBuffer = new Collection<string[]>();
 
 
         #endregion

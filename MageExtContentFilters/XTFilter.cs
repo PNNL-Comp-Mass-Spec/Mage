@@ -66,7 +66,8 @@ namespace MageExtContentFilters {
         /// </summary>
         /// <param name="fields">Row, as array of fields</param>
         /// <returns>Whether or not row should be included in output</returns>
-        protected override bool CheckFilter(ref object[] fields) {
+		protected override bool CheckFilter(ref string[] fields)
+		{
             bool accepted = false;
 			string peptideSequence = GetColumnValue(ref fields, peptideSequenceIndex, string.Empty);
 			double hyperScoreValue = GetColumnValue(ref fields, hyperScoreValueIndex, -1d);
@@ -79,7 +80,7 @@ namespace MageExtContentFilters {
             accepted = mXTFilter.EvaluateXTandem(peptideSequence, hyperScoreValue, logEValue, delCN2Value, chargeState, peptideMass, msgfSpecProb);
 
             if (accepted && OutputColumnDefs != null) {
-                object[] outRow = MapDataRow(fields);
+				string[] outRow = MapDataRow(fields);
                 fields = outRow;
             }
             return accepted;

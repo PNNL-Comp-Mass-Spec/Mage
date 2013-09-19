@@ -56,7 +56,7 @@ namespace Mage {
         public override void HandleDataRow(object sender, MageDataEventArgs args) {
             if (args.DataAvailable) {
 				// do filtering here
-				object[] vals = args.Fields;
+				string[] vals = args.Fields;
 				if (CheckFilter(ref vals))
 				{
 					passedRowsCounter++;
@@ -85,7 +85,8 @@ namespace Mage {
         /// </summary>
         /// <param name="vals"></param>
         /// <returns></returns>
-        protected virtual bool CheckFilter(ref object[] vals) {
+		protected virtual bool CheckFilter(ref string[] vals)
+		{
             bool accepted = false;
 
             return accepted;
@@ -106,7 +107,8 @@ namespace Mage {
         /// <param name="fieldPos">index of field in file metadata to be used for renaming</param>
         /// <param name="fields">file metada</param>
         /// <returns></returns>
-        public virtual string RenameOutputFile(string sourceFile, Dictionary<string, int> fieldPos, object[] fields) {
+		public virtual string RenameOutputFile(string sourceFile, Dictionary<string, int> fieldPos, string[] fields)
+		{
             return sourceFile;
         }
 

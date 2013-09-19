@@ -85,7 +85,8 @@ namespace MageExtractorTest {
 
             ExtractionType extractionParms = new ExtractionType();
             DestinationType destination = null;
-            foreach (object[] testCase in cases.Rows) {
+			foreach (string[] testCase in cases.Rows)
+			{
 
                 // get job list to extract from
                 string jobListFileName = testCase[JobListFileIdx].ToString();
@@ -148,7 +149,8 @@ namespace MageExtractorTest {
             SimpleSink cases = GetFileContentsToSink(testCaseFilePath);
 
             ExtractionType extractionParms = new ExtractionType();
-            foreach (object[] testCase in cases.Rows) {
+			foreach (string[] testCase in cases.Rows)
+			{
                 string jobListFile = testCase[0].ToString();
                 extractionParms.RType = ResultType.TypeList[testCase[1].ToString()];
                 TestFindFilesForJobList(jobListFile, extractionParms);
@@ -202,8 +204,8 @@ namespace MageExtractorTest {
             StringBuilder mb = new StringBuilder();
             Collection<MageColumnDef> sourceCols = source.Columns;
             Collection<MageColumnDef> resultCols = result.Columns;
-            Collection<object[]> sourceRows = source.Rows;
-            Collection<object[]> resultRows = result.Rows;
+			Collection<string[]> sourceRows = source.Rows;
+			Collection<string[]> resultRows = result.Rows;
 
             if (sourceCols.Count != resultCols.Count) {
                 mb.AppendLine("column count does not match");

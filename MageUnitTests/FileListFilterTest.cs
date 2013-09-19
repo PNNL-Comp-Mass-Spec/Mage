@@ -90,8 +90,9 @@ namespace MageUnitTests {
 
             int hits = 0;
             int fileNameColIndx = 1;
-            foreach (object[] item in sink.Rows) {
-                string s = item[fileNameColIndx].ToString();
+			foreach (string[] item in sink.Rows)
+			{
+                string s = item[fileNameColIndx];
                 if (s == "TargetFile2.txt") ++hits;
                 if (s == "TargetFile3.txt") ++hits;
             }
@@ -134,8 +135,9 @@ namespace MageUnitTests {
 
             int hits = 0;
             int fileNameColIndx = 1;
-            foreach (object[] item in sink.Rows) {
-                string s = item[fileNameColIndx].ToString();
+			foreach (string[] item in sink.Rows)
+			{
+                string s = item[fileNameColIndx];
                 if (s == "TargetFile2.txt") ++hits;
                 if (s == "TargetFile3.txt") ++hits;
             }
@@ -162,7 +164,7 @@ namespace MageUnitTests {
             parms.Add("FileNameSelector", "TestFileNameSelector");
             target.SetParameters(parms);
 
-            List<object[]> outputBuffer = target.mOutputBuffer;
+			List<string[]> outputBuffer = target.mOutputBuffer;
             Assert.AreEqual(1, outputBuffer.Count);
         }
 

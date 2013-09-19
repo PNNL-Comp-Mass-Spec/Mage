@@ -98,8 +98,8 @@ namespace Mage {
         /// <param name="args"></param>
         public override void HandleDataRow(object sender, MageDataEventArgs args) {
             if (args.DataAvailable) {
-                string folderPathSpec = args.Fields[mInputFolderIdx].ToString();
-                string resultFileName = args.Fields[mInputFileIdx].ToString();
+                string folderPathSpec = args.Fields[mInputFolderIdx];
+                string resultFileName = args.Fields[mInputFileIdx];
                 string assocFileName = base.ReplaceEx(resultFileName, mSourceFileNameFragment, mAssociatedFileNameFragment);
 
                 if (assocFileName == kNoFilesFound)
