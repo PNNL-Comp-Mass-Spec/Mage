@@ -1,5 +1,8 @@
 Mage Revision History
 
+Version 1.5.5022; October 1, 2013
+	- Updated the Job Flex Query to support Request_ID
+
 Version 1.5.5010; September 19, 2013
 	- Added support for downloading files from MyEMSL
 	- Switched from object[] to string[] for tracking data
