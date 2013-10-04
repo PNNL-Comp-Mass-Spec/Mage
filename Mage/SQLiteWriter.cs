@@ -240,11 +240,11 @@ namespace Mage {
 
 
         private void CopyTabularDataRowsToSQLiteDB() {
-            traceLog.Debug("preparing to insert tablular data ...");
+            // traceLog.Debug("preparing to insert tablular data ...");
 
             AssureDBConnection();
             SQLiteTransaction tx = mConnection.BeginTransaction();
-            traceLog.Debug("Starting to insert block of rows for table [" + mSchema.TableName + "]");
+            // traceLog.Debug("Starting to insert block of rows for table [" + mSchema.TableName + "]");
             try {
 
                 SQLiteCommand insert = BuildSQLiteInsert(mSchema);
@@ -265,7 +265,7 @@ namespace Mage {
 
                 tx.Commit();
 
-                traceLog.Debug("finished inserting block of rows for table [" + mSchema.TableName + "]");
+                // traceLog.Debug("finished inserting block of rows for table [" + mSchema.TableName + "]");
             } catch (SQLiteException ex) {
                 tx.Rollback();
                 traceLog.Debug("unexpected exception: " + ex.Message);
