@@ -248,7 +248,9 @@ namespace Mage
 			// Determine the dataset name to use for each row in mOutputBuffer
 			for (int outputBufferRowIdx = 0; outputBufferRowIdx < mOutputBuffer.Count; outputBufferRowIdx++)
 			{
-				string folderPathSpec = mOutputBuffer[outputBufferRowIdx][mFolderPathColIndx];
+				string folderPathSpec = string.Empty;
+				if (mFolderPathColIndx < mOutputBuffer[outputBufferRowIdx].Length)
+					folderPathSpec = mOutputBuffer[outputBufferRowIdx][mFolderPathColIndx];
 
 				string datasetName = DetermineDatasetName(mOutputBuffer[outputBufferRowIdx], folderPathSpec);
 
@@ -257,7 +259,7 @@ namespace Mage
 					searchMyEMSL = true;
 
 					if (string.IsNullOrEmpty(datasetName))
-						throw new MageException("Unable to determine dataset name for row " + (outputBufferRowIdx + 1).ToString() + ", file " + folderPathSpec);
+						throw new MageException("Unable to determine dataset name for row " + (outputBufferRowIdx + 1) + ", file " + folderPathSpec);
 				}
 
 				dctRowDatasets.Add(outputBufferRowIdx, datasetName);
@@ -280,7 +282,7 @@ namespace Mage
 				}
 
 				string folderPathSpec = mOutputBuffer[outputBufferRowIdx][mFolderPathColIndx];
-				List<string> folderPaths = new List<string>();
+				var folderPaths = new List<string>();
 
 				// folderPathSpec may contain multiple folders, separated by a vertical bar
 				// If that is the case, then we'll search for files in each folder, preferentially using files in the folder listed first
@@ -317,7 +319,7 @@ namespace Mage
 				}
 
 				// inform our subscribers of what we found
-				if ((fileInfo == null || fileInfo.Count == 0) && (subfolderInfo == null || subfolderInfo.Count == 0))
+				if ((fileInfo.Count == 0) && (subfolderInfo.Count == 0))
 				{
 					ReportNothingFound(outputBufferRowIdx);
 				}
@@ -325,10 +327,10 @@ namespace Mage
 				{
 					foreach (KeyValuePair<string, FileInfo> entry in fileInfo)
 					{
-						string fileName = string.Empty;
-						string folderPath = string.Empty;
-						string fileSizeKB = string.Empty;
-						string fileDate = string.Empty;
+						string fileName;
+						string folderPath;
+						string fileSizeKB;
+						string fileDate;
 
 						if (entry.Value.DirectoryName.StartsWith(MYEMSL_PATH_FLAG))
 						{

@@ -237,7 +237,7 @@ namespace Mage
 					break;
 			}
 
-			if (datasetColIndex >= 0)
+			if (datasetColIndex >= 0 && datasetColIndex < bufferRow.Length)
 			{
 				datasetName = bufferRow[datasetColIndex];
 			}

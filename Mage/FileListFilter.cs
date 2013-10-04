@@ -74,7 +74,36 @@ namespace Mage
 		/// <param name="path"></param>
 		public void AddFolderPath(string path)
 		{
-			mOutputBuffer.Add(new string[] { "", "", "", path });  // Note: needs to have the same number of columns as OutputColumnList
+			bool bufferUpdated = false;
+			if (!string.IsNullOrEmpty(OutputColumnList))
+			{
+				var outputColumnDefs = OutputColumnList.Split(',').ToList();
+
+				if (outputColumnDefs.Count > 0)
+				{
+					var columnHeaders = new string[outputColumnDefs.Count];
+
+					for (int colIndex = 0; colIndex < outputColumnDefs.Count; colIndex++)
+					{
+						// break each column spec into fields
+						string[] colSpecFlds = outputColumnDefs[colIndex].Trim().Split('|');
+						string outputColName = colSpecFlds[0].Trim();
+
+						if (outputColName == SourceFolderColumnName)
+							columnHeaders[colIndex] = path;
+						else
+							columnHeaders[colIndex] = "";
+
+					}
+
+					mOutputBuffer.Add(columnHeaders);
+					bufferUpdated = true;
+				}
+			}
+
+			if (!bufferUpdated)
+				mOutputBuffer.Add(new string[] { "", "", "", "", path });  // Note: needs to have the same number of columns as OutputColumnList
+
 		}
 
 		/// <summary>
@@ -95,7 +124,8 @@ namespace Mage
 		/// <summary>
 		/// construct a new Mage file list filter module
 		/// </summary>
-		public FileListFilter() : base()
+		public FileListFilter()
+			: base()
 		{
 			FileSelectorMode = "RegEx";
 			IncludeFilesOrFolders = "File";
@@ -110,7 +140,7 @@ namespace Mage
 		/// Set up controls for scope of search
 		/// </summary>
 		protected override void SetupSearch()
-		{			
+		{
 
 			mIncludeFiles = IncludeFilesOrFolders.Contains("File");
 			mIncludeFolders = IncludeFilesOrFolders.Contains("Folder");
@@ -149,7 +179,7 @@ namespace Mage
 			string folderPath,
 			string datasetName)
 		{
- 			SearchFolders(outputBufferRowIdx, fileInfo, subfolderInfo, folderPath, datasetName);
+			SearchFolders(outputBufferRowIdx, fileInfo, subfolderInfo, folderPath, datasetName);
 		}
 
 		#endregion
@@ -158,11 +188,11 @@ namespace Mage
 
 
 		private void SearchFolders(
-			int outputBufferRowIdx, 
-			Dictionary<string, FileInfo> fileInfo, 
-			Dictionary<string, DirectoryInfo> subfolderInfo, 
+			int outputBufferRowIdx,
+			Dictionary<string, FileInfo> fileInfo,
+			Dictionary<string, DirectoryInfo> subfolderInfo,
 			string folderPath,
-		    string datasetName)
+			string datasetName)
 		{
 
 			List<FileSystemInfo> foundFiles = new List<FileSystemInfo>();
@@ -295,7 +325,7 @@ namespace Mage
 			{
 				if (searchMode == FolderSearchMode.Files)
 				{
-					fiList = di.GetFiles(selector);						
+					fiList = di.GetFiles(selector);
 				}
 				if (searchMode == FolderSearchMode.Folders)
 				{
@@ -306,7 +336,7 @@ namespace Mage
 					filteredFilesOrFolders[fi.Name] = fi;
 				}
 			}
-			
+
 			// We used the dictionary keys for our file names to eliminate duplicates
 			// Convert the values to a list of file system infos and return the list
 			return filteredFilesOrFolders.Values.ToList<FileSystemInfo>();
@@ -318,11 +348,11 @@ namespace Mage
 			string subDir;
 			string parentFolders;
 			GetMyEMSLParentFoldersAndSubDir(folderPath, datasetName, out subDir, out parentFolders);
-			
+
 			var filteredFilesOrFolders = new Dictionary<string, FileSystemInfo>();
 
 			List<string> selectors = GetFileNameSelectors();
-			
+
 			if (selectors.Count == 0)
 			{
 				// Get all files/subfolders in folder
@@ -333,13 +363,13 @@ namespace Mage
 			foreach (string selector in selectors)
 			{
 				var fiList = GetMyEMSLFilesOrFolders(searchMode, selector, datasetName, subDir, parentFolders);
-			
+
 				foreach (FileSystemInfo fi in fiList)
 				{
 					filteredFilesOrFolders[fi.Name] = fi;
 				}
 			}
-			
+
 			// We used the dictionary keys for our file names to eliminate duplicates
 			// Convert the values to a list of file system infos and return the list
 			return filteredFilesOrFolders.Values.ToList<FileSystemInfo>();
@@ -356,7 +386,7 @@ namespace Mage
 		{
 			DirectoryInfo di = new DirectoryInfo(path);
 
-			var fiList = new List<FileSystemInfo>(); 
+			var fiList = new List<FileSystemInfo>();
 			if (searchMode == FolderSearchMode.Files)
 			{
 				foreach (var file in di.GetFiles().ToList())
@@ -368,7 +398,7 @@ namespace Mage
 				foreach (var directory in di.GetDirectories().ToList())
 					fiList.Add(directory);
 			}
-		
+
 			List<Regex> fileNameRegExSpecs = GetRegexFileSelectors(GetFileNameSelectors());
 
 			return FilterFileNamesFromList(fiList, fileNameRegExSpecs);
@@ -389,10 +419,10 @@ namespace Mage
 		}
 
 		private List<FileSystemInfo> GetMyEMSLFilesOrFolders(
-			FolderSearchMode searchMode, 
-			string fileSelector, 
-			string datasetName, 
-			string subDir, 
+			FolderSearchMode searchMode,
+			string fileSelector,
+			string datasetName,
+			string subDir,
 			string parentFolders)
 		{
 

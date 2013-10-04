@@ -98,7 +98,7 @@ namespace Mage
 					fiFile = GetFileInfoUNC(folderPath, fileName);
 
 				// Append new files in fileNames to fileInfo
-				if (!(fiFile == null))
+				if (fiFile != null)
 				{
 					if (!fileInfo.ContainsKey(fiFile.Name))
 						fileInfo.Add(fiFile.Name, fiFile);
@@ -145,8 +145,7 @@ namespace Mage
 			string fileNameClean;
 			DatasetInfoBase.ExtractMyEMSLFileID(fileName, out fileNameClean);
 
-			bool recurse = false;
-			m_RecentlyFoundMyEMSLFiles = m_MyEMSLDatasetInfoCache.FindFiles(fileNameClean, subDir, datasetName, recurse);
+			m_RecentlyFoundMyEMSLFiles = m_MyEMSLDatasetInfoCache.FindFiles(fileNameClean, subDir, datasetName, recurse: false);
 
 			if (m_RecentlyFoundMyEMSLFiles.Count > 0)
 			{
@@ -154,8 +153,8 @@ namespace Mage
 				string encodedFilePath = DatasetInfoBase.AppendMyEMSLFileID(Path.Combine(parentFolders, archiveFile.FileInfo.RelativePathWindows), archiveFile.FileID);
 				return new FileInfo(encodedFilePath);
 			}
-			else
-				return null;
+			
+			return null;
 		}
 
 		#endregion

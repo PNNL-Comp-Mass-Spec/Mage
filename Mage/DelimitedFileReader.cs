@@ -13,12 +13,10 @@ namespace Mage
 	/// Mage module that reads content of a delimited files
 	/// and streams it to Mage standard tabular ouput
 	/// </summary>
-	public class DelimitedFileReader : FileProcessingBase, IDisposable
+	public class DelimitedFileReader : FileProcessingBase
 	{
 
 		#region Member Variables
-
-		private StreamReader mFileReader = null;
 
 		private bool doHeaderLine = true;
 
@@ -57,39 +55,6 @@ namespace Mage
 
 		#endregion
 
-		#region IDisposable Members
-
-		/// <summary>
-		/// dispose of held resources
-		/// </summary>
-		public void Dispose()
-		{
-			Dispose(true);
-			GC.SuppressFinalize(this);
-		}
-
-		/// <summary>
-		/// dispose of held resources
-		/// </summary>
-		/// <param name="disposing"></param>
-		protected virtual void Dispose(bool disposing)
-		{
-			if (disposing)
-			{
-				// Code to dispose the managed resources of the class
-			}
-			// Code to dispose the un-managed resources of the class
-			if (mFileReader != null)
-			{
-				mFileReader.Dispose();
-			}
-
-			//           isDisposed = true;
-		}
-
-		#endregion
-
-
 		#region IBaseModule Members
 
 		/// <summary>
@@ -99,21 +64,7 @@ namespace Mage
 		public override void Prepare()
 		{
 		}
-
-		/// <summary>
-		/// called after pipeline run is complete - module can do any special cleanup
-		/// this module closes the input file
-		/// (override of base class)
-		/// </summary>
-		public override void Cleanup()
-		{
-			base.Cleanup();
-			if (mFileReader != null)
-			{
-				mFileReader.Close();
-			}
-		}
-
+	
 		/// <summary>
 		/// Pass execution to module instead of having it respond to standard tabular input stream events
 		/// (override of base class)
@@ -153,59 +104,57 @@ namespace Mage
 
 			// This RegEx is used to parse CSV files
 			// It assures that we only split on commas that are not inside double-quoted strings
-			Regex r = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
-			string[] fields;
+			var r = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
 
 			string delimitedFilePathLocal = DownloadFileIfRequired(FilePath);
 
-			bool downloadedMyEMSLFile = false;
-			if (delimitedFilePathLocal != FilePath)
-			{
-				downloadedMyEMSLFile = true;
-			}			
+			bool downloadedMyEMSLFile = delimitedFilePathLocal != FilePath;
 
 			try
 			{
-				mFileReader = new StreamReader(new FileStream(delimitedFilePathLocal, FileMode.Open, FileAccess.Read, FileShare.Read));
-				string line;
-				while ((line = mFileReader.ReadLine()) != null)
+				using (var fileReader = new StreamReader(new FileStream(delimitedFilePathLocal, FileMode.Open, FileAccess.Read, FileShare.Read)))
 				{
-					if (Abort)
-					{
-						ReportProcessingAborted();
-						break;
-					}
 
-					// check first line for delimiter type
-					if (checkDelimiter)
+					string line;
+					while ((line = fileReader.ReadLine()) != null)
 					{
-						tabDelimited = !SwitchToCSV(line);
-						checkDelimiter = false;
-					}
+						if (Abort)
+						{
+							ReportProcessingAborted();
+							break;
+						}
 
-					// parse line according to delimiter type
-					if (tabDelimited)
-					{
-						fields = line.Split(delim);
-					}
-					else
-					{
-						fields = r.Split(line);
-					}
+						// check first line for delimiter type
+						if (checkDelimiter)
+						{
+							tabDelimited = !SwitchToCSV(line);
+							checkDelimiter = false;
+						}
 
-					// output line
-					if (doHeaderLine)
-					{
-						doHeaderLine = false;
-						OutputHeaderLine(fields);
+						// parse line according to delimiter type
+						string[] fields;
+						if (tabDelimited)
+						{
+							fields = line.Split(delim);
+						}
+						else
+						{
+							fields = r.Split(line);
+						}
+
+						// output line
+						if (doHeaderLine)
+						{
+							doHeaderLine = false;
+							OutputHeaderLine(fields);
+						}
+						else
+						{
+							OutputDataLine(fields);
+						}
 					}
-					else
-					{
-						OutputDataLine(fields);
-					}
+					OutputDataLine(null);
 				}
-				OutputDataLine(null);
-				mFileReader.Close();
 
 				if (downloadedMyEMSLFile)
 					DeleteFileIfLowDiskSpace(delimitedFilePathLocal);
@@ -213,7 +162,7 @@ namespace Mage
 			}
 			catch (IOException ex)
 			{
-				throw new MageException("Cannot access " + Path.GetFileName(FilePath) + ": " + ex.Message, ex);
+				throw new MageException("Cannot access " + Path.GetFileName(delimitedFilePathLocal) + ": " + ex.Message, ex);
 			}
 		}
 
@@ -228,55 +177,58 @@ namespace Mage
 		private void OutputFileContents()
 		{
 			char[] delim = Delimiter.ToCharArray();
-			mFileReader = new StreamReader(FilePath);
-			string line;
-			while ((line = mFileReader.ReadLine()) != null)
+
+			using (var fileReader = new StreamReader(new FileStream(FilePath, FileMode.Open, FileAccess.Read, FileShare.Read)))
 			{
-				if (Abort)
+				string line;
+				while ((line = fileReader.ReadLine()) != null)
 				{
-					ReportProcessingAborted();
-					break;
+					if (Abort)
+					{
+						ReportProcessingAborted();
+						break;
+					}
+					string[] fields = line.Split(delim);
+					if (doHeaderLine)
+					{
+						doHeaderLine = false;
+						OutputHeaderLine(fields);
+					}
+					else
+					{
+						OutputDataLine(fields);
+					}
 				}
-				string[] fields = line.Split(delim);
-				if (doHeaderLine)
-				{
-					doHeaderLine = false;
-					OutputHeaderLine(fields);
-				}
-				else
-				{
-					OutputDataLine(fields);
-				}
+				OutputDataLine(null);
 			}
-			OutputDataLine(null);
-			mFileReader.Close();
 		}
 
 		private void OutputFileContentsFromCSV()
 		{
-			Regex r = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
-			mFileReader = new StreamReader(FilePath);
-			string line;
-			while ((line = mFileReader.ReadLine()) != null)
-			{
-				if (Abort)
+			var r = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
+			using (var fileReader = new StreamReader(new FileStream(FilePath, FileMode.Open, FileAccess.Read, FileShare.Read)))
+			{			
+				string line;
+				while ((line = fileReader.ReadLine()) != null)
 				{
-					ReportProcessingAborted();
-					break;
+					if (Abort)
+					{
+						ReportProcessingAborted();
+						break;
+					}
+					string[] fields = r.Split(line);
+					if (doHeaderLine)
+					{
+						doHeaderLine = false;
+						OutputHeaderLine(fields);
+					}
+					else
+					{
+						OutputDataLine(fields);
+					}
 				}
-				string[] fields = r.Split(line);
-				if (doHeaderLine)
-				{
-					doHeaderLine = false;
-					OutputHeaderLine(fields);
-				}
-				else
-				{
-					OutputDataLine(fields);
-				}
+				OutputDataLine(null);
 			}
-			OutputDataLine(null);
-			mFileReader.Close();
 		}
 
 		private void OutputHeaderLine(string[] fields)
