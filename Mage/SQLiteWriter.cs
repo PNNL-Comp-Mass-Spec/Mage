@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using log4net;
 using System.Data.SQLite;
@@ -42,6 +41,12 @@ namespace Mage {
         /// Name of the table in the database into which the tabular data will be inserted
         /// </summary>
         public string TableName { get; set; }
+
+		/// <summary>
+		/// Optional list of column defs that will be used when creating the target table in the SqLite database
+		/// </summary>
+		/// <remarks>This list does not need to contain all of the columns; only those for which the data type is not text (e.g. integer or real)</remarks>
+		public List<MageColumnDef> ColDefOverride { get; set; }
 
         /// <summary>
         /// Path to the SQLite database file
@@ -131,7 +136,7 @@ namespace Mage {
         public override void HandleColumnDef(object sender, MageColumnEventArgs args) {
             base.HandleColumnDef(sender, args);
             // make table schema
-            List<MageColumnDef> cd = (OutputColumnDefs == null) ? InputColumnDefs : OutputColumnDefs;
+            List<MageColumnDef> cd = OutputColumnDefs ?? InputColumnDefs;
             mSchema = MakeTableSchema(cd);
             // create db and table in database
             CreateTableInDatabase();
@@ -172,20 +177,39 @@ namespace Mage {
 
         #region Helper Functions
 
-        private TableSchema MakeTableSchema(List<MageColumnDef> colDefs) {
-            TableSchema ts = new TableSchema();
-            ts.TableName = TableName;
-            ts.Columns = new List<ColumnSchema>();
-            foreach (MageColumnDef colDef in colDefs) {
-                ColumnSchema cs = new ColumnSchema();
-                cs.ColumnName = colDef.Name;
-                string type = colDef.DataType;
-                if (type.Contains("char")) {
-                    cs.ColumnType = "text";
-                } else {
-                    cs.ColumnType = type;
-                }
-                ts.Columns.Add(cs);
+        private TableSchema MakeTableSchema(IEnumerable<MageColumnDef> colDefs) {
+            var ts = new TableSchema
+            {
+	            TableName = TableName,
+	            Columns = new List<ColumnSchema>()
+            };
+	        foreach (MageColumnDef colDef in colDefs) {
+                var cs = new ColumnSchema
+                {
+	                ColumnName = colDef.Name,
+	                ColumnType = colDef.DataType
+                };
+
+		        if (ColDefOverride != null)
+	            {
+		            foreach (var overrideDef in ColDefOverride)
+		            {
+			            if (String.Compare(overrideDef.Name, cs.ColumnName, StringComparison.CurrentCultureIgnoreCase) == 0)
+			            {
+				            cs.ColumnType = overrideDef.DataType;
+							break;
+			            }
+		            }
+	            }
+
+				// Check for a column type of "varchar" or "char"
+				if (cs.ColumnType.Contains("char"))
+				{
+					// Change to text
+					cs.ColumnType = "text";
+				}
+
+				ts.Columns.Add(cs);
             }
             return ts;
         }
@@ -225,12 +249,12 @@ namespace Mage {
 
             // Prepare a CREATE TABLE DDL statement
             string stmt = BuildCreateTableQuery(mSchema);
-            traceLog.Info(System.Environment.NewLine + System.Environment.NewLine + stmt + System.Environment.NewLine + System.Environment.NewLine);
+            traceLog.Info(Environment.NewLine + Environment.NewLine + stmt + Environment.NewLine + Environment.NewLine);
 
             try {
                 // Execute the query in order to actually create the table.
                 AssureDBConnection();
-                SQLiteCommand cmd = new SQLiteCommand(stmt, mConnection);
+                var cmd = new SQLiteCommand(stmt, mConnection);
                 cmd.ExecuteNonQuery();
             } catch (SQLiteException ex) {
                 traceLog.Debug("CreateTableInDatabase failed: " + ex.Message);
@@ -253,7 +277,7 @@ namespace Mage {
 				{
                     insert.Connection = mConnection;
                     insert.Transaction = tx;
-                    List<string> pnames = new List<string>();
+                    var pnames = new List<string>();
                     for (int j = 0; j <= mSchema.Columns.Count - 1; j++) {
                         string pname = "@" + GetNormalizedName(mSchema.Columns[j].ColumnName, pnames);
                         // Old: insert.Parameters[pname].Value = CastValueForColumn(row[j], mSchema.Columns[j]);
@@ -276,11 +300,11 @@ namespace Mage {
         private void ExecuteSQLInDatabase(string stmt) {
             AssureDBExists();
 
-            traceLog.Info(System.Environment.NewLine + System.Environment.NewLine + stmt + System.Environment.NewLine + System.Environment.NewLine);
+            traceLog.Info(Environment.NewLine + Environment.NewLine + stmt + Environment.NewLine + Environment.NewLine);
 
             try {
                 AssureDBConnection();
-                SQLiteCommand cmd = new SQLiteCommand(stmt, mConnection);
+                var cmd = new SQLiteCommand(stmt, mConnection);
                 cmd.ExecuteNonQuery();
             } catch (SQLiteException ex) {
                 traceLog.Debug("ExecuteSQLInDatabase failed: " + ex.Message);
@@ -297,20 +321,20 @@ namespace Mage {
         // returns the CREATE TABLE DDL for creating the SQLite table 
         // from the specified table schema object.
         private string BuildCreateTableQuery(TableSchema ts) {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
-            sb.Append("CREATE TABLE [" + ts.TableName + "] (" + System.Environment.NewLine);
+            sb.Append("CREATE TABLE [" + ts.TableName + "] (" + Environment.NewLine);
 
             for (int i = 0; i <= ts.Columns.Count - 1; i++) {
                 ColumnSchema col = ts.Columns[i];
                 string cline = BuildColumnStatement(col);
                 sb.Append(cline);
                 if (i < ts.Columns.Count - 1) {
-                    sb.Append("," + System.Environment.NewLine);
+                    sb.Append("," + Environment.NewLine);
                 }
             }
-            sb.Append(System.Environment.NewLine);
-            sb.Append(");" + System.Environment.NewLine);
+            sb.Append(Environment.NewLine);
+            sb.Append(");" + Environment.NewLine);
 
             string query = sb.ToString();
             return query;
@@ -319,7 +343,7 @@ namespace Mage {
         /// Used when creating the CREATE TABLE DDL. Creates a single row
         /// for the specified column.
         private string BuildColumnStatement(ColumnSchema col) {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append("\t" + "\"" + col.ColumnName + "\"" + "\t" + "\t");
 
             if (col.ColumnType == "int") {
@@ -347,9 +371,12 @@ namespace Mage {
 
         // Creates SQLite connection string from the specified DB file path.
         private static string CreateSQLiteConnectionString(string sqlitePath, string password) {
-            SQLiteConnectionStringBuilder builder = new SQLiteConnectionStringBuilder();
-            builder.DataSource = sqlitePath;
-            if (password != null) {
+            var builder = new SQLiteConnectionStringBuilder
+            {
+	            DataSource = sqlitePath
+            };
+
+	        if (password != null) {
                 builder.Password = password;
             }
             //builder.PageSize = 4096
@@ -375,9 +402,9 @@ namespace Mage {
 
         // Creates a command object needed to insert values into a specific SQLite table.
         private SQLiteCommand BuildSQLiteInsert(TableSchema ts) {
-            SQLiteCommand res = new SQLiteCommand();
+            var res = new SQLiteCommand();
 
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append("INSERT INTO [" + ts.TableName + "] (");
             for (int i = 0; i <= ts.Columns.Count - 1; i++) {
                 sb.Append("[" + ts.Columns[i].ColumnName + "]");
@@ -388,7 +415,7 @@ namespace Mage {
             // for
             sb.Append(") VALUES (");
 
-            List<string> pnames = new List<string>();
+            var pnames = new List<string>();
             for (int i = 0; i <= ts.Columns.Count - 1; i++) {
                 string pname = "@" + GetNormalizedName(ts.Columns[i].ColumnName, pnames);
                 sb.Append(pname);
@@ -397,7 +424,7 @@ namespace Mage {
                 }
 
                 DbType dbType = GetDbTypeOfColumn(ts.Columns[i]);
-                SQLiteParameter prm = new SQLiteParameter(pname, dbType, ts.Columns[i].ColumnName);
+                var prm = new SQLiteParameter(pname, dbType, ts.Columns[i].ColumnName);
                 res.Parameters.Add(prm);
 
                 // Remember the parameter name in order to avoid duplicates
@@ -414,7 +441,7 @@ namespace Mage {
         // a name in SQL Server that cannot be used as a basis for a matching index
         // name in SQLite).
         private string GetNormalizedName(string str, List<string> names) {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             for (int i = 0; i <= str.Length - 1; i++) {
                 if (Char.IsLetterOrDigit(str[i]) || str[i] == '_') {
                     sb.Append(str[i]);
@@ -588,7 +615,7 @@ namespace Mage {
 
         // Strip any parentheses from the string.
         private string StripParens(string value) {
-            Regex rx = new Regex("\\(([^\\)]*)\\)");
+            var rx = new Regex("\\(([^\\)]*)\\)");
             Match m = rx.Match(value);
             if (!m.Success) {
                 return value;
@@ -620,7 +647,7 @@ namespace Mage {
 
         // Discards the national prefix if exists (e.g., N'sometext') which is not supported in SQLite.
         private static string DiscardNational(string value) {
-            Regex rx = new Regex("N\\'([^\\']*)\\'");
+            var rx = new Regex("N\\'([^\\']*)\\'");
             Match m = rx.Match(value);
             if (m.Success) {
                 return m.Groups[1].Value;
