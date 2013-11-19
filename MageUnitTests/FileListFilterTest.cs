@@ -62,7 +62,7 @@ namespace MageUnitTests {
         ///A test for FileListFilter run as source using RegEx file selector mode
         ///</summary>
         [TestMethod()]
-        [DeploymentItem(@"..\..\TestItems\TargetFolder")]
+		[DeploymentItem(@"..\..\..\TestItems\TargetFolder")]
         public void RunFileListFilterAsSourceRegEx() {
 
             string testFolderPath = Path.GetFullPath(".");
@@ -106,7 +106,7 @@ namespace MageUnitTests {
         ///A test for FileListFilter run as source using file search selector mode
         ///</summary>
         [TestMethod()]
-        [DeploymentItem(@"..\..\TestItems\TargetFolder")]
+		[DeploymentItem(@"..\..\..\TestItems\TargetFolder")]
         public void RunFileListFilterAsSourceFileSearch() {
 
             string testFolderPath = Path.GetFullPath(".");

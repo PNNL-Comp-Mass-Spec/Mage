@@ -163,7 +163,7 @@ namespace MageUnitTests {
         }
 
         [TestMethod()]
-        [DeploymentItem(@"..\..\TestItems\QueryDefinitions.xml")]
+		[DeploymentItem(@"..\..\..\TestItems\QueryDefinitions.xml")]
         public void XMLInitiationTest() {
             string expected;
             string actual;
@@ -194,7 +194,7 @@ namespace MageUnitTests {
         }
 
         [TestMethod()]
-        [DeploymentItem(@"..\..\TestItems\QueryDefinitions.xml")]
+		[DeploymentItem(@"..\..\..\TestItems\QueryDefinitions.xml")]
         public void XMLSprocInitiationTest() {
 
             // expected predefined parameter
@@ -220,7 +220,7 @@ namespace MageUnitTests {
         }
 
         [TestMethod()]
-        [DeploymentItem(@"..\..\TestItems\QueryDefinitions.xml")]
+		[DeploymentItem(@"..\..\..\TestItems\QueryDefinitions.xml")]
         public void XMLPredefineDescriptionsTest() {
 
             // get XML query definition by name

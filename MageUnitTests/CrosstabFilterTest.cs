@@ -61,7 +61,7 @@ namespace MageUnitTests
         ///A test for FactorValueCol
         ///</summary>
         [TestMethod()]
-        [DeploymentItem(@"..\..\TestItems\factors_test.txt")]
+        [DeploymentItem(@"..\..\..\TestItems\factors_test.txt")]
         public void CrosstabFilterMainTest() {
             //  "SELECT Dataset, Dataset_ID, Factor, Value FROM V_Custom_Factors_List_Report"
 

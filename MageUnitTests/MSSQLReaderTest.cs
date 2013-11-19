@@ -114,7 +114,7 @@ namespace MageUnitTests {
         }
 
         [TestMethod()]
-        [DeploymentItem(@"..\..\TestItems\QueryDefinitions.xml")]
+		[DeploymentItem(@"..\..\..\TestItems\QueryDefinitions.xml")]
         public void XMLQueryDatasetFactors() {
 
             // runtime parameters for query
@@ -297,7 +297,7 @@ namespace MageUnitTests {
         }
 
         [TestMethod()]
-        [DeploymentItem(@"..\..\TestItems\QueryDefinitions.xml")]
+		[DeploymentItem(@"..\..\..\TestItems\QueryDefinitions.xml")]
         public void XMLMTSSprocReadTest() {
 
             // runtime parameters for query

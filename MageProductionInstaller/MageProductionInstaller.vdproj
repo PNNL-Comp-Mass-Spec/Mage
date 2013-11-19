@@ -1368,7 +1368,7 @@
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Mage\\bin\\Release\\System.Data.SQLite.dll"
+            "SourcePath" = "8:..\\Mage\\bin\\x86\\Release\\System.Data.SQLite.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_057AD5CA807A46E8986EE13523678AA6"
@@ -1523,7 +1523,7 @@
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\MageUIComponents\\bin\\Release\\MageUIComponents.dll"
+            "SourcePath" = "8:..\\MageUIComponents\\bin\\x86\\Release\\MageUIComponents.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_057AD5CA807A46E8986EE13523678AA6"
@@ -1554,7 +1554,7 @@
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Mage\\bin\\Release\\Mage.dll"
+            "SourcePath" = "8:..\\Mage\\bin\\x86\\Release\\Mage.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_738E1BBF7C4D4F51A5181B7AFD3312CD"
@@ -1647,7 +1647,7 @@
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\MageDisplayLib\\bin\\Release\\MageDisplayLib.dll"
+            "SourcePath" = "8:..\\MageDisplayLib\\bin\\x86\\Release\\MageDisplayLib.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_738E1BBF7C4D4F51A5181B7AFD3312CD"
@@ -1678,7 +1678,7 @@
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Mage\\bin\\Release\\Mage.dll"
+            "SourcePath" = "8:..\\Mage\\bin\\x86\\Release\\Mage.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7A09AD7671C44849BD53B9B99B97D498"
@@ -1709,7 +1709,7 @@
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\MageExtContentFilters\\bin\\Release\\MageExtContentFilters.dll"
+            "SourcePath" = "8:..\\MageExtContentFilters\\bin\\x86\\Release\\MageExtContentFilters.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_057AD5CA807A46E8986EE13523678AA6"
@@ -1853,7 +1853,7 @@
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Mage\\bin\\Release\\System.Data.SQLite.dll"
+            "SourcePath" = "8:..\\Mage\\bin\\x86\\Release\\System.Data.SQLite.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_738E1BBF7C4D4F51A5181B7AFD3312CD"
@@ -1955,7 +1955,7 @@
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\MageUIComponents\\bin\\Release\\MageUIComponents.dll"
+            "SourcePath" = "8:..\\MageUIComponents\\bin\\x86\\Release\\MageUIComponents.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7A09AD7671C44849BD53B9B99B97D498"
@@ -2079,7 +2079,7 @@
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\MageDisplayLib\\bin\\Release\\MageDisplayLib.dll"
+            "SourcePath" = "8:..\\MageDisplayLib\\bin\\x86\\Release\\MageDisplayLib.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7A09AD7671C44849BD53B9B99B97D498"
@@ -2161,7 +2161,7 @@
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Mage\\bin\\Release\\log4net.dll"
+            "SourcePath" = "8:..\\Mage\\bin\\x86\\Release\\log4net.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7A09AD7671C44849BD53B9B99B97D498"
@@ -2387,7 +2387,7 @@
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\MageDisplayLib\\bin\\Release\\MageDisplayLib.dll"
+            "SourcePath" = "8:..\\MageDisplayLib\\bin\\x86\\Release\\MageDisplayLib.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_057AD5CA807A46E8986EE13523678AA6"
@@ -2542,7 +2542,7 @@
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Mage\\bin\\Release\\System.Data.SQLite.dll"
+            "SourcePath" = "8:..\\Mage\\bin\\x86\\Release\\System.Data.SQLite.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7A09AD7671C44849BD53B9B99B97D498"
@@ -2635,7 +2635,7 @@
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\MageUIComponents\\bin\\Release\\MageUIComponents.dll"
+            "SourcePath" = "8:..\\MageUIComponents\\bin\\x86\\Release\\MageUIComponents.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_738E1BBF7C4D4F51A5181B7AFD3312CD"
@@ -2666,7 +2666,7 @@
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Mage\\bin\\Release\\log4net.dll"
+            "SourcePath" = "8:..\\Mage\\bin\\x86\\Release\\log4net.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_057AD5CA807A46E8986EE13523678AA6"
@@ -2697,7 +2697,7 @@
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Mage\\bin\\Release\\log4net.dll"
+            "SourcePath" = "8:..\\Mage\\bin\\x86\\Release\\log4net.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_738E1BBF7C4D4F51A5181B7AFD3312CD"
@@ -2852,7 +2852,7 @@
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\Mage\\bin\\Release\\Mage.dll"
+            "SourcePath" = "8:..\\Mage\\bin\\x86\\Release\\Mage.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_057AD5CA807A46E8986EE13523678AA6"

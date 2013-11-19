@@ -63,7 +63,7 @@ namespace MageUnitTests {
         ///A test for Run
         ///</summary>
         [TestMethod()]
-        [DeploymentItem(@"..\..\TestItems\Metadata.db")]
+		[DeploymentItem(@"..\..\..\TestItems\Metadata.db")]
         public void QueryTest() {
             int maxRows = 7;
             string[] colList = new string[] { "Dataset", "Dataset_ID", "Factor", "Value" };
@@ -107,8 +107,8 @@ namespace MageUnitTests {
         }
 
         [TestMethod()]
-        [DeploymentItem(@"..\..\TestItems\Metadata.db")]
-        [DeploymentItem(@"..\..\TestItems\SQLiteQueryDefinitions.xml")]
+		[DeploymentItem(@"..\..\..\TestItems\Metadata.db")]
+		[DeploymentItem(@"..\..\..\TestItems\SQLiteQueryDefinitions.xml")]
         public void QueryFromConfigTest() {
             int maxRows = 5;
 

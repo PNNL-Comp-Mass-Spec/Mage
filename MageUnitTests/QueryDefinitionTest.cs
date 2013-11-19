@@ -60,7 +60,7 @@ namespace MageUnitTests
         ///A test for GetQueryXMLDef
         ///</summary>
         [TestMethod()]
-        [DeploymentItem(@"..\..\TestItems\QueryDefinitions.xml")]
+		[DeploymentItem(@"..\..\..\TestItems\QueryDefinitions.xml")]
         public void GetQueryXMLDefTest() {
             string queryName = "Mage_Analysis_Jobs";
             string actual;
