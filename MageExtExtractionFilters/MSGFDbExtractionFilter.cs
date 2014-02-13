@@ -130,9 +130,11 @@ namespace MageExtExtractionFilters {
 					}
                 } else {
 					Collection<string[]> rows = null;
+	                bool matchFound;
 
-                    rows = mProteinMerger.MergeAllProteins(ref outRow);
+                    rows = mProteinMerger.MergeAllProteins(ref outRow, out matchFound);
                     if (rows == null) {
+						// Either the peptide only maps to one protein, or the ProteinMerger did not find a match for the row
 						string sScanChargePeptideProtein = CreateRowTag(outRow, includeProtein: true);
 						if (mDataWrittenRowTags.Contains(sScanChargePeptideProtein))
 							accepted = false;
@@ -140,7 +142,8 @@ namespace MageExtExtractionFilters {
 						{
 							mDataWrittenRowTags.Add(sScanChargePeptideProtein);
 							accepted = CheckFilter(ref outRow);
-							OnWarningMessage(new MageStatusEventArgs("ProteinMerger did not find a match for row " + mTotalRowsCounter));
+							if (!matchFound)
+								OnWarningMessage(new MageStatusEventArgs("ProteinMerger did not find a match for row " + mTotalRowsCounter));
 						}
                     } else {
                         for (int i = 0; i < rows.Count; i++) {
@@ -216,7 +219,8 @@ namespace MageExtExtractionFilters {
 
 			if (includeProtein)
 			{
-				return scanNumber + "_" + chargeState + "_" + peptideSequence + "_" + proteinName;
+				// Even though we are tracking proteins, we need to remove prefix and suffix residues to avoid reporting the same peptide mapped to the same protein in the same scan twice in the output file
+				return scanNumber + "_" + chargeState + "_" + RemovePrefixAndSuffixResidues(peptideSequence) + "_" + proteinName;
 			}
 			else
 			{

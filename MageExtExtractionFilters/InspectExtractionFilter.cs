@@ -99,10 +99,12 @@ namespace MageExtExtractionFilters {
                     accepted = CheckFilter(ref outRow);
                 } else {
 					Collection<string[]> rows = null;
-
-                    rows = mProteinMerger.MergeAllProteins(ref outRow);
+	                bool matchFound;
+					rows = mProteinMerger.MergeAllProteins(ref outRow, out matchFound);
                     if (rows == null) {
                         accepted = CheckFilter(ref outRow);
+						if (!matchFound)
+							OnWarningMessage(new MageStatusEventArgs("ProteinMerger did not find a match for row " + mTotalRowsCounter));
                     } else {
                         for (int i = 0; i < rows.Count; i++) {
 							string[] row = rows[i];

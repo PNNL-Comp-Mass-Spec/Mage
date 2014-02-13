@@ -1,5 +1,8 @@
 Mage Revision History
 
+Version 1.5.5157; February 13, 2014
+	- Fixed bug that resulted in near-duplicate entries in the synopsis file for mode "MSGF+ Synopsis All Proteins"
+
 Version 1.5.5022; October 1, 2013
 	- Updated the Job Flex Query to support Request_ID
 

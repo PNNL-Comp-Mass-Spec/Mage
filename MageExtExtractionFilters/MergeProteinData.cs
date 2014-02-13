@@ -121,13 +121,15 @@ namespace MageExtExtractionFilters {
 		/// If multiple proteins, return in list.
 		/// </summary>
 		/// <param name="outRow"></param>
+		/// <param name="matchFound">Output parameter: True if the ResultID and SequenceID are present in the cached data</param>
 		/// <returns></returns>
-		public Collection<string[]> MergeAllProteins(ref string[] outRow)
+		public Collection<string[]> MergeAllProteins(ref string[] outRow, out bool matchFound)
 		{
 			Collection<string[]> outRows = null;
 			string resultID = outRow[IDX_Lookup_Col];
 			int sequenceID;
 			int rowIdx;
+			matchFound = false;
 
 			if (!mProtDataLookup.TryGetValue(resultID, out sequenceID)) {
 				return outRows;
@@ -136,6 +138,8 @@ namespace MageExtExtractionFilters {
 			if (!mFirstOccurrenceIndex.TryGetValue(sequenceID, out rowIdx)) {
 				return outRows;
 			}
+
+			matchFound = true;
 
 			int numberOfProteins = 0;
 			// starting at first protein, merge protein fields into outRow
