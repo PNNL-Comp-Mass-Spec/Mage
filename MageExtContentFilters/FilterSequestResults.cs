@@ -144,7 +144,7 @@ namespace MageExtContentFilters {
 						case "RankScore":
 							if (rankXc > 0)
 							{
-								if (rankXc > filterRow.CriteriaValueInt)
+								if (!CompareInteger(rankXc, currCritOperator, filterRow.CriteriaValueInt))
 								{
 									currEval = false;
 									break;

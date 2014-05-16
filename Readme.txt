@@ -56,6 +56,6 @@ Written by Gary Kiebel and Matthew Monroe for the Department of Energy (PNNL, Ri
 Copyright 2011, Battelle Memorial Institute.  All Rights Reserved.
 
 E-mail: matthew.monroe@pnnl.gov or matt@alchemistmatt.com
-Website: http://ncrr.pnnl.gov/ or http://omics.pnl.gov
+Website: http://panomics.pnnl.gov/ or http://omics.pnl.gov
 -------------------------------------------------------------------------------
 
