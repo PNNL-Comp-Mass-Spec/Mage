@@ -97,6 +97,7 @@ namespace MageExtContentFilters {
                             }
                             break;
                         case "MSGFDB_FDR":
+						case "MSGFPlus_QValue":
                             if (FDR > -1) {
                                 if (!CompareDouble(FDR, currCritOperator, filterRow.CriteriaValueFloat, 0.000001)) {
                                     currEval = false;

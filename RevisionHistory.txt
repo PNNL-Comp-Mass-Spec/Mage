@@ -1,5 +1,8 @@
 Mage Revision History
 
+Version 1.5.5274; June 10, 2014
+	- Updated to support DMS filter MSGFPlus_QValue (which replaces MSGFDB_FDR)
+
 Version 1.5.5429; May 16, 2014
 	- Updated evaluation of RankXC vs. filter set criterion RankScore to support >=
 

@@ -39,6 +39,20 @@ namespace MageExtContentFilters {
                 } else
                     CriterionID = -1;
             }
+
+			public override string ToString()
+			{
+				if (Math.Abs(CriteriaValueInt - CriteriaValueFloat) < Single.Epsilon)
+					return CriteriaName + " " + CriteriaOperator + " " + CriteriaValueInt;
+				else
+				{
+					if (Math.Abs(CriteriaValueFloat) < 0.002)
+						return CriteriaName + " " + CriteriaOperator + " " + CriteriaValueFloat.ToString("0.00E+00");
+					else
+						return CriteriaName + " " + CriteriaOperator + " " + CriteriaValueFloat.ToString("0.000");
+				}
+			}
+
         }
 
         protected Dictionary<string, List<FilterCriteriaDef>> m_FilterGroups = new Dictionary<string, List<FilterCriteriaDef>>();
@@ -73,7 +87,7 @@ namespace MageExtContentFilters {
 
             int.TryParse(filterSetID, out m_filterSetID);
         }
-
+		
         /// <summary>
         /// Creates a tab-delimited text file with details of the filter groups for the filter set associated with this class
         /// </summary>
