@@ -91,9 +91,9 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Data.SQLite, Version=1.0.66.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=$(Platform)">
+    <Reference Include="System.Data.SQLite">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Mage\lib\$(Platform)\System.Data.SQLite.dll</HintPath>
+      <HintPath>..\Mage\lib\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -186,6 +186,8 @@
   <PropertyGroup>
     <PostBuildEvent>copy "$(TargetPath)" "$(ProjectDir)..\DeployedFiles\$(ProjectName)"
 copy "$(TargetDir)*.dll" "$(ProjectDir)..\DeployedFiles\$(ProjectName)"
+xcopy "$(TargetDir)x86\*.dll" "$(ProjectDir)..\DeployedFiles\$(ProjectName)\x86\" /D
+xcopy "$(TargetDir)x64\*.dll" "$(ProjectDir)..\DeployedFiles\$(ProjectName)\x64\" /D
 copy "$(TargetDir)QueryDefinitions.xml" "$(ProjectDir)..\DeployedFiles\$(ProjectName)"
 copy "$(TargetFileName).config" "$(ProjectDir)..\DeployedFiles\$(ProjectName)"
 </PostBuildEvent>

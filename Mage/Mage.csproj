@@ -74,9 +74,9 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Data.SQLite, Version=1.0.66.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=$(Platform)">
+    <Reference Include="System.Data.SQLite">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Mage\lib\$(Platform)\System.Data.SQLite.dll</HintPath>
+      <HintPath>..\Mage\lib\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -129,6 +129,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="lib\log4net.dll" />
+    <Content Include="x64\SQLite.Interop.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\SQLite.Interop.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

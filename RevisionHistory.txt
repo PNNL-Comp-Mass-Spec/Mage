@@ -1,5 +1,8 @@
 Mage Revision History
 
+Version 1.5.5302; July 8, 2014
+	- Updated to System.Data.SQLite v1.0.93
+
 Version 1.5.5274; June 10, 2014
 	- Updated to support DMS filter MSGFPlus_QValue (which replaces MSGFDB_FDR)
 
