@@ -269,9 +269,11 @@ namespace Mage {
             AssureDBConnection();
             SQLiteTransaction tx = mConnection.BeginTransaction();
             // traceLog.Debug("Starting to insert block of rows for table [" + mSchema.TableName + "]");
-            try {
+            try
+            {
+				List<DbType> columnDataTypes;
 
-                SQLiteCommand insert = BuildSQLiteInsert(mSchema);
+				SQLiteCommand insert = BuildSQLiteInsert(mSchema, out columnDataTypes);
 
 				foreach (string[] row in mRows)
 				{
@@ -280,12 +282,28 @@ namespace Mage {
                     var pnames = new List<string>();
                     for (int j = 0; j <= mSchema.Columns.Count - 1; j++) {
                         string pname = "@" + GetNormalizedName(mSchema.Columns[j].ColumnName, pnames);
-                        // Old: insert.Parameters[pname].Value = CastValueForColumn(row[j], mSchema.Columns[j]);
-						insert.Parameters[pname].Value = row[j];
-                        pnames.Add(pname);
+
+	                    if (columnDataTypes[j] == DbType.DateTime)
+	                    {
+		                    DateTime dtDate;
+		                    if (DateTime.TryParse(row[j], out dtDate))
+		                    {
+			                    insert.Parameters[pname].Value = dtDate.ToString("yyyy-MM-dd HH:mm:ss");
+		                    }
+		                    else
+		                    {
+								insert.Parameters[pname].Value = null;
+		                    }
+	                    }
+	                    else
+	                    {
+		                    // Old: insert.Parameters[pname].Value = CastValueForColumn(row[j], mSchema.Columns[j]);
+		                    insert.Parameters[pname].Value = row[j];
+	                    }
+	                    pnames.Add(pname);
                     }
                     insert.ExecuteNonQuery();
-                }// foreach
+                }
 
                 tx.Commit();
 
@@ -401,8 +419,11 @@ namespace Mage {
         }
 
         // Creates a command object needed to insert values into a specific SQLite table.
-        private SQLiteCommand BuildSQLiteInsert(TableSchema ts) {
+		private SQLiteCommand BuildSQLiteInsert(TableSchema ts, out List<DbType> columnDataTypes)
+		{
             var res = new SQLiteCommand();
+
+			columnDataTypes = new List<DbType>(ts.Columns.Count - 1);
 
             var sb = new StringBuilder();
             sb.Append("INSERT INTO [" + ts.TableName + "] (");
@@ -412,7 +433,7 @@ namespace Mage {
                     sb.Append(", ");
                 }
             }
-            // for
+            
             sb.Append(") VALUES (");
 
             var pnames = new List<string>();
@@ -426,6 +447,8 @@ namespace Mage {
                 DbType dbType = GetDbTypeOfColumn(ts.Columns[i]);
                 var prm = new SQLiteParameter(pname, dbType, ts.Columns[i].ColumnName);
                 res.Parameters.Add(prm);
+
+	            columnDataTypes.Add(dbType);
 
                 // Remember the parameter name in order to avoid duplicates
                 pnames.Add(pname);
@@ -483,7 +506,7 @@ namespace Mage {
                     if (val is decimal) {
                         return Convert.ToInt32(Convert.ToDecimal(val));
                     }
-                    break; // TODO: might not be correct. Was : Exit Select
+                    break; 
 
                 case DbType.Int16:
                     if (val is int) {
@@ -498,7 +521,7 @@ namespace Mage {
                     if (val is decimal) {
                         return Convert.ToInt16(Convert.ToDecimal(val));
                     }
-                    break; // TODO: might not be correct. Was : Exit Select
+                    break; 
 
                 case DbType.Int64:
                     if (val is int) {
@@ -513,7 +536,7 @@ namespace Mage {
                     if (val is decimal) {
                         return Convert.ToInt64(Convert.ToDecimal(val));
                     }
-                    break; // TODO: might not be correct. Was : Exit Select
+                    break;
 
                 case DbType.Single:
                     if (val is double) {
@@ -522,7 +545,7 @@ namespace Mage {
                     if (val is decimal) {
                         return Convert.ToSingle(Convert.ToDecimal(val));
                     }
-                    break; // TODO: might not be correct. Was : Exit Select
+                    break; 
 
                 case DbType.Double:
                     if (val is float) {
@@ -534,18 +557,18 @@ namespace Mage {
                     if (val is decimal) {
                         return Convert.ToDouble(Convert.ToDecimal(val));
                     }
-                    break; // TODO: might not be correct. Was : Exit Select
+                    break;
 
                 case DbType.String:
                     if (val is Guid) {
                         return ((Guid)val).ToString();
                     }
-                    break; // TODO: might not be correct. Was : Exit Select
+                    break; 
 
                 case DbType.Binary:
                 case DbType.Boolean:
                 case DbType.DateTime:
-                    break; // TODO: might not be correct. Was : Exit Select
+                    break; 
                 default:
 
                     traceLog.Error("argument exception - illegal database type");

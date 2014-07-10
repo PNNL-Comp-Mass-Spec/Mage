@@ -1,5 +1,8 @@
 Mage Revision History
 
+Version 1.5.5302; July 9, 2014
+	- SqlServer data import now reformats dates as yyyy-MM-dd HH:mm:ss when inserting into a SqLite database
+
 Version 1.5.5302; July 8, 2014
 	- Updated to System.Data.SQLite v1.0.93
 
