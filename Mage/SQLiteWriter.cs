@@ -158,16 +158,16 @@ namespace Mage {
                     mRows.Add(args.Fields);
                 }
                 if (++mRowsAccumulated < mBlockSize) {
-                    // accumulate row
+                    // Accumulate row (so that data can be added in chunks, using a single transaction for each chunk)
                 } else {
                     mRowsAccumulated = 0;
-                    // do trasaction block against SQLite database
+					// Add the cached data to the SQLite database
                     CopyTabularDataRowsToSQLiteDB();
                     mRows.Clear();
                 }
             } else {
                 if (mRowsAccumulated > 0) {
-                    // do trasaction block against SQLite database
+                    // Add the cached data to the SQLite database
                     CopyTabularDataRowsToSQLiteDB();
                 }
             }
@@ -280,7 +280,12 @@ namespace Mage {
                     insert.Connection = mConnection;
                     insert.Transaction = tx;
                     var pnames = new List<string>();
-                    for (int j = 0; j <= mSchema.Columns.Count - 1; j++) {
+                    for (int j = 0; j <= mSchema.Columns.Count - 1; j++)
+                    {
+						// Check for the row having fewer columns of data than the header
+	                    if (j >= row.Length)
+		                    break;
+
                         string pname = "@" + GetNormalizedName(mSchema.Columns[j].ColumnName, pnames);
 
 	                    if (columnDataTypes[j] == DbType.DateTime)

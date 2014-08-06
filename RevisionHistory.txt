@@ -1,5 +1,8 @@
 Mage Revision History
 
+Version 1.5.5310; July 16, 2014
+	- SQLiteWriter now supports data lines with fewer columns than the header line
+
 Version 1.5.5302; July 9, 2014
 	- SqlServer data import now reformats dates as yyyy-MM-dd HH:mm:ss when inserting into a SqLite database
 
