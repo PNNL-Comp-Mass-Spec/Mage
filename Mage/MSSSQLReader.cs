@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Data.SqlClient;
 using log4net;
 using System.Data;
@@ -12,7 +10,7 @@ namespace Mage {
     /// Module which can query an MS SQL Server database and deliver 
     /// results of query via its standard tabular output events
     /// </summary>
-    public class MSSQLReader : BaseModule, IDisposable {
+    public sealed class MSSQLReader : BaseModule, IDisposable {
 
 		/// <summary>
 		/// SQL Command error constant
@@ -23,16 +21,16 @@ namespace Mage {
 
         #region member variables
 
-        private SqlConnection mConnection = null;
+        private SqlConnection mConnection;
         private string mConnectionString = "Data Source=@server@;Initial Catalog=@database@;integrated security=SSPI";
 
-        private int CommandTimeoutSeconds = 15;
+	    private const int CommandTimeoutSeconds = 15;
 
-        private DateTime startTime;
+	    private DateTime startTime;
         private DateTime stopTime;
         private TimeSpan duration;
 
-        private Dictionary<string, string> mSprocParameters = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> mSprocParameters = new Dictionary<string, string>();
 
         #endregion
 
@@ -95,7 +93,7 @@ namespace Mage {
         /// <param name="args"></param>
         public MSSQLReader(string xml, Dictionary<string, string> args) {
             SprocName = "";
-            SQLBuilder builder = new SQLBuilder(xml, ref args);
+            var builder = new SQLBuilder(xml, ref args);
             //            builder.InitializeFromXML(xml, ref args);
             SetPropertiesFromBuilder(builder);
         }
@@ -135,7 +133,7 @@ namespace Mage {
         /// dispose of held resources
         /// </summary>
         /// <param name="disposing"></param>
-        protected virtual void Dispose(bool disposing) {
+        private void Dispose(bool disposing) {
             if (disposing) {
                 // Code to dispose the managed resources of the class
             }
@@ -209,46 +207,53 @@ namespace Mage {
         /// <summary>
         /// Establish connection to the database server
         /// </summary>
-        protected void Connect() {
+        private void Connect() {
             string cnStr = mConnectionString.Replace("@server@", Server);
             cnStr = cnStr.Replace("@database@", Database);
-            mConnection = new SqlConnection();
-            mConnection.ConnectionString = cnStr;
-            mConnection.Open();
+            mConnection = new SqlConnection
+            {
+	            ConnectionString = cnStr
+            };
+	        mConnection.Open();
         }
 
         /// <summary>
         /// Close the connection to the database
         /// </summary>
-        protected void Close() {
+        private void Close() {
             mConnection.Close();
         }
 
         /// <summary>
         /// Run SQL query against database and deliver data rows via standard tabular output
         /// </summary>
-        protected void GetDataFromDatabaseQuery() {
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = mConnection;
-            cmd.CommandText = SQLText;
-            cmd.CommandTimeout = CommandTimeoutSeconds;
+        private void GetDataFromDatabaseQuery() {
+            var cmd = new SqlCommand
+            {
+	            Connection = mConnection,
+	            CommandText = SQLText,
+	            CommandTimeout = CommandTimeoutSeconds
+            };
 
-            try {
-                SqlDataReader myReader = cmd.ExecuteReader();
+	        try
+            {
+	            SqlDataReader myReader = cmd.ExecuteReader();
                 GetData(myReader);
-            } catch (Exception e) {
-                if (e is InvalidOperationException || e is SqlException) {
+            } 
+			catch (Exception e)
+            {
+	            if (e is InvalidOperationException || e is SqlException) {
                     throw new MageException(SQL_COMMAND_ERROR + ": " + e.Message + ";    " + SQLText);
-                } else {
-                    throw;
                 }
+
+	            throw;
             }
         }
 
         /// <summary>
         /// Run stored procedure and deliver data rows via standard tabular output
         /// </summary>
-        protected void GetDataFromDatabaseSproc() {
+        private void GetDataFromDatabaseSproc() {
             SqlCommand myCmd = GetSprocCmd(SprocName, mSprocParameters);
             SqlDataReader myReader = myCmd.ExecuteReader();
             GetData(myReader);
@@ -258,21 +263,22 @@ namespace Mage {
         /// Deliver rowset from query via standard tabular output
         /// </summary>
         /// <param name="myReader"></param>
-        protected void GetData(IDataReader myReader) {
+        private void GetData(IDataReader myReader) {
             if (myReader == null) {
                 // Something went wrong
                 UpdateStatusMessage("Error: SqlDataReader object is null");
                 return;
             }
+	        List<MageColumnDef> columnDefs;
 
-            OutputColumnDefinitions(myReader);
+            OutputColumnDefinitions(myReader, out columnDefs);
 
             int totalRows = 0;
-            OutputDataRows(myReader, ref totalRows);
+            OutputDataRows(myReader, columnDefs, ref totalRows);
 
             stopTime = DateTime.UtcNow;
             duration = stopTime - startTime;
-            traceLog.Info("MSSQLReader.GetData --> Get data finish (" + duration + ") [" + totalRows.ToString() + "]:" + SQLText);
+            traceLog.Info("MSSQLReader.GetData --> Get data finish (" + duration + ") [" + totalRows + "]:" + SQLText);
 
             //Always close the DataReader
             myReader.Close();
@@ -282,21 +288,52 @@ namespace Mage {
         /// Deliver data rows via standard tabular output
         /// </summary>
         /// <param name="myReader">DataReader object from which to get data rows</param>
-        /// 
+        /// <param name="columnDefs">Column definitions (used to find date/time columns)</param>
         /// <param name="totalRows">Total rows delivered</param>
-        protected void OutputDataRows(IDataReader myReader, ref int totalRows) {
+        private void OutputDataRows(IDataReader myReader, List<MageColumnDef> columnDefs, ref int totalRows)
+		{
             // now do all the rows - if anyone is registered as wanting them
             startTime = DateTime.UtcNow;
             traceLog.Debug("MSSQLReader.GetData --> Get data start:" + SQLText);
             while (myReader.Read()) {
-                object[] a = new object[myReader.FieldCount];
+                var a = new object[myReader.FieldCount];
                 myReader.GetValues(a);
 
-				string[] dataVals = new string[a.Length];
-				for (int i = 0; i < a.Length; i++)
-					dataVals[i] = a[i].ToString();
+				var dataVals = new string[a.Length];
 
-				OnDataRowAvailable(new MageDataEventArgs(dataVals));
+	            for (int i = 0; i < a.Length; i++)
+	            {
+					bool valProcessed = false;
+
+		            if (i < columnDefs.Count)
+		            {
+			            DateTime dateValue;
+			            if ((columnDefs[i].DataType.StartsWith("date") ||
+			                 columnDefs[i].DataType.StartsWith("smalldate")
+			                ) && DateTime.TryParse(a[i].ToString(), out dateValue))
+			            {
+				            dataVals[i] = dateValue.ToString("yyyy-MM-dd hh:mm:ss tt");
+				            valProcessed = true;
+			            }
+			            else
+			            {
+							DateTime timeValue;
+							if (columnDefs[i].DataType == "time" && DateTime.TryParse(a[i].ToString(), out timeValue))
+							{
+								dataVals[i] = timeValue.ToString("hh:mm:ss tt");
+								valProcessed = true;
+							}
+			            }
+
+		            }
+		            
+					if (!valProcessed)
+		            {
+			            dataVals[i] = a[i].ToString();
+		            }
+	            }
+
+	            OnDataRowAvailable(new MageDataEventArgs(dataVals));
                 totalRows++;
                 if (Abort) {
                     ReportProcessingAborted();
@@ -316,14 +353,17 @@ namespace Mage {
         /// Deliver column definitions via standard tabular output
         /// </summary>
         /// <param name="myReader">DataReader object from which to get data rows</param>
-        protected void OutputColumnDefinitions(IDataReader myReader) {
+		/// <param name="columnDefs">Column definitions</param>
+        private void OutputColumnDefinitions(IDataReader myReader, out List<MageColumnDef> columnDefs) 
+		{
             // if anyone is registered as listening for ColumnDefAvailable events, make it happen for them
             startTime = DateTime.UtcNow;
             traceLog.Debug("MSSQLReader.GetData --> Get column info start:" + SQLText);
             // Determine the column names and column data types (
 
             // Get list of fields in result set and process each field
-            List<MageColumnDef> columnDefs = new List<MageColumnDef>();
+			columnDefs = new List<MageColumnDef>();
+
             DataTable schemaTable = myReader.GetSchemaTable();
             foreach (DataRow drField in schemaTable.Rows) {
                 // initialize column definition with canonical fields
@@ -349,15 +389,17 @@ namespace Mage {
         /// </summary>
         /// <param name="drField">MSSQL TableSchema row containing definition for a column</param>
         /// <returns></returns>
-        protected static MageColumnDef GetColumnInfo(DataRow drField) {
+        private static MageColumnDef GetColumnInfo(DataRow drField) {
             // add the canonical column definition fields to column definition
 
-            MageColumnDef columnDef = new MageColumnDef();
-            columnDef.Name = drField["ColumnName"].ToString();
-            columnDef.DataType = drField["DataTypeName"].ToString();
-            columnDef.Size = drField["ColumnSize"].ToString();
+            var columnDef = new MageColumnDef
+            {
+	            Name = drField["ColumnName"].ToString(),
+	            DataType = drField["DataTypeName"].ToString(),
+	            Size = drField["ColumnSize"].ToString()
+            };
 
-            string colHidden = drField["IsHidden"].ToString();
+	        string colHidden = drField["IsHidden"].ToString();
             columnDef.Hidden = !(string.IsNullOrEmpty(colHidden) || colHidden.ToLower() == "false");
             return columnDef;
         }
@@ -366,7 +408,7 @@ namespace Mage {
         /// inform any interested listeners about our progress
         /// </summary>
         /// <param name="message"></param>
-        protected void UpdateStatusMessage(string message) {
+        private void UpdateStatusMessage(string message) {
             OnStatusMessageUpdated(new MageStatusEventArgs(message));
         }
 
@@ -381,16 +423,22 @@ namespace Mage {
         /// <param name="sprocName"></param>
         /// <param name="parms"></param>
         /// <returns></returns>
-        protected SqlCommand GetSprocCmd(string sprocName, Dictionary<string, string> parms) {
+        private SqlCommand GetSprocCmd(string sprocName, Dictionary<string, string> parms) {
 
             // start the SqlCommand that we are building up for the sproc
-            SqlCommand builtCmd = new SqlCommand();
-            builtCmd.Connection = mConnection;
-            try {
+            var builtCmd = new SqlCommand
+            {
+	            Connection = mConnection
+            };
+
+	        try {
                 // query the database to get argument definitions for the given stored procedure
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = mConnection;
-                string sqlText = string.Format("SELECT * FROM INFORMATION_SCHEMA.PARAMETERS WHERE SPECIFIC_NAME = '{0}'", sprocName);
+                var cmd = new SqlCommand
+                {
+	                Connection = mConnection
+                };
+
+		        string sqlText = string.Format("SELECT * FROM INFORMATION_SCHEMA.PARAMETERS WHERE SPECIFIC_NAME = '{0}'", sprocName);
                 cmd.CommandText = sqlText;
                 //
                 SqlDataReader rdr = cmd.ExecuteReader();
@@ -410,7 +458,7 @@ namespace Mage {
                 // loop through all the arguments and add a parameter for each one
                 // the the SqlCommand being built
                 while (rdr.Read()) {
-                    object[] a = new object[rdr.FieldCount];
+                    var a = new object[rdr.FieldCount];
                     rdr.GetValues(a);
                     string argName = a[namIdx].ToString();
                     string argType = a[typIdx].ToString();
@@ -427,7 +475,7 @@ namespace Mage {
                             }
                             break;
                         case "varchar":
-                            Int32 size = (Int32)a[sizIdx];
+                            var size = (Int32)a[sizIdx];
                             builtCmd.Parameters.Add(new SqlParameter(argName, SqlDbType.VarChar, size));
                             builtCmd.Parameters[argName].Direction = ParamDirection(argMode);
                             if (parms.ContainsKey(argName)) {
@@ -453,14 +501,16 @@ namespace Mage {
                     }
                 }
                 rdr.Close();
-            } catch (Exception e) {
-                if (e is InvalidOperationException || e is SqlException) {
+            } 
+			catch (Exception e)
+            {
+	            if (e is InvalidOperationException || e is SqlException) {
                     throw new MageException("Problem forming SQL command:" + e.Message);
-                } else {
-                    throw;
                 }
+
+	            throw;
             }
-            return builtCmd;
+	        return builtCmd;
         }
 
         /// <summary>
@@ -468,7 +518,7 @@ namespace Mage {
         /// </summary>
         /// <param name="argMode"></param>
         /// <returns></returns>
-        protected static ParameterDirection ParamDirection(string argMode) {
+        private static ParameterDirection ParamDirection(string argMode) {
             return (argMode == "INOUT") ? ParameterDirection.Output : ParameterDirection.Input;
         }
 
