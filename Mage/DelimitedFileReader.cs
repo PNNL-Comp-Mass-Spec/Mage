@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
-using MyEMSLReader;
 
 namespace Mage
 {
@@ -231,10 +227,10 @@ namespace Mage
 			}
 		}
 
-		private void OutputHeaderLine(string[] fields)
+		private void OutputHeaderLine(IEnumerable<string> fields)
 		{
 			// output the column definitions
-			List<MageColumnDef> colDefs = new List<MageColumnDef>();
+			var colDefs = new List<MageColumnDef>();
 			foreach (string field in fields)
 			{
 				colDefs.Add(new MageColumnDef(field, "text", "10"));

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Reflection;
 using log4net;
@@ -51,35 +50,35 @@ namespace Mage {
         /// <summary>
         /// temporary working reference to input column field used during output column mapping
         /// </summary>
-        protected int InputColumnIndex = 0;
+        protected int InputColumnIndex;
 
         /// <summary>
         /// master list of Output column definitions
         /// (not all modules require this feature) 
         /// </summary>
-        protected List<MageColumnDef> OutputColumnDefs = null;
+        protected List<MageColumnDef> OutputColumnDefs;
 
         /// <summary>
         /// master list of Output column position keyed to column name (for lookup of column index by column name)
         /// (not all modules require this feature) 
         /// </summary>
-        protected Dictionary<string, int> OutputColumnPos = null;
+        protected Dictionary<string, int> OutputColumnPos;
 
         /// <summary> 
         /// master list of position map between output columns and input columns
         /// </summary>
-        protected List<KeyValuePair<int, int>> OutputToInputColumnPosMap = null;
+        protected List<KeyValuePair<int, int>> OutputToInputColumnPosMap;
 
         /// <summary>
         /// Set of key/value pairs for ad hoc parameters.
         /// </summary>
-        protected Dictionary<string, string> Context = null;
+        protected Dictionary<string, string> Context;
 
         /// <summary>
         /// Position map list of new output columns 
         /// the have matching keys in the Context parameters
         /// </summary>
-        protected Dictionary<string, int> ContextColPos = null;
+        protected Dictionary<string, int> ContextColPos;
 
         #endregion
 
@@ -292,7 +291,7 @@ namespace Mage {
                 try {
                     // rename column if it has same name as previously handled column
                     if (InputColumnPos.ContainsKey(columnDef.Name)) {
-                        columnDef.Name = columnDef.Name + (++mNameDisambiguatorCount).ToString();
+                        columnDef.Name = columnDef.Name + (++mNameDisambiguatorCount);
                     }
                     InputColumnPos.Add(columnDef.Name, InputColumnIndex++);
                     InputColumnDefs.Add(columnDef);
@@ -481,7 +480,7 @@ namespace Mage {
             int posCurrent = 0;
             int lenPattern = pattern.Length;
             int idxNext = original.IndexOf(pattern, comparisonType);
-            StringBuilder result = new StringBuilder(stringBuilderInitialSize < 0 ? Math.Min(4096, original.Length) : stringBuilderInitialSize);
+            var result = new StringBuilder(stringBuilderInitialSize < 0 ? Math.Min(4096, original.Length) : stringBuilderInitialSize);
 
             while (idxNext >= 0) {
                 result.Append(original, posCurrent, idxNext - posCurrent);
@@ -551,15 +550,15 @@ namespace Mage {
                         AddIndexForNewColumn(outputColName, outColIdx);
                         outColIdx++;
                         continue;
-                    } else {
-                        // output column is mapped to input column
-                        // copy input column def to output col def for this column
-                        string colName = (string.IsNullOrEmpty(inputColName)) ? outputColName : inputColName;
-                        MapOutputColumnToInputColumn(colName, outColIdx);
-                        // and do any necessary overrides
-                        AdjustOutputColumnProperties(outColIdx, outputColName, type, size);
-                        outColIdx++;
                     }
+
+	                // output column is mapped to input column
+	                // copy input column def to output col def for this column
+	                string colName = (string.IsNullOrEmpty(inputColName)) ? outputColName : inputColName;
+	                MapOutputColumnToInputColumn(colName, outColIdx);
+	                // and do any necessary overrides
+	                AdjustOutputColumnProperties(outColIdx, outputColName, type, size);
+	                outColIdx++;
                 }
             } catch (Exception e) {
                 traceLog.Error(e.Message);
@@ -571,7 +570,7 @@ namespace Mage {
         /// A name/position map for "new" output columns (columns added to output that don't remap input columns)
         /// (not all modules require this feature) 
         /// </summary>
-        protected Dictionary<string, int> NewOutputColumnPos = null;
+        protected Dictionary<string, int> NewOutputColumnPos;
 
         private void AddIndexForNewColumn(string outputColName, int outColIdx) {
             NewOutputColumnPos.Add(outputColName, outColIdx);
@@ -652,7 +651,7 @@ namespace Mage {
 		protected string[] MapDataRow(string[] vals)
 		{
             // remap results according to our output column definitions
-			string[] outRow = new string[OutputColumnDefs.Count];
+			var outRow = new string[OutputColumnDefs.Count];
 
             int actualCount = vals.Length;
             // copy over values from remapped input columns
@@ -679,12 +678,12 @@ namespace Mage {
         /// <param name="colIndex"></param>
         /// <returns>Index if defined; -1 if columnName is not present in OutputColumnPos</returns>
         protected bool TryGetOutputColumnPos(string columnName, out int colIndex) {
-
-            colIndex = -1;
-            if (OutputColumnPos != null) {
+	
+			if (OutputColumnPos != null) {
                 if (OutputColumnPos.TryGetValue(columnName, out colIndex))
                     return true;
             }
+
             colIndex = -1;
             return false;
         }

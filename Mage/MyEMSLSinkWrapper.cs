@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using Mage;
 using MyEMSLReader;
 
 namespace Mage
@@ -16,7 +13,7 @@ namespace Mage
 	public class MyEMSLSinkWrapper : FileProcessingBase
 	{
 	
-		private SimpleSink mSink = null;
+		private readonly SimpleSink mSink;
 
 		/// <summary>
 		/// Set to True to download and cache locally any MyEMSL files

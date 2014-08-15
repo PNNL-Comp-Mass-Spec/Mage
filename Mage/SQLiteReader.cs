@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Data.SQLite;
 using log4net;
 using System.Data;
@@ -12,18 +10,18 @@ namespace Mage {
     /// Module which can query a SQLite database and deliver 
     /// results of query via its standard tabular output events
     /// </summary>
-    public class SQLiteReader : BaseModule, IDisposable {
+    public sealed class SQLiteReader : BaseModule, IDisposable {
         private static readonly ILog traceLog = LogManager.GetLogger("TraceLog");
 
         #region Member Variables
 
-        private int CommandTimeoutSeconds = 15;
+	    private const int CommandTimeoutSeconds = 15;
 
-        private DateTime startTime;
+	    private DateTime startTime;
         private DateTime stopTime;
         private TimeSpan duration;
 
-        private SQLiteConnection mConnection = null;
+        private SQLiteConnection mConnection;
 
         #endregion
 
@@ -57,7 +55,7 @@ namespace Mage {
         /// <param name="xml"></param>
         /// <param name="args"></param>
         public SQLiteReader(string xml, Dictionary<string, string> args) {
-            SQLBuilder builder = new SQLBuilder(xml, ref args);
+            var builder = new SQLBuilder(xml, ref args);
             SetPropertiesFromBuilder(builder);
         }
 
@@ -77,7 +75,7 @@ namespace Mage {
         /// dispose of held resources
         /// </summary>
         /// <param name="disposing"></param>
-        protected virtual void Dispose(bool disposing) {
+        private void Dispose(bool disposing) {
             if (disposing) {
                 // Code to dispose the managed resources of the class
             }
@@ -132,17 +130,21 @@ namespace Mage {
         #region Private Functions
 
         private void Access() {
-            SQLiteCommand cmd = new SQLiteCommand(SQLText, mConnection);
-            cmd.CommandTimeout = CommandTimeoutSeconds;
+            var cmd = new SQLiteCommand(SQLText, mConnection)
+            {
+	            CommandTimeout = CommandTimeoutSeconds
+            };
 
-            SQLiteDataReader myReader = cmd.ExecuteReader();
+	        SQLiteDataReader myReader = cmd.ExecuteReader();
             GetData(myReader);
         }
 
         private void Connect() {
-            SQLiteConnectionStringBuilder builder = new SQLiteConnectionStringBuilder();
-            builder.DataSource = Database;
-            /*
+            var builder = new SQLiteConnectionStringBuilder
+            {
+	            DataSource = Database
+            };
+	        /*
                         if (password != null) {
                             builder.Password = password;
                         }
@@ -162,7 +164,7 @@ namespace Mage {
         /// output results of query to Mage standard tabular output
         /// </summary>
         /// <param name="myReader"></param>
-        protected void GetData(IDataReader myReader) {
+        private void GetData(IDataReader myReader) {
             if (myReader == null) { // Something went wrong
                 UpdateStatusMessage("Error: SqlDataReader object is null");
                 return;
@@ -175,7 +177,7 @@ namespace Mage {
 
             stopTime = DateTime.UtcNow;
             duration = stopTime - startTime;
-            traceLog.Info("SQLiteReader.GetData --> Get data finish (" + duration + ") [" + totalRows.ToString() + "]:" + SQLText);
+            traceLog.Info("SQLiteReader.GetData --> Get data finish (" + duration + ") [" + totalRows + "]:" + SQLText);
 
             //Always close the DataReader
             myReader.Close();
@@ -186,10 +188,10 @@ namespace Mage {
             startTime = DateTime.UtcNow;
             traceLog.Debug("SQLiteReader.GetData --> Get data start:" + SQLText);
             while (myReader.Read()) {
-                object[] a = new object[myReader.FieldCount];
+                var a = new object[myReader.FieldCount];
                 myReader.GetValues(a);
 
-				string[] dataVals = new string[a.Length];
+				var dataVals = new string[a.Length];
 				for (int i = 0; i < a.Length; i++)
 					dataVals[i] = a[i].ToString();
 
@@ -213,7 +215,7 @@ namespace Mage {
             // Determine the column names and column data types (
 
             // Get list of fields in result set and process each field
-            List<MageColumnDef> columnDefs = new List<MageColumnDef>();
+            var columnDefs = new List<MageColumnDef>();
             DataTable schemaTable = myReader.GetSchemaTable();
             foreach (DataRow drField in schemaTable.Rows) {
                 MageColumnDef columnDef = GetColumnInfo(drField);
@@ -239,15 +241,17 @@ namespace Mage {
         /// </summary>
         /// <param name="drField"></param>
         /// <returns></returns>
-        protected static MageColumnDef GetColumnInfo(DataRow drField) {
+        private static MageColumnDef GetColumnInfo(DataRow drField) {
             // add the canonical column definition fields to column definition
 
-            MageColumnDef columnDef = new MageColumnDef();
-            columnDef.Name = drField["ColumnName"].ToString();
-            columnDef.DataType = drField["DataTypeName"].ToString();
-            columnDef.Size = drField["ColumnSize"].ToString();
+            var columnDef = new MageColumnDef
+            {
+	            Name = drField["ColumnName"].ToString(),
+	            DataType = drField["DataTypeName"].ToString(),
+	            Size = drField["ColumnSize"].ToString()
+            };
 
-            string colHidden = drField["IsHidden"].ToString();
+	        string colHidden = drField["IsHidden"].ToString();
             columnDef.Hidden = !(string.IsNullOrEmpty(colHidden) || colHidden.ToLower() == "false");
             return columnDef;
         }
@@ -256,7 +260,7 @@ namespace Mage {
         /// inform any listeners about our progress
         /// </summary>
         /// <param name="message"></param>
-        protected void UpdateStatusMessage(string message) {
+        private void UpdateStatusMessage(string message) {
             OnStatusMessageUpdated(new MageStatusEventArgs(message));
         }
 

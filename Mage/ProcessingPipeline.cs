@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Xml;
-using System.IO;
-using System.Reflection;
 using log4net;
 using System.Collections.ObjectModel;
 
@@ -50,12 +47,12 @@ namespace Mage {
         /// <summary>
         /// Ordered list of modules managed by this pipeline object
         /// </summary>
-        private List<IBaseModule> mModuleList = new List<IBaseModule>();
+        private readonly List<IBaseModule> mModuleList = new List<IBaseModule>();
 
         /// <summary>
         /// Lookup reference for modules managed by this pipeline object (indexed by module name)
         /// </summary>
-        private Dictionary<string, IBaseModule> mModuleIndex = new Dictionary<string, IBaseModule>();
+        private readonly Dictionary<string, IBaseModule> mModuleIndex = new Dictionary<string, IBaseModule>();
 
         #endregion
 
@@ -286,7 +283,7 @@ namespace Mage {
                 mod.DataRowAvailable += rowHandler;
                 traceLog.Debug(string.Format("Connected external handler to module '{0}' ({1})", mod.ModuleName, PipelineName));
             } else {
-                traceLog.Error(string.Format("Could not connect handler module to module '{0}' ({1})", mod.ModuleName, PipelineName));
+                traceLog.Error(string.Format("Could not connect handler module to module '{0}' ({1})", "Null module", PipelineName));
             }
         }
 
@@ -329,10 +326,9 @@ namespace Mage {
         /// <param name="moduleType">name of class to instantiate the module from</param>
         /// <returns>Module</returns>
         public IBaseModule MakeModule(string moduleName, string moduleType) {
-            IBaseModule module = null;
-            string className = moduleType;
+	        string className = moduleType;
             try {
-                module = MakeModule(className);
+                IBaseModule module = MakeModule(className);
                 if (module == null) {
                     throw new MageException("Class not found in searched assemblies");
                 }
@@ -351,8 +347,7 @@ namespace Mage {
         /// <returns></returns>
         public static IBaseModule MakeModule(string className) {
             IBaseModule module = null;
-            Type modType = null;
-            modType = ModuleDiscovery.GetModuleTypeFromClassName(className);
+	        Type modType = ModuleDiscovery.GetModuleTypeFromClassName(className);
             if (modType != null) {
                 module = (IBaseModule)Activator.CreateInstance(modType);
             }
@@ -366,7 +361,7 @@ namespace Mage {
         /// <param name="module">Module object</param>
         /// <returns>Reference to the module</returns>
         public IBaseModule AddModule(string moduleName, IBaseModule module) {
-            ModuleDef modDef = new ModuleDef(moduleName, module);
+            var modDef = new ModuleDef(moduleName, module);
             return AddModule(modDef);
         }
 
@@ -376,7 +371,12 @@ namespace Mage {
         /// <param name="modDef"></param>
         /// <returns></returns>
         public IBaseModule AddModule(ModuleDef modDef) {
-            IBaseModule module = modDef.ModuleObject as IBaseModule;
+            var module = modDef.ModuleObject as IBaseModule;
+			if (module == null)
+			{
+				throw new MageException("Null module sent to AddModule");
+			}
+
             mModuleList.Add(module);
             mModuleIndex.Add(modDef.ModuleName, module);
             module.StatusMessageUpdated += HandleStatusMessageUpdated;
@@ -401,7 +401,7 @@ namespace Mage {
         /// <summary>
         /// buffer to accumulate error messages from status update stream
         /// </summary>
-        private List<string> mErrorMessages = new List<string>();
+        private readonly List<string> mErrorMessages = new List<string>();
 
         /// <summary>
         /// Get error messages
@@ -456,33 +456,42 @@ namespace Mage {
             // step through XML module specification document
             // and build and wire modules as specified
             //
-            string moduleName = "";
-            string moduleType = "";
-            string connectedTo = "";
 
-            //            pipelineSpec = "<root>" + pipelineSpec + "</root>";
-            XmlDocument doc = new XmlDocument();
+	        //            pipelineSpec = "<root>" + pipelineSpec + "</root>";
+            var doc = new XmlDocument();
             doc.LoadXml(pipelineSpec);
             XmlNodeList xnl = doc.SelectNodes(".//module");
 
             // get next module description from specification
-            foreach (XmlNode n in xnl) {
-                moduleName = n.Attributes["name"].InnerText;
-                moduleType = n.Attributes["type"].InnerText;
-                // create the module
-                IBaseModule mod = MakeModule(moduleName, moduleType);
-                // wire it to an upstream module, if required
-                XmlNode cn = n.Attributes["connectedTo"];
-                if (cn != null) {
-                    connectedTo = cn.InnerText;
-                    ConnectModules(connectedTo, moduleName);
-                } else {
-                    // module with no upstream module 
-                    // is assumed to be the root of the pipeline
-                    // (we play by Highlander rules - there can be only one)
-                    RootModule = mod;
-                }
-            }
+	        if (xnl == null)
+	        {
+		        return;
+	        }
+
+	        foreach (XmlNode n in xnl) {
+		        if (n.Attributes == null)
+		        {
+			        continue;
+		        }
+
+		        string moduleName = n.Attributes["name"].InnerText;
+		        string moduleType = n.Attributes["type"].InnerText;
+		        // create the module
+		        IBaseModule mod = MakeModule(moduleName, moduleType);
+		        // wire it to an upstream module, if required
+		        XmlNode cn = n.Attributes["connectedTo"];
+		        if (cn != null)
+		        {
+			        string connectedTo = cn.InnerText;
+			        ConnectModules(connectedTo, moduleName);
+		        }
+		        else {
+			        // module with no upstream module 
+			        // is assumed to be the root of the pipeline
+			        // (we play by Highlander rules - there can be only one)
+			        RootModule = mod;
+		        }
+	        }
         }
 
         /// <summary>
@@ -496,25 +505,35 @@ namespace Mage {
 
             // parse the XML definition of the module parameters
             pipelineModuleParams = "<root>" + pipelineModuleParams + "</root>";
-            XmlDocument doc = new XmlDocument();
+            var doc = new XmlDocument();
             doc.LoadXml(pipelineModuleParams);
 
             // step through list of module sections in specification
             XmlNodeList xnl = doc.SelectNodes(".//module");
             // do section for current module in specifiction
-            foreach (XmlNode modNode in xnl) {
-                // get the name of the module that the paramters belong to
-                string moduleName = modNode.Attributes["name"].InnerText;
-                // build list of parameters for the module
-                Dictionary<string, string> moduleParams = new Dictionary<string, string>();
-                foreach (XmlNode parmNode in modNode.ChildNodes) {
-                    string paramName = parmNode.Attributes["name"].InnerText;
-                    string paramVal = parmNode.InnerText;
-                    moduleParams.Add(paramName, paramVal);
-                }
-                // send list of parameters to module
-                SetModuleParameters(moduleName, moduleParams);
-            }
+	        if (xnl == null)
+	        {
+		        return;
+	        }
+
+	        foreach (XmlNode modNode in xnl) {
+		        // get the name of the module that the paramters belong to
+		        if (modNode.Attributes == null)
+		        {
+			        continue;
+		        }
+
+		        string moduleName = modNode.Attributes["name"].InnerText;
+		        // build list of parameters for the module
+		        var moduleParams = new Dictionary<string, string>();
+		        foreach (XmlNode parmNode in modNode.ChildNodes) {
+			        string paramName = parmNode.Attributes["name"].InnerText;
+			        string paramVal = parmNode.InnerText;
+			        moduleParams.Add(paramName, paramVal);
+		        }
+		        // send list of parameters to module
+		        SetModuleParameters(moduleName, moduleParams);
+	        }
         }
         #endregion
 
@@ -530,15 +549,15 @@ namespace Mage {
         /// <param name="name">Name of the pipeline</param>
         /// <param name="moduleList">List of modules to build pipeline from</param>
         /// <returns>Pipeline</returns>
-        public static ProcessingPipeline Assemble(string name, Collection<object> moduleList) {
-            Collection<ModuleDef> namedModuleList = new Collection<ModuleDef>();
+        public static ProcessingPipeline Assemble(string name, IEnumerable<object> moduleList) {
+            var namedModuleList = new Collection<ModuleDef>();
             int seq = 0;
-            string moduleName = "";
-            foreach (object moduleObject in moduleList) {
-                if (moduleObject is string) {
-                    moduleName = moduleObject as string + (++seq).ToString(); ;
+	        foreach (object moduleObject in moduleList) {
+	            string moduleName;
+	            if (moduleObject is string) {
+                    moduleName = moduleObject as string + (++seq);
                 } else {
-                    moduleName = moduleObject.GetType().Name + (++seq).ToString();
+                    moduleName = moduleObject.GetType().Name + (++seq);
                 }
                 namedModuleList.Add(new ModuleDef(moduleName, moduleObject));
             }
@@ -555,15 +574,14 @@ namespace Mage {
         /// <param name="name">Name of the pipeline</param>
         /// <param name="namedModuleList">List of modules to add, with name of module</param>
         /// <returns>Pipeline</returns>
-        public static ProcessingPipeline Assemble(string name, Collection<ModuleDef> namedModuleList) {
-            ProcessingPipeline pipeline = new ProcessingPipeline(name);
-            string precedingModName = "";
-            string currentModName = "";
-            object moduleObject = null;
-            foreach (ModuleDef mod in namedModuleList) {
-                precedingModName = currentModName;
+        public static ProcessingPipeline Assemble(string name, IEnumerable<ModuleDef> namedModuleList) {
+            var pipeline = new ProcessingPipeline(name);
+	        string currentModName = "";
+	        foreach (ModuleDef mod in namedModuleList) {
+                string precedingModName = currentModName;
                 currentModName = mod.ModuleName;
-                moduleObject = mod.ModuleObject;
+
+                object moduleObject = mod.ModuleObject;
                 if (moduleObject is string) {
                     moduleObject = MakeModule(moduleObject as string);
                 }
@@ -595,7 +613,7 @@ namespace Mage {
         /// <param name="moduleList">comma-delimited list of modules as arguments</param>
         /// <returns></returns>
         public static ProcessingPipeline Assemble(string name, params object[] moduleList) {
-            Collection<object> moduleCollection = new Collection<object>(moduleList);
+            var moduleCollection = new Collection<object>(moduleList);
             return Assemble(name, moduleCollection);
         }
 
@@ -605,30 +623,35 @@ namespace Mage {
 		/// <param name="pipelineSpecXML"></param>
 		/// <returns></returns>
         public static ProcessingPipeline Assemble(string pipelineSpecXML) {
-            XmlDocument doc = new XmlDocument();
+            var doc = new XmlDocument();
             doc.LoadXml(pipelineSpecXML);
             XmlNodeList xnl = doc.SelectNodes(".//module");
 
             XmlNode p = doc.SelectSingleNode("/pipeline");
             string pipelineName = p.Attributes["name"].InnerText;
 
-            Collection<ModuleDef> namedModuleList = new Collection<ModuleDef>();
-            foreach (XmlNode n in xnl) {
-                // create the module
-                XmlAttribute nameAttr = n.Attributes["name"];
-                string moduleName = (nameAttr != null) ? nameAttr.InnerText : string.Format("Module{0}", namedModuleList.Count + 1);
-                string moduleType = n.Attributes["type"].InnerText;
-                IBaseModule mod = MakeModule(moduleType);
+            var namedModuleList = new Collection<ModuleDef>();
+			if (xnl == null)
+			{
+				return Assemble(pipelineName, namedModuleList);
+			}
 
-                XmlNodeList pnl = n.SelectNodes(".//param");
-                foreach (XmlNode parmNode in pnl) {
-                    string paramName = parmNode.Attributes["name"].InnerText;
-                    string paramVal = parmNode.InnerText;
-                    mod.SetPropertyByName(paramName, paramVal);
-                }
-                namedModuleList.Add(new ModuleDef(moduleName, mod));
-            }
-            return Assemble(pipelineName, namedModuleList);
+			foreach (XmlNode n in xnl) {
+				// create the module
+				XmlAttribute nameAttr = n.Attributes["name"];
+				string moduleName = (nameAttr != null) ? nameAttr.InnerText : string.Format("Module{0}", namedModuleList.Count + 1);
+				string moduleType = n.Attributes["type"].InnerText;
+				IBaseModule mod = MakeModule(moduleType);
+
+				XmlNodeList pnl = n.SelectNodes(".//param");
+				foreach (XmlNode parmNode in pnl) {
+					string paramName = parmNode.Attributes["name"].InnerText;
+					string paramVal = parmNode.InnerText;
+					mod.SetPropertyByName(paramName, paramVal);
+				}
+				namedModuleList.Add(new ModuleDef(moduleName, mod));
+			}
+			return Assemble(pipelineName, namedModuleList);
         }
 
         #endregion

@@ -4,7 +4,7 @@ The Mage suite of tools provide access to DMS files and metadata.
 == Mage Extractor ==
 
 Mage Extractor can extract MS/MS search results from SEQUEST, X!Tandem, 
-Inspect, or MSFBDB analysis jobs and combine the results into a single 
+Inspect, or MSGF+ analysis jobs and combine the results into a single 
 tab-delimited text file or a single SQLite database. MAGE Extractor is 
 the successor to STARSuite Extractor; it includes support for MSGF results.
 
@@ -56,6 +56,6 @@ Written by Gary Kiebel and Matthew Monroe for the Department of Energy (PNNL, Ri
 Copyright 2011, Battelle Memorial Institute.  All Rights Reserved.
 
 E-mail: matthew.monroe@pnnl.gov or matt@alchemistmatt.com
-Website: http://ncrr.pnnl.gov/ or http://omics.pnl.gov
+Website: http://panomics.pnnl.gov/ or http://omics.pnl.gov
 -------------------------------------------------------------------------------
 

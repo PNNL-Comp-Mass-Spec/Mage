@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Mage;
 using System.Threading;
 
 namespace Mage {
@@ -11,7 +8,7 @@ namespace Mage {
     /// Runs one or more Mage pipelines from a queue
     /// in a worker thread.
     /// </summary>
-    public class PipelineQueue {
+    public sealed class PipelineQueue {
 
         /// <summary>
         /// event that is fired when next pipeline in queue begins procession
@@ -29,12 +26,12 @@ namespace Mage {
         /// <summary>
         /// is queue currently running?
         /// </summary>
-        private bool mQueueRunning = false;
+        private bool mQueueRunning;
 
         /// <summary>
         /// The current pipeline that is running (null if none)
         /// </summary>
-        private ProcessingPipeline mCurrentPipeline = null;
+        private ProcessingPipeline mCurrentPipeline;
 
         #endregion
 
@@ -66,7 +63,7 @@ namespace Mage {
         /// <summary>
         /// Internal queue of pipelines to be run
         /// </summary>
-        private Queue<ProcessingPipeline> mPipelineQueue = new Queue<ProcessingPipeline>();
+        private readonly Queue<ProcessingPipeline> mPipelineQueue = new Queue<ProcessingPipeline>();
 
         /// <summary>
         /// Adds a pipeline to the queue
@@ -160,7 +157,7 @@ namespace Mage {
         /// <summary>
         /// To inform subscribers
         /// </summary>
-        protected virtual void UpdateQueueCompleted() {
+        private void UpdateQueueCompleted() {
             if (OnRunCompleted != null) {
 				if (Globals.AbortRequested)
 					OnRunCompleted(this, new MageStatusEventArgs("Aborted"));
@@ -173,7 +170,7 @@ namespace Mage {
         /// To inform subscribers
         /// </summary>
         /// <param name="msg"></param>
-        protected virtual void UpdatePipelineStarted(string msg) {
+        private void UpdatePipelineStarted(string msg) {
             if (OnPipelineStarted != null) {
                 OnPipelineStarted(this, new MageStatusEventArgs(msg));
             }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Mage {
 
@@ -21,11 +18,11 @@ namespace Mage {
 
         // Master list of entities to build crosstab against.
         // It is a dictionary of entity ID/entity name key/value pairs
-        private Dictionary<string, string> mEntityList = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> mEntityList = new Dictionary<string, string>();
 
         // Accumulator list of factors
         // It is a dictionary, keyed by entity ID, of dictionares of name/value pairs for the crosstab fields
-        private Dictionary<string, Dictionary<string, string>> mFactorList = new Dictionary<string, Dictionary<string, string>>();
+        private readonly Dictionary<string, Dictionary<string, string>> mFactorList = new Dictionary<string, Dictionary<string, string>>();
 
         #endregion
 
@@ -144,13 +141,16 @@ namespace Mage {
             foreach (string entityID in mEntityList.Keys) {
 
                 // create list to hold output row fields
-                List<string> outputRow = new List<string>();
+				// add entity name and entity ID fields
+                var outputRow = new List<string>
+                {
+	                entityID,
+	                mEntityList[entityID]
+                };
 
                 // add entity name and entity ID fields
-                outputRow.Add(entityID);
-                outputRow.Add(mEntityList[entityID]);
 
-                // add fields for all factors
+	            // add fields for all factors
                 // and set field values for factors that the entity has vales for
                 foreach (string factor in mFactorList.Keys) {
                     string fieldValue = "";
@@ -171,16 +171,19 @@ namespace Mage {
         private void OutputColumnDefinitions() {
 
             // start with empty column definition list
-            List<MageColumnDef> outCols = new List<MageColumnDef>();
+			// add the entity name and id columns
+            var outCols = new List<MageColumnDef>
+            {
+	            InputColumnDefs[mEntityIDIdx],
+	            InputColumnDefs[mEntityIdx]
+            };
 
-            // add the entity name and id columns
-            outCols.Add(InputColumnDefs[mEntityIDIdx]);
-            outCols.Add(InputColumnDefs[mEntityIdx]);
 
-            // add a column for each factor
+	        // add a column for each factor
             foreach (string fac in mFactorList.Keys) {
                 outCols.Add(new MageColumnDef(fac, "text", "15"));
             }
+
             OnColumnDefAvailable(new MageColumnEventArgs(outCols.ToArray()));
         }
 

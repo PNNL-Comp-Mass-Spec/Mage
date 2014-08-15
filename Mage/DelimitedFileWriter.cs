@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
 namespace Mage {
@@ -14,9 +12,9 @@ namespace Mage {
 
         #region Member Variables
 
-        private StreamWriter mOutFile = null;
+        private StreamWriter mOutFile;
 
-        bool mAppendFlag = false;
+        bool mAppendFlag;
 
         #endregion
 
@@ -74,7 +72,7 @@ namespace Mage {
         /// dispose of held resources
         /// </summary>
         /// <param name="disposing"></param>
-        protected virtual void Dispose(bool disposing) {
+        private void Dispose(bool disposing) {
             if (disposing) {
                 // Code to dispose the managed resources of the class
             }
@@ -95,7 +93,11 @@ namespace Mage {
         /// Called before pipeline runs - module can do any special setup that it needs
         /// (override of base class)
         /// </summary>
-        public override void Prepare() {
+        public override void Prepare()
+        {
+	        if (string.IsNullOrWhiteSpace(FilePath))
+		        throw new MageException("FilePath must be defined before calling Prepare in DelimitedFileWriter");
+
             string dirPath = Path.GetDirectoryName(FilePath);
             if (!string.IsNullOrEmpty(dirPath) && !Directory.Exists(dirPath)) {
                 Directory.CreateDirectory(dirPath);
@@ -159,7 +161,7 @@ namespace Mage {
         #region Support Functions
 
         private void OutputHeader() {
-            List<string> h = new List<string>();
+            var h = new List<string>();
             // use our output column definitions, if we have them
             // otherwise just use the input column definitions
             if (OutputColumnDefs != null) {
@@ -184,7 +186,7 @@ namespace Mage {
                 outRow = MapDataRow(vals);
             }
             foreach (var item in outRow) {
-				mOutFile.Write(delim + ((item != null) ? item : ""));
+				mOutFile.Write(delim + (item ?? ""));
                 delim = Delimiter;
             }
             mOutFile.WriteLine();

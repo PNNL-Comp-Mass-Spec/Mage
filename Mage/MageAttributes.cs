@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Mage {
 
@@ -10,7 +7,7 @@ namespace Mage {
     /// Mage modules and associated GUI parameter panels to allow discovery
     /// at runtime
     /// </summary>
-    [AttributeUsage(System.AttributeTargets.Class, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public sealed class MageAttribute : Attribute {
 
         /// <summary>

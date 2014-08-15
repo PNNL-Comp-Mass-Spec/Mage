@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.IO;
-using System.Text.RegularExpressions;
 using log4net;
 using MyEMSLReader;
 
@@ -40,7 +38,7 @@ namespace Mage
 		/// It includes the folder path column to be searched for files
 		/// so it also functions as an internal file path buffer 
 		/// </summary>
-		protected List<string[]> mOutputBuffer = new List<string[]>();
+		protected readonly List<string[]> mOutputBuffer = new List<string[]>();
 
 		// these are used by the file/subfolder search logic
 
@@ -116,10 +114,10 @@ namespace Mage
 
 		#region Constructors
 
-				/// <summary>
+		/// <summary>
 		/// construct a new Mage file list filter module
 		/// </summary>
-		public FileListInfoBase()
+		protected FileListInfoBase()
 		{
 			FileTypeColumnName = COLUMN_NAME_FILE_TYPE;				// Item
 			FileColumnName = COLUMN_NAME_FILE_NAME;					// File
@@ -288,7 +286,7 @@ namespace Mage
 				// If that is the case, then we'll search for files in each folder, preferentially using files in the folder listed first
 				if (folderPathSpec.Contains('|'))
 				{
-					folderPaths = folderPathSpec.Split('|').ToList<string>();
+					folderPaths = folderPathSpec.Split('|').ToList();
 				}
 				else
 				{
@@ -334,7 +332,7 @@ namespace Mage
 
 						if (entry.Value.DirectoryName.StartsWith(MYEMSL_PATH_FLAG))
 						{
-							Int64 myEMSLFileID = DatasetInfo.ExtractMyEMSLFileID(entry.Value.FullName);
+							Int64 myEMSLFileID = DatasetInfoBase.ExtractMyEMSLFileID(entry.Value.FullName);
 
 							if (myEMSLFileID == 0)
 								throw new MageException("Encoded MyEMSL File ID not found in " + entry.Value.FullName);
@@ -410,7 +408,7 @@ namespace Mage
 		/// <param name="subfolderName"></param>
 		private void ReportSubfolderFound(int outputBufferRowIdx, string folderPath, string subfolderName)
 		{
-			string[] outRow = (string[])mOutputBuffer[outputBufferRowIdx].Clone(); // yes, we do want a shallow copy
+			var outRow = (string[])mOutputBuffer[outputBufferRowIdx].Clone(); // yes, we do want a shallow copy
 			if (mFileTypeOutColIndex > -1)
 			{
 				outRow[mFileTypeOutColIndex] = "folder";
@@ -432,7 +430,7 @@ namespace Mage
 		/// /// <param name="fileDate"></param>
 		private void ReportFileFound(int outputBufferRowIdx, string folderPath, string fileName, string fileSizeKB, string fileDate)
 		{
-			string[] outRow = (string[])mOutputBuffer[outputBufferRowIdx].Clone(); // yes, we do want a shallow copy
+			var outRow = (string[])mOutputBuffer[outputBufferRowIdx].Clone(); // yes, we do want a shallow copy
 			if (mFileTypeOutColIndex > -1)
 			{
 				outRow[mFileTypeOutColIndex] = "file";

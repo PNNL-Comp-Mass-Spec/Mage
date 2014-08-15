@@ -1,3 +1,4 @@
 .hg/
 DeployedFiles/
 .hgignore
+*.DotSettings

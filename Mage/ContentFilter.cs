@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using log4net;
 
 namespace Mage {
 
@@ -15,12 +12,12 @@ namespace Mage {
 
         #region Member Variables
 
-        private int totalRowsCounter = 0;
-        private int passedRowsCounter = 0;
-        private int reportRowBlockSize = 1000;
+        private int totalRowsCounter;
+        private int passedRowsCounter;
+	    private const int reportRowBlockSize = 1000;
 
-		private int mMinimumReportIntervalMsec = 500;
-		private DateTime mLastReportTimeUTC = DateTime.UtcNow;
+	    private const int mMinimumReportIntervalMsec = 500;
+	    private DateTime mLastReportTimeUTC = DateTime.UtcNow;
 
         #endregion
 
@@ -37,7 +34,7 @@ namespace Mage {
         /// <param name="args"></param>
         public override void HandleColumnDef(object sender, MageColumnEventArgs args) {
             base.HandleColumnDef(sender, args);
-            List<MageColumnDef> cd = (OutputColumnDefs != null) ? OutputColumnDefs : InputColumnDefs;
+            List<MageColumnDef> cd = OutputColumnDefs ?? InputColumnDefs;
             OnColumnDefAvailable(new MageColumnEventArgs(cd.ToArray()));
             totalRowsCounter = 0;
             passedRowsCounter = 0;
@@ -64,7 +61,7 @@ namespace Mage {
 				}
                 // report progress
                 if (++totalRowsCounter % reportRowBlockSize == 0) {
-					string msg = "Processed " + totalRowsCounter.ToString() + " total rows, passed " + passedRowsCounter.ToString();
+					string msg = "Processed " + totalRowsCounter + " total rows, passed " + passedRowsCounter;
 					if (DateTime.UtcNow.Subtract(mLastReportTimeUTC).TotalMilliseconds >= mMinimumReportIntervalMsec)
 					{
 						OnStatusMessageUpdated(new MageStatusEventArgs(msg));
@@ -86,13 +83,13 @@ namespace Mage {
         /// <param name="vals"></param>
         /// <returns></returns>
 		protected virtual bool CheckFilter(ref string[] vals)
-		{
-            bool accepted = false;
+        {
+	        const bool accepted = false;
 
-            return accepted;
+	        return accepted;
         }
 
-        /// <summary>
+	    /// <summary>
         /// called when all column definitions are complete
         /// this function can be overridden by subclasses to set up processing
         /// </summary>

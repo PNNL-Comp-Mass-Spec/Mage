@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.IO;
 using MyEMSLReader;
 
@@ -25,7 +24,7 @@ namespace Mage
 
 		#region Member Variables
 
-		private int tagIndex = 0; // used to provide unique prefix for duplicate file names
+		private int tagIndex; // used to provide unique prefix for duplicate file names
 
 		#endregion
 
@@ -91,7 +90,7 @@ namespace Mage
 					string destPathClean;
 					DatasetInfoBase.ExtractMyEMSLFileID(destPath, out destPathClean);
 
-					if (!OverwriteExistingFiles && System.IO.File.Exists(destPathClean))
+					if (!OverwriteExistingFiles && File.Exists(destPathClean))
 					{
 						UpdateStatus(this, new MageStatusEventArgs("WARNING->Skipping existing file: " + destPathClean, 0));
 						OnWarningMessage(new MageStatusEventArgs("WARNING->Skipping existing file: " + destPathClean));
@@ -106,7 +105,7 @@ namespace Mage
 							UpdateStatus(this, new MageStatusEventArgs("Queuing file for Download->" + sourceFile));
 
 							// Note: Explicitly defining the target path to save the file at using filePathLocal
-							bool unzipRequired = false;
+							const bool unzipRequired = false;
 							m_MyEMSLDatasetInfoCache.AddFileToDownloadQueue(myEMSLFileID, cachedFileInfo.FileInfo, unzipRequired, destPathClean);
 						}
 						else
@@ -124,7 +123,7 @@ namespace Mage
 					UpdateStatus(this, new MageStatusEventArgs("Start Copy->" + sourceFile));
 					if (OverwriteExistingFiles)
 					{
-						bool bFileExists = System.IO.File.Exists(destPath);
+						bool bFileExists = File.Exists(destPath);
 						File.Copy(sourcePath, destPath, true);
 						if (bFileExists)
 						{
@@ -135,7 +134,7 @@ namespace Mage
 					}
 					else
 					{
-						if (System.IO.File.Exists(destPath))
+						if (File.Exists(destPath))
 						{
 							UpdateStatus(this, new MageStatusEventArgs("WARNING->Skipping existing file: " + destPath, 0));
 							OnWarningMessage(new MageStatusEventArgs("WARNING->Skipping existing file: " + destPath));
@@ -182,14 +181,13 @@ namespace Mage
 		/// <summary>
 		/// copy given folder to output
 		/// </summary>
-		/// <param name="sourceFile">(not currently used)</param>
 		/// <param name="sourcePath">input folder</param>
 		/// <param name="destPath">output folder</param>
-		protected override void ProcessFolder(string sourceFile, string sourcePath, string destPath)
+		protected override void ProcessFolder(string sourcePath, string destPath)
 		{
 
-			DirectoryInfo source = new DirectoryInfo(sourcePath);
-			DirectoryInfo target = new DirectoryInfo(destPath);
+			var source = new DirectoryInfo(sourcePath);
+			var target = new DirectoryInfo(destPath);
 
 			if (sourcePath.StartsWith(MYEMSL_PATH_FLAG))
 				CopyAllMyEMSL(source, target);
@@ -210,27 +208,25 @@ namespace Mage
 		{
 			if (ApplyPrefixToFileName == "Yes")
 			{
-				string prefix = "";
+				string prefix;
 				if (InputColumnPos.ContainsKey(ColumnToUseForPrefix))
 				{
 					string leader = (!string.IsNullOrEmpty(PrefixLeader)) ? PrefixLeader + "_" : "";
 					prefix = leader + fields[fieldPos[ColumnToUseForPrefix]];
 
 					// Replace any invalid characters with an underscore
-					foreach (char chInvalidChar in System.IO.Path.GetInvalidFileNameChars())
+					foreach (char chInvalidChar in Path.GetInvalidFileNameChars())
 						prefix = prefix.Replace(chInvalidChar, '_');
 
 				}
 				else
 				{
-					prefix = "Tag_" + (tagIndex++).ToString();
+					prefix = "Tag_" + (tagIndex++);
 				}
 				return prefix + "_" + sourceFile;
 			}
-			else
-			{
-				return sourceFile;
-			}
+			
+			return sourceFile;
 		}
 
 		/// <summary>

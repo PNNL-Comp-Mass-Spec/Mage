@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
 namespace Mage {
@@ -34,7 +32,7 @@ namespace Mage {
         #region Member Variables
 
         // delegate that this module calls to get output file name
-        private OutputFileNamer GetOutputFileName = null;
+        private OutputFileNamer GetOutputFileName;
 
         #endregion
 
@@ -136,9 +134,9 @@ namespace Mage {
 					{
 						fileType = "file";
 					}
-					else if (System.IO.Directory.Exists(sourceFolder))
+					else if (Directory.Exists(sourceFolder))
 					{
-						if (System.IO.File.Exists(Path.Combine(sourceFolder, sourceFile)))
+						if (File.Exists(Path.Combine(sourceFolder, sourceFile)))
 							fileType = "file";
 						else
 						{
@@ -171,9 +169,8 @@ namespace Mage {
 
                 string destFolder = OutputFolderPath;
 				string destFile;
-                string destPath;
 
-				if (sourceFile == BaseModule.kNoFilesFound) {
+	            if (sourceFile == BaseModule.kNoFilesFound) {
 					destFile = kNoFilesFound;
 				} else 
 				{
@@ -183,18 +180,16 @@ namespace Mage {
 						destFile = GetOutputFileName(sourceFile, InputColumnPos, args.Fields);
 				}
 
-				destPath =  Path.GetFullPath(Path.Combine(destFolder, destFile));
+				string destPath = Path.GetFullPath(Path.Combine(destFolder, destFile));
 
                 // package fields as dictionary
-                Dictionary<string, string> context = new Dictionary<string, string>();
-                foreach (KeyValuePair<string, int> colPos in InputColumnPos) {
-					if (args.Fields[colPos.Value] == null)
-						context.Add(colPos.Key, String.Empty);
-					else
-						context.Add(colPos.Key, args.Fields[colPos.Value]);
+                var context = new Dictionary<string, string>();
+                foreach (KeyValuePair<string, int> colPos in InputColumnPos)
+                {
+	                context.Add(colPos.Key, args.Fields[colPos.Value] ?? String.Empty);
                 }
 
-                // process file
+	            // process file
                 if (sourceFile == BaseModule.kNoFilesFound) {
 					// skip
                 } else
@@ -206,7 +201,7 @@ namespace Mage {
 							ProcessFile(sourceFile, sourcePath, destPath, context);
 						}
 						if (fileType == "folder") {
-							ProcessFolder(sourceFile, sourcePath, destPath);
+							ProcessFolder(sourcePath, destPath);
 						}
 					}
 
@@ -255,13 +250,12 @@ namespace Mage {
         protected virtual void ProcessFile(string sourceFile, string sourcePath, string destPath, Dictionary<string, string> context) {
         }
 
-        /// <summary>
-        /// this function should be overriden by subclasses to do the actual processing
-        /// </summary>
-        /// <param name="sourceFile"></param>
-        /// <param name="sourcePath"></param>
-        /// <param name="destPath"></param>
-        protected virtual void ProcessFolder(string sourceFile, string sourcePath, string destPath) {
+	    /// <summary>
+	    /// this function should be overriden by subclasses to do the actual processing
+	    /// </summary>
+	    /// <param name="sourcePath"></param>
+	    /// <param name="destPath"></param>
+	    protected virtual void ProcessFolder(string sourcePath, string destPath) {
         }
 
         #endregion

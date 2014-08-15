@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Collections.ObjectModel;
 
 namespace Mage {
@@ -29,7 +27,7 @@ namespace Mage {
         /// <summary>
         /// An internal buffer for accumulating rows passed in via the standard tabular input handler
         /// </summary>
-		private List<string[]> SavedRows = new List<string[]>();
+		private readonly List<string[]> SavedRows = new List<string[]>();
 
         #endregion
 
@@ -113,9 +111,9 @@ namespace Mage {
             if (args.DataAvailable) {
                 if (WriteToConsole) {
                     foreach (string item in args.Fields) {
-                        System.Console.Write(item + "|");
+                        Console.Write(item + "|");
                     }
-                    System.Console.WriteLine();
+                    Console.WriteLine();
                 }
                 if (SavedRows.Count < RowsToSave) {
                     SavedRows.Add(args.Fields);
@@ -231,7 +229,8 @@ namespace Mage {
 		/// <param name="rowIndex">Row to examine</param>
 		/// <param name="value">Value (double, Output) </param>
 		/// <returns>True if the column exists and contains a numeric value; otherwise false</returns>
-        public bool TryGetValueViaColumnName(string columnName, int rowIndex, out double value) {
+        public bool TryGetValueViaColumnName(string columnName, int rowIndex, out double value) 
+		{
             int colIndex;
             value = 0;
 
@@ -270,7 +269,8 @@ namespace Mage {
 		/// <param name="rowIndex">Row to examine</param>
 		/// <param name="value">Value (string, Output) </param>
 		/// <returns>True if the column exists; otherwise false</returns>
-        public bool TryGetValueViaColumnName(string columnName, int rowIndex, out string value) {
+        public bool TryGetValueViaColumnName(string columnName, int rowIndex, out string value) 
+		{
             int colIndex;
             value = null;
 

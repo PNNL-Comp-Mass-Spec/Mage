@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace Mage {
@@ -14,7 +11,7 @@ namespace Mage {
 
         #region Member Variables
 
-        private List<string[]> mAdHocRows = new List<string[]>();
+        private readonly List<string[]> mAdHocRows = new List<string[]>();
 
         #endregion
 
@@ -123,9 +120,9 @@ namespace Mage {
         }
 
         private void OutputGeneratedRows() {
-            string[] fields = null;
-            for (int i = 0; i < Rows; i++) {
-                if (i == 0 && IncludeHeaderInOutput) {
+	        for (int i = 0; i < Rows; i++) {
+	            string[] fields;
+	            if (i == 0 && IncludeHeaderInOutput) {
                     fields = MakeSimulatedHeaderRow(Cols);
                     OutputHeaderLine(fields);
                 }
@@ -141,7 +138,7 @@ namespace Mage {
         /// <param name="numCols"></param>
         /// <returns></returns>
         public static string[] MakeSimulatedHeaderRow(int numCols) {
-            string[] row = new string[numCols];
+            var row = new string[numCols];
             for (int j = 0; j < numCols; j++) {
                 row[j] = string.Format(SimulatedHeaderTemplate, j + 1);
             }
@@ -155,18 +152,18 @@ namespace Mage {
         /// <param name="numCols"></param>
         /// <returns></returns>
         public static string[] MakeSimulatedDataRow(int i, int numCols) {
-            string[] row = new string[numCols];
+            var row = new string[numCols];
             for (int j = 0; j < numCols; j++) {
                 row[j] = string.Format(SimulatedDataTemplate, i + 1, j + 1);
             }
             return row;
         }
 
-        private void OutputHeaderLine(string[] fields) {
+        private void OutputHeaderLine(IEnumerable<string> fields) {
             // output the column definitions
-            List<MageColumnDef> columnDefs = new List<MageColumnDef>();
+            var columnDefs = new List<MageColumnDef>();
             foreach (string field in fields) {
-                MageColumnDef colDef = new MageColumnDef(field, "text", "10");
+                var colDef = new MageColumnDef(field, "text", "10");
                 columnDefs.Add(colDef);
             }
             OnColumnDefAvailable(new MageColumnEventArgs(columnDefs.ToArray()));

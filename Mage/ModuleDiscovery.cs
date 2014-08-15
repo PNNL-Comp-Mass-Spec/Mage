@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Reflection;
 using System.IO;
 using System.Xml;
@@ -65,15 +64,15 @@ namespace Mage {
         /// <returns></returns>
         public static Type GetModuleTypeFromClassName(string ClassName) {
             Type modType = null;
-            if (modType == null) {
-                // is the module class in the executing assembly?
-                Assembly ae = Assembly.GetExecutingAssembly(); //GetType().Assembly;
-                //modType = ae.GetType(ClassName); // should work, but doesn't
-                //string ne = ae.GetName().Name;
-                //modType = Type.GetType(ne + "." + ClassName); // does work, but do it the long way for consistency
-                modType = GetClassTypeFromAssembly(ClassName, ae);
-            }
-            if (modType == null) {
+	        
+		    // is the module class in the executing assembly?
+		    Assembly ae = Assembly.GetExecutingAssembly(); //GetType().Assembly;
+		    //modType = ae.GetType(ClassName); // should work, but doesn't
+		    //string ne = ae.GetName().Name;
+		    //modType = Type.GetType(ne + "." + ClassName); // does work, but do it the long way for consistency
+		    modType = GetClassTypeFromAssembly(ClassName, ae);
+	        
+	        if (modType == null) {
                 // is the module class in the main assembly?
                 Assembly aa = Assembly.GetEntryAssembly();
                 modType = GetClassTypeFromAssembly(ClassName, aa);
@@ -88,7 +87,7 @@ namespace Mage {
             if (modType == null) {
                 // is the module class found in a loadable assembly?
                 if (ExternalModuleFolder != null) {
-                    DirectoryInfo di = new DirectoryInfo(ExternalModuleFolder);
+                    var di = new DirectoryInfo(ExternalModuleFolder);
                     FileInfo[] dllFiles = di.GetFiles(LoadableModuleFileNamePrefix + "*.dll");
                     foreach (FileInfo fi in dllFiles) {
                         string DLLName = fi.Name;
@@ -137,20 +136,20 @@ namespace Mage {
         /// <summary>
         /// list of attributes for filters, and filter panels, indexed by ID 
         /// </summary>
-        private static Dictionary<string, MageAttribute> mFilters = new Dictionary<string, MageAttribute>();
-        private static Dictionary<string, MageAttribute> mPanels = new Dictionary<string, MageAttribute>();
+        private static readonly Dictionary<string, MageAttribute> mFilters = new Dictionary<string, MageAttribute>();
+        private static readonly Dictionary<string, MageAttribute> mPanels = new Dictionary<string, MageAttribute>();
 
         /// <summary>
         /// list of attributes for filters, indexed by label
         /// </summary>
-        private static Dictionary<string, MageAttribute> mFiltersByLabel = new Dictionary<string, MageAttribute>();
+        private static readonly Dictionary<string, MageAttribute> mFiltersByLabel = new Dictionary<string, MageAttribute>();
 
         /// <summary>
         /// get list of filter labels (for display)
         /// </summary>
         public static Collection<string> FilterLabels {
             get {
-                Collection<string> labels = new Collection<string>();
+                var labels = new Collection<string>();
                 foreach (MageAttribute ma in mFilters.Values) {
                     labels.Add(ma.ModLabel);
                 }
@@ -161,7 +160,7 @@ namespace Mage {
         /// <summary>
         /// Get list of filters
         /// </summary>
-        public static Collection<MageAttribute> Filters {
+        public static IEnumerable<MageAttribute> Filters {
             get {
                 return new Collection<MageAttribute>(mFilters.Values.ToArray());
             }
@@ -227,18 +226,19 @@ namespace Mage {
         /// <returns></returns>
         public static Collection<MageAttribute> FindFilters() {
             // list to hold info about discovered filters
-            Collection<MageAttribute> filterList = new Collection<MageAttribute>();
+            var filterList = new Collection<MageAttribute>();
 
             // list to hold classes that we will look at
-            List<Type> classesToExamine = new List<Type>();
+            var classesToExamine = new List<Type>();
 
             // add classes from main assembly
             classesToExamine.AddRange(Assembly.GetEntryAssembly().GetTypes());
 
             // get classes from loadable DLLs
-            DirectoryInfo di = new DirectoryInfo(ExternalModuleFolder);
-            List<FileInfo> dllFiles = new List<FileInfo>();
+            var di = new DirectoryInfo(ExternalModuleFolder);
+            var dllFiles = new List<FileInfo>();
             dllFiles.AddRange(di.GetFiles(LoadableModuleFileNamePrefix + "*.dll"));
+
             foreach (FileInfo fi in dllFiles) {
                 string DLLName = fi.Name;
                 string path = Path.Combine(ExternalModuleFolder, DLLName);
@@ -250,9 +250,11 @@ namespace Mage {
             foreach (Type modType in classesToExamine) {
                 Console.WriteLine(modType.ToString());
                 object[] atrbs = modType.GetCustomAttributes(false);
-                foreach (object obj in atrbs) {
-                    if (obj.GetType() == typeof(MageAttribute)) {
-                        MageAttribute ma = (MageAttribute)obj;
+                foreach (object obj in atrbs)
+                {
+	                var ma = obj as MageAttribute;
+					if (ma != null)
+					{
                         ma.ModClassName = modType.Name;
                         filterList.Add(ma);
                     }
@@ -272,7 +274,7 @@ namespace Mage {
         /// <param name="queryName"></param>
         /// <returns></returns>
         public static string GetQueryXMLDef(string queryName) {
-            XmlDocument doc = new XmlDocument();
+            var doc = new XmlDocument();
             doc.Load(QueryDefinitionFileName);
 
             // find query node by name

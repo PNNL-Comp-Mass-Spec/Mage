@@ -12,15 +12,15 @@ namespace Mage {
 
         #region Member Variables
 
-        private List<QueryPredicate> mPredicates = new List<QueryPredicate>();
+        private readonly List<QueryPredicate> mPredicates = new List<QueryPredicate>();
 
-        private Dictionary<string, QueryPredicate> mDefaultPredicates = new Dictionary<string, QueryPredicate>();
+        private readonly Dictionary<string, QueryPredicate> mDefaultPredicates = new Dictionary<string, QueryPredicate>();
 
-        private List<QuerySort> mSortingItems = new List<QuerySort>();
+        private readonly List<QuerySort> mSortingItems = new List<QuerySort>();
 
-        private Dictionary<string, string> mSpecialArgs = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> mSpecialArgs = new Dictionary<string, string>();
 
-        private Dictionary<string, string> mSprocParameters = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> mSprocParameters = new Dictionary<string, string>();
 
         #endregion
 
@@ -173,7 +173,7 @@ namespace Mage {
             Table = "";
             mSpecialArgs.Clear();
 
-            System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
+            var doc = new System.Xml.XmlDocument();
             doc.LoadXml(xml);
 
             System.Xml.XmlNode queryNode = doc.SelectSingleNode(".//query");
@@ -218,7 +218,7 @@ namespace Mage {
 
             // find any special runtime arguments (name is marked by prefix)
             // strip the prefix, add to specialArgs, and remove from runtime arguments list
-            Dictionary<string, string> tempArgs = new Dictionary<string, string>(args);
+            var tempArgs = new Dictionary<string, string>(args);
             foreach (KeyValuePair<string, string> arg in tempArgs) {
                 if (arg.Key.StartsWith(":")) { // special runtime parameters have prefix
                     string key = arg.Key.Substring(1, arg.Key.Length - 1);
@@ -254,9 +254,9 @@ namespace Mage {
         /// <param name="xml">Specifications for query</param>
         /// <returns></returns>
         public static Dictionary<string, string> GetDescriptionsFromXML(string xml) {
-            Dictionary<string, string> descriptions = new Dictionary<string, string>();
+            var descriptions = new Dictionary<string, string>();
 
-            System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
+            var doc = new System.Xml.XmlDocument();
             doc.LoadXml(xml);
 
             System.Xml.XmlNode queryNode = doc.SelectSingleNode(".//query");
@@ -290,12 +290,14 @@ namespace Mage {
         /// <param name="cmp">Comparision type</param>
         /// <param name="val">Comparision value</param>
         public void SetColumnDefaultPredicate(string rel, string col, string cmp, string val) {
-            QueryPredicate p = new QueryPredicate();
-            p.rel = rel;
-            p.col = col;
-            p.cmp = cmp;
-            p.val = val;
-            mDefaultPredicates[col] = p;
+            var p = new QueryPredicate
+            {
+	            rel = rel,
+	            col = col,
+	            cmp = cmp,
+	            val = val
+            };
+	        mDefaultPredicates[col] = p;
         }
 
         /// <summary>
@@ -307,7 +309,7 @@ namespace Mage {
         public void AddPredicateItem(string col, string val) {
             if (mDefaultPredicates.ContainsKey(col)) {
                 QueryPredicate p = mDefaultPredicates[col];
-                val = (val == null) ? p.val : val;
+                val = val ?? p.val;
                 AddPredicateItem(p.rel, p.col, p.cmp, val);
             } else
                 if (val != null) {
@@ -335,12 +337,14 @@ namespace Mage {
         public void AddPredicateItem(string rel, string col, string cmp, string val) {
             if (!string.IsNullOrEmpty(val)) { // (someday) reject if any field empty, not just value field
                 //  ConvertWildcards(ref cmp, ref val);
-                QueryPredicate p = new QueryPredicate();
-                p.rel = rel;
-                p.col = col;
-                p.cmp = cmp;
-                p.val = val;
-                mPredicates.Add(p);
+                var p = new QueryPredicate
+                {
+	                rel = rel,
+	                col = col,
+	                cmp = cmp,
+	                val = val
+                };
+	            mPredicates.Add(p);
             }
         }
 
@@ -350,13 +354,18 @@ namespace Mage {
         /// <param name="col">Sort column name</param>
         /// <param name="dir">Sort direction ("ASC"/"DESC")</param>
         public void AddSortingItem(string col, string dir) {
-            if (!string.IsNullOrEmpty(col)) { // don't take malformed items
-                QuerySort sorting = new QuerySort();
-                sorting.col = col;
-                string d = dir.ToUpper();
-                sorting.dir = (d == "DESC") ? d : "ASC";
-                mSortingItems.Add(sorting);
-            }
+	        if (string.IsNullOrEmpty(col))
+	        {
+		        return;
+	        }
+
+	        var sorting = new QuerySort
+	        {
+		        col = col
+	        };
+	        string d = dir.ToUpper();
+	        sorting.dir = (d == "DESC") ? d : "ASC";
+	        mSortingItems.Add(sorting);
         }
 
         /// <summary>
@@ -385,7 +394,7 @@ namespace Mage {
                 if (regex_all || regex_one) {
                     cmp = "wildcards";
                 } else {
-                    string[] exceptions = new string[] { "MatchesText", "MTx", "MatchesTextOrBlank", "MTxOB" };
+                    var exceptions = new[] { "MatchesText", "MTx", "MatchesTextOrBlank", "MTxOB" };
                     if (!sql_any && !exceptions.Contains(cmp)) {
                         // quote underscores in the absence of '%' or regex/glob wildcards
                         val = val.Replace("_", "[_]");
@@ -400,13 +409,13 @@ namespace Mage {
         public string BuildQuerySQL() {
 
             // process the predicate list
-            List<string> p_and = new List<string>();
-            List<string> p_or = new List<string>();
-            string sWhereItem;
+            var p_and = new List<string>();
+            var p_or = new List<string>();
 
-            foreach (QueryPredicate predicate in mPredicates) {
-                sWhereItem = MakeWhereItem(predicate);
-                if (!String.IsNullOrEmpty(sWhereItem)) {
+	        foreach (QueryPredicate predicate in mPredicates)
+            {
+	            string sWhereItem = MakeWhereItem(predicate);
+	            if (!String.IsNullOrEmpty(sWhereItem)) {
                     switch (predicate.rel.ToLower()) {
                         case "and":
                             p_and.Add(sWhereItem);
@@ -418,8 +427,8 @@ namespace Mage {
                 }
             }
 
-            // build guts of query
-            StringBuilder baseSql = new StringBuilder();
+	        // build guts of query
+            var baseSql = new StringBuilder();
             baseSql.Append(" FROM " + Table);
             //
             // collect all 'or' clauses as one grouped item and put it into the 'and' item array
@@ -437,7 +446,7 @@ namespace Mage {
             string display_cols = Columns;
 
             // construct final query according to its intended use
-            StringBuilder sql = new StringBuilder();
+            var sql = new StringBuilder();
             switch (QueryType) {
                 case "count_only": // query for returning count of total rows
                     sql.Append("SELECT COUNT(*) AS numrows");
@@ -470,8 +479,8 @@ namespace Mage {
         /// </summary>
         /// <param name="sortItems"></param>
         /// <returns>SQL text for sorting</returns>
-        private static string MakeOrderBy(List<QuerySort> sortItems) {
-            List<string> a = new List<string>();
+        private static string MakeOrderBy(IEnumerable<QuerySort> sortItems) {
+            var a = new List<string>();
             foreach (QuerySort item in sortItems) {
                 a.Add(string.Format("[{0}] {1}", item.col, item.dir));
             }
@@ -490,7 +499,7 @@ namespace Mage {
             string val = predicate.val;
 
             string str = "";
-            double ignore = 0.0;
+            double ignore;
             switch (cmp) {
                 case "wildcards":
                     val = val.Replace("_", "[_]");

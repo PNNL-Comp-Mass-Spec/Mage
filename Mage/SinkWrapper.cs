@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using Mage;
-using MyEMSLReader;
+﻿using System.Linq;
 
 namespace Mage
 {
@@ -16,7 +10,7 @@ namespace Mage
 	public class SinkWrapper : BaseModule
 	{
 
-		private SimpleSink mSink = null;
+		private readonly SimpleSink mSink;
 
 		/// <summary>
 		/// constructor

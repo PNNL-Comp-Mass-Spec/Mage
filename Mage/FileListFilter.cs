@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.IO;
 using System.Text.RegularExpressions;
-using log4net;
 using MyEMSLReader;
 
 namespace Mage
@@ -25,7 +23,7 @@ namespace Mage
 		private bool mIncludeFolders;
 		private bool mRecurseMyEMSL;
 
-		private List<string[]> mSearchSubfolders = new List<string[]>();
+		private readonly List<string[]> mSearchSubfolders = new List<string[]>();
 
 		#endregion
 
@@ -125,7 +123,6 @@ namespace Mage
 		/// construct a new Mage file list filter module
 		/// </summary>
 		public FileListFilter()
-			: base()
 		{
 			FileSelectorMode = "RegEx";
 			IncludeFilesOrFolders = "File";
@@ -195,8 +192,8 @@ namespace Mage
 			string datasetName)
 		{
 
-			List<FileSystemInfo> foundFiles = new List<FileSystemInfo>();
-			List<FileSystemInfo> foundSubFolders = new List<FileSystemInfo>();
+			var foundFiles = new List<FileSystemInfo>();
+			var foundSubFolders = new List<FileSystemInfo>();
 			try
 			{
 				if (FileSelectorMode == "RegEx")
@@ -237,20 +234,22 @@ namespace Mage
 				// Append new files in fileNames to fileInfo
 				if (!(foundFiles == null || foundFiles.Count == 0))
 				{
-					foreach (FileInfo entry in foundFiles)
+					foreach (var entry in foundFiles)
 					{
-						if (!fileInfo.ContainsKey(entry.Name))
-							fileInfo.Add(entry.Name, entry);
+						var fileEntry = entry as FileInfo;
+						if (fileEntry != null && !fileInfo.ContainsKey(fileEntry.Name))
+							fileInfo.Add(fileEntry.Name, fileEntry);
 					}
 				}
 
 				// Append new subFolders in fileNames to subfolderInfo
 				if (!(foundSubFolders == null || foundSubFolders.Count == 0))
 				{
-					foreach (DirectoryInfo entry in foundSubFolders)
+					foreach (var entry in foundSubFolders)
 					{
-						if (!subfolderInfo.ContainsKey(entry.Name))
-							subfolderInfo.Add(entry.Name, entry);
+						var subfolderEntry = entry as DirectoryInfo;
+						if (subfolderEntry != null && !subfolderInfo.ContainsKey(subfolderEntry.Name))
+							subfolderInfo.Add(subfolderEntry.Name, subfolderEntry);
 					}
 				}
 
@@ -283,12 +282,12 @@ namespace Mage
 			if (path.StartsWith(MYEMSL_PATH_FLAG))
 				return;
 
-			DirectoryInfo di = new DirectoryInfo(path);
+			var di = new DirectoryInfo(path);
 			if (di.Exists)
 			{
 				foreach (DirectoryInfo sfDi in di.GetDirectories(SubfolderSearchName))
 				{
-					string[] subfolderRow = (string[])fields.Clone();
+					var subfolderRow = (string[])fields.Clone();
 					string subfolderPath = Path.Combine(path, sfDi.Name);
 					subfolderRow[mFolderPathColIndx] = subfolderPath;
 					mSearchSubfolders.Add(subfolderRow);
@@ -307,12 +306,11 @@ namespace Mage
 		/// <returns>List of file names</returns>
 		private List<FileSystemInfo> GetFileOrFolderNamesFromFolderBySearchPattern(string path, FolderSearchMode searchMode)
 		{
-			Dictionary<string, FileSystemInfo> filteredFilesOrFolders = new Dictionary<string, FileSystemInfo>();
+			var filteredFilesOrFolders = new Dictionary<string, FileSystemInfo>();
 
 			List<string> selectors = GetFileNameSelectors();
 
-			FileSystemInfo[] fiList = null;
-			DirectoryInfo di = new DirectoryInfo(path);
+			var di = new DirectoryInfo(path);
 
 			if (selectors.Count == 0)
 			{
@@ -325,21 +323,25 @@ namespace Mage
 			{
 				if (searchMode == FolderSearchMode.Files)
 				{
-					fiList = di.GetFiles(selector);
+					foreach (FileInfo entry in di.GetFiles(selector))
+					{
+						filteredFilesOrFolders[entry.Name] = entry;
+					}
 				}
+
 				if (searchMode == FolderSearchMode.Folders)
 				{
-					fiList = di.GetDirectories(selector);
+					foreach (DirectoryInfo entry in di.GetDirectories(selector))
+					{
+						filteredFilesOrFolders[entry.Name] = entry;
+					}
 				}
-				foreach (FileSystemInfo fi in fiList)
-				{
-					filteredFilesOrFolders[fi.Name] = fi;
-				}
+				
 			}
 
 			// We used the dictionary keys for our file names to eliminate duplicates
 			// Convert the values to a list of file system infos and return the list
-			return filteredFilesOrFolders.Values.ToList<FileSystemInfo>();
+			return filteredFilesOrFolders.Values.ToList();
 
 		}
 
@@ -364,15 +366,15 @@ namespace Mage
 			{
 				var fiList = GetMyEMSLFilesOrFolders(searchMode, selector, datasetName, subDir, parentFolders);
 
-				foreach (FileSystemInfo fi in fiList)
+				foreach (FileSystemInfo entry in fiList)
 				{
-					filteredFilesOrFolders[fi.Name] = fi;
+					filteredFilesOrFolders[entry.Name] = entry;
 				}
 			}
 
 			// We used the dictionary keys for our file names to eliminate duplicates
 			// Convert the values to a list of file system infos and return the list
-			return filteredFilesOrFolders.Values.ToList<FileSystemInfo>();
+			return filteredFilesOrFolders.Values.ToList();
 
 		}
 		/// <summary>
@@ -384,19 +386,17 @@ namespace Mage
 		/// <returns>List of file names</returns>
 		private List<FileSystemInfo> GetFileOrFolderNamesFromFolderByRegEx(string path, FolderSearchMode searchMode)
 		{
-			DirectoryInfo di = new DirectoryInfo(path);
+			var di = new DirectoryInfo(path);
 
 			var fiList = new List<FileSystemInfo>();
 			if (searchMode == FolderSearchMode.Files)
 			{
-				foreach (var file in di.GetFiles().ToList())
-					fiList.Add(file);
+				fiList.AddRange(di.GetFiles().ToList());
 			}
 
 			if (searchMode == FolderSearchMode.Folders)
 			{
-				foreach (var directory in di.GetDirectories().ToList())
-					fiList.Add(directory);
+				fiList.AddRange(di.GetDirectories().ToList());
 			}
 
 			List<Regex> fileNameRegExSpecs = GetRegexFileSelectors(GetFileNameSelectors());
@@ -410,7 +410,7 @@ namespace Mage
 			string parentFolders;
 			GetMyEMSLParentFoldersAndSubDir(folderPath, datasetName, out subDir, out parentFolders);
 
-			string fileSelector = "*";
+			const string fileSelector = "*";
 			var fiList = GetMyEMSLFilesOrFolders(searchMode, fileSelector, datasetName, subDir, parentFolders);
 
 			List<Regex> fileNameRegExSpecs = GetRegexFileSelectors(GetFileNameSelectors());
@@ -459,7 +459,7 @@ namespace Mage
 		private static List<FileSystemInfo> FilterFileNamesFromList(List<FileSystemInfo> fileList, List<Regex> fileNameRegExSpecs)
 		{
 
-			List<FileSystemInfo> filteredFilesOrFolders = new List<FileSystemInfo>(fileList.Count);
+			var filteredFilesOrFolders = new List<FileSystemInfo>(fileList.Count);
 
 			// find files (or folders) that meet selection criteria.
 			foreach (FileSystemInfo fiEntry in fileList)
@@ -488,14 +488,14 @@ namespace Mage
 		/// Make list of regex objects from list of file selectors
 		/// </summary>
 		/// <returns></returns>
-		private static List<Regex> GetRegexFileSelectors(List<string> selectors)
+		private static List<Regex> GetRegexFileSelectors(IEnumerable<string> selectors)
 		{
-			List<Regex> fileNameSpecs = new List<Regex>();
+			var fileNameSpecs = new List<Regex>();
 			foreach (string selector in selectors)
 			{
 				try
 				{
-					Regex rx = new Regex(selector.Trim(), RegexOptions.IgnoreCase);
+					var rx = new Regex(selector.Trim(), RegexOptions.IgnoreCase);
 					fileNameSpecs.Add(rx);
 				}
 				catch (Exception e)
@@ -513,7 +513,7 @@ namespace Mage
 		/// <returns></returns>
 		private List<string> GetFileNameSelectors()
 		{
-			List<string> selectorList = new List<string>();
+			var selectorList = new List<string>();
 			foreach (string selector in FileNameSelector.Split(';'))
 			{
 				selectorList.Add(selector.Trim());

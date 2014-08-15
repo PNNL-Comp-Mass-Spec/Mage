@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.IO;
-using System.Text.RegularExpressions;
-using log4net;
 using MyEMSLReader;
+
 namespace Mage
 {
 	/// <summary>
@@ -35,7 +33,6 @@ namespace Mage
 		/// construct a new Mage file list filter module
 		/// </summary>
 		public FileListInfoLookup()
-			: base()
 		{
 		}
 

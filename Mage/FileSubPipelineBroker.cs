@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
@@ -51,13 +48,13 @@ namespace Mage {
         #region Member Variables
 
         // running count of number of files processed
-        private int mFileCount = 0;
+        private int mFileCount;
 
         // handle to the currently running sub-pipeline
-        private ProcessingPipeline mPipeline = null;
+        private ProcessingPipeline mPipeline;
 
         // delegate that this module calls to build sub-pipeline
-        private FileProcessingPipelineGenerator ProcessingPipelineMaker = null;
+        private FileProcessingPipelineGenerator ProcessingPipelineMaker;
 
         private Dictionary<string, string> mFileFilterParameters = new Dictionary<string, string>();
 
@@ -108,14 +105,14 @@ namespace Mage {
         /// </summary>
         public string FileFilterParameters {
             get {
-                List<string> s = new List<string>();
+                var s = new List<string>();
                 foreach(KeyValuePair<string, string> kv in mFileFilterParameters) {
                     s.Add(string.Format("{0}:{1}", kv.Key, kv.Value)); 
                 }
                 return string.Join(", ", s.ToArray());
             }
             set {
-                Dictionary<string, string> parms = new Dictionary<string, string>();
+                var parms = new Dictionary<string, string>();
                 foreach (string def in value.Split(';')) {
                     string[] pair = def.Split(':');
                     parms.Add(pair[0].Trim(), pair[1].Trim());
@@ -206,9 +203,9 @@ namespace Mage {
         #region Internally-Defined Processing Pipelines
 
         private ProcessingPipeline MakeDefaultFileProcessingPipeline(string inputFilePath, string outputFilePath, Dictionary<string, string> context) {
-            DelimitedFileReader reader = new DelimitedFileReader();
-            BaseModule filter = ProcessingPipeline.MakeModule(FileFilterModuleName) as BaseModule;
-            DelimitedFileWriter writer = new DelimitedFileWriter();
+            var reader = new DelimitedFileReader();
+            var filter = ProcessingPipeline.MakeModule(FileFilterModuleName) as BaseModule;
+            var writer = new DelimitedFileWriter();
 
             filter.SetParameters(mFileFilterParameters);
             filter.SetContext(context);
@@ -222,9 +219,9 @@ namespace Mage {
         }
 
         private ProcessingPipeline MakeDefaultSQLiteProcessingPipeline(string inputFilePath, string outputFilePath, Dictionary<string, string> context) {
-            DelimitedFileReader reader = new DelimitedFileReader();
-            BaseModule filter = ProcessingPipeline.MakeModule(FileFilterModuleName) as BaseModule;
-            SQLiteWriter writer = new SQLiteWriter();
+            var reader = new DelimitedFileReader();
+            var filter = ProcessingPipeline.MakeModule(FileFilterModuleName) as BaseModule;
+            var writer = new SQLiteWriter();
 
             filter.SetParameters(mFileFilterParameters);
             filter.SetContext(context);
@@ -245,12 +242,12 @@ namespace Mage {
         /// </summary>
         /// <param name="filterModule"></param>
         protected void SetupFileRenamer(string filterModule) {
-            ProcessingPipeline pipeline = new ProcessingPipeline("FileProcessingSubPipeline");
+            var pipeline = new ProcessingPipeline("FileProcessingSubPipeline");
             pipeline.MakeModule(filterModule, FileFilterModuleName);
-            BaseModule bm = (BaseModule)pipeline.GetModule(filterModule);
+            var bm = (BaseModule)pipeline.GetModule(filterModule);
             MethodInfo mi = bm.GetType().GetMethod("RenameOutputFile");
             if (mi != null) {
-                ContentFilter filterMod = (ContentFilter)bm;
+                var filterMod = (ContentFilter)bm;
                 SetOutputFileNamer(new OutputFileNamer(filterMod.RenameOutputFile));
             }
         }

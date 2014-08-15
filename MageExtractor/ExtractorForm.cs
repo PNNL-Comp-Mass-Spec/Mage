@@ -1,18 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Mage;
 using System.IO;
 using log4net;
 using MageDisplayLib;
 using MageExtExtractionFilters;
-using MageUIComponents;
-using System.Collections.ObjectModel;
 
 namespace MageExtractor {
 
@@ -28,8 +21,6 @@ namespace MageExtractor {
 
 		#region Member Variables
 
-		private ILog traceLog;
-
 		/// <summary>
 		/// Pipeline queue for running the multiple pipelines that make up the workflows for this module
 		/// </summary>
@@ -38,17 +29,17 @@ namespace MageExtractor {
 		/// <summary>
 		/// The parameters for the slated extraction
 		/// </summary>
-		private ExtractionType mExtractionParms = null;
+		private ExtractionType mExtractionParms;
 
 		/// <summary>
 		/// Where extracted results will be delivered
 		/// </summary>
-		private DestinationType mDestination = null;
+		private DestinationType mDestination;
 
 		/// <summary>
 		/// Keeps track of the target folders to which files were saved; used by ClearTempFiles
 		/// </summary>
-		private SortedSet<string> mOutputFolderPaths = new SortedSet<string>();
+		private readonly SortedSet<string> mOutputFolderPaths = new SortedSet<string>();
 
 		private string mFinalPipelineName = string.Empty;
 
@@ -60,7 +51,7 @@ namespace MageExtractor {
 			InitializeComponent();
 
 			const bool isBetaVersion = false;
-			SetFormTitle("2014-07-16", isBetaVersion);
+			SetFormTitle("2014-08-14", isBetaVersion);
 
 			SetTags();
 
@@ -70,17 +61,17 @@ namespace MageExtractor {
 				// set up configuration folder and files
 				SavedState.SetupConfigFiles("MageExtractor");
 			} catch (Exception ex) {
-				System.Windows.Forms.MessageBox.Show("Error loading settings: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show("Error loading settings: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
 
 			try {
 				// Set log4net path and kick the logger into action
 				string LogFileName = Path.Combine(SavedState.DataDirectory, "log.txt");
 				log4net.GlobalContext.Properties["LogName"] = LogFileName;
-				traceLog = LogManager.GetLogger("TraceLog");
+				ILog traceLog = LogManager.GetLogger("TraceLog");
 				traceLog.Info("Starting");
 			} catch (Exception ex) {
-				System.Windows.Forms.MessageBox.Show("Error instantiating trace log: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show("Error instantiating trace log: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
 
 			ConnectPanelsToCommandHandlers();
@@ -98,10 +89,10 @@ namespace MageExtractor {
 			try {
 				SavedState.RestoreSavedPanelParameters(PanelSupport.GetParameterPanelList(this));
 			} catch (Exception ex) {
-				System.Windows.Forms.MessageBox.Show("Error restoring saved settings; will auto-delete SavedState.xml.  Message details: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show("Error restoring saved settings; will auto-delete SavedState.xml.  Message details: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				// Delete the SavedState.xml file
 				try {
-					System.IO.File.Delete(SavedState.FilePath);
+					File.Delete(SavedState.FilePath);
 				} catch (Exception ex2) {
 					// Ignore errors here
 					Console.WriteLine("Error deleting SavedState file: " + ex2.Message);
@@ -188,7 +179,7 @@ namespace MageExtractor {
 			string queryName = EntityListSourceTabs.SelectedTab.Tag.ToString();
 			string queryTemplate = ModuleDiscovery.GetQueryXMLDef(queryName);
 
-			IModuleParameters paramSource = sender as IModuleParameters;
+			var paramSource = sender as IModuleParameters;
 			Dictionary<string, string> queryParameters = paramSource.GetParameters();
 
 			if (!ValidQueryParameters(queryName, queryParameters)) {
@@ -223,7 +214,7 @@ namespace MageExtractor {
 				// Validate mExtractionParms.MSGFCutoff
 				if (mExtractionParms.MSGFCutoff.ToLower() != "All Pass".ToLower())
 				{
-					double result = -1;
+					double result;
 					if (!double.TryParse(mExtractionParms.MSGFCutoff, out result))
 					{
 						result = -1;
@@ -254,13 +245,13 @@ namespace MageExtractor {
 				}
 				catch (Exception ex)
 				{
-					System.Windows.Forms.MessageBox.Show("Error extracting results: " + ex.Message + "; " + ex.StackTrace, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+					MessageBox.Show("Error extracting results: " + ex.Message + "; " + ex.StackTrace, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				}
 
 			}
 			catch (Exception ex)
 			{
-				System.Windows.Forms.MessageBox.Show("Error initializing extraction: " + ex.Message + "; " + ex.StackTrace, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show("Error initializing extraction: " + ex.Message + "; " + ex.StackTrace, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
 
 	
@@ -302,7 +293,7 @@ namespace MageExtractor {
 			}
 
 			if (string.IsNullOrEmpty(msg) && (queryName == TAG_JOB_IDs || queryName == TAG_JOB_IDs_FROM_DATASETS)) {
-				char[] cSepChars = new char[] { ',', '\t' };
+				var cSepChars = new char[] { ',', '\t' };
 				string sWarning;
 
 				if (queryName == TAG_JOB_IDs)
@@ -311,14 +302,14 @@ namespace MageExtractor {
 					sWarning = "Use dataset IDs, not dataset names: '";
 
 				// Validate that the job numbers or dataset IDs are all numeric
-				string sValue;
-				int iValue;
 				foreach (KeyValuePair<string, string> entry in queryParameters) {
-					sValue = entry.Value.Replace(Environment.NewLine, ",");
+					string sValue = entry.Value.Replace(Environment.NewLine, ",");
 
 					string[] values = sValue.Split(cSepChars);
 
-					foreach (string datasetID in values) {
+					foreach (string datasetID in values)
+					{
+						int iValue;
 						if (!int.TryParse(datasetID, out iValue)) {
 							msg = sWarning + datasetID + "' is not numeric";
 							break;
@@ -332,11 +323,9 @@ namespace MageExtractor {
 
 			if (string.IsNullOrEmpty(msg))
 				return true;
-			else {
-				System.Windows.Forms.MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-				return false;
-			}
-
+			
+			MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			return false;
 		}
 
 		#endregion
@@ -359,8 +348,9 @@ namespace MageExtractor {
 			statusPanel1.HandleCompletionMessageUpdate(this, new MageStatusEventArgs(args.Message));
 			Console.WriteLine(args.Message);
 
-			if (sender is Mage.ProcessingPipeline) {
-				Mage.ProcessingPipeline pipeline = (Mage.ProcessingPipeline)sender;
+			var pipeline = sender as ProcessingPipeline;
+			if (pipeline != null)
+			{			
 				if (pipeline.PipelineName == mFinalPipelineName) {
 					// Must use a delegate and Invoke to avoid "cross-thread operation not valid" exceptions
 					VoidFnDelegate dc = DisableCancelButton;
@@ -368,8 +358,8 @@ namespace MageExtractor {
 				}
 			}
 
-			if (args.Message.StartsWith(Mage.MSSQLReader.SQL_COMMAND_ERROR))
-				System.Windows.Forms.MessageBox.Show(args.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			if (args.Message.StartsWith(MSSQLReader.SQL_COMMAND_ERROR))
+				MessageBox.Show(args.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
 		}
 
@@ -379,7 +369,7 @@ namespace MageExtractor {
 		private void HandlePipelineQueueCompletion(object sender, MageStatusEventArgs args) {
 		}
 
-		private void lblAboutLink_LinkClicked(object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e) {
+		private void lblAboutLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
 			try {
 				LaunchMageExtractorHelpPage();
 			} catch (Exception ex) {
@@ -439,15 +429,14 @@ namespace MageExtractor {
 		/// <summary>
 		/// build and run Mage pipeline to populate main list display with jobs
 		/// </summary>
-		/// <param name="queryTemplate">XML query template (typically from QueryDefinitions.xml) </param>
-		/// <param name="queryItems">List of predicate items in delimited string format (rel|col|cmp|val)</param>
+		/// <param name="queryName">Query name to use</param>
 		private bool GetJobList(string queryName) {
 			bool result = false;
 			string queryDefXML = ModuleDiscovery.GetQueryXMLDef(queryName);
 			SQLBuilder builder = JobFlexQueryPanel.GetSQLBuilder(queryDefXML);
 			if (builder.HasPredicate) {
 				result = true;
-				MSSQLReader reader = new MSSQLReader(builder);
+				var reader = new MSSQLReader(builder);
 				ProcessingPipeline pipeline = ProcessingPipeline.Assemble("Get Jobs", reader, JobListDisplayCtl);
 				ConnectPipelineToStatusDisplay(pipeline);
 				JobListDisplayCtl.Clear();
@@ -457,7 +446,7 @@ namespace MageExtractor {
 
 				mPipelineQueue.Run(pipeline);
 			} else {
-				System.Windows.Forms.MessageBox.Show("You must define one or more search criteria before searching for jobs", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show("You must define one or more search criteria before searching for jobs", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
 			return result;
 		}
@@ -468,7 +457,7 @@ namespace MageExtractor {
 		/// <param name="queryTemplate">XML query template (typically from QueryDefinitions.xml) </param>
 		/// <param name="queryParameters">Key/Value pairs (column/value)</param>
 		private void GetJobList(string queryTemplate, Dictionary<string, string> queryParameters) {
-			MSSQLReader reader = new MSSQLReader(queryTemplate, queryParameters);
+			var reader = new MSSQLReader(queryTemplate, queryParameters);
 			JobListDisplayCtl.Clear();
 			ProcessingPipeline pipeline = ProcessingPipeline.Assemble("Get Jobs", reader, JobListDisplayCtl);
 			ConnectPipelineToStatusDisplay(pipeline);
@@ -487,9 +476,8 @@ namespace MageExtractor {
 		/// Set the given content extraction module's destination parameters
 		/// from the user's UI choices
 		/// </summary>
-		/// <param name="extractor"></param>
 		private DestinationType GetDestinationParameters() {
-			DestinationType dest = null;
+			DestinationType dest;
 			switch (FilterOutputTabs.SelectedTab.Tag.ToString()) {
 				case "File_Output":
 					if (string.IsNullOrEmpty(FolderDestinationPanel1.OutputFolder))
@@ -497,7 +485,8 @@ namespace MageExtractor {
 						MessageBox.Show("Destination folder cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 						return null;
 					}
-					else if (string.IsNullOrEmpty(FolderDestinationPanel1.OutputFile))
+					
+					if (string.IsNullOrEmpty(FolderDestinationPanel1.OutputFile))
 					{
 						MessageBox.Show("Destination file cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 						return null;
@@ -511,7 +500,8 @@ namespace MageExtractor {
 						MessageBox.Show("SQLite Database path cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 						return null;
 					}
-					else if (string.IsNullOrEmpty(SQLiteDestinationPanel1.TableName))
+					
+					if (string.IsNullOrEmpty(SQLiteDestinationPanel1.TableName))
 					{
 						MessageBox.Show("SQLite destination table name cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 						return null;
@@ -520,7 +510,7 @@ namespace MageExtractor {
 					break;
 
 				default:
-					MessageBox.Show("Programming bug in GetDestinationParameters: control FilterOutputTabs has an unrecognized tab with tag " + FilterOutputTabs.SelectedTab.Tag.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+					MessageBox.Show("Programming bug in GetDestinationParameters: control FilterOutputTabs has an unrecognized tab with tag " + FilterOutputTabs.SelectedTab.Tag, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 					return null;					
 
 			}
@@ -532,11 +522,13 @@ namespace MageExtractor {
 		/// </summary>
 		/// <returns></returns>
 		private ExtractionType GetExtractionParameters() {
-			ExtractionType et = new ExtractionType();
-			et.RType = extractionSettingsPanel1.ResultTypeDescription;
-			et.ResultFilterSetID = extractionSettingsPanel1.ResultFilterSetID;
-			et.KeepAllResults = extractionSettingsPanel1.KeepAllResults;
-			et.MSGFCutoff = extractionSettingsPanel1.MSGFCutoff;
+			var et = new ExtractionType
+			{
+				RType = extractionSettingsPanel1.ResultTypeDescription,
+				ResultFilterSetID = extractionSettingsPanel1.ResultFilterSetID,
+				KeepAllResults = extractionSettingsPanel1.KeepAllResults,
+				MSGFCutoff = extractionSettingsPanel1.MSGFCutoff
+			};
 			return et;
 		}
 

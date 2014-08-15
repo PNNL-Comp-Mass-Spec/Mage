@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using log4net;
 using System.Data.SQLite;
@@ -14,22 +15,22 @@ namespace Mage {
     /// into the specified SQLite database and table.
     /// The table and database will be created if they do not already exist.
     /// </summary>
-    public class SQLiteWriter : BaseModule, IDisposable {
+    public sealed class SQLiteWriter : BaseModule, IDisposable {
 
         private static readonly ILog traceLog = LogManager.GetLogger("TraceLog"); // traceLog.Debug
 
         #region Member Variables
 
         // buffer for accumulating rows into output block
-		private List<string[]> mRows = new List<string[]>();
+		private readonly List<string[]> mRows = new List<string[]>();
 
         // description of table we will be inserting rows into
-        private TableSchema mSchema = null;
+        private TableSchema mSchema;
 
         // connection to SQLite database 
-        private SQLiteConnection mConnection = null;
+        private SQLiteConnection mConnection;
 
-        private int mRowsAccumulated = 0;
+        private int mRowsAccumulated;
 
         private int mBlockSize = 1000;
 
@@ -62,9 +63,9 @@ namespace Mage {
         /// number of input rows that are grouped into SQLite transaction blocks 
         /// </summary>
         public string BlockSize {
-            get { return mBlockSize.ToString(); }
+            get { return mBlockSize.ToString(CultureInfo.InvariantCulture); }
             set {
-                int val = 0;
+                int val;
                 if (int.TryParse(value, out val)) {
                     mBlockSize = val;
                 }
@@ -97,7 +98,7 @@ namespace Mage {
         /// dispose of held resources
         /// </summary>
         /// <param name="disposing"></param>
-        protected virtual void Dispose(bool disposing) {
+        private void Dispose(bool disposing) {
             if (disposing) {
                 // Code to dispose the managed resources of the class
             }
@@ -375,11 +376,12 @@ namespace Mage {
                 sb.Append(col.ColumnType);
             }
             //End If
-            if (!col.IsNullable) {
+			if (!col.IsNullable)
+			{
                 sb.Append(" NOT NULL");
             }
 
-            string defval = StripParens(col.DefaultValue);
+			string defval = StripParens(col.DefaultValue);
             defval = DiscardNational(defval);
             //traceLog.Debug(("DEFAULT VALUE BEFORE [" & col.DefaultValue & "] AFTER [") + defval & "]")
             if (!string.IsNullOrEmpty(defval) && defval.ToUpper().Contains("GETDATE")) {
@@ -481,9 +483,9 @@ namespace Mage {
             // Avoid returning duplicate name
             if (names.Contains(sb.ToString())) {
                 return GetNormalizedName(sb.ToString() + "_", names);
-            } else {
-                return sb.ToString();
             }
+
+	        return sb.ToString();
         }
 
         // Used in order to adjust the value received from SQL Server for the SQLite database.
@@ -647,9 +649,9 @@ namespace Mage {
             Match m = rx.Match(value);
             if (!m.Success) {
                 return value;
-            } else {
-                return StripParens(m.Groups[1].Value);
             }
+
+	        return StripParens(m.Groups[1].Value);
         }
 
         // Check if the DEFAULT clause is valid by SQLite standards
@@ -658,7 +660,7 @@ namespace Mage {
                 return true;
             }
 
-            double testnum = 0;
+            double testnum;
             if (!double.TryParse(value, out testnum)) {
                 return false;
             }
@@ -679,9 +681,9 @@ namespace Mage {
             Match m = rx.Match(value);
             if (m.Success) {
                 return m.Groups[1].Value;
-            } else {
-                return value;
             }
+
+	        return value;
         }
 
         #endregion
@@ -691,15 +693,15 @@ namespace Mage {
         private class ColumnSchema {
             public string ColumnName = "";
             public string ColumnType = "";
-            public bool IsNullable = true;
-            public string DefaultValue = "";
-            //           public bool IsIdentity = false;
+	        public bool IsNullable = true;
+	        public string DefaultValue = "";
+	        //           public bool IsIdentity = false;
             //           public bool IsCaseSensitivite = false; // null??
         }
 
         private class TableSchema {
             public string TableName = "";
-            public List<ColumnSchema> Columns = null;
+            public List<ColumnSchema> Columns;
         }
         #endregion
 

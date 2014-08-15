@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 
@@ -67,7 +65,7 @@ namespace Mage {
     /// Argument for a column definition event for standard tabular output
     /// </summary>
     public class MageColumnEventArgs : EventArgs {
-        private List<MageColumnDef> columDefs;
+        private readonly List<MageColumnDef> columDefs;
 
         /// <summary>
         /// list of column definitions
@@ -76,17 +74,12 @@ namespace Mage {
             get { return new Collection<MageColumnDef>(columDefs); }
         }
 
-        /// <summary>
-        /// </summary>
-        public MageColumnEventArgs() {
-        }
-
-        /// <summary>
+	    /// <summary>
         /// construct new MageColumnEventArgs object
         /// with given column definitions list
         /// </summary>
         /// <param name="colDefs">Column defintion list</param>
-        public MageColumnEventArgs(MageColumnDef[] colDefs) {
+        public MageColumnEventArgs(IEnumerable<MageColumnDef> colDefs) {
             columDefs = new List<MageColumnDef>(colDefs);
         }
     }
@@ -95,7 +88,7 @@ namespace Mage {
     /// Argument for data row event for standard tabular output
     /// </summary>
     public class MageDataEventArgs : EventArgs {
-		private string[] fields = null;
+		private readonly string[] fields;
 
         /// <summary>
         /// the event contains a data row to process
@@ -166,13 +159,7 @@ namespace Mage {
     [Serializable]
     public class MageException : Exception {
 
-        /// <summary>
-        /// construct a new MageException object
-        /// </summary>
-        public MageException() {
-        }
-
-        /// <summary>
+	    /// <summary>
         /// construct a new MageException object
         /// with the given exception message
         /// </summary>

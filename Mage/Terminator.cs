@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Collections.ObjectModel;
 
 namespace Mage {
@@ -15,7 +12,7 @@ namespace Mage {
 
         #region Member Variables
 
-        int mRowsProcessed = 0;
+        int mRowsProcessed;
 
         #endregion
 

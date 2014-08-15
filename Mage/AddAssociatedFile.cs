@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Mage;
 using System.IO;
 using MyEMSLReader;
 
@@ -83,7 +80,7 @@ namespace Mage {
         /// <param name="args"></param>
         public override void HandleColumnDef(object sender, MageColumnEventArgs args) {
             base.HandleColumnDef(sender, args);
-            List<MageColumnDef> columnDefs = (OutputColumnDefs != null) ? OutputColumnDefs : InputColumnDefs;
+            List<MageColumnDef> columnDefs = OutputColumnDefs ?? InputColumnDefs;
             OnColumnDefAvailable(new MageColumnEventArgs(columnDefs.ToArray()));
 
             mInputFolderIdx = InputColumnPos[SourceFolderColumnName];
@@ -110,9 +107,9 @@ namespace Mage {
                 {
                     // folderPathSpec may contain multiple folders, separated by a vertical bar
                     // If that is the case, then we'll search for files in each folder, preferentially using files in the folder listed first
-                    List<string> folderPaths = new List<string>();
+                    var folderPaths = new List<string>();
                     if (folderPathSpec.Contains('|')) {
-                        folderPaths = folderPathSpec.Split('|').ToList<string>();
+                        folderPaths = folderPathSpec.Split('|').ToList();
                     }
                     else {
                         folderPaths.Add(folderPathSpec);

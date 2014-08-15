@@ -1,5 +1,8 @@
 Mage Revision History
 
+Version 1.5.5339; August 14, 2014
+	- Now formatting dates returned from Sql Server queries using yyyy-MM-dd hh:mm:ss tt
+
 Version 1.5.5310; July 16, 2014
 	- SQLiteWriter now supports data lines with fewer columns than the header line
 

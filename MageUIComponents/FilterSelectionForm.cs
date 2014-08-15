@@ -68,7 +68,7 @@ namespace MageUIComponents {
 
             List<string> sortedNames = new List<string>();
             Dictionary<string, string> filterDescriptions = new Dictionary<string, string>();
-            Collection<MageAttribute> filters = ModuleDiscovery.Filters;
+            IEnumerable<MageAttribute> filters = ModuleDiscovery.Filters;
             foreach (MageAttribute filter in filters) {
                 sortedNames.Add(filter.ModLabel);
                 filterDescriptions.Add(filter.ModLabel, filter.ModDescription);

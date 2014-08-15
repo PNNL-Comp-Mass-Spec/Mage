@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Mage;
+﻿using System.Collections.Generic;
 
 namespace Mage {
 
@@ -14,7 +10,7 @@ namespace Mage {
 
         #region Member Variables
 
-        private Dictionary<string, string> mKV = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> mKV = new Dictionary<string, string>();
 
         #endregion
 

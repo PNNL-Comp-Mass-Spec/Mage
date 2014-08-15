@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using Mage;
@@ -13,7 +9,6 @@ using MageDisplayLib;
 using System.Reflection;
 using MageUIComponents;
 using System.Collections.ObjectModel;
-using System.Xml;
 
 namespace MageFileProcessor
 {
@@ -40,13 +35,10 @@ namespace MageFileProcessor
 		private string mFinalPipelineName = string.Empty;
 
 		// current command that is being executed or has most recently been executed
-		MageCommandEventArgs mCurrentCmd = null;
+		MageCommandEventArgs mCurrentCmd;
 
 		// object that sent the current command
-		object mCurrentCmdSender = null;
-
-		//private static readonly ILog traceLog = LogManager.GetLogger("TraceLog");
-		private ILog traceLog; //= LogManager.GetLogger("TraceLog");
+		object mCurrentCmdSender;
 
 		#endregion
 
@@ -57,7 +49,7 @@ namespace MageFileProcessor
 			InitializeComponent();
 
 			const bool isBetaVersion = false;
-			SetFormTitle("2014-07-16", isBetaVersion);
+			SetFormTitle("2014-08-14", isBetaVersion);
 
 			SetTags();
 
@@ -70,7 +62,7 @@ namespace MageFileProcessor
 			}
 			catch (Exception ex)
 			{
-				System.Windows.Forms.MessageBox.Show("Error loading settings: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show("Error loading settings: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
 
 			try
@@ -79,12 +71,12 @@ namespace MageFileProcessor
 				// Set log4net path and kick the logger into action
 				string LogFileName = Path.Combine(SavedState.DataDirectory, "log.txt");
 				log4net.GlobalContext.Properties["LogName"] = LogFileName;
-				traceLog = LogManager.GetLogger("TraceLog");
+				ILog traceLog = LogManager.GetLogger("TraceLog");
 				traceLog.Info("Starting");
 			}
 			catch (Exception ex)
 			{
-				System.Windows.Forms.MessageBox.Show("Error instantiating trace log: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show("Error instantiating trace log: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
 
 			// setup UI component panels
@@ -116,11 +108,11 @@ namespace MageFileProcessor
 			}
 			catch (Exception ex)
 			{
-				System.Windows.Forms.MessageBox.Show("Error restoring saved settings; will auto-delete SavedState.xml.  Message details: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show("Error restoring saved settings; will auto-delete SavedState.xml.  Message details: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				// Delete the SavedState.xml file
 				try
 				{
-					System.IO.File.Delete(SavedState.FilePath);
+					File.Delete(SavedState.FilePath);
 				}
 				catch (Exception ex2)
 				{
@@ -240,31 +232,30 @@ namespace MageFileProcessor
 		private void BuildAndRunPipeline(MageCommandEventArgs command)
 		{
 			DisplaySourceMode mode = (command.Mode == "selected") ? DisplaySourceMode.Selected : DisplaySourceMode.All;
-			Dictionary<string, string> runtimeParms = null;
-			GVPipelineSource source = null;
-			ISinkModule sink = null;
-			string queryName = string.Empty;
 
 			mPipelineQueue.Pipelines.Clear();
-			bool newpipelineQueue = false;
-
-			string queryDefXML = null;
-			ProcessingPipeline pipeline;
 
 			try
 			{
 				// build and run the pipeline appropriate to the command
+				Dictionary<string, string> runtimeParms;
+				GVPipelineSource source;
+				ISinkModule sink;
+				string queryDefXML;
+				ProcessingPipeline pipeline;
+
 				switch (command.Action)
 				{
 					case "get_entities_from_query":
+						string queryName;
 						queryDefXML = GetQueryDefinition(out queryName);
 						if (string.IsNullOrEmpty(queryDefXML))
 						{
-							System.Windows.Forms.MessageBox.Show("Unknown query type '" + queryName + "'.  Your QueryDefinitions.xml file is out-of-date", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+							MessageBox.Show("Unknown query type '" + queryName + "'.  Your QueryDefinitions.xml file is out-of-date", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 							return;
 						}
-						Dictionary<string, string> queryParameters = null;
-						queryParameters = GetRuntimeParmsForEntityQuery();
+
+						Dictionary<string, string> queryParameters = GetRuntimeParmsForEntityQuery();
 						if (!ValidQueryParameters(queryName, queryParameters))
 						{
 							return;
@@ -281,11 +272,11 @@ namespace MageFileProcessor
 						SQLBuilder builder = JobFlexQueryPanel.GetSQLBuilder(queryDefXML);
 						if (!builder.HasPredicate)
 						{
-							System.Windows.Forms.MessageBox.Show("You must define one or more search criteria before searching", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+							MessageBox.Show("You must define one or more search criteria before searching", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 							return;
 						}
 
-						MSSQLReader reader = new MSSQLReader(builder);
+						var reader = new MSSQLReader(builder);
 						sink = JobListDisplayControl.MakeSink("Jobs", 15);
 
 						pipeline = ProcessingPipeline.Assemble("Get Jobs", reader, sink);
@@ -307,9 +298,9 @@ namespace MageFileProcessor
 					case "get_files_from_local_folder":
 						runtimeParms = GetRuntimeParmsForLocalFolder();
 						string sFolder = runtimeParms["Folder"];
-						if (!System.IO.Directory.Exists(sFolder))
+						if (!Directory.Exists(sFolder))
 						{
-							System.Windows.Forms.MessageBox.Show("Folder not found: " + sFolder, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+							MessageBox.Show("Folder not found: " + sFolder, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 							return;
 						}
 						sink = FileListDisplayControl.MakeSink("Files", 15);
@@ -322,9 +313,9 @@ namespace MageFileProcessor
 					case "get_files_from_local_manifest":
 						runtimeParms = GetRuntimeParmsForManifestFile();
 						string sFile = runtimeParms["ManifestFilePath"];
-						if (!System.IO.File.Exists(sFile))
+						if (!File.Exists(sFile))
 						{
-							System.Windows.Forms.MessageBox.Show("Manifest file not found: " + sFile, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+							MessageBox.Show("Manifest file not found: " + sFile, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 							return;
 						}
 						sink = FileListDisplayControl.MakeSink("Files", 15);
@@ -361,7 +352,8 @@ namespace MageFileProcessor
 									MessageBox.Show("Destination folder cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 									return;
 								}
-								else if (string.IsNullOrEmpty(runtimeParms["OutputFile"]))
+								
+								if (string.IsNullOrEmpty(runtimeParms["OutputFile"]))
 								{
 									MessageBox.Show("Destination file cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 									return;
@@ -374,7 +366,8 @@ namespace MageFileProcessor
 									MessageBox.Show("SQLite Database path cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 									return;
 								}
-								else if (string.IsNullOrEmpty(runtimeParms["TableName"]))
+								
+								if (string.IsNullOrEmpty(runtimeParms["TableName"]))
 								{
 									MessageBox.Show("SQLite destination table name cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 									return;
@@ -382,27 +375,15 @@ namespace MageFileProcessor
 								break;
 
 							default:
-								MessageBox.Show("Programming bug in BuildAndRunPipeline: control FilterOutputTabs has an unrecognized tab with tag " + FilterOutputTabs.SelectedTab.Tag.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+								MessageBox.Show("Programming bug in BuildAndRunPipeline: control FilterOutputTabs has an unrecognized tab with tag " + FilterOutputTabs.SelectedTab.Tag, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 								return;		
 						}
 						
 						source = new GVPipelineSource(FileListDisplayControl, mode);
 
-						bool useNewPipelineQ = true;
-
-						if (useNewPipelineQ)
-						{							
-							mPipelineQueue = Pipelines.MakePipelineQueueToPreProcessThenFilterFiles(source, runtimeParms, filterParms);
-							mFinalPipelineName = mPipelineQueue.Pipelines.Last().PipelineName;
-							newpipelineQueue = true;
-						}
-						else
-						{
-							pipeline = Pipelines.MakePipelineToFilterSelectedfiles(source, runtimeParms, filterParms);
-							mPipelineQueue.Pipelines.Enqueue(pipeline);
-							mFinalPipelineName = pipeline.PipelineName;
-						}						
-
+						mPipelineQueue = Pipelines.MakePipelineQueueToPreProcessThenFilterFiles(source, runtimeParms, filterParms);
+						mFinalPipelineName = mPipelineQueue.Pipelines.Last().PipelineName;
+						
 						break;
 
 
@@ -427,8 +408,7 @@ namespace MageFileProcessor
 						mFinalPipelineName = p.PipelineName;
 					}
 
-					if (newpipelineQueue)
-						ConnectPipelineQueueToStatusDisplay(mPipelineQueue);
+					ConnectPipelineQueueToStatusDisplay(mPipelineQueue);
 					
 					EnableCancel(true);
 					mPipelineQueue.Run();
@@ -483,7 +463,7 @@ namespace MageFileProcessor
 
 			if (string.IsNullOrEmpty(msg) && (queryName == TAG_JOB_IDs || queryName == TAG_JOB_IDs_FROM_DATASETS || queryName == TAG_DATASET_ID_LIST))
 			{
-				char[] cSepChars = new char[] { ',', '\t' };
+				var cSepChars = new char[] { ',', '\t' };
 				string sWarning;
 
 				if (queryName == TAG_JOB_IDs)
@@ -492,16 +472,15 @@ namespace MageFileProcessor
 					sWarning = "Use dataset IDs, not dataset names: '";
 
 				// Validate that the job numbers or dataset IDs are all numeric
-				string sValue;
-				int iValue;
 				foreach (KeyValuePair<string, string> entry in queryParameters)
 				{
-					sValue = entry.Value.Replace(Environment.NewLine, ",");
+					string sValue = entry.Value.Replace(Environment.NewLine, ",");
 
 					string[] values = sValue.Split(cSepChars);
 
 					foreach (string datasetID in values)
 					{
+						int iValue;
 						if (!int.TryParse(datasetID, out iValue))
 						{
 							msg = sWarning + datasetID + "' is not numeric";
@@ -516,12 +495,9 @@ namespace MageFileProcessor
 
 			if (string.IsNullOrEmpty(msg))
 				return true;
-			else
-			{
-				System.Windows.Forms.MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-				return false;
-			}
-
+			
+			MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			return false;
 		}
 
 		#endregion
@@ -665,14 +641,13 @@ namespace MageFileProcessor
 		/// according to the combination of columns it has,
 		/// and set its title accordingly
 		/// </summary>
-		/// <param name="ldc"></param>
 		private void AdjustListDisplayTitleFromColumDefs()
 		{
 			if (mCurrentCmd.Action == "reload_list_display" || mCurrentCmd.Action == "display_reloaded")
 			{
 				if (mCurrentCmdSender is IMageDisplayControl)
 				{
-					IMageDisplayControl ldc = mCurrentCmdSender as IMageDisplayControl;
+					var ldc = mCurrentCmdSender as IMageDisplayControl;
 					string type = ldc.PageTitle;
 					Collection<string> colNames = ldc.ColumnNames;
 					if (colNames.Contains("Item"))
@@ -698,8 +673,6 @@ namespace MageFileProcessor
 		/// <summary>
 		/// control enable state of filter panel based on output tab choice
 		/// </summary>
-		/// <param name="sender">(ignored)</param>
-		/// <param name="e">(ignored)</param>
 		private void EnableDisableOutputTabs()
 		{
 			string mode = this.FilterOutputTabs.SelectedTab.Tag.ToString();
@@ -731,7 +704,6 @@ namespace MageFileProcessor
 
 		private string GetQueryDefinition(out string queryName)
 		{
-			queryName = string.Empty;
 			// Note: Tab page tag field contains name of query to look up in query def file
 			Control queryPage = EntityListSourceTabs.SelectedTab;
 			queryName = queryPage.Tag.ToString();
@@ -747,68 +719,78 @@ namespace MageFileProcessor
 
 		private Dictionary<string, string> GetRuntimeParmsForLocalFolder()
 		{
-			Dictionary<string, string> rp = new Dictionary<string, string>();
-			rp.Add("FileNameFilter", LocalFolderPanel1.FileNameFilter);
-			rp.Add("Folder", LocalFolderPanel1.Folder);
-			rp.Add("SearchInSubfolders", LocalFolderPanel1.SearchInSubfolders);
-			rp.Add("SubfolderSearchName", LocalFolderPanel1.SubfolderSearchName);
+			var rp = new Dictionary<string, string>
+			{
+				{"FileNameFilter", LocalFolderPanel1.FileNameFilter},
+				{"Folder", LocalFolderPanel1.Folder},
+				{"SearchInSubfolders", LocalFolderPanel1.SearchInSubfolders},
+				{"SubfolderSearchName", LocalFolderPanel1.SubfolderSearchName}
+			};
 			return rp;
 		}
 
 		private Dictionary<string, string> GetRuntimeParmsForManifestFile()
 		{
-			Dictionary<string, string> rp = new Dictionary<string, string>();
-			rp.Add("ManifestFilePath", LocalManifestPanel1.ManifestFilePath);
+			var rp = new Dictionary<string, string>
+			{
+				{"ManifestFilePath", LocalManifestPanel1.ManifestFilePath}
+			};
 			return rp;
 		}
 
 		private Dictionary<string, string> GetRuntimeParmsForFileProcessing()
 		{
-			Dictionary<string, string> rp = new Dictionary<string, string>();
-			rp.Add("OutputFolder", FolderDestinationPanel1.OutputFolder);
-			rp.Add("OutputFile", FolderDestinationPanel1.OutputFile);
-			rp.Add("DatabaseName", SQLiteDestinationPanel1.DatabaseName);
-			rp.Add("TableName", SQLiteDestinationPanel1.TableName);
-			rp.Add("OutputMode", FilterOutputTabs.SelectedTab.Tag.ToString());
-			rp.Add("ManifestFileName", string.Format("Manifest_{0:yyyy-MM-dd_hhmmss}.txt", System.DateTime.Now));
+			var rp = new Dictionary<string, string>
+			{
+				{"OutputFolder", FolderDestinationPanel1.OutputFolder},
+				{"OutputFile", FolderDestinationPanel1.OutputFile},
+				{"DatabaseName", SQLiteDestinationPanel1.DatabaseName},
+				{"TableName", SQLiteDestinationPanel1.TableName},
+				{"OutputMode", FilterOutputTabs.SelectedTab.Tag.ToString()},
+				{"ManifestFileName", string.Format("Manifest_{0:yyyy-MM-dd_hhmmss}.txt", DateTime.Now)}
+			};
 
 			return rp;
 		}
 
 		private Dictionary<string, string> GetRuntimeParmsForCopyFiles()
 		{
-			Dictionary<string, string> rp = new Dictionary<string, string>();
-			rp.Add("OutputFolder", FileCopyPanel1.OutputFolder);
-			rp.Add("ManifestFileName", string.Format("Manifest_{0:yyyy-MM-dd_hhmmss}.txt", System.DateTime.Now));
-			rp.Add("ApplyPrefixToFileName", FileCopyPanel1.ApplyPrefixToFileName);
-			rp.Add("PrefixLeader", FileCopyPanel1.PrefixLeader);
-			rp.Add("ColumnToUseForPrefix", FileCopyPanel1.PrefixColumnName);
-			rp.Add("OverwriteExistingFiles", FileCopyPanel1.OverwriteExistingFiles);
-			rp.Add("OutputColumnList", "Name, *");
-			rp.Add("OutputFileColumnName", "Name");
-			rp.Add("SourceFileColumnName", "Name");
-			rp.Add("SourceFolderColumnName", "Folder");
+			var rp = new Dictionary<string, string>
+			{
+				{"OutputFolder", FileCopyPanel1.OutputFolder},
+				{"ManifestFileName", string.Format("Manifest_{0:yyyy-MM-dd_hhmmss}.txt", DateTime.Now)},
+				{"ApplyPrefixToFileName", FileCopyPanel1.ApplyPrefixToFileName},
+				{"PrefixLeader", FileCopyPanel1.PrefixLeader},
+				{"ColumnToUseForPrefix", FileCopyPanel1.PrefixColumnName},
+				{"OverwriteExistingFiles", FileCopyPanel1.OverwriteExistingFiles},
+				{"OutputColumnList", "Name, *"},
+				{"OutputFileColumnName", "Name"},
+				{"SourceFileColumnName", "Name"},
+				{"SourceFolderColumnName", "Folder"}
+			};
 
 			return rp;
 		}
 
 		private Dictionary<string, string> GetRuntimeParmsForEntityFileType(string entityType)
 		{
-			Dictionary<string, string> rp = new Dictionary<string, string>();
-			rp.Add("FileSelectors", EntityFilePanel1.FileSelectors);
-			rp.Add("FileSelectionMode", EntityFilePanel1.FileSelectionMode);
-			rp.Add("IncludeFilesOrFolders", EntityFilePanel1.IncludeFilesOrFolders);
-			rp.Add("SearchInSubfolders", EntityFilePanel1.SearchInSubfolders);
-			rp.Add("SubfolderSearchName", EntityFilePanel1.SubfolderSearchName);
-			rp.Add("SourceFolderColumnName", "Folder");
-			rp.Add("FileColumnName", "Name");
+			var rp = new Dictionary<string, string>
+			{
+				{"FileSelectors", EntityFilePanel1.FileSelectors},
+				{"FileSelectionMode", EntityFilePanel1.FileSelectionMode},
+				{"IncludeFilesOrFolders", EntityFilePanel1.IncludeFilesOrFolders},
+				{"SearchInSubfolders", EntityFilePanel1.SearchInSubfolders},
+				{"SubfolderSearchName", EntityFilePanel1.SubfolderSearchName},
+				{"SourceFolderColumnName", "Folder"},
+				{"FileColumnName", "Name"}
+			};
 			switch (entityType)
 			{
 				case "Jobs":
-					rp.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListFilter.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListFilter.COLUMN_NAME_FILE_DATE + "|+|text, Folder, Job, Dataset, Dataset_ID, Tool, Settings_File, Parameter_File, Instrument");
+					rp.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_DATE + "|+|text, Folder, Job, Dataset, Dataset_ID, Tool, Settings_File, Parameter_File, Instrument");
 					break;
 				case "Datasets":
-					rp.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListFilter.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListFilter.COLUMN_NAME_FILE_DATE + "|+|text, Folder, Dataset, Dataset_ID, Experiment, Campaign, State, Instrument, Created, Type, Comment");
+					rp.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_DATE + "|+|text, Folder, Dataset, Dataset_ID, Experiment, Campaign, State, Instrument, Created, Type, Comment");
 					break;
 			}
 			return rp;
@@ -818,11 +800,12 @@ namespace MageFileProcessor
 		/// Get "best" column name to use for naming prefix according to hueristec
 		/// </summary>
 		/// <returns></returns>
-		private static string GetBestPrefixIDColumnName(Collection<MageColumnDef> colDefs)
+		private static string GetBestPrefixIDColumnName(IEnumerable<MageColumnDef> colDefs)
 		{
 			string IDColumnName = "";
 			// define list of potential candidate names in order of precedence
-			Dictionary<string, bool> candidateIDColumnNames = new Dictionary<string, bool>() {
+			var candidateIDColumnNames = new Dictionary<string, bool>
+			{
                 { "Job", false }, { "Dataset_ID", false }, { "Dataset", false }
             };
 			// go through actual column names and make the potential candidates
@@ -874,9 +857,9 @@ namespace MageFileProcessor
 			statusPanel1.HandleCompletionMessageUpdate(this, new MageStatusEventArgs(args.Message));
 			Console.WriteLine(args.Message);
 
-			if (sender is Mage.ProcessingPipeline)
+			var pipeline = sender as ProcessingPipeline;
+			if (pipeline != null)
 			{
-				Mage.ProcessingPipeline pipeline = (Mage.ProcessingPipeline)sender;
 				if (pipeline.PipelineName == mFinalPipelineName)
 				{
 
@@ -889,8 +872,8 @@ namespace MageFileProcessor
 				}
 			}
 
-			if (args.Message.StartsWith(Mage.MSSQLReader.SQL_COMMAND_ERROR))
-				System.Windows.Forms.MessageBox.Show(args.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			if (args.Message.StartsWith(MSSQLReader.SQL_COMMAND_ERROR))
+				MessageBox.Show(args.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
 		}
 
@@ -915,7 +898,7 @@ namespace MageFileProcessor
             Invoke(csu, new object[] { null });
 
             if (args.Message.StartsWith(Mage.MSSQLReader.SQL_COMMAND_ERROR))
-                System.Windows.Forms.MessageBox.Show(args.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show(args.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
 			// Must use a delegate and Invoke to avoid "cross-thread operation not valid" exceptions
 			VoidFnDelegate et = EnableDisableOutputTabs;
@@ -923,7 +906,7 @@ namespace MageFileProcessor
         }
 		*/
 
-		private void lblAboutLink_LinkClicked(object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e)
+		private void lblAboutLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
 			try
 			{
@@ -984,7 +967,7 @@ namespace MageFileProcessor
 		/// </summary>
 		private void SetupColumnMapping()
 		{
-			string columnMappingFileName = "ColumnMapping.txt";
+			const string columnMappingFileName = "ColumnMapping.txt";
 			string path = Path.Combine(SavedState.DataDirectory, columnMappingFileName);  // "ColumnMappingConfig.db")
 			if (!File.Exists(path))
 			{
@@ -1023,10 +1006,8 @@ namespace MageFileProcessor
 			{
 				return SQLiteDestinationPanel1.GetParameters();
 			}
-			else
-			{
-				return FolderDestinationPanel1.GetParameters();
-			}
+			
+			return FolderDestinationPanel1.GetParameters();
 		}
 
 		#endregion
