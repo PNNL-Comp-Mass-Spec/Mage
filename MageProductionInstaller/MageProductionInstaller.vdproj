@@ -64,25 +64,19 @@
         "Entry"
         {
         "MsmKey" = "8:_0D4B0D82E2AD89EED969C943E7FC6DFD"
-        "OwnerKey" = "8:_461C970D92B8D5969FA55DBF56A3B63F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_0D4B0D82E2AD89EED969C943E7FC6DFD"
         "OwnerKey" = "8:_ADD04AF299554FF9AF85B72E7C50CF41"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_0D4B0D82E2AD89EED969C943E7FC6DFD"
-        "OwnerKey" = "8:_FB6F977271828005A6542E504C2C6613"
+        "OwnerKey" = "8:_1D3AB2D6E68345EDE4C20E6F23DBA09E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_0D4B0D82E2AD89EED969C943E7FC6DFD"
-        "OwnerKey" = "8:_1DEDA745FA649F868F695D4199388877"
+        "OwnerKey" = "8:_FB6F977271828005A6542E504C2C6613"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -111,8 +105,32 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_1789EAF161C74B838CE5DAD0A567A852"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_185FDE6778434C4087B43FECBE8CF53A"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_18B4A43A422C416B83CD55243280572C"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_1D3AB2D6E68345EDE4C20E6F23DBA09E"
+        "OwnerKey" = "8:_36DAA23730E94D9A80AD60FDF1698E22"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_1D3AB2D6E68345EDE4C20E6F23DBA09E"
+        "OwnerKey" = "8:_DB11AAED024249738DEB15B6FF75736F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -142,55 +160,19 @@
         "Entry"
         {
         "MsmKey" = "8:_1D926D476F9ED2E8022A2D4C587EDBC0"
-        "OwnerKey" = "8:_461C970D92B8D5969FA55DBF56A3B63F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_1D926D476F9ED2E8022A2D4C587EDBC0"
         "OwnerKey" = "8:_ADD04AF299554FF9AF85B72E7C50CF41"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_1D926D476F9ED2E8022A2D4C587EDBC0"
-        "OwnerKey" = "8:_1DEDA745FA649F868F695D4199388877"
+        "OwnerKey" = "8:_1D3AB2D6E68345EDE4C20E6F23DBA09E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_1D926D476F9ED2E8022A2D4C587EDBC0"
         "OwnerKey" = "8:_18B4A43A422C416B83CD55243280572C"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_1DEDA745FA649F868F695D4199388877"
-        "OwnerKey" = "8:_36DAA23730E94D9A80AD60FDF1698E22"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_1DEDA745FA649F868F695D4199388877"
-        "OwnerKey" = "8:_FB6F977271828005A6542E504C2C6613"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_1DEDA745FA649F868F695D4199388877"
-        "OwnerKey" = "8:_9A4792D8644E07D751A665FB5E9E207D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_1DEDA745FA649F868F695D4199388877"
-        "OwnerKey" = "8:_73C5D22509DF4F05AADA1A56D34BC992"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_1DEDA745FA649F868F695D4199388877"
-        "OwnerKey" = "8:_1287647B78C746D09E2FE8F970DF9F97"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -297,6 +279,18 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_39C05627016CC620577ADC991796F5B1"
+        "OwnerKey" = "8:_36DAA23730E94D9A80AD60FDF1698E22"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_39C05627016CC620577ADC991796F5B1"
+        "OwnerKey" = "8:_DB11AAED024249738DEB15B6FF75736F"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_3AB75ED94E284336883804D87076BC9D"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -329,12 +323,6 @@
         {
         "MsmKey" = "8:_452B9162621E4A23A4BCC4E9CDA9611A"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_461C970D92B8D5969FA55DBF56A3B63F"
-        "OwnerKey" = "8:_DB11AAED024249738DEB15B6FF75736F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -525,12 +513,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_705F90B8A95A42A5B99B7CDE0E4573DA"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_73C5D22509DF4F05AADA1A56D34BC992"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -675,12 +657,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_9486764B5FFDB38C854FFCECF8BB1581"
-        "OwnerKey" = "8:_36DAA23730E94D9A80AD60FDF1698E22"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_9A4792D8644E07D751A665FB5E9E207D"
         "OwnerKey" = "8:_47D3A68C4CB8B7294B86584DA7CADA20"
         "MsmSig" = "8:_UNDEFINED"
@@ -759,18 +735,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_B90EA5115C134DC5933E8476E4BD725D"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_B9C1D0D7B9FF479AA4C4B44290A70A5C"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_C7FBD107A705409B838F24258190C080"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -808,7 +772,31 @@
         "Entry"
         {
         "MsmKey" = "8:_CF01D8D0D31CB39507ADFB250F8AB6CE"
+        "OwnerKey" = "8:_9A4792D8644E07D751A665FB5E9E207D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CF01D8D0D31CB39507ADFB250F8AB6CE"
+        "OwnerKey" = "8:_73C5D22509DF4F05AADA1A56D34BC992"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CF01D8D0D31CB39507ADFB250F8AB6CE"
+        "OwnerKey" = "8:_1287647B78C746D09E2FE8F970DF9F97"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CF01D8D0D31CB39507ADFB250F8AB6CE"
         "OwnerKey" = "8:_ADD04AF299554FF9AF85B72E7C50CF41"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CF01D8D0D31CB39507ADFB250F8AB6CE"
+        "OwnerKey" = "8:_FB6F977271828005A6542E504C2C6613"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -874,19 +862,13 @@
         "Entry"
         {
         "MsmKey" = "8:_F211978705941054F1607E4116EF6565"
-        "OwnerKey" = "8:_461C970D92B8D5969FA55DBF56A3B63F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F211978705941054F1607E4116EF6565"
         "OwnerKey" = "8:_ADD04AF299554FF9AF85B72E7C50CF41"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_F211978705941054F1607E4116EF6565"
-        "OwnerKey" = "8:_1DEDA745FA649F868F695D4199388877"
+        "OwnerKey" = "8:_1D3AB2D6E68345EDE4C20E6F23DBA09E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -933,14 +915,20 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_FBF85924E363B74F5DFBFCED2810F593"
-        "OwnerKey" = "8:_DB11AAED024249738DEB15B6FF75736F"
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_18B4A43A422C416B83CD55243280572C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_18B4A43A422C416B83CD55243280572C"
+        "OwnerKey" = "8:_1789EAF161C74B838CE5DAD0A567A852"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_185FDE6778434C4087B43FECBE8CF53A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -953,18 +941,6 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_C7FBD107A705409B838F24258190C080"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B9C1D0D7B9FF479AA4C4B44290A70A5C"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B90EA5115C134DC5933E8476E4BD725D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1007,12 +983,6 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_73C5D22509DF4F05AADA1A56D34BC992"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_705F90B8A95A42A5B99B7CDE0E4573DA"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1132,18 +1102,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_461C970D92B8D5969FA55DBF56A3B63F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_FBF85924E363B74F5DFBFCED2810F593"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_F5746ED3225AB42B0B45CC9B6655AF6D"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1168,25 +1126,25 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_1D3AB2D6E68345EDE4C20E6F23DBA09E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_FB6F977271828005A6542E504C2C6613"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_39C05627016CC620577ADC991796F5B1"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_F9F68FDA35BA3C66FFB3B9A0A8C6AF65"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_1DEDA745FA649F868F695D4199388877"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_9486764B5FFDB38C854FFCECF8BB1581"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1494,7 +1452,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MyEMSLReader, Version=1.0.5233.22172, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:MyEMSLReader, Version=1.0.5343.30243, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_1287647B78C746D09E2FE8F970DF9F97"
@@ -1525,7 +1483,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MageUIComponents, Version=1.4.5310.32995, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:MageUIComponents, Version=1.4.5354.30072, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_12E6F4793DF14EDBAFBC7C01B6247FF7"
@@ -1552,11 +1510,104 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1789EAF161C74B838CE5DAD0A567A852"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_1789EAF161C74B838CE5DAD0A567A852"
+                    {
+                    "Name" = "8:log4net.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\Mage\\lib\\log4net.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_057AD5CA807A46E8986EE13523678AA6"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_185FDE6778434C4087B43FECBE8CF53A"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_185FDE6778434C4087B43FECBE8CF53A"
+                    {
+                    "Name" = "8:log4net.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:..\\Mage\\lib\\log4net.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_7A09AD7671C44849BD53B9B99B97D498"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1D3AB2D6E68345EDE4C20E6F23DBA09E"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Pacifica.Core, Version=2.0.5302.18953, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_1D3AB2D6E68345EDE4C20E6F23DBA09E"
+                    {
+                    "Name" = "8:Pacifica.Core.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Pacifica.Core.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_7A09AD7671C44849BD53B9B99B97D498"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1D3AD408FE844EC695AD3F9E137F2259"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Mage, Version=1.4.5310.32993, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:Mage, Version=1.4.5354.29951, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_1D3AD408FE844EC695AD3F9E137F2259"
@@ -1614,37 +1665,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1DEDA745FA649F868F695D4199388877"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Pacifica.Core, Version=2.0.5193.24827, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_1DEDA745FA649F868F695D4199388877"
-                    {
-                    "Name" = "8:Pacifica.Core.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Pacifica.Core.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_7A09AD7671C44849BD53B9B99B97D498"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1F7C1334AA14653F8F3109C692DB28A7"
             {
             "AssemblyRegister" = "3:1"
@@ -1680,7 +1700,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MageDisplayLib, Version=1.4.5310.32993, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:MageDisplayLib, Version=1.4.5354.30071, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_224CB43A0565B93EB6CE1399EFA7E61A"
@@ -1731,7 +1751,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:RangerLib, Version=1.0.5310.32299, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:RangerLib, Version=1.0.5354.30071, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_26DE4BE2032D48CC9C8D3776059EE6B0"
@@ -1762,7 +1782,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MageDisplayLib, Version=1.4.5310.32993, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:MageDisplayLib, Version=1.4.5354.30071, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_28C4942E1263462197316002C7C97D16"
@@ -1793,7 +1813,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Mage, Version=1.4.5310.32993, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:Mage, Version=1.4.5354.29951, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_3114B5FEC5254F4E90AA4CD6E85FABFE"
@@ -1820,11 +1840,42 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_39C05627016CC620577ADC991796F5B1"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Jayrock.Json, Version=0.9.12915.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_39C05627016CC620577ADC991796F5B1"
+                    {
+                    "Name" = "8:Jayrock.Json.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Jayrock.Json.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_7A09AD7671C44849BD53B9B99B97D498"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3AB75ED94E284336883804D87076BC9D"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MageExtContentFilters, Version=1.4.5310.32994, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:MageExtContentFilters, Version=1.4.5354.30073, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_3AB75ED94E284336883804D87076BC9D"
@@ -1906,7 +1957,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MageExtExtractionFilters, Version=1.4.5310.32301, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:MageExtExtractionFilters, Version=1.4.5354.30074, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_44CCC0EA2D07475C9D77CDB5838DA8BC"
@@ -1984,42 +2035,11 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_461C970D92B8D5969FA55DBF56A3B63F"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Pacifica.Core, Version=2.0.5193.24827, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_461C970D92B8D5969FA55DBF56A3B63F"
-                    {
-                    "Name" = "8:Pacifica.Core.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Pacifica.Core.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_738E1BBF7C4D4F51A5181B7AFD3312CD"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_47D3A68C4CB8B7294B86584DA7CADA20"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Mage, Version=1.4.5310.32993, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:Mage, Version=1.4.5354.29951, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_47D3A68C4CB8B7294B86584DA7CADA20"
@@ -2070,7 +2090,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MageUIComponents, Version=1.4.5310.32995, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:MageUIComponents, Version=1.4.5354.30072, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_4CB095463B854249BB5A2DA33CA6B0E7"
@@ -2163,7 +2183,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MageExtExtractionFilters, Version=1.4.5310.32301, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:MageExtExtractionFilters, Version=1.4.5354.30074, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_58774F0335A945718220507BC0134A4E"
@@ -2194,7 +2214,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MageDisplayLib, Version=1.4.5310.32993, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:MageDisplayLib, Version=1.4.5354.30071, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_65152DFD973D4487972E7B160C3CC4CE"
@@ -2245,7 +2265,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MageUIComponents, Version=1.4.5310.32995, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:MageUIComponents, Version=1.4.5354.30072, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_6BE6A7EEC9D4A75F8951862E03B37F1B"
@@ -2272,42 +2292,11 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_705F90B8A95A42A5B99B7CDE0E4573DA"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_705F90B8A95A42A5B99B7CDE0E4573DA"
-                    {
-                    "Name" = "8:log4net.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Mage\\bin\\x86\\Release\\log4net.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_7A09AD7671C44849BD53B9B99B97D498"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_73C5D22509DF4F05AADA1A56D34BC992"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MyEMSLReader, Version=1.0.5233.22172, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:MyEMSLReader, Version=1.0.5343.30243, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_73C5D22509DF4F05AADA1A56D34BC992"
@@ -2440,7 +2429,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MageDisplayLib, Version=1.4.5310.32299, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:MageDisplayLib, Version=1.4.5354.30071, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_879D30DF03324A909547077F5816EE61"
@@ -2502,7 +2491,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MageDisplayLib, Version=1.4.5310.32993, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:MageDisplayLib, Version=1.4.5354.30071, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_8A4F14834DAE4606A2AA9D1BE0496522"
@@ -2533,7 +2522,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MageExtExtractionFilters, Version=1.4.5310.32995, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:MageExtExtractionFilters, Version=1.4.5354.30074, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_8B05E2B0E39E74C5C703C3DD46FBA052"
@@ -2560,42 +2549,11 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9486764B5FFDB38C854FFCECF8BB1581"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Jayrock.Json, Version=0.9.12915.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_9486764B5FFDB38C854FFCECF8BB1581"
-                    {
-                    "Name" = "8:Jayrock.Json.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Jayrock.Json.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_7A09AD7671C44849BD53B9B99B97D498"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9A4792D8644E07D751A665FB5E9E207D"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MyEMSLReader, Version=1.0.5233.22172, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:MyEMSLReader, Version=1.0.5343.30243, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_9A4792D8644E07D751A665FB5E9E207D"
@@ -2688,7 +2646,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MageUIComponents, Version=1.4.5310.32995, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:MageUIComponents, Version=1.4.5354.30072, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_B83B64EBB89B430791AD91657AA94CA0"
@@ -2698,68 +2656,6 @@
                     }
                 }
             "SourcePath" = "8:..\\MageUIComponents\\bin\\x86\\Release\\MageUIComponents.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_738E1BBF7C4D4F51A5181B7AFD3312CD"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B90EA5115C134DC5933E8476E4BD725D"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_B90EA5115C134DC5933E8476E4BD725D"
-                    {
-                    "Name" = "8:log4net.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Mage\\bin\\x86\\Release\\log4net.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_057AD5CA807A46E8986EE13523678AA6"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B9C1D0D7B9FF479AA4C4B44290A70A5C"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_B9C1D0D7B9FF479AA4C4B44290A70A5C"
-                    {
-                    "Name" = "8:log4net.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:..\\Mage\\bin\\x86\\Release\\log4net.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_738E1BBF7C4D4F51A5181B7AFD3312CD"
@@ -2812,7 +2708,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MageExtContentFilters, Version=1.4.5310.32994, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:MageExtContentFilters, Version=1.4.5354.30073, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_C8E02AB74A4ACA8ED081F6F866032CFB"
@@ -2848,11 +2744,11 @@
                 {
                     "_CF01D8D0D31CB39507ADFB250F8AB6CE"
                     {
-                    "Name" = "8:Pacifica.Core.DLL"
+                    "Name" = "8:Pacifica.Core.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Pacifica.Core.DLL"
+            "SourcePath" = "8:Pacifica.Core.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_13D8982CD1D84C4884C85115AC81A497"
@@ -2894,7 +2790,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Mage, Version=1.4.5310.32993, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:Mage, Version=1.4.5354.29951, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_F0B8365E6E4E479584A8328AF825E8A6"
@@ -2956,7 +2852,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:RangerLib, Version=1.0.5310.32994, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:RangerLib, Version=1.0.5354.30071, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_F5746ED3225AB42B0B45CC9B6655AF6D"
@@ -3018,7 +2914,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MyEMSLReader, Version=1.0.5233.22172, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:MyEMSLReader, Version=1.0.5343.30243, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_FB6F977271828005A6542E504C2C6613"
@@ -3031,37 +2927,6 @@
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7A09AD7671C44849BD53B9B99B97D498"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_FBF85924E363B74F5DFBFCED2810F593"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Jayrock.Json, Version=0.9.12915.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_FBF85924E363B74F5DFBFCED2810F593"
-                    {
-                    "Name" = "8:Jayrock.Json.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Jayrock.Json.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_738E1BBF7C4D4F51A5181B7AFD3312CD"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -3187,15 +3052,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Mage"
-        "ProductCode" = "8:{95E00D38-0131-4795-ABC3-9722242F979F}"
-        "PackageCode" = "8:{05119276-2072-4022-9F06-91DE52BB1D73}"
+        "ProductCode" = "8:{A704F252-2338-4940-A4E4-695068F5FB48}"
+        "PackageCode" = "8:{844EC0B6-0EC7-4F92-B332-1B7D0642216B}"
         "UpgradeCode" = "8:{FDED06AE-BF64-4DD9-AA5A-97897D0F54B2}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.5.8"
+        "ProductVersion" = "8:1.5.9"
         "Manufacturer" = "8:PNNL"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

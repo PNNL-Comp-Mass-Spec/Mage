@@ -40,6 +40,12 @@
     <predicate rel='AND' col='Dataset_ID' cmp='InList' val='' />
   </query>
 
+  <query name='Dataset_Name_List'>
+    <connection server='gigasax' database='DMS5'/>
+    <table name='V_Mage_Dataset_List' cols='*' />
+    <predicate rel='AND' col='Dataset' cmp='InListText' val='' />
+  </query>
+
   <query name='Jobs_From_Dataset_List'>
     <connection server='gigasax' database='DMS5'/>
     <table name='V_Mage_Analysis_Jobs' cols='*'/>

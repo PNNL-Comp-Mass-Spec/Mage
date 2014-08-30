@@ -21,6 +21,7 @@ namespace MageFileProcessor
 		protected const string TAG_JOB_IDs_FROM_DATASETS = "Jobs_From_Dataset_List";
 		protected const string TAG_DATASET_LIST = "Datasets";
 		protected const string TAG_DATASET_ID_LIST = "Dataset_List";
+		protected const string TAG_DATASET_NAME_LIST = "Dataset_Name_List";
 		protected const string TAG_DATA_PACKAGE_ID = "Data_Package";
 		protected const string TAG_DATA_PACKAGE_DS_IDs = "Data_Package_Datasets";
 
@@ -49,7 +50,7 @@ namespace MageFileProcessor
 			InitializeComponent();
 
 			const bool isBetaVersion = false;
-			SetFormTitle("2014-08-14", isBetaVersion);
+			SetFormTitle("2014-08-29", isBetaVersion);
 
 			SetTags();
 
@@ -157,6 +158,7 @@ namespace MageFileProcessor
 			this.JobsFromDatasetIDTabPage.Tag = TAG_JOB_IDs_FROM_DATASETS;
 			this.DatasetTabPage.Tag = TAG_DATASET_LIST;
 			this.DatasetIDTabPage.Tag = TAG_DATASET_ID_LIST;
+			this.DatasetNameTabPage.Tag = TAG_DATASET_NAME_LIST;
 			this.DataPackageJobsTabPage.Tag = TAG_DATA_PACKAGE_ID;
 			this.DataPackageDatasetsTabPage.Tag = TAG_DATA_PACKAGE_DS_IDs;
 		}

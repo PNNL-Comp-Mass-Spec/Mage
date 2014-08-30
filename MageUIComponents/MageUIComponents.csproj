@@ -98,6 +98,12 @@
     <Compile Include="DatasetIDListPanel.designer.cs">
       <DependentUpon>DatasetIDListPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="DatasetNameListPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DatasetNameListPanel.Designer.cs">
+      <DependentUpon>DatasetNameListPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="FileCopyPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -229,6 +235,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DatasetIDListPanel.resx">
       <DependentUpon>DatasetIDListPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DatasetNameListPanel.resx">
+      <DependentUpon>DatasetNameListPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DatasetQueryPanel.resx">
       <DependentUpon>DatasetQueryPanel.cs</DependentUpon>

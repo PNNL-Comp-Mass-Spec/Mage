@@ -570,6 +570,9 @@ namespace Mage {
                 case "InList":
                     str += string.Format(" {0} IN ({1}) ", col, val);
                     break;
+				case "InListText":
+					str += string.Format(" {0} IN ({1}) ", col, QuoteList(val));
+                    break;
                 case "MatchesTextOrBlank":
                 case "MTxOB":
                     str += string.Format("[{0}] = '{1}' OR [{0}] = ''", col, val);
@@ -593,7 +596,28 @@ namespace Mage {
             return str;
         }
 
-        #endregion
+		/// <summary>
+		/// Adds single quotes to a comma separated list of values
+		/// </summary>
+		/// <param name="valList"></param>
+		/// <returns></returns>
+	    private static string QuoteList(string valList)
+		{
+			var values = valList.Split(',');
+			var quotedList = new StringBuilder();
+
+			foreach (var value in values)
+			{
+				if (quotedList.Length > 0)
+					quotedList.Append(",");
+
+				quotedList.Append("'" + value.Trim() + "'");
+			}
+
+			return quotedList.ToString();
+		}
+
+	    #endregion
 
     }
 }

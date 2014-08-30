@@ -45,6 +45,7 @@
 			this.DatasetQueryPanel1 = new MageUIComponents.DatasetQueryPanel();
 			this.DatasetIDTabPage = new System.Windows.Forms.TabPage();
 			this.DatasetIDListPanel1 = new MageUIComponents.DatasetIDListPanel();
+			this.DatasetNameTabPage = new System.Windows.Forms.TabPage();
 			this.AboutTabPage = new System.Windows.Forms.TabPage();
 			this.pnlAbout = new System.Windows.Forms.Panel();
 			this.txtVersion = new System.Windows.Forms.TextBox();
@@ -73,6 +74,7 @@
 			this.FolderDestinationPanel1 = new MageUIComponents.FolderDestinationPanel();
 			this.ProcessFileToSQLiteDBTabPage = new System.Windows.Forms.TabPage();
 			this.SQLiteDestinationPanel1 = new MageUIComponents.SQLiteDestinationPanel();
+			this.datasetNameListPanel1 = new MageUIComponents.DatasetNameListPanel();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -87,6 +89,7 @@
 			this.DataPackageDatasetsTabPage.SuspendLayout();
 			this.DatasetTabPage.SuspendLayout();
 			this.DatasetIDTabPage.SuspendLayout();
+			this.DatasetNameTabPage.SuspendLayout();
 			this.AboutTabPage.SuspendLayout();
 			this.pnlAbout.SuspendLayout();
 			this.panel2.SuspendLayout();
@@ -171,6 +174,7 @@
 			this.EntityListSourceTabs.Controls.Add(this.DataPackageDatasetsTabPage);
 			this.EntityListSourceTabs.Controls.Add(this.DatasetTabPage);
 			this.EntityListSourceTabs.Controls.Add(this.DatasetIDTabPage);
+			this.EntityListSourceTabs.Controls.Add(this.DatasetNameTabPage);
 			this.EntityListSourceTabs.Controls.Add(this.AboutTabPage);
 			this.EntityListSourceTabs.Dock = System.Windows.Forms.DockStyle.Top;
 			this.EntityListSourceTabs.Location = new System.Drawing.Point(7, 6);
@@ -239,6 +243,7 @@
 			this.JobListTabPage.Padding = new System.Windows.Forms.Padding(4);
 			this.JobListTabPage.Size = new System.Drawing.Size(1268, 105);
 			this.JobListTabPage.TabIndex = 1;
+			this.JobListTabPage.Tag = "Defined via code in method SetTags()";
 			this.JobListTabPage.Text = "Jobs From Job List";
 			this.JobListTabPage.UseVisualStyleBackColor = true;
 			// 
@@ -266,6 +271,7 @@
 			this.JobsFromDatasetIDTabPage.Padding = new System.Windows.Forms.Padding(4);
 			this.JobsFromDatasetIDTabPage.Size = new System.Drawing.Size(1268, 105);
 			this.JobsFromDatasetIDTabPage.TabIndex = 5;
+			this.JobsFromDatasetIDTabPage.Tag = "Defined via code in method SetTags()";
 			this.JobsFromDatasetIDTabPage.Text = "Jobs From Dataset List";
 			this.JobsFromDatasetIDTabPage.UseVisualStyleBackColor = true;
 			// 
@@ -292,7 +298,7 @@
 			this.DataPackageJobsTabPage.Padding = new System.Windows.Forms.Padding(4);
 			this.DataPackageJobsTabPage.Size = new System.Drawing.Size(1268, 105);
 			this.DataPackageJobsTabPage.TabIndex = 2;
-			this.DataPackageJobsTabPage.Tag = "Data_Package";
+			this.DataPackageJobsTabPage.Tag = "Defined via code in method SetTags()";
 			this.DataPackageJobsTabPage.Text = "Jobs From Data Pkg";
 			this.DataPackageJobsTabPage.UseVisualStyleBackColor = true;
 			// 
@@ -317,7 +323,7 @@
 			this.DataPackageDatasetsTabPage.Name = "DataPackageDatasetsTabPage";
 			this.DataPackageDatasetsTabPage.Size = new System.Drawing.Size(1268, 105);
 			this.DataPackageDatasetsTabPage.TabIndex = 8;
-			this.DataPackageDatasetsTabPage.Tag = "Data_Package_Datasets";
+			this.DataPackageDatasetsTabPage.Tag = "Defined via code in method SetTags()";
 			this.DataPackageDatasetsTabPage.Text = "Datasets From Data Pkg";
 			this.DataPackageDatasetsTabPage.UseVisualStyleBackColor = true;
 			// 
@@ -344,6 +350,7 @@
 			this.DatasetTabPage.Padding = new System.Windows.Forms.Padding(4);
 			this.DatasetTabPage.Size = new System.Drawing.Size(1268, 105);
 			this.DatasetTabPage.TabIndex = 3;
+			this.DatasetTabPage.Tag = "Defined via code in method SetTags()";
 			this.DatasetTabPage.Text = "Datasets From Query";
 			this.DatasetTabPage.UseVisualStyleBackColor = true;
 			// 
@@ -368,7 +375,8 @@
 			this.DatasetIDTabPage.Padding = new System.Windows.Forms.Padding(4);
 			this.DatasetIDTabPage.Size = new System.Drawing.Size(1268, 105);
 			this.DatasetIDTabPage.TabIndex = 4;
-			this.DatasetIDTabPage.Text = "Datasets From Dataset List";
+			this.DatasetIDTabPage.Tag = "Defined via code in method SetTags()";
+			this.DatasetIDTabPage.Text = "Datasets by ID";
 			this.DatasetIDTabPage.UseVisualStyleBackColor = true;
 			// 
 			// DatasetIDListPanel1
@@ -381,6 +389,20 @@
 			this.DatasetIDListPanel1.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
 			this.DatasetIDListPanel1.Size = new System.Drawing.Size(1260, 97);
 			this.DatasetIDListPanel1.TabIndex = 0;
+			// 
+			// DatasetNameTabPage
+			// 
+			this.DatasetNameTabPage.BackColor = System.Drawing.Color.Transparent;
+			this.DatasetNameTabPage.Controls.Add(this.datasetNameListPanel1);
+			this.DatasetNameTabPage.Location = new System.Drawing.Point(4, 25);
+			this.DatasetNameTabPage.Margin = new System.Windows.Forms.Padding(4);
+			this.DatasetNameTabPage.Name = "DatasetNameTabPage";
+			this.DatasetNameTabPage.Padding = new System.Windows.Forms.Padding(4);
+			this.DatasetNameTabPage.Size = new System.Drawing.Size(1268, 105);
+			this.DatasetNameTabPage.TabIndex = 9;
+			this.DatasetNameTabPage.Tag = "Defined via code in method SetTags()";
+			this.DatasetNameTabPage.Text = "Datasets By Name";
+			this.DatasetNameTabPage.UseVisualStyleBackColor = true;
 			// 
 			// AboutTabPage
 			// 
@@ -747,6 +769,17 @@
 			this.SQLiteDestinationPanel1.TabIndex = 14;
 			this.SQLiteDestinationPanel1.TableName = "DMS_Factors";
 			// 
+			// datasetNameListPanel1
+			// 
+			this.datasetNameListPanel1.BackColor = System.Drawing.SystemColors.Control;
+			this.datasetNameListPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.datasetNameListPanel1.Location = new System.Drawing.Point(4, 4);
+			this.datasetNameListPanel1.Margin = new System.Windows.Forms.Padding(4);
+			this.datasetNameListPanel1.Name = "datasetNameListPanel1";
+			this.datasetNameListPanel1.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
+			this.datasetNameListPanel1.Size = new System.Drawing.Size(1260, 97);
+			this.datasetNameListPanel1.TabIndex = 0;
+			// 
 			// FileProcessorForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -774,6 +807,7 @@
 			this.DataPackageDatasetsTabPage.ResumeLayout(false);
 			this.DatasetTabPage.ResumeLayout(false);
 			this.DatasetIDTabPage.ResumeLayout(false);
+			this.DatasetNameTabPage.ResumeLayout(false);
 			this.AboutTabPage.ResumeLayout(false);
 			this.pnlAbout.ResumeLayout(false);
 			this.pnlAbout.PerformLayout();
@@ -844,6 +878,8 @@
 		private System.Windows.Forms.Panel panel5;
 		private MageDisplayLib.StatusPanel statusPanel1;
 		private MageUIComponents.FileProcessingPanel FileProcessingPanel1;
+		private System.Windows.Forms.TabPage DatasetNameTabPage;
+		private MageUIComponents.DatasetNameListPanel datasetNameListPanel1;
     }
 }
 
