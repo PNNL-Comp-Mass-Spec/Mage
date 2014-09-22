@@ -50,7 +50,7 @@ namespace MageFileProcessor
 			InitializeComponent();
 
 			const bool isBetaVersion = false;
-			SetFormTitle("2014-08-29", isBetaVersion);
+			SetFormTitle("2014-09-22", isBetaVersion);
 
 			SetTags();
 

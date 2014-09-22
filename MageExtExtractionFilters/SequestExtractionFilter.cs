@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Mage;
 using MageExtContentFilters;
 
@@ -104,15 +101,15 @@ namespace MageExtExtractionFilters {
                     vals[mFilterResultsColIdx] = "Not Checked";
                 }
             } else {
-                string peptideSequence = GetColumnValue(ref vals, peptideSequenceIndex, "");
-                double xCorrValue = GetColumnValue(ref vals, xCorrValueIndex, -1d);
-                double delCNValue = GetColumnValue(ref vals, delCNValueIndex, -1d);
-                double delCN2Value = GetColumnValue(ref vals, delCN2ValueIndex, -1d);
-                int chargeState = GetColumnValue(ref vals, chargeStateIndex, -1);
-                double peptideMass = GetColumnValue(ref vals, peptideMassIndex, -1d);
-                int cleavageState = GetColumnValue(ref vals, cleavageStateIndex, -1);
-                double msgfSpecProb = GetColumnValue(ref vals, msgfSpecProbIndex, -1d);
-				int rankXC = GetColumnValue(ref vals, rankXCIndex, -1);
+                string peptideSequence = GetColumnValue(vals, peptideSequenceIndex, "");
+				double xCorrValue = GetColumnValue(vals, xCorrValueIndex, -1d);
+				double delCNValue = GetColumnValue(vals, delCNValueIndex, -1d);
+				double delCN2Value = GetColumnValue(vals, delCN2ValueIndex, -1d);
+				int chargeState = GetColumnValue(vals, chargeStateIndex, -1);
+				double peptideMass = GetColumnValue(vals, peptideMassIndex, -1d);
+				int cleavageState = GetColumnValue(vals, cleavageStateIndex, -1);
+				double msgfSpecProb = GetColumnValue(vals, msgfSpecProbIndex, -1d);
+				int rankXC = GetColumnValue(vals, rankXCIndex, -1);
 
                 // Legacy columns; no longer used
                 int spectrumCount = -1;

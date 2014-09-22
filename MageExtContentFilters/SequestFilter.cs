@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Mage;
+﻿using Mage;
 
 namespace MageExtContentFilters {
 
@@ -75,15 +71,15 @@ namespace MageExtContentFilters {
 		{
             bool accepted = false;
          
-			string peptideSequence = GetColumnValue(ref fields, peptideSequenceIndex, string.Empty);
-			double xCorrValue = GetColumnValue(ref fields, xCorrValueIndex, -1d);
-			double delCNValue = GetColumnValue(ref fields, delCNValueIndex, -1d);
-			double delCN2Value = GetColumnValue(ref fields, delCN2ValueIndex, -1d);
-			int chargeState = GetColumnValue(ref fields, chargeStateIndex, -1);
-			double peptideMass = GetColumnValue(ref fields, peptideMassIndex, -1d);
-			int cleavageState = GetColumnValue(ref fields, cleavageStateIndex, -1);
-			double msgfSpecProb = GetColumnValue(ref fields, msgfSpecProbIndex, -1d);
-			int rankXc = GetColumnValue(ref fields, rankXcIndex, -1);
+			string peptideSequence = GetColumnValue(fields, peptideSequenceIndex, string.Empty);
+			double xCorrValue = GetColumnValue(fields, xCorrValueIndex, -1d);
+			double delCNValue = GetColumnValue(fields, delCNValueIndex, -1d);
+			double delCN2Value = GetColumnValue(fields, delCN2ValueIndex, -1d);
+			int chargeState = GetColumnValue(fields, chargeStateIndex, -1);
+			double peptideMass = GetColumnValue(fields, peptideMassIndex, -1d);
+			int cleavageState = GetColumnValue(fields, cleavageStateIndex, -1);
+			double msgfSpecProb = GetColumnValue(fields, msgfSpecProbIndex, -1d);
+			int rankXc = GetColumnValue(fields, rankXcIndex, -1);
 
 			int spectrumCount = -1;
 			double discriminantScore = -1;

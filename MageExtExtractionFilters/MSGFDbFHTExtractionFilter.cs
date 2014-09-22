@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Mage;
 using MageExtContentFilters;
 
@@ -106,14 +103,14 @@ namespace MageExtExtractionFilters {
                     vals[mFilterResultsColIdx] = "Not Checked";
                 }
             } else {
-                string peptideSequence = GetColumnValue(ref vals, peptideSequenceIndex, "");
-                int chargeState = GetColumnValue(ref vals, chargeStateIndex, 0);
-                double peptideMass = GetColumnValue(ref vals, peptideMassIndex, -1d);
-                double SpecProb = GetColumnValue(ref vals, msgfDbSpecProbValueIndex, -1d);
-                double PValue = GetColumnValue(ref vals, pValueIndex, -1d);
-                double FDR = GetColumnValue(ref vals, FDRIndex, -1d);
-                double PepFDR = GetColumnValue(ref vals, pepFDRIndex, -1d);
-                double msgfSpecProb = GetColumnValue(ref vals, msgfSpecProbIndex, -1d);
+				string peptideSequence = GetColumnValue(vals, peptideSequenceIndex, "");
+				int chargeState = GetColumnValue(vals, chargeStateIndex, 0);
+				double peptideMass = GetColumnValue(vals, peptideMassIndex, -1d);
+				double SpecProb = GetColumnValue(vals, msgfDbSpecProbValueIndex, -1d);
+				double PValue = GetColumnValue(vals, pValueIndex, -1d);
+				double FDR = GetColumnValue(vals, FDRIndex, -1d);
+				double PepFDR = GetColumnValue(vals, pepFDRIndex, -1d);
+				double msgfSpecProb = GetColumnValue(vals, msgfSpecProbIndex, -1d);
 				int rankMSGFDbSpecProb = 1;
 
 				bool pass = mMSGFDbFilter.EvaluateMSGFDB(peptideSequence, chargeState, peptideMass, SpecProb, PValue, FDR, PepFDR, msgfSpecProb, rankMSGFDbSpecProb);

@@ -1,5 +1,8 @@
 Mage Revision History
 
+Version 1.5.5378; September 22, 2014
+	- Changed the GetColumnValue() function to not use the ref keyword for the columnVals string array
+
 Version 1.5.5354; August 29, 2014
 	- Added tab Datasets by Name to Mage File Processor
 

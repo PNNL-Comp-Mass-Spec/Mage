@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Mage;
+﻿using Mage;
 
 namespace MageExtContentFilters {
 
@@ -69,13 +65,13 @@ namespace MageExtContentFilters {
 		protected override bool CheckFilter(ref string[] fields)
 		{
             bool accepted = false;
-			string peptideSequence = GetColumnValue(ref fields, peptideSequenceIndex, string.Empty);
-			double hyperScoreValue = GetColumnValue(ref fields, hyperScoreValueIndex, -1d);
-			double logEValue = GetColumnValue(ref fields, logEValueIndex, -1d);
-			double delCN2Value = GetColumnValue(ref fields, delCN2ValueIndex, -1d);
-			int chargeState = GetColumnValue(ref fields, chargeStateIndex, -1);
-			double peptideMass = GetColumnValue(ref fields, peptideMassIndex, -1d);
-			double msgfSpecProb = GetColumnValue(ref fields, msgfSpecProbIndex, -1d);
+			string peptideSequence = GetColumnValue(fields, peptideSequenceIndex, string.Empty);
+			double hyperScoreValue = GetColumnValue(fields, hyperScoreValueIndex, -1d);
+			double logEValue = GetColumnValue(fields, logEValueIndex, -1d);
+			double delCN2Value = GetColumnValue(fields, delCN2ValueIndex, -1d);
+			int chargeState = GetColumnValue(fields, chargeStateIndex, -1);
+			double peptideMass = GetColumnValue(fields, peptideMassIndex, -1d);
+			double msgfSpecProb = GetColumnValue(fields, msgfSpecProbIndex, -1d);
 	
             accepted = mXTFilter.EvaluateXTandem(peptideSequence, hyperScoreValue, logEValue, delCN2Value, chargeState, peptideMass, msgfSpecProb);
 

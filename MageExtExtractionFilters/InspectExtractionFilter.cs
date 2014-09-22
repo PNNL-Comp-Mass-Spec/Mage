@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using MageExtContentFilters;
 using Mage;
 using System.Collections.ObjectModel;
@@ -136,17 +133,17 @@ namespace MageExtExtractionFilters {
                     vals[mFilterResultsColIdx] = "Not Checked";
                 }
             } else {
-                string peptideSequence = GetColumnValue(ref vals, peptideSequenceIndex, "");
-                int chargeState = GetColumnValue(ref vals, chargeStateIndex, 0);
-                double peptideMass = GetColumnValue(ref vals, peptideMassIndex, -1d);
-                
-                double MQScore = GetColumnValue(ref vals, mqScoreIndex, -1d);
-		        double TotalPRMScore = GetColumnValue(ref vals, totalPRMScoreIndex, -1d);
-		        double FScore = GetColumnValue(ref vals, fScoreIndex, -1d);
-		        double PValue = GetColumnValue(ref vals, pValueIndex, -1d);
+				string peptideSequence = GetColumnValue(vals, peptideSequenceIndex, "");
+				int chargeState = GetColumnValue(vals, chargeStateIndex, 0);
+				double peptideMass = GetColumnValue(vals, peptideMassIndex, -1d);
 
-                double msgfSpecProb = GetColumnValue(ref vals, msgfSpecProbIndex, -1d);
-				int rankTotalPRMScore = GetColumnValue(ref vals, rankTotalPRMScoreIndex, -1);
+				double MQScore = GetColumnValue(vals, mqScoreIndex, -1d);
+				double TotalPRMScore = GetColumnValue(vals, totalPRMScoreIndex, -1d);
+				double FScore = GetColumnValue(vals, fScoreIndex, -1d);
+				double PValue = GetColumnValue(vals, pValueIndex, -1d);
+
+				double msgfSpecProb = GetColumnValue(vals, msgfSpecProbIndex, -1d);
+				int rankTotalPRMScore = GetColumnValue(vals, rankTotalPRMScoreIndex, -1);
 
 				bool pass = mInspectFilter.EvaluateInspect(peptideSequence, chargeState, peptideMass, MQScore, TotalPRMScore, FScore, PValue, msgfSpecProb, rankTotalPRMScore);
 

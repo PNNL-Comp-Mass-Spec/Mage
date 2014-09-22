@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using MageExtContentFilters;
 using Mage;
-using System.IO;
 using System.Collections.ObjectModel;
 
 namespace MageExtExtractionFilters {
@@ -134,13 +130,13 @@ namespace MageExtExtractionFilters {
                     vals[mFilterResultsColIdx] = "Not Checked";
                 }
             } else {
-                string peptideSequence = GetColumnValue(ref vals, peptideSequenceIndex, "");
-                double delCN2Value = GetColumnValue(ref vals, delCN2ValueIndex, -1d);
-                double hyperScoreValue = GetColumnValue(ref vals, hyperScoreValueIndex, -1d);
-                double logEValue = GetColumnValue(ref vals, logEValueIndex, -1d);
-                int chargeState = GetColumnValue(ref vals, chargeStateIndex, -1);
-                double peptideMass = GetColumnValue(ref vals, peptideMassIndex, -1d);
-                double msgfSpecProb = GetColumnValue(ref vals, msgfSpecProbIndex, -1d);
+				string peptideSequence = GetColumnValue(vals, peptideSequenceIndex, "");
+				double delCN2Value = GetColumnValue(vals, delCN2ValueIndex, -1d);
+				double hyperScoreValue = GetColumnValue(vals, hyperScoreValueIndex, -1d);
+				double logEValue = GetColumnValue(vals, logEValueIndex, -1d);
+				int chargeState = GetColumnValue(vals, chargeStateIndex, -1);
+				double peptideMass = GetColumnValue(vals, peptideMassIndex, -1d);
+				double msgfSpecProb = GetColumnValue(vals, msgfSpecProbIndex, -1d);
 
                 bool pass = mXTFilter.EvaluateXTandem(peptideSequence, hyperScoreValue, logEValue, delCN2Value, chargeState, peptideMass, msgfSpecProb);
 
