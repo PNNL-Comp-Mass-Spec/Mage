@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 using System.Windows.Forms;
 using log4net;
 using Mage;
 using MageDisplayLib;
+using Timer = System.Windows.Forms.Timer;
 
 namespace MageConcatenator
 {
@@ -13,7 +15,7 @@ namespace MageConcatenator
     {
         #region Member Variables
 
-        public const string PROGRAM_DATE = "October 23, 2014";
+        public const string PROGRAM_DATE = "October 24, 2014";
 
         /// <summary>
         /// Pipeline queue for running the multiple pipelines that make up the workflows for this module
@@ -30,6 +32,10 @@ namespace MageConcatenator
 
         // object that sent the current command
         object mCurrentCmdSender;
+
+        private clsFileCombiner mFileCombiner;
+        private List<string> mCombineFilesPaths;
+        private string mCombineFilesTargetFilePath;
 
         #endregion
 
@@ -229,6 +235,30 @@ namespace MageConcatenator
             }
         }
 
+        private void StartConcatenatingFiles(bool useThreading)
+        {
+            if (useThreading)
+                ThreadPool.QueueUserWorkItem(StartConcatenating);
+            else
+                StartConcatenating(null);
+        }
+
+        private void StartConcatenating(object state)
+        {
+            var success = mFileCombiner.CombineFiles(mCombineFilesPaths, mCombineFilesTargetFilePath);
+
+            if (success)
+            {
+                CompletionStateUpdated csu = AdjusttPostCommndUIState;
+                Invoke(csu, new object[] { null });
+            }
+            else
+            {
+                BoolFnDelegate ec = EnableCancel;
+                Invoke(ec, new object[] { false });
+            }
+        }
+
         #endregion
 
         #region File Grocessing Routines
@@ -254,7 +284,7 @@ namespace MageConcatenator
                     return;
                 }
 
-                string targetFilePath = Path.Combine(runtimeParms["OutputFolder"], runtimeParms["OutputFile"]);
+                mCombineFilesTargetFilePath = Path.Combine(runtimeParms["OutputFolder"], runtimeParms["OutputFile"]);
 
                 if (processAllFiles)
                 {
@@ -262,7 +292,7 @@ namespace MageConcatenator
                 }
 
                 // Construct the list of the file paths to concatenate
-                var lstFilePaths = new List<string>();
+                mCombineFilesPaths = new List<string>();
 
                 foreach (var selectedFileRow in FileListDisplayControl.SelectedItemRowsDictionaryList)
                 {
@@ -270,27 +300,27 @@ namespace MageConcatenator
                     string sourceFilePath = Path.Combine(selectedFileRow["Folder"], selectedFileRow["File"]);
 
                     // Make sure the target file is not in the source file list
-                    if (System.String.Compare(sourceFilePath, targetFilePath, System.StringComparison.OrdinalIgnoreCase) == 0)
+                    if (System.String.Compare(sourceFilePath, mCombineFilesTargetFilePath, System.StringComparison.OrdinalIgnoreCase) == 0)
                     {
                         // Auto-rename the target file
-                        var fiTargetFile = new FileInfo(targetFilePath);
+                        var fiTargetFile = new FileInfo(mCombineFilesTargetFilePath);
                         if (fiTargetFile.Directory == null)
                         {
-                             MessageBox.Show("Error in CombineFiles: cannot determine the parent folder path for the target file, " + targetFilePath, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                             MessageBox.Show("Error in CombineFiles: cannot determine the parent folder path for the target file, " + mCombineFilesTargetFilePath, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             return;
                         }
 
                         var dtTimestamp = "_combined_" + DateTime.Now.ToString("HH:mm:ss").Replace(":", "_");
-                        targetFilePath = Path.GetFileNameWithoutExtension(targetFilePath) + dtTimestamp +
-                                         Path.GetExtension(targetFilePath);
+                        mCombineFilesTargetFilePath = Path.GetFileNameWithoutExtension(mCombineFilesTargetFilePath) + dtTimestamp +
+                                         Path.GetExtension(mCombineFilesTargetFilePath);
 
-                        targetFilePath = Path.Combine(fiTargetFile.Directory.FullName, targetFilePath);
+                        mCombineFilesTargetFilePath = Path.Combine(fiTargetFile.Directory.FullName, mCombineFilesTargetFilePath);
 
                     }
-                    lstFilePaths.Add(sourceFilePath);
+                    mCombineFilesPaths.Add(sourceFilePath);
                 }
 
-                if (lstFilePaths.Count == 0)
+                if (mCombineFilesPaths.Count == 0)
                 {
                     statusPanel1.HandleStatusMessageUpdated(this, new MageStatusEventArgs("No files are selected; nothing to do"));
                     return;
@@ -301,19 +331,19 @@ namespace MageConcatenator
                 statusPanel1.ClearWarnings();
                 EnableCancel(true);
 
-                var fileCombiner = new clsFileCombiner();
-                fileCombiner.OnStatusUpdate += HandlePipelineUpdate;
-                fileCombiner.OnError += HandlePipelineWarning;
-                fileCombiner.OnWarning += HandlePipelineWarning;
-                fileCombiner.OnRunCompleted += HandlePipelineCompletion;
+                if (mFileCombiner == null)
+                {
+                    mFileCombiner = new clsFileCombiner();
+                    mFileCombiner.OnStatusUpdate += HandlePipelineUpdate;
+                    mFileCombiner.OnError += HandlePipelineWarning;
+                    mFileCombiner.OnWarning += HandlePipelineWarning;
+                    mFileCombiner.OnRunCompleted += HandlePipelineCompletion;
+                }
 
-                var success = fileCombiner.CombineFiles(lstFilePaths, targetFilePath);
-                
-                if (success)
-                    AdjusttPostCommndUIState(null);
-                else 
-                    EnableCancel(false);
+                mFileCombiner.AddFileNameFirstColumn = chkAddFileName.Checked;
 
+                const bool USE_THREADING = true;
+                StartConcatenatingFiles(USE_THREADING);
             }
 
             catch (Exception ex)
@@ -330,7 +360,7 @@ namespace MageConcatenator
         private List<clsFileInfo> GetSelectedFiles()
         {
             var lstSelectedFiles = new List<clsFileInfo>();
-            var lstFilePaths = new SortedSet<string>();
+            var mCombineFilesPaths = new SortedSet<string>();
 
             foreach (var selectedFileRow in FileListDisplayControl.SelectedItemRowsDictionaryList)
             {
@@ -353,7 +383,7 @@ namespace MageConcatenator
                 }
 
                 var fullPath = Path.Combine(folderPath, filename);
-                if (lstFilePaths.Contains(fullPath))
+                if (mCombineFilesPaths.Contains(fullPath))
                 {
                     continue;
                 }
@@ -365,7 +395,7 @@ namespace MageConcatenator
                 };
 
                 lstSelectedFiles.Add(fileInfo);
-                lstFilePaths.Add(fullPath);
+                mCombineFilesPaths.Add(fullPath);
             }
 
             return lstSelectedFiles;
@@ -412,11 +442,10 @@ namespace MageConcatenator
                         data[1] = currentFile.SizeKB;
                         data[2] = currentFile.DateModified;
                         data[3] = currentFile.FolderPath;
+                        data[4] = currentFile.Rows.ToString("#,##0");
 
-                        if (currentFile.Rows > clsFileCombiner.MAX_ROWS_TO_TRACK)
-                            data[4] = clsFileCombiner.MAX_ROWS_TO_TRACK + "+";
-                        else
-                            data[4] = currentFile.Rows.ToString("#,##0");
+                        if (currentFile.Rows >= clsFileCombiner.MAX_ROWS_TO_TRACK)
+                            data[4] += "+";
 
                         data[5] = currentFile.Columns.ToString("0");
 
@@ -554,6 +583,7 @@ namespace MageConcatenator
         #region Functions for handling status updates
 
         private delegate void CompletionStateUpdated(object status);
+        private delegate void BoolFnDelegate(bool value);
         private delegate void VoidFnDelegate();
 
         private void HandlePipelineUpdate(object sender, MageStatusEventArgs args)
@@ -625,6 +655,16 @@ namespace MageConcatenator
         private void SetupStatusPanel()
         {
             statusPanel1.OwnerControl = this;
+            statusPanel1.OnAction += statusPanel1_OnAction;
+        }
+
+        void statusPanel1_OnAction(object sender, MageCommandEventArgs e)
+        {
+            if (e.Action == "cancel_operation")
+            {
+                if (mFileCombiner != null)
+                    mFileCombiner.Cancel();
+            }
         }
 
         /// <summary>

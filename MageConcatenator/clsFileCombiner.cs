@@ -8,21 +8,50 @@ namespace MageConcatenator
 {
     class clsFileCombiner
     {
+
+
+        #region Constants and Classwide Variables
+
         public const int MAX_ROWS_TO_TRACK = 100000;
 
+        private bool mCancelProcessingRequested;
+
+        #endregion
+
+        #region Properties
+
+        public bool AddFileNameFirstColumn { get; set; }
+
+        #endregion
+
+        #region Events
+
         public event EventHandler<MageStatusEventArgs> OnRunCompleted;
-        
+
         public event EventHandler<MageStatusEventArgs> OnError;
 
         public event EventHandler<MageStatusEventArgs> OnWarning;
 
         public event EventHandler<MageStatusEventArgs> OnStatusUpdate;
 
+        #endregion
+
+        /// <summary>
+        /// Cancel the current processing
+        /// and set the abort flag to stop the queue
+        /// </summary>
+        public void Cancel()
+        {
+            Globals.AbortRequested = true;
+            mCancelProcessingRequested = true;
+        }
 
         public bool CombineFiles(List<string> lstFilePaths, string targetFilePath)
         {
             try
             {
+                mCancelProcessingRequested = false;
+
                 var fiTargetFile = new FileInfo(targetFilePath);
                 int filesProcessed = 0;
 
@@ -33,11 +62,13 @@ namespace MageConcatenator
                 {
                     bool headerWritten = false;
                     string headerLine = string.Empty;
-                    
+
                     char headerDelimiter = ' ';
 
                     foreach (var filePath in lstFilePaths)
                     {
+                        if (mCancelProcessingRequested)
+                            break;
 
                         var fiFile = new FileInfo(filePath);
                         if (!fiFile.Exists)
@@ -46,25 +77,36 @@ namespace MageConcatenator
                             continue;
                         }
 
+                        var percentComplete = filesProcessed / (float)lstFilePaths.Count * 100;
+                        var dtLastStatus = DateTime.UtcNow;
+                        ReportStatus(percentComplete.ToString("0") + "% complete, processing " + filePath);
+
                         filesProcessed++;
 
-                        ReportStatus("Processing " + filePath);
+                        string sourceFileName = fiFile.Name;
 
                         char delimiter = GetDelimiter(fiFile);
                         if (headerDelimiter == ' ')
+                        {
                             headerDelimiter = delimiter;
+                        }
                         else
                         {
                             if (headerDelimiter != delimiter)
                                 ReportWarning("First file has column delimiter '" + headerDelimiter + "' but file " +
-                                          filesProcessed + " has delimiter '" + delimiter + "'");
+                                              filesProcessed + " has delimiter '" + delimiter + "'");
                         }
+
+                        Int64 fileSizeBytes = fiFile.Length;
+
                         using (
                             var reader =
                                 new StreamReader(new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
                             )
                         {
                             bool headerParsed = false;
+                            int rowCount = 0;
+                            Int64 bytesRead = 0;
 
                             while (reader.Peek() > -1)
                             {
@@ -77,19 +119,53 @@ namespace MageConcatenator
                                 if (!headerParsed)
                                 {
                                     ParseHeaderLine(currentRow, writer, filePath, ref headerWritten, ref headerLine, ref headerDelimiter);
-                                    headerParsed=true;
+                                    headerParsed = true;
                                     continue;
                                 }
 
-                                writer.WriteLine(currentRow);
+                                if (AddFileNameFirstColumn)
+                                    writer.WriteLine(sourceFileName + delimiter + currentRow);
+                                else
+                                    writer.WriteLine(currentRow);
+
+                                rowCount++;
+                                bytesRead += currentRow.Length + 1;
+
+                                if (rowCount % 10000 == 0)
+                                {
+                                    if (mCancelProcessingRequested)
+                                        break;
+
+                                    if (DateTime.UtcNow.Subtract(dtLastStatus).TotalSeconds >= 0.5)
+                                    {
+                                        dtLastStatus = DateTime.UtcNow;
+                                        var percentCompleteOverall = percentComplete + bytesRead / (float)fileSizeBytes / lstFilePaths.Count * 100;
+                                        ReportStatus(percentCompleteOverall.ToString("0") + "% complete, processing " + filePath);
+                                    }
+                                }
+
                             }
                         }
                     }
 
                 }
 
-                ReportProcessingComplete("Combined " + filesProcessed + " files to create " + fiTargetFile.FullName);
-                return true;
+                if (mCancelProcessingRequested)
+                {
+                    var cancelMessage = "Cancelled the operation (" + filesProcessed + " file";
+                    if (filesProcessed != 1)
+                        cancelMessage += "s";
+                    cancelMessage += " processed so far)";
+
+                    ReportProcessingComplete(cancelMessage);
+                    return false;
+                }
+                else
+                {
+                    ReportProcessingComplete("Combined " + filesProcessed + " files to create " + fiTargetFile.FullName);
+                    return true;
+                }
+
             }
             catch (Exception ex)
             {
@@ -98,7 +174,7 @@ namespace MageConcatenator
             }
         }
 
-        
+
         private char GetDelimiter(FileInfo fiFile)
         {
             char delimiter = '\t';
@@ -111,15 +187,19 @@ namespace MageConcatenator
         private void ParseHeaderLine(string currentRow, StreamWriter writer, string filePath,
                                      ref bool headerWritten, ref string headerLine, ref char headerDelimiter)
         {
-            
+
             if (!headerWritten)
             {
                 headerWritten = true;
                 headerLine = string.Copy(currentRow);
 
                 headerDelimiter = VerifyDelimiter(currentRow, headerDelimiter);
-             
-                writer.WriteLine(headerLine);
+
+                if (AddFileNameFirstColumn)
+                    writer.WriteLine("Source_file" + headerDelimiter + headerLine);
+                else
+                    writer.WriteLine(headerLine);
+
                 return;
             }
 
@@ -129,13 +209,15 @@ namespace MageConcatenator
                 ReportWarning("The header line for file " + Path.GetFileName(filePath) +
                           " does not match the header line of the first file");
             }
-           
+
         }
 
         public bool UpdateFileRowColCounts(List<clsFileInfo> lstFiles)
         {
             try
             {
+                mCancelProcessingRequested = false;
+
                 foreach (var item in lstFiles)
                 {
                     UpdateColCounts(item);
@@ -163,7 +245,7 @@ namespace MageConcatenator
 
                 char delimiter = GetDelimiter(fiFile);
 
-                using ( var reader = new StreamReader(new FileStream(fiFile.FullName, FileMode.Open, FileAccess.Read, FileShare.Read)))
+                using (var reader = new StreamReader(new FileStream(fiFile.FullName, FileMode.Open, FileAccess.Read, FileShare.Read)))
                 {
                     int rowCount = 0;
                     int colCount = -1;
@@ -189,8 +271,8 @@ namespace MageConcatenator
                             {
                                 colCount = columns.Length;
                             }
-                            
-                        }                       
+
+                        }
                     }
 
                     item.Columns = colCount;
@@ -237,7 +319,7 @@ namespace MageConcatenator
 
         }
 
-        public void ReportProcessingComplete(string message)
+        protected void ReportProcessingComplete(string message)
         {
             if (OnRunCompleted != null)
             {
@@ -245,7 +327,7 @@ namespace MageConcatenator
             }
         }
 
-        public void ReportError(string message)
+        protected void ReportError(string message)
         {
             if (OnError != null)
             {
@@ -255,7 +337,7 @@ namespace MageConcatenator
 
         private void ReportStatus(string message)
         {
-             if (OnStatusUpdate != null)
+            if (OnStatusUpdate != null)
             {
                 OnStatusUpdate(this, new MageStatusEventArgs(message));
             }

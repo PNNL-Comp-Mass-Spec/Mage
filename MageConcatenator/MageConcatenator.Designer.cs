@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MageConcatenator));
             this.pnlControlsAndStatus = new System.Windows.Forms.Panel();
+            this.cmdAbout = new System.Windows.Forms.Button();
             this.chkAddFileName = new System.Windows.Forms.CheckBox();
             this.FolderDestinationPanel1 = new MageUIComponents.FolderDestinationPanel();
             this.statusPanel1 = new MageDisplayLib.StatusPanel();
@@ -36,7 +38,6 @@
             this.ProcessSelectedFilesCtl = new System.Windows.Forms.Button();
             this.FileListDisplayControl = new MageDisplayLib.GridViewDisplayControl();
             this.LocalFolderPanel1 = new MageUIComponents.LocalFolderPanel();
-            this.cmdAbout = new System.Windows.Forms.Button();
             this.pnlControlsAndStatus.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,6 +54,18 @@
             this.pnlControlsAndStatus.Name = "pnlControlsAndStatus";
             this.pnlControlsAndStatus.Size = new System.Drawing.Size(1274, 159);
             this.pnlControlsAndStatus.TabIndex = 15;
+            // 
+            // cmdAbout
+            // 
+            this.cmdAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmdAbout.Location = new System.Drawing.Point(1191, 10);
+            this.cmdAbout.Margin = new System.Windows.Forms.Padding(4);
+            this.cmdAbout.Name = "cmdAbout";
+            this.cmdAbout.Size = new System.Drawing.Size(77, 28);
+            this.cmdAbout.TabIndex = 27;
+            this.cmdAbout.Text = "About";
+            this.cmdAbout.UseVisualStyleBackColor = true;
+            this.cmdAbout.Click += new System.EventHandler(this.cmdAbout_Click);
             // 
             // chkAddFileName
             // 
@@ -122,6 +135,7 @@
             // FileListDisplayControl
             // 
             this.FileListDisplayControl.AllowDisableShiftClickMode = true;
+            this.FileListDisplayControl.AutoSizeColumnWidths = false;
             this.FileListDisplayControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.FileListDisplayControl.HeaderVisible = true;
             this.FileListDisplayControl.ItemBlockSize = 100;
@@ -150,18 +164,6 @@
             this.LocalFolderPanel1.SubfolderSearchName = "*";
             this.LocalFolderPanel1.TabIndex = 8;
             // 
-            // cmdAbout
-            // 
-            this.cmdAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmdAbout.Location = new System.Drawing.Point(1191, 10);
-            this.cmdAbout.Margin = new System.Windows.Forms.Padding(4);
-            this.cmdAbout.Name = "cmdAbout";
-            this.cmdAbout.Size = new System.Drawing.Size(77, 28);
-            this.cmdAbout.TabIndex = 27;
-            this.cmdAbout.Text = "About";
-            this.cmdAbout.UseVisualStyleBackColor = true;
-            this.cmdAbout.Click += new System.EventHandler(this.cmdAbout_Click);
-            // 
             // MageConcatenator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -170,8 +172,9 @@
             this.Controls.Add(this.FileListDisplayControl);
             this.Controls.Add(this.pnlControlsAndStatus);
             this.Controls.Add(this.LocalFolderPanel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MageConcatenator";
-            this.Text = "MageConcatenator";
+            this.Text = "Mage File Concatenator";
             this.pnlControlsAndStatus.ResumeLayout(false);
             this.pnlControlsAndStatus.PerformLayout();
             this.ResumeLayout(false);
