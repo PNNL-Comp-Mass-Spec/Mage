@@ -124,7 +124,7 @@ namespace Mage
 		/// </summary>
 		public FileListFilter()
 		{
-			FileSelectorMode = "RegEx";
+			FileSelectorMode = "FileSearch";
 			IncludeFilesOrFolders = "File";
 			RecursiveSearch = "No";
 		}

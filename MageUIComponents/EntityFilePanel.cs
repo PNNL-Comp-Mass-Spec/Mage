@@ -17,7 +17,10 @@ namespace MageUIComponents {
             InitializeComponent();
         }
 
-        private string mSelectionMode = "RegEx";
+        /// <summary>
+        /// Can be RegEx or FileSearch
+        /// </summary>
+        private string mSelectionMode = "FileSearch";
 
         public string FileSelectionMode {
             get {

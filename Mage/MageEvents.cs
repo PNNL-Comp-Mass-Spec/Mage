@@ -40,7 +40,7 @@ namespace Mage {
         }
 
         /// <summary>
-        /// construct a Mage standard tabular input/outpu column definition object
+        /// construct a Mage standard tabular input/output column definition object
         /// </summary>
         /// <param name="name">Column name</param>
         /// <param name="type">Column data type</param>

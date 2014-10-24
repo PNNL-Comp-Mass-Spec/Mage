@@ -89,7 +89,7 @@ namespace Mage {
         /// (this is only needed if module does not simply pass through the input columns)
         /// Col Specs:
         /// [output column name] - simple pass-through of input column with same name
-        /// [[output column name]|[input column name]|[type]|[size] - map input column to output column using different name and pptionally override data type and size
+        /// [output column name]|[input column name]|[type]|[size] - map input column to output column using different name and optionally override data type and size
         /// [output column name]|+|[type]|[size] - output column is new column
         /// </summary>
         public string OutputColumnList { get; set; }
@@ -528,6 +528,15 @@ namespace Mage {
             int outColIdx = 0;
             // process each column spec from spec list
             try {
+                if (OutputColumnList.StartsWith("Job, "))
+                {
+                    if (!InputColumnPos.ContainsKey("Job"))
+                    {
+                        // Job number is not available; don't try to add it
+                        OutputColumnList = OutputColumnList.Substring(5);
+                    }
+                }
+
                 foreach (string colSpec in OutputColumnList.Split(',')) {
                     // break each column spec into fields
                     string[] colSpecFlds = colSpec.Trim().Split('|');

@@ -33,7 +33,14 @@ namespace MageFileProcessor
 		/// Pipeline queue for running the multiple pipelines that make up the workflows for this module
 		/// </summary>
 		private PipelineQueue mPipelineQueue = new PipelineQueue();
+
 		private string mFinalPipelineName = string.Empty;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>Used to determine which field names to use for source files when copying files or processing files</remarks>
+        private string mFileSourcePipelineName = string.Empty;
 
 		// current command that is being executed or has most recently been executed
 		MageCommandEventArgs mCurrentCmd;
@@ -50,7 +57,7 @@ namespace MageFileProcessor
 			InitializeComponent();
 
 			const bool isBetaVersion = false;
-			SetFormTitle("2014-09-22", isBetaVersion);
+			SetFormTitle("2014-10-23", isBetaVersion);
 
 			SetTags();
 
@@ -295,6 +302,7 @@ namespace MageFileProcessor
 						pipeline = Pipelines.MakeFileListPipeline(source, sink, runtimeParms);
 						mPipelineQueue.Pipelines.Enqueue(pipeline);
 						mFinalPipelineName = pipeline.PipelineName;
+                        mFileSourcePipelineName = pipeline.PipelineName;
 						break;
 
 					case "get_files_from_local_folder":
@@ -310,6 +318,7 @@ namespace MageFileProcessor
 						pipeline = Pipelines.MakePipelineToGetLocalFileList(sink, runtimeParms);
 						mPipelineQueue.Pipelines.Enqueue(pipeline);
 						mFinalPipelineName = pipeline.PipelineName;
+                        mFileSourcePipelineName = pipeline.PipelineName;
 						break;
 
 					case "get_files_from_local_manifest":
@@ -325,6 +334,7 @@ namespace MageFileProcessor
 						pipeline = Pipelines.MakePipelineToGetFilesFromManifest(sink, runtimeParms);
 						mPipelineQueue.Pipelines.Enqueue(pipeline);
 						mFinalPipelineName = pipeline.PipelineName;
+                        mFileSourcePipelineName = pipeline.PipelineName;
 						break;
 
 					case "copy_files":
@@ -516,6 +526,8 @@ namespace MageFileProcessor
 			// initial labels for display list control panels
 			JobListDisplayControl.PageTitle = "Entities";
 			FileListDisplayControl.PageTitle = "Files";
+            FileListDisplayControl.AutoSizeColumnWidths = true;
+
 			JobDatasetIDList1.Legend = "(Dataset IDs)";
 			JobDatasetIDList1.ListName = "Dataset_ID";
 
@@ -724,9 +736,10 @@ namespace MageFileProcessor
 			var rp = new Dictionary<string, string>
 			{
 				{"FileNameFilter", LocalFolderPanel1.FileNameFilter},
+                {"FileSelectionMode", LocalFolderPanel1.FileSelectionMode},
 				{"Folder", LocalFolderPanel1.Folder},
 				{"SearchInSubfolders", LocalFolderPanel1.SearchInSubfolders},
-				{"SubfolderSearchName", LocalFolderPanel1.SubfolderSearchName}
+				{"SubfolderSearchName", LocalFolderPanel1.SubfolderSearchName}                
 			};
 			return rp;
 		}
@@ -752,6 +765,15 @@ namespace MageFileProcessor
 				{"ManifestFileName", string.Format("Manifest_{0:yyyy-MM-dd_hhmmss}.txt", DateTime.Now)}
 			};
 
+            if (mFileSourcePipelineName == Pipelines.PIPELINE_GET_LOCAL_FILES)
+            {
+                rp.Add("SourceFileColumnName", "File");
+            }
+            else
+            {
+                rp.Add("SourceFileColumnName", "Name");
+            }
+
 			return rp;
 		}
 
@@ -765,13 +787,23 @@ namespace MageFileProcessor
 				{"PrefixLeader", FileCopyPanel1.PrefixLeader},
 				{"ColumnToUseForPrefix", FileCopyPanel1.PrefixColumnName},
 				{"OverwriteExistingFiles", FileCopyPanel1.OverwriteExistingFiles},
-				{"OutputColumnList", "Name, *"},
-				{"OutputFileColumnName", "Name"},
-				{"SourceFileColumnName", "Name"},
 				{"SourceFolderColumnName", "Folder"}
 			};
 
-			return rp;
+            if (mFileSourcePipelineName == Pipelines.PIPELINE_GET_LOCAL_FILES)
+		    {
+                rp.Add("SourceFileColumnName", "File");
+                rp.Add("OutputColumnList", "File, *");
+                rp.Add("OutputFileColumnName", "File");
+		    }
+		    else
+		    {
+                rp.Add("SourceFileColumnName", "Name");
+                rp.Add("OutputColumnList", "Name, *");
+		        rp.Add("OutputFileColumnName", "Name");
+		    }
+
+		    return rp;
 		}
 
 		private Dictionary<string, string> GetRuntimeParmsForEntityFileType(string entityType)

@@ -1,10 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Mage;
 
@@ -16,6 +11,11 @@ namespace MageUIComponents {
 
         #region Member Variables
 
+        /// <summary>
+        /// Can be RegEx or FileSearch
+        /// </summary>
+        private string mSelectionMode = "FileSearch";
+
         #endregion
 
         #region Properties
@@ -25,12 +25,34 @@ namespace MageUIComponents {
             set { LocalFileNameFilterCtl.Text = value; }
         }
 
+        public string FileSelectionMode
+        {
+            get
+            {
+                return mSelectionMode;
+            }
+            set
+            {
+                mSelectionMode = value;
+                if (mSelectionMode != "RegEx")
+                {
+                    FileSearchRadioBtn.Checked = true;
+                }
+                else
+                {
+                    RegExRadioBtn.Checked = true;
+                }
+            }
+        }
+
         public string Folder {
             get { return LocalDirectoryCtl.Text; }
             set { LocalDirectoryCtl.Text = value; }
         }
 
-		public string SearchInSubfolders
+        public string MostRecentFolder { get; set; }
+
+        public string SearchInSubfolders
 		{
 			get
 			{
@@ -61,7 +83,10 @@ namespace MageUIComponents {
         public Dictionary<string, string> GetParameters() {
             return new Dictionary<string, string>() { 
                 { "FileNameFilter",  FileNameFilter },
-                { "Folder",  Folder }
+                { "FileSelectionMode", FileSelectionMode },
+                { "Folder",  Folder },
+                { "SearchInSubfolders", SearchInSubfolders},
+                { "SubfolderSearchName", SubfolderSearchName}
             };
         }
 
@@ -71,8 +96,17 @@ namespace MageUIComponents {
                     case "FileNameFilter":
                         FileNameFilter = paramDef.Value;
                         break;
+                    case "FileSelectionMode":
+                        FileSelectionMode = paramDef.Value;
+                        break;
                     case "Folder":
                         Folder = paramDef.Value;
+                        break;
+                    case "SearchInSubfolders":
+                        SearchInSubfolders = paramDef.Value;
+                        break;
+                    case "SubfolderSearchName":
+                        SubfolderSearchName = paramDef.Value;
                         break;
                 }
             }
@@ -82,6 +116,7 @@ namespace MageUIComponents {
 
         public LocalFolderPanel() {
             InitializeComponent();
+            MostRecentFolder = string.Empty;
         }
 
 		private void GetFilesCtl_Click(object sender, EventArgs e) {
@@ -91,19 +126,33 @@ namespace MageUIComponents {
         }
 
         private void SelectFolderCtl_Click(object sender, EventArgs e) {
-            FolderBrowserDialog browse = new FolderBrowserDialog();
-            browse.ShowNewFolderButton = true;
-            browse.Description = "Please select a folder";
-			browse.RootFolder = Environment.SpecialFolder.MyComputer; //Environment.SpecialFolder.DesktopDirectory;
+            var browse = new FolderBrowserDialog
+            {
+                ShowNewFolderButton = true,
+                Description = "Please select a folder",
+                RootFolder = Environment.SpecialFolder.MyComputer
+            };
 
-			if (LocalDirectoryCtl.TextLength > 0 && System.IO.Directory.Exists(LocalDirectoryCtl.Text))
-				browse.SelectedPath = LocalDirectoryCtl.Text;
+            if (LocalDirectoryCtl.TextLength > 0 && System.IO.Directory.Exists(LocalDirectoryCtl.Text))
+                browse.SelectedPath = LocalDirectoryCtl.Text;
+            else if (!string.IsNullOrEmpty(MostRecentFolder) && System.IO.Directory.Exists(MostRecentFolder))
+                browse.SelectedPath = MostRecentFolder;
 
             if (browse.ShowDialog() == DialogResult.OK) {
                 LocalDirectoryCtl.Text = browse.SelectedPath;
+                MostRecentFolder = browse.SelectedPath;
             }
         }
+ 
+        private void RegExRadioBtn_CheckedChanged(object sender, EventArgs e)
+        {
+            mSelectionMode = "RegEx";
+        }
 
+        private void FileSearchRadioBtn_CheckedChanged(object sender, EventArgs e)
+        {
+            mSelectionMode = "FileSearch";
+        }
 
     }
 }

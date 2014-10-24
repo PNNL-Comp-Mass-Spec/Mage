@@ -13,7 +13,7 @@ namespace MageDisplayLib {
         /// </summary>
         public event EventHandler<EventArgs> SelectionChanged;
 
-        Dictionary<string, string> mParameters = new Dictionary<string, string>();
+        readonly Dictionary<string, string> mParameters = new Dictionary<string, string>();
 
         #region IModuleParameters Members
 
@@ -76,6 +76,12 @@ namespace MageDisplayLib {
 		}
 
         /// <summary>
+        /// Set to True to automatically set column widths after populating the grid
+        /// </summary>
+        public bool AutoSizeColumnWidths { get; set; }
+
+
+        /// <summary>
         /// Defines whether or not multiple items can be selected in the data grid view 
         /// </summary>
         public bool MultiSelect {
@@ -134,12 +140,68 @@ namespace MageDisplayLib {
         }
 
         /// <summary>
+        /// Get the complete list of the selected rows
+        /// </summary>
+        /// <remarks>Returns the values for each row as a list of strings</remarks>
+        public List<List<string>> SelectedItemRows
+        {
+            get
+            {
+                var lstSelectedRows = new List<List<string>>();
+
+                gvQueryResults.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+                foreach (DataGridViewRow item in gvQueryResults.SelectedRows)
+                {
+                    var rowValues = new List<string>();
+
+                    for (int i = 0; i < item.Cells.Count; i++)
+                    {
+                        rowValues.Add(item.Cells[i].Value.ToString());
+                    }
+                    lstSelectedRows.Add(rowValues);
+                }
+
+                return lstSelectedRows;
+            }
+        }
+
+        /// <summary>
+        /// Get the complete list of the selected rows
+        /// </summary>
+        /// <remarks>Returns the values for each row as a dictionary where keys are the column header and values are the value</remarks>
+        public List<Dictionary<string, string>> SelectedItemRowsDictionaryList
+        {
+            get
+            {
+                var lstSelectedRows = new List<Dictionary<string, string>>();
+
+                gvQueryResults.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                
+                foreach (DataGridViewRow item in gvQueryResults.SelectedRows)
+                {
+                    var rowValues = new Dictionary<string, string>();
+
+                    for (int i = 0; i < ColumnDefs.Count; i++)
+                    {
+                        string colName = ColumnDefs[i].Name;
+                        string fieldVal = item.Cells[i].Value.ToString();
+                        rowValues.Add(colName, fieldVal);
+                    }
+                    lstSelectedRows.Add(rowValues);
+                }
+
+                return lstSelectedRows;
+            }
+        }        
+
+        /// <summary>
         /// Get contents of first selected row as key/value pairs
         /// where key is column name and value is contents of column
         /// </summary>
         public Dictionary<string, string> SeletedItemFields {
             get {
-                Dictionary<string, string> fields = new Dictionary<string, string>();
+                var fields = new Dictionary<string, string>();
                 if (gvQueryResults.SelectedRows.Count > 0) {
                     DataGridViewRow item = gvQueryResults.SelectedRows[0];
                     for (int i = 0; i < ColumnDefs.Count; i++) {
@@ -239,6 +301,8 @@ namespace MageDisplayLib {
                 }
             } else {
                 UpdateNoticeFld("");
+                if (AutoSizeColumnWidths)
+                    AutoSizeColumnWidthsNow();
             }
         }
 
@@ -445,7 +509,20 @@ namespace MageDisplayLib {
 
         #endregion
 
-        #region Move Items
+        #region Public Functions
+
+        /// <summary>
+        /// Automatically resize the column widths
+        /// </summary>
+        public void AutoSizeColumnWidthsNow()
+        {
+
+            foreach (DataGridViewColumn item in gvQueryResults.Columns)
+            {
+                item.DataGridView.AutoResizeColumns();
+            }
+
+        }
 
         /// <summary>
         /// Move the first currently selected item up or down in the list

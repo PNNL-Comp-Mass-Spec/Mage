@@ -9,7 +9,11 @@ namespace MageFileProcessor {
     /// This class contains several functions that build Mage pipelines 
     /// that supply data to the UI in response to user commands
     /// </summary>
-    public class Pipelines {
+    public class Pipelines
+    {
+
+        public const string PIPELINE_GET_DMS_FILES = "FileListPipeline";
+        public const string PIPELINE_GET_LOCAL_FILES = "PipelineToGetLocalFileList";
 
         // class is not instantiated
         private Pipelines() {
@@ -55,7 +59,7 @@ namespace MageFileProcessor {
             };
 
 	        // build and wire pipeline
-            return ProcessingPipeline.Assemble("FileListPipeline", sourceObject, fileFilter, sinkObject);
+            return ProcessingPipeline.Assemble(PIPELINE_GET_DMS_FILES, sourceObject, fileFilter, sinkObject);
         }
 
         /// <summary>
@@ -71,6 +75,9 @@ namespace MageFileProcessor {
             reader.AddFolderPath(runtimeParms["Folder"]);
             reader.FileNameSelector = runtimeParms["FileNameFilter"];
 
+            if (runtimeParms.ContainsKey("FileSelectionMode"))
+				reader.FileSelectorMode = runtimeParms["FileSelectionMode"];
+
 			if (runtimeParms.ContainsKey("SearchInSubfolders"))
 				reader.RecursiveSearch = runtimeParms["SearchInSubfolders"];
 
@@ -82,11 +89,11 @@ namespace MageFileProcessor {
 			reader.SourceFolderColumnName = FileListInfoBase.COLUMN_NAME_SOURCE_FOLDER;	// Folder
 			reader.FileSizeColumnName = FileListInfoBase.COLUMN_NAME_FILE_SIZE;			// File_Size_KB
 			reader.FileDateColumnName = FileListInfoBase.COLUMN_NAME_FILE_DATE;			// File_Date
-			reader.OutputColumnList = string.Format("{0}|+|text, {1}|+|text, {2}|+|text, {3}|+|text, {4}|+|text", reader.FileTypeColumnName, reader.FileColumnName, reader.FileSizeColumnName, reader.FileDateColumnName, reader.SourceFolderColumnName);
+            reader.OutputColumnList = string.Format("{0}|+|text, {1}|+|text, {2}|+|text, {3}|+|text, {4}|+|text", reader.FileTypeColumnName, reader.FileColumnName, reader.FileSizeColumnName, reader.FileDateColumnName, reader.SourceFolderColumnName);
             reader.IncludeFilesOrFolders = "File";
 
             // build and wire pipeline
-            return ProcessingPipeline.Assemble("PipelineToGetLocalFileList", reader, sinkObject);
+            return ProcessingPipeline.Assemble(PIPELINE_GET_LOCAL_FILES, reader, sinkObject);
         }
 
         /// <summary>
@@ -307,6 +314,16 @@ namespace MageFileProcessor {
 				SourceFolderColumnName = "Folder",
 				FileColumnName = "Name"
 			};
+
+            string valueOverride;
+            if (runtimeParms.TryGetValue("SourceFileColumnName", out valueOverride))
+            {
+                fileFinder.SourceFileColumnName = valueOverride;
+                fileFinder.FileColumnName = valueOverride;
+            }
+
+            if (runtimeParms.TryGetValue("SourceFolderColumnName", out valueOverride))
+                fileFinder.SourceFolderColumnName = valueOverride;
 
 			fileFinder.OutputColumnList = string.Format("Job, Item|{0}, Folder, Name|{1}, File_Size_KB|{2}, File_Date|{3}", 
 				FileListInfoBase.COLUMN_NAME_FILE_TYPE, 
