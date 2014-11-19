@@ -2,3 +2,8 @@
 DeployedFiles/
 .hgignore
 *.DotSettings
+*/obj/
+*/bin/
+TestResults/
+*.user
+*.suo

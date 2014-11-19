@@ -65,7 +65,8 @@ namespace MageUnitTests {
         [TestMethod()]
         [DeploymentItem("Mage.dll")]
         public void GetDestFileTest() {
-            FileCopy_Accessor target = new FileCopy_Accessor();
+			FileCopy target = new FileCopy();
+			PrivateObject privateTarget = new PrivateObject(target); // A way to access private member functions, properties, and fields.
             string expected = "";
             string actual = "";
             string sourceFile = "SourceFile";
@@ -76,37 +77,48 @@ namespace MageUnitTests {
 
             // typical usage - ID column in column list and ApplyPrefixToFileName set to "Yes"
             IDColName = "Tres";
-            target.InputColumnPos = new Dictionary<string, int>() { { "Uno", 0 }, { "Dos", 1 }, { IDColName, 2 } };
+			//target.InputColumnPos = new Dictionary<string, int>() { { "Uno", 0 }, { "Dos", 1 }, { IDColName, 2 } };
+			privateTarget.SetFieldOrProperty("InputColumnPos", new Dictionary<string, int>() { { "Uno", 0 }, { "Dos", 1 }, { IDColName, 2 } });
             target.ColumnToUseForPrefix = IDColName;
             target.ApplyPrefixToFileName = "Yes";
             target.PrefixLeader = IDColName;
-            fieldPos = target.InputColumnPos;
+			//fieldPos = target.InputColumnPos;
+			fieldPos = (Dictionary<string, int>)privateTarget.GetFieldOrProperty("InputColumnPos");
             fields = new string[] { "FirstField", "SecondField", "ThirdField" };
-            expected = IDColName + "_" + fields[target.InputColumnPos[target.ColumnToUseForPrefix]] + "_" + sourceFile;
-            actual = target.GetDestFile(sourceFile, fieldPos, fields);
+			//expected = IDColName + "_" + fields[target.InputColumnPos[target.ColumnToUseForPrefix]] + "_" + sourceFile;
+			//actual = target.GetDestFile(sourceFile, fieldPos, fields);
+			expected = IDColName + "_" + fields[((Dictionary<string, int>)privateTarget.GetFieldOrProperty("InputColumnPos"))[target.ColumnToUseForPrefix]] + "_" + sourceFile;
+			//actual = (string)privateTarget.Invoke("GetDestFile", new Type[3] { sourceFile.GetType(), fieldPos.GetType(), fields.GetType() }, new object[3] { sourceFile, fieldPos, fields });
+			actual = (string)privateTarget.Invoke("GetDestFile", new object[3] { sourceFile, fieldPos, fields });
             Assert.AreEqual(expected, actual, "Typical usage");
 
             // typical usage - ID column in column list and ApplyPrefixToFileName set to "No"
             IDColName = "Tres";
-            target.InputColumnPos = new Dictionary<string, int>() { { "Uno", 0 }, { "Dos", 1 }, { IDColName, 2 } };
+			//target.InputColumnPos = new Dictionary<string, int>() { { "Uno", 0 }, { "Dos", 1 }, { IDColName, 2 } };
+			privateTarget.SetFieldOrProperty("InputColumnPos", new Dictionary<string, int>() { { "Uno", 0 }, { "Dos", 1 }, { IDColName, 2 } });
             target.ColumnToUseForPrefix = IDColName;
             target.ApplyPrefixToFileName = "No";
-            fieldPos = target.InputColumnPos;
+			//fieldPos = target.InputColumnPos;
+			fieldPos = (Dictionary<string, int>)privateTarget.GetFieldOrProperty("InputColumnPos");
             fields = new string[] { "FirstField", "SecondField", "ThirdField" };
             expected = sourceFile;
-            actual = target.GetDestFile(sourceFile, fieldPos, fields);
-            Assert.AreEqual(expected, actual, "No prefix");
+            //actual = target.GetDestFile(sourceFile, fieldPos, fields);
+			actual = (string)privateTarget.Invoke("GetDestFile", new object[3] { sourceFile, fieldPos, fields });
+			Assert.AreEqual(expected, actual, "No prefix");
 
             // ID column NOT in column list and ApplyPrefixToFileName set to "Yes"
             IDColName = "Tres";
-            target.InputColumnPos = new Dictionary<string, int>() { { "Uno", 0 }, { "Dos", 1 }, { "ChoppedLiver", 2 } };
+			//target.InputColumnPos = new Dictionary<string, int>() { { "Uno", 0 }, { "Dos", 1 }, { "ChoppedLiver", 2 } };
+			privateTarget.SetFieldOrProperty("InputColumnPos", new Dictionary<string, int>() { { "Uno", 0 }, { "Dos", 1 }, { "ChoppedLiver", 2 } });
             target.ColumnToUseForPrefix = IDColName;
             target.ApplyPrefixToFileName = "Yes";
-            fieldPos = target.InputColumnPos;
+			//fieldPos = target.InputColumnPos;
+			fieldPos = (Dictionary<string, int>)privateTarget.GetFieldOrProperty("InputColumnPos");
             fields = new string[] { "FirstField", "SecondField", "ThirdField" };
             expected = "Tag_0_" + sourceFile;
-            actual = target.GetDestFile(sourceFile, fieldPos, fields);
-            Assert.AreEqual(expected, actual, "Missing ID column");
+            //actual = target.GetDestFile(sourceFile, fieldPos, fields);
+			actual = (string)privateTarget.Invoke("GetDestFile", new object[3] { sourceFile, fieldPos, fields });
+			Assert.AreEqual(expected, actual, "Missing ID column");
         }
 
         /// <summary>

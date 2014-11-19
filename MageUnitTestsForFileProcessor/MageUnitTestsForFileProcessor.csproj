@@ -83,9 +83,6 @@
     <Content Include="AuthoringTests.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Shadow Include="Test References\MageFileProcessor.accessor" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\MageDisplayLib\MageDisplayLib.csproj">
       <Project>{367DBD6A-E07A-42F5-BBD6-A425C4907F9D}</Project>
       <Name>MageDisplayLib</Name>

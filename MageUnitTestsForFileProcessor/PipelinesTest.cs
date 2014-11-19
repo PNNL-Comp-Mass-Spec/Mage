@@ -87,7 +87,7 @@ namespace MageUnitTestsForFileProcessor {
                 {"Dataset", "sarc_ms"}
             };
 
-            pipeline = Pipelines_Accessor.MakeJobQueryPipeline(sinkObject, queryDefXML, runtimeParms);
+			pipeline = Pipelines.MakeJobQueryPipeline(sinkObject, queryDefXML, runtimeParms);
             Assert.AreNotEqual(null, pipeline);
 
             IBaseModule source = pipeline.GetModule("MSSQLReader1");
@@ -114,7 +114,7 @@ namespace MageUnitTestsForFileProcessor {
                 {"FileNameFilter", "TestVal" }
             };
 
-            pipeline = Pipelines_Accessor.MakePipelineToGetLocalFileList(sinkObject, runtimeParms);
+			pipeline = Pipelines.MakePipelineToGetLocalFileList(sinkObject, runtimeParms);
             Assert.AreNotEqual(null, pipeline);
 
             IBaseModule source = pipeline.GetModule("FileListFilter1");
@@ -138,7 +138,7 @@ namespace MageUnitTestsForFileProcessor {
                 {"ManifestFilePath", "TestVal" }
             };
 
-            pipeline = Pipelines_Accessor.MakePipelineToGetFilesFromManifest(sinkObject, runtimeParms);
+			pipeline = Pipelines.MakePipelineToGetFilesFromManifest(sinkObject, runtimeParms);
             Assert.AreNotEqual(null, pipeline);
 
             IBaseModule source;
@@ -168,6 +168,7 @@ namespace MageUnitTestsForFileProcessor {
             runtimeParms = new Dictionary<string, string>() {
                 { "OutputFolder", "--" },
                 { "OutputFile", "" },
+				{ "OutputMode", ""},
                 { "ApplyPrefixToFileName", "File_Output" }
             };
 
@@ -175,7 +176,7 @@ namespace MageUnitTestsForFileProcessor {
                 {"SelectedFilterClassName", "Bogus"}
             };
 
-            pipeline = Pipelines_Accessor.MakePipelineToFilterSelectedfiles(sourceObject, runtimeParms, filterParms);
+			pipeline = Pipelines.MakePipelineToFilterSelectedfiles(sourceObject, runtimeParms, filterParms);
             Assert.AreNotEqual(null, pipeline);
 
             IBaseModule module = null;
@@ -207,12 +208,13 @@ namespace MageUnitTestsForFileProcessor {
             runtimeParms = new Dictionary<string, string>() {
                 { "OutputFolder", "--" },
                 { "OutputFile", "" },
+				{ "OutputMode", "SQLite_Output"},
                 { "ApplyPrefixToFileName", "SQLite_Output" },
                 { "DatabaseName", "--" },
                 { "TableName", "--" }
             };
 
-            pipeline = Pipelines_Accessor.MakePipelineToFilterSelectedfiles(sourceObject, runtimeParms, filterParms);
+			pipeline = Pipelines.MakePipelineToFilterSelectedfiles(sourceObject, runtimeParms, filterParms);
             Assert.AreNotEqual(null, pipeline, "Failed to make pipeline for SQLite mode");
 
             module = pipeline.GetModule("FileSubPipelineBroker2");
@@ -245,7 +247,7 @@ namespace MageUnitTestsForFileProcessor {
                 { "OutputColumnList", "File|+|text, Folder, Job, Dataset, Dataset_ID, Tool, Settings_File, Parameter_File, Instrument" } 
             };
 
-            pipeline = Pipelines_Accessor.MakeFileListPipeline(sourceObject, sinkObject, runtimeParms);
+			pipeline = Pipelines.MakeFileListPipeline(sourceObject, sinkObject, runtimeParms);
             Assert.AreNotEqual(null, pipeline);
         }
 
@@ -267,10 +269,11 @@ namespace MageUnitTestsForFileProcessor {
                 { "ApplyPrefixToFileName", "Yes" },
                 { "PrefixLeader", "Blue" },
                 { "ColumnToUseForPrefix", "Job" },
+				{ "OverwriteExistingFiles", "No"},
                 { "ManifestFileName", string.Format("Manifest_{0:yyMMddhhmmss}.txt", System.DateTime.Now) }
             };
 
-            pipeline = Pipelines_Accessor.MakeFileCopyPipeline(sourceObject, runtimeParms);
+			pipeline = Pipelines.MakeFileCopyPipeline(sourceObject, runtimeParms);
             Assert.AreNotEqual(null, pipeline);
         }
 
