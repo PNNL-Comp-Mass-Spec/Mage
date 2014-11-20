@@ -147,6 +147,24 @@ namespace MageUnitTests {
 
         }
 
+		/// <summary>
+		/// A class to provide access to private member variables of FileListFilter.
+		/// Original method was using private accessors, deprecated starting in 2010
+		/// Another option was using PrivateObject, which requires 
+		///    Microsoft.VisualStudio.TestTools.UnitTesting and performs operations using reflection.
+		/// </summary>
+	    private class FileListFilterExtracter : FileListFilter
+	    {
+		    public List<string[]> OutputBuffer
+		    {
+				get { return mOutputBuffer; }
+			    set
+			    {
+					mOutputBuffer.Clear();
+				    mOutputBuffer.AddRange(value);
+			    }
+		    } 
+	    }
 
         /// <summary>
         ///A test for GetFileNamesFromSourceFolder
@@ -155,8 +173,7 @@ namespace MageUnitTests {
         [DeploymentItem("Mage.dll")]
         public void GetFileNamesFromSourceFolderTest() {
 
-			FileListFilter target = new FileListFilter(); // TODO: Initialize to an appropriate value
-			PrivateObject privateTarget = new PrivateObject(target); // A way to access private member functions, properties, and fields.
+			FileListFilterExtracter target = new FileListFilterExtracter(); // TODO: Initialize to an appropriate value
             Dictionary<string, string> parms = new Dictionary<string, string>();
             parms.Add("FolderPath", "TestFolderPath");
             target.SetParameters(parms);
@@ -165,8 +182,7 @@ namespace MageUnitTests {
             parms.Add("FileNameSelector", "TestFileNameSelector");
             target.SetParameters(parms);
 
-			//List<string[]> outputBuffer = target.mOutputBuffer;
-			List<string[]> outputBuffer = (List<string[]>)privateTarget.GetFieldOrProperty("mOutputBuffer");
+			List<string[]> outputBuffer = target.OutputBuffer;
             Assert.AreEqual(1, outputBuffer.Count);
         }
 
