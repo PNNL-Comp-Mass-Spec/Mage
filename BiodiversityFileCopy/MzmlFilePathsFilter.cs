@@ -8,10 +8,8 @@ namespace BiodiversityFileCopy
   /// <summary>
   /// Mage filter that adds input and output mzML file paths to output stream 
   /// </summary>
-  public class MzmlFilePathsFilter : AddFilePathsFilter
+  public class MzmlFilePathsFilter : BaseFilePathsFilter
   {
-    //    private const string RefineryToolName = "MSGFPlus_MzML";
-    //    private const string NoRefineryToolName = "MSGFPlus_MzML_NoRefine";
     protected int ItemIdx;
     protected int FileIdx;
 
@@ -85,12 +83,14 @@ namespace BiodiversityFileCopy
         //        var gen = cacheFilePath.Contains(_msxmlGenPattern);
 
         var fc = File.ReadAllLines(cacheFilePath);
+        if (fc.Length <= 0) continue;
+
         var srcFilePath = fc[0].Trim(); // TBD: check for exactly one line
         var mzmlFileName = Path.GetFileName(srcFilePath);
+        if (string.IsNullOrEmpty(mzmlFileName)) continue;
 
         var ogName = row[OrgNameIdx];
-        var destFilepath = string.Format(@"{0}{1}\MZML\{2}", DestinationRootFolderPath, ogName, mzmlFileName);
-
+        var destFilepath = Path.Combine(DestinationRootFolderPath, ogName, OutputSubfolderName, mzmlFileName);
         row[SourceFileIdx] = srcFilePath;
         row[DestFileIdx] = destFilepath;
         savedRows.Add(row);

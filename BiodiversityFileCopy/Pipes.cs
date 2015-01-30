@@ -34,28 +34,44 @@ namespace BiodiversityFileCopy
       foreach (var row in fileList.Rows) {
         var destPath = row[destIdx];
         var sourcePath = row[srcIdx];
-        if (File.Exists(destPath)) {
-          FilteredMsg(string.Format("Exists: {0}", destPath), verbose);
-          numExist++;
-        } else {
-          if (checkSource) {
-            // try to copy file
-            if (!File.Exists(sourcePath)) {
-              Logging.LogError(string.Format("Source file missing {0}", sourcePath));
-            } else {
-              if (doCopy) {
-                // make destination folder if necessary
-                EnsureDirectoryExists(destPath);
-                File.Copy(sourcePath, destPath, false);
-                FilteredMsg(string.Format("{2}: {0} -> {1}", sourcePath, destPath, "Copied:"), verbose);
-              } else {
-                FilteredMsg(string.Format("{2}: {0} -> {1}", sourcePath, destPath, "Would copy:"), verbose);
-              }
+        try {
+          if (File.Exists(destPath)) {
+            FilteredMsg(string.Format("Exists: {0}", destPath), verbose);
+            numExist++;
+          } else {
+            if (checkSource) {
+              CopyFile(doCopy, verbose, destPath, sourcePath);
             }
           }
+        } // end foreach
+        catch (IOException e) {
+          Logging.LogError(e.Message);
         }
-      } // end foreach
+      } // end try
       return numExist;
+    }
+
+    /// <summary>
+    /// Copy a file
+    /// </summary>
+    /// <param name="doCopy">Copy if true, otherwise just log what would have happened</param>
+    /// <param name="verbose">Log message about copy if true</param>
+    /// <param name="destPath">Full path to copy file to</param>
+    /// <param name="sourcePath">Full path to copy file from</param>
+    private static void CopyFile(bool doCopy, bool verbose, string destPath, string sourcePath)
+    {
+      if (!File.Exists(sourcePath)) {
+        Logging.LogError(string.Format("Source file missing {0}", sourcePath));
+      } else {
+        if (doCopy) {
+          // make destination folder if necessary
+          EnsureDirectoryExists(destPath);
+          File.Copy(sourcePath, destPath, false);
+          FilteredMsg(string.Format("{2}: {0} -> {1}", sourcePath, destPath, "Copied:"), verbose);
+        } else {
+          FilteredMsg(string.Format("{2}: {0} -> {1}", sourcePath, destPath, "Would copy:"), verbose);
+        }
+      }
     }
 
     private static void EnsureDirectoryExists(string destPath)
@@ -176,10 +192,8 @@ FROM(
       var orgLookup = new Dictionary<string, string>();
       var idIdx = dataPackageList.ColumnIndex["Package_ID"];
       var orgIdx = dataPackageList.ColumnIndex["OG_Name"];
-      foreach (var row in dataPackageList.Rows) {
-        if (!string.IsNullOrEmpty(row[idIdx])) {
-          orgLookup[row[idIdx]] = row[orgIdx];
-        }
+      foreach (var row in dataPackageList.Rows.Where(row => !string.IsNullOrEmpty(row[idIdx]))) {
+        orgLookup[row[idIdx]] = row[orgIdx];
       }
       return orgLookup;
     }
@@ -210,7 +224,7 @@ FROM(
 
       var filter = new NullFilter { OutputColumnList = "Package_ID|Datapk#, OG_Name" };
 
-      var pl = ProcessingPipeline.Assemble("", reader, filter, dataPackageList);
+      var pl = ProcessingPipeline.Assemble("Get_Data_Package_List", reader, filter, dataPackageList);
       ConnectPipelineToMessaging(pl);
       pl.RunRoot(null);
       return dataPackageList;
@@ -229,16 +243,8 @@ FROM(
       // set up pipeline source
       var src = new SinkWrapper(datasetList);
 
-      var rff = new RawFilePathsFilter {
-        OutputColumnList = "SourceFilePath|+|text, DestinationFilePath|+|text, *",
-        SourceFilePathColName = "SourceFilePath",
-        DestinationFilePathColName = "DestinationFilePath",
-        DestinationRootFolderPath = outputRootFolderPath,
-        SourceFolderPathColName = "Folder",
-        DatasetColName = "Dataset",
-        DataPackageIDColName = "Data_Package_ID",
-        OrganismNameColumn = "OG_Name"
-      };
+      var rff = new RawFilePathsFilter();
+      rff.SetDefaultProperties(outputRootFolderPath, "RAW");
 
       var dsl = new SimpleSink();
 
@@ -269,14 +275,15 @@ FROM(
       flf.SourceFolderColumnName = datasetFolderColName;
 
       var mzf = new MzmlFilePathsFilter();
-      AddFilePathsFilter.SetDefaultProperties(mzf, outputRootFolderPath);
+      mzf.SetDefaultProperties(outputRootFolderPath, "MZML");
       mzf.SourceFolderPathColName = datasetFolderColName; // must match upstream setting
 
-      var p1 = ProcessingPipeline.Assemble("", src, flf, mzf);
+      var p1 = ProcessingPipeline.Assemble("Accumulate_File_Paths", src, flf, mzf);
       ConnectPipelineToMessaging(p1);
       p1.RunRoot(null);
 
-      var p2 = ProcessingPipeline.Assemble("", mzf, lst);
+      var p2 = ProcessingPipeline.Assemble("Select_Best_File_Paths", mzf, lst);
+      ConnectPipelineToMessaging(p2);
       p2.RunRoot(null);
       return lst;
     }
@@ -302,7 +309,7 @@ FROM(
       };
 
       var lst = new SimpleSink();
-      var p1 = ProcessingPipeline.Assemble("", src, dsf, lst);
+      var p1 = ProcessingPipeline.Assemble("Add_Parent_Folder", src, dsf, lst);
       ConnectPipelineToMessaging(p1);
       p1.RunRoot(null);
       return lst;
@@ -321,12 +328,12 @@ FROM(
       var flf = new FileListFilter();
       SetDefaultFileSearchFilterParameters(flf, "*mzid.gz", "No", "");
 
-      var mzf = new MzidFilePathsFilter();
-      AddFilePathsFilter.SetDefaultProperties(mzf, outputRootFolderPath);
+      var mzf = new SimpleFilePathsFilter();
+      mzf.SetDefaultProperties(outputRootFolderPath, "MZID");
 
       var lst = new SimpleSink();
 
-      var pl = ProcessingPipeline.Assemble("", src, flf, mzf, lst);
+      var pl = ProcessingPipeline.Assemble("Add_Mzid_File_Paths", src, flf, mzf, lst);
       ConnectPipelineToMessaging(pl);
       pl.RunRoot(null);
       return lst;
@@ -345,17 +352,16 @@ FROM(
       var flf = new FileListFilter();
       SetDefaultFileSearchFilterParameters(flf, "*fht.txt", "No", "");
 
-      var fhf = new FhtFilePathsFilter();
-      AddFilePathsFilter.SetDefaultProperties(fhf, outputRootFolderPath);
+      var fhf = new SimpleFilePathsFilter();
+      fhf.SetDefaultProperties(outputRootFolderPath, "MSGF_txt");
 
       var lst = new SimpleSink();
 
-      var pl = ProcessingPipeline.Assemble("", src, flf, fhf, lst);
+      var pl = ProcessingPipeline.Assemble("Add_Fht_File_Paths", src, flf, fhf, lst);
       ConnectPipelineToMessaging(pl);
       pl.RunRoot(null);
       return lst;
     }
-
 
     /// <summary>
     /// Add source and destination fasta file paths to given fasta file list
@@ -368,16 +374,8 @@ FROM(
       var dsl = new SimpleSink();
       var src = new SinkWrapper(fastaFileList);
 
-      var rff = new FastaFilePathsFilter {
-        OutputColumnList = "SourceFilePath|+|text, DestinationFilePath|+|text, *",
-        SourceFilePathColName = "SourceFilePath",
-        DestinationFilePathColName = "DestinationFilePath",
-        DestinationRootFolderPath = outputRootFolderPath,
-        SourceFolderPathColName = "FASTA_Folder",
-        DatasetColName = "Organism DB",
-        DataPackageIDColName = "Data_Package_ID",
-        OrganismNameColumn = "OG_Name"
-      };
+      var rff = new FastaFilePathsFilter();
+      rff.SetDefaultProperties(outputRootFolderPath, "fasta");
 
       var pl = ProcessingPipeline.Assemble("Add output folder path", src, rff, dsl);
       ConnectPipelineToMessaging(pl);

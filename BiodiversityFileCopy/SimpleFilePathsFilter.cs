@@ -3,10 +3,7 @@ using Mage;
 
 namespace BiodiversityFileCopy
 {
-  /// <summary>
-  /// Mage filter that adds input and output mzid.gz file paths to output stream 
-  /// </summary>
-  public class MzidFilePathsFilter : AddFilePathsFilter
+  class SimpleFilePathsFilter : BaseFilePathsFilter
   {
     protected int ItemIdx;
     protected int FileIdx;
@@ -20,17 +17,15 @@ namespace BiodiversityFileCopy
 
     public override bool BuildPaths(string[] outRow, ref string srcFilePath, ref string destFilepath)
     {
-      if (outRow[ItemIdx] == "file") // skip input rows that don't actually specify a file
-                {
+      if (outRow[ItemIdx] == "file") { // skip input rows that don't actually specify a file
         srcFilePath = Path.Combine(outRow[SourceFldrIdx], outRow[FileIdx]);
         var msgfFileName = outRow[FileIdx];
         var ogName = outRow[OrgNameIdx];
-        //destFilepath = string.Format(@"{0}{1}\MZID\{2}", DestinationRootFolderPath, ogName, msgfFileName);
-        destFilepath = Path.Combine(DestinationRootFolderPath, ogName, "MZID", msgfFileName);
+        destFilepath = Path.Combine(DestinationRootFolderPath, ogName, OutputSubfolderName, msgfFileName);
         return true;
       }
       return false;
     }
-  }
 
+  }
 }

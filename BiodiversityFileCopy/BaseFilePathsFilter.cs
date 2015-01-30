@@ -6,7 +6,7 @@ namespace BiodiversityFileCopy
   /// base class for Mage filter to add source and destination 
   /// file path columns to output stream
   /// </summary>
-  public abstract class AddFilePathsFilter : ContentFilter
+  public abstract class BaseFilePathsFilter : ContentFilter
   {
     protected int SourceFldrIdx;
     protected int DatasetIdx;
@@ -23,6 +23,8 @@ namespace BiodiversityFileCopy
     public string DestinationRootFolderPath { get; set; }
     public string SourceFilePathColName { get; set; }
     public string DestinationFilePathColName { get; set; }
+
+    public string OutputSubfolderName { get; set; }
 
     public override void HandleColumnDef(object sender, MageColumnEventArgs args)
     {
@@ -63,16 +65,17 @@ namespace BiodiversityFileCopy
     /// <returns>should row actually be added to output stream</returns>
     public abstract bool BuildPaths(string[] outRow, ref string srcFilePath, ref string destFilepath);
 
-    public static void SetDefaultProperties(AddFilePathsFilter filter, string outputRootFolderPath)
+    public virtual void SetDefaultProperties(string outputRootFolderPath, string outputSubfolderName)
     {
-      filter.OutputColumnList = "SourceFilePath|+|text, DestinationFilePath|+|text, *";
-      filter.SourceFilePathColName = "SourceFilePath";
-      filter.DestinationFilePathColName = "DestinationFilePath";
-      filter.DestinationRootFolderPath = outputRootFolderPath;
-      filter.SourceFolderPathColName = "Folder";
-      filter.DatasetColName = "Dataset";
-      filter.DataPackageIDColName = "Data_Package_ID";
-      filter.OrganismNameColumn = "OG_Name";
+      OutputSubfolderName = outputSubfolderName;
+      OutputColumnList = "SourceFilePath|+|text, DestinationFilePath|+|text, *";
+      SourceFilePathColName = "SourceFilePath";
+      DestinationFilePathColName = "DestinationFilePath";
+      DestinationRootFolderPath = outputRootFolderPath;
+      DataPackageIDColName = "Data_Package_ID";
+      OrganismNameColumn = "OG_Name";
+      SourceFolderPathColName = "Folder";
+      DatasetColName = "Dataset";
     }
   }
 

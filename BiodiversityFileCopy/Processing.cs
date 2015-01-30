@@ -16,7 +16,7 @@ namespace BiodiversityFileCopy
     public Boolean DoFHTCopy { get; set; }
 
     public string OutputRootFolderPath { get; set; }
-    public string IinputFileRootFolderPath { get; set; }
+    public string InputFileRootFolderPath { get; set; }
     public string DataPackageListFile { get; set; }
     public string DataPkgsToProcess { get; set; }
     public Boolean Verbose { get; set; }
@@ -26,7 +26,11 @@ namespace BiodiversityFileCopy
     public void ProcessDataPackages()
     {
       // read list of data packages to process from external file
-      var dataPkgList = Pipes.GetDataPackageList(Path.Combine(IinputFileRootFolderPath, DataPackageListFile));
+      var dataPkgList = Pipes.GetDataPackageList(Path.Combine(InputFileRootFolderPath, DataPackageListFile));
+      if (dataPkgList.Rows.Count == 0) {
+        Logging.LogError("The assigned organism file was missing or could not be read");
+        return;
+      }
 
       // extract lookup table of organisms defined for data packages in list
       var orgLookup = Pipes.ExtractOrganismLookupFromSink(dataPkgList);

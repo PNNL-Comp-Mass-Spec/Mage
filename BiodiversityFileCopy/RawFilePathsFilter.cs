@@ -1,20 +1,23 @@
 ﻿using System;
+using System.IO;
+
 
 namespace BiodiversityFileCopy
 {
   /// <summary>
   /// Mage filter that adds input and output raw file paths to output stream 
   /// </summary>
-  public class RawFilePathsFilter : AddFilePathsFilter
+  public class RawFilePathsFilter : BaseFilePathsFilter
   {
     public override bool BuildPaths(string[] outRow, ref string srcFilePath, ref string destFilepath)
     {
       if (srcFilePath == null) throw new ArgumentNullException("srcFilePath");
-      string sourceFolder = outRow[SourceFldrIdx];
-      string dataset = outRow[DatasetIdx];
-      srcFilePath = string.Format(@"{0}\{1}.RAW", sourceFolder, dataset);
+      var sourceFolder = outRow[SourceFldrIdx];
+      var dataset = outRow[DatasetIdx];
+      var datasetFile = dataset + ".RAW";
+      srcFilePath = Path.Combine(sourceFolder, datasetFile);
       var ogName = outRow[OrgNameIdx];
-      destFilepath = string.Format(@"{0}{1}\RAW\{2}.RAW", DestinationRootFolderPath, ogName, dataset);
+      destFilepath = Path.Combine(DestinationRootFolderPath, ogName, OutputSubfolderName, datasetFile);
       return true;
     }
   }

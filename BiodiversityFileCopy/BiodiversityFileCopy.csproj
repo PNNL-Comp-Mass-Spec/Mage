@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -44,15 +45,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddFilePathsFilter.cs" />
+    <Compile Include="SimpleFilePathsFilter.cs" />
+    <Compile Include="BaseFilePathsFilter.cs" />
     <Compile Include="AddJobDatasetFolderFilter.cs" />
     <Compile Include="AddOrganismNameFilter.cs" />
-    <Compile Include="BoundedSinkWrapper.cs" />
     <Compile Include="CommandOptions.cs" />
     <Compile Include="FastaFilePathsFilter.cs" />
-    <Compile Include="FhtFilePathsFilter.cs" />
     <Compile Include="Logging.cs" />
-    <Compile Include="MzidFilePathsFilter.cs" />
     <Compile Include="MzmlFilePathsFilter.cs" />
     <Compile Include="Pipes.cs" />
     <Compile Include="Processing.cs" />

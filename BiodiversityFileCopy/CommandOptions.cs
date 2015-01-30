@@ -44,7 +44,7 @@ namespace BiodiversityFileCopy
 
       // Defaults
       proc.OutputRootFolderPath = @"\\proto-11\BiodiversityLibrary\";
-      proc.IinputFileRootFolderPath = proc.OutputRootFolderPath;
+      proc.InputFileRootFolderPath = proc.OutputRootFolderPath;
       proc.DataPackageListFile = "DMS_Organism_Stats_Annotated_MICROBES.txt";
       proc.DoCopyFiles = true;
       proc.DoRawCopy = true;
@@ -67,6 +67,7 @@ namespace BiodiversityFileCopy
         switch (kw.Trim().ToLower()) {
           case "output_folder":
             proc.OutputRootFolderPath = sa.Pop();
+            proc.InputFileRootFolderPath = proc.OutputRootFolderPath;
             break;
           case "assigned_organisms":
             proc.DataPackageListFile = sa.Pop();
@@ -76,6 +77,7 @@ namespace BiodiversityFileCopy
             proc.DoMZMLCopy = false;
             proc.DoFASTACopy = false;
             proc.DoMZIDCopy = false;
+            proc.DoFHTCopy = false;
             var fileCodes = sa.Pop().Split(',').ToList();
             foreach (var fileCode in fileCodes) {
               switch (fileCode.Trim()) {
