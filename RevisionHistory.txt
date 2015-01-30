@@ -1,5 +1,8 @@
 Mage Revision History
 
+Version 1.5.5507; January 29, 2015
+	- Updated to .NET 4 version of log4net
+
 Version 1.5.5410; October 24, 2014
 	- Added Mage Concatenator
 	- Now auto-sizing columns in the file list grid
