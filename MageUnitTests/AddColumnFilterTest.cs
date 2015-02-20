@@ -64,20 +64,24 @@ namespace MageUnitTests {
         [TestMethod()]
         public void AddColumnFilterConstructorTest() {
 
-            string[] initialColumns = new string[] { "Alpha", "Beta", "Gamma" };
+            var initialColumns = new string[] { "Alpha", "Beta", "Gamma" };
             string[] expectedColumns = { "Alpha", "Added1|+|text", "Beta", "Added2|+|text", "Gamma" };
 
             // set up data generator
-            DataGenerator gen = new DataGenerator();
-            gen.AddAdHocRow = initialColumns; // header
+            var gen = new DataGenerator
+            {
+                AddAdHocRow = initialColumns    // header
+            };
             gen.AddAdHocRow = new string[] { "A1", "B1", "C1" };
             gen.AddAdHocRow = new string[] { "A2", "B2", "C2" };
 
-            NullFilter target = new NullFilter();
-            target.OutputColumnList = string.Join(", ", expectedColumns);
+            var target = new NullFilter
+            {
+                OutputColumnList = string.Join(", ", expectedColumns)
+            };
             target.SetContext(new Dictionary<string, string>() { { "Added1", "Overwrite1" }, { "Added2", "Overwrite2" } });
 
-            SimpleSink sink = new SimpleSink();
+            var sink = new SimpleSink();
 
             ProcessingPipeline pipeline = new ProcessingPipeline("AddColumnFilterConstructorTest");
             string sourceModName = "Generator";

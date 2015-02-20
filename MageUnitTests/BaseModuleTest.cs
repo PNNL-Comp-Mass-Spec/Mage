@@ -155,7 +155,7 @@ namespace MageUnitTests {
             outColNames.Add(string.Format("{0}|+|text", insertedColumnName));
             outColNames.Add("*");
 
-            string outColList = string.Join(", ", outColNames.ToArray());
+            string outColList = string.Join(", ", outColNames);
             target.OutputColumnList = outColList;
 
             dGen.Run(null);
@@ -205,7 +205,7 @@ namespace MageUnitTests {
             // generate shuffled list of input column names as output column names
             List<string> outColNames = new List<string>(inColNames);
             Shuffle(outColNames);
-            string outColList = string.Join(", ", outColNames.ToArray());
+            string outColList = string.Join(", ", outColNames);
             Dictionary<string, int> outColPos = new Dictionary<string, int>();
             for (int i = 0; i < outColNames.Count; i++) {
                 outColPos[outColNames[i]] = i;

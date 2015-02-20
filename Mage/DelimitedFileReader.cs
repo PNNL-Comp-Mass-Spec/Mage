@@ -108,7 +108,7 @@ namespace Mage
 
 			try
 			{
-				using (var fileReader = new StreamReader(new FileStream(delimitedFilePathLocal, FileMode.Open, FileAccess.Read, FileShare.Read)))
+				using (var fileReader = new StreamReader(new FileStream(delimitedFilePathLocal, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
 				{
 
 					string line;
@@ -174,7 +174,7 @@ namespace Mage
 		{
 			char[] delim = Delimiter.ToCharArray();
 
-			using (var fileReader = new StreamReader(new FileStream(FilePath, FileMode.Open, FileAccess.Read, FileShare.Read)))
+			using (var fileReader = new StreamReader(new FileStream(FilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
 			{
 				string line;
 				while ((line = fileReader.ReadLine()) != null)
@@ -202,7 +202,7 @@ namespace Mage
 		private void OutputFileContentsFromCSV()
 		{
 			var r = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
-			using (var fileReader = new StreamReader(new FileStream(FilePath, FileMode.Open, FileAccess.Read, FileShare.Read)))
+			using (var fileReader = new StreamReader(new FileStream(FilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
 			{			
 				string line;
 				while ((line = fileReader.ReadLine()) != null)

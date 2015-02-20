@@ -75,7 +75,7 @@ namespace MageConcatenator
             SetupFilterSelectionListForFileProcessor();
 
             // setup context menus for list displays
-            new GridViewDisplayActions(FileListDisplayControl);
+            var dummy = new GridViewDisplayActions(FileListDisplayControl);
 
             // Connect the pipeline queue to message handlers
             ConnectPipelineQueueToStatusDisplay(mPipelineQueue);
@@ -179,25 +179,20 @@ namespace MageConcatenator
             try
             {
                 // build and run the pipeline appropriate to the command
-                Dictionary<string, string> runtimeParms;
-                GVPipelineSource source;
-                ISinkModule sink;
-                string queryDefXML;
-                ProcessingPipeline pipeline;
 
                 switch (command.Action)
                 {
                     case "get_files_from_local_folder":
-                        runtimeParms = GetRuntimeParmsForLocalFolder();
+                        Dictionary<string, string> runtimeParms = GetRuntimeParmsForLocalFolder();
                         string sFolder = runtimeParms["Folder"];
                         if (!Directory.Exists(sFolder))
                         {
                             MessageBox.Show("Folder not found: " + sFolder, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             return;
                         }
-                        sink = FileListDisplayControl.MakeSink("Files", 15);
+                        ISinkModule sink = FileListDisplayControl.MakeSink("Files", 15);
 
-                        pipeline = Pipelines.MakePipelineToGetLocalFileList(sink, runtimeParms);
+                        ProcessingPipeline pipeline = Pipelines.MakePipelineToGetLocalFileList(sink, runtimeParms);
                         mPipelineQueue.Pipelines.Enqueue(pipeline);
                         mFinalPipelineName = pipeline.PipelineName;
                         break;

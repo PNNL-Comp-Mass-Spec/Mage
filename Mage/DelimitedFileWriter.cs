@@ -173,7 +173,7 @@ namespace Mage {
                     h.Add(col.Name);
                 }
             }
-            mOutFile.WriteLine(string.Join(Delimiter, h.ToArray()));
+            mOutFile.WriteLine(string.Join(Delimiter, h));
         }
 
 		private void OutputDataRow(string[] vals)

@@ -93,7 +93,8 @@ namespace MageDisplayLib {
             rawList = rawList.Replace(" ", ",");
             rawList = rawList.Replace(Environment.NewLine, ", ").TrimEnd(',', ' ');
             string cleanList = "";
-            Dictionary<string, string> items = new Dictionary<string, string>();
+            
+            var items = new Dictionary<string, string>();
             foreach (string field in rawList.Split(',')) {
                 string s = field.Trim();
                 if (!string.IsNullOrEmpty(s)) {
@@ -101,7 +102,7 @@ namespace MageDisplayLib {
                 }
             }
             if (items.Count > 0) {
-                cleanList = string.Join(", ", items.Keys.ToArray());
+                cleanList = string.Join(", ", items.Keys);
             }
             return cleanList;
         }

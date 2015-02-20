@@ -97,6 +97,7 @@
     <Compile Include="FileProcessingBase.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="KVSink.cs" />
+    <Compile Include="MergeFromLookup.cs" />
     <Compile Include="MyEMSLSinkWrapper.cs" />
     <Compile Include="NullFilter.cs">
       <SubType>Code</SubType>

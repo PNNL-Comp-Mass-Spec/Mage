@@ -143,7 +143,7 @@ namespace MageExtExtractionFilters
 			}
 			if (tools.Count > 1)
 			{
-				string toolRollup = "(" + string.Join(", ", tools.Keys.ToArray()) + ")";
+				string toolRollup = "(" + string.Join(", ", tools.Keys) + ")";
 				msg = "Cannot work on a mix of job types " + toolRollup + Environment.NewLine + "Select only Sequest, X!Tandem, Inspect, or MSGFPlus jobs";
 			}
 			else

@@ -329,10 +329,10 @@ namespace MageUIComponents {
                     fields.Add(colFlds[SizeColIdx]);
                 }
                 // roll this column spec's fields up to delimited string
-                specs.Add(string.Join("|", fields.ToArray()));
+                specs.Add(string.Join("|", fields));
             }
             // roll column specs up to delimited string
-            return string.Join(",", specs.ToArray());
+            return string.Join(",", specs);
         }
 
         /// <summary>

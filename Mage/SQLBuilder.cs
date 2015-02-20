@@ -433,11 +433,11 @@ namespace Mage {
             //
             // collect all 'or' clauses as one grouped item and put it into the 'and' item array
             if (p_or.Count > 0) {
-                p_and.Add("(" + string.Join(" OR ", p_or.ToArray()) + ")");
+                p_and.Add("(" + string.Join(" OR ", p_or) + ")");
             }
             //
             // 'and' all predicate clauses together
-            string pred = string.Join(" AND ", p_and.ToArray());
+            string pred = string.Join(" AND ", p_and);
             if (!string.IsNullOrEmpty(pred)) {
                 baseSql.Append(" WHERE " + pred);
             }
@@ -484,7 +484,7 @@ namespace Mage {
             foreach (QuerySort item in sortItems) {
                 a.Add(string.Format("[{0}] {1}", item.col, item.dir));
             }
-            return string.Join(", ", a.ToArray());
+            return string.Join(", ", a);
         }
 
         /// <summary>

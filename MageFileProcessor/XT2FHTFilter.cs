@@ -34,27 +34,29 @@ namespace MageFileProcessor {
 
         // this is a function that returns an output column map
         private static string GetFilterColumnMap() {
-            List<string> colMapfields = new List<string>();
-            colMapfields.Add("HitNum|+|text");
-            colMapfields.Add("ScanNum|Scan");
-            colMapfields.Add("ScanCount|+|text");
-            colMapfields.Add("ChargeState|Charge");
-            colMapfields.Add("MH|Peptide_MH");
-            colMapfields.Add("XCorr|+|text");
-            colMapfields.Add("DelCn|+|text");
-            colMapfields.Add("Sp|+|text");
-            colMapfields.Add("Reference|+|text");
-            colMapfields.Add("MultiProtein|Multiple_Protein_Count");
-            colMapfields.Add("Peptide|Peptide_Sequence");
-            colMapfields.Add("DelCn2|DeltaCn2");
-            colMapfields.Add("RankSp|+|text");
-            colMapfields.Add("RankXc|+|text");
-            colMapfields.Add("DelM|Delta_Mass");
-            colMapfields.Add("XcRatio|+|text");
-            colMapfields.Add("PassFilt|+|text");
-            colMapfields.Add("MScore|+|text");
-            colMapfields.Add("NumTrypticEnds|+|text");
-            return string.Join(", ", colMapfields.ToArray());
+            var colMapfields = new List<string>
+            {
+                "HitNum|+|text",
+                "ScanNum|Scan",
+                "ScanCount|+|text",
+                "ChargeState|Charge",
+                "MH|Peptide_MH",
+                "XCorr|+|text",
+                "DelCn|+|text",
+                "Sp|+|text",
+                "Reference|+|text",
+                "MultiProtein|Multiple_Protein_Count",
+                "Peptide|Peptide_Sequence",
+                "DelCn2|DeltaCn2",
+                "RankSp|+|text",
+                "RankXc|+|text",
+                "DelM|Delta_Mass",
+                "XcRatio|+|text",
+                "PassFilt|+|text",
+                "MScore|+|text",
+                "NumTrypticEnds|+|text"
+            };
+            return string.Join(", ", colMapfields);
         }
 
         /// <summary>

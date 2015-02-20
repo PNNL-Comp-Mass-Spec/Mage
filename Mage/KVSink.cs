@@ -10,6 +10,9 @@ namespace Mage {
 
         #region Member Variables
 
+        private int mKeyColIdx;
+        private int mValColIdx;
+
         private readonly Dictionary<string, string> mKV = new Dictionary<string, string>();
 
         #endregion
@@ -34,9 +37,6 @@ namespace Mage {
         public Dictionary<string, string> Values { get { return mKV; } }
 
         #endregion
-
-        private int mKeyColIdx;
-        private int mValColIdx;
 
 		/// <summary>
 		/// Handler for ColumnDefAvailable events

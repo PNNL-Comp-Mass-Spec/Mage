@@ -109,7 +109,7 @@ namespace Mage {
                 foreach(KeyValuePair<string, string> kv in mFileFilterParameters) {
                     s.Add(string.Format("{0}:{1}", kv.Key, kv.Value)); 
                 }
-                return string.Join(", ", s.ToArray());
+                return string.Join(", ", s);
             }
             set {
                 var parms = new Dictionary<string, string>();

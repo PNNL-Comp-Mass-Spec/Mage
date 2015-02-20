@@ -92,6 +92,10 @@ namespace Mage {
         /// [output column name]|[input column name]|[type]|[size] - map input column to output column using different name and optionally override data type and size
         /// [output column name]|+|[type]|[size] - output column is new column
         /// </summary>
+        /// <example>*, MSGF_SpecProb|+|text</example>
+        /// <example>Dataset, Dataset_ID, Alias|+|text, *</example>
+        /// <example>Item|+|text, Name|+|text, File_Size_KB|+|text, Folder, *</example>
+        /// <example>ref|+|text, one, two, three, results|+|float</example>
         public string OutputColumnList { get; set; }
 
         #endregion
@@ -517,6 +521,7 @@ namespace Mage {
         /// populate the appropriate internal buffers with column definitions
         /// and field indexes for them
         /// </summary>
+        /// <remarks>See the comments for OutputColumnList for example output column definitions</remarks>
         protected void SetupOutputColumns() {
             if (string.IsNullOrEmpty(OutputColumnList)) return;
 

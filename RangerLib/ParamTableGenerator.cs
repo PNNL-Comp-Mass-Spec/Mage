@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using Mage;
 
-namespace RangerLib {
+namespace RangerLib
+{
 
-    public class ParamTableGenerator {
+    public class ParamTableGenerator
+    {
 
         private PermutationGenerator mPGenModule = new PermutationGenerator();
 
@@ -38,7 +40,8 @@ namespace RangerLib {
         /// <summary>
         /// Constructor
         /// </summary>
-        public ParamTableGenerator() {
+        public ParamTableGenerator()
+        {
             FilePath = "";
             DBPath = "";
             TableName = "";
@@ -55,28 +58,33 @@ namespace RangerLib {
         /// "IncrementList"
         /// "Operator"
         /// </param>
-        public void AddParamColumn(Dictionary<string, string> parms) {
+        public void AddParamColumn(Dictionary<string, string> parms)
+        {
             mPGenModule.AddParamColumn(parms);
             mParamOperatorLookup.Add(parms["ParamName"], parms["Operator"]);
         }
 
-        private void Clear() {
+        private void Clear()
+        {
             mPGenModule = new PermutationGenerator();
             mParamOperatorLookup.Clear();
         }
 
-        public ProcessingPipeline GetPipeline() {
+        public ProcessingPipeline GetPipeline()
+        {
 
             // build column lists and column overwrite specs
-            List<string> allCols = new List<string>();
-            Dictionary<string, string> operatorColOverwrites = new Dictionary<string, string>();
-            foreach (string paramName in mPGenModule.ParamNames) {
+            var allCols = new List<string>();
+            var operatorColOverwrites = new Dictionary<string, string>();
+
+            foreach (string paramName in mPGenModule.ParamNames)
+            {
                 allCols.Add(paramName);
                 string operatorColName = paramName + "_Operator";
                 allCols.Add(operatorColName + "|+|text");
                 operatorColOverwrites.Add(operatorColName, mParamOperatorLookup[paramName]);
             }
-            string genColspec = string.Join(", ", mPGenModule.ParamNames.ToArray());
+            string genColspec = string.Join(", ", mPGenModule.ParamNames);
             string allColspec = string.Join(", ", allCols.ToArray());
 
             // set output column parameters for permutation generator module
@@ -85,22 +93,31 @@ namespace RangerLib {
             mPGenModule.AutoColumnFormat = "ParamSet_{0:000000}";
 
             // create module to add columns for operators
-            NullFilter filter = new NullFilter();
-            filter.OutputColumnList = mPGenModule.AutoColumnName + ", " + allColspec;
+            var filter = new NullFilter
+            {
+                OutputColumnList = mPGenModule.AutoColumnName + ", " + allColspec
+            };
             filter.SetContext(operatorColOverwrites);
 
             IBaseModule writer = null;
-            if(!string.IsNullOrEmpty(FilePath)) {
-                    // create module to write to file
-                    DelimitedFileWriter dfw = new DelimitedFileWriter();
-                    dfw.FilePath = FilePath;
-                    writer = dfw;
-            } else {
-                    // create module to write to SQLite DB
-                    SQLiteWriter slw = new SQLiteWriter();
-                    slw.DbPath = DBPath;
-                    slw.TableName = TableName;
-                    writer = slw;
+            if (!string.IsNullOrEmpty(FilePath))
+            {
+                // create module to write to file
+                var dfw = new DelimitedFileWriter
+                {
+                    FilePath = FilePath
+                };
+                writer = dfw;
+            }
+            else
+            {
+                // create module to write to SQLite DB
+                var slw = new SQLiteWriter
+                {
+                    DbPath = DBPath,
+                    TableName = TableName
+                };
+                writer = slw;
             }
             return ProcessingPipeline.Assemble("ParamGen", mPGenModule, filter, writer);
         }

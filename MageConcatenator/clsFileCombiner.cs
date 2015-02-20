@@ -101,7 +101,7 @@ namespace MageConcatenator
 
                         using (
                             var reader =
-                                new StreamReader(new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                                new StreamReader(new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                             )
                         {
                             bool headerParsed = false;
@@ -245,7 +245,7 @@ namespace MageConcatenator
 
                 char delimiter = GetDelimiter(fiFile);
 
-                using (var reader = new StreamReader(new FileStream(fiFile.FullName, FileMode.Open, FileAccess.Read, FileShare.Read)))
+                using (var reader = new StreamReader(new FileStream(fiFile.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
                 {
                     int rowCount = 0;
                     int colCount = -1;
