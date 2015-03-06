@@ -1,5 +1,8 @@
 Mage Revision History
 
+Version 1.5.5542; March 5, 2015
+	- Now reporting an error if download of files from MyEMSL fails
+
 Version 1.5.5507; January 29, 2015
 	- Updated to .NET 4 version of log4net
 

@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2010
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4EBE293A-DB89-45B9-ACA9-7405D67F5D80}"
 	ProjectSection(SolutionItems) = preProject
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
@@ -32,8 +34,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MageExtExtractionFilters", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MageExtractorTest", "MageExtractorTest\MageExtractorTest.csproj", "{A57489F0-ECB0-40B2-8947-4203E7E42AC0}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "MageProductionInstaller", "MageProductionInstaller\MageProductionInstaller.vdproj", "{FC31E00F-DD08-4B74-9697-C32B24D7B582}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RangerLib", "RangerLib\RangerLib.csproj", "{744D0B8A-6A3A-48A1-A492-5AAD205ED419}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MageFilePackager", "MageFilePackager\MageFilePackager.csproj", "{B99E2215-0366-4CC5-866E-675867FF38E7}"
@@ -43,9 +43,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BiodiversityFileCopy", "BiodiversityFileCopy\BiodiversityFileCopy.csproj", "{C6518410-ED5F-4F61-AD92-BE1DE3C88294}"
 EndProject
 Global
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = Mage.vsmdi
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -215,18 +212,6 @@ Global
 		{A57489F0-ECB0-40B2-8947-4203E7E42AC0}.Release|Mixed Platforms.Build.0 = Release|x86
 		{A57489F0-ECB0-40B2-8947-4203E7E42AC0}.Release|x64.ActiveCfg = Release|x64
 		{A57489F0-ECB0-40B2-8947-4203E7E42AC0}.Release|x86.ActiveCfg = Release|x86
-		{FC31E00F-DD08-4B74-9697-C32B24D7B582}.Debug|Any CPU.ActiveCfg = Debug
-		{FC31E00F-DD08-4B74-9697-C32B24D7B582}.Debug|Any CPU.Build.0 = Debug
-		{FC31E00F-DD08-4B74-9697-C32B24D7B582}.Debug|Mixed Platforms.ActiveCfg = Debug
-		{FC31E00F-DD08-4B74-9697-C32B24D7B582}.Debug|x64.ActiveCfg = Debug
-		{FC31E00F-DD08-4B74-9697-C32B24D7B582}.Debug|x86.ActiveCfg = Debug
-		{FC31E00F-DD08-4B74-9697-C32B24D7B582}.Release|Any CPU.ActiveCfg = Release
-		{FC31E00F-DD08-4B74-9697-C32B24D7B582}.Release|Any CPU.Build.0 = Release
-		{FC31E00F-DD08-4B74-9697-C32B24D7B582}.Release|Mixed Platforms.ActiveCfg = Release
-		{FC31E00F-DD08-4B74-9697-C32B24D7B582}.Release|Mixed Platforms.Build.0 = Release
-		{FC31E00F-DD08-4B74-9697-C32B24D7B582}.Release|x64.ActiveCfg = Release
-		{FC31E00F-DD08-4B74-9697-C32B24D7B582}.Release|x86.ActiveCfg = Release
-		{FC31E00F-DD08-4B74-9697-C32B24D7B582}.Release|x86.Build.0 = Release
 		{744D0B8A-6A3A-48A1-A492-5AAD205ED419}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{744D0B8A-6A3A-48A1-A492-5AAD205ED419}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{744D0B8A-6A3A-48A1-A492-5AAD205ED419}.Debug|Mixed Platforms.Build.0 = Debug|x86
@@ -284,5 +269,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = Mage.vsmdi
 	EndGlobalSection
 EndGlobal

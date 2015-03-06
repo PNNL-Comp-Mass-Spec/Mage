@@ -51,7 +51,7 @@ namespace MageExtractor {
 			InitializeComponent();
 
 			const bool isBetaVersion = false;
-            SetFormTitle("2015-01-29", isBetaVersion);
+            SetFormTitle("2015-03-05", isBetaVersion);
 
 			SetTags();
 
@@ -114,9 +114,9 @@ namespace MageExtractor {
 
 			if (!string.IsNullOrEmpty(programDate)) {
 				if (beta)
-					txtVersion.Text += string.Format(" ( {0}, beta)", programDate);
+					txtVersion.Text += string.Format(" ({0}, beta)", programDate);
 				else
-					txtVersion.Text += string.Format(" ( {0})", programDate);
+					txtVersion.Text += string.Format(" ({0})", programDate);
 			}
 
 			if (beta)

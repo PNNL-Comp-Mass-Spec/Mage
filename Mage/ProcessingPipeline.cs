@@ -147,10 +147,20 @@ namespace Mage {
 					// In particular, FileProcessingBase will call m_MyEMSLDatasetInfoCache.ProcessDownloadQueue
 					foreach (KeyValuePair<string, IBaseModule> modDef in mModuleIndex)
 					{
-						modDef.Value.PostProcess();
+						var postProcessSuccess = modDef.Value.PostProcess();
+
+					    if (!postProcessSuccess)
+					    {
+					        bError = true;
+					    }
 					}
 
-					if (string.IsNullOrEmpty(CompletionCode)) {
+				    if (bError)
+				    {
+				        throw new MageException("Post processing error; see warnings for details");
+				    }
+
+				    if (string.IsNullOrEmpty(CompletionCode)) {
 						if (Globals.AbortRequested) {
 							HandleStatusMessageUpdated(this, new MageStatusEventArgs("Processing Aborted"));
 							traceLog.Info(string.Format("Pipeline {0} aborted...", PipelineName));

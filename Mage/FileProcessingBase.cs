@@ -382,13 +382,14 @@ namespace Mage
 		}
 
 		/// <summary>
-		/// Called by pipeline container after to pipeline execution has processed all of the data rows
+		/// Called by pipeline container after pipeline execution has processed all of the data rows
 		/// Download any queued MyEMSL files
 		/// </summary>
-		public override void PostProcess()
+		public override bool PostProcess()
 		{
 			// Note that the target folder path will most likely be ignored since explicit destination file paths were likely used when files were added to the queue
-			ProcessMyEMSLDownloadQueue(".", Downloader.DownloadFolderLayout.SingleDataset);
+			var success = ProcessMyEMSLDownloadQueue(".", Downloader.DownloadFolderLayout.SingleDataset);
+		    return success;
 		}
 
 		/// <summary>
@@ -409,6 +410,11 @@ namespace Mage
 				OnStatusMessageUpdated(new MageStatusEventArgs("Downloading " + m_MyEMSLDatasetInfoCache.FilesToDownload.Count + " files from MyEMSL"));
 
 			bool success = m_MyEMSLDatasetInfoCache.ProcessDownloadQueue(downloadFolderPath, folderLayout);
+
+            foreach (var errorMessage in m_MyEMSLDatasetInfoCache.ErrorMessages)
+            {
+                OnWarningMessage(new MageStatusEventArgs(errorMessage));
+            }
 
 			System.Threading.Thread.Sleep(10);
 

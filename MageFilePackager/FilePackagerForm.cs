@@ -113,7 +113,7 @@ namespace MageFilePackager {
         }
 
         private void SetAboutText() {
-            txtAbout1.Text = "Mage File packager can build download package manifiests by searching for files from DMS datasets, analysis jobs, and data packages.";
+            txtAbout1.Text = "Mage File packager can build download package manifests by searching for files from DMS datasets, analysis jobs, and data packages.";
             txtAbout2.Text = "Written by Gary Kiebel in 2012 for the Department of Energy (PNNL, Richland, WA)";
             lblAboutLink.Text = "http://prismwiki.pnl.gov/wiki/Mage_Suite";
         }
@@ -126,9 +126,9 @@ namespace MageFilePackager {
 
             if (!string.IsNullOrEmpty(programDate)) {
                 if (beta)
-                    txtVersion.Text += string.Format(" ( {0}, beta)", programDate);
+                    txtVersion.Text += string.Format(" ({0}, beta)", programDate);
                 else
-                    txtVersion.Text += string.Format(" ( {0})", programDate);
+                    txtVersion.Text += string.Format(" ({0})", programDate);
             }
 
             if (beta)

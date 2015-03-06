@@ -338,8 +338,9 @@ namespace Mage {
 		/// <summary>
 		/// Called by pipeline container after to pipeline execution has processed all of the data rows
 		/// </summary>
-		public virtual void PostProcess()
+		public virtual bool PostProcess()
 		{
+            return true;
 		}
 
         /// <summary>
