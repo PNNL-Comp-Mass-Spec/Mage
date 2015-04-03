@@ -1,5 +1,8 @@
 Mage Revision History
 
+Version 1.5.5570; April 2, 2015
+	- Updated MyEMSLReader that fixes cart download bug
+
 Version 1.5.5542; March 5, 2015
 	- Now reporting an error if download of files from MyEMSL fails
 
