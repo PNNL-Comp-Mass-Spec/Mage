@@ -1,7 +1,10 @@
-﻿using Mage;
+﻿using System;
+using Mage;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
+
 namespace MageUnitTests {
 
 
@@ -103,7 +106,7 @@ namespace MageUnitTests {
         ///A test for Run
         ///</summary>
         [TestMethod()]
-		[DeploymentItem(@"..\..\..\TestItems\Sarc_MS_Filtered_isos.csv")]
+		[DeploymentItem(@"..\..\..\MageUnitTests\TestItems\Sarc_MS_Filtered_isos.csv")]
         public void ReadCommaDelimitedFileTest() {
             // create DelimitedFileReader object and test sink object 
             // and connect together
@@ -135,9 +138,10 @@ namespace MageUnitTests {
         }
 
         [TestMethod()]
-		[DeploymentItem(@"..\..\..\TestItems\tab_delim.txt")]
-        public void ReadTabDelimitedFileTest() {
-            SimpleSink result = ReadDelimitedFile("tab_delim.txt");
+		[DeploymentItem(@"..\..\..\MageUnitTests\TestItems\tab_delim.txt")]
+        public void ReadTabDelimitedFileTest()
+        {
+            SimpleSink result = ReadDelimitedFile(@"tab_delim.txt");
             Assert.AreEqual(4, result.Columns.Count);
             Assert.AreEqual(17, result.Rows.Count);
         }

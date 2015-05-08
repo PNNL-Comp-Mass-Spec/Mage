@@ -77,6 +77,7 @@ Source: ..\DeployedFiles\MageFileProcessor\System.Data.SQLite.dll       ; DestDi
 Source: ..\DeployedFiles\MageFileProcessor\MageFileProcessor.exe        ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\ReadMe.txt                   ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\QueryDefinitions.xml         ; DestDir: {app}\MageFileProcessor
+Source: ..\DeployedFiles\MageFileProcessor\ColumnMapping.txt            ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\x64\SQLite.Interop.dll       ; DestDir: {app}\MageFileProcessor\x64
 Source: ..\DeployedFiles\MageFileProcessor\x86\SQLite.Interop.dll       ; DestDir: {app}\MageFileProcessor\x86
 
@@ -151,7 +152,7 @@ AppCopyright=© PNNL
 ;LicenseFile=.\License.rtf
 PrivilegesRequired=poweruser
 OutputBaseFilename=MageInstaller
-VersionInfoVersion=1.51
+VersionInfoVersion=1.52
 VersionInfoCompany=PNNL
 VersionInfoDescription=Mage
 VersionInfoCopyright=PNNL

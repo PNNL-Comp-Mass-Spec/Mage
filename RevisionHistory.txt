@@ -1,5 +1,9 @@
 Mage Revision History
 
+Version 1.5.5576; April 8, 2015
+	- Update installer to include ColumnMapping.txt
+	- Updated MyEMSLReader.dll
+
 Version 1.5.5570; April 2, 2015
 	- Updated MyEMSLReader that fixes cart download bug
 

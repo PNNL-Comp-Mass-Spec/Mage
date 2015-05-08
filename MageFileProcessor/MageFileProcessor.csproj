@@ -65,6 +65,27 @@
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
     <CodeAnalysisFailOnMissingRules>true</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisFailOnMissingRules>true</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisFailOnMissingRules>true</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -184,12 +205,13 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetPath)" "$(ProjectDir)..\DeployedFiles\$(ProjectName)"
-copy "$(TargetDir)*.dll" "$(ProjectDir)..\DeployedFiles\$(ProjectName)"
+    <PostBuildEvent>copy "$(TargetPath)" "$(ProjectDir)..\DeployedFiles\$(ProjectName)" /y
+copy "$(TargetDir)*.dll" "$(ProjectDir)..\DeployedFiles\$(ProjectName)" /y
 xcopy "$(TargetDir)x86\*.dll" "$(ProjectDir)..\DeployedFiles\$(ProjectName)\x86\" /D /y
 xcopy "$(TargetDir)x64\*.dll" "$(ProjectDir)..\DeployedFiles\$(ProjectName)\x64\" /D /y
 copy "$(TargetDir)QueryDefinitions.xml" "$(ProjectDir)..\DeployedFiles\$(ProjectName)"
-copy "$(TargetFileName).config" "$(ProjectDir)..\DeployedFiles\$(ProjectName)"
+copy "$(TargetFileName).config" "$(ProjectDir)..\DeployedFiles\$(ProjectName)" /y
+copy "$(TargetDir)ColumnMapping.txt" "$(ProjectDir)..\DeployedFiles\$(ProjectName)" /y
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
