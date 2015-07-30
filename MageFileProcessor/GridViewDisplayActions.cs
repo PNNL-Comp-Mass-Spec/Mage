@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using MageDisplayLib;
-using Mage;
 
 namespace MageFileProcessor {
 
@@ -20,26 +19,26 @@ namespace MageFileProcessor {
         /// The particular GridViewDisplayControl object that this object is attached to
         /// and supplies context menu items for
         /// </summary>
-        private GridViewDisplayControl mDisplayUserControl = null;
+        private readonly GridViewDisplayControl mDisplayUserControl;
 
         /// <summary>
         /// The DataGridView control contained by the attached GridViewDisplayControl
         /// (broken out as separate reference for convenience)
         /// </summary>
-        private DataGridView mDisplayView = null;
+        private readonly DataGridView mDisplayView;
 
         /// <summary>
         /// List of names of all menu items created by this class
         /// </summary>
-        private List<string> mAllMenuItems = new List<string>();
+        private readonly List<string> mAllMenuItems = new List<string>();
 
         /// <summary>
         /// Lists of names of menu items 
         /// that are sensitive to presence of certain columns in list display
         /// </summary>
-        private List<string> mFolderSensitiveMenuItems = new List<string>();
-        private List<string> mJobSensitiveMenuItems = new List<string>();
-        private List<string> mDatasetSensitiveMenuItems = new List<string>();
+        private readonly List<string> mFolderSensitiveMenuItems = new List<string>();
+        private readonly List<string> mJobSensitiveMenuItems = new List<string>();
+        private readonly List<string> mDatasetSensitiveMenuItems = new List<string>();
 
         #endregion
 
@@ -66,14 +65,16 @@ namespace MageFileProcessor {
         /// </summary>
         private void SetupContextMenus() {
 
-            List<ToolStripItem> mMyMenuItems = new List<ToolStripItem>();
-            mMyMenuItems.Add(new ToolStripSeparator());
+            var mMyMenuItems = new List<ToolStripItem>
+            {
+                new ToolStripSeparator()
+            };
             mMyMenuItems.AddRange(GetFolderMenuItems().ToArray());
             mMyMenuItems.AddRange(GetWebActionMenuItems().ToArray());
 
             mDisplayUserControl.AppendContextMenuItems(mMyMenuItems.ToArray());
 
-            foreach (ToolStripItem tsmi in mMyMenuItems) {
+            foreach (var tsmi in mMyMenuItems) {
                 tsmi.Enabled = false;
                 mAllMenuItems.Add(tsmi.Name);
             }
@@ -87,9 +88,16 @@ namespace MageFileProcessor {
         /// Return the index to the given column
         /// </summary>
         /// <param name="colName">Name of column to get index for</param>
-        /// <returns>Position of column in item array</returns>
-        private int GetColumnIndex(string colName) {
-            int i = mDisplayView.Columns[colName].Index;
+        /// <returns>Position of column in item array; -1 if not found</returns>
+        private int GetColumnIndex(string colName)
+        {
+            var columnDef = mDisplayView.Columns[colName];
+            if (columnDef == null)
+            {
+                return -1;
+            }
+            
+            var i = columnDef.Index;
             return i;
         }
 
@@ -99,8 +107,8 @@ namespace MageFileProcessor {
         /// <param name="colName">Column name to get values from</param>
         /// <returns>List of contents of column for each selected row</returns>
         private string[] GetItemList(string colName) {
-            List<string> lst = new List<string>();
-            int i = GetColumnIndex(colName);
+            var lst = new List<string>();
+            var i = GetColumnIndex(colName);
             if (i != -1) {
                 foreach (DataGridViewRow objRow in mDisplayView.SelectedRows) {
                     lst.Add(objRow.Cells[i].Value.ToString());
@@ -118,19 +126,22 @@ namespace MageFileProcessor {
         /// </summary>
         /// <returns>Menu items</returns>
         private ToolStripItem[] GetWebActionMenuItems() {
-            List<ToolStripItem> tsmil = new List<ToolStripItem>();
-            ToolStripMenuItem tsmi = null;
-            ToolStripMenuItem webmi = new ToolStripMenuItem("Open DMS web page");
-            webmi.Name = "WebPageSubmenu";
+            var tsmil = new List<ToolStripItem>();
+
+            var webmi = new ToolStripMenuItem("Open DMS web page")
+            {
+                Name = "WebPageSubmenu"
+            };
             tsmil.Add(webmi);
 
-            tsmi = new ToolStripMenuItem("Job detail", null, HandleJobWebAction, "JobDetailWebPage");
-            mJobSensitiveMenuItems.Add(tsmi.Name);
-            webmi.DropDownItems.Add(tsmi);
+            var tsmiJob = new ToolStripMenuItem("Job detail", null, HandleJobWebAction, "JobDetailWebPage");
+            mJobSensitiveMenuItems.Add(tsmiJob.Name);
+            webmi.DropDownItems.Add(tsmiJob);
 
-            tsmi = new ToolStripMenuItem("Dataset detail", null, HandleDatasetWebAction, "DatasetDetailWebPage");
-            mDatasetSensitiveMenuItems.Add(tsmi.Name);
-            webmi.DropDownItems.Add(tsmi);
+            var tsmiDataset = new ToolStripMenuItem("Dataset detail", null, HandleDatasetWebAction, "DatasetDetailWebPage");
+            mDatasetSensitiveMenuItems.Add(tsmiDataset.Name);
+            webmi.DropDownItems.Add(tsmiDataset);
+
             return tsmil.ToArray();
         }
 
@@ -152,14 +163,14 @@ namespace MageFileProcessor {
         /// <param name="url">Base URL</param>
         /// <param name="columnName">column to get trailing URL segment from</param>
         private void LaunchWebBrowser(string url, string columnName) {
-            string[] itemList = GetItemList(columnName);
+            var itemList = GetItemList(columnName);
             if (mDisplayView.SelectedRows.Count == 0) {
                 MessageBox.Show("No rows selected");
             } else
                 if (itemList.Length == 0) {
                     MessageBox.Show(string.Format("Column '{0}' not present in row", columnName));
                 } else {
-                    System.Diagnostics.Process.Start(url + itemList[0]);
+                    Process.Start(url + itemList[0]);
                 }
         }
 
@@ -168,11 +179,11 @@ namespace MageFileProcessor {
         #region Windows Explorer Folder Menu Actions
 
         private ToolStripItem[] GetFolderMenuItems() {
-            List<ToolStripItem> l = new List<ToolStripItem>();
-            ToolStripMenuItem tsmi = new ToolStripMenuItem("Open Folder", null, HandleFolderAction, "OpenFolder");
+            var tsmil = new List<ToolStripItem>();
+            var tsmi = new ToolStripMenuItem("Open Folder", null, HandleFolderAction, "OpenFolder");
             mFolderSensitiveMenuItems.Add(tsmi.Name);
-            l.Add(tsmi);
-            return l.ToArray();
+            tsmil.Add(tsmi);
+            return tsmil.ToArray();
         }
 
         /// <summary>
@@ -190,15 +201,15 @@ namespace MageFileProcessor {
         /// </summary>
         /// <param name="columnName"></param>
         private void OpenWindowsExplorer(string columnName) {
-            string[] itemList = GetItemList(columnName);
+            var itemList = GetItemList(columnName);
             if (mDisplayView.SelectedRows.Count == 0) {
                 MessageBox.Show("No rows selected");
             } else
                 if (itemList.Length == 0) {
                     MessageBox.Show(string.Format("Column '{0}' not present in row", columnName));
                 } else {
-                    string filePath = itemList[0];
-                    System.Diagnostics.Process.Start("explorer.exe", filePath);
+                    var filePath = itemList[0];
+                    Process.Start("explorer.exe", filePath);
                 }
         }
 
@@ -227,7 +238,7 @@ namespace MageFileProcessor {
                 AdjustMenuItemsFromNameList(mJobSensitiveMenuItems, false);
                 AdjustMenuItemsFromNameList(mDatasetSensitiveMenuItems, false);
                 //
-                foreach (MageColumnDef colDef in mDisplayUserControl.ColumnDefs) {
+                foreach (var colDef in mDisplayUserControl.ColumnDefs) {
                     switch (colDef.Name) {
                         case "Job":
                             AdjustMenuItemsFromNameList(mJobSensitiveMenuItems, true);
@@ -250,11 +261,15 @@ namespace MageFileProcessor {
         /// <param name="itemNames"></param>
         /// <param name="active"></param>
         private void AdjustMenuItemsFromNameList(List<string> itemNames, bool active) {
-            foreach (string name in itemNames) {
-                if (!string.IsNullOrEmpty(name)) {
-                    foreach (ToolStripItem tsi in mDisplayView.ContextMenuStrip.Items.Find(name, true)) {
-                        tsi.Enabled = active;
-                    }
+            foreach (var name in itemNames)
+            {
+                if (string.IsNullOrEmpty(name))
+                {
+                    continue;
+                }
+
+                foreach (var tsi in mDisplayView.ContextMenuStrip.Items.Find(name, true)) {
+                    tsi.Enabled = active;
                 }
             }
         }

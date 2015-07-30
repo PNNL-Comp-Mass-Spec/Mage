@@ -151,6 +151,7 @@
             // JobListDisplayControl
             // 
             this.JobListDisplayControl.AllowDisableShiftClickMode = true;
+            this.JobListDisplayControl.AutoSizeColumnWidths = false;
             this.JobListDisplayControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.JobListDisplayControl.HeaderVisible = true;
             this.JobListDisplayControl.ItemBlockSize = 100;
@@ -321,6 +322,7 @@
             this.DataPackageDatasetsTabPage.Location = new System.Drawing.Point(4, 25);
             this.DataPackageDatasetsTabPage.Margin = new System.Windows.Forms.Padding(4);
             this.DataPackageDatasetsTabPage.Name = "DataPackageDatasetsTabPage";
+            this.DataPackageDatasetsTabPage.Padding = new System.Windows.Forms.Padding(4);
             this.DataPackageDatasetsTabPage.Size = new System.Drawing.Size(1268, 105);
             this.DataPackageDatasetsTabPage.TabIndex = 8;
             this.DataPackageDatasetsTabPage.Tag = "Defined via code in method SetTags()";
@@ -331,13 +333,13 @@
             // 
             this.JobDataPackagePanel2.BackColor = System.Drawing.SystemColors.Control;
             this.JobDataPackagePanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.JobDataPackagePanel2.Location = new System.Drawing.Point(0, 0);
+            this.JobDataPackagePanel2.Location = new System.Drawing.Point(4, 4);
             this.JobDataPackagePanel2.Margin = new System.Windows.Forms.Padding(5);
             this.JobDataPackagePanel2.Name = "JobDataPackagePanel2";
             this.JobDataPackagePanel2.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
             this.JobDataPackagePanel2.ShowGetDatasets = true;
             this.JobDataPackagePanel2.ShowGetJobs = false;
-            this.JobDataPackagePanel2.Size = new System.Drawing.Size(1268, 105);
+            this.JobDataPackagePanel2.Size = new System.Drawing.Size(1260, 97);
             this.JobDataPackagePanel2.TabIndex = 1;
             // 
             // DatasetTabPage
@@ -521,6 +523,7 @@
             // FileListDisplayControl
             // 
             this.FileListDisplayControl.AllowDisableShiftClickMode = true;
+            this.FileListDisplayControl.AutoSizeColumnWidths = false;
             this.FileListDisplayControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.FileListDisplayControl.HeaderVisible = true;
             this.FileListDisplayControl.ItemBlockSize = 100;
@@ -591,9 +594,11 @@
             // 
             this.LocalFolderPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LocalFolderPanel1.FileNameFilter = "syn.txt";
+            this.LocalFolderPanel1.FileSelectionMode = "FileSearch";
             this.LocalFolderPanel1.Folder = "C:\\Data\\syn";
             this.LocalFolderPanel1.Location = new System.Drawing.Point(4, 4);
             this.LocalFolderPanel1.Margin = new System.Windows.Forms.Padding(5);
+            this.LocalFolderPanel1.MostRecentFolder = "";
             this.LocalFolderPanel1.Name = "LocalFolderPanel1";
             this.LocalFolderPanel1.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
             this.LocalFolderPanel1.SearchInSubfolders = "No";
@@ -775,6 +780,7 @@
             this.SQLiteDestinationPanel1.Location = new System.Drawing.Point(4, 4);
             this.SQLiteDestinationPanel1.Margin = new System.Windows.Forms.Padding(5);
             this.SQLiteDestinationPanel1.Name = "SQLiteDestinationPanel1";
+            this.SQLiteDestinationPanel1.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
             this.SQLiteDestinationPanel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.SQLiteDestinationPanel1.Size = new System.Drawing.Size(1266, 86);
             this.SQLiteDestinationPanel1.TabIndex = 14;

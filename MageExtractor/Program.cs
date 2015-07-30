@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 
 // Configure log4net using the .log4net file
@@ -24,8 +22,8 @@ namespace MageExtractor {
 			catch (Exception ex)
 			{
 				Console.WriteLine("Exception caught: " + ex.Message);
-				Console.WriteLine(ex.StackTrace.ToString());
-				MessageBox.Show("Critical error: " + ex.Message + "\n" + ex.StackTrace.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				Console.WriteLine(ex.StackTrace);
+				MessageBox.Show("Critical error: " + ex.Message + "\n" + ex.StackTrace, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
 				var fiExe = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location);
 				if (fiExe.FullName.StartsWith(@"\\"))

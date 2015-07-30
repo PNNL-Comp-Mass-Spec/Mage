@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Windows.Forms;
 using Mage;
-using System.IO;
+using PRISM.Files;
 
-namespace MageUIComponents {
+namespace MageUIComponents
+{
 
-    public partial class FolderDestinationPanel : UserControl, IModuleParameters {
+    public partial class FolderDestinationPanel : UserControl, IModuleParameters
+    {
 
-        public FolderDestinationPanel() {
+        public FolderDestinationPanel()
+        {
             InitializeComponent();
         }
 
@@ -23,17 +22,21 @@ namespace MageUIComponents {
 
         #region Properties
 
-        public string OutputFolder {
+        public string OutputFolder
+        {
             get { return OutputFolderCtl.Text; }
             set { OutputFolderCtl.Text = value; }
         }
 
-        public string OutputFile {
-            get {
-                if (!string.IsNullOrEmpty(OutputFileCtl.Text) && !Path.HasExtension(OutputFileCtl.Text)) {
+        public string OutputFile
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(OutputFileCtl.Text) && !Path.HasExtension(OutputFileCtl.Text))
+                {
                     OutputFileCtl.Text += ".txt";
                 }
-                return OutputFileCtl.Text; 
+                return OutputFileCtl.Text;
             }
             set { OutputFileCtl.Text = value; }
         }
@@ -42,16 +45,20 @@ namespace MageUIComponents {
 
         #region IModuleParameters Members
 
-        public Dictionary<string, string> GetParameters() {
+        public Dictionary<string, string> GetParameters()
+        {
             return new Dictionary<string, string>() { 
                 { "OutputFolder",   OutputFolder},
                 { "OutputFile",   OutputFile}
             };
         }
 
-        public void SetParameters(Dictionary<string, string> paramList) {
-            foreach (KeyValuePair<string, string> paramDef in paramList) {
-                switch (paramDef.Key) {
+        public void SetParameters(Dictionary<string, string> paramList)
+        {
+            foreach (var paramDef in paramList)
+            {
+                switch (paramDef.Key)
+                {
                     case "OutputFolder":
                         OutputFolder = paramDef.Value;
                         break;
@@ -64,29 +71,54 @@ namespace MageUIComponents {
 
         #endregion
 
-        private void SelectFolderCtl_Click(object sender, EventArgs e) {
-            FolderBrowserDialog browse = new FolderBrowserDialog();
-            browse.ShowNewFolderButton = true;
-            browse.Description = "Please select a folder";
-            browse.RootFolder = Environment.SpecialFolder.MyComputer; //Environment.SpecialFolder.MyComputer; //Environment.SpecialFolder.DesktopDirectory;
+        private void SelectFolderCtl_Click(object sender, EventArgs e)
+        {
 
-			if (OutputFolderCtl.TextLength > 0 && System.IO.Directory.Exists(OutputFolderCtl.Text))
-				browse.SelectedPath = OutputFolderCtl.Text;
-			
-            if (browse.ShowDialog() == DialogResult.OK) {
-                OutputFolderCtl.Text = browse.SelectedPath;
+            var folderBrowser = new FolderBrowser();
+
+            try
+            {
+                if (OutputFolderCtl.TextLength > 0 && Directory.Exists(OutputFolderCtl.Text))
+                {
+                    folderBrowser.FolderPath = OutputFolderCtl.Text;
+                }
             }
+            catch (Exception)
+            {
+                // Ignore errors here
+            }
+
+            if (folderBrowser.BrowseForFolder())
+            {
+                OutputFolderCtl.Text = folderBrowser.FolderPath;
+            }
+
         }
 
         private void DefineDestinationFileCtl_Click(object sender, EventArgs e) {
-            OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            openFileDialog1.RestoreDirectory = true;
-            openFileDialog1.AddExtension = true;
-            openFileDialog1.CheckFileExists = false;
-            openFileDialog1.DefaultExt = "txt";
-            openFileDialog1.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-            if (openFileDialog1.ShowDialog() == DialogResult.OK) {
-                string filePath = openFileDialog1.FileName;
+            var fileDialog = new OpenFileDialog
+            {
+                RestoreDirectory = true,
+                AddExtension = true,
+                CheckFileExists = false,
+                DefaultExt = "txt",
+                Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*"                
+            };
+
+            try
+            {
+                if (!string.IsNullOrEmpty(OutputFolderCtl.Text) && Directory.Exists(OutputFolderCtl.Text))
+                {
+                    fileDialog.InitialDirectory = OutputFolderCtl.Text;
+                }
+            }
+            catch (Exception)
+            {
+                // Ignore errors here
+            }
+
+            if (fileDialog.ShowDialog() == DialogResult.OK) {
+                var filePath = fileDialog.FileName;
                 OutputFileCtl.Text = Path.GetFileName(filePath);
                 OutputFolderCtl.Text = Path.GetDirectoryName(filePath);
             }

@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows.Forms;
 using Mage;
 
-namespace MageUIComponents {
+namespace MageUIComponents
+{
 
-    public partial class LocalFolderPanel : UserControl, IModuleParameters {
+    public partial class LocalFolderPanel : UserControl, IModuleParameters
+    {
 
         public event EventHandler<MageCommandEventArgs> OnAction;
 
@@ -20,7 +23,8 @@ namespace MageUIComponents {
 
         #region Properties
 
-        public string FileNameFilter {
+        public string FileNameFilter
+        {
             get { return LocalFileNameFilterCtl.Text; }
             set { LocalFileNameFilterCtl.Text = value; }
         }
@@ -45,7 +49,8 @@ namespace MageUIComponents {
             }
         }
 
-        public string Folder {
+        public string Folder
+        {
             get { return LocalDirectoryCtl.Text; }
             set { LocalDirectoryCtl.Text = value; }
         }
@@ -53,34 +58,35 @@ namespace MageUIComponents {
         public string MostRecentFolder { get; set; }
 
         public string SearchInSubfolders
-		{
-			get
-			{
-				return (SearchInSubfoldersCtl.Checked) ? "Yes" : "No";
-			}
-			set
-			{
-				SearchInSubfoldersCtl.Checked = (value == "Yes") ? true : false;
-			}
-		}
+        {
+            get
+            {
+                return (SearchInSubfoldersCtl.Checked) ? "Yes" : "No";
+            }
+            set
+            {
+                SearchInSubfoldersCtl.Checked = (value == "Yes");
+            }
+        }
 
-		public string SubfolderSearchName
-		{
-			get
-			{
-				return SubfolderSearchNameCtl.Text;
-			}
-			set
-			{
-				SubfolderSearchNameCtl.Text = value;
-			}
-		}
+        public string SubfolderSearchName
+        {
+            get
+            {
+                return SubfolderSearchNameCtl.Text;
+            }
+            set
+            {
+                SubfolderSearchNameCtl.Text = value;
+            }
+        }
 
         #endregion
 
         #region IModuleParameters Members
 
-        public Dictionary<string, string> GetParameters() {
+        public Dictionary<string, string> GetParameters()
+        {
             return new Dictionary<string, string>() { 
                 { "FileNameFilter",  FileNameFilter },
                 { "FileSelectionMode", FileSelectionMode },
@@ -90,9 +96,12 @@ namespace MageUIComponents {
             };
         }
 
-        public void SetParameters(Dictionary<string, string> paramList) {
-            foreach (KeyValuePair<string, string> paramDef in paramList) {
-                switch (paramDef.Key) {
+        public void SetParameters(Dictionary<string, string> paramList)
+        {
+            foreach (var paramDef in paramList)
+            {
+                switch (paramDef.Key)
+                {
                     case "FileNameFilter":
                         FileNameFilter = paramDef.Value;
                         break;
@@ -114,36 +123,49 @@ namespace MageUIComponents {
 
         #endregion
 
-        public LocalFolderPanel() {
+        public LocalFolderPanel()
+        {
             InitializeComponent();
             MostRecentFolder = string.Empty;
         }
 
-		private void GetFilesCtl_Click(object sender, EventArgs e) {
-            if (OnAction != null) {
+        private void GetFilesCtl_Click(object sender, EventArgs e)
+        {
+            if (OnAction != null)
+            {
                 OnAction(this, new MageCommandEventArgs("get_files_from_local_folder"));
             }
         }
 
-        private void SelectFolderCtl_Click(object sender, EventArgs e) {
-            var browse = new FolderBrowserDialog
+        private void SelectFolderCtl_Click(object sender, EventArgs e)
+        {
+
+            var folderBrowser = new PRISM.Files.FolderBrowser();
+
+            try
             {
-                ShowNewFolderButton = true,
-                Description = "Please select a folder",
-                RootFolder = Environment.SpecialFolder.MyComputer
-            };
-
-            if (LocalDirectoryCtl.TextLength > 0 && System.IO.Directory.Exists(LocalDirectoryCtl.Text))
-                browse.SelectedPath = LocalDirectoryCtl.Text;
-            else if (!string.IsNullOrEmpty(MostRecentFolder) && System.IO.Directory.Exists(MostRecentFolder))
-                browse.SelectedPath = MostRecentFolder;
-
-            if (browse.ShowDialog() == DialogResult.OK) {
-                LocalDirectoryCtl.Text = browse.SelectedPath;
-                MostRecentFolder = browse.SelectedPath;
+                if (LocalDirectoryCtl.TextLength > 0 && Directory.Exists(LocalDirectoryCtl.Text))
+                {
+                    folderBrowser.FolderPath = LocalDirectoryCtl.Text;
+                }
+                else if (!string.IsNullOrEmpty(MostRecentFolder) && Directory.Exists(MostRecentFolder))
+                {
+                    folderBrowser.FolderPath = MostRecentFolder;
+                }
             }
+            catch (Exception)
+            {
+                // Ignore errors here
+            }
+
+            if (folderBrowser.BrowseForFolder())
+            {
+                LocalDirectoryCtl.Text = folderBrowser.FolderPath;
+                MostRecentFolder = folderBrowser.FolderPath;
+            }
+
         }
- 
+
         private void RegExRadioBtn_CheckedChanged(object sender, EventArgs e)
         {
             mSelectionMode = "RegEx";

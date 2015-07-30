@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
+using System.Diagnostics;
 using System.IO;
-using Mage;
-using log4net;
-using MageDisplayLib;
+using System.Linq;
 using System.Reflection;
+using System.Windows.Forms;
+using log4net;
+using Mage;
+using MageDisplayLib;
 using MageUIComponents;
-using System.Collections.ObjectModel;
 
 namespace MageFileProcessor
 {
@@ -57,7 +57,7 @@ namespace MageFileProcessor
 			InitializeComponent();
 
 			const bool isBetaVersion = false;
-			SetFormTitle("2015-05-08", isBetaVersion);
+			SetFormTitle("2015-07-30", isBetaVersion);
 
 			SetTags();
 
@@ -77,9 +77,9 @@ namespace MageFileProcessor
 			{
 				// set up configuration folder and files
 				// Set log4net path and kick the logger into action
-				string LogFileName = Path.Combine(SavedState.DataDirectory, "log.txt");
-				log4net.GlobalContext.Properties["LogName"] = LogFileName;
-				ILog traceLog = LogManager.GetLogger("TraceLog");
+				var LogFileName = Path.Combine(SavedState.DataDirectory, "log.txt");
+				GlobalContext.Properties["LogName"] = LogFileName;
+				var traceLog = LogManager.GetLogger("TraceLog");
 				traceLog.Info("Starting");
 			}
 			catch (Exception ex)
@@ -94,11 +94,15 @@ namespace MageFileProcessor
 			SetupColumnMapping();
 
 			// setup context menus for list displays
+		    
+            // ReSharper disable once ObjectCreationAsStatement
 			new GridViewDisplayActions(JobListDisplayControl);
+		    
+            // ReSharper disable once ObjectCreationAsStatement
 			new GridViewDisplayActions(FileListDisplayControl);
 
 			// Connect click events
-			this.lblAboutLink.LinkClicked += lblAboutLink_LinkClicked;
+			lblAboutLink.LinkClicked += lblAboutLink_LinkClicked;
 
 			// Connect the pipeline queue to message handlers
 			ConnectPipelineQueueToStatusDisplay(mPipelineQueue);
@@ -141,8 +145,8 @@ namespace MageFileProcessor
 
 		private void SetFormTitle(string programDate, bool beta)
 		{
-			System.Version objVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
-			string version = string.Format("{0}.{1}.{2}", objVersion.Major, objVersion.Minor, objVersion.Build);
+			var objVersion = Assembly.GetExecutingAssembly().GetName().Version;
+			var version = string.Format("{0}.{1}.{2}", objVersion.Major, objVersion.Minor, objVersion.Build);
 
 			txtVersion.Text = "Version " + version;
 
@@ -240,7 +244,7 @@ namespace MageFileProcessor
 		/// <param name="command"></param>
 		private void BuildAndRunPipeline(MageCommandEventArgs command)
 		{
-			DisplaySourceMode mode = (command.Mode == "selected") ? DisplaySourceMode.Selected : DisplaySourceMode.All;
+			var mode = (command.Mode == "selected") ? DisplaySourceMode.Selected : DisplaySourceMode.All;
 
 			mPipelineQueue.Pipelines.Clear();
 
@@ -264,7 +268,7 @@ namespace MageFileProcessor
 							return;
 						}
 
-						Dictionary<string, string> queryParameters = GetRuntimeParmsForEntityQuery();
+						var queryParameters = GetRuntimeParmsForEntityQuery();
 						if (!ValidQueryParameters(queryName, queryParameters))
 						{
 							return;
@@ -278,7 +282,7 @@ namespace MageFileProcessor
 
 					case "get_entities_from_flex_query":
 						queryDefXML = ModuleDiscovery.GetQueryXMLDef(command.Mode);
-						SQLBuilder builder = JobFlexQueryPanel.GetSQLBuilder(queryDefXML);
+						var builder = JobFlexQueryPanel.GetSQLBuilder(queryDefXML);
 						if (!builder.HasPredicate)
 						{
 							MessageBox.Show("You must define one or more search criteria before searching", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -294,7 +298,7 @@ namespace MageFileProcessor
 						break;
 
 					case "get_files_from_entities":
-						string entityType = JobListDisplayControl.PageTitle;
+						var entityType = JobListDisplayControl.PageTitle;
 						runtimeParms = GetRuntimeParmsForEntityFileType(entityType);
 						source = new GVPipelineSource(JobListDisplayControl, mode);
 						sink = FileListDisplayControl.MakeSink("Files", 15);
@@ -307,7 +311,7 @@ namespace MageFileProcessor
 
 					case "get_files_from_local_folder":
 						runtimeParms = GetRuntimeParmsForLocalFolder();
-						string sFolder = runtimeParms["Folder"];
+						var sFolder = runtimeParms["Folder"];
 						if (!Directory.Exists(sFolder))
 						{
 							MessageBox.Show("Folder not found: " + sFolder, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -323,7 +327,7 @@ namespace MageFileProcessor
 
 					case "get_files_from_local_manifest":
 						runtimeParms = GetRuntimeParmsForManifestFile();
-						string sFile = runtimeParms["ManifestFilePath"];
+						var sFile = runtimeParms["ManifestFilePath"];
 						if (!File.Exists(sFile))
 						{
 							MessageBox.Show("Manifest file not found: " + sFile, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -353,7 +357,7 @@ namespace MageFileProcessor
 						break;
 
 					case "process_file_contents":
-						Dictionary<string, string> filterParms = FileProcessingPanel1.GetParameters();
+						var filterParms = FileProcessingPanel1.GetParameters();
 						runtimeParms = GetRuntimeParmsForFileProcessing();
 
 						switch (FilterOutputTabs.SelectedTab.Tag.ToString())
@@ -414,7 +418,7 @@ namespace MageFileProcessor
 					// Clear any warnings
 					statusPanel1.ClearWarnings();				
 
-					foreach (ProcessingPipeline p in mPipelineQueue.Pipelines.ToArray())
+					foreach (var p in mPipelineQueue.Pipelines.ToArray())
 					{
 						ConnectPipelineToStatusDisplay(p);
 						mFinalPipelineName = p.PipelineName;
@@ -434,10 +438,10 @@ namespace MageFileProcessor
 
 		private bool ValidQueryParameters(string queryName, Dictionary<string, string> queryParameters)
 		{
-			string msg = string.Empty;
-			bool bFilterDefined = false;
+			var msg = string.Empty;
+			var bFilterDefined = false;
 
-			foreach (KeyValuePair<string, string> entry in queryParameters)
+			foreach (var entry in queryParameters)
 			{
 				if (!string.IsNullOrEmpty(entry.Key) && !string.IsNullOrEmpty(entry.Value))
 				{
@@ -475,7 +479,7 @@ namespace MageFileProcessor
 
 			if (string.IsNullOrEmpty(msg) && (queryName == TAG_JOB_IDs || queryName == TAG_JOB_IDs_FROM_DATASETS || queryName == TAG_DATASET_ID_LIST))
 			{
-				var cSepChars = new char[] { ',', '\t' };
+				var cSepChars = new[] { ',', '\t' };
 				string sWarning;
 
 				if (queryName == TAG_JOB_IDs)
@@ -484,13 +488,13 @@ namespace MageFileProcessor
 					sWarning = "Use dataset IDs, not dataset names: '";
 
 				// Validate that the job numbers or dataset IDs are all numeric
-				foreach (KeyValuePair<string, string> entry in queryParameters)
+				foreach (var entry in queryParameters)
 				{
-					string sValue = entry.Value.Replace(Environment.NewLine, ",");
+					var sValue = entry.Value.Replace(Environment.NewLine, ",");
 
-					string[] values = sValue.Split(cSepChars);
+					var values = sValue.Split(cSepChars);
 
-					foreach (string datasetID in values)
+					foreach (var datasetID in values)
 					{
 						int iValue;
 						if (!int.TryParse(datasetID, out iValue))
@@ -578,7 +582,7 @@ namespace MageFileProcessor
 		/// </summary>
 		private void AdjustFileProcessingPanels()
 		{
-			int fileCount = FileListDisplayControl.ItemCount;
+			var fileCount = FileListDisplayControl.ItemCount;
 			if (fileCount == 0)
 			{
 				FileCopyPanel1.Enabled = false;
@@ -599,7 +603,7 @@ namespace MageFileProcessor
 		/// </summary>
 		private void AdjustFileExtractionPanel()
 		{
-			int entityCount = JobListDisplayControl.ItemCount;
+			var entityCount = JobListDisplayControl.ItemCount;
 			if (entityCount == 0)
 			{
 				EntityFilePanel1.Enabled = false;
@@ -657,39 +661,46 @@ namespace MageFileProcessor
 		/// </summary>
 		private void AdjustListDisplayTitleFromColumDefs()
 		{
-			if (mCurrentCmd.Action == "reload_list_display" || mCurrentCmd.Action == "display_reloaded")
-			{
-				if (mCurrentCmdSender is IMageDisplayControl)
-				{
-					var ldc = mCurrentCmdSender as IMageDisplayControl;
-					string type = ldc.PageTitle;
-					Collection<string> colNames = ldc.ColumnNames;
-					if (colNames.Contains("Item"))
-					{
-						type = "Files";
-					}
-					else
-						if (colNames.Contains("Job"))
-						{
-							type = "Jobs";
+		    if (mCurrentCmd.Action != "reload_list_display" && mCurrentCmd.Action != "display_reloaded")
+		    {
+		        return;
+		    }
 
-						}
-						else
-							if (colNames.Contains("Dataset_ID"))
-							{
-								type = "Datasets";
-							}
-					ldc.PageTitle = type;
-				}
-			}
+		    if (!(mCurrentCmdSender is IMageDisplayControl))
+		    {
+		        return;
+		    }
+
+		    var ldc = (IMageDisplayControl)mCurrentCmdSender;
+		    var type = ldc.PageTitle;
+		    
+            var colNames = ldc.ColumnNames;
+		    if (colNames.Contains("Item"))
+		    {
+		        type = "Files";
+		    }
+		    else
+		    {
+		        if (colNames.Contains("Job"))
+		        {
+		            type = "Jobs";
+
+		        }
+		        else if (colNames.Contains("Dataset_ID"))
+		        {
+		            type = "Datasets";
+		        }
+		    }
+
+		    ldc.PageTitle = type;
 		}
 
-		/// <summary>
+	    /// <summary>
 		/// control enable state of filter panel based on output tab choice
 		/// </summary>
 		private void EnableDisableOutputTabs()
 		{
-			string mode = this.FilterOutputTabs.SelectedTab.Tag.ToString();
+			var mode = this.FilterOutputTabs.SelectedTab.Tag.ToString();
 			if (mode == "Copy_Files")
 			{
 				FileProcessingPanel1.Enabled = false;
@@ -727,7 +738,7 @@ namespace MageFileProcessor
 		private Dictionary<string, string> GetRuntimeParmsForEntityQuery()
 		{
 			Control queryPage = EntityListSourceTabs.SelectedTab;
-			IModuleParameters panel = PanelSupport.GetParameterPanel(queryPage);
+			var panel = PanelSupport.GetParameterPanel(queryPage);
 			return panel.GetParameters();
 		}
 
@@ -836,14 +847,15 @@ namespace MageFileProcessor
 		/// <returns></returns>
 		private static string GetBestPrefixIDColumnName(IEnumerable<MageColumnDef> colDefs)
 		{
-			string IDColumnName = "";
+			var IDColumnName = "";
 			// define list of potential candidate names in order of precedence
 			var candidateIDColumnNames = new Dictionary<string, bool>
 			{
                 { "Job", false }, { "Dataset_ID", false }, { "Dataset", false }
             };
+
 			// go through actual column names and make the potential candidates
-			foreach (MageColumnDef colDef in colDefs)
+			foreach (var colDef in colDefs)
 			{
 				if (candidateIDColumnNames.ContainsKey(colDef.Name))
 				{
@@ -851,7 +863,7 @@ namespace MageFileProcessor
 				}
 			}
 			// use the higest precedence marked potential candiate
-			foreach (KeyValuePair<string, bool> candidateIDColName in candidateIDColumnNames)
+			foreach (var candidateIDColName in candidateIDColumnNames)
 			{
 				if (candidateIDColName.Value)
 				{
@@ -960,7 +972,7 @@ namespace MageFileProcessor
 
 			//Call the Process.Start method to open the default browser 
 			//with a URL:
-			System.Diagnostics.Process.Start(lblAboutLink.Text);
+			Process.Start(lblAboutLink.Text);
 		}
 
 		#endregion
@@ -982,7 +994,7 @@ namespace MageFileProcessor
 		private void SetupCommandHandler()
 		{
 			// get reference to the method that handles command events
-			MethodInfo methodInfo = this.GetType().GetMethod("DoCommand");
+			var methodInfo = this.GetType().GetMethod("DoCommand");
 			Control subjectControl = this;
 
 			PanelSupport.DiscoverAndConnectCommandHandlers(subjectControl, methodInfo);
@@ -1002,7 +1014,7 @@ namespace MageFileProcessor
 		private void SetupColumnMapping()
 		{
 			const string columnMappingFileName = "ColumnMapping.txt";
-			string path = Path.Combine(SavedState.DataDirectory, columnMappingFileName);  // "ColumnMappingConfig.db")
+			var path = Path.Combine(SavedState.DataDirectory, columnMappingFileName);  // "ColumnMappingConfig.db")
 			if (!File.Exists(path))
 			{
 				File.Copy(columnMappingFileName, path);
@@ -1017,8 +1029,8 @@ namespace MageFileProcessor
 		private void SetupFlexQueryPanels()
 		{
 			JobFlexQueryPanel.QueryName = "Job_Flex_Query";
-			JobFlexQueryPanel.SetColumnPickList(new string[] { "Job", "State", "Dataset", "Dataset_ID", "Tool", "Parameter_File", "Settings_File", "Instrument", "Experiment", "Campaign", "Organism", "Organism DB", "Protein Collection List", "Protein Options", "Comment", "Results Folder", "Folder", "Dataset_Created", "Job_Finish", "Request_ID" });
-			JobFlexQueryPanel.SetComparisionPickList(new string[] { "ContainsText", "DoesNotContainText", "StartsWithText", "MatchesText", "MatchesTextOrBlank", "Equals", "NotEqual", "GreaterThan", "GreaterThanOrEqualTo", "LessThan", "LessThanOrEqualTo", "MostRecentWeeks", "LaterThan", "EarlierThan", "InList" });
+			JobFlexQueryPanel.SetColumnPickList(new[] { "Job", "State", "Dataset", "Dataset_ID", "Tool", "Parameter_File", "Settings_File", "Instrument", "Experiment", "Campaign", "Organism", "Organism DB", "Protein Collection List", "Protein Options", "Comment", "Results Folder", "Folder", "Dataset_Created", "Job_Finish", "Request_ID" });
+			JobFlexQueryPanel.SetComparisionPickList(new[] { "ContainsText", "DoesNotContainText", "StartsWithText", "MatchesText", "MatchesTextOrBlank", "Equals", "NotEqual", "GreaterThan", "GreaterThanOrEqualTo", "LessThan", "LessThanOrEqualTo", "MostRecentWeeks", "LaterThan", "EarlierThan", "InList" });
 		}
 
 		#endregion

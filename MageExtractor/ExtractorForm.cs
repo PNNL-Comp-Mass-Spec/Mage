@@ -51,7 +51,7 @@ namespace MageExtractor {
 			InitializeComponent();
 
 			const bool isBetaVersion = false;
-            SetFormTitle("2015-05-08", isBetaVersion);
+            SetFormTitle("2015-07-30", isBetaVersion);
 
 			SetTags();
 
@@ -66,9 +66,9 @@ namespace MageExtractor {
 
 			try {
 				// Set log4net path and kick the logger into action
-				string LogFileName = Path.Combine(SavedState.DataDirectory, "log.txt");
+				var LogFileName = Path.Combine(SavedState.DataDirectory, "log.txt");
 				log4net.GlobalContext.Properties["LogName"] = LogFileName;
-				ILog traceLog = LogManager.GetLogger("TraceLog");
+				var traceLog = LogManager.GetLogger("TraceLog");
 				traceLog.Info("Starting");
 			} catch (Exception ex) {
 				MessageBox.Show("Error instantiating trace log: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -77,7 +77,7 @@ namespace MageExtractor {
 			ConnectPanelsToCommandHandlers();
 
 			// Connect click events
-			this.lblAboutLink.LinkClicked += lblAboutLink_LinkClicked;
+			lblAboutLink.LinkClicked += lblAboutLink_LinkClicked;
 
 			// Connect the pipeline queue to message handlers
 			ConnectPipelineQueueToStatusDisplay(mPipelineQueue);
@@ -107,8 +107,8 @@ namespace MageExtractor {
 		}
 
 		private void SetFormTitle(string programDate, bool beta) {
-			System.Version objVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
-			string version = string.Format("{0}.{1}.{2}", objVersion.Major, objVersion.Minor, objVersion.Build);
+			var objVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+			var version = string.Format("{0}.{1}.{2}", objVersion.Major, objVersion.Minor, objVersion.Build);
 
 			txtVersion.Text = "Version " + version;
 
@@ -135,8 +135,8 @@ namespace MageExtractor {
 		/// </summary>
 		private void SetupFlexQueryPanels() {
 			JobFlexQueryPanel.QueryName = "Job_Flex_Query";
-			JobFlexQueryPanel.SetColumnPickList(new string[] { "Job", "State", "Dataset", "Dataset_ID", "Tool", "Parameter_File", "Settings_File", "Instrument", "Experiment", "Campaign", "Organism", "Organism DB", "Protein Collection List", "Protein Options", "Comment", "Results Folder", "Folder", "Dataset_Created", "Job_Finish", "Request_ID" });
-			JobFlexQueryPanel.SetComparisionPickList(new string[] { "ContainsText", "DoesNotContainText", "StartsWithText", "MatchesText", "MatchesTextOrBlank", "Equals", "NotEqual", "GreaterThan", "GreaterThanOrEqualTo", "LessThan", "LessThanOrEqualTo", "MostRecentWeeks", "LaterThan", "EarlierThan", "InList" });
+			JobFlexQueryPanel.SetColumnPickList(new[] { "Job", "State", "Dataset", "Dataset_ID", "Tool", "Parameter_File", "Settings_File", "Instrument", "Experiment", "Campaign", "Organism", "Organism DB", "Protein Collection List", "Protein Options", "Comment", "Results Folder", "Folder", "Dataset_Created", "Job_Finish", "Request_ID" });
+			JobFlexQueryPanel.SetComparisionPickList(new[] { "ContainsText", "DoesNotContainText", "StartsWithText", "MatchesText", "MatchesTextOrBlank", "Equals", "NotEqual", "GreaterThan", "GreaterThanOrEqualTo", "LessThan", "LessThanOrEqualTo", "MostRecentWeeks", "LaterThan", "EarlierThan", "InList" });
 		}
 
 		#endregion
@@ -176,18 +176,23 @@ namespace MageExtractor {
 		}
 
 		private void HandleJobQueryCommand(object sender, MageCommandEventArgs command) {
-			string queryName = EntityListSourceTabs.SelectedTab.Tag.ToString();
-			string queryTemplate = ModuleDiscovery.GetQueryXMLDef(queryName);
+			var queryName = EntityListSourceTabs.SelectedTab.Tag.ToString();
+			var queryTemplate = ModuleDiscovery.GetQueryXMLDef(queryName);
 
 			var paramSource = sender as IModuleParameters;
-			Dictionary<string, string> queryParameters = paramSource.GetParameters();
+		    if (paramSource == null)
+		    {
+		        return;
+		    }
 
-			if (!ValidQueryParameters(queryName, queryParameters)) {
-				return;
-			}
+		    var queryParameters = paramSource.GetParameters();
 
-			GetJobList(queryTemplate, queryParameters);
-			SavedState.SaveParameters(PanelSupport.GetParameterPanelList(this));
+		    if (!ValidQueryParameters(queryName, queryParameters)) {
+		        return;
+		    }
+
+		    GetJobList(queryTemplate, queryParameters);
+		    SavedState.SaveParameters(PanelSupport.GetParameterPanelList(this));
 		}
 
 		private void HandleExtractionCommand(object sender, MageCommandEventArgs command) {	
@@ -201,8 +206,8 @@ namespace MageExtractor {
 
 				if (!CheckForJobsToProcess()) return;
 
-				DisplaySourceMode mode = (command.Mode == "all") ? DisplaySourceMode.All : DisplaySourceMode.Selected;
-				string msg = ExtractionPipelines.CheckJobResultType(new GVPipelineSource(JobListDisplayCtl, mode), "Tool", mExtractionParms);
+				var mode = (command.Mode == "all") ? DisplaySourceMode.All : DisplaySourceMode.Selected;
+				var msg = ExtractionPipelines.CheckJobResultType(new GVPipelineSource(JobListDisplayCtl, mode), "Tool", mExtractionParms);
 				if (!string.IsNullOrEmpty(msg))
 				{
 					MessageBox.Show(msg, "Invalid Selection", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -262,10 +267,10 @@ namespace MageExtractor {
 		}
 
 		private bool ValidQueryParameters(string queryName, Dictionary<string, string> queryParameters) {
-			string msg = string.Empty;
-			bool bFilterDefined = false;
+			var msg = string.Empty;
+			var bFilterDefined = false;
 
-			foreach (KeyValuePair<string, string> entry in queryParameters) {
+			foreach (var entry in queryParameters) {
 				if (!string.IsNullOrEmpty(entry.Key) && !string.IsNullOrEmpty(entry.Value)) {
 					if (entry.Value.Trim().Length > 0) {
 						bFilterDefined = true;
@@ -293,7 +298,7 @@ namespace MageExtractor {
 			}
 
 			if (string.IsNullOrEmpty(msg) && (queryName == TAG_JOB_IDs || queryName == TAG_JOB_IDs_FROM_DATASETS)) {
-				var cSepChars = new char[] { ',', '\t' };
+				var cSepChars = new[] { ',', '\t' };
 				string sWarning;
 
 				if (queryName == TAG_JOB_IDs)
@@ -302,12 +307,12 @@ namespace MageExtractor {
 					sWarning = "Use dataset IDs, not dataset names: '";
 
 				// Validate that the job numbers or dataset IDs are all numeric
-				foreach (KeyValuePair<string, string> entry in queryParameters) {
-					string sValue = entry.Value.Replace(Environment.NewLine, ",");
+				foreach (var entry in queryParameters) {
+					var sValue = entry.Value.Replace(Environment.NewLine, ",");
 
-					string[] values = sValue.Split(cSepChars);
+					var values = sValue.Split(cSepChars);
 
-					foreach (string datasetID in values)
+					foreach (var datasetID in values)
 					{
 						int iValue;
 						if (!int.TryParse(datasetID, out iValue)) {
@@ -417,7 +422,7 @@ namespace MageExtractor {
 		/// <param name="jobList"></param>
 		private void ExtractFileContents(BaseModule jobList) {
 			mPipelineQueue = ExtractionPipelines.MakePipelineQueueToExtractFromJobList(jobList, mExtractionParms, mDestination);
-			foreach (ProcessingPipeline p in mPipelineQueue.Pipelines.ToArray()) {
+			foreach (var p in mPipelineQueue.Pipelines.ToArray()) {
 				ConnectPipelineToStatusDisplay(p);
 				mFinalPipelineName = p.PipelineName;
 			}
@@ -431,13 +436,13 @@ namespace MageExtractor {
 		/// </summary>
 		/// <param name="queryName">Query name to use</param>
 		private bool GetJobList(string queryName) {
-			bool result = false;
-			string queryDefXML = ModuleDiscovery.GetQueryXMLDef(queryName);
-			SQLBuilder builder = JobFlexQueryPanel.GetSQLBuilder(queryDefXML);
+			var result = false;
+			var queryDefXML = ModuleDiscovery.GetQueryXMLDef(queryName);
+			var builder = JobFlexQueryPanel.GetSQLBuilder(queryDefXML);
 			if (builder.HasPredicate) {
 				result = true;
 				var reader = new MSSQLReader(builder);
-				ProcessingPipeline pipeline = ProcessingPipeline.Assemble("Get Jobs", reader, JobListDisplayCtl);
+				var pipeline = ProcessingPipeline.Assemble("Get Jobs", reader, JobListDisplayCtl);
 				ConnectPipelineToStatusDisplay(pipeline);
 				JobListDisplayCtl.Clear();
 
@@ -459,7 +464,7 @@ namespace MageExtractor {
 		private void GetJobList(string queryTemplate, Dictionary<string, string> queryParameters) {
 			var reader = new MSSQLReader(queryTemplate, queryParameters);
 			JobListDisplayCtl.Clear();
-			ProcessingPipeline pipeline = ProcessingPipeline.Assemble("Get Jobs", reader, JobListDisplayCtl);
+			var pipeline = ProcessingPipeline.Assemble("Get Jobs", reader, JobListDisplayCtl);
 			ConnectPipelineToStatusDisplay(pipeline);
 
 			EnableCancel(true);
@@ -577,7 +582,7 @@ namespace MageExtractor {
 		/// </summary>
 		/// <returns></returns>
 		private bool CheckForJobsToProcess() {
-			bool ok = true;
+			var ok = true;
 			if (JobListDisplayCtl.List.Rows.Count == 0) {
 				MessageBox.Show("There are no jobs to process", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				ok = false;
@@ -616,7 +621,7 @@ namespace MageExtractor {
 				if (!mOutputFolderPaths.Contains(Path.GetTempPath()))
 					mOutputFolderPaths.Add(Path.GetTempPath());
 
-				foreach (string folderPath in mOutputFolderPaths)
+				foreach (var folderPath in mOutputFolderPaths)
 				{
 					ClearMageTempFiles(folderPath);
 				}
