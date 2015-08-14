@@ -2,19 +2,21 @@
 using MageExtContentFilters;
 using System.Collections.ObjectModel;
 
-namespace MageExtExtractionFilters {
+namespace MageExtExtractionFilters
+{
 
     /// <summary>
     /// Describes key parameters for result files (and their associated files) 
     /// that extractor can handle
     /// </summary>
-    public class ResultType {
+    public class ResultType
+    {
 
         #region Constants
-        
+
         public const string XTANDEM_ALL_PROTEINS = "X!Tandem All Proteins";
         public const string MSGFDB_SYN_ALL_PROTEINS = "MSGF+ Synopsis All Proteins";
-		public const string INSPECT_SYN_ALL_PROTEINS = "Inspect Synopsis All Proteins";
+        public const string INSPECT_SYN_ALL_PROTEINS = "Inspect Synopsis All Proteins";
         public const string MSPATHFINDER_SYN_ALL_PROTEINS = "MSPathFinder All Proteins";
 
         #endregion
@@ -23,13 +25,16 @@ namespace MageExtExtractionFilters {
 
         private static readonly Dictionary<string, ResultType> mTypeList = new Dictionary<string, ResultType>();
 
-        static ResultType() {
-            foreach (var rtype in Types) {
+        static ResultType()
+        {
+            foreach (var rtype in Types)
+            {
                 mTypeList[rtype.ResultName] = rtype;
             }
         }
 
-        public static Dictionary<string, ResultType> TypeList {
+        public static Dictionary<string, ResultType> TypeList
+        {
             get { return mTypeList; }
         }
 
@@ -43,39 +48,42 @@ namespace MageExtExtractionFilters {
             new ResultType("MSGF+ First Hits",              "msg_fht",    "msgfplusFHT",   "_msgfdb_fht.txt",  "ResultID"),
             new ResultType("MSGF+ Synopsis First Protein",  "msg_syn",    "msgfplus",      "_msgfdb_syn.txt",  "ResultID"),
             new ResultType(MSGFDB_SYN_ALL_PROTEINS,         "msg_syn",    "msgfplus",      "_msgfdb_syn.txt",  "ResultID"),
+            new ResultType("MSPathFinder First Protein",    "mspath_syn", "mspathfinder",  "_mspath_syn.txt",  "ResultID"),
             new ResultType(MSPATHFINDER_SYN_ALL_PROTEINS,   "mspath_syn", "mspathfinder",  "_mspath_syn.txt",  "ResultID") 
         };
 
         private static readonly List<MergeFile> mMergeTypes = new List<MergeFile>() {
-
             //                 ResultName              NameColumn        KeyCol           FileNameTag
-            { new MergeFile("X!Tandem First Protein", "ResultToSeqMap",  "Result_ID",     "_xt_ResultToSeqMap.txt") },
-            { new MergeFile("X!Tandem First Protein", "SeqToProteinMap", "Unique_Seq_ID", "_xt_SeqToProteinMap.txt") },
-            { new MergeFile("X!Tandem First Protein", "MSGF_Name",       "Result_ID",     "_xt_MSGF.txt") },
+            new MergeFile("X!Tandem First Protein", "ResultToSeqMap",  "Result_ID",     "_xt_ResultToSeqMap.txt"),
+            new MergeFile("X!Tandem First Protein", "SeqToProteinMap", "Unique_Seq_ID", "_xt_SeqToProteinMap.txt"),
+            new MergeFile("X!Tandem First Protein", "MSGF_Name",       "Result_ID",     "_xt_MSGF.txt"),
 
-            { new MergeFile(XTANDEM_ALL_PROTEINS,     "ResultToSeqMap",  "Result_ID",     "_xt_ResultToSeqMap.txt") },
-            { new MergeFile(XTANDEM_ALL_PROTEINS,     "SeqToProteinMap", "Unique_Seq_ID", "_xt_SeqToProteinMap.txt") },
-            { new MergeFile(XTANDEM_ALL_PROTEINS,     "MSGF_Name",       "Result_ID",     "_xt_MSGF.txt") },
+            new MergeFile(XTANDEM_ALL_PROTEINS,     "ResultToSeqMap",  "Result_ID",     "_xt_ResultToSeqMap.txt"),
+            new MergeFile(XTANDEM_ALL_PROTEINS,     "SeqToProteinMap", "Unique_Seq_ID", "_xt_SeqToProteinMap.txt"),
+            new MergeFile(XTANDEM_ALL_PROTEINS,     "MSGF_Name",       "Result_ID",     "_xt_MSGF.txt"),
 
-            { new MergeFile("Sequest Synopsis",       "MSGF_Name",       "Result_ID",     "_syn_MSGF.txt") },
-            { new MergeFile("Sequest First Hits",     "MSGF_Name",       "Result_ID",     "_fht_MSGF.txt") },
+            new MergeFile("Sequest Synopsis",       "MSGF_Name",       "Result_ID",     "_syn_MSGF.txt"),
+            new MergeFile("Sequest First Hits",     "MSGF_Name",       "Result_ID",     "_fht_MSGF.txt"),
 
-            { new MergeFile(INSPECT_SYN_ALL_PROTEINS, "ResultToSeqMap",  "Result_ID",     "_inspect_syn_ResultToSeqMap.txt") },
-            { new MergeFile(INSPECT_SYN_ALL_PROTEINS, "SeqToProteinMap", "Unique_Seq_ID", "_inspect_syn_SeqToProteinMap.txt") },
-            { new MergeFile(INSPECT_SYN_ALL_PROTEINS, "MSGF_Name",       "Result_ID",     "_inspect_syn_MSGF.txt") },
+            new MergeFile(INSPECT_SYN_ALL_PROTEINS, "ResultToSeqMap",  "Result_ID",     "_inspect_syn_ResultToSeqMap.txt"),
+            new MergeFile(INSPECT_SYN_ALL_PROTEINS, "SeqToProteinMap", "Unique_Seq_ID", "_inspect_syn_SeqToProteinMap.txt"),
+            new MergeFile(INSPECT_SYN_ALL_PROTEINS, "MSGF_Name",       "Result_ID",     "_inspect_syn_MSGF.txt"),
 
-            { new MergeFile("MSGF+ First Hits",      "MSGF_Name",       "Result_ID",     "_msgfdb_fht_MSGF.txt") },
+            new MergeFile("MSGF+ First Hits",      "MSGF_Name",       "Result_ID",     "_msgfdb_fht_MSGF.txt"),
 
-            { new MergeFile("MSGF+ Synopsis First Protein",  "ResultToSeqMap",  "Result_ID",     "_msgfdb_syn_ResultToSeqMap.txt") },
-            { new MergeFile("MSGF+ Synopsis First Protein",  "SeqToProteinMap", "Unique_Seq_ID", "_msgfdb_syn_SeqToProteinMap.txt") },
-            { new MergeFile("MSGF+ Synopsis First Protein",  "MSGF_Name",       "Result_ID",     "_msgfdb_syn_MSGF.txt") },
+            new MergeFile("MSGF+ Synopsis First Protein",  "ResultToSeqMap",  "Result_ID",     "_msgfdb_syn_ResultToSeqMap.txt"),
+            new MergeFile("MSGF+ Synopsis First Protein",  "SeqToProteinMap", "Unique_Seq_ID", "_msgfdb_syn_SeqToProteinMap.txt"),
+            new MergeFile("MSGF+ Synopsis First Protein",  "MSGF_Name",       "Result_ID",     "_msgfdb_syn_MSGF.txt"),
 
-            { new MergeFile(MSGFDB_SYN_ALL_PROTEINS,         "ResultToSeqMap",  "Result_ID",     "_msgfdb_syn_ResultToSeqMap.txt") },
-            { new MergeFile(MSGFDB_SYN_ALL_PROTEINS,         "SeqToProteinMap", "Unique_Seq_ID", "_msgfdb_syn_SeqToProteinMap.txt") },
-            { new MergeFile(MSGFDB_SYN_ALL_PROTEINS,         "MSGF_Name",       "Result_ID",     "_msgfdb_syn_MSGF.txt") },
+            new MergeFile(MSGFDB_SYN_ALL_PROTEINS,         "ResultToSeqMap",  "Result_ID",     "_msgfdb_syn_ResultToSeqMap.txt"),
+            new MergeFile(MSGFDB_SYN_ALL_PROTEINS,         "SeqToProteinMap", "Unique_Seq_ID", "_msgfdb_syn_SeqToProteinMap.txt"),
+            new MergeFile(MSGFDB_SYN_ALL_PROTEINS,         "MSGF_Name",       "Result_ID",     "_msgfdb_syn_MSGF.txt"),
 
-            { new MergeFile(MSPATHFINDER_SYN_ALL_PROTEINS,    "ResultToSeqMap",  "Result_ID",     "_mspath_syn_ResultToSeqMap.txt") },
-            { new MergeFile(MSPATHFINDER_SYN_ALL_PROTEINS,    "SeqToProteinMap", "Unique_Seq_ID", "_mspath_syn_SeqToProteinMap.txt") }
+            new MergeFile("MSPathFinder First Protein",    "ResultToSeqMap",  "Result_ID",     "_mspath_syn_ResultToSeqMap.txt"),
+            new MergeFile("MSPathFinder First Protein",    "SeqToProteinMap", "Unique_Seq_ID", "_mspath_syn_SeqToProteinMap.txt"),
+
+            new MergeFile(MSPATHFINDER_SYN_ALL_PROTEINS,   "ResultToSeqMap",  "Result_ID",     "_mspath_syn_ResultToSeqMap.txt"),
+            new MergeFile(MSPATHFINDER_SYN_ALL_PROTEINS,   "SeqToProteinMap", "Unique_Seq_ID", "_mspath_syn_SeqToProteinMap.txt")
 
         };
 
@@ -88,11 +96,15 @@ namespace MageExtExtractionFilters {
         public string ResultsFileNamePattern { get; set; }
         public string Filter { get; set; }
         public string ResultIDColName { get; set; }
-        public Collection<MergeFile> MergeFileTypes {
-            get {
+        public Collection<MergeFile> MergeFileTypes
+        {
+            get
+            {
                 var types = new Collection<MergeFile>();
-                foreach (var mf in mMergeTypes) {
-                    if (mf.ResultName == ResultName) {
+                foreach (var mf in mMergeTypes)
+                {
+                    if (mf.ResultName == ResultName)
+                    {
                         types.Add(mf);
                     }
                 }
@@ -104,7 +116,8 @@ namespace MageExtExtractionFilters {
 
         #region Internal Classes
 
-        public class MergeFile {
+        public class MergeFile
+        {
             public string ResultName { get; set; }
             public string NameColumn { get; set; }
             public int ColumnIndx { get; set; }
@@ -112,7 +125,8 @@ namespace MageExtExtractionFilters {
             public string FileNameTag { get; set; }
             public string MergeFileName { get; set; }
 
-            public MergeFile(string resultName, string name, string keyCol, string tag) {
+            public MergeFile(string resultName, string name, string keyCol, string tag)
+            {
                 ResultName = resultName;
                 NameColumn = name;
                 KeyCol = keyCol;
@@ -126,7 +140,8 @@ namespace MageExtExtractionFilters {
 
         #region Constructors
 
-        public ResultType(string name, string tag, string filter, string resultsFileTag, string idColName) {
+        public ResultType(string name, string tag, string filter, string resultsFileTag, string idColName)
+        {
             ResultName = name;
             Tag = tag;
             ResultsFileNamePattern = resultsFileTag;
@@ -140,9 +155,11 @@ namespace MageExtExtractionFilters {
         /// Return an extraction filter object for the current filter type
         /// </summary>
         /// <returns></returns>
-        public ExtractionFilter GetExtractionFilter(FilterResultsBase resultsChecker) {
+        public ExtractionFilter GetExtractionFilter(FilterResultsBase resultsChecker)
+        {
             ExtractionFilter exf;
-            switch (Filter) {
+            switch (Filter)
+            {
                 case "sequest":
                     var sxf = new SequestExtractionFilter();
                     sxf.ResultChecker = resultsChecker as FilterSequestResults;
@@ -154,11 +171,11 @@ namespace MageExtExtractionFilters {
                     exf = xxf;
                     break;
                 case "inspect":
-					var ixf = new InspectExtractionFilter();
-					ixf.ResultChecker = resultsChecker as FilterInspectResults;
-					exf = ixf;
+                    var ixf = new InspectExtractionFilter();
+                    ixf.ResultChecker = resultsChecker as FilterInspectResults;
+                    exf = ixf;
                     break;
-				case "msgfplusFHT":
+                case "msgfplusFHT":
                     var mxf1 = new MSGFDbFHTExtractionFilter();
                     mxf1.ResultChecker = resultsChecker as FilterMSGFDbResults;
                     exf = mxf1;
@@ -186,9 +203,11 @@ namespace MageExtExtractionFilters {
         /// </summary>
         /// <param name="filterSetID">Filter set ID</param>
         /// <returns></returns>
-        public FilterResultsBase GetResultsChecker(string filterSetID) {
+        public FilterResultsBase GetResultsChecker(string filterSetID)
+        {
             FilterResultsBase frb = null;
-            switch (Filter) {
+            switch (Filter)
+            {
                 case "sequest":
                     frb = SequestExtractionFilter.MakeSequestResultChecker(filterSetID);
                     break;
@@ -196,7 +215,7 @@ namespace MageExtExtractionFilters {
                     frb = XTandemExtractionFilter.MakeXTandemResultChecker(filterSetID);
                     break;
                 case "inspect":
-					frb = InspectExtractionFilter.MakeInspectResultChecker(filterSetID);
+                    frb = InspectExtractionFilter.MakeInspectResultChecker(filterSetID);
                     break;
                 case "msgfplusFHT":
                     frb = MSGFDbFHTExtractionFilter.MakeMSGFDbResultChecker(filterSetID);

@@ -121,7 +121,12 @@ namespace MageExtExtractionFilters
 
                 if (!mOutputAllProteins)
                 {
-                    mProteinMerger.MergeFirstProtein(ref outRow);
+                    string warningMessage;
+                    if (!mProteinMerger.MergeFirstProtein(ref outRow, out warningMessage))
+                    {
+                        OnWarningMessage(
+                            new MageStatusEventArgs("ProteinMerger reports " + warningMessage + " for row " + mTotalRowsCounter));
+                    }
 
                     var sScanChargePeptide = CreateRowTag(outRow, includeProtein: false, columnIndices: mColumnIndices);
                     if (!mDataWrittenRowTags.Contains(sScanChargePeptide))
@@ -146,8 +151,7 @@ namespace MageExtExtractionFilters
                             if (!matchFound)
                             {
                                 OnWarningMessage(
-                                    new MageStatusEventArgs("ProteinMerger did not find a match for row " +
-                                                            mTotalRowsCounter));
+                                    new MageStatusEventArgs("ProteinMerger did not find a match for row " + mTotalRowsCounter));
                             }
                         }
                     }

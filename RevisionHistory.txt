@@ -1,5 +1,8 @@
 Mage Revision History
 
+Version 1.5.5704; August 14, 2015
+	- Add mode "MSPathFinder First Protein"
+
 Version 1.5.5703; August 13, 2015
 	- Update MageExtractor to support MSPathFinder results
 		- Use the Filter for Result Type filters to filter on FDR
