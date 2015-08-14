@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using MageExtContentFilters;
 using Mage;
-using System.Collections.ObjectModel;
+using MageExtContentFilters;
 
 namespace MageExtExtractionFilters {
 
@@ -10,22 +9,22 @@ namespace MageExtExtractionFilters {
         #region Member Variables
 
         // working copy of Inspect filter object
-        private FilterInspectResults mInspectFilter = null;
+        private FilterInspectResults mInspectFilter;
 
         // indexes into the synopsis row field array
-        private int peptideSequenceIndex = 0;
-        private int chargeStateIndex = 0;
-        private int peptideMassIndex = 0;
-        private int mqScoreIndex = 0;
-        private int totalPRMScoreIndex = 0;
-		private int fScoreIndex = 0;
-        private int pValueIndex = 0;	
+        private int peptideSequenceIndex;
+        private int chargeStateIndex;
+        private int peptideMassIndex;
+        private int mqScoreIndex;
+        private int totalPRMScoreIndex;
+		private int fScoreIndex;
+        private int pValueIndex;	
      
         private int msgfSpecProbIndex = -1;
 		private int rankTotalPRMScoreIndex = -1;
 
-        private MergeProteinData mProteinMerger = null;
-        private bool mOutputAllProteins = false;
+        private MergeProteinData mProteinMerger;
+        private bool mOutputAllProteins;
 
 
         #endregion
@@ -47,7 +46,7 @@ namespace MageExtExtractionFilters {
         private void InitializeParameters() {
             // ResultType.MergeFile mfMap = mMergeFiles["ResultToSeqMap"];
             // ResultType.MergeFile mfProt = mMergeFiles["SeqToProteinMap"];
-            mProteinMerger = new MergeProteinData(MergeProteinData.MergeModeConstants.Inspect);
+            mProteinMerger = new MergeProteinData(MergeProteinData.MergeModeConstants.InspectOrMSGFDB);
             mOutputAllProteins = (mExtractionType.RType.ResultName == ResultType.INSPECT_SYN_ALL_PROTEINS);
         }
 
@@ -87,25 +86,23 @@ namespace MageExtExtractionFilters {
         /// <param name="args"></param>
         public override void HandleDataRow(object sender, MageDataEventArgs args) {
             if (args.DataAvailable) {
-
-                bool accepted = false;
-				string[] outRow = MapDataRow(args.Fields);
+                
+                var outRow = MapDataRow(args.Fields);
 
                 if (!mOutputAllProteins) {
                     mProteinMerger.MergeFirstProtein(ref outRow);
-                    accepted = CheckFilter(ref outRow);
+                    CheckFilter(ref outRow);
                 } else {
-					Collection<string[]> rows = null;
-	                bool matchFound;
-					rows = mProteinMerger.MergeAllProteins(ref outRow, out matchFound);
+                    bool matchFound;
+					var rows = mProteinMerger.MergeAllProteins(ref outRow, out matchFound);
                     if (rows == null) {
-                        accepted = CheckFilter(ref outRow);
+                        CheckFilter(ref outRow);
 						if (!matchFound)
 							OnWarningMessage(new MageStatusEventArgs("ProteinMerger did not find a match for row " + mTotalRowsCounter));
                     } else {
                         for (int i = 0; i < rows.Count; i++) {
-							string[] row = rows[i];
-                            accepted = CheckFilter(ref row);
+							var row = rows[i];
+                            CheckFilter(ref row);
                         }
                     }
                 }
@@ -123,29 +120,29 @@ namespace MageExtExtractionFilters {
         /// and annotate the appropriate column in the result (if one is specified)
         /// and pass on result if it passed the filter
         /// </summary>
-        /// <param name="outRow"></param>
+        /// <param name="vals"></param>
         /// <returns></returns>
 		protected bool CheckFilter(ref string[] vals)
 		{
-            bool accept = true;
+            var accept = true;
             if (mInspectFilter == null) {
                 if (mFilterResultsColIdx >= 0) {
                     vals[mFilterResultsColIdx] = "Not Checked";
                 }
             } else {
-				string peptideSequence = GetColumnValue(vals, peptideSequenceIndex, "");
-				int chargeState = GetColumnValue(vals, chargeStateIndex, 0);
-				double peptideMass = GetColumnValue(vals, peptideMassIndex, -1d);
+				var peptideSequence = GetColumnValue(vals, peptideSequenceIndex, "");
+				var chargeState = GetColumnValue(vals, chargeStateIndex, 0);
+				var peptideMass = GetColumnValue(vals, peptideMassIndex, -1d);
 
-				double MQScore = GetColumnValue(vals, mqScoreIndex, -1d);
-				double TotalPRMScore = GetColumnValue(vals, totalPRMScoreIndex, -1d);
-				double FScore = GetColumnValue(vals, fScoreIndex, -1d);
-				double PValue = GetColumnValue(vals, pValueIndex, -1d);
+				var MQScore = GetColumnValue(vals, mqScoreIndex, -1d);
+				var TotalPRMScore = GetColumnValue(vals, totalPRMScoreIndex, -1d);
+				var FScore = GetColumnValue(vals, fScoreIndex, -1d);
+				var PValue = GetColumnValue(vals, pValueIndex, -1d);
 
-				double msgfSpecProb = GetColumnValue(vals, msgfSpecProbIndex, -1d);
-				int rankTotalPRMScore = GetColumnValue(vals, rankTotalPRMScoreIndex, -1);
+				var msgfSpecProb = GetColumnValue(vals, msgfSpecProbIndex, -1d);
+				var rankTotalPRMScore = GetColumnValue(vals, rankTotalPRMScoreIndex, -1);
 
-				bool pass = mInspectFilter.EvaluateInspect(peptideSequence, chargeState, peptideMass, MQScore, TotalPRMScore, FScore, PValue, msgfSpecProb, rankTotalPRMScore);
+				var pass = mInspectFilter.EvaluateInspect(peptideSequence, chargeState, peptideMass, MQScore, TotalPRMScore, FScore, PValue, msgfSpecProb, rankTotalPRMScore);
 
                 accept = pass || mKeepAllResults;
                 if (mFilterResultsColIdx >= 0) {
@@ -193,18 +190,18 @@ namespace MageExtExtractionFilters {
         /// </summary>
         public static FilterInspectResults MakeInspectResultChecker(string FilterSetID) {
 
-            string queryDefXML = ModuleDiscovery.GetQueryXMLDef("Extraction_Filter_Set_List");
-            Dictionary<string, string> runtimeParms = new Dictionary<string, string>() { { "Filter_Set_ID", FilterSetID } };
-            MSSQLReader reader = new MSSQLReader(queryDefXML, runtimeParms);
+            var queryDefXML = ModuleDiscovery.GetQueryXMLDef("Extraction_Filter_Set_List");
+            var runtimeParms = new Dictionary<string, string>() { { "Filter_Set_ID", FilterSetID } };
+            var reader = new MSSQLReader(queryDefXML, runtimeParms);
 
             // create Mage module to receive query results
-            SimpleSink filterCriteria = new SimpleSink();
+            var filterCriteria = new SimpleSink();
 
             // build pipeline and run it
-            ProcessingPipeline pipeline = ProcessingPipeline.Assemble("GetFilterCriteria", reader, filterCriteria);
+            var pipeline = ProcessingPipeline.Assemble("GetFilterCriteria", reader, filterCriteria);
             pipeline.RunRoot(null);
 
-            // create new Sequest filter object with retrieved filter criteria
+            // create new Inspect filter object with retrieved filter criteria
             return new FilterInspectResults(filterCriteria.Rows, FilterSetID);
         }
 

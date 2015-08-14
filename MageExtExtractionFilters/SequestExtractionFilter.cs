@@ -12,18 +12,18 @@ namespace MageExtExtractionFilters {
         #region Member Variables
 
         // working copy of SEQUEST hit checker object
-        private FilterSequestResults mSeqFilter = null;
+        private FilterSequestResults mSeqFilter;
 
         // indexes into the synopsis row field array
-        private int peptideSequenceIndex = 0;
-        private int xCorrValueIndex = 0;
-        private int delCNValueIndex = 0;
-        private int delCN2ValueIndex = 0;
-        private int chargeStateIndex = 0;
-        private int peptideMassIndex = 0;
-        private int cleavageStateIndex = 0;
-        private int msgfSpecProbIndex = 0;
-		private int rankXCIndex = 0;
+        private int peptideSequenceIndex;
+        private int xCorrValueIndex;
+        private int delCNValueIndex;
+        private int delCN2ValueIndex;
+        private int chargeStateIndex;
+        private int peptideMassIndex;
+        private int cleavageStateIndex;
+        private int msgfSpecProbIndex;
+		private int rankXCIndex;
 
         #endregion
 
@@ -32,14 +32,6 @@ namespace MageExtExtractionFilters {
         public FilterSequestResults ResultChecker {
             get { return mSeqFilter; }
             set { mSeqFilter = value; }
-        }
-
-        #endregion
-
-        #region Initialization
-
-        public override void Prepare() {
-            base.Prepare();
         }
 
         #endregion
@@ -67,11 +59,9 @@ namespace MageExtExtractionFilters {
         /// <param name="args"></param>
         public override void HandleDataRow(object sender, MageDataEventArgs args) {
             if (args.DataAvailable) {
+                var outRow = MapDataRow(args.Fields);
 
-                bool accepted = false;
-				string[] outRow = MapDataRow(args.Fields);
-
-                accepted = CheckFilter(ref outRow);
+                var accepted = CheckFilter(ref outRow);
 
                 if (accepted) {
                     mPassedRowsCounter++;
@@ -91,32 +81,32 @@ namespace MageExtExtractionFilters {
         /// and annotate the appropriate column in the result (if one is specified)
         /// and pass on result if it passed the filter
         /// </summary>
-        /// <param name="outRow"></param>
+        /// <param name="vals"></param>
         /// <returns></returns>
 		protected bool CheckFilter(ref string[] vals)
 		{
-            bool accept = true;
+            var accept = true;
             if (mSeqFilter == null) {
                 if (mFilterResultsColIdx >= 0) {
                     vals[mFilterResultsColIdx] = "Not Checked";
                 }
             } else {
-                string peptideSequence = GetColumnValue(vals, peptideSequenceIndex, "");
-				double xCorrValue = GetColumnValue(vals, xCorrValueIndex, -1d);
-				double delCNValue = GetColumnValue(vals, delCNValueIndex, -1d);
-				double delCN2Value = GetColumnValue(vals, delCN2ValueIndex, -1d);
-				int chargeState = GetColumnValue(vals, chargeStateIndex, -1);
-				double peptideMass = GetColumnValue(vals, peptideMassIndex, -1d);
-				int cleavageState = GetColumnValue(vals, cleavageStateIndex, -1);
-				double msgfSpecProb = GetColumnValue(vals, msgfSpecProbIndex, -1d);
-				int rankXC = GetColumnValue(vals, rankXCIndex, -1);
+                var peptideSequence = GetColumnValue(vals, peptideSequenceIndex, "");
+				var xCorrValue = GetColumnValue(vals, xCorrValueIndex, -1d);
+				var delCNValue = GetColumnValue(vals, delCNValueIndex, -1d);
+				var delCN2Value = GetColumnValue(vals, delCN2ValueIndex, -1d);
+				var chargeState = GetColumnValue(vals, chargeStateIndex, -1);
+				var peptideMass = GetColumnValue(vals, peptideMassIndex, -1d);
+				var cleavageState = GetColumnValue(vals, cleavageStateIndex, -1);
+				var msgfSpecProb = GetColumnValue(vals, msgfSpecProbIndex, -1d);
+				var rankXC = GetColumnValue(vals, rankXCIndex, -1);
 
                 // Legacy columns; no longer used
-                int spectrumCount = -1;
+                var spectrumCount = -1;
                 double discriminantScore = -1;
                 double NETAbsoluteDifference = -1;
 
-				bool pass = mSeqFilter.EvaluateSequest(peptideSequence, xCorrValue, delCNValue, delCN2Value, chargeState, peptideMass, spectrumCount, discriminantScore, NETAbsoluteDifference, cleavageState, msgfSpecProb, rankXC);
+				var pass = mSeqFilter.EvaluateSequest(peptideSequence, xCorrValue, delCNValue, delCN2Value, chargeState, peptideMass, spectrumCount, discriminantScore, NETAbsoluteDifference, cleavageState, msgfSpecProb, rankXC);
 
                 accept = pass || mKeepAllResults;
                 if (mFilterResultsColIdx >= 0) {
@@ -157,15 +147,15 @@ namespace MageExtExtractionFilters {
         /// <returns></returns>
         public static FilterSequestResults MakeSequestResultChecker(string FilterSetID) {
         
-            string queryDefXML = ModuleDiscovery.GetQueryXMLDef("Extraction_Filter_Set_List");
-            Dictionary<string, string> runtimeParms = new Dictionary<string, string>() { { "Filter_Set_ID", FilterSetID } };
-            MSSQLReader reader = new MSSQLReader(queryDefXML, runtimeParms);
+            var queryDefXML = ModuleDiscovery.GetQueryXMLDef("Extraction_Filter_Set_List");
+            var runtimeParms = new Dictionary<string, string>() { { "Filter_Set_ID", FilterSetID } };
+            var reader = new MSSQLReader(queryDefXML, runtimeParms);
 
             // create Mage module to receive query results
-            SimpleSink filterCriteria = new SimpleSink();
+            var filterCriteria = new SimpleSink();
 
             // build pipeline and run it
-            ProcessingPipeline pipeline = ProcessingPipeline.Assemble("GetFilterCriteria", reader, filterCriteria);
+            var pipeline = ProcessingPipeline.Assemble("GetFilterCriteria", reader, filterCriteria);
             pipeline.RunRoot(null);
 
             // create new Sequest filter object with retrieved filter criteria

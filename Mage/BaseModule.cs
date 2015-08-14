@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Reflection;
 using log4net;
 
 namespace Mage {
@@ -161,8 +160,8 @@ namespace Mage {
         /// <param name="e"></param>
         protected virtual void OnDataRowAvailable(MageDataEventArgs e) {
             // Make a temporary copy of the event to avoid possibility of a race condition
-            EventHandler<MageDataEventArgs> handler = DataRowAvailable;
-            if (handler != null && !this.Abort) {
+            var handler = DataRowAvailable;
+            if (handler != null && !Abort) {
                 handler(this, e);
             }
         }
@@ -173,7 +172,7 @@ namespace Mage {
         /// <param name="e"></param>
         protected virtual void OnColumnDefAvailable(MageColumnEventArgs e) {
             // Make a temporary copy of the event to avoid possibility of a race condition
-            EventHandler<MageColumnEventArgs> handler = ColumnDefAvailable;
+            var handler = ColumnDefAvailable;
             if (handler != null) {
                 handler(this, e);
             }
@@ -185,7 +184,7 @@ namespace Mage {
         /// <param name="e"></param>
         protected virtual void OnStatusMessageUpdated(MageStatusEventArgs e) {
             // Make a temporary copy of the event to avoid possibility of a race condition
-            EventHandler<MageStatusEventArgs> handler = StatusMessageUpdated;
+            var handler = StatusMessageUpdated;
             if (handler != null) {
                 handler(this, e);
             }
@@ -197,7 +196,7 @@ namespace Mage {
         /// <param name="e"></param>
         protected virtual void OnWarningMessage(MageStatusEventArgs e) {
             // Make a temporary copy of the event to avoid possibility of a race condition
-            EventHandler<MageStatusEventArgs> handler = WarningMessageUpdated;
+            var handler = WarningMessageUpdated;
             if (handler != null) {
                 handler(this, e);
             }
@@ -243,7 +242,7 @@ namespace Mage {
         /// <param name="key"></param>
         /// <param name="val"></param>
         public virtual void SetPropertyByName(string key, string val) {
-            PropertyInfo pi = GetType().GetProperty(key);
+            var pi = GetType().GetProperty(key);
             if (pi != null) {
                 pi.SetValue(this, val, null);
             }
@@ -259,7 +258,7 @@ namespace Mage {
         public virtual void SetParameters(Dictionary<string, string> parameters) {
             if (parameters != null) {
                 // set properties (of subclasses) from parameters
-                foreach (KeyValuePair<string, string> paramDef in parameters) {
+                foreach (var paramDef in parameters) {
                     SetPropertyByName(paramDef.Key, paramDef.Value);
                 }
             }
@@ -291,7 +290,7 @@ namespace Mage {
         /// <param name="sender"></param>
         /// <param name="args"></param>
         public virtual void HandleColumnDef(object sender, MageColumnEventArgs args) {
-            foreach (MageColumnDef columnDef in args.ColumnDefs) {
+            foreach (var columnDef in args.ColumnDefs) {
                 try {
                     // rename column if it has same name as previously handled column
                     if (InputColumnPos.ContainsKey(columnDef.Name)) {
@@ -347,7 +346,7 @@ namespace Mage {
         /// Raise a status message event that processing was aborted
         /// </summary>
         protected void ReportProcessingAborted() {
-            ReportProcessingAborted(this.ModuleName);
+            ReportProcessingAborted(ModuleName);
         }
 
         /// <summary>
@@ -482,9 +481,9 @@ namespace Mage {
             }
 
 
-            int posCurrent = 0;
-            int lenPattern = pattern.Length;
-            int idxNext = original.IndexOf(pattern, comparisonType);
+            var posCurrent = 0;
+            var lenPattern = pattern.Length;
+            var idxNext = original.IndexOf(pattern, comparisonType);
             var result = new StringBuilder(stringBuilderInitialSize < 0 ? Math.Min(4096, original.Length) : stringBuilderInitialSize);
 
             while (idxNext >= 0) {
@@ -509,7 +508,7 @@ namespace Mage {
         protected void SetupOutputColumnToContextMapping() {
             if (Context != null && NewOutputColumnPos != null) {
                 ContextColPos = new Dictionary<string, int>(StringComparer.CurrentCultureIgnoreCase);
-                foreach (KeyValuePair<string, int> colPos in NewOutputColumnPos) {
+                foreach (var colPos in NewOutputColumnPos) {
                     if (Context.ContainsKey(colPos.Key)) {
                         ContextColPos.Add(colPos.Key, colPos.Value);
                     }
@@ -531,7 +530,7 @@ namespace Mage {
             OutputToInputColumnPosMap = new List<KeyValuePair<int, int>>();
             NewOutputColumnPos = new Dictionary<string, int>(StringComparer.CurrentCultureIgnoreCase);
 
-            int outColIdx = 0;
+            var outColIdx = 0;
             // process each column spec from spec list
             try {
                 if (OutputColumnList.StartsWith("Job, "))
@@ -543,13 +542,13 @@ namespace Mage {
                     }
                 }
 
-                foreach (string colSpec in OutputColumnList.Split(',')) {
+                foreach (var colSpec in OutputColumnList.Split(',')) {
                     // break each column spec into fields
-                    string[] colSpecFlds = colSpec.Trim().Split('|');
-                    string outputColName = colSpecFlds[0].Trim();
-                    string inputColName = (colSpecFlds.Length > 1) ? colSpecFlds[1].Trim() : "";
-                    string type = (colSpecFlds.Length > 2) ? colSpecFlds[2].Trim() : "";
-                    string size = (colSpecFlds.Length > 3) ? colSpecFlds[3].Trim() : "";
+                    var colSpecFlds = colSpec.Trim().Split('|');
+                    var outputColName = colSpecFlds[0].Trim();
+                    var inputColName = (colSpecFlds.Length > 1) ? colSpecFlds[1].Trim() : "";
+                    var type = (colSpecFlds.Length > 2) ? colSpecFlds[2].Trim() : "";
+                    var size = (colSpecFlds.Length > 3) ? colSpecFlds[3].Trim() : "";
 
                     if (outputColName == "*") {
                         // wildcard
@@ -569,7 +568,7 @@ namespace Mage {
 
 	                // output column is mapped to input column
 	                // copy input column def to output col def for this column
-	                string colName = (string.IsNullOrEmpty(inputColName)) ? outputColName : inputColName;
+	                var colName = (string.IsNullOrEmpty(inputColName)) ? outputColName : inputColName;
 	                MapOutputColumnToInputColumn(colName, outColIdx);
 	                // and do any necessary overrides
 	                AdjustOutputColumnProperties(outColIdx, outputColName, type, size);
@@ -596,8 +595,8 @@ namespace Mage {
         /// for any input columns not already mapped to output colums list                       
         /// </summary>
         private int MapOutputColumnsForUnmappedInputColumns(int outColIdx) {
-            foreach (MageColumnDef inputColDef in InputColumnDefs) {
-                string inputColName = inputColDef.Name;
+            foreach (var inputColDef in InputColumnDefs) {
+                var inputColName = inputColDef.Name;
                 if (!OutputColumnPos.ContainsKey(inputColName)) {
                     MapOutputColumnToInputColumn(inputColName, outColIdx);
                     outColIdx++;
@@ -633,8 +632,8 @@ namespace Mage {
             if (!InputColumnPos.ContainsKey(inputColName)) {
                 throw new Exception(string.Format("Tried to map input column '{0}' which does not exist", inputColName));
             }
-            int inputColIdx = InputColumnPos[inputColName];
-            MageColumnDef colDef = InputColumnDefs[inputColIdx];
+            var inputColIdx = InputColumnPos[inputColName];
+            var colDef = InputColumnDefs[inputColIdx];
             AddOutputColumnDefinition(colDef, outColIdx, inputColIdx);
         }
 
@@ -668,18 +667,20 @@ namespace Mage {
             // remap results according to our output column definitions
 			var outRow = new string[OutputColumnDefs.Count];
 
-            int actualCount = vals.Length;
+            var actualCount = vals.Length;
+
             // copy over values from remapped input columns
-            foreach (KeyValuePair<int, int> colMap in OutputToInputColumnPosMap) {
+            foreach (var colMap in OutputToInputColumnPosMap) {
                 if (colMap.Value < actualCount) {
                     outRow[colMap.Key] = vals[colMap.Value];
                 } else {
                     outRow[colMap.Key] = "";
                 }
             }
+
             // add any matching context values to new columns
             if (ContextColPos != null) {
-                foreach (KeyValuePair<string, int> newCol in ContextColPos) {
+                foreach (var newCol in ContextColPos) {
                     outRow[newCol.Value] = Context[newCol.Key];
                 }
             }

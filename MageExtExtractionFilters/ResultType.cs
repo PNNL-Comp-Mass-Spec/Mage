@@ -15,38 +15,40 @@ namespace MageExtExtractionFilters {
         public const string XTANDEM_ALL_PROTEINS = "X!Tandem All Proteins";
         public const string MSGFDB_SYN_ALL_PROTEINS = "MSGF+ Synopsis All Proteins";
 		public const string INSPECT_SYN_ALL_PROTEINS = "Inspect Synopsis All Proteins";
+        public const string MSPATHFINDER_SYN_ALL_PROTEINS = "MSPathFinder All Proteins";
 
         #endregion
 
         #region static properties and initializtion
 
-        private static Dictionary<string, ResultType> mTypeList = new Dictionary<string, ResultType>();
+        private static readonly Dictionary<string, ResultType> mTypeList = new Dictionary<string, ResultType>();
 
         static ResultType() {
-            foreach (ResultType rtype in Types) {
+            foreach (var rtype in Types) {
                 mTypeList[rtype.ResultName] = rtype;
             }
         }
 
         public static Dictionary<string, ResultType> TypeList {
-            get { return ResultType.mTypeList; }
+            get { return mTypeList; }
         }
 
-        private static List<ResultType> Types = new List<ResultType>() {
-            //                 Name                         Tag        Filter          resultsFileTag      ResultsFileTag           IDColumnName
-            new ResultType("Sequest Synopsis",              "syn",     "sequest",      "_syn.txt",         "_syn_MSGF.txt",         "HitNum"),
-            new ResultType("Sequest First Hits",            "fht",     "sequest",      "_fht.txt",         "_fht_MSGF.txt",         "HitNum"),
-            new ResultType("X!Tandem First Protein",        "xt",      "xtandem",      "_xt.txt",          "_xt_MSGF.txt",          "Result_ID"),
-            new ResultType(XTANDEM_ALL_PROTEINS,            "xt",      "xtandem",      "_xt.txt",          "_xt_MSGF.txt",          "Result_ID"),
-            new ResultType(INSPECT_SYN_ALL_PROTEINS,        "ins_syn", "inspect",      "_inspect_syn.txt", "_inspect_syn_MSGF.txt", "ResultID"),
-            new ResultType("MSGF+ First Hits",              "msg_fht", "msgfplusFHT",  "_msgfdb_fht.txt",  "_msgfdb_fht_MSGF.txt",  "ResultID"),
-            new ResultType("MSGF+ Synopsis First Protein",  "msg_syn", "msgfplus",     "_msgfdb_syn.txt",  "_msgfdb_syn_MSGF.txt",  "ResultID"),
-            new ResultType(MSGFDB_SYN_ALL_PROTEINS,         "msg_syn", "msgfplus",     "_msgfdb_syn.txt",  "_msgfdb_syn_MSGF.txt",  "ResultID") 
+        private static readonly List<ResultType> Types = new List<ResultType>() {
+            //                 Name                         Tag        Filter          resultsFileTag       IDColumnName
+            new ResultType("Sequest Synopsis",              "syn",        "sequest",       "_syn.txt",         "HitNum"),
+            new ResultType("Sequest First Hits",            "fht",        "sequest",       "_fht.txt",         "HitNum"),
+            new ResultType("X!Tandem First Protein",        "xt",         "xtandem",       "_xt.txt",          "Result_ID"),
+            new ResultType(XTANDEM_ALL_PROTEINS,            "xt",         "xtandem",       "_xt.txt",          "Result_ID"),
+            new ResultType(INSPECT_SYN_ALL_PROTEINS,        "ins_syn",    "inspect",       "_inspect_syn.txt", "ResultID"),
+            new ResultType("MSGF+ First Hits",              "msg_fht",    "msgfplusFHT",   "_msgfdb_fht.txt",  "ResultID"),
+            new ResultType("MSGF+ Synopsis First Protein",  "msg_syn",    "msgfplus",      "_msgfdb_syn.txt",  "ResultID"),
+            new ResultType(MSGFDB_SYN_ALL_PROTEINS,         "msg_syn",    "msgfplus",      "_msgfdb_syn.txt",  "ResultID"),
+            new ResultType(MSPATHFINDER_SYN_ALL_PROTEINS,   "mspath_syn", "mspathfinder",  "_mspath_syn.txt",  "ResultID") 
         };
 
-        private static List<MergeFile> mMergeTypes = new List<MergeFile>() {
+        private static readonly List<MergeFile> mMergeTypes = new List<MergeFile>() {
 
-            //                 ResultName              NameColumn        KeyCol       FileNameTag
+            //                 ResultName              NameColumn        KeyCol           FileNameTag
             { new MergeFile("X!Tandem First Protein", "ResultToSeqMap",  "Result_ID",     "_xt_ResultToSeqMap.txt") },
             { new MergeFile("X!Tandem First Protein", "SeqToProteinMap", "Unique_Seq_ID", "_xt_SeqToProteinMap.txt") },
             { new MergeFile("X!Tandem First Protein", "MSGF_Name",       "Result_ID",     "_xt_MSGF.txt") },
@@ -70,7 +72,10 @@ namespace MageExtExtractionFilters {
 
             { new MergeFile(MSGFDB_SYN_ALL_PROTEINS,         "ResultToSeqMap",  "Result_ID",     "_msgfdb_syn_ResultToSeqMap.txt") },
             { new MergeFile(MSGFDB_SYN_ALL_PROTEINS,         "SeqToProteinMap", "Unique_Seq_ID", "_msgfdb_syn_SeqToProteinMap.txt") },
-            { new MergeFile(MSGFDB_SYN_ALL_PROTEINS,         "MSGF_Name",       "Result_ID",     "_msgfdb_syn_MSGF.txt") }
+            { new MergeFile(MSGFDB_SYN_ALL_PROTEINS,         "MSGF_Name",       "Result_ID",     "_msgfdb_syn_MSGF.txt") },
+
+            { new MergeFile(MSPATHFINDER_SYN_ALL_PROTEINS,    "ResultToSeqMap",  "Result_ID",     "_mspath_syn_ResultToSeqMap.txt") },
+            { new MergeFile(MSPATHFINDER_SYN_ALL_PROTEINS,    "SeqToProteinMap", "Unique_Seq_ID", "_mspath_syn_SeqToProteinMap.txt") }
 
         };
 
@@ -85,8 +90,8 @@ namespace MageExtExtractionFilters {
         public string ResultIDColName { get; set; }
         public Collection<MergeFile> MergeFileTypes {
             get {
-                Collection<MergeFile> types = new Collection<MergeFile>();
-                foreach (MergeFile mf in mMergeTypes) {
+                var types = new Collection<MergeFile>();
+                foreach (var mf in mMergeTypes) {
                     if (mf.ResultName == ResultName) {
                         types.Add(mf);
                     }
@@ -121,7 +126,7 @@ namespace MageExtExtractionFilters {
 
         #region Constructors
 
-        public ResultType(string name, string tag, string filter, string resultsFileTag, string msgfFileTag, string idColName) {
+        public ResultType(string name, string tag, string filter, string resultsFileTag, string idColName) {
             ResultName = name;
             Tag = tag;
             ResultsFileNamePattern = resultsFileTag;
@@ -136,33 +141,37 @@ namespace MageExtExtractionFilters {
         /// </summary>
         /// <returns></returns>
         public ExtractionFilter GetExtractionFilter(FilterResultsBase resultsChecker) {
-            ExtractionFilter exf = null;
+            ExtractionFilter exf;
             switch (Filter) {
                 case "sequest":
-                    SequestExtractionFilter sxf = new SequestExtractionFilter();
+                    var sxf = new SequestExtractionFilter();
                     sxf.ResultChecker = resultsChecker as FilterSequestResults;
                     exf = sxf;
                     break;
                 case "xtandem":
-                    XTandemExtractionFilter xxf = new XTandemExtractionFilter();
+                    var xxf = new XTandemExtractionFilter();
                     xxf.ResultChecker = resultsChecker as FilterXTResults;
                     exf = xxf;
                     break;
                 case "inspect":
-					InspectExtractionFilter ixf = new InspectExtractionFilter();
+					var ixf = new InspectExtractionFilter();
 					ixf.ResultChecker = resultsChecker as FilterInspectResults;
 					exf = ixf;
                     break;
 				case "msgfplusFHT":
-                    MSGFDbFHTExtractionFilter mxf1 = new MSGFDbFHTExtractionFilter();
+                    var mxf1 = new MSGFDbFHTExtractionFilter();
                     mxf1.ResultChecker = resultsChecker as FilterMSGFDbResults;
                     exf = mxf1;
                     break;
-
                 case "msgfplus":
-                    MSGFDbExtractionFilter mxf2 = new MSGFDbExtractionFilter();
+                    var mxf2 = new MSGFDbExtractionFilter();
                     mxf2.ResultChecker = resultsChecker as FilterMSGFDbResults;
                     exf = mxf2;
+                    break;
+                case "mspathfinder":
+                    var mspathxf = new MSPathFinderExtractionFilter();
+                    mspathxf.ResultChecker = resultsChecker as FilterMSPathFinderResults;
+                    exf = mspathxf;
                     break;
                 default:
                     exf = new ExtractionFilter();
@@ -194,6 +203,9 @@ namespace MageExtExtractionFilters {
                     break;
                 case "msgfplus":
                     frb = MSGFDbExtractionFilter.MakeMSGFDbResultChecker(filterSetID);
+                    break;
+                case "mspathfinder":
+                    frb = MSPathFinderExtractionFilter.MakeMSPathFinderResultChecker(filterSetID);
                     break;
                 default:
                     break;

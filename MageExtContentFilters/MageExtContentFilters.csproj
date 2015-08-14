@@ -95,6 +95,7 @@
     <Compile Include="AllPassFilter.cs" />
     <Compile Include="FilterInspectResults.cs" />
     <Compile Include="FilterMSGFDbResults.cs" />
+    <Compile Include="FilterMSPathFinderResults.cs" />
     <Compile Include="FilterResultsBase.cs">
       <SubType>Code</SubType>
     </Compile>

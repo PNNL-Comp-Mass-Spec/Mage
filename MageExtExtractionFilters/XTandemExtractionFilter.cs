@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using MageExtContentFilters;
 using Mage;
-using System.Collections.ObjectModel;
+using MageExtContentFilters;
 
 namespace MageExtExtractionFilters {
 
@@ -9,20 +8,20 @@ namespace MageExtExtractionFilters {
 
         #region Member Variables
 
-        // working copy of SEQUEST filter object
-        private FilterXTResults mXTFilter = null;
+        // working copy of X!Tandem filter object
+        private FilterXTResults mXTFilter;
 
         // indexes into the synopsis row field array
-        private int peptideSequenceIndex = 0;
-        private int delCN2ValueIndex = 0;
-        private int chargeStateIndex = 0;
-        private int peptideMassIndex = 0;
-        private int hyperScoreValueIndex = 0;
-        private int logEValueIndex = 0;
-        private int msgfSpecProbIndex = 0;
+        private int peptideSequenceIndex;
+        private int delCN2ValueIndex;
+        private int chargeStateIndex;
+        private int peptideMassIndex;
+        private int hyperScoreValueIndex;
+        private int logEValueIndex;
+        private int msgfSpecProbIndex;
 
-        private MergeProteinData mProteinMerger = null;
-        private bool mOutputAllProteins = false;
+        private MergeProteinData mProteinMerger;
+        private bool mOutputAllProteins;
 
 
         #endregion
@@ -84,25 +83,23 @@ namespace MageExtExtractionFilters {
         /// <param name="args"></param>
         public override void HandleDataRow(object sender, MageDataEventArgs args) {
             if (args.DataAvailable) {
-
-                bool accepted = false;
-				string[] outRow = MapDataRow(args.Fields);
+                
+                var outRow = MapDataRow(args.Fields);
 
                 if (!mOutputAllProteins) {
                     mProteinMerger.MergeFirstProtein(ref outRow);
-                    accepted = CheckFilter(ref outRow);
+                    CheckFilter(ref outRow);
                 } else {
-					Collection<string[]> rows = null;
-	                bool matchFound;
-					rows = mProteinMerger.MergeAllProteins(ref outRow, out matchFound);
+                    bool matchFound;
+					var rows = mProteinMerger.MergeAllProteins(ref outRow, out matchFound);
                     if (rows == null) {
-                        accepted = CheckFilter(ref outRow);
+                        CheckFilter(ref outRow);
 						if (!matchFound)
 							OnWarningMessage(new MageStatusEventArgs("ProteinMerger did not find a match for row " + mTotalRowsCounter));
                     } else {
                         for (int i = 0; i < rows.Count; i++) {
-							string[] row = rows[i];
-                            accepted = CheckFilter(ref row);
+							var row = rows[i];
+                            CheckFilter(ref row);
                         }
                     }
                 }
@@ -120,25 +117,25 @@ namespace MageExtExtractionFilters {
         /// and annotate the appropriate column in the result (if one is specified)
         /// and pass on result if it passed the filter
         /// </summary>
-        /// <param name="outRow"></param>
+        /// <param name="vals"></param>
         /// <returns></returns>
 		protected bool CheckFilter(ref string[] vals)
 		{
-            bool accept = true;
+            var accept = true;
             if (mXTFilter == null) {
                 if (mFilterResultsColIdx >= 0) {
                     vals[mFilterResultsColIdx] = "Not Checked";
                 }
             } else {
-				string peptideSequence = GetColumnValue(vals, peptideSequenceIndex, "");
-				double delCN2Value = GetColumnValue(vals, delCN2ValueIndex, -1d);
-				double hyperScoreValue = GetColumnValue(vals, hyperScoreValueIndex, -1d);
-				double logEValue = GetColumnValue(vals, logEValueIndex, -1d);
-				int chargeState = GetColumnValue(vals, chargeStateIndex, -1);
-				double peptideMass = GetColumnValue(vals, peptideMassIndex, -1d);
-				double msgfSpecProb = GetColumnValue(vals, msgfSpecProbIndex, -1d);
+				var peptideSequence = GetColumnValue(vals, peptideSequenceIndex, "");
+				var delCN2Value = GetColumnValue(vals, delCN2ValueIndex, -1d);
+				var hyperScoreValue = GetColumnValue(vals, hyperScoreValueIndex, -1d);
+				var logEValue = GetColumnValue(vals, logEValueIndex, -1d);
+				var chargeState = GetColumnValue(vals, chargeStateIndex, -1);
+				var peptideMass = GetColumnValue(vals, peptideMassIndex, -1d);
+				var msgfSpecProb = GetColumnValue(vals, msgfSpecProbIndex, -1d);
 
-                bool pass = mXTFilter.EvaluateXTandem(peptideSequence, hyperScoreValue, logEValue, delCN2Value, chargeState, peptideMass, msgfSpecProb);
+                var pass = mXTFilter.EvaluateXTandem(peptideSequence, hyperScoreValue, logEValue, delCN2Value, chargeState, peptideMass, msgfSpecProb);
 
                 accept = pass || mKeepAllResults;
                 if (mFilterResultsColIdx >= 0) {
@@ -183,18 +180,18 @@ namespace MageExtExtractionFilters {
         /// </summary>
         public static FilterXTResults MakeXTandemResultChecker(string FilterSetID) {
 
-            string queryDefXML = ModuleDiscovery.GetQueryXMLDef("Extraction_Filter_Set_List");
-            Dictionary<string, string> runtimeParms = new Dictionary<string, string>() { { "Filter_Set_ID", FilterSetID } };
-            MSSQLReader reader = new MSSQLReader(queryDefXML, runtimeParms);
+            var queryDefXML = ModuleDiscovery.GetQueryXMLDef("Extraction_Filter_Set_List");
+            var runtimeParms = new Dictionary<string, string>() { { "Filter_Set_ID", FilterSetID } };
+            var reader = new MSSQLReader(queryDefXML, runtimeParms);
 
             // create Mage module to receive query results
-            SimpleSink filterCriteria = new SimpleSink();
+            var filterCriteria = new SimpleSink();
 
             // build pipeline and run it
-            ProcessingPipeline pipeline = ProcessingPipeline.Assemble("GetFilterCriteria", reader, filterCriteria);
+            var pipeline = ProcessingPipeline.Assemble("GetFilterCriteria", reader, filterCriteria);
             pipeline.RunRoot(null);
 
-            // create new Sequest filter object with retrieved filter criteria
+            // create new X!Tandem filter object with retrieved filter criteria
             return new FilterXTResults(filterCriteria.Rows, FilterSetID);
         }
 

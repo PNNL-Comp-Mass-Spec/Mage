@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MageExtContentFilters;
-using Mage;
 using System.Collections.ObjectModel;
+using System.IO;
+using Mage;
 
 namespace MageExtExtractionFilters {
 
@@ -15,15 +13,16 @@ namespace MageExtExtractionFilters {
 
 		public enum MergeModeConstants {
 			XTandem = 0,
-			Inspect = 1
+			InspectOrMSGFDB = 1,         // Used by Inspect and MSGF+
+            MSPathFinder = 2
 		}
 
 		#region Member Variables
 
-		private MergeModeConstants mMergeMode;
+		private readonly MergeModeConstants mMergeMode;
 
 		// reference to row in protein buffer, keyed by result id
-		private Dictionary<string, int> mProtDataLookup = null;
+		private Dictionary<string, int> mProtDataLookup;
 
 		// indexes for the protein columns in the result
 		private int ODX_Cleavage_State = -1;
@@ -69,18 +68,22 @@ namespace MageExtExtractionFilters {
 				ODX_Protein_Intensity_Log = colPos["Protein_Intensity_Log(I)"];
 			}
 
-			if (mMergeMode == MergeModeConstants.Inspect) {
+			if (mMergeMode == MergeModeConstants.InspectOrMSGFDB) {
 				ODX_Protein_Name = colPos["Protein"];               // The Protein column is present in the original _msgfdb_syn.txt file; we are replacing the protein name listed with the name from the msgfdb_syn_SeqToProteinMap.txt file
+			}
+
+			if (mMergeMode == MergeModeConstants.MSPathFinder) {
+				ODX_Protein_Name = colPos["ProteinName"];           // The Protein column is present in the original _msgfdb_syn.txt file; we are replacing the protein name listed with the name from the msgfdb_syn_SeqToProteinMap.txt file
 			}
 
 		}
 
 		// lookup index relating Unique_Seq_ID 
 		// to index of first occurrence row in proteinData
-		Dictionary<int, int> mFirstOccurrenceIndex = null;
+		Dictionary<int, int> mFirstOccurrenceIndex;
 
 		// protein data buffer
-		System.Collections.Generic.List<ProteinInfo> mProteinDataSorted = new System.Collections.Generic.List<ProteinInfo>();
+	    readonly List<ProteinInfo> mProteinDataSorted = new List<ProteinInfo>();
 
 		/// <summary>
 		/// Look up first protein identified for result 
@@ -89,19 +92,19 @@ namespace MageExtExtractionFilters {
 		/// <param name="outRow"></param>
 		public void MergeFirstProtein(ref string[] outRow)
 		{
-			string resultID = outRow[IDX_Lookup_Col];
+			var resultID = outRow[IDX_Lookup_Col];
 			int sequenceID;
-			int rowIdx;
 
-			outRow[ODX_Cleavage_State] = string.Empty;
+		    outRow[ODX_Cleavage_State] = string.Empty;
 			outRow[ODX_Terminus_State] = string.Empty;
 			outRow[ODX_Protein_Name] = string.Empty;
 
 			if (!mProtDataLookup.TryGetValue(resultID, out sequenceID)) {
 				// ToDo: Report a warning
-				sequenceID = -1;
-			} else {
-				if (mFirstOccurrenceIndex.TryGetValue(sequenceID, out rowIdx)) {
+			} else
+			{
+			    int rowIdx;
+			    if (mFirstOccurrenceIndex.TryGetValue(sequenceID, out rowIdx)) {
 					outRow[ODX_Cleavage_State] = mProteinDataSorted[rowIdx].Cleavage_State.ToString();
 					outRow[ODX_Terminus_State] = mProteinDataSorted[rowIdx].Terminus_State.ToString();
 					outRow[ODX_Protein_Name] = mProteinDataSorted[rowIdx].Protein_Name;
@@ -126,39 +129,41 @@ namespace MageExtExtractionFilters {
 		public Collection<string[]> MergeAllProteins(ref string[] outRow, out bool matchFound)
 		{
 			Collection<string[]> outRows = null;
-			string resultID = outRow[IDX_Lookup_Col];
+			var resultID = outRow[IDX_Lookup_Col];
 			int sequenceID;
 			int rowIdx;
 			matchFound = false;
 
 			if (!mProtDataLookup.TryGetValue(resultID, out sequenceID)) {
-				return outRows;
+				return null;
 			}
 
 			if (!mFirstOccurrenceIndex.TryGetValue(sequenceID, out rowIdx)) {
-				return outRows;
+				return null;
 			}
 
 			matchFound = true;
 
-			int numberOfProteins = 0;
+			var numberOfProteins = 0;
 			// starting at first protein, merge protein fields into outRow
 			// and then walk down the protein list checking the sequence ID.
 			// If single protein, outRow has been updated, and no futher action taken.
 			// If more than one protein for current sequence, create list,
 			// merge protein data into new copy of result, and add merged
 			// result to list
-			for (int rIdx = rowIdx; rIdx < mProteinDataSorted.Count; rIdx++) {
+			for (var rIdx = rowIdx; rIdx < mProteinDataSorted.Count; rIdx++) {
 				if (mProteinDataSorted[rIdx].Unique_Seq_ID == sequenceID) {
 					numberOfProteins++;
 					if (numberOfProteins == 2) {
 						outRows = new Collection<string[]>();
 					}
-					if (numberOfProteins >= 2) {
-						string[] row = new string[outRow.Length];
+
+					if (numberOfProteins >= 2 && outRows != null) {
+						var row = new string[outRow.Length];
 						Array.Copy(outRow, row, outRow.Length);
 						outRows.Add(row);
 					}
+
 					outRow[ODX_Cleavage_State] = mProteinDataSorted[rIdx].Cleavage_State.ToString();
 					outRow[ODX_Terminus_State] = mProteinDataSorted[rIdx].Terminus_State.ToString();
 					outRow[ODX_Protein_Name] = mProteinDataSorted[rIdx].Protein_Name;
@@ -167,11 +172,10 @@ namespace MageExtExtractionFilters {
 					if (ODX_Protein_Intensity_Log > -1)
 						outRow[ODX_Protein_Intensity_Log] = mProteinDataSorted[rIdx].Protein_Intensity_LogI;
 				} else {
-					if (numberOfProteins >= 2) {
-						string[] row = new string[outRow.Length];
+					if (numberOfProteins >= 2 && outRows != null) {
+						var row = new string[outRow.Length];
 						Array.Copy(outRow, row, outRow.Length);
 						outRows.Add(row);
-						////                           Console.WriteLine("result_id:{0}, sequence_id:{1}, row:{2}, count:{3}", resultID, sequenceID, rIdx, outRows.Count);
 					}
 					break;
 				}
@@ -182,22 +186,26 @@ namespace MageExtExtractionFilters {
 		// FUTURE: check for missing file names before loading file.
 		public void GetProteinLookupData(ResultType.MergeFile mapMergeFile, ResultType.MergeFile protMergeFile, string resultFolderPath) {
 			// get result to protein mapping data
-			string mapFileName = mapMergeFile.MergeFileName;
-			SimpleSink resultToSequenceMap = new SimpleSink();
+			var mapFileName = mapMergeFile.MergeFileName;
+			var resultToSequenceMap = new SimpleSink();
 			if (!string.IsNullOrEmpty(mapFileName)) {
-				DelimitedFileReader mapFileReader = new DelimitedFileReader();
-				mapFileReader.FilePath = System.IO.Path.Combine(resultFolderPath, mapFileName);
-				ProcessingPipeline.Assemble("Lookup Protein Map", mapFileReader, resultToSequenceMap).RunRoot(null);
+			    var mapFileReader = new DelimitedFileReader
+			    {
+			        FilePath = Path.Combine(resultFolderPath, mapFileName)
+			    };
+			    ProcessingPipeline.Assemble("Lookup Protein Map", mapFileReader, resultToSequenceMap).RunRoot(null);
 			}
 
 			// get protein data
-			SimpleSink mProteinData = new SimpleSink();
+			var mProteinData = new SimpleSink();
 
-			string protFileName = protMergeFile.MergeFileName;
+			var protFileName = protMergeFile.MergeFileName;
 			if (!string.IsNullOrEmpty(protFileName)) {
-				DelimitedFileReader protFileReader = new DelimitedFileReader();
-				protFileReader.FilePath = System.IO.Path.Combine(resultFolderPath, protFileName);
-				ProcessingPipeline.Assemble("Lookup Protein Data", protFileReader, mProteinData).RunRoot(null);
+			    var protFileReader = new DelimitedFileReader
+			    {
+			        FilePath = Path.Combine(resultFolderPath, protFileName)
+			    };
+			    ProcessingPipeline.Assemble("Lookup Protein Data", protFileReader, mProteinData).RunRoot(null);
 			}
 
 			int colIndexUniqueSeqID;
@@ -222,12 +230,11 @@ namespace MageExtExtractionFilters {
 
 			// Extract the protein data from the SimpleSink so that we can sort it
 			mProteinDataSorted.Clear();
-			for (int rowIdx = 0; rowIdx < mProteinData.Rows.Count; rowIdx++) {
+			for (var rowIdx = 0; rowIdx < mProteinData.Rows.Count; rowIdx++) {
 				int iValue;
-				string sValue = string.Empty;
 
-				bool bValidProteinInfo = false;
-				ProteinInfo oProteinInfo = new ProteinInfo();
+			    var bValidProteinInfo = false;
+				var oProteinInfo = new ProteinInfo();
 
 				if (mProteinData.TryGetValueViaColumnIndex(colIndexUniqueSeqID, rowIdx, out iValue))
 				{
@@ -242,7 +249,8 @@ namespace MageExtExtractionFilters {
 					if (mProteinData.TryGetValueViaColumnIndex(colIndexTerminusState, rowIdx, out iValue))
 						oProteinInfo.Terminus_State = iValue;
 
-					if (mProteinData.TryGetValueViaColumnIndex(colIndexProteinName, rowIdx, out sValue))
+				    string sValue;
+				    if (mProteinData.TryGetValueViaColumnIndex(colIndexProteinName, rowIdx, out sValue))
 						oProteinInfo.Protein_Name = sValue;
 
 					if (mProteinData.TryGetValueViaColumnIndex(colIndexEValue, rowIdx, out sValue))
@@ -259,21 +267,23 @@ namespace MageExtExtractionFilters {
 
 			// index relating Unique_Seq_ID to index of first occurrence row in proteinData
 			mFirstOccurrenceIndex = new Dictionary<int, int>(mProteinDataSorted.Count);
-			int currentSeqID = 0;
-			for (int rowIdx = 0; rowIdx < mProteinDataSorted.Count; rowIdx++) {
-				if (mProteinDataSorted[rowIdx].Unique_Seq_ID > currentSeqID) {
-					mFirstOccurrenceIndex[mProteinDataSorted[rowIdx].Unique_Seq_ID] = rowIdx;
-					currentSeqID = mProteinDataSorted[rowIdx].Unique_Seq_ID;
-				}
+			var currentSeqID = 0;
+			for (var rowIdx = 0; rowIdx < mProteinDataSorted.Count; rowIdx++) {
+			    if (mProteinDataSorted[rowIdx].Unique_Seq_ID <= currentSeqID)
+			    {
+			        continue;
+			    }
+			    mFirstOccurrenceIndex[mProteinDataSorted[rowIdx].Unique_Seq_ID] = rowIdx;
+			    currentSeqID = mProteinDataSorted[rowIdx].Unique_Seq_ID;
 			}
 
 			// index for Result_ID to Unique_Seq_ID map
 			// FUTURE: look up column index based on column header
 			mProtDataLookup = new Dictionary<string, int>();
-			int sID = 0;
-			foreach (string[] row in resultToSequenceMap.Rows)
+		    foreach (var row in resultToSequenceMap.Rows)
 			{
-				if (int.TryParse(row[1], out sID)) 
+			    int sID;
+			    if (int.TryParse(row[1], out sID)) 
 				{
 					mProtDataLookup[row[0]] = sID;
 				}

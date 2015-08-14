@@ -1,5 +1,9 @@
 Mage Revision History
 
+Version 1.5.5703; August 13, 2015
+	- Update MageExtractor to support MSPathFinder results
+		- Use the Filter for Result Type filters to filter on FDR
+
 Version 1.5.5689; July 30, 2015
 	- Switched to using the Folder Browser control in PRISM.Dll
 	- GUI layout updates to line up controls are similar tabs

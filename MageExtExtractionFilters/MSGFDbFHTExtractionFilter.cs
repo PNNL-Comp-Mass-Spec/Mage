@@ -12,14 +12,14 @@ namespace MageExtExtractionFilters {
         #region Member Variables
 
         // working copy of MSGFDB filter object
-        private FilterMSGFDbResults mMSGFDbFilter = null;
+        private FilterMSGFDbResults mMSGFDbFilter;
 
         // indexes into the synopsis row field array
-        private int peptideSequenceIndex = 0;
-        private int chargeStateIndex = 0;
-        private int peptideMassIndex = 0;
-        private int msgfDbSpecProbValueIndex = 0;
-        private int pValueIndex = 0;
+        private int peptideSequenceIndex;
+        private int chargeStateIndex;
+        private int peptideMassIndex;
+        private int msgfDbSpecProbValueIndex;
+        private int pValueIndex;
 
         // Note that FDR and PepFDR may not be present
         private int FDRIndex = -1;
@@ -34,14 +34,6 @@ namespace MageExtExtractionFilters {
         public FilterMSGFDbResults ResultChecker {
             get { return mMSGFDbFilter; }
             set { mMSGFDbFilter = value; }
-        }
-
-        #endregion
-
-        #region Initialization
-
-        public override void Prepare() {
-            base.Prepare();
         }
 
         #endregion
@@ -70,10 +62,9 @@ namespace MageExtExtractionFilters {
         public override void HandleDataRow(object sender, MageDataEventArgs args) {
             if (args.DataAvailable) {
 
-                bool accepted = false;
-				string[] outRow = MapDataRow(args.Fields);
+                var outRow = MapDataRow(args.Fields);
 
-                accepted = CheckFilter(ref outRow);
+                var accepted = CheckFilter(ref outRow);
                 
                 if (accepted) {
                     mPassedRowsCounter++;
@@ -93,27 +84,27 @@ namespace MageExtExtractionFilters {
         /// and annotate the appropriate column in the result (if one is specified)
         /// and pass on result if it passed the filter
         /// </summary>
-        /// <param name="outRow"></param>
+        /// <param name="vals"></param>
         /// <returns></returns>
 		protected bool CheckFilter(ref string[] vals)
 		{
-            bool accept = true;
+            var accept = true;
             if (mMSGFDbFilter == null) {
                 if (mFilterResultsColIdx >= 0) {
                     vals[mFilterResultsColIdx] = "Not Checked";
                 }
             } else {
-				string peptideSequence = GetColumnValue(vals, peptideSequenceIndex, "");
-				int chargeState = GetColumnValue(vals, chargeStateIndex, 0);
-				double peptideMass = GetColumnValue(vals, peptideMassIndex, -1d);
-				double SpecProb = GetColumnValue(vals, msgfDbSpecProbValueIndex, -1d);
-				double PValue = GetColumnValue(vals, pValueIndex, -1d);
-				double FDR = GetColumnValue(vals, FDRIndex, -1d);
-				double PepFDR = GetColumnValue(vals, pepFDRIndex, -1d);
-				double msgfSpecProb = GetColumnValue(vals, msgfSpecProbIndex, -1d);
-				int rankMSGFDbSpecProb = 1;
+				var peptideSequence = GetColumnValue(vals, peptideSequenceIndex, "");
+				var chargeState = GetColumnValue(vals, chargeStateIndex, 0);
+				var peptideMass = GetColumnValue(vals, peptideMassIndex, -1d);
+				var SpecProb = GetColumnValue(vals, msgfDbSpecProbValueIndex, -1d);
+				var PValue = GetColumnValue(vals, pValueIndex, -1d);
+				var FDR = GetColumnValue(vals, FDRIndex, -1d);
+				var PepFDR = GetColumnValue(vals, pepFDRIndex, -1d);
+				var msgfSpecProb = GetColumnValue(vals, msgfSpecProbIndex, -1d);
+				var rankMSGFDbSpecProb = 1;
 
-				bool pass = mMSGFDbFilter.EvaluateMSGFDB(peptideSequence, chargeState, peptideMass, SpecProb, PValue, FDR, PepFDR, msgfSpecProb, rankMSGFDbSpecProb);
+				var pass = mMSGFDbFilter.EvaluateMSGFDB(peptideSequence, chargeState, peptideMass, SpecProb, PValue, FDR, PepFDR, msgfSpecProb, rankMSGFDbSpecProb);
 
                 accept = pass || mKeepAllResults;
                 if (mFilterResultsColIdx >= 0) {
@@ -162,18 +153,18 @@ namespace MageExtExtractionFilters {
         /// </summary>
         public static FilterMSGFDbResults MakeMSGFDbResultChecker(string FilterSetID) {
 
-            string queryDefXML = ModuleDiscovery.GetQueryXMLDef("Extraction_Filter_Set_List");
-            Dictionary<string, string> runtimeParms = new Dictionary<string, string>() { { "Filter_Set_ID", FilterSetID } };
-            MSSQLReader reader = new MSSQLReader(queryDefXML, runtimeParms);
+            var queryDefXML = ModuleDiscovery.GetQueryXMLDef("Extraction_Filter_Set_List");
+            var runtimeParms = new Dictionary<string, string>() { { "Filter_Set_ID", FilterSetID } };
+            var reader = new MSSQLReader(queryDefXML, runtimeParms);
 
             // create Mage module to receive query results
-            SimpleSink filterCriteria = new SimpleSink();
+            var filterCriteria = new SimpleSink();
 
             // build pipeline and run it
-            ProcessingPipeline pipeline = ProcessingPipeline.Assemble("GetFilterCriteria", reader, filterCriteria);
+            var pipeline = ProcessingPipeline.Assemble("GetFilterCriteria", reader, filterCriteria);
             pipeline.RunRoot(null);
 
-            // create new Sequest filter object with retrieved filter criteria
+            // create new MSGF+ filter object with retrieved filter criteria
             return new FilterMSGFDbResults(filterCriteria.Rows, FilterSetID);
         }
     }

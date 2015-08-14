@@ -17,13 +17,13 @@ namespace MageExtExtractionFilters {
 
         #region Member Variables
 
-        private int mCurrentFileCount = 0;
+        private int mCurrentFileCount;
 
-        private ExtractionType mExtractionType = null;
+        private ExtractionType mExtractionType;
 
-        private DestinationType mDestination = null;
+        private DestinationType mDestination;
 
-        private FilterResultsBase mResultsChecker = null;
+        private FilterResultsBase mResultsChecker;
 
 		private string mCurrentProgressText = "";
 
@@ -82,7 +82,7 @@ namespace MageExtExtractionFilters {
 
         private void PrecalculateMergeFileColumnIndexes() {
             mMergeFiles = new Dictionary<string, ResultType.MergeFile>();
-            foreach (ResultType.MergeFile mf in mExtractionType.RType.MergeFileTypes) {
+            foreach (var mf in mExtractionType.RType.MergeFileTypes) {
                 if (InputColumnPos.Keys.Contains(mf.NameColumn)) {
                     mf.ColumnIndx = InputColumnPos[mf.NameColumn];
                 }
@@ -92,7 +92,7 @@ namespace MageExtExtractionFilters {
 
         public override void HandleColumnDef(object sender, MageColumnEventArgs args) {
             base.HandleColumnDef(sender, args);
-            List<MageColumnDef> columnDefs = (OutputColumnDefs != null) ? OutputColumnDefs : InputColumnDefs;
+            var columnDefs = OutputColumnDefs ?? InputColumnDefs;
             OnColumnDefAvailable(new MageColumnEventArgs(columnDefs.ToArray()));
             PrecalculateColumnIndexes();
             PrecalculateMergeFileColumnIndexes();
@@ -107,13 +107,13 @@ namespace MageExtExtractionFilters {
         /// <param name="args"></param>
         public override void HandleDataRow(object sender, MageDataEventArgs args) {
             if (args.DataAvailable) {
-                string resultFolderPath = args.Fields[mInputFolderIdx].ToString();
-                string resultFileName = args.Fields[mInputFileIdx].ToString();
+                var resultFolderPath = args.Fields[mInputFolderIdx];
+                var resultFileName = args.Fields[mInputFileIdx];
                 string inputFilePath;
 
-				List<string> filesDownloadedFromMyEMSL = new List<string>();
+				var filesDownloadedFromMyEMSL = new List<string>();
 
-				if (resultFileName == BaseModule.kNoFilesFound)
+				if (resultFileName == kNoFilesFound)
 					inputFilePath = "";
 				else
 				{
@@ -125,26 +125,28 @@ namespace MageExtExtractionFilters {
 						// We'll download all of the files for the given dataset as a group
 						// These files should already have a MyEMSL File ID encoded in them
 
-						var filesToDownload = new List<string>();
+					    var filesToDownload = new List<string>
+					    {
+					        resultFileName
+					    };
 
-						filesToDownload.Add(resultFileName);
 
-						foreach (ResultType.MergeFile mf in mMergeFiles.Values)
+					    foreach (var mf in mMergeFiles.Values)
 						{
 							if (mf.ColumnIndx >= 0)
 							{
-								string mergeFileName = args.Fields[mf.ColumnIndx].ToString();
+								var mergeFileName = args.Fields[mf.ColumnIndx];
 								filesToDownload.Add(mergeFileName);
 							}
 						}
 
-						for (int i = 0; i < filesToDownload.Count; i++)
+						for (var i = 0; i < filesToDownload.Count; i++)
 						{
 							string filePathClean;
-							Int64 myEMSLFileID = DatasetInfoBase.ExtractMyEMSLFileID(filesToDownload[i], out filePathClean);
+							var myEMSLFileID = DatasetInfoBase.ExtractMyEMSLFileID(filesToDownload[i], out filePathClean);
 
 							if (myEMSLFileID <= 0)
-								throw new MageException("File does not have the MyEMSL FileID tag (" + MyEMSLReader.DatasetInfoBase.MYEMSL_FILEID_TAG + "): " + filesToDownload[i]);
+								throw new MageException("File does not have the MyEMSL FileID tag (" + DatasetInfoBase.MYEMSL_FILEID_TAG + "): " + filesToDownload[i]);
 
 							DatasetFolderOrFileInfo cachedFileInfo;
 							if (m_FilterPassingMyEMSLFiles.TryGetValue(myEMSLFileID, out cachedFileInfo))
@@ -158,9 +160,9 @@ namespace MageExtExtractionFilters {
 									inputFilePath = Path.Combine(resultFolderPath, cachedFileInfo.FileInfo.Filename);
 								}
 
-								string filePathLocal = Path.Combine(resultFolderPath, cachedFileInfo.FileInfo.Filename);
+								var filePathLocal = Path.Combine(resultFolderPath, cachedFileInfo.FileInfo.Filename);
 
-								bool unzipRequired = false;
+								const bool unzipRequired = false;
 								m_MyEMSLDatasetInfoCache.AddFileToDownloadQueue(cachedFileInfo.FileID, cachedFileInfo.FileInfo, unzipRequired, filePathLocal);
 								filesDownloadedFromMyEMSL.Add(filePathLocal);
 
@@ -171,10 +173,10 @@ namespace MageExtExtractionFilters {
 						}
 					
 						// Note that the target folder path will be ignored since we explicitly defined the destination file path when queuing the file
-						bool success = m_MyEMSLDatasetInfoCache.ProcessDownloadQueue(".", Downloader.DownloadFolderLayout.SingleDataset);
+						var success = m_MyEMSLDatasetInfoCache.ProcessDownloadQueue(".", Downloader.DownloadFolderLayout.SingleDataset);
 						if (!success)
 						{
-							string msg = "Failed to download Mage Extractor merge files from MyEMSL";
+							var msg = "Failed to download Mage Extractor merge files from MyEMSL";
 							if (m_MyEMSLDatasetInfoCache.ErrorMessages.Count > 0)
 								msg += ": " + m_MyEMSLDatasetInfoCache.ErrorMessages.First();
 							else
@@ -187,18 +189,18 @@ namespace MageExtExtractionFilters {
 				}
 
                 // add actual file name to merge file list
-                foreach (ResultType.MergeFile mf in mMergeFiles.Values) {
-                    mf.MergeFileName = (mf.ColumnIndx < 0) ? "" : args.Fields[mf.ColumnIndx].ToString();
+                foreach (var mf in mMergeFiles.Values) {
+                    mf.MergeFileName = (mf.ColumnIndx < 0) ? "" : args.Fields[mf.ColumnIndx];
 
 					string filePathClean;
-					Int64 myEMSLFileID = DatasetInfoBase.ExtractMyEMSLFileID(mf.MergeFileName, out filePathClean);
+					var myEMSLFileID = DatasetInfoBase.ExtractMyEMSLFileID(mf.MergeFileName, out filePathClean);
 
 					if (myEMSLFileID > 0)
 						mf.MergeFileName = filePathClean;
                 }
 
-                if (resultFileName != BaseModule.kNoFilesFound) {
-                    string job = args.Fields[mJobIdx].ToString();
+                if (resultFileName != kNoFilesFound) {
+                    var job = args.Fields[mJobIdx];
                     SendProgressUpdate(job);
 
 					if (!File.Exists(inputFilePath))
@@ -208,26 +210,31 @@ namespace MageExtExtractionFilters {
 					else
 					{
 						// build and run pipeline (in this thread) to process file contents
-						DelimitedFileReader resultsFileReader = new DelimitedFileReader();
-						resultsFileReader.FilePath = inputFilePath;
+					    var resultsFileReader = new DelimitedFileReader
+					    {
+					        FilePath = inputFilePath
+					    };
 
-						ExtractionFilter msgfFilter = new MSGFExtractionFilter();
+                        // Note that MSPathFinder jobs will not have an msgf file, but we
+                        // still need to include the MSGFExtractionFilter in the pipeline so that
+                        // the data gets filtered
+					    ExtractionFilter msgfFilter = new MSGFExtractionFilter();
 						msgfFilter.Job = job;
 						msgfFilter.ResultFolderPath = resultFolderPath;
 						msgfFilter.MergeFiles = mMergeFiles;
 						msgfFilter.ExtractionType = mExtractionType;
 
-						ExtractionFilter resultsFilter = mExtractionType.RType.GetExtractionFilter(mResultsChecker);
+						var resultsFilter = mExtractionType.RType.GetExtractionFilter(mResultsChecker);
 						resultsFilter.Job = job;
 						resultsFilter.ResultFolderPath = resultFolderPath;
 						resultsFilter.MergeFiles = mMergeFiles;
 						resultsFilter.ExtractionType = mExtractionType;
 
-						BaseModule writer = mDestination.GetDestinationWriterModule(job, inputFilePath);
+						var writer = mDestination.GetDestinationWriterModule(job, inputFilePath);
 						var pipeline = ProcessingPipeline.Assemble("Extract File Contents", resultsFileReader, msgfFilter, resultsFilter, writer);
 
-						pipeline.OnWarningMessageUpdated += new EventHandler<MageStatusEventArgs>(pipeline_OnWarningMessageUpdated);
-						pipeline.OnStatusMessageUpdated += new EventHandler<MageStatusEventArgs>(pipeline_OnStatusMessageUpdated);
+						pipeline.OnWarningMessageUpdated += pipeline_OnWarningMessageUpdated;
+						pipeline.OnStatusMessageUpdated += pipeline_OnStatusMessageUpdated;
 
 						pipeline.RunRoot(null);
 
@@ -263,7 +270,7 @@ namespace MageExtExtractionFilters {
 
 
         private void SendProgressUpdate(string job) {
-            string cur = (++mCurrentFileCount).ToString();
+            var cur = (++mCurrentFileCount).ToString();
 			mCurrentProgressText = string.Format("Extracting results for job {0} ({1})", job, cur);
             OnStatusMessageUpdated(new MageStatusEventArgs(mCurrentProgressText));
         }
@@ -277,12 +284,13 @@ namespace MageExtExtractionFilters {
         /// Set up an appropriate filter checker based on current result type
         /// </summary>
         private void SetupCurrentResultsChecker() {
-            if (mExtractionType.ResultFilterSetID.ToLower() != "All Pass".ToLower()) {
+            if (!string.Equals(mExtractionType.ResultFilterSetID, ExtractionFilter.ALL_PASS_CUTOFF, StringComparison.CurrentCultureIgnoreCase))
+            {
                 mResultsChecker = mExtractionType.RType.GetResultsChecker(mExtractionType.ResultFilterSetID);
 
                 if (mResultsChecker != null) {
                     // Write out the filter criteria as a tab-delimited text file
-                    mResultsChecker.WriteCriteria(System.IO.Path.Combine(Destination.ContainerPath, Destination.FilterCriteriaName));
+                    mResultsChecker.WriteCriteria(Path.Combine(Destination.ContainerPath, Destination.FilterCriteriaName));
                 }
             }
         }
@@ -290,7 +298,7 @@ namespace MageExtExtractionFilters {
         /// <summary>
         /// Get filter module to apply to file contents being extracted
         /// </summary>
-        /// <param name="assocScoreLookup"></param>
+        /// <param name="resultsFolderPath"></param>
         /// <param name="job"></param>
         /// <returns></returns>
         private ExtractionFilter GetExtractionFilterModule(string resultsFolderPath, string job) {

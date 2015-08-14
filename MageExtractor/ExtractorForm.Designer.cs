@@ -1,4 +1,6 @@
-﻿namespace MageExtractor {
+﻿using MageExtExtractionFilters;
+
+namespace MageExtractor {
     partial class ExtractorForm {
         /// <summary>
         /// Required designer variable.

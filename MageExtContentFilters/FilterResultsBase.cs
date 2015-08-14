@@ -1,15 +1,17 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using System.Collections.ObjectModel;
+using System.Data;
+using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Data;
-using System.Collections;
-using System.Collections.ObjectModel;
 
-namespace MageExtContentFilters {
+namespace MageExtContentFilters
+{
 
-    public class FilterResultsBase {
+    public class FilterResultsBase
+    {
 
         protected static int CriteriaGroupIDIndex = 0;
         protected static int CriteriaNameIndex = 1;
@@ -18,40 +20,43 @@ namespace MageExtContentFilters {
         protected static int CriterionIDIndex = 4;
 
         // internal class
-        protected class FilterCriteriaDef {
+        protected class FilterCriteriaDef
+        {
             public string CriteriaName;
             public string CriteriaOperator;
             public int CriteriaValueInt;
             public float CriteriaValueFloat;
             public int CriterionID;
 
-			public FilterCriteriaDef(string[] criteria)
-			{
+            public FilterCriteriaDef(string[] criteria)
+            {
                 CriteriaName = criteria[CriteriaNameIndex].Trim();
                 CriteriaOperator = criteria[CriteriaOperatorIndex].Trim();
-                string value = criteria[CriteriaValueIntIndex];
+                var value = criteria[CriteriaValueIntIndex];
                 int.TryParse(value, out CriteriaValueInt);
                 float.TryParse(value, out CriteriaValueFloat);
 
-                if (criteria.Length > 4) {
+                if (criteria.Length > 4)
+                {
                     value = criteria[CriterionIDIndex].Trim();
                     int.TryParse(value, out CriterionID);
-                } else
+                }
+                else
                     CriterionID = -1;
             }
 
-			public override string ToString()
-			{
-				if (Math.Abs(CriteriaValueInt - CriteriaValueFloat) < Single.Epsilon)
-					return CriteriaName + " " + CriteriaOperator + " " + CriteriaValueInt;
-				else
-				{
-					if (Math.Abs(CriteriaValueFloat) < 0.002)
-						return CriteriaName + " " + CriteriaOperator + " " + CriteriaValueFloat.ToString("0.00E+00");
-					else
-						return CriteriaName + " " + CriteriaOperator + " " + CriteriaValueFloat.ToString("0.000");
-				}
-			}
+            public override string ToString()
+            {
+                if (Math.Abs(CriteriaValueInt - CriteriaValueFloat) < Single.Epsilon)
+                    return CriteriaName + " " + CriteriaOperator + " " + CriteriaValueInt;
+                else
+                {
+                    if (Math.Abs(CriteriaValueFloat) < 0.002)
+                        return CriteriaName + " " + CriteriaOperator + " " + CriteriaValueFloat.ToString("0.00E+00");
+                    else
+                        return CriteriaName + " " + CriteriaOperator + " " + CriteriaValueFloat.ToString("0.000");
+                }
+            }
 
         }
 
@@ -61,74 +66,81 @@ namespace MageExtContentFilters {
         protected Regex m_CleavageStateRegex;
 
         protected Regex m_TerminusStateRegex;
-        public enum eCleavageStates {
+        public enum eCleavageStates
+        {
             Non = 0,
             Partial = 1,
             Full = 2
         }
 
-		public FilterResultsBase(Collection<string[]> filterCriteria, string filterSetID)
-		{
-			foreach (string[] criteria in filterCriteria)
-			{
-                FilterCriteriaDef fc = new FilterCriteriaDef(criteria);
+        public FilterResultsBase(Collection<string[]> filterCriteria, string filterSetID)
+        {
+            foreach (var criteria in filterCriteria)
+            {
+                var fc = new FilterCriteriaDef(criteria);
 
-                string groupID = criteria[CriteriaGroupIDIndex].ToString();
-                if (!m_FilterGroups.ContainsKey(groupID)) {
+                var groupID = criteria[CriteriaGroupIDIndex];
+                if (!m_FilterGroups.ContainsKey(groupID))
+                {
                     m_FilterGroups[groupID] = new List<FilterCriteriaDef>();
                 }
                 m_FilterGroups[groupID].Add(fc);
             }
             //            this.m_filters = filterCriteria;
             //            this.m_FilterGroups = GetGroupList(this.m_filters);
-            this.m_CleanSeqRegex = new Regex("(?<cleanseq>[a-zA-z\\.]+)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-            this.m_CleavageStateRegex = new Regex("^(?<1>\\S)\\.(?<2>\\S)\\S*(?<3>[A-Z])[^A-Z]*\\.(?<4>\\S)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-            this.m_TerminusStateRegex = new Regex("^(?<LeftAA>\\S)\\.\\S+\\.(?<RightAA>\\S)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            m_CleanSeqRegex = new Regex(@"(?<cleanseq>[a-zA-z\.]+)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            m_CleavageStateRegex = new Regex(@"^(?<Prefix>\S)\.(?<PepStart>\S)\S*(?<PepEnd>[A-Z])[^A-Z]*\.(?<Suffix>\S)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            m_TerminusStateRegex = new Regex(@"^(?<LeftAA>\S)\.\S+\.(?<RightAA>\S)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
             int.TryParse(filterSetID, out m_filterSetID);
         }
-		
+
         /// <summary>
         /// Creates a tab-delimited text file with details of the filter groups for the filter set associated with this class
         /// </summary>
         /// <param name="sOutputFilePath"></param>
-        public void WriteCriteria(string sOutputFilePath) {
+        public void WriteCriteria(string sOutputFilePath)
+        {
+            using ( var swOutfile = new StreamWriter(new FileStream(sOutputFilePath, FileMode.Create, FileAccess.Write, FileShare.Read)))
+            {
+                swOutfile.WriteLine("Filter_Set_ID" + "\t" + "Filter_Criteria_Group_ID" + "\t" + "Criterion_Name" + "\t" +
+                                    "Operator" + "\t" + "Criterion_Value" + "\t" + "Criterion_ID");
 
-            System.IO.StreamWriter swOutfile;
+                foreach (var filterGroupID in m_FilterGroups.Keys)
+                {
 
-            swOutfile = new System.IO.StreamWriter(new System.IO.FileStream(sOutputFilePath, System.IO.FileMode.Create, System.IO.FileAccess.Write, System.IO.FileShare.Read));
+                    foreach (var filterRow in m_FilterGroups[filterGroupID])
+                    {
 
-            swOutfile.WriteLine("Filter_Set_ID" + "\t" + "Filter_Criteria_Group_ID" + "\t" + "Criterion_Name" + "\t" + "Operator" + "\t" + "Criterion_Value" + "\t" + "Criterion_ID");
+                        swOutfile.Write(m_filterSetID + "\t" + filterGroupID + "\t" + filterRow.CriteriaName + "\t" +
+                                        filterRow.CriteriaOperator + "\t");
 
-            foreach (string filterGroupID in this.m_FilterGroups.Keys) {
-                
-                foreach (FilterCriteriaDef filterRow in m_FilterGroups[filterGroupID]) {
+                        if (Math.Abs((int)filterRow.CriteriaValueFloat - filterRow.CriteriaValueFloat) < Single.Epsilon)
+                            swOutfile.Write(filterRow.CriteriaValueInt);
+                        else
+                            swOutfile.Write(filterRow.CriteriaValueFloat);
 
-                    swOutfile.Write(m_filterSetID + "\t" + filterGroupID + "\t" + filterRow.CriteriaName + "\t" + filterRow.CriteriaOperator + "\t");
-                    ;
-					if ((int)filterRow.CriteriaValueFloat == filterRow.CriteriaValueFloat)
-                        swOutfile.Write(filterRow.CriteriaValueInt);
-                    else
-                        swOutfile.Write(filterRow.CriteriaValueFloat);
-
-                    swOutfile.WriteLine("\t" + filterRow.CriterionID);
+                        swOutfile.WriteLine("\t" + filterRow.CriterionID);
+                    }
                 }
-            }
 
-            swOutfile.Close();
+            }
         }
 
-        protected bool CompareDouble(double valueToCompare, string operatorSymbol, double criterionValue) {
+        protected bool CompareDouble(double valueToCompare, string operatorSymbol, double criterionValue)
+        {
             double thresholdNearlyEqual = float.Epsilon * 10;
             return CompareDouble(valueToCompare, operatorSymbol, criterionValue, thresholdNearlyEqual);
         }
 
-        protected bool CompareDouble(double valueToCompare, string operatorSymbol, double criterionValue, double thresholdNearlyEqual) {
+        protected bool CompareDouble(double valueToCompare, string operatorSymbol, double criterionValue, double thresholdNearlyEqual)
+        {
 
-            bool tmpvalue = false;
-            double tmpDelta = Math.Abs(valueToCompare - criterionValue);
+            var tmpvalue = false;
+            var tmpDelta = Math.Abs(valueToCompare - criterionValue);
 
-            switch (operatorSymbol) {
+            switch (operatorSymbol)
+            {
                 case "<":
                     //less than
                     if (valueToCompare < criterionValue)
@@ -154,21 +166,19 @@ namespace MageExtContentFilters {
                     if (valueToCompare > criterionValue)
                         tmpvalue = true;
                     break;
-                default:
-                    tmpvalue = false;
-
-                    break;
             }
 
             return tmpvalue;
 
         }
 
-        protected bool CompareInteger(int valueToCompare, string operatorSymbol, int criterionValue) {
+        protected bool CompareInteger(int valueToCompare, string operatorSymbol, int criterionValue)
+        {
 
-            bool tmpvalue = false;
+            var tmpvalue = false;
 
-            switch (operatorSymbol) {
+            switch (operatorSymbol)
+            {
                 case "<":
                     //less than
                     if (valueToCompare < criterionValue)
@@ -194,25 +204,23 @@ namespace MageExtContentFilters {
                     if (valueToCompare > criterionValue)
                         tmpvalue = true;
                     break;
-                default:
-                    tmpvalue = false;
-
-                    break;
             }
 
             return tmpvalue;
 
         }
 
-        protected ArrayList GetGroupList(DataTable filterCriteria) {
-            int currGroupID = 0;
-            int prevGroupID = 0;
+        protected ArrayList GetGroupList(DataTable filterCriteria)
+        {
+            var prevGroupID = 0;
 
-            ArrayList tmpList = new ArrayList();
+            var tmpList = new ArrayList();
 
-            foreach (DataRow dr in filterCriteria.Rows) {
-                currGroupID = Convert.ToInt32(dr["Filter_Criteria_Group_ID"]);
-                if (currGroupID != prevGroupID) {
+            foreach (DataRow dr in filterCriteria.Rows)
+            {
+                var currGroupID = Convert.ToInt32(dr["Filter_Criteria_Group_ID"]);
+                if (currGroupID != prevGroupID)
+                {
                     tmpList.Add(currGroupID);
                 }
                 prevGroupID = currGroupID;
@@ -221,38 +229,44 @@ namespace MageExtContentFilters {
             return tmpList;
         }
 
-        protected eCleavageStates GetCleavageState(string peptideSequence) {
+        protected eCleavageStates GetCleavageState(string peptideSequence)
+        {
             //Implements IFilterResults.GetCleavageState
-            eCleavageStates tmpState = default(eCleavageStates);
+            eCleavageStates tmpState;
 
-            int num = 0;
+            var num = 0;
             //Dim r As New Regex("^(?<1>\S)\.(?<2>\S)\S+(?<3>\S)\.(?<4>\S)$")
             //Dim r As New Regex("^(?<1>\S)\.(?<2>\S)\S*(?<3>[A-Ja-j,L-Ql-q,S-Zs-z])[^A-Za-z]*\.(?<4>\S)$")
 
-            Match m = default(Match);
+            var m = m_CleavageStateRegex.Match(peptideSequence);
 
-            m = this.m_CleavageStateRegex.Match(peptideSequence);
+            var prefix = m.Groups["Prefix"].ToString();
+            var pepStart = m.Groups["PepStart"].ToString();
+            var pepEnd = m.Groups["PepEnd"].ToString();
+            var suffix = m.Groups["Suffix"].ToString();
 
-            string AA1 = m.Groups[1].ToString();
-            string AA2 = m.Groups[2].ToString();
-            string AA3 = m.Groups[3].ToString();
-            string AA4 = m.Groups[4].ToString();
-
-            if (AA1.Equals("R") | AA1.Equals("K")) {
-                if (!AA2.Equals("P"))
+            if (prefix.Equals("R") | prefix.Equals("K"))
+            {
+                if (!pepStart.Equals("P"))
                     num += 1;
-            } else if (AA1.Equals("-")) {
+            }
+            else if (prefix.Equals("-"))
+            {
                 num += 1;
             }
 
-            if (AA3.Equals("R") | AA3.Equals("K")) {
-                if (!AA4.Equals("P"))
+            if (pepEnd.Equals("R") | pepEnd.Equals("K"))
+            {
+                if (!suffix.Equals("P"))
                     num += 1;
-            } else if (AA4.Equals("-")) {
+            }
+            else if (suffix.Equals("-"))
+            {
                 num += 1;
             }
 
-            switch (num) {
+            switch (num)
+            {
                 case 0:
                     tmpState = eCleavageStates.Non;
                     break;
@@ -270,39 +284,51 @@ namespace MageExtContentFilters {
             return tmpState;
         }
 
-        protected int GetTerminusState(string peptideSequence) {
+        protected int GetTerminusState(string peptideSequence)
+        {
             //Dim r As New Regex("^(?<LeftAA>\S)\.\S+\.(?<RightAA>\S)$")
-            Match m = this.m_TerminusStateRegex.Match(peptideSequence);
-            int num = 0;
+            var m = m_TerminusStateRegex.Match(peptideSequence);
+            int num;
 
-            if ((m.Groups["LeftAA"].ToString().Equals("-") & !m.Groups["RightAA"].ToString().Equals("-"))) {
+            if ((m.Groups["LeftAA"].ToString().Equals("-") & !m.Groups["RightAA"].ToString().Equals("-")))
+            {
                 num = 1;
-            } else if ((m.Groups["RightAA"].ToString().Equals("-") & !m.Groups["LeftAA"].ToString().Equals("-"))) {
+            }
+            else if ((m.Groups["RightAA"].ToString().Equals("-") & !m.Groups["LeftAA"].ToString().Equals("-")))
+            {
                 num = 2;
-            } else if ((m.Groups["RightAA"].ToString().Equals("-") & m.Groups["LeftAA"].ToString().Equals("-"))) {
+            }
+            else if ((m.Groups["RightAA"].ToString().Equals("-") & m.Groups["LeftAA"].ToString().Equals("-")))
+            {
                 num = 3;
-            } else {
+            }
+            else
+            {
                 num = 0;
             }
 
             return num;
         }
 
-        protected int GetPeptideLength(string dirtySequence) {
+        protected int GetPeptideLength(string dirtySequence)
+        {
 
-            MatchCollection matches = this.m_CleanSeqRegex.Matches(dirtySequence);
+            var matches = m_CleanSeqRegex.Matches(dirtySequence);
 
-            StringBuilder intermedSeq = new StringBuilder();
+            var intermedSeq = new StringBuilder();
 
-            foreach (Match m in matches) {
+            foreach (Match m in matches)
+            {
                 intermedSeq.Append(m.Value);
             }
 
-            if (Regex.IsMatch(intermedSeq.ToString(), "\\S\\.\\S+\\.\\S")) {
-                string[] tmpSeq = null;
-                tmpSeq = Regex.Split(intermedSeq.ToString(), "\\.");
+            if (Regex.IsMatch(intermedSeq.ToString(), @"\S\.\S+\.\S"))
+            {
+                var tmpSeq = Regex.Split(intermedSeq.ToString(), @"\.");
                 return tmpSeq[1].Length;
-            } else {
+            }
+            else
+            {
                 return intermedSeq.Length;
             }
 

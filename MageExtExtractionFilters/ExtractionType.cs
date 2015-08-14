@@ -17,9 +17,9 @@ namespace MageExtExtractionFilters {
 
         /// <summary>
         /// Eliminate results with MSGF SpecProb that don't meet this threshold
+        /// This filter is used when merging search engine results with the _syn_MSGF.txt or _fht_MSGF.txt file
         /// </summary>
         public string MSGFCutoff { get; set; }
-
 
     }
 }

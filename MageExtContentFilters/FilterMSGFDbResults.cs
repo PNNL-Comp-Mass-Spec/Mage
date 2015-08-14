@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Collections.ObjectModel;
 
 namespace MageExtContentFilters {
@@ -13,27 +10,23 @@ namespace MageExtContentFilters {
         }
 
 		public bool EvaluateMSGFDB(string peptideSequence, int chargeState, double peptideMass, double SpecProb, double PValue, double FDR, double PepFDR, double msgfSpecProb, int rankMSGFDbSpecProb) {
-            string currCritName = null;
-            string currCritOperator = null;
+		    var currEval = true;
+            var peptideLength = GetPeptideLength(peptideSequence);
+            var termState = 0;
 
-            bool currEval = true;
-            int peptideLength = this.GetPeptideLength(peptideSequence);
-            int termState = 0;
+            var cleavageState = Convert.ToInt32(GetCleavageState(peptideSequence));
 
-            int cleavageState = Convert.ToInt32(this.GetCleavageState(peptideSequence));
-
-            foreach (string filterGroupID in this.m_FilterGroups.Keys) {
+            foreach (var filterGroupID in m_FilterGroups.Keys) {
                 currEval = true;
-                foreach (FilterCriteriaDef filterRow in m_FilterGroups[filterGroupID]) {
-                    currCritName = filterRow.CriteriaName;
-                    currCritOperator = filterRow.CriteriaOperator;
+                foreach (var filterRow in m_FilterGroups[filterGroupID]) {
+                    var currCritName = filterRow.CriteriaName;
+                    var currCritOperator = filterRow.CriteriaOperator;
 
                     switch (currCritName) {
                         case "Charge":
                             if (chargeState > 0) {
                                 if (!CompareInteger(chargeState, currCritOperator, filterRow.CriteriaValueInt)) {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -41,7 +34,6 @@ namespace MageExtContentFilters {
                             if (msgfSpecProb > -1) {
                                 if (!CompareDouble(msgfSpecProb, currCritOperator, filterRow.CriteriaValueFloat)) {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -49,18 +41,16 @@ namespace MageExtContentFilters {
                             if (cleavageState > -1) {
                                 if (!CompareInteger(cleavageState, currCritOperator, filterRow.CriteriaValueInt)) {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
                         case "Terminus_State":
                             if (termState > -1) {
                             	if (termState < 0)
-	                            	termState = this.GetTerminusState(peptideSequence);
+	                            	termState = GetTerminusState(peptideSequence);
 
                                 if (!CompareInteger(termState, currCritOperator, filterRow.CriteriaValueInt)) {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -68,7 +58,6 @@ namespace MageExtContentFilters {
                             if (peptideLength > 0) {
                                 if (!CompareInteger(peptideLength, currCritOperator, filterRow.CriteriaValueInt)) {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -76,7 +65,6 @@ namespace MageExtContentFilters {
                             if (peptideMass > 0) {
                                 if (!CompareDouble(peptideMass, currCritOperator, filterRow.CriteriaValueFloat, 0.000001)) {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -84,7 +72,6 @@ namespace MageExtContentFilters {
                             if (SpecProb > -1) {
                                 if (!CompareDouble(SpecProb, currCritOperator, filterRow.CriteriaValueFloat)) {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -92,7 +79,6 @@ namespace MageExtContentFilters {
                             if (PValue > -1) {
                                 if (!CompareDouble(PValue, currCritOperator, filterRow.CriteriaValueFloat)) {
                                     currEval = false;
-                                    break;                               
                                 }
                             }
                             break;
@@ -101,7 +87,6 @@ namespace MageExtContentFilters {
                             if (FDR > -1) {
                                 if (!CompareDouble(FDR, currCritOperator, filterRow.CriteriaValueFloat, 0.000001)) {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -109,7 +94,6 @@ namespace MageExtContentFilters {
                             if (PepFDR > -1) {
                                 if (!CompareDouble(PepFDR, currCritOperator, filterRow.CriteriaValueFloat, 0.000001)) {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -119,13 +103,9 @@ namespace MageExtContentFilters {
 								if (!CompareInteger(rankMSGFDbSpecProb, currCritOperator, filterRow.CriteriaValueInt))
 								{
 									currEval = false;
-									break;
 								}
 							}
 							break;
-						default:
-                            currEval = true;
-                            break;
                     }
                     
                     if (currEval == false)
@@ -133,7 +113,7 @@ namespace MageExtContentFilters {
 
                 }
                 
-                if (currEval == true)
+                if (currEval)
                     break;                           //Subject passed the criteria for this filtergroup
             }
 
