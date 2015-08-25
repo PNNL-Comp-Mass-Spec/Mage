@@ -34,16 +34,16 @@ namespace MageExtExtractionFilters
         // indexes into the synopsis row field array
         private udtColumnIndices mColumnIndices;
         private int peptideMassIndex;
-        private int msgfDbSpecProbValueIndex;		// MSGFDB_SpecProb for MSGFDB, MSGFDB_SpecEValue for MSGF+
+        private int msgfDbSpecEValueIndex;		        // MSGFDB_SpecProb for MSGFDB, MSGFDB_SpecEValue for MSGF+
         private int rankMSGFDbSpecProbIndex = -1;		// Rank_MSGFDB_SpecProb for MSGFDB, Rank_MSGFDB_SpecEValue for MSGF+
 
-        private int pValueIndex;					// PValue for MSGFDB,          EValue for MSGF+
+        private int eValueIndex;					    // PValue for MSGFDB,          EValue for MSGF+
 
         // Note that FDR and PepFDR may not be present
         private int FDRIndex = -1;						// FDR for MSGFDB,             QValue for MSGF+
         private int pepFDRIndex = -1;					// PepFDR for MSGFDB,          PepQValue for MSGF+
 
-        private int msgfSpecProbIndex = -1;
+        private int msgfSpecProbIndex = -1;             // Spectral Probability from MSGF; for MSGF+ this column will have identical values the data in msgfDbSpecEValueIndex
 
         private MergeProteinData mProteinMerger;
         private bool mOutputAllProteins;
@@ -203,14 +203,14 @@ namespace MageExtExtractionFilters
                 var peptideSequence = GetColumnValue(vals, mColumnIndices.PeptideSequence, "");
                 var chargeState = GetColumnValue(vals, mColumnIndices.ChargeState, 0);
                 var peptideMass = GetColumnValue(vals, peptideMassIndex, -1d);
-                var SpecProb = GetColumnValue(vals, msgfDbSpecProbValueIndex, -1d);
-                var PValue = GetColumnValue(vals, pValueIndex, -1d);
+                var specEValue = GetColumnValue(vals, msgfDbSpecEValueIndex, -1d);
+                var eValue = GetColumnValue(vals, eValueIndex, -1d);
                 var FDR = GetColumnValue(vals, FDRIndex, -1d);
                 var PepFDR = GetColumnValue(vals, pepFDRIndex, -1d);
                 var msgfSpecProb = GetColumnValue(vals, msgfSpecProbIndex, -1d);
                 var rankMSGFDbSpecProb = GetColumnValue(vals, rankMSGFDbSpecProbIndex, -1);
 
-                var pass = mMSGFDbFilter.EvaluateMSGFDB(peptideSequence, chargeState, peptideMass, SpecProb, PValue, FDR, PepFDR, msgfSpecProb, rankMSGFDbSpecProb);
+                var pass = mMSGFDbFilter.EvaluateMSGFDB(peptideSequence, chargeState, peptideMass, specEValue, eValue, FDR, PepFDR, msgfSpecProb, rankMSGFDbSpecProb);
 
                 accept = pass || mKeepAllResults;
                 if (mFilterResultsColIdx >= 0)
@@ -311,10 +311,10 @@ namespace MageExtExtractionFilters
             peptideMassIndex = GetMSGFDBColumnIndex(dctColumnMapping, MSGFDBColumns.MH);
             mColumnIndices.Protein = GetMSGFDBColumnIndex(dctColumnMapping, MSGFDBColumns.Protein);
 
-            msgfDbSpecProbValueIndex = GetMSGFDBColumnIndex(dctColumnMapping, MSGFDBColumns.MSGFDB_SpecProbOrEValue);
+            msgfDbSpecEValueIndex = GetMSGFDBColumnIndex(dctColumnMapping, MSGFDBColumns.MSGFDB_SpecProbOrEValue);
             rankMSGFDbSpecProbIndex = GetMSGFDBColumnIndex(dctColumnMapping, MSGFDBColumns.Rank_MSGFDB_SpecProbOrEValue);
 
-            pValueIndex = GetMSGFDBColumnIndex(dctColumnMapping, MSGFDBColumns.PValueOrEValue);
+            eValueIndex = GetMSGFDBColumnIndex(dctColumnMapping, MSGFDBColumns.PValueOrEValue);
 
             // Note that FDR and PepFDR may not be present
             FDRIndex = GetMSGFDBColumnIndex(dctColumnMapping, MSGFDBColumns.FDROrQValue);

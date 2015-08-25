@@ -9,7 +9,8 @@ namespace MageExtContentFilters {
             : base(filterCriteria, filterSetID) {
         }
 
-		public bool EvaluateMSGFDB(string peptideSequence, int chargeState, double peptideMass, double SpecProb, double PValue, double FDR, double PepFDR, double msgfSpecProb, int rankMSGFDbSpecProb) {
+        public bool EvaluateMSGFDB(string peptideSequence, int chargeState, double peptideMass, double specEValue, double eValue, double FDR, double PepFDR, double msgfSpecProb, int rankMSGFDbSpecProb)
+        {
 		    var currEval = true;
             var peptideLength = GetPeptideLength(peptideSequence);
             var termState = 0;
@@ -69,15 +70,17 @@ namespace MageExtContentFilters {
                             }
                             break;
                         case "MSGFDB_SpecProb":
-                            if (SpecProb > -1) {
-                                if (!CompareDouble(SpecProb, currCritOperator, filterRow.CriteriaValueFloat)) {
+                            if (specEValue > -1)
+                            {
+                                if (!CompareDouble(specEValue, currCritOperator, filterRow.CriteriaValueFloat))
+                                {
                                     currEval = false;
                                 }
                             }
                             break;
                         case "MSGFDB_PValue":
-                            if (PValue > -1) {
-                                if (!CompareDouble(PValue, currCritOperator, filterRow.CriteriaValueFloat)) {
+                            if (eValue > -1) {
+                                if (!CompareDouble(eValue, currCritOperator, filterRow.CriteriaValueFloat)) {
                                     currEval = false;
                                 }
                             }

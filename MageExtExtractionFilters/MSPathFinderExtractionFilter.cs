@@ -13,6 +13,8 @@ namespace MageExtExtractionFilters
             Peptide,
             Charge,
             Mass,
+            SpecEValue,
+            EValue,
             QValue,
             PepQValue,
             Scan,
@@ -29,6 +31,8 @@ namespace MageExtExtractionFilters
         // indexes into the synopsis row field array
         private udtColumnIndices mColumnIndices;
         private int peptideMassIndex;
+        private int specEValueIndex;
+        private int eValueIndex;
         private int qValueIndex;        // Aka FDR
         private int pepqValueIndex;     // Aka peptide-level FDR
 
@@ -188,10 +192,12 @@ namespace MageExtExtractionFilters
                 var peptideSequence = GetColumnValue(vals, mColumnIndices.PeptideSequence, "");
                 var chargeState = GetColumnValue(vals, mColumnIndices.ChargeState, 0);
                 var peptideMass = GetColumnValue(vals, peptideMassIndex, -1d);
+                var specEValue = GetColumnValue(vals, specEValueIndex, -1d);
+                var eValue = GetColumnValue(vals, eValueIndex, -1d);
                 var qValue = GetColumnValue(vals, qValueIndex, -1d);
                 var pepQValue = GetColumnValue(vals, pepqValueIndex, -1d);
 
-                var pass = mMSPathFinderFilter.EvaluateMSPathFinder(peptideSequence, chargeState, peptideMass, qValue, pepQValue);
+                var pass = mMSPathFinderFilter.EvaluateMSPathFinder(peptideSequence, chargeState, peptideMass, specEValue, eValue, qValue, pepQValue);
 
                 accept = pass || mKeepAllResults;
                 if (mFilterResultsColIdx >= 0)
@@ -219,6 +225,8 @@ namespace MageExtExtractionFilters
                 {MSPathFinderColumns.Charge, GetColumnIndex(columnHeaders, "Charge")},
                 {MSPathFinderColumns.Mass, GetColumnIndex(columnHeaders, "Mass")},
                 {MSPathFinderColumns.Protein, GetColumnIndex(columnHeaders, "ProteinName")},
+                {MSPathFinderColumns.SpecEValue, GetColumnIndex(columnHeaders, "SpecEValue")},
+                {MSPathFinderColumns.EValue, GetColumnIndex(columnHeaders, "EValue")},
                 {MSPathFinderColumns.QValue, GetColumnIndex(columnHeaders, "QValue")},
                 {MSPathFinderColumns.PepQValue, GetColumnIndex(columnHeaders, "PepQValue")}
             };
@@ -263,6 +271,9 @@ namespace MageExtExtractionFilters
             mColumnIndices.ChargeState = GetColumnIndex(dctColumnMapping, MSPathFinderColumns.Charge);
             peptideMassIndex = GetColumnIndex(dctColumnMapping, MSPathFinderColumns.Mass);
             mColumnIndices.Protein = GetColumnIndex(dctColumnMapping, MSPathFinderColumns.Protein);
+
+            specEValueIndex = GetColumnIndex(dctColumnMapping, MSPathFinderColumns.SpecEValue);
+            eValueIndex = GetColumnIndex(dctColumnMapping, MSPathFinderColumns.EValue);
 
             qValueIndex = GetColumnIndex(dctColumnMapping, MSPathFinderColumns.QValue);
             pepqValueIndex = GetColumnIndex(dctColumnMapping, MSPathFinderColumns.PepQValue);

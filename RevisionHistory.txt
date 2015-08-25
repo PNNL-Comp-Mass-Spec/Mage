@@ -1,5 +1,8 @@
 Mage Revision History
 
+Version 1.5.5714; August 24, 2015
+	- Added support for MSPathFinder columns SpecEValue and EValue
+
 Version 1.5.5704; August 14, 2015
 	- Add mode "MSPathFinder First Protein"
 

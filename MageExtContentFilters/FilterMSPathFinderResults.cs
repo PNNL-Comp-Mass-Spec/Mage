@@ -15,6 +15,8 @@ namespace MageExtContentFilters
           string peptideSequence,
           int chargeState,
           double peptideMass,
+          double specEValue,
+          double eValue,
           double qValue,
           double pepQValue
          )
@@ -39,6 +41,16 @@ namespace MageExtContentFilters
                             if (chargeState > 0)
                             {
                                 if (!CompareInteger(chargeState, currCritOperator, filterRow.CriteriaValueInt))
+                                {
+                                    currEval = false;
+                                }
+                            }
+                            break;
+                        case "MSGF_SpecProb":
+                            // We don't run MSGF on MSPathFinder results, but we will test the filter threshold against specEValue
+                            if (specEValue > -1)
+                            {
+                                if (!CompareDouble(specEValue, currCritOperator, filterRow.CriteriaValueFloat))
                                 {
                                     currEval = false;
                                 }
@@ -78,6 +90,24 @@ namespace MageExtContentFilters
                             if (peptideMass > 0)
                             {
                                 if (!CompareDouble(peptideMass, currCritOperator, filterRow.CriteriaValueFloat, 0.000001))
+                                {
+                                    currEval = false;
+                                }
+                            }
+                            break;
+                        case "MSGFDB_SpecProb":
+                            if (specEValue > -1)
+                            {
+                                if (!CompareDouble(specEValue, currCritOperator, filterRow.CriteriaValueFloat))
+                                {
+                                    currEval = false;
+                                }
+                            }
+                            break;
+                        case "MSGFDB_PValue":
+                            if (eValue > -1)
+                            {
+                                if (!CompareDouble(eValue, currCritOperator, filterRow.CriteriaValueFloat))
                                 {
                                     currEval = false;
                                 }
