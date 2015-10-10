@@ -241,16 +241,16 @@ namespace Mage
 			SetupSearch();
 
 			var dctRowDatasets = new Dictionary<int, string>();
-			bool searchMyEMSL = false;
+			var searchMyEMSL = false;
 
 			// Determine the dataset name to use for each row in mOutputBuffer
-			for (int outputBufferRowIdx = 0; outputBufferRowIdx < mOutputBuffer.Count; outputBufferRowIdx++)
+			for (var outputBufferRowIdx = 0; outputBufferRowIdx < mOutputBuffer.Count; outputBufferRowIdx++)
 			{
-				string folderPathSpec = string.Empty;
+				var folderPathSpec = string.Empty;
 				if (mFolderPathColIndx < mOutputBuffer[outputBufferRowIdx].Length)
 					folderPathSpec = mOutputBuffer[outputBufferRowIdx][mFolderPathColIndx];
 
-				string datasetName = DetermineDatasetName(mOutputBuffer[outputBufferRowIdx], folderPathSpec);
+				var datasetName = DetermineDatasetName(mOutputBuffer[outputBufferRowIdx], folderPathSpec);
 
 				if (folderPathSpec.Contains(MYEMSL_PATH_FLAG))
 				{
@@ -271,7 +271,7 @@ namespace Mage
 
 
 			// go through each folder that we accumulated in our internal buffer
-			for (int outputBufferRowIdx = 0; outputBufferRowIdx < mOutputBuffer.Count; outputBufferRowIdx++)
+			for (var outputBufferRowIdx = 0; outputBufferRowIdx < mOutputBuffer.Count; outputBufferRowIdx++)
 			{
 				if (Abort)
 				{
@@ -279,7 +279,7 @@ namespace Mage
 					break;
 				}
 
-				string folderPathSpec = mOutputBuffer[outputBufferRowIdx][mFolderPathColIndx];
+				var folderPathSpec = mOutputBuffer[outputBufferRowIdx][mFolderPathColIndx];
 				var folderPaths = new List<string>();
 
 				// folderPathSpec may contain multiple folders, separated by a vertical bar
@@ -299,9 +299,9 @@ namespace Mage
 				// This dictionary holds subfolder name file system info for each subfolder that is found
 				var subfolderInfo = new Dictionary<string, DirectoryInfo>(StringComparer.CurrentCultureIgnoreCase);
 
-				string datasetName = dctRowDatasets[outputBufferRowIdx];
+				var datasetName = dctRowDatasets[outputBufferRowIdx];
 
-				foreach (string folderPath in folderPaths)
+				foreach (var folderPath in folderPaths)
 				{
 					if (Abort)
 					{
@@ -323,7 +323,25 @@ namespace Mage
 				}
 				else
 				{
-					foreach (KeyValuePair<string, FileInfo> entry in fileInfo)
+                    // When searching the archive, we may find files that start with x_
+                    // We want to skip those if there is a corresponding file that does not start with x_
+
+				    var candidatesForRemoval = (from item in fileInfo where item.Key.StartsWith("x_") select item).ToList();
+
+				    foreach (var candidate in candidatesForRemoval)
+				    {
+				        if (candidate.Key.Length < 3)
+				            continue;
+
+				        var nameToFind = candidate.Key.Substring(2);
+
+				        if (fileInfo.ContainsKey(nameToFind))
+				        {
+                            fileInfo.Remove(candidate.Key);
+				        }
+				    }
+
+				    foreach (var entry in fileInfo)
 					{
 						string fileName;
 						string folderPath;
@@ -332,7 +350,7 @@ namespace Mage
 
 						if (entry.Value.DirectoryName.StartsWith(MYEMSL_PATH_FLAG))
 						{
-							Int64 myEMSLFileID = DatasetInfoBase.ExtractMyEMSLFileID(entry.Value.FullName);
+							var myEMSLFileID = DatasetInfoBase.ExtractMyEMSLFileID(entry.Value.FullName);
 
 							if (myEMSLFileID == 0)
 								throw new MageException("Encoded MyEMSL File ID not found in " + entry.Value.FullName);
@@ -359,10 +377,10 @@ namespace Mage
 						}
 						ReportFileFound(outputBufferRowIdx, folderPath, fileName, fileSizeKB, fileDate);
 					}
-					foreach (KeyValuePair<string, DirectoryInfo> entry in subfolderInfo)
+					foreach (var entry in subfolderInfo)
 					{
-						string subfolderName = entry.Key;
-						string folderPath = entry.Value.FullName;
+						var subfolderName = entry.Key;
+						var folderPath = entry.Value.FullName;
 						ReportSubfolderFound(outputBufferRowIdx, folderPath, subfolderName);
 					}
 				}
@@ -376,7 +394,7 @@ namespace Mage
 			if (sizeBytes == 0)
 				return "0";
 
-			double fileSizeKB = sizeBytes / 1024.0;
+			var fileSizeKB = sizeBytes / 1024.0;
 
 			if (fileSizeKB < 10)
 				return fileSizeKB.ToString("0.000");

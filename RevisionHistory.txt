@@ -1,5 +1,9 @@
 Mage Revision History
 
+Version 1.5.5760; October 9, 2015
+	- Now skipping x_ files if a file with the same name but without x_ exists in the same folder
+		- That convention was used when replacing files in the Aurora archive
+
 Version 1.5.5714; August 24, 2015
 	- Added support for MSPathFinder columns SpecEValue and EValue
 
