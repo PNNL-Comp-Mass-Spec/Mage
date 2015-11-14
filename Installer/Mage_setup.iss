@@ -1,6 +1,8 @@
 ; This is an Inno Setup configuration file
 ; http://www.jrsoftware.org/isinfo.php
 
+#define ApplicationVersion GetFileVersion('..\DeployedFiles\MageConcatenator\Mage.dll')
+
 [CustomMessages]
 AppName=Mage
 [Messages]
@@ -140,7 +142,8 @@ Name: {commondesktop}\Mage File Processor; Filename: {app}\MageFileProcessor\Mag
 
 [Setup]
 AppName=Mage
-AppVerName=Mage
+AppVersion={#ApplicationVersion}
+;AppVerName=Mage
 AppID=MageId
 AppPublisher=Pacific Northwest National Laboratory
 AppPublisherURL=http://omics.pnl.gov/software
@@ -152,7 +155,8 @@ AppCopyright=© PNNL
 ;LicenseFile=.\License.rtf
 PrivilegesRequired=poweruser
 OutputBaseFilename=MageInstaller
-VersionInfoVersion=1.57
+;VersionInfoVersion=1.57
+VersionInfoVersion={#ApplicationVersion}
 VersionInfoCompany=PNNL
 VersionInfoDescription=Mage
 VersionInfoCopyright=PNNL
