@@ -1,10 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Mage;
 
@@ -14,7 +9,7 @@ namespace MageExtractor {
 
 		#region Member Variables
 
-		Dictionary<string, string> mParameters = new Dictionary<string, string>();
+        readonly Dictionary<string, string> mParameters = new Dictionary<string, string>();
 
 		string mFilterSetIDToAutoSelect = string.Empty;
 
@@ -60,13 +55,15 @@ namespace MageExtractor {
 
         private void GetFilterSetList() {
             // create Mage module to query DMS
-            MSSQLReader reader = new MSSQLReader();
-            reader.Database = "DMS5";
-            reader.Server = "gigasax";
-            reader.SQLText = "SELECT Filter_Set_ID, Name, Description FROM V_PDE_Filter_Sets";
+            var reader = new MSSQLReader
+            {
+                Database = "DMS5",
+                Server = "gigasax",
+                SQLText = "SELECT Filter_Set_ID, Name, Description FROM V_PDE_Filter_Sets"
+            };
 
             // create Mage module to receive query results
-            ISinkModule filters = gridViewDisplayControl1.MakeSink("Filter Sets", 20);
+            var filters = gridViewDisplayControl1.MakeSink("Filter Sets", 20);
 
             // build pipeline and run it
             mGetFilterSetsPipeline = ProcessingPipeline.Assemble("GetFilters", reader, filters);
@@ -86,8 +83,6 @@ namespace MageExtractor {
 
 		private void UpdateSelectedFilterSetID() {
 			if (!string.IsNullOrEmpty(mFilterSetIDToAutoSelect)) {
-
-				List<DataGridViewRow> toSelect = new List<DataGridViewRow>(1);
 
 				// Find the row with the given filter set ID
 				foreach (DataGridViewRow item in gridViewDisplayControl1.List.Rows) {

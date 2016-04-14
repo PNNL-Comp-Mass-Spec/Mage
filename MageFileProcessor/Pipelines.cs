@@ -103,8 +103,8 @@ namespace MageFileProcessor {
         /// <param name="runtimeParms">Settings for parameters for modules in the pipeline</param>
         /// <returns>Mage pipeline</returns>
         public static ProcessingPipeline MakePipelineToGetFilesFromManifest(ISinkModule sinkObject, Dictionary<string, string> runtimeParms) {
-            string filePath = runtimeParms["ManifestFilePath"];
-            string folderPath = Path.GetDirectoryName(filePath);
+            var filePath = runtimeParms["ManifestFilePath"];
+            var folderPath = Path.GetDirectoryName(filePath);
 
             // make source module in pipeline to get list of files in local directory
             var reader = new DelimitedFileReader
@@ -131,7 +131,7 @@ namespace MageFileProcessor {
         public static ProcessingPipeline MakeFileCopyPipeline(IBaseModule sourceObject, Dictionary<string, string> runtimeParms) {
 
             // create file copy module and initialize it
-			string outputFolder = runtimeParms["OutputFolder"];
+			var outputFolder = runtimeParms["OutputFolder"];
 			var copier = new FileCopy
 			{
 				OutputFolderPath = outputFolder,
@@ -172,15 +172,15 @@ namespace MageFileProcessor {
         public static ProcessingPipeline MakePipelineToFilterSelectedfiles(IBaseModule sourceObject, Dictionary<string, string> runtimeParms, Dictionary<string, string> filterParms) {
 
             // set up some parameter values
-			string outputMode = runtimeParms["OutputMode"];
-            string outputFolderPath = runtimeParms["OutputFolder"] ?? "";
-            string filterName = filterParms["SelectedFilterClassName"];
+			var outputMode = runtimeParms["OutputMode"];
+            var outputFolderPath = runtimeParms["OutputFolder"] ?? "";
+            var filterName = filterParms["SelectedFilterClassName"];
             filterParms.Remove("SelectedFilterClassName");
 
 			if (string.IsNullOrEmpty(filterName))
 				filterName = "All Pass";
 
-            string reportFileName = string.Format("Runlog_{0}_{1:yyyy-MM-dd_hhmmss}.txt", filterName.Replace(" ", "_"), System.DateTime.Now);
+            var reportFileName = string.Format("Runlog_{0}_{1:yyyy-MM-dd_hhmmss}.txt", filterName.Replace(" ", "_"), System.DateTime.Now);
 		
             // make file sub-pipeline processing broker module 
             // to run a filter pipeline against files from list
@@ -226,8 +226,8 @@ namespace MageFileProcessor {
 			Dictionary<string, string> runtimeParms, 
 			Dictionary<string, string> filterParms)
 		{
-			string outputMode = runtimeParms["OutputMode"];
-			string outputFolderPath = runtimeParms["OutputFolder"];
+			var outputMode = runtimeParms["OutputMode"];
+			var outputFolderPath = runtimeParms["OutputFolder"];
 
 			var pipelineQueue = new PipelineQueue();
 
@@ -239,7 +239,7 @@ namespace MageFileProcessor {
 
 			// search job results folders for list of results files to process
 			// and accumulate into buffer module
-			ProcessingPipeline plof = MakePipelineToGetListOfFiles(sourceObject, fileList, runtimeParms);
+			var plof = MakePipelineToGetListOfFiles(sourceObject, fileList, runtimeParms);
 			pipelineQueue.Add(plof);
 
 			var sinkWrapper = new MyEMSLSinkWrapper(fileList)
@@ -248,7 +248,7 @@ namespace MageFileProcessor {
 				PredownloadMyEMSLFiles = true
 			};
 
-			ProcessingPipeline pxfl = MakePipelineToFilterSelectedfiles(sinkWrapper, runtimeParms, filterParms);
+			var pxfl = MakePipelineToFilterSelectedfiles(sinkWrapper, runtimeParms, filterParms);
 			pipelineQueue.Add(pxfl);
 
 			return pipelineQueue;
@@ -301,7 +301,7 @@ namespace MageFileProcessor {
 		/// <returns></returns>
 		public static ProcessingPipeline MakePipelineToGetListOfFiles(BaseModule jobListSource, BaseModule fileListSink, Dictionary<string, string> runtimeParms)
 		{
-			string outputFolder = runtimeParms["OutputFolder"];
+			var outputFolder = runtimeParms["OutputFolder"];
 
 			var modules = new Collection<object>
 			{
@@ -342,7 +342,7 @@ namespace MageFileProcessor {
 			};
 			modules.Add(writer);
 
-			ProcessingPipeline filePipeline = ProcessingPipeline.Assemble("Search For Files", modules);
+			var filePipeline = ProcessingPipeline.Assemble("Search For Files", modules);
 			return filePipeline;
 		}
     }

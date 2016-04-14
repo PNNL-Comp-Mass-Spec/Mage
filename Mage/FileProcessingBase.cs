@@ -191,7 +191,7 @@ namespace Mage
 		/// <returns>The dataset name if found; empty string if the dataset name could not be determined</returns>
 		protected string DetermineDatasetName(string folderPath)
 		{
-			string datasetName = string.Empty;
+			var datasetName = string.Empty;
 
 			// Parse the folderPath with a RegEx to extract the dataset name
 			var reMatch = mDatasetMatchStrict1.Match(folderPath);
@@ -204,7 +204,7 @@ namespace Mage
 
 			if (reMatch.Success)
 			{
-				datasetName = reMatch.Groups[1].ToString();
+				datasetName = reMatch.Groups[1].Value;
 			}
 
 			return datasetName;
@@ -227,8 +227,8 @@ namespace Mage
 				COLUMN_NAME_DATASET_NUM
 			};
 
-			int datasetColIndex = -1;
-			foreach (string datasetColName in datasetColNames)
+			var datasetColIndex = -1;
+			foreach (var datasetColName in datasetColNames)
 			{
 				if (TryGetOutputColumnPos(datasetColName, out datasetColIndex))
 					break;
@@ -259,7 +259,7 @@ namespace Mage
 			if (filePathRemote.StartsWith(MYEMSL_PATH_FLAG))
 			{
 				string filePathClean;
-				Int64 myEMSLFileID = DatasetInfoBase.ExtractMyEMSLFileID(filePathRemote, out filePathClean);
+				var myEMSLFileID = DatasetInfoBase.ExtractMyEMSLFileID(filePathRemote, out filePathClean);
 
 				if (myEMSLFileID <= 0)
 					throw new MageException("MyEMSL File does not have the MyEMSL FileID tag (" + MyEMSLReader.DatasetInfoBase.MYEMSL_FILEID_TAG + "): " + filePathRemote);
@@ -276,10 +276,10 @@ namespace Mage
 					m_MyEMSLDatasetInfoCache.AddFileToDownloadQueue(myEMSLFileID, cachedFileInfo.FileInfo, unzipRequired, filePathLocal);
 
 					// Note that the target folder path will be ignored since we explicitly defined the destination file path when queuing the file
-					bool success = m_MyEMSLDatasetInfoCache.ProcessDownloadQueue(".", Downloader.DownloadFolderLayout.SingleDataset);
+					var success = m_MyEMSLDatasetInfoCache.ProcessDownloadQueue(".", Downloader.DownloadFolderLayout.SingleDataset);
 					if (!success)
 					{
-						string msg = "Failed to download file " + cachedFileInfo.FileInfo.RelativePathWindows + " from MyEMSL";
+						var msg = "Failed to download file " + cachedFileInfo.FileInfo.RelativePathWindows + " from MyEMSL";
 						if (m_MyEMSLDatasetInfoCache.ErrorMessages.Count > 0)
 							msg += ": " + m_MyEMSLDatasetInfoCache.ErrorMessages.First();
 						else
@@ -310,7 +310,7 @@ namespace Mage
 		/// <returns>Parent folders, including the dataset folder</returns>
 		protected string ExtractParentDatasetFolders(string folderPath)
 		{
-			string parentFolders = string.Empty;
+			var parentFolders = string.Empty;
 
 			// Parse the folderPath with a RegEx to extract the parent folders
 			var reMatch = mDatasetMatchStrict1.Match(folderPath);
@@ -409,7 +409,7 @@ namespace Mage
 			else
 				OnStatusMessageUpdated(new MageStatusEventArgs("Downloading " + m_MyEMSLDatasetInfoCache.FilesToDownload.Count + " files from MyEMSL"));
 
-			bool success = m_MyEMSLDatasetInfoCache.ProcessDownloadQueue(downloadFolderPath, folderLayout);
+			var success = m_MyEMSLDatasetInfoCache.ProcessDownloadQueue(downloadFolderPath, folderLayout);
 
             foreach (var errorMessage in m_MyEMSLDatasetInfoCache.ErrorMessages)
             {

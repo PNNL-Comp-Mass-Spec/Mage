@@ -1,5 +1,9 @@
 Mage Revision History
 
+Version 1.5.5947; April 13, 2016
+	- Add exception handler for access denied errors on directories
+	- Updated MyEMSLReader.dll
+
 Version 1.5.5891; February 17, 2016
 	- Updated MyEMSLReader.dll, Pacifica.Core.dll and PRISM.dll
 
