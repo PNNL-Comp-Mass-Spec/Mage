@@ -78,7 +78,7 @@ namespace Mage {
         /// construct new MageColumnEventArgs object
         /// with given column definitions list
         /// </summary>
-        /// <param name="colDefs">Column defintion list</param>
+        /// <param name="colDefs">Column definition list</param>
         public MageColumnEventArgs(IEnumerable<MageColumnDef> colDefs) {
             columDefs = new List<MageColumnDef>(colDefs);
         }

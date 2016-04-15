@@ -461,7 +461,7 @@ namespace Mage {
         /// <summary>
         /// Construct a pipeline from an XML description
         /// </summary>
-        /// <param name="pipelineSpec">Path to the XML defintion file</param>
+        /// <param name="pipelineSpec">Path to the XML definition file</param>
         public void Build(string pipelineSpec) {
             // step through XML module specification document
             // and build and wire modules as specified
@@ -509,7 +509,7 @@ namespace Mage {
         /// <summary>
         /// Set the parameters for all the modules in the pipeline from an XML definition file
         /// </summary>
-        /// <param name="pipelineModuleParams">Path to the XML defintion file</param>
+        /// <param name="pipelineModuleParams">Path to the XML definition file</param>
         public void SetAllModuleParameters(string pipelineModuleParams) {
             // step though XML document that defines parameters for modules,
             // and for each module in the document, extract a key/value list of paramters

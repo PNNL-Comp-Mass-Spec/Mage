@@ -9,7 +9,7 @@ namespace MageFilePackager {
     /// <summary>
     /// A variation on a Mage sink module 
     /// that can acccumulate rows from multiple pipeline runs
-    /// Using initial column defintions
+    /// Using initial column definitions
     /// </summary>
     class Accummulator : SimpleSink {
 

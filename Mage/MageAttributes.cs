@@ -3,7 +3,7 @@
 namespace Mage {
 
     /// <summary>
-    /// Defintion of custom attribute than can be used to decorate
+    /// Definition of custom attribute than can be used to decorate
     /// Mage modules and associated GUI parameter panels to allow discovery
     /// at runtime
     /// </summary>

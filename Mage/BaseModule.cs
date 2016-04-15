@@ -591,7 +591,7 @@ namespace Mage {
         }
 
         /// <summary>
-        /// Add output column defintions that are a pass-through of an input column
+        /// Add output column definitions that are a pass-through of an input column
         /// for any input columns not already mapped to output colums list                       
         /// </summary>
         private int MapOutputColumnsForUnmappedInputColumns(int outColIdx) {
@@ -626,7 +626,7 @@ namespace Mage {
         }
 
         /// <summary>
-        /// Add output column defintion that is pass-through of an input column
+        /// Add output column definition that is pass-through of an input column
         /// </summary>
         private void MapOutputColumnToInputColumn(string inputColName, int outColIdx) {
             if (!InputColumnPos.ContainsKey(inputColName)) {
