@@ -8,6 +8,7 @@ using Mage;
 using log4net;
 using MageDisplayLib;
 using System.Reflection;
+using MageFilePackager.Properties;
 
 namespace MageFilePackager {
 
@@ -45,6 +46,9 @@ namespace MageFilePackager {
 
         #region Initialization
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public FilePackagerForm() {
             _mCurrentCmdSender = null;
             _mCurrentCmd = null;
@@ -53,11 +57,21 @@ namespace MageFilePackager {
             InitializeComponent();
 
             const bool isBetaVersion = true;
-			SetFormTitle("2013-02-27", isBetaVersion);
+			SetFormTitle("2016-04-15", isBetaVersion);
 
             SetTags();
 
             SetAboutText();
+
+            // These settings are loaded from file MagerConcatenator.exe.config
+            // Typically gigasax and DMS5
+            Mage.Globals.DMSServer = Settings.Default.DMSServer;
+            Mage.Globals.DMSDatabase = Settings.Default.DMSDatabase;
+            
+            txtServer.Text = "DMS Server: " + Mage.Globals.DMSServer;
+
+            ModuleDiscovery.DMSServerOverride = Globals.DMSServer;
+            ModuleDiscovery.DMSDatabaseOverride = Globals.DMSDatabase;
 
             try {
                 // set up configuration folder and files
@@ -65,6 +79,14 @@ namespace MageFilePackager {
             } catch (Exception ex) {
                 MessageBox.Show("Error loading settings: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
+
+            // These settings are loaded from file MageFilePackager.exe.config
+            // Typically gigasax and DMS5
+            Globals.DMSServer = Settings.Default.DMSServer;
+            Globals.DMSDatabase = Settings.Default.DMSDatabase;
+
+            ModuleDiscovery.DMSServerOverride = Globals.DMSServer;
+            ModuleDiscovery.DMSDatabaseOverride = Globals.DMSDatabase;
 
             try {
                 // set up configuration folder and files
@@ -472,7 +494,7 @@ namespace MageFilePackager {
 
         /// <summary>
         /// Get XML definition for query with given name
-        /// from external XML query defintion file
+        /// from external XML query definition file
         /// </summary>
         /// <param name="queryName"></param>
         /// <returns></returns>

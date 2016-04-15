@@ -45,14 +45,17 @@ namespace MageExtContentFilters {
         }
 
         private void GetFilterSetList() {
-            // create Mage module to query DMS
-            MSSQLReader reader = new MSSQLReader();
-            reader.Database = "DMS5";
-            reader.Server = "gigasax";
-            reader.SQLText = "SELECT Filter_Set_ID, Name, Description FROM V_PDE_Filter_Sets";
+            
+            // Create Mage module to query DMS (typically on gigasax)
+            var reader = new MSSQLReader
+            {
+                Database = Globals.DMSDatabase,
+                Server = Globals.DMSServer,
+                SQLText = "SELECT Filter_Set_ID, Name, Description FROM V_PDE_Filter_Sets"
+            };
 
             // create Mage module to receive query results
-            ISinkModule filters = gridViewDisplayControl1.MakeSink("Filter Sets", 20);
+            var filters = gridViewDisplayControl1.MakeSink("Filter Sets", 20);
 
 			// build pipeline and run it
 			mGetFiltersPipeline = ProcessingPipeline.Assemble("GetFilters", reader, filters);
@@ -73,7 +76,7 @@ namespace MageExtContentFilters {
 		private void UpdateFilterSetID() {
 			if (!string.IsNullOrEmpty(mFilterSetIDToAutoSelect)) {
 
-				List<DataGridViewRow> toSelect = new List<DataGridViewRow>(1);
+				var toSelect = new List<DataGridViewRow>(1);
 
 				// Find the row with the given filter set ID
 				foreach (DataGridViewRow item in gridViewDisplayControl1.List.Rows) {

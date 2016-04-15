@@ -1,5 +1,14 @@
 Mage Revision History
 
+Version 1.5.5949; April 15, 2016
+	- Add settings DMSServer and DMSDatabase to the .exe.config files to allow for customizing the DMS server name
+		- MageConcatenator.exe.config
+		- MageExtractor.exe.config
+		- MageFilePackager.exe.config
+		- MageFileProcessor.exe.config
+		- MageMetadataProcessor.exe.config
+	- Note that server and database names in the QueryDefinitions.xml file are auto-updated based on the .exe.config settings
+
 Version 1.5.5947; April 13, 2016
 	- Add exception handler for access denied errors on directories
 	- Updated MyEMSLReader.dll

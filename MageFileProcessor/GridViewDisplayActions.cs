@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
+using Mage;
 using MageDisplayLib;
 
 namespace MageFileProcessor {
@@ -11,7 +12,27 @@ namespace MageFileProcessor {
     /// Builds an extension to the context menu for a GridViewDisplayControl object,
     /// and provides the code to handle the extension functions.
     /// </summary>
-    class GridViewDisplayActions {
+    class GridViewDisplayActions
+    {
+
+        #region "Properties"
+
+        public string BaseDmsUrl
+        {
+            get {
+                switch (Globals.DMSServer.ToLower())
+                {
+                    case "cbdms":
+                        return "http://cbdmsweb.pnl.gov";
+                    default:
+                        // Includes gigasax
+                        return "http://dms2.pnl.gov";
+                }
+
+            }
+        }
+
+        #endregion
 
         #region Member Variables
 
@@ -151,10 +172,12 @@ namespace MageFileProcessor {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void HandleJobWebAction(object sender, EventArgs e) {
-            LaunchWebBrowser("http://dms2.pnl.gov/analysis_job/show/", "Job");
+            // Example URL: http://dms2.pnl.gov/analysis_job/show/1302557
+            LaunchWebBrowser(BaseDmsUrl + "/analysis_job/show/", "Job");
         }
         private void HandleDatasetWebAction(object sender, EventArgs e) {
-            LaunchWebBrowser("http://dms2.pnl.gov/dataset/show/", "Dataset");
+            // Example URL: http://dms2.pnl.gov/dataset/show/QC_Shew_16_01_2_11Apr16_Pippin_16-03-05
+            LaunchWebBrowser(BaseDmsUrl + "/dataset/show/", "Dataset");
         }
 
         /// <summary>

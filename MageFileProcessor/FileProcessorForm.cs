@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using log4net;
 using Mage;
 using MageDisplayLib;
+using MageFileProcessor.Properties;
 using MageUIComponents;
 
 namespace MageFileProcessor
@@ -52,21 +53,34 @@ namespace MageFileProcessor
 
 		#region Initialization
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
 		public FileProcessorForm()
 		{
 			InitializeComponent();
 
 			const bool isBetaVersion = false;
-			SetFormTitle("2016-04-13", isBetaVersion);
+			SetFormTitle("2016-04-15", isBetaVersion);
 
 			SetTags();
 
-			SetAboutText();		
+			SetAboutText();
+
+            // These settings are loaded from file MageFileProcessor.exe.config
+            // Typically gigasax and DMS5
+            Mage.Globals.DMSServer = Settings.Default.DMSServer;
+            Mage.Globals.DMSDatabase = Settings.Default.DMSDatabase;
+            
+            txtServer.Text = "DMS Server: " + Mage.Globals.DMSServer;
+            
+            ModuleDiscovery.DMSServerOverride = Globals.DMSServer;
+            ModuleDiscovery.DMSDatabaseOverride = Globals.DMSDatabase;
 
 			try
 			{
 				// set up configuration folder and files
-				SavedState.SetupConfigFiles("MageFileProcessor");
+                SavedState.SetupConfigFiles("MageFileProcessor");
 			}
 			catch (Exception ex)
 			{
@@ -239,7 +253,7 @@ namespace MageFileProcessor
 		}
 
 		/// <summary>
-		/// Construnct and run a Mage pipeline for the given command
+		/// Construct and run a Mage pipeline for the given command
 		/// </summary>
 		/// <param name="command"></param>
 		private void BuildAndRunPipeline(MageCommandEventArgs command)

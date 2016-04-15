@@ -6,6 +6,7 @@ using System.IO;
 using log4net;
 using MageDisplayLib;
 using MageExtExtractionFilters;
+using MageExtractor.Properties;
 
 namespace MageExtractor
 {
@@ -54,11 +55,21 @@ namespace MageExtractor
             InitializeComponent();
 
             const bool isBetaVersion = false;
-            SetFormTitle("2016-04-13", isBetaVersion);
+            SetFormTitle("2016-04-15", isBetaVersion);
 
             SetTags();
 
             SetAboutText();
+
+            // These settings are loaded from file MageExtractor.exe.config
+            // Typically gigasax and DMS5
+            Mage.Globals.DMSServer = Settings.Default.DMSServer;
+            Mage.Globals.DMSDatabase = Settings.Default.DMSDatabase;
+
+            txtServer.Text = "DMS Server: " + Mage.Globals.DMSServer;
+
+            ModuleDiscovery.DMSServerOverride = Globals.DMSServer;
+            ModuleDiscovery.DMSDatabaseOverride = Globals.DMSDatabase;
 
             try
             {
@@ -113,7 +124,7 @@ namespace MageExtractor
                     Console.WriteLine("Error deleting SavedState file: " + ex2.Message);
                 }
             }
-        }
+        }      
 
         private void SetAboutText()
         {
@@ -530,7 +541,7 @@ namespace MageExtractor
         }
 
         /// <summary>
-        /// build and run Mage pipeline to populate main list display with jobs
+        /// Build and run Mage pipeline to populate main list display with jobs
         /// </summary>
         /// <param name="queryTemplate">XML query template (typically from QueryDefinitions.xml) </param>
         /// <param name="queryParameters">Key/Value pairs (column/value)</param>

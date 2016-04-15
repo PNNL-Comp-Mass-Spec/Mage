@@ -98,8 +98,7 @@ namespace MageExtractor
         }
 
         #endregion
-
-
+        
         public ExtractionSettingsPanel()
         {
             InitializeComponent();
@@ -164,6 +163,8 @@ namespace MageExtractor
             {
                 FilterSetIDToSelect = ResultFilterSetID
             };
+
+            selectionForm.InitializeFilterSetList();
 
             if (selectionForm.ShowDialog() == DialogResult.OK)
             {

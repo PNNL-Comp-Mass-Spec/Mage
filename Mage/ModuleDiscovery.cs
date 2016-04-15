@@ -46,6 +46,24 @@ namespace Mage {
         /// </summary>
         public static string QueryDefinitionFileName { get; set; }
 
+        /// <summary>
+        /// DMS server name to use instead of the name defined in the QueryDefinitions.xml file
+        /// </summary>
+        /// <remarks>
+        /// This allows the user to update the .exe.config file with a specific server and database,
+        /// without needing to also update the QueryDefinitions.xml file
+        /// </remarks>
+        public static string DMSServerOverride;
+
+        /// <summary>
+        /// DMS database name to use instead of the name defined in the QueryDefinitions.xml file
+        /// </summary>
+        /// <remarks>
+        /// This allows the user to update the .exe.config file with a specific server and database,
+        /// without needing to also update the QueryDefinitions.xml file
+        /// </remarks>
+        public static string DMSDatabaseOverride;
+
         #endregion
 
         #region General Discovery Functions
@@ -66,7 +84,7 @@ namespace Mage {
             Type modType = null;
 	        
 		    // is the module class in the executing assembly?
-		    Assembly ae = Assembly.GetExecutingAssembly(); //GetType().Assembly;
+		    var ae = Assembly.GetExecutingAssembly(); //GetType().Assembly;
 		    //modType = ae.GetType(ClassName); // should work, but doesn't
 		    //string ne = ae.GetName().Name;
 		    //modType = Type.GetType(ne + "." + ClassName); // does work, but do it the long way for consistency
@@ -74,12 +92,12 @@ namespace Mage {
 	        
 	        if (modType == null) {
                 // is the module class in the main assembly?
-                Assembly aa = Assembly.GetEntryAssembly();
+                var aa = Assembly.GetEntryAssembly();
                 modType = GetClassTypeFromAssembly(ClassName, aa);
             }
             if (modType == null) {
                 // is the module class in the assembly of the code that called us?
-                Assembly ac = Assembly.GetCallingAssembly(); //GetType().Assembly;
+                var ac = Assembly.GetCallingAssembly(); //GetType().Assembly;
                 //string nc = ac.GetName().Name;
                 // modType = Type.GetType(nc + "." + ClassName); // should work, but doesn't
                 modType = GetClassTypeFromAssembly(ClassName, ac);
@@ -88,11 +106,11 @@ namespace Mage {
                 // is the module class found in a loadable assembly?
                 if (ExternalModuleFolder != null) {
                     var di = new DirectoryInfo(ExternalModuleFolder);
-                    FileInfo[] dllFiles = di.GetFiles(LoadableModuleFileNamePrefix + "*.dll");
-                    foreach (FileInfo fi in dllFiles) {
-                        string DLLName = fi.Name;
-                        string path = Path.Combine(ExternalModuleFolder, DLLName);
-                        Assembly af = Assembly.LoadFrom(path);
+                    var dllFiles = di.GetFiles(LoadableModuleFileNamePrefix + "*.dll");
+                    foreach (var fi in dllFiles) {
+                        var DLLName = fi.Name;
+                        var path = Path.Combine(ExternalModuleFolder, DLLName);
+                        var af = Assembly.LoadFrom(path);
                         modType = GetClassTypeFromAssembly(ClassName, af);
                         if (modType != null) break; // we found it, don't keep looking
                     } // foreach
@@ -113,8 +131,8 @@ namespace Mage {
         private static Type GetClassTypeFromAssembly(string ClassName, Assembly assembly) {
             Type modType = null;
             if (assembly != null) {
-                Type[] ts = assembly.GetTypes();
-                foreach (Type t in ts) {
+                var ts = assembly.GetTypes();
+                foreach (var t in ts) {
                     if (t.Name == ClassName) {
                         modType = t;
                         break;
@@ -150,7 +168,7 @@ namespace Mage {
         public static Collection<string> FilterLabels {
             get {
                 var labels = new Collection<string>();
-                foreach (MageAttribute ma in mFilters.Values) {
+                foreach (var ma in mFilters.Values) {
                     labels.Add(ma.ModLabel);
                 }
                 return labels;
@@ -179,7 +197,7 @@ namespace Mage {
         /// <param name="filterLabel"></param>
         /// <returns></returns>
         public static string SelectedFilterClassName(string filterLabel) {
-            string sel = "";
+            var sel = "";
             if (mFiltersByLabel.ContainsKey(filterLabel)) {
                 sel = mFiltersByLabel[filterLabel].ModClassName;
             }
@@ -192,9 +210,9 @@ namespace Mage {
         /// <param name="filterLabel"></param>
         /// <returns></returns>
         public static string GetParameterPanelForFilter(string filterLabel) {
-            string panelClass = "";
+            var panelClass = "";
             if (mFiltersByLabel.ContainsKey(filterLabel)) {
-                string ID = mFiltersByLabel[filterLabel].ModID;
+                var ID = mFiltersByLabel[filterLabel].ModID;
                 if (mPanels.ContainsKey(ID)) {
                     panelClass = mPanels[ID].ModClassName;
                 }
@@ -209,7 +227,7 @@ namespace Mage {
         public static void SetupFilters() {
             mFilterList.Clear();
             mFilterList = ModuleDiscovery.FindFilters();
-            foreach (MageAttribute ma in mFilterList) {
+            foreach (var ma in mFilterList) {
                 if (ma.ModType == "Filter") {
                     mFilters.Add(ma.ModID, ma);
                     mFiltersByLabel.Add(ma.ModLabel, ma);
@@ -239,18 +257,18 @@ namespace Mage {
             var dllFiles = new List<FileInfo>();
             dllFiles.AddRange(di.GetFiles(LoadableModuleFileNamePrefix + "*.dll"));
 
-            foreach (FileInfo fi in dllFiles) {
-                string DLLName = fi.Name;
-                string path = Path.Combine(ExternalModuleFolder, DLLName);
+            foreach (var fi in dllFiles) {
+                var DLLName = fi.Name;
+                var path = Path.Combine(ExternalModuleFolder, DLLName);
                 classesToExamine.AddRange(Assembly.LoadFrom(path).GetTypes());
             }
 
-            // look at each class in list to see if it is marked with
+            // Look at each class in list to see if it is marked with
             // Mage attributes and examine them to find filter modules
-            foreach (Type modType in classesToExamine) {
+            foreach (var modType in classesToExamine) {
                 Console.WriteLine(modType.ToString());
-                object[] atrbs = modType.GetCustomAttributes(false);
-                foreach (object obj in atrbs)
+                var atrbs = modType.GetCustomAttributes(false);
+                foreach (var obj in atrbs)
                 {
 	                var ma = obj as MageAttribute;
 					if (ma != null)
@@ -269,7 +287,7 @@ namespace Mage {
 
         /// <summary>
         /// Get XML definition for query with given name
-        /// from external XML query defintion file
+        /// from external XML query definition file
         /// </summary>
         /// <param name="queryName"></param>
         /// <returns></returns>
@@ -278,11 +296,54 @@ namespace Mage {
             doc.Load(QueryDefinitionFileName);
 
             // find query node by name
-            string xpath = string.Format(".//query[@name='{0}']", queryName);
-            XmlNode queryNode = doc.SelectSingleNode(xpath);
-            return (queryNode != null) ? queryNode.OuterXml : "";
+            var xpath = string.Format(".//query[@name='{0}']", queryName);
+            var queryNode = doc.SelectSingleNode(xpath);
+
+            if (queryNode == null)
+            {
+                return string.Empty;
+            }
+
+            if (string.IsNullOrWhiteSpace(DMSServerOverride) && string.IsNullOrWhiteSpace(DMSDatabaseOverride))
+            {
+                var nodeXML = queryNode.OuterXml;
+                return nodeXML;
+            }
+
+
+            return UpdateQueryXMLConnectionInfo(queryNode, DMSServerOverride, DMSDatabaseOverride);
         }
 
+        private static string UpdateQueryXMLConnectionInfo(XmlNode queryNode, string dmsServerOverride, string dmsDatabaseOverride)
+        {
+            var xpathConnection = "//queries/query/connection";
+            var nodeList = queryNode.SelectNodes(xpathConnection);
+
+            if (nodeList == null || nodeList.Count == 0)
+                return queryNode.OuterXml;
+
+            foreach (XmlNode node in nodeList)
+            {
+                if (node.Attributes == null)
+                    continue;
+
+                foreach (XmlAttribute attrib in node.Attributes)
+                {
+                    if (attrib.Name == "server" && !string.IsNullOrWhiteSpace(dmsServerOverride))
+                    {
+                        attrib.Value = dmsServerOverride;
+                    }
+
+                    if (attrib.Name == "database" && !string.IsNullOrWhiteSpace(dmsServerOverride))
+                    {
+                        attrib.Value = dmsDatabaseOverride;
+                    }
+                }
+            }
+
+            return queryNode.OuterXml;
+            
+        }
 
         #endregion
 

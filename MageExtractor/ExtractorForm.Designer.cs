@@ -39,6 +39,7 @@ namespace MageExtractor {
             this.JobDataPackagePanel1 = new MageUIComponents.JobDataPackagePanel();
             this.AboutTabPage = new System.Windows.Forms.TabPage();
             this.pnlAbout = new System.Windows.Forms.Panel();
+            this.txtServer = new System.Windows.Forms.TextBox();
             this.txtVersion = new System.Windows.Forms.TextBox();
             this.txtAbout3 = new System.Windows.Forms.TextBox();
             this.lblAboutLink = new System.Windows.Forms.LinkLabel();
@@ -47,8 +48,8 @@ namespace MageExtractor {
             this.panel1 = new System.Windows.Forms.Panel();
             this.JobListDisplayCtl = new MageDisplayLib.GridViewDisplayControl();
             this.statusPanel1 = new MageDisplayLib.StatusPanel();
-            this.extractionSettingsPanel1 = new MageExtractor.ExtractionSettingsPanel();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.extractionSettingsPanel1 = new MageExtractor.ExtractionSettingsPanel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.FilterOutputTabs = new System.Windows.Forms.TabControl();
             this.ProcessFilesToLocalTabPage = new System.Windows.Forms.TabPage();
@@ -226,6 +227,7 @@ namespace MageExtractor {
             // pnlAbout
             // 
             this.pnlAbout.BackColor = System.Drawing.SystemColors.Control;
+            this.pnlAbout.Controls.Add(this.txtServer);
             this.pnlAbout.Controls.Add(this.txtVersion);
             this.pnlAbout.Controls.Add(this.txtAbout3);
             this.pnlAbout.Controls.Add(this.lblAboutLink);
@@ -238,33 +240,48 @@ namespace MageExtractor {
             this.pnlAbout.Size = new System.Drawing.Size(1209, 101);
             this.pnlAbout.TabIndex = 0;
             // 
+            // txtServer
+            // 
+            this.txtServer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtServer.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtServer.Location = new System.Drawing.Point(696, 78);
+            this.txtServer.Margin = new System.Windows.Forms.Padding(4);
+            this.txtServer.Multiline = true;
+            this.txtServer.Name = "txtServer";
+            this.txtServer.ReadOnly = true;
+            this.txtServer.Size = new System.Drawing.Size(190, 20);
+            this.txtServer.TabIndex = 10;
+            this.txtServer.Text = "Server";
+            // 
             // txtVersion
             // 
             this.txtVersion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtVersion.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtVersion.Location = new System.Drawing.Point(802, 76);
+            this.txtVersion.Location = new System.Drawing.Point(903, 78);
             this.txtVersion.Margin = new System.Windows.Forms.Padding(4);
+            this.txtVersion.Multiline = true;
             this.txtVersion.Name = "txtVersion";
             this.txtVersion.ReadOnly = true;
-            this.txtVersion.Size = new System.Drawing.Size(400, 15);
-            this.txtVersion.TabIndex = 6;
+            this.txtVersion.Size = new System.Drawing.Size(302, 20);
+            this.txtVersion.TabIndex = 9;
             this.txtVersion.Text = "Version";
             // 
             // txtAbout3
             // 
             this.txtAbout3.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtAbout3.Location = new System.Drawing.Point(16, 76);
+            this.txtAbout3.Location = new System.Drawing.Point(16, 78);
             this.txtAbout3.Margin = new System.Windows.Forms.Padding(4);
+            this.txtAbout3.Multiline = true;
             this.txtAbout3.Name = "txtAbout3";
             this.txtAbout3.ReadOnly = true;
-            this.txtAbout3.Size = new System.Drawing.Size(229, 15);
+            this.txtAbout3.Size = new System.Drawing.Size(229, 20);
             this.txtAbout3.TabIndex = 4;
             this.txtAbout3.Text = "For usage instructions, please see";
             // 
             // lblAboutLink
             // 
             this.lblAboutLink.AutoSize = true;
-            this.lblAboutLink.Location = new System.Drawing.Point(253, 76);
+            this.lblAboutLink.Location = new System.Drawing.Point(253, 77);
             this.lblAboutLink.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblAboutLink.Name = "lblAboutLink";
             this.lblAboutLink.Size = new System.Drawing.Size(85, 17);
@@ -340,6 +357,18 @@ namespace MageExtractor {
             this.statusPanel1.Size = new System.Drawing.Size(1225, 52);
             this.statusPanel1.TabIndex = 8;
             // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.extractionSettingsPanel1);
+            this.panel5.Controls.Add(this.statusPanel1);
+            this.panel5.Controls.Add(this.panel4);
+            this.panel5.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel5.Location = new System.Drawing.Point(0, 377);
+            this.panel5.Margin = new System.Windows.Forms.Padding(4);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(1225, 297);
+            this.panel5.TabIndex = 19;
+            // 
             // extractionSettingsPanel1
             // 
             this.extractionSettingsPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -353,18 +382,6 @@ namespace MageExtractor {
             this.extractionSettingsPanel1.ResultTypeName = "Sequest Synopsis";
             this.extractionSettingsPanel1.Size = new System.Drawing.Size(1225, 110);
             this.extractionSettingsPanel1.TabIndex = 18;
-            // 
-            // panel5
-            // 
-            this.panel5.Controls.Add(this.extractionSettingsPanel1);
-            this.panel5.Controls.Add(this.statusPanel1);
-            this.panel5.Controls.Add(this.panel4);
-            this.panel5.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel5.Location = new System.Drawing.Point(0, 377);
-            this.panel5.Margin = new System.Windows.Forms.Padding(4);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(1225, 297);
-            this.panel5.TabIndex = 19;
             // 
             // panel4
             // 
@@ -494,8 +511,7 @@ namespace MageExtractor {
 		private System.Windows.Forms.TextBox txtAbout1;
 		private System.Windows.Forms.TextBox txtAbout2;
 		private System.Windows.Forms.LinkLabel lblAboutLink;
-		private System.Windows.Forms.TextBox txtAbout3;
-		private System.Windows.Forms.TextBox txtVersion;
+        private System.Windows.Forms.TextBox txtAbout3;
 		private MageDisplayLib.StatusPanel statusPanel1;
 		private System.Windows.Forms.Panel panel5;
 		private ExtractionSettingsPanel extractionSettingsPanel1;
@@ -504,6 +520,8 @@ namespace MageExtractor {
 		private System.Windows.Forms.TabPage ProcessFilesToLocalTabPage;
 		private MageUIComponents.FolderDestinationPanel FolderDestinationPanel1;
 		private System.Windows.Forms.TabPage ProcessFileToSQLiteDBTabPage;
-		private MageUIComponents.SQLiteDestinationPanel SQLiteDestinationPanel1;
+        private MageUIComponents.SQLiteDestinationPanel SQLiteDestinationPanel1;
+        private System.Windows.Forms.TextBox txtServer;
+        private System.Windows.Forms.TextBox txtVersion;
     }
 }

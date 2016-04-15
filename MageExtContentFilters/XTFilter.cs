@@ -64,19 +64,19 @@ namespace MageExtContentFilters {
         /// <returns>Whether or not row should be included in output</returns>
 		protected override bool CheckFilter(ref string[] fields)
 		{
-            bool accepted = false;
-			string peptideSequence = GetColumnValue(fields, peptideSequenceIndex, string.Empty);
-			double hyperScoreValue = GetColumnValue(fields, hyperScoreValueIndex, -1d);
-			double logEValue = GetColumnValue(fields, logEValueIndex, -1d);
-			double delCN2Value = GetColumnValue(fields, delCN2ValueIndex, -1d);
-			int chargeState = GetColumnValue(fields, chargeStateIndex, -1);
-			double peptideMass = GetColumnValue(fields, peptideMassIndex, -1d);
-			double msgfSpecProb = GetColumnValue(fields, msgfSpecProbIndex, -1d);
+            var accepted = false;
+			var peptideSequence = GetColumnValue(fields, peptideSequenceIndex, string.Empty);
+			var hyperScoreValue = GetColumnValue(fields, hyperScoreValueIndex, -1d);
+			var logEValue = GetColumnValue(fields, logEValueIndex, -1d);
+			var delCN2Value = GetColumnValue(fields, delCN2ValueIndex, -1d);
+			var chargeState = GetColumnValue(fields, chargeStateIndex, -1);
+			var peptideMass = GetColumnValue(fields, peptideMassIndex, -1d);
+			var msgfSpecProb = GetColumnValue(fields, msgfSpecProbIndex, -1d);
 	
             accepted = mXTFilter.EvaluateXTandem(peptideSequence, hyperScoreValue, logEValue, delCN2Value, chargeState, peptideMass, msgfSpecProb);
 
             if (accepted && OutputColumnDefs != null) {
-				string[] outRow = MapDataRow(fields);
+				var outRow = MapDataRow(fields);
                 fields = outRow;
             }
             return accepted;
@@ -89,17 +89,22 @@ namespace MageExtContentFilters {
         /// </summary>
         private void SetupXTFilter() {
 
-            // create Mage module to query DMS
-            MSSQLReader reader = new MSSQLReader();
-            reader.Database = "DMS5";
-            reader.Server = "gigasax";
-            reader.SQLText = string.Format("SELECT Filter_Criteria_Group_ID, Criterion_Name, Criterion_Comparison, Criterion_Value FROM V_Mage_Filter_Set_Criteria WHERE Filter_Set_ID = {0}", FilterSetID);
+            // Create Mage module to query DMS (typically on gigasax)
+            var reader = new MSSQLReader
+            {
+                Database = Globals.DMSDatabase,
+                Server = Globals.DMSServer,
+                SQLText =
+                    string.Format(
+                        "SELECT Filter_Criteria_Group_ID, Criterion_Name, Criterion_Comparison, Criterion_Value FROM V_Mage_Filter_Set_Criteria WHERE Filter_Set_ID = {0}",
+                        FilterSetID)
+            };
 
             // create Mage module to receive query results
-            SimpleSink filterCriteria = new SimpleSink();
+            var filterCriteria = new SimpleSink();
 
             // build pipeline and run it
-            ProcessingPipeline pipeline = ProcessingPipeline.Assemble("GetFilterCriteria", reader, filterCriteria);
+            var pipeline = ProcessingPipeline.Assemble("GetFilterCriteria", reader, filterCriteria);
             pipeline.RunRoot(null);
 
             // create new Sequest filter object with retrieved filter criteria

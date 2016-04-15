@@ -6,6 +6,7 @@ using System.Threading;
 using System.Windows.Forms;
 using log4net;
 using Mage;
+using MageConcatenator.Properties;
 using MageDisplayLib;
 using Timer = System.Windows.Forms.Timer;
 
@@ -44,6 +45,14 @@ namespace MageConcatenator
         public MageConcatenator()
         {
             InitializeComponent();
+
+            // These settings are loaded from file MageConcatenator.exe.config
+            // Typically gigasax and DMS5
+            Mage.Globals.DMSServer = Settings.Default.DMSServer;
+            Mage.Globals.DMSDatabase = Settings.Default.DMSDatabase;
+
+            ModuleDiscovery.DMSServerOverride = Globals.DMSServer;
+            ModuleDiscovery.DMSDatabaseOverride = Globals.DMSDatabase;
 
             try
             {

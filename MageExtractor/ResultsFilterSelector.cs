@@ -46,6 +46,9 @@ namespace MageExtractor {
 
         #endregion
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public ResultsFilterSelector() {
             InitializeComponent();
             gridViewDisplayControl1.List.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -53,12 +56,16 @@ namespace MageExtractor {
             gridViewDisplayControl1.List.AllowDelete = false;
         }
 
-        private void GetFilterSetList() {
-            // create Mage module to query DMS
+        /// <summary>
+        /// Populate the GridView with the filter sets defined in DMS
+        /// </summary>
+        public void InitializeFilterSetList()
+        {
+            // create Mage module to query DMS (typically on gigasax)
             var reader = new MSSQLReader
             {
-                Database = "DMS5",
-                Server = "gigasax",
+                Database = Globals.DMSDatabase,
+                Server = Globals.DMSServer,
                 SQLText = "SELECT Filter_Set_ID, Name, Description FROM V_PDE_Filter_Sets"
             };
 
@@ -78,7 +85,8 @@ namespace MageExtractor {
         }
 
         private void FilterPanel_Load(object sender, EventArgs e) {
-            GetFilterSetList();
+            // Previously called GetFilterSetList() here
+            // Instead, call InitializeFilterSetList once the program is running
         }
 
 		private void UpdateSelectedFilterSetID() {

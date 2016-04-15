@@ -69,26 +69,26 @@ namespace MageExtContentFilters {
         /// <returns>Whether or not row should be included in output</returns>
 		protected override bool CheckFilter(ref string[] fields)
 		{
-            bool accepted = false;
+            var accepted = false;
          
-			string peptideSequence = GetColumnValue(fields, peptideSequenceIndex, string.Empty);
-			double xCorrValue = GetColumnValue(fields, xCorrValueIndex, -1d);
-			double delCNValue = GetColumnValue(fields, delCNValueIndex, -1d);
-			double delCN2Value = GetColumnValue(fields, delCN2ValueIndex, -1d);
-			int chargeState = GetColumnValue(fields, chargeStateIndex, -1);
-			double peptideMass = GetColumnValue(fields, peptideMassIndex, -1d);
-			int cleavageState = GetColumnValue(fields, cleavageStateIndex, -1);
-			double msgfSpecProb = GetColumnValue(fields, msgfSpecProbIndex, -1d);
-			int rankXc = GetColumnValue(fields, rankXcIndex, -1);
+			var peptideSequence = GetColumnValue(fields, peptideSequenceIndex, string.Empty);
+			var xCorrValue = GetColumnValue(fields, xCorrValueIndex, -1d);
+			var delCNValue = GetColumnValue(fields, delCNValueIndex, -1d);
+			var delCN2Value = GetColumnValue(fields, delCN2ValueIndex, -1d);
+			var chargeState = GetColumnValue(fields, chargeStateIndex, -1);
+			var peptideMass = GetColumnValue(fields, peptideMassIndex, -1d);
+			var cleavageState = GetColumnValue(fields, cleavageStateIndex, -1);
+			var msgfSpecProb = GetColumnValue(fields, msgfSpecProbIndex, -1d);
+			var rankXc = GetColumnValue(fields, rankXcIndex, -1);
 
-			int spectrumCount = -1;
+			var spectrumCount = -1;
 			double discriminantScore = -1;
 			double NETAbsoluteDifference = -1;
 
 			accepted = mSeqFilter.EvaluateSequest(peptideSequence, xCorrValue, delCNValue, delCN2Value, chargeState, peptideMass, spectrumCount, discriminantScore, NETAbsoluteDifference, cleavageState, msgfSpecProb, rankXc);
 
             if (accepted && OutputColumnDefs != null) {
-				string[] outRow = MapDataRow(fields);
+				var outRow = MapDataRow(fields);
                 fields = outRow;
             }
             return accepted;
@@ -101,17 +101,22 @@ namespace MageExtContentFilters {
         /// </summary>
         private void SetupSequestFilter() {
 
-            // create Mage module to query DMS
-            MSSQLReader reader = new MSSQLReader();
-            reader.Database = "DMS5";
-            reader.Server = "gigasax";
-            reader.SQLText = string.Format("SELECT Filter_Criteria_Group_ID, Criterion_Name, Criterion_Comparison, Criterion_Value FROM V_Mage_Filter_Set_Criteria WHERE Filter_Set_ID = {0}", FilterSetID);
+            // Create Mage module to query DMS (typically on gigasax)
+            var reader = new MSSQLReader
+            {
+                Database = Globals.DMSDatabase,
+                Server = Globals.DMSServer,
+                SQLText =
+                    string.Format(
+                        "SELECT Filter_Criteria_Group_ID, Criterion_Name, Criterion_Comparison, Criterion_Value FROM V_Mage_Filter_Set_Criteria WHERE Filter_Set_ID = {0}",
+                        FilterSetID)
+            };
 
             // create Mage module to receive query results
-            SimpleSink filterCriteria = new SimpleSink();
+            var filterCriteria = new SimpleSink();
 
             // build pipeline and run it
-            ProcessingPipeline pipeline = ProcessingPipeline.Assemble("GetFilterCriteria", reader, filterCriteria);
+            var pipeline = ProcessingPipeline.Assemble("GetFilterCriteria", reader, filterCriteria);
             pipeline.RunRoot(null);
 
             // create new Sequest filter object with retrieved filter criteria

@@ -49,6 +49,7 @@
             this.datasetNameListPanel1 = new MageUIComponents.DatasetNameListPanel();
             this.AboutTabPage = new System.Windows.Forms.TabPage();
             this.pnlAbout = new System.Windows.Forms.Panel();
+            this.txtServer = new System.Windows.Forms.TextBox();
             this.txtVersion = new System.Windows.Forms.TextBox();
             this.lblAboutLink = new System.Windows.Forms.LinkLabel();
             this.txtAbout2 = new System.Windows.Forms.TextBox();
@@ -432,6 +433,7 @@
             // pnlAbout
             // 
             this.pnlAbout.BackColor = System.Drawing.SystemColors.Control;
+            this.pnlAbout.Controls.Add(this.txtServer);
             this.pnlAbout.Controls.Add(this.txtVersion);
             this.pnlAbout.Controls.Add(this.lblAboutLink);
             this.pnlAbout.Controls.Add(this.txtAbout2);
@@ -444,23 +446,36 @@
             this.pnlAbout.Size = new System.Drawing.Size(1260, 97);
             this.pnlAbout.TabIndex = 1;
             // 
+            // txtServer
+            // 
+            this.txtServer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtServer.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtServer.Location = new System.Drawing.Point(747, 72);
+            this.txtServer.Margin = new System.Windows.Forms.Padding(4);
+            this.txtServer.Multiline = true;
+            this.txtServer.Name = "txtServer";
+            this.txtServer.ReadOnly = true;
+            this.txtServer.Size = new System.Drawing.Size(190, 20);
+            this.txtServer.TabIndex = 8;
+            this.txtServer.Text = "Server";
+            // 
             // txtVersion
             // 
             this.txtVersion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtVersion.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtVersion.Location = new System.Drawing.Point(856, 73);
+            this.txtVersion.Location = new System.Drawing.Point(954, 72);
             this.txtVersion.Margin = new System.Windows.Forms.Padding(4);
             this.txtVersion.Multiline = true;
             this.txtVersion.Name = "txtVersion";
             this.txtVersion.ReadOnly = true;
-            this.txtVersion.Size = new System.Drawing.Size(400, 15);
+            this.txtVersion.Size = new System.Drawing.Size(302, 20);
             this.txtVersion.TabIndex = 5;
             this.txtVersion.Text = "Version";
             // 
             // lblAboutLink
             // 
             this.lblAboutLink.AutoSize = true;
-            this.lblAboutLink.Location = new System.Drawing.Point(268, 71);
+            this.lblAboutLink.Location = new System.Drawing.Point(268, 72);
             this.lblAboutLink.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblAboutLink.Name = "lblAboutLink";
             this.lblAboutLink.Size = new System.Drawing.Size(85, 17);
@@ -499,11 +514,12 @@
             // txtAbout3
             // 
             this.txtAbout3.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtAbout3.Location = new System.Drawing.Point(16, 73);
+            this.txtAbout3.Location = new System.Drawing.Point(16, 72);
             this.txtAbout3.Margin = new System.Windows.Forms.Padding(4);
+            this.txtAbout3.Multiline = true;
             this.txtAbout3.Name = "txtAbout3";
             this.txtAbout3.ReadOnly = true;
-            this.txtAbout3.Size = new System.Drawing.Size(424, 15);
+            this.txtAbout3.Size = new System.Drawing.Size(244, 20);
             this.txtAbout3.TabIndex = 4;
             this.txtAbout3.Text = "For usage instructions, please see";
             // 
@@ -886,6 +902,7 @@
 		private MageUIComponents.FileProcessingPanel FileProcessingPanel1;
 		private System.Windows.Forms.TabPage DatasetNameTabPage;
 		private MageUIComponents.DatasetNameListPanel datasetNameListPanel1;
+        private System.Windows.Forms.TextBox txtServer;
     }
 }
 
