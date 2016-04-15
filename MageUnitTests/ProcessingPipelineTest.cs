@@ -235,16 +235,16 @@ namespace MageUnitTests {
             Assert.AreEqual("SQLiteWriter", mod.GetType().Name);
         }
 
-        string pipelineXML = @"
+        // Default server info: gigasax and DMS5
+        readonly string pipelineXML = @"
 <pipeline name='Test_Pipeline' >
     <module name='Reader' type='MSSQLReader'>
-        <param name='Server' >gigasax</param>
-        <param name='Database' >DMS5</param>
-        <param name='SQLText' >SELECT * FROM T_Campaign</param>
-    </module>
-    <module name='Sink' type='SimpleSink' />
-</pipeline>
-";
+        <param name='Server' >" + Globals.DMSServer + "</param>" +
+        "<param name='Database' >" + Globals.DMSDatabase + "</param>" +
+        "<param name='SQLText' >SELECT * FROM T_Campaign</param>" +
+    "</module>" +
+    "<module name='Sink' type='SimpleSink' />" +
+"</pipeline>";
 
         /// <summary>
         ///A test for Build
@@ -255,7 +255,7 @@ namespace MageUnitTests {
 
             IBaseModule mod = pipeline.GetModule("Reader");
             MSSQLReader target = mod as MSSQLReader;
-            Assert.AreEqual(target.Server, "gigasax");
+            Assert.AreEqual(target.Server, Globals.DMSServer);
             Assert.AreEqual(pipeline.PipelineName, "Test_Pipeline");
         }
 

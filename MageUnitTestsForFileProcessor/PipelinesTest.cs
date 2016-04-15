@@ -73,16 +73,16 @@ namespace MageUnitTestsForFileProcessor {
 
             ISinkModule sinkObject = new SimpleSink(maxRows);
 
+            // Default server info: gigasax and DMS5
             string queryDefXML = @"
   <query name='Mage_Analysis_Jobs'>
     <description>Get selected list of analysis jobs</description>
-    <connection server='gigasax' database='DMS5'/>
-    <table name='V_Mage_Analysis_Jobs' cols='*'/>
-    <predicate rel='AND' col='Job' cmp='Equals' val=''>Descriptive text for Job</predicate>
-    <predicate rel='AND' col='Dataset' cmp='ContainsText' val=''>Descriptive text for Dataset</predicate>
-    <sort col='Job' dir='ASC'/>
-  </query>
-";
+    <connection server='" + Globals.DMSServer + "' database='" + Globals.DMSDatabase + "'/>" +
+    "<table name='V_Mage_Analysis_Jobs' cols='*'/>" +
+    "<predicate rel='AND' col='Job' cmp='Equals' val=''>Descriptive text for Job</predicate>" +
+    "<predicate rel='AND' col='Dataset' cmp='ContainsText' val=''>Descriptive text for Dataset</predicate>" +
+    "<sort col='Job' dir='ASC'/>" +
+  "</query>";
             runtimeParms = new Dictionary<string, string>() {
                 {"Dataset", "sarc_ms"}
             };
@@ -95,8 +95,8 @@ namespace MageUnitTestsForFileProcessor {
             Assert.IsInstanceOfType(source, typeof(MSSQLReader));
 
             MSSQLReader target = (MSSQLReader)source;
-            Assert.AreEqual("DMS5", target.Database);
-            Assert.AreEqual("gigasax", target.Server);
+            Assert.AreEqual(Globals.DMSDatabase.ToLower(), target.Database.ToLower());
+            Assert.AreEqual(Globals.DMSServer.ToLower(), target.Server.ToLower());
             Assert.AreEqual("SELECT * FROM V_Mage_Analysis_Jobs WHERE [Dataset] LIKE '%sarc_ms%' ORDER BY [Job] ASC", target.SQLText);
         }
 

@@ -183,7 +183,7 @@ namespace MageUnitTests {
             //           target.InitializeFromXML(queryDefXML, ref runtimeParameters);
             Dictionary<string, string> specialArgs = target.SpecialArgs;
 
-            Assert.AreEqual("gigasax", specialArgs["Server"]);
+            Assert.AreEqual(Globals.DMSServer.ToLower(), specialArgs["Server"].ToLower());
             Assert.AreEqual(testDB, specialArgs["Database"]);
             Assert.AreEqual("", target.SprocName);
 

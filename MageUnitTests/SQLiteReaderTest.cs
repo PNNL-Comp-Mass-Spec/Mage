@@ -115,7 +115,7 @@ namespace MageUnitTests {
             // runtime parameters for query 
             Dictionary<string, string> runtimeParameters = new Dictionary<string, string>();
             runtimeParameters["Factor"] = "Group";
-            // runtimeParameters[":Database"] = "SomeOtherDatabase.db"; // if you wanted to override the database file defintion in the query defintion file
+            // runtimeParameters[":Database"] = "SomeOtherDatabase.db"; // if you wanted to override the database file definition in the query definition file
 
             // get data from database
             SimpleSink result = GetDataFromSQLite("Factors", runtimeParameters, maxRows);

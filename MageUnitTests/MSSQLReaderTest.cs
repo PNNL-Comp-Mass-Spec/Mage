@@ -157,9 +157,10 @@ namespace MageUnitTests {
             target.ColumnDefAvailable += sink.HandleColumnDef;
             target.DataRowAvailable += sink.HandleDataRow;
 
-            // define and run a database query
-            target.Server = "gigasax";
-            target.Database = "DMS5";
+            // Define and run a database query
+            // Defaults are gigasax and DMS5
+            target.Server = Globals.DMSServer;
+            target.Database = Globals.DMSDatabase;
 
             // define query
             string[] colList = new string[] { "Dataset", "Dataset_ID", "Factor", "Value" };
@@ -190,9 +191,10 @@ namespace MageUnitTests {
             target.ColumnDefAvailable += sink.HandleColumnDef;
             target.DataRowAvailable += sink.HandleDataRow;
 
-            // define and run a database query
-            target.Server = "gigasax";
-            target.Database = "DMS5";
+            // Define and run a database query
+            // Defaults are gigasax and DMS5
+            target.Server = Globals.DMSServer;
+            target.Database = Globals.DMSDatabase;
 
             // define columns (noramlly not needed for production code, but necessary for unit test)
             string[] colList = new string[] { "DatasetID", "volName", "path", "datasetFolder", "resultsFolder", "datasetName", "JobId", "ColumnID", "AcquisitionTime", "Labelling", "InstrumentName", "ToolID", "BlockNum", "ReplicateName", "ExperimentID", "RunOrder", "BatchID", "ArchPath", "DatasetFullPath", "Organism", "Campaign", "ParameterFileName", "SettingsFileName" };
@@ -260,9 +262,10 @@ namespace MageUnitTests {
             string[] colList = new string[] { "Job", "State", "Dataset", "Dataset_ID", "Tool", "Parameter_File", "Settings_File", "Instrument", "Experiment", "Campaign" };
             string colNames = string.Join(", ", colList);
  
-            // define and run a database query
-            target.Server = "gigasax";
-            target.Database = "DMS5";
+            // Define and run a database query
+            // Defaults are gigasax and DMS5
+            target.Server = Globals.DMSServer;
+            target.Database = Globals.DMSDatabase;
             target.SQLText = string.Format("SELECT TOP ({1}) {0} FROM V_Mage_Analysis_Jobs WHERE Instrument LIKE '%test%'", colNames, maxRows.ToString());
 
             target.Run(null);
@@ -281,9 +284,10 @@ namespace MageUnitTests {
             target.DataRowAvailable += sink.HandleDataRow;
 
 
-            // define and run a database sproc query
-            target.Server = "gigasax";
-            target.Database = "DMS5";
+            // Define and run a database sproc query
+            // Defaults are gigasax and DMS5
+            target.Server = Globals.DMSServer;
+            target.Database = Globals.DMSDatabase;
             target.SprocName = "FindExistingJobsForRequest";
             target.SetSprocParam("@requestID", "8142");
 
