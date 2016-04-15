@@ -14,19 +14,18 @@ using RangerLib;
 namespace Ranger {
     public partial class RangerForm : Form {
 
-        private List<IModuleParameters> mParamPanels = new List<IModuleParameters>();
+        private readonly List<IModuleParameters> mParamPanels = new List<IModuleParameters>();
 
         public RangerForm() {
             InitializeComponent();
             InitializeParameterSubpanels();
-
+            
             try {
                 // set up configuration folder and files
                 SavedState.SetupConfigFiles("MageRanger");
             } catch (Exception ex) {
                 System.Windows.Forms.MessageBox.Show("Error loading settings: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-
 
 			try {
 				// restore settings to UI component panels

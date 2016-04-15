@@ -19,7 +19,7 @@ namespace Mage {
 	    private const int mMinimumReportIntervalMsec = 500;
 	    private DateTime mLastReportTimeUTC = DateTime.UtcNow;
 
-        #endregion
+        #endregion        
 
         #region IBaseModule Members
 
@@ -110,6 +110,7 @@ namespace Mage {
         }
 
         #endregion
+
     }
 
 

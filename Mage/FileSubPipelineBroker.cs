@@ -245,7 +245,8 @@ namespace Mage {
             var pipeline = new ProcessingPipeline("FileProcessingSubPipeline");
             pipeline.MakeModule(filterModule, FileFilterModuleName);
             var bm = (BaseModule)pipeline.GetModule(filterModule);
-            MethodInfo mi = bm.GetType().GetMethod("RenameOutputFile");
+           
+            var mi = bm.GetType().GetMethod("RenameOutputFile");
             if (mi != null) {
                 var filterMod = (ContentFilter)bm;
                 SetOutputFileNamer(new OutputFileNamer(filterMod.RenameOutputFile));
