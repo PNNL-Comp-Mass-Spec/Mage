@@ -4,7 +4,7 @@
 #define ApplicationVersion GetFileVersion('..\DeployedFiles\MageConcatenator\Mage.dll')
 
 [CustomMessages]
-AppName=Mage (CBDMS)
+AppName=Mage_CBDMS
 [Messages]
 WelcomeLabel2=This will install [name/ver] on your computer.
 ; Example with multiple lines:
@@ -28,7 +28,7 @@ Source: ..\DeployedFiles\MageConcatenator\QueryDefinitions.xml          ; DestDi
 Source: ..\DeployedFiles\MageConcatenator\x64\SQLite.Interop.dll        ; DestDir: {app}\MageConcatenator\x64
 Source: ..\DeployedFiles\MageConcatenator\x86\SQLite.Interop.dll        ; DestDir: {app}\MageConcatenator\x86
 
-Source: ..\DeployedFiles\\CBDMS\MageExtractor.exe.config                ; DestDir: {app}\MageExtractor
+Source: ..\DeployedFiles\CBDMS\MageExtractor.exe.config                 ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\ICSharpCode.SharpZipLib.dll      ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\Jayrock.Json.dll                 ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\log4net.dll                      ; DestDir: {app}\MageExtractor
@@ -48,7 +48,7 @@ Source: ..\DeployedFiles\MageExtractor\QueryDefinitions.xml             ; DestDi
 Source: ..\DeployedFiles\MageExtractor\x64\SQLite.Interop.dll           ; DestDir: {app}\MageExtractor\x64
 Source: ..\DeployedFiles\MageExtractor\x86\SQLite.Interop.dll           ; DestDir: {app}\MageExtractor\x86
 
-Source: ..\DeployedFiles\\CBDMS\MageFilePackager.exe.config             ; DestDir: {app}\MageFilePackager
+Source: ..\DeployedFiles\CBDMS\MageFilePackager.exe.config              ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\ICSharpCode.SharpZipLib.dll   ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\Jayrock.Json.dll              ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\log4net.dll                   ; DestDir: {app}\MageFilePackager
@@ -63,7 +63,7 @@ Source: ..\DeployedFiles\MageFilePackager\MageFilePackager.exe          ; DestDi
 Source: ..\DeployedFiles\MageFilePackager\ReadMe.txt                    ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\QueryDefinitions.xml          ; DestDir: {app}\MageFilePackager
 
-Source: ..\DeployedFiles\\CBDMS\MageFileProcessor.exe.config            ; DestDir: {app}\MageFileProcessor
+Source: ..\DeployedFiles\CBDMS\MageFileProcessor.exe.config             ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\ICSharpCode.SharpZipLib.dll  ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\Jayrock.Json.dll             ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\log4net.dll                  ; DestDir: {app}\MageFileProcessor
@@ -83,7 +83,7 @@ Source: ..\DeployedFiles\MageFileProcessor\ColumnMapping.txt            ; DestDi
 Source: ..\DeployedFiles\MageFileProcessor\x64\SQLite.Interop.dll       ; DestDir: {app}\MageFileProcessor\x64
 Source: ..\DeployedFiles\MageFileProcessor\x86\SQLite.Interop.dll       ; DestDir: {app}\MageFileProcessor\x86
 
-Source: ..\DeployedFiles\\CBDMS\MageMetadataProcessor.exe.config        ; DestDir: {app}\MageMetaDataProcessor
+Source: ..\DeployedFiles\CBDMS\MageMetadataProcessor.exe.config         ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\ICSharpCode.SharpZipLib.dll          ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\Jayrock.Json.dll         ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\log4net.dll              ; DestDir: {app}\MageMetaDataProcessor
@@ -141,10 +141,10 @@ Name: {commondesktop}\Mage Extractor (CBDMS); Filename: {app}\MageExtractor\Mage
 Name: {commondesktop}\Mage File Processor (CBDMS); Filename: {app}\MageFileProcessor\MageFileProcessor.exe; Tasks: desktopicon; IconFilename: {app}\MageFileProcessor\wand.ico; IconIndex: 0; Comment: Mage File Processor
 
 [Setup]
-AppName=Mage (CBDMS)
+AppName=Mage_CBDMS
 AppVersion={#ApplicationVersion}
-;AppVerName=Mage
-AppID=MageId
+;AppVerName=Mage_CBDMS
+AppID=MageIdCBDMS
 AppPublisher=Pacific Northwest National Laboratory
 AppPublisherURL=http://omics.pnl.gov/software
 AppSupportURL=http://omics.pnl.gov/software
