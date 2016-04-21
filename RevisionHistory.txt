@@ -1,5 +1,8 @@
 Mage Revision History
 
+Version 1.5.5955; April 21, 2016
+	- Update to .NET 4.5.1 due to update to System.Data.SQLite v1.0.97 compiled for .NET 4.5.1
+
 Version 1.5.5949; April 15, 2016
 	- Add settings DMSServer and DMSDatabase to the .exe.config files to allow for customizing the DMS server name
 		- MageConcatenator.exe.config
