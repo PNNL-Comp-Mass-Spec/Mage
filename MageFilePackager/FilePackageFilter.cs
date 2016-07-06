@@ -17,9 +17,9 @@ namespace MageFilePackager {
         public readonly static string DataPackageShareRoot = @"\\protoapps\DataPkgs\";
 
         public readonly static Dictionary<string, string> PrefixList = new Dictionary<string, string> {
-                                                                      { "Job", @"\\a2.emsl.pnl.gov\dmsarch\"},
-                                                                      { "Data_Package", @"\\a1.emsl.pnl.gov\prismarch\DataPkgs\" },
-                                                                      { "Dataset", @"\\a2.emsl.pnl.gov\dmsarch\" }
+                                                                      { "Job", @"\\aurora.emsl.pnl.gov\archive\dmsarch\"},
+                                                                      { "Data_Package", @"\\aurora.emsl.pnl.gov\archive\prismarch\DataPkgs\" },
+                                                                      { "Dataset", @"\\aurora.emsl.pnl.gov\archive\dmsarch\" }
                                                                   };
 
         // Precalulate field indexes

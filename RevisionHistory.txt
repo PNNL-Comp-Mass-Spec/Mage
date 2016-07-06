@@ -1,5 +1,8 @@
 Mage Revision History
 
+Version 1.5.6030; July 5, 2016
+	- Switch from a2.emsl.pnl.gov to aurora.emsl.pnl.gov
+
 Version 1.5.5955; April 21, 2016
 	- Update to .NET 4.5.1 due to update to System.Data.SQLite v1.0.97 compiled for .NET 4.5.1
 

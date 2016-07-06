@@ -64,22 +64,20 @@ namespace Mage
 		protected static Dictionary<Int64, DatasetFolderOrFileInfo> m_FilterPassingMyEMSLFiles;
 
 		/// <summary>
-		/// RegEx to extract the dataset name from a path of the form \\MyEMSL\VPro01\2013_3\QC_Shew_13_04d_500ng_10Sep13_Tiger_13-07-34
+		/// RegEx to extract the dataset name from a path similar to these examples:
+        ///   \\proto-7\VOrbi05\2013_3\QC_Shew_13_02_500ng_4_HCD_26Jul13_Lynx_13-02-04
+        ///   \\MyEMSL\VPro01\2013_3\QC_Shew_13_04d_500ng_10Sep13_Tiger_13-07-34
+		///   \\aurora.emsl.pnl.gov\archive\dmsarch\VPro01\2013_3\QC_Shew_13_04a_500ng_10Sep13_Tiger_13-07-36
+		///   \\a2.emsl.pnl.gov\dmsarch\VPro01\2013_3\QC_Shew_13_04a_500ng_10Sep13_Tiger_13-07-36
 		/// The RegEx can also be used to determine the portion of a path that includes parent folders and the dataset folder
 		/// </summary>
-		private readonly Regex mDatasetMatchStrict1 = new Regex(@"\\\\[^\\]+\\[^\\]+\\2[0-9][0-9][0-9]_[1-4]\\([^\\]+)", RegexOptions.Compiled);
-
-		/// <summary>
-		/// RegEx to extract the dataset name from a path of the form \\a2.emsl.pnl.gov\dmsarch\VPro01\2013_3\QC_Shew_13_04a_500ng_10Sep13_Tiger_13-07-36
-		/// /// The RegEx can also be used to determine the portion of a path that includes parent folders and the dataset folder
-		/// </summary>
-		private readonly Regex mDatasetMatchStrict2 = new Regex(@"\\\\[^\\]+\\[^\\]+\\[^\\]+\\2[0-9][0-9][0-9]_[1-4]\\([^\\]+)", RegexOptions.Compiled);
+        private readonly Regex mDatasetMatchStrict = new Regex(@"\\\\[^\\]+(?:\\[^\\]+)?(?:\\[^\\]+)?\\[^\\]+\\2[0-9][0-9][0-9]_[1-4]\\(?<Dataset>[^\\]+)", RegexOptions.Compiled);
 
 		/// <summary>
 		/// RegEx to extract the dataset name from a path of the form \2013_3\QC_Shew_13_04f_500ng_10Sep13_Tiger_13-07-34
 		/// /// The RegEx can also be used to determine the portion of a path that includes parent folders and the dataset folder
 		/// </summary>
-		private readonly Regex mDatasetMatchLoose = new Regex(@"(^|\\)2[0-9][0-9][0-9]_[1-4]\\([^\\]+)", RegexOptions.Compiled);
+		private readonly Regex mDatasetMatchLoose = new Regex(@"(^|\\)2[0-9][0-9][0-9]_[1-4]\\(?<Dataset>[^\\]+)", RegexOptions.Compiled);
 
 		/// <summary>
 		/// Constructor
@@ -194,17 +192,14 @@ namespace Mage
 			var datasetName = string.Empty;
 
 			// Parse the folderPath with a RegEx to extract the dataset name
-			var reMatch = mDatasetMatchStrict1.Match(folderPath);
-
-			if (!reMatch.Success)
-				reMatch = mDatasetMatchStrict2.Match(folderPath);
+			var reMatch = mDatasetMatchStrict.Match(folderPath);
 
 			if (!reMatch.Success)
 				reMatch = mDatasetMatchLoose.Match(folderPath);
 
 			if (reMatch.Success)
 			{
-				datasetName = reMatch.Groups[1].Value;
+				datasetName = reMatch.Groups["Dataset"].Value;
 			}
 
 			return datasetName;
@@ -313,10 +308,7 @@ namespace Mage
 			var parentFolders = string.Empty;
 
 			// Parse the folderPath with a RegEx to extract the parent folders
-			var reMatch = mDatasetMatchStrict1.Match(folderPath);
-
-			if (!reMatch.Success)
-				reMatch = mDatasetMatchStrict2.Match(folderPath);
+			var reMatch = mDatasetMatchStrict.Match(folderPath);
 
 			if (!reMatch.Success)
 				reMatch = mDatasetMatchLoose.Match(folderPath);
