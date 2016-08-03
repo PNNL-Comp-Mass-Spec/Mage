@@ -288,6 +288,7 @@ namespace MageDisplayLib
             gvQueryResults.ReadOnly = true;
 
             AllowDisableShiftClickMode = true;
+            gvQueryResults.ShiftClickSelect = true;
             MultiSelect = true;
 
             //Get and Set the Current Cell 

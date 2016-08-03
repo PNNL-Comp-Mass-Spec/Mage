@@ -1,8 +1,9 @@
 Mage Revision History
 
 Version 1.5.6059; August 3, 2016
-	- Add context menu action "Copy data in sorted column" for gridviews
+	- Add context menu action "Copy data in sorted column" for GridView controls
 	- Bulk code reformatting and Resharper cleanup
+	- Default to have "Shift+Click, Ctrl+Click" mode enabled by default for GridView controls
 
 Version 1.5.6030; July 5, 2016
 	- Switch from a2.emsl.pnl.gov to aurora.emsl.pnl.gov
