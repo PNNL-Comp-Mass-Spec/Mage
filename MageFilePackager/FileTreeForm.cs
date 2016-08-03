@@ -86,7 +86,7 @@ namespace MageFilePackager {
             float myTally = 0;
             if (node.Tag != null && node.Checked) {
                 var row = (object[])node.Tag;
-                int idx = _columnPos["KB"];
+                var idx = _columnPos["KB"];
                 float kb;
                 float.TryParse(row[idx].ToString(), out kb);
                 _checkedSizeTotal += kb;
@@ -199,19 +199,19 @@ namespace MageFilePackager {
 
 			protected override bool CheckFilter(ref string[] vals)
 			{
-                string path = vals[_pathIdx];
-                string kb = vals[_kbIdx];
+                var path = vals[_pathIdx];
+                var kb = vals[_kbIdx];
 
                 // break folder path into segements
-                string[] folders = path.Split('\\');
+                var folders = path.Split('\\');
 
                 // find bottom folder in hierarchy 
                 // (and build out as necessary)
-                TreeNodeCollection curNodeList = FileTree.Nodes;
-                TreeNode curNode;
-                foreach (string folder in folders) {
+                var curNodeList = FileTree.Nodes;
+			    foreach (var folder in folders) {
                     if (string.IsNullOrEmpty(folder)) continue;
                     var n = curNodeList.IndexOfKey(folder);
+                    TreeNode curNode;
                     if (n < 0) {
                         curNode = new TreeNode(folder) { Name = folder };
                         curNodeList.Add(curNode);
@@ -225,7 +225,7 @@ namespace MageFilePackager {
                 // add file to bottom folder in path
                 float sz;
                 float.TryParse(kb, out sz);
-                string label = string.Format("{0} [{1:###,###,##0.0} KB]", vals[_nameIdx], sz);
+                var label = string.Format("{0} [{1:###,###,##0.0} KB]", vals[_nameIdx], sz);
                 var fileNode = new TreeNode { Text = label, Tag = vals };
                 curNodeList.Add(fileNode);
                 return true;
@@ -255,10 +255,10 @@ namespace MageFilePackager {
             private void OutputCheckedItems(TreeNode node) {
                 // if this node is checked, and has an object stored in tag filed, output it
                 if (node.Tag != null && node.Checked) {
-					object[] tagData = (object[])node.Tag;
+					var tagData = (object[])node.Tag;
 
-					string[] tagVals = new string[tagData.Length];
-					for (int i = 0; i < tagData.Length; i++)
+					var tagVals = new string[tagData.Length];
+					for (var i = 0; i < tagData.Length; i++)
 						tagVals[i] = tagData[i].ToString();
 
 					OnDataRowAvailable(new MageDataEventArgs(tagVals));

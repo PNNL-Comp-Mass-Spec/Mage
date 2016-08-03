@@ -118,9 +118,9 @@ namespace MageExtExtractionFilters
                     }
                     else
                     {
-                        for (int i = 0; i < rows.Count; i++)
+                        foreach (var rowItem in rows)
                         {
-                            var row = rows[i];
+                            var row = rowItem;
                             CheckFilter(ref row);
                         }
                     }

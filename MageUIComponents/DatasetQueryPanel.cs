@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using Mage;
 
-namespace MageUIComponents {
+namespace MageUIComponents
+{
 
-    public partial class DatasetQueryPanel : UserControl, IModuleParameters {
+    public partial class DatasetQueryPanel : UserControl, IModuleParameters
+    {
 
         public event EventHandler<MageCommandEventArgs> OnAction;
 
-        public DatasetQueryPanel() {
+        public DatasetQueryPanel()
+        {
             InitializeComponent();
         }
 
         #region IModuleParameters Members
 
-        public Dictionary<string, string> GetParameters() {
-            return new Dictionary<string, string>() { 
+        public Dictionary<string, string> GetParameters()
+        {
+            return new Dictionary<string, string>() {
                 { "Dataset", DatasetCtl.Text },
                 { "Instrument", InstrumentCtl.Text },
                 { "State", StateCtl.Text },
@@ -24,14 +28,17 @@ namespace MageUIComponents {
             };
         }
 
-        public void SetParameters(Dictionary<string, string> paramList) {
-            foreach (KeyValuePair<string, string> paramDef in paramList) {
-                switch (paramDef.Key) {
+        public void SetParameters(Dictionary<string, string> paramList)
+        {
+            foreach (var paramDef in paramList)
+            {
+                switch (paramDef.Key)
+                {
                     case "Dataset":
                         DatasetCtl.Text = paramDef.Value;
                         break;
                     case "Instrument":
-                       InstrumentCtl .Text = paramDef.Value;
+                        InstrumentCtl.Text = paramDef.Value;
                         break;
                     case "State":
                         StateCtl.Text = paramDef.Value;
@@ -47,11 +54,9 @@ namespace MageUIComponents {
 
         #endregion
 
-		private void GetDatasetsCtl_Click(object sender, EventArgs e) {
-            if (OnAction != null) {
-                OnAction(this, new MageCommandEventArgs("get_entities_from_query", "Datasets"));
-            }
+        private void GetDatasetsCtl_Click(object sender, EventArgs e)
+        {
+            OnAction?.Invoke(this, new MageCommandEventArgs("get_entities_from_query", "Datasets"));
         }
-
     }
 }

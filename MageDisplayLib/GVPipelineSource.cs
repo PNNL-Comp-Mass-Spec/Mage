@@ -19,14 +19,14 @@ namespace MageDisplayLib
         #region Member Variables
 
         // Data grid view display whose data we are serving
-        private GridViewDisplayControl myListControl = null;
+        private GridViewDisplayControl myListControl;
 
         /// <summary>
         /// whether or not we are outputing all the rows
         /// in our associated display grid view or only
         /// the currently selected rows
         /// </summary>
-        private DisplaySourceMode mInputMode = DisplaySourceMode.All;
+        private readonly DisplaySourceMode mInputMode;
 
         /// <summary>
         /// </summary>
@@ -35,7 +35,7 @@ namespace MageDisplayLib
         /// <summary>
         /// internal buffer for cell contents from our associated GridViewDisplayControl
         /// </summary>
-		private List<string[]> mRowBuffer = new List<string[]>();
+		private readonly List<string[]> mRowBuffer = new List<string[]>();
 
         #endregion
 
@@ -90,7 +90,11 @@ namespace MageDisplayLib
         /// <summary>
         /// set this module to stop executing
         /// </summary>
-        public bool Stop { get { return Abort; } set { Abort = value; } }
+        public bool Stop
+        {
+            get { return Abort; }
+            set { Abort = value; }
+        }
 
         #endregion
 
@@ -118,9 +122,9 @@ namespace MageDisplayLib
         /// <returns></returns>
 		private static string[] GetOutputRowFromGridRow(DataGridViewRow row)
         {
-            int n = row.Cells.Count;
-            string[] vals = new string[n];
-            for (int i = 0; i < n; i++)
+            var n = row.Cells.Count;
+            var vals = new string[n];
+            for (var i = 0; i < n; i++)
             {
                 if (row.Cells[i].Value == null)
                     vals[i] = string.Empty;
@@ -148,18 +152,18 @@ namespace MageDisplayLib
             switch (mInputMode)
             {
                 case DisplaySourceMode.All:
-                    DataGridViewRowCollection allRows = myListControl.List.Rows;
+                    var allRows = myListControl.List.Rows;
                     foreach (DataGridViewRow row in allRows)
                     {
-                        string[] vals = GetOutputRowFromGridRow(row);
+                        var vals = GetOutputRowFromGridRow(row);
                         mRowBuffer.Add(vals);
                     }
                     break;
                 case DisplaySourceMode.Selected:
-                    DataGridViewSelectedRowCollection selRows = myListControl.List.SelectedRows;
+                    var selRows = myListControl.List.SelectedRows;
                     foreach (DataGridViewRow row in selRows)
                     {
-                        string[] vals = GetOutputRowFromGridRow(row);
+                        var vals = GetOutputRowFromGridRow(row);
                         mRowBuffer.Add(vals);
                     }
                     break;
@@ -175,7 +179,7 @@ namespace MageDisplayLib
             OnColumnDefAvailable(new MageColumnEventArgs(mColumnDefs.ToArray()));
 
             // output the rows from the list control according to current mode setting
-            foreach (string[] row in mRowBuffer)
+            foreach (var row in mRowBuffer)
             {
                 if (Abort)
                     break;

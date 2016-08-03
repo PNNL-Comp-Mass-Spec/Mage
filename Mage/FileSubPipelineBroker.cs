@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 
 
 namespace Mage
@@ -112,7 +111,7 @@ namespace Mage
             get
             {
                 var s = new List<string>();
-                foreach (KeyValuePair<string, string> kv in mFileFilterParameters)
+                foreach (var kv in mFileFilterParameters)
                 {
                     s.Add(string.Format("{0}:{1}", kv.Key, kv.Value));
                 }
@@ -121,9 +120,9 @@ namespace Mage
             set
             {
                 var parms = new Dictionary<string, string>();
-                foreach (string def in value.Split(';'))
+                foreach (var def in value.Split(';'))
                 {
-                    string[] pair = def.Split(':');
+                    var pair = def.Split(':');
                     parms.Add(pair[0].Trim(), pair[1].Trim());
                 }
                 SetFileFilterParameters(parms);
@@ -233,7 +232,7 @@ namespace Mage
 
             reader.FilePath = inputFilePath;
             writer.FilePath = outputFilePath;
-            bool concatenateFiles = (!string.IsNullOrEmpty(OutputFileName)) && (mFileCount > 0);
+            var concatenateFiles = (!string.IsNullOrEmpty(OutputFileName)) && (mFileCount > 0);
             writer.Append = (concatenateFiles) ? "Yes" : "No";
             writer.Header = (concatenateFiles) ? "No" : "Yes";
             return ProcessingPipeline.Assemble("DefaultFileProcessingPipeline", reader, filter, writer);
@@ -249,7 +248,7 @@ namespace Mage
             filter.SetContext(context);
 
             reader.FilePath = inputFilePath;
-            string tableName = (!string.IsNullOrEmpty(TableName)) ? TableName : Path.GetFileNameWithoutExtension(inputFilePath);
+            var tableName = (!string.IsNullOrEmpty(TableName)) ? TableName : Path.GetFileNameWithoutExtension(inputFilePath);
             writer.DbPath = DatabaseName;
             writer.TableName = tableName;
             return ProcessingPipeline.Assemble("DefaultFileProcessingPipeline", reader, filter, writer);

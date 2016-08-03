@@ -1,14 +1,15 @@
 ﻿using System;
+using System.Collections;
 using System.Windows.Forms;
 
 namespace MageDisplayLib
 {
-    class ListViewItemComparer : System.Collections.IComparer
+    class ListViewItemComparer : IComparer
     {
         private readonly int m_SortCol;
         private readonly bool m_SortAscending = true;
-        private readonly bool m_SortNumeric = false;
-        private readonly bool m_SortDate = false;
+        private readonly bool m_SortNumeric;
+        private readonly bool m_SortDate;
 
         public ListViewItemComparer()
         {
@@ -17,34 +18,48 @@ namespace MageDisplayLib
             m_SortNumeric = false;
             m_SortDate = false;
         }
+
         public ListViewItemComparer(int column)
         {
             m_SortCol = column;
             m_SortNumeric = false;
             m_SortDate = false;
         }
-        public ListViewItemComparer(int column, bool SortAscending, bool SortNumeric, bool SortDate)
+
+        public ListViewItemComparer(int column, bool sortAscending, bool sortNumeric, bool sortDate)
         {
             m_SortCol = column;
-            m_SortAscending = SortAscending;
-            m_SortNumeric = SortNumeric;
-            m_SortDate = SortDate;
+            m_SortAscending = sortAscending;
+            m_SortNumeric = sortNumeric;
+            m_SortDate = sortDate;
         }
 
         // Compares two ListViewItem rows, x, and y
         public int Compare(object x, object y)
         {
-            int intComparisonResult = 0;
-            bool StringSort = true;
+            var row1 = x as ListViewItem;
+            var row2 = y as ListViewItem;
 
-            float Val1 = 0;
-            float Val2 = 0;
+            if (row1 == null && row2 == null)
+                return 0;
 
-            System.DateTime Date1 = System.DateTime.MinValue;
-            System.DateTime Date2 = System.DateTime.MinValue;
+            if (row1 == null)
+                return -1;
 
-            string Item1 = ((ListViewItem)x).SubItems[m_SortCol].Text;
-            string Item2 = ((ListViewItem)y).SubItems[m_SortCol].Text;
+            if (row2 == null)
+                return -1;
+
+            var comparisonResult = 0;
+            var stringSort = true;
+
+            float val1 = 0;
+            float val2 = 0;
+
+            var date1 = DateTime.MinValue;
+            var date2 = DateTime.MinValue;
+
+            var item1 = row1.SubItems[m_SortCol].Text;
+            var item2 = row2.SubItems[m_SortCol].Text;
 
             if (m_SortNumeric)
             {
@@ -54,35 +69,35 @@ namespace MageDisplayLib
 
                 try
                 {
-                    StringSort = false;
+                    stringSort = false;
 
-                    if (Item1.Length > 0)
+                    if (item1.Length > 0)
                     {
-                        if (!float.TryParse(Item1, out Val1))
+                        if (!float.TryParse(item1, out val1))
                             // Conversion failed
-                            StringSort = true;
+                            stringSort = true;
                     }
 
-                    if (!StringSort)
+                    if (!stringSort)
                     {
-                        if (Item2.Length > 0)
+                        if (item2.Length > 0)
                         {
-                            if (!float.TryParse(Item2, out Val2))
+                            if (!float.TryParse(item2, out val2))
                                 // Conversion failed
-                                StringSort = true;
+                                stringSort = true;
                         }
                     }
 
-                    if (!StringSort)
+                    if (!stringSort)
                     {
-                        if (Val1 > Val2)
-                            intComparisonResult = 1;
+                        if (val1 > val2)
+                            comparisonResult = 1;
                         else
                         {
-                            if (Val1 < Val2)
-                                intComparisonResult = -1;
+                            if (val1 < val2)
+                                comparisonResult = -1;
                             else
-                                intComparisonResult = 0;
+                                comparisonResult = 0;
                         }
                     }
                 }
@@ -90,7 +105,7 @@ namespace MageDisplayLib
                 {
                     // Conversion or comparison error
                     // Enable string sorting
-                    StringSort = true;
+                    stringSort = true;
                 }
 
             }
@@ -104,35 +119,35 @@ namespace MageDisplayLib
 
                     try
                     {
-                        StringSort = false;
+                        stringSort = false;
 
-                        if (Item1.Length > 0)
+                        if (item1.Length > 0)
                         {
-                            if (!System.DateTime.TryParse(Item1, out Date1))
+                            if (!DateTime.TryParse(item1, out date1))
                                 // Conversion failed
-                                StringSort = true;
+                                stringSort = true;
                         }
 
-                        if (!StringSort)
+                        if (!stringSort)
                         {
-                            if (Item2.Length > 0)
+                            if (item2.Length > 0)
                             {
-                                if (!System.DateTime.TryParse(Item2, out Date2))
+                                if (!DateTime.TryParse(item2, out date2))
                                     // Conversion failed
-                                    StringSort = true;
+                                    stringSort = true;
                             }
                         }
 
-                        if (!StringSort)
+                        if (!stringSort)
                         {
-                            if (Date1 > Date2)
-                                intComparisonResult = 1;
+                            if (date1 > date2)
+                                comparisonResult = 1;
                             else
                             {
-                                if (Date1 < Date2)
-                                    intComparisonResult = -1;
+                                if (date1 < date2)
+                                    comparisonResult = -1;
                                 else
-                                    intComparisonResult = 0;
+                                    comparisonResult = 0;
                             }
                         }
                     }
@@ -140,25 +155,26 @@ namespace MageDisplayLib
                     {
                         // Conversion or comparison error
                         // Enable string sorting
-                        StringSort = true;
+                        stringSort = true;
                     }
 
                 }
             }
 
-            if (StringSort)
+            if (stringSort)
             {
-                intComparisonResult = String.Compare(((ListViewItem)x).SubItems[m_SortCol].Text, ((ListViewItem)y).SubItems[m_SortCol].Text);
+                comparisonResult = string.CompareOrdinal(row1.SubItems[m_SortCol].Text, row2.SubItems[m_SortCol].Text);
             }
 
-            if (!m_SortAscending)
-            {
-                // Reverse the sort by changing the sign of intComparisonResult
-                if (intComparisonResult < 0)
-                    intComparisonResult = -intComparisonResult;
-            }
+            if (m_SortAscending)
+                return comparisonResult;
 
-            return intComparisonResult;
+            // Reverse the sort by changing the sign of intComparisonResult
+            if (comparisonResult < 0)
+                comparisonResult = -comparisonResult;
+
+            return comparisonResult;
         }
+        
     }
 }

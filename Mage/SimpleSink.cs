@@ -119,7 +119,7 @@ namespace Mage
             {
                 if (WriteToConsole)
                 {
-                    foreach (string item in args.Fields)
+                    foreach (var item in args.Fields)
                     {
                         Console.Write(item + "|");
                     }
@@ -147,7 +147,7 @@ namespace Mage
         public override void HandleColumnDef(object sender, MageColumnEventArgs args)
         {
             base.HandleColumnDef(sender, args);
-            foreach (MageColumnDef columnDef in args.ColumnDefs)
+            foreach (var columnDef in args.ColumnDefs)
             {
                 if (WriteToConsole)
                 {
@@ -167,7 +167,7 @@ namespace Mage
         public override void Run(object state)
         {
             OnColumnDefAvailable(new MageColumnEventArgs(InputColumnDefs.ToArray()));
-            foreach (string[] row in SavedRows)
+            foreach (var row in SavedRows)
             {
                 OnDataRowAvailable(new MageDataEventArgs(row));
             }

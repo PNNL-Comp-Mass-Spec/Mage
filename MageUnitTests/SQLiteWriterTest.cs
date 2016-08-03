@@ -12,72 +12,23 @@ namespace MageUnitTests
     public class SQLiteWriterTest
     {
 
-
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #region Additional test attributes
-        // 
-        //You can use the following additional attributes as you write your tests:
-        //
-        //Use ClassInitialize to run code before running the first test in the class
-        //[ClassInitialize()]
-        //public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
-        //
-        //Use ClassCleanup to run code after all tests in a class have run
-        //[ClassCleanup()]
-        //public static void MyClassCleanup()
-        //{
-        //}
-        //
-        //Use TestInitialize to run code before running each test
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
-        //Use TestCleanup to run code after each test has run
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        //
-        #endregion
-
-
         [TestMethod()]
         public void DoubleTap()
         {
-            int cols = 5;
-            int rows = 21;
-            string dbPath = "write_test_2.db";
-            string tableName = "t_test";
-            string sqlText = string.Format("SELECT * FROM {0}", tableName);
+            var cols = 5;
+            var rows = 21;
+            var dbPath = "write_test_2.db";
+            var tableName = "t_test";
+            var sqlText = string.Format("SELECT * FROM {0}", tableName);
 
-            DataGenerator dGen;
-            dGen = new DataGenerator();
-            dGen.Rows = rows;
-            dGen.Cols = cols;
+            var dGen = new DataGenerator
+            {
+                Rows = rows,
+                Cols = cols
+            };
 
-            SimpleSink source1 = WriteSQLiteDBWithTestData(dbPath, tableName, dGen);
-            SimpleSink result1 = SQLiteReaderTest.ReadSQLiteDB(rows, sqlText, dbPath);
+            var source1 = WriteSQLiteDBWithTestData(dbPath, tableName, dGen);
+            var result1 = SQLiteReaderTest.ReadSQLiteDB(rows, sqlText, dbPath);
 
             Assert.AreEqual(rows, source1.Rows.Count, "Source row count does not match");
             Assert.AreEqual(cols, source1.Columns.Count, "Source column count does ot match");
@@ -85,11 +36,13 @@ namespace MageUnitTests
             Assert.AreEqual(cols, result1.Columns.Count, "Result column count does not match");
             General.CompareSinks(source1, result1);
 
-            dGen = new DataGenerator();
-            dGen.Rows = rows;
-            dGen.Cols = cols;
-            SimpleSink source2 = WriteSQLiteDBWithTestData(dbPath, tableName, dGen);
-            SimpleSink result2 = SQLiteReaderTest.ReadSQLiteDB(rows, sqlText, dbPath);
+            dGen = new DataGenerator
+            {
+                Rows = rows,
+                Cols = cols
+            };
+            var source2 = WriteSQLiteDBWithTestData(dbPath, tableName, dGen);
+            var result2 = SQLiteReaderTest.ReadSQLiteDB(rows, sqlText, dbPath);
 
             Assert.AreEqual(rows, source2.Rows.Count, "Source row count does not match");
             Assert.AreEqual(cols, source2.Columns.Count, "Source column count does ot match");
@@ -103,19 +56,21 @@ namespace MageUnitTests
         [TestMethod()]
         public void WriteTest()
         {
-            int cols = 5;
-            int rows = 21;
-            string dbPath = "write_test.db";
-            string tableName = "t_test";
-            string sqlText = string.Format("SELECT * FROM {0}", tableName);
+            var cols = 5;
+            var rows = 21;
+            var dbPath = "write_test.db";
+            var tableName = "t_test";
+            var sqlText = string.Format("SELECT * FROM {0}", tableName);
 
-            DataGenerator dGen = new DataGenerator();
-            dGen.Rows = rows;
-            dGen.Cols = cols;
+            var dGen = new DataGenerator
+            {
+                Rows = rows,
+                Cols = cols
+            };
 
-            SimpleSink source = WriteSQLiteDBWithTestData(dbPath, tableName, dGen);
+            var source = WriteSQLiteDBWithTestData(dbPath, tableName, dGen);
 
-            SimpleSink result = SQLiteReaderTest.ReadSQLiteDB(rows, sqlText, dbPath);
+            var result = SQLiteReaderTest.ReadSQLiteDB(rows, sqlText, dbPath);
 
             Assert.AreEqual(rows, source.Rows.Count, "Source row count does not match");
             Assert.AreEqual(cols, source.Columns.Count, "Source column count does ot match");
@@ -126,11 +81,13 @@ namespace MageUnitTests
 
         public SimpleSink WriteSQLiteDBWithTestData(string dbPath, string tableName, IBaseModule dGen)
         {
-            ProcessingPipeline pipeline = new ProcessingPipeline("SQLiteWriter");
+            var pipeline = new ProcessingPipeline("SQLiteWriter");
 
-            SQLiteWriter target = new SQLiteWriter();
-            target.DbPath = dbPath;
-            target.TableName = tableName;
+            var target = new SQLiteWriter
+            {
+                DbPath = dbPath,
+                TableName = tableName
+            };
 
             pipeline.RootModule = pipeline.AddModule("Gen", dGen);
             pipeline.AddModule("Writer", target);
@@ -141,7 +98,7 @@ namespace MageUnitTests
 
             pipeline.RunRoot(null);
 
-            SimpleSink result = (SimpleSink)pipeline.GetModule("Results");
+            var result = (SimpleSink)pipeline.GetModule("Results");
             return result;
         }
 
@@ -151,11 +108,10 @@ namespace MageUnitTests
         [TestMethod()]
         public void BlockSizeTest()
         {
-            SQLiteWriter target = new SQLiteWriter();
-            string expected = "42";
-            string actual;
+            var target = new SQLiteWriter();
+            var expected = "42";
             target.BlockSize = expected;
-            actual = target.BlockSize;
+            var actual = target.BlockSize;
             Assert.AreEqual(expected, actual);
         }
 
@@ -165,11 +121,10 @@ namespace MageUnitTests
         [TestMethod()]
         public void DbPasswordTest()
         {
-            SQLiteWriter target = new SQLiteWriter();
-            string expected = "Test Value";
-            string actual;
+            var target = new SQLiteWriter();
+            var expected = "Test Value";
             target.DbPassword = expected;
-            actual = target.DbPassword;
+            var actual = target.DbPassword;
             Assert.AreEqual(expected, actual);
         }
 
@@ -179,11 +134,10 @@ namespace MageUnitTests
         [TestMethod()]
         public void DbPathTest()
         {
-            SQLiteWriter target = new SQLiteWriter();
-            string expected = "Test Value";
-            string actual;
+            var target = new SQLiteWriter();
+            var expected = "Test Value";
             target.DbPath = expected;
-            actual = target.DbPath;
+            var actual = target.DbPath;
             Assert.AreEqual(expected, actual);
         }
 
@@ -193,11 +147,10 @@ namespace MageUnitTests
         [TestMethod()]
         public void TableNameTest()
         {
-            SQLiteWriter target = new SQLiteWriter();
-            string expected = "Test Value";
-            string actual;
+            var target = new SQLiteWriter();
+            var expected = "Test Value";
             target.TableName = expected;
-            actual = target.TableName;
+            var actual = target.TableName;
             Assert.AreEqual(expected, actual);
         }
     }

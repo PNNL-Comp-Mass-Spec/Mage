@@ -61,7 +61,7 @@ namespace MageFileProcessor
             InitializeComponent();
 
             const bool isBetaVersion = false;
-            SetFormTitle("2016-07-13", isBetaVersion);
+            SetFormTitle("2016-08-03", isBetaVersion);
 
             SetTags();
 
@@ -754,6 +754,9 @@ namespace MageFileProcessor
         {
             Control queryPage = EntityListSourceTabs.SelectedTab;
             var panel = PanelSupport.GetParameterPanel(queryPage);
+            if (panel == null)
+                return new Dictionary<string, string>();
+
             return panel.GetParameters();
         }
 

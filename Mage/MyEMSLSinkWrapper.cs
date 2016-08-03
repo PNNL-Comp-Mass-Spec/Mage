@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using MyEMSLReader;
 
@@ -68,7 +67,7 @@ namespace Mage
             // Only retrieve files for which the MyEMSL FileID is known (the file will have an @ sign)
             // Update the paths in mSink to point to the temporary path to which the files were downloaded
 
-            bool downloadMyEMSLFiles = false;
+            var downloadMyEMSLFiles = false;
             string downloadFolderPath;
 
             if (string.IsNullOrEmpty(TempFilesContainerPath))
@@ -81,7 +80,7 @@ namespace Mage
             }
 
             var fiFileCheck = new FileInfo(downloadFolderPath);
-            if (fiFileCheck.Exists)
+            if (fiFileCheck.Exists && fiFileCheck.Directory != null)
             {
                 downloadFolderPath = fiFileCheck.Directory.FullName;
             }
@@ -94,7 +93,7 @@ namespace Mage
             if (mSink.ColumnIndex.TryGetValue("Folder", out folderColIndex) &&
                 mSink.ColumnIndex.TryGetValue("Name", out filenameColIndex))
             {
-                for (int i = 0; i < mSink.Rows.Count; i++)
+                for (var i = 0; i < mSink.Rows.Count; i++)
                 {
                     if (UpdateSinkRowIfMyEMSLFile(i, filenameColIndex, folderColIndex, downloadFolderPath))
                         downloadMyEMSLFiles = true;
@@ -107,9 +106,9 @@ namespace Mage
             }
 
             // Look for other entries in mSink with a MyEMSL File ID
-            for (int i = 0; i < mSink.Rows.Count; i++)
+            for (var i = 0; i < mSink.Rows.Count; i++)
             {
-                for (int j = 0; j < mSink.Rows[i].Length; j++)
+                for (var j = 0; j < mSink.Rows[i].Length; j++)
                 {
                     if (j == filenameColIndex || j == folderColIndex)
                         continue;
@@ -121,7 +120,7 @@ namespace Mage
 
             if (downloadMyEMSLFiles)
             {
-                bool success = ProcessMyEMSLDownloadQueue(downloadFolderPath, Downloader.DownloadFolderLayout.DatasetNameAndSubFolders);
+                var success = ProcessMyEMSLDownloadQueue(downloadFolderPath, Downloader.DownloadFolderLayout.DatasetNameAndSubFolders);
 
                 if (!success)
                 {
@@ -141,7 +140,7 @@ namespace Mage
         public override void Run(object state)
         {
             OnColumnDefAvailable(new MageColumnEventArgs(mSink.Columns.ToArray()));
-            foreach (string[] row in mSink.Rows)
+            foreach (var row in mSink.Rows)
             {
                 if (Abort)
                     break;
@@ -160,7 +159,7 @@ namespace Mage
         /// <returns>True if a MyEMSL File was found and the row was updated</returns>
         protected bool UpdateSinkRowIfMyEMSLFile(int rowIndex, int colIndex, int folderColIndex, string downloadFolderPath)
         {
-            string[] currentRow = mSink.Rows[rowIndex];
+            var currentRow = mSink.Rows[rowIndex];
 
             if (currentRow[colIndex] == null)
                 return false;
@@ -168,14 +167,14 @@ namespace Mage
             if (folderColIndex >= 0 && currentRow[folderColIndex] == null)
                 folderColIndex = -1;
 
-            string filePathWithID = currentRow[colIndex];
+            var filePathWithID = currentRow[colIndex];
 
             if (filePathWithID == kNoFilesFound)
                 return false;
 
             string filePathClean;
 
-            Int64 myEMSLFileID = DatasetInfoBase.ExtractMyEMSLFileID(filePathWithID, out filePathClean);
+            var myEMSLFileID = DatasetInfoBase.ExtractMyEMSLFileID(filePathWithID, out filePathClean);
 
             if (myEMSLFileID <= 0)
                 return false;
@@ -185,7 +184,7 @@ namespace Mage
             {
                 m_MyEMSLDatasetInfoCache.AddFileToDownloadQueue(cachedFileInfo.FileInfo);
 
-                string newFilePath = Path.Combine(downloadFolderPath, cachedFileInfo.FileInfo.Dataset, cachedFileInfo.FileInfo.RelativePathWindows);
+                var newFilePath = Path.Combine(downloadFolderPath, cachedFileInfo.FileInfo.Dataset, cachedFileInfo.FileInfo.RelativePathWindows);
 
                 if (Path.IsPathRooted(filePathWithID))
                 {

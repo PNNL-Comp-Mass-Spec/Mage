@@ -67,7 +67,7 @@ namespace Mage
             get
             {
                 var pn = new Collection<string>();
-                foreach (ParameterDef pd in mParamColDefinitions)
+                foreach (var pd in mParamColDefinitions)
                 {
                     pn.Add(pd.ParamName);
                 }
@@ -162,9 +162,9 @@ namespace Mage
         private void SetupInputColumns()
         {
             var colDefs = new List<MageColumnDef>();
-            foreach (ParameterDef pDef in mParamColDefinitions)
+            foreach (var pDef in mParamColDefinitions)
             {
-                MageColumnDef colDef = new MageColumnDef(pDef.ParamName, "float", "10");
+                var colDef = new MageColumnDef(pDef.ParamName, "float", "10");
                 colDefs.Add(colDef);
             }
             base.HandleColumnDef(this, new MageColumnEventArgs(colDefs.ToArray()));
@@ -177,7 +177,7 @@ namespace Mage
             // set cycle count for each parameter def object
             // and get total row count that will be produced
             mTotalRows = 1;
-            foreach (ParameterDef pDef in mParamColDefinitions)
+            foreach (var pDef in mParamColDefinitions)
             {
                 pDef.RowCycle = mTotalRows;
                 mTotalRows *= pDef.NumberOfIncrements;
@@ -188,10 +188,10 @@ namespace Mage
         // and total row count and output them via standard tabular output
         private void GenerateRows()
         {
-            int totalCols = mParamColDefinitions.Count;
+            var totalCols = mParamColDefinitions.Count;
             // step through all row numbers for output rows
             // and generate a row for each and add it to list
-            for (int rowNum = 0; rowNum < mTotalRows; rowNum++)
+            for (var rowNum = 0; rowNum < mTotalRows; rowNum++)
             {
                 if (Abort)
                 {
@@ -202,9 +202,9 @@ namespace Mage
                 var row = new string[totalCols];
                 // step through each column and update row fields
                 // using previously set up column parameter objects
-                for (int colNum = 0; colNum < totalCols; colNum++)
+                for (var colNum = 0; colNum < totalCols; colNum++)
                 {
-                    ParameterDef pDef = mParamColDefinitions[colNum];
+                    var pDef = mParamColDefinitions[colNum];
                     row[colNum] = pDef.CurrentIncrement(rowNum);
                 }
                 OutputDataLine(row, rowNum);
@@ -218,7 +218,7 @@ namespace Mage
         {
             if (fields == null)
             {
-                OnDataRowAvailable(new MageDataEventArgs(fields));
+                OnDataRowAvailable(new MageDataEventArgs(null));
                 return;
             }
             if (OutputColumnDefs == null)
@@ -227,8 +227,8 @@ namespace Mage
             }
             else
             {
-                string[] outRow = MapDataRow(fields);
-                for (int i = 0; i < outRow.Length; i++)
+                var outRow = MapDataRow(fields);
+                for (var i = 0; i < outRow.Length; i++)
                 {
                     if (outRow[i] == null)
                     {
@@ -266,7 +266,7 @@ namespace Mage
         // for a single parameter
         private class ParameterDef
         {
-            public string ParamName { get; set; }
+            public string ParamName { get; private set; }
 
             // increment range parameters
             // used to calculate specific incremental values
@@ -287,7 +287,7 @@ namespace Mage
             // number of output rows that must pass
             // before this object's parameter increment values
             // advances to the next value.
-            public int RowCycle { get; set; }
+            public int RowCycle { private get; set; }
 
             // index to current increment
             private int incrementIndex;
@@ -318,7 +318,7 @@ namespace Mage
             public ParameterDef(Dictionary<string, string> paramList)
             {
                 Initialize();
-                foreach (KeyValuePair<string, string> paramDef in paramList)
+                foreach (var paramDef in paramList)
                 {
                     double value;
                     switch (paramDef.Key)
@@ -387,8 +387,8 @@ namespace Mage
                 }
                 else
                 {
-                    double current = LowerBound;
-                    for (int j = 0; (current <= UpperBound); j++)
+                    var current = LowerBound;
+                    for (var j = 0; (current <= UpperBound); j++)
                     {
                         current = LowerBound + j * Step;
                         if (current > UpperBound)

@@ -64,7 +64,7 @@ namespace MageFilePackager
         {
             if (Parameters != null)
             {
-                foreach (KeyValuePair<string, string> kv in Parameters)
+                foreach (var kv in Parameters)
                 {
                     _text.Append(string.Format("<parameter name='{0}' value='{1}' />\n", kv.Key, kv.Value));
                 }
@@ -75,7 +75,7 @@ namespace MageFilePackager
         {
             if (Prefixes != null)
             {
-                foreach (KeyValuePair<string, string> kv in Prefixes)
+                foreach (var kv in Prefixes)
                 {
                     _text.Append(string.Format("<prefix source='{0}' value='{1}' />\n", kv.Key, kv.Value));
                 }
@@ -89,7 +89,7 @@ namespace MageFilePackager
         private void OutputDataRow(string[] vals)
         {
             _text.Append("<path ");
-            for (int i = 0; i < InputColumnDefs.Count; i++)
+            for (var i = 0; i < InputColumnDefs.Count; i++)
             {
                 _text.Append(string.Format("{0}='{1}' ", InputColumnDefs[i].Name, vals[i]));
             }

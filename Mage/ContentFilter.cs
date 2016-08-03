@@ -37,7 +37,7 @@ namespace Mage
         public override void HandleColumnDef(object sender, MageColumnEventArgs args)
         {
             base.HandleColumnDef(sender, args);
-            List<MageColumnDef> cd = OutputColumnDefs ?? InputColumnDefs;
+            var cd = OutputColumnDefs ?? InputColumnDefs;
             OnColumnDefAvailable(new MageColumnEventArgs(cd.ToArray()));
             totalRowsCounter = 0;
             passedRowsCounter = 0;
@@ -58,7 +58,7 @@ namespace Mage
             if (args.DataAvailable)
             {
                 // do filtering here
-                string[] vals = args.Fields;
+                var vals = args.Fields;
                 if (CheckFilter(ref vals))
                 {
                     passedRowsCounter++;
@@ -67,7 +67,7 @@ namespace Mage
                 // report progress
                 if (++totalRowsCounter % reportRowBlockSize == 0)
                 {
-                    string msg = "Processed " + totalRowsCounter + " total rows, passed " + passedRowsCounter;
+                    var msg = "Processed " + totalRowsCounter + " total rows, passed " + passedRowsCounter;
                     if (DateTime.UtcNow.Subtract(mLastReportTimeUTC).TotalMilliseconds >= mMinimumReportIntervalMsec)
                     {
                         OnStatusMessageUpdated(new MageStatusEventArgs(msg));

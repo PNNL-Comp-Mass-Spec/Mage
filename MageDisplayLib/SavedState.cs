@@ -19,8 +19,8 @@ namespace MageDisplayLib
         // names and paths for configuration directory and files
         private static string mAppDataFolderName;
         private static string mDataDirectory;
-        private static string mQueryDefFileName = "QueryDefinitions.xml";
-        private static string mSavedStateFileName = "SavedState.xml";
+        private static readonly string mQueryDefFileName = "QueryDefinitions.xml";
+        private static readonly string mSavedStateFileName = "SavedState.xml";
 
         /// <summary>
         /// Name of folder that contains config/state files for application
@@ -67,7 +67,7 @@ namespace MageDisplayLib
             ModuleDiscovery.QueryDefinitionFileName = Path.Combine(mDataDirectory, mQueryDefFileName);
             if (!File.Exists(ModuleDiscovery.QueryDefinitionFileName))
             {
-                FileInfo ioQueryDef = new FileInfo(mQueryDefFileName);
+                var ioQueryDef = new FileInfo(mQueryDefFileName);
                 if (ioQueryDef.Exists)
                 {
                     File.Copy(mQueryDefFileName, ModuleDiscovery.QueryDefinitionFileName);
@@ -79,8 +79,8 @@ namespace MageDisplayLib
             }
             else
             {
-                FileInfo fiInfo = new FileInfo(mQueryDefFileName);
-                FileInfo fcInfo = new FileInfo(ModuleDiscovery.QueryDefinitionFileName);
+                var fiInfo = new FileInfo(mQueryDefFileName);
+                var fcInfo = new FileInfo(ModuleDiscovery.QueryDefinitionFileName);
                 if (fiInfo.LastWriteTimeUtc > fcInfo.LastWriteTimeUtc)
                 {
                     File.Copy(mQueryDefFileName, ModuleDiscovery.QueryDefinitionFileName, true);
@@ -88,10 +88,10 @@ namespace MageDisplayLib
             }
 
             // setup to save and restore settings for UI component panels
-            SavedState.FilePath = Path.Combine(mDataDirectory, mSavedStateFileName);
+            FilePath = Path.Combine(mDataDirectory, mSavedStateFileName);
 
             // tell modules where to look for loadable module DLLs
-            FileInfo fi = new FileInfo(System.Windows.Forms.Application.ExecutablePath);
+            var fi = new FileInfo(System.Windows.Forms.Application.ExecutablePath);
             ModuleDiscovery.ExternalModuleFolder = fi.DirectoryName;
         }
 
@@ -102,7 +102,7 @@ namespace MageDisplayLib
         /// <param name="panelList">List of UI component panels</param>
         public static void SaveParameters(Dictionary<string, IModuleParameters> panelList)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             // make XML header and opening root element
             sb.AppendLine("<?xml version='1.0' encoding='utf-8' ?>");
@@ -110,15 +110,15 @@ namespace MageDisplayLib
 
             // step through panel list and add XML parameter defitions for each parameter
             // for each panel that has an IModuleParameters interface
-            string lineFormat = "<parameter panel='{0}' name='{1}' value='{2}' />";
-            foreach (KeyValuePair<string, IModuleParameters> panelDesc in panelList)
+            var lineFormat = "<parameter panel='{0}' name='{1}' value='{2}' />";
+            foreach (var panelDesc in panelList)
             {
-                string paramPanel = panelDesc.Key;
-                Dictionary<string, string> parms = panelDesc.Value.GetParameters();
-                foreach (KeyValuePair<string, string> paramDesc in parms)
+                var paramPanel = panelDesc.Key;
+                var parms = panelDesc.Value.GetParameters();
+                foreach (var paramDesc in parms)
                 {
-                    string paramName = paramDesc.Key;
-                    string paramValue = paramDesc.Value;
+                    var paramName = paramDesc.Key;
+                    var paramValue = paramDesc.Value;
                     sb.AppendLine(string.Format(lineFormat, paramPanel, paramName, paramValue));
                 }
             }
@@ -126,7 +126,7 @@ namespace MageDisplayLib
             sb.AppendLine("</parameters>");
 
             // dump XML to file
-            StreamWriter mOutFile = new StreamWriter(FilePath);
+            var mOutFile = new StreamWriter(FilePath);
             mOutFile.WriteLine(sb.ToString());
             mOutFile.Close();
         }
@@ -138,33 +138,37 @@ namespace MageDisplayLib
         /// <param name="panelList">List of UI component panels</param>
         public static void RestoreSavedPanelParameters(Dictionary<string, IModuleParameters> panelList)
         {
-            if (!File.Exists(SavedState.FilePath))
+            if (!File.Exists(FilePath))
                 return;
 
             // get XML containing saved panel parameters
-            XmlDocument doc = new XmlDocument();
+            var doc = new XmlDocument();
             doc.Load(FilePath);
 
             // get list of paramter nodes
-            string xpath = ".//parameter";
-            XmlNodeList parms = doc.SelectNodes(xpath);
+            var xpath = ".//parameter";
+            var parms = doc.SelectNodes(xpath);
 
             // for each panel in list, collect its parameters from the XML node list
             // and set them for the panel
-            foreach (string listPanel in panelList.Keys)
+            foreach (var listPanel in panelList.Keys)
             {
-                Dictionary<string, string> parameterList = new Dictionary<string, string>();
-                foreach (XmlNode parm in parms)
-                {
-                    string paramPanel = parm.Attributes["panel"].InnerText;
-                    string paramName = parm.Attributes["name"].InnerText;
-                    string paramValue = parm.Attributes["value"].InnerText;
-                    if (paramPanel == listPanel)
+                var parameterList = new Dictionary<string, string>();
+                if (parms != null)
+                    foreach (XmlNode parm in parms)
                     {
-                        parameterList[paramName] = paramValue;
+                        if (parm.Attributes == null) continue;
+                        
+                        var paramPanel = parm.Attributes["panel"].InnerText;
+                        var paramName = parm.Attributes["name"].InnerText;
+                        var paramValue = parm.Attributes["value"].InnerText;
+
+                        if (paramPanel == listPanel)
+                        {
+                            parameterList[paramName] = paramValue;
+                        }
                     }
-                }
-                IModuleParameters panel = panelList[listPanel];
+                var panel = panelList[listPanel];
                 panel.SetParameters(parameterList);
             }
         }

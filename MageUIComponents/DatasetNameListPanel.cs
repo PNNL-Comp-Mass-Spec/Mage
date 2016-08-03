@@ -20,7 +20,7 @@ namespace MageUIComponents
         }
 
         public void SetParameters(Dictionary<string, string> paramList) {
-            foreach (KeyValuePair<string, string> paramDef in paramList) {
+            foreach (var paramDef in paramList) {
                 switch (paramDef.Key) {
                     case "Dataset_ID":
                         DatasetListCtl.Text = paramDef.Value;
@@ -37,22 +37,20 @@ namespace MageUIComponents
             InitializeComponent();
         }
 
-        private void GetDatasetsCtl_Click(object sender, EventArgs e) {
-            if (OnAction != null) {
-                OnAction(this, new MageCommandEventArgs("get_entities_from_query", "Datasets"));
-            }
-
+        private void GetDatasetsCtl_Click(object sender, EventArgs e)
+        {
+            OnAction?.Invoke(this, new MageCommandEventArgs("get_entities_from_query", "Datasets"));
         }
 
-        private void DatasetListCtl_Leave(object sender, EventArgs e) {
+	    private void DatasetListCtl_Leave(object sender, EventArgs e) {
             DatasetListCtl.Text = PanelSupport.CleanUpDelimitedList(DatasetListCtl.Text);
         }
 
 
         private void DatasetListCtl_KeyDown(object sender, EventArgs e) {
-            KeyEventArgs args = (KeyEventArgs)e;
+            var args = (KeyEventArgs)e;
 
-            if (args.Control == true && args.KeyCode == Keys.A) {
+            if (args.Control && args.KeyCode == Keys.A) {
                 // Ctrl+A pressed
                 DatasetListCtl.SelectAll();
 

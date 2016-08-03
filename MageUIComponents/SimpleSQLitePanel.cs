@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace MageUIComponents {
@@ -24,7 +18,7 @@ namespace MageUIComponents {
         }
 
         private void BrowseForFileBtn_Click(object sender, EventArgs e) {
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            var saveFileDialog1 = new SaveFileDialog();
             saveFileDialog1.Title = "Save to file";
             saveFileDialog1.ShowDialog();
 

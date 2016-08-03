@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Mage;
 
 namespace MageConcatenator
@@ -53,17 +52,17 @@ namespace MageConcatenator
                 mCancelProcessingRequested = false;
 
                 var fiTargetFile = new FileInfo(targetFilePath);
-                int filesProcessed = 0;
+                var filesProcessed = 0;
 
                 using (
                     var writer =
                         new StreamWriter(new FileStream(fiTargetFile.FullName, FileMode.Create, FileAccess.Write,
                                                         FileShare.Read)))
                 {
-                    bool headerWritten = false;
-                    string headerLine = string.Empty;
+                    var headerWritten = false;
+                    var headerLine = string.Empty;
 
-                    char headerDelimiter = ' ';
+                    var headerDelimiter = ' ';
 
                     foreach (var filePath in lstFilePaths)
                     {
@@ -83,9 +82,9 @@ namespace MageConcatenator
 
                         filesProcessed++;
 
-                        string sourceFileName = fiFile.Name;
+                        var sourceFileName = fiFile.Name;
 
-                        char delimiter = GetDelimiter(fiFile);
+                        var delimiter = GetDelimiter(fiFile);
                         if (headerDelimiter == ' ')
                         {
                             headerDelimiter = delimiter;
@@ -97,15 +96,15 @@ namespace MageConcatenator
                                               filesProcessed + " has delimiter '" + delimiter + "'");
                         }
 
-                        Int64 fileSizeBytes = fiFile.Length;
+                        var fileSizeBytes = fiFile.Length;
 
                         using (
                             var reader =
                                 new StreamReader(new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                             )
                         {
-                            bool headerParsed = false;
-                            int rowCount = 0;
+                            var headerParsed = false;
+                            var rowCount = 0;
                             Int64 bytesRead = 0;
 
                             while (reader.Peek() > -1)
@@ -177,7 +176,7 @@ namespace MageConcatenator
 
         private char GetDelimiter(FileInfo fiFile)
         {
-            char delimiter = '\t';
+            var delimiter = '\t';
             if (fiFile.Extension.ToLower() == ".csv")
                 delimiter = ',';
 
@@ -243,12 +242,12 @@ namespace MageConcatenator
                     return false;
                 }
 
-                char delimiter = GetDelimiter(fiFile);
+                var delimiter = GetDelimiter(fiFile);
 
                 using (var reader = new StreamReader(new FileStream(fiFile.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
                 {
-                    int rowCount = 0;
-                    int colCount = -1;
+                    var rowCount = 0;
+                    var colCount = -1;
 
                     while (reader.Peek() > -1)
                     {
@@ -302,14 +301,14 @@ namespace MageConcatenator
 
             var columns = currentRow.Split(delimiter);
 
-            if (columns.Count() == 1)
+            if (columns.Length == 1)
             {
-                char alternateDelimiter = ',';
+                var alternateDelimiter = ',';
                 if (delimiter == ',')
                     alternateDelimiter = '\t';
 
                 columns = currentRow.Split(alternateDelimiter);
-                if (columns.Count() > 1)
+                if (columns.Length > 1)
                 {
                     return alternateDelimiter;
                 }
@@ -321,35 +320,22 @@ namespace MageConcatenator
 
         protected void ReportProcessingComplete(string message)
         {
-            if (OnRunCompleted != null)
-            {
-                OnRunCompleted(this, new MageStatusEventArgs(message));
-            }
+            OnRunCompleted?.Invoke(this, new MageStatusEventArgs(message));
         }
 
         protected void ReportError(string message)
         {
-            if (OnError != null)
-            {
-                OnError(this, new MageStatusEventArgs(message));
-            }
+            OnError?.Invoke(this, new MageStatusEventArgs(message));
         }
 
         private void ReportStatus(string message)
         {
-            if (OnStatusUpdate != null)
-            {
-                OnStatusUpdate(this, new MageStatusEventArgs(message));
-            }
+            OnStatusUpdate?.Invoke(this, new MageStatusEventArgs(message));
         }
 
         private void ReportWarning(string message)
         {
-            if (OnWarning != null)
-            {
-                OnWarning(this, new MageStatusEventArgs(message));
-            }
+            OnWarning?.Invoke(this, new MageStatusEventArgs(message));
         }
-
     }
 }

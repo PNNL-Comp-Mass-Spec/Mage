@@ -1,22 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Mage;
 using System.Collections.ObjectModel;
 using System.IO;
 using MageDisplayLib;
 
-namespace MageUIComponents {
+namespace MageUIComponents
+{
 
     /// <summary>
     /// Dialog that allows column mappings to be created, edited, and saved
     /// </summary>
-    public partial class ColumnMappingForm : Form {
+    public partial class ColumnMappingForm : Form
+    {
 
         #region Member Variables
 
@@ -38,7 +35,7 @@ namespace MageUIComponents {
         /// </summary>
         private Collection<MageColumnDef> mInputColumnDefs = new Collection<MageColumnDef>();
 
-		private bool mAddingMapping = false;
+        private bool mAddingMapping;
 
         #endregion
 
@@ -55,7 +52,8 @@ namespace MageUIComponents {
         /// file path and folder path to the file that
         /// will provide input column list
         /// </summary>
-        public Dictionary<string, string> InputFileInfo {
+        public Dictionary<string, string> InputFileInfo
+        {
             get { return mInputFileInfo; }
             set { mInputFileInfo = value; }
         }
@@ -63,7 +61,8 @@ namespace MageUIComponents {
         /// set of key/value parameters that contain the
         /// output file or database info
         /// </summary>
-        public Dictionary<string, string> OutputInfo {
+        public Dictionary<string, string> OutputInfo
+        {
             get { return mOutputInfo; }
             set { mOutputInfo = value; }
         }
@@ -72,7 +71,8 @@ namespace MageUIComponents {
         /// editing field for the column mapping name 
         /// in the col spec editing panel
         /// </summary>
-        public string MappingName {
+        public string MappingName
+        {
             get { return MappingNameCtl.Text; }
             set { MappingNameCtl.Text = value; }
         }
@@ -81,7 +81,8 @@ namespace MageUIComponents {
         /// editing field for the column mapping description 
         /// in the col spec editing panel
         /// </summary>
-        public string MappingDescription {
+        public string MappingDescription
+        {
             get { return MappingDescriptionCtl.Text; }
             set { MappingDescriptionCtl.Text = value; }
         }
@@ -89,11 +90,14 @@ namespace MageUIComponents {
         /// <summary>
         /// name of selected column mapping
         /// </summary>
-        public string ColumnMapping {
-            get {
-                string result = "";
-                Dictionary<string, string> selectedColMapping = ColumnMappingDisplayList.SeletedItemFields;
-                if (selectedColMapping != null && selectedColMapping.ContainsKey("name")) {
+        public string ColumnMapping
+        {
+            get
+            {
+                var result = "";
+                var selectedColMapping = ColumnMappingDisplayList.SeletedItemFields;
+                if (selectedColMapping != null && selectedColMapping.ContainsKey("name"))
+                {
                     result = selectedColMapping["name"];
                 }
                 return result;
@@ -103,11 +107,14 @@ namespace MageUIComponents {
         /// <summary>
         /// output column specification (in string format) for selected column mapping
         /// </summary>
-        public string OutputColumnList {
-            get {
-                string result = "";
-                Dictionary<string, string> selectedColMapping = ColumnMappingDisplayList.SeletedItemFields;
-                if (selectedColMapping != null && selectedColMapping.ContainsKey("column_list")) {
+        public string OutputColumnList
+        {
+            get
+            {
+                var result = "";
+                var selectedColMapping = ColumnMappingDisplayList.SeletedItemFields;
+                if (selectedColMapping != null && selectedColMapping.ContainsKey("column_list"))
+                {
                     result = selectedColMapping["column_list"];
                 }
                 return result;
@@ -117,13 +124,14 @@ namespace MageUIComponents {
         /// <summary>
         /// number or rows to show in row preview
         /// </summary>
-        public int PreviewRowLimit { get; set; }
+        public int PreviewRowLimit { get; }
 
         #endregion
 
         #region Constructors
 
-        public ColumnMappingForm() {
+        public ColumnMappingForm()
+        {
             InitializeComponent();
             PreviewRowLimit = 200;
         }
@@ -137,7 +145,8 @@ namespace MageUIComponents {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ColumnMappingForm_Load(object sender, EventArgs e) {
+        private void ColumnMappingForm_Load(object sender, EventArgs e)
+        {
             SetupEventHandlers();
             SetupGridDisplayListBehavior();
             LoadColumnMappingList();
@@ -147,33 +156,36 @@ namespace MageUIComponents {
         /// <summary>
         /// how we want grid view display list to autosize themselves
         /// </summary>
-        private void SetupGridDisplayListBehavior() {
+        private void SetupGridDisplayListBehavior()
+        {
             ColumnMappingDisplayList.List.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-			ColumnMappingDisplayList.MultiSelect = false;
+            ColumnMappingDisplayList.MultiSelect = false;
 
             ColumnSpecEditingDisplayList.List.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-			ColumnSpecEditingDisplayList.List.ReadOnly = false;
-			ColumnSpecEditingDisplayList.MultiSelect = true;
-			ColumnSpecEditingDisplayList.AllowDisableShiftClickMode = false;
+            ColumnSpecEditingDisplayList.List.ReadOnly = false;
+            ColumnSpecEditingDisplayList.MultiSelect = true;
+            ColumnSpecEditingDisplayList.AllowDisableShiftClickMode = false;
 
-			ColumnSpecEditingDisplayList.List.DataError += HandleColumnSpecEditingListDataError;
+            ColumnSpecEditingDisplayList.List.DataError += HandleColumnSpecEditingListDataError;
 
-			RowPreviewDisplayList.MultiSelect = true;
-			RowPreviewDisplayList.AllowDisableShiftClickMode = false;
-			RowPreviewDisplayList.List.AllowDelete = false;
+            RowPreviewDisplayList.MultiSelect = true;
+            RowPreviewDisplayList.AllowDisableShiftClickMode = false;
+            RowPreviewDisplayList.List.AllowDelete = false;
         }
 
         /// <summary>
         /// Connect events on the associated display list to our handlers
         /// </summary>
-        private void SetupEventHandlers() {
+        private void SetupEventHandlers()
+        {
             ColumnMappingDisplayList.SelectionChanged += DisplaySelectedColumnMappingInEditingPanel;
         }
 
         /// <summary>
         /// setup initial values in editing panel
         /// </summary>
-        private void LoadEditingPanel() {
+        private void LoadEditingPanel()
+        {
             MappingName = "New Column Mapping";
             MappingDescription = "Describe purpose";
             DisplayColumnListInEditingPanel("", false);
@@ -187,27 +199,30 @@ namespace MageUIComponents {
         /// use Mage pipeline to get contents of column mapping definition file
         /// and use it to populate column mapping display panel
         /// </summary>
-        private void LoadColumnMappingList() {
-            if (!File.Exists(MappingConfigFilePath)) {// need to create config file
+        private void LoadColumnMappingList()
+        {
+            if (!File.Exists(MappingConfigFilePath))
+            {// need to create config file
                 CreateDefaultColumnMappingConfigFile();
             }
-            DelimitedFileReader reader = new DelimitedFileReader();
-            reader.FilePath = MappingConfigFilePath;
-            ISinkModule display = ColumnMappingDisplayList.MakeSink(50);
-            ProcessingPipeline pipeline = ProcessingPipeline.Assemble("PipelineToGetColumnMappingConfig", reader, display);
+            var reader = new DelimitedFileReader { FilePath = MappingConfigFilePath };
+            var display = ColumnMappingDisplayList.MakeSink(50);
+            var pipeline = ProcessingPipeline.Assemble("PipelineToGetColumnMappingConfig", reader, display);
             pipeline.RunRoot(null);
         }
 
         /// <summary>
         /// make a default column mapping config file if one does not exist
         /// </summary>
-        private static void CreateDefaultColumnMappingConfigFile() {
-            DataGenerator dGen = new DataGenerator();
-            dGen.AddAdHocRow = new string[] { "name", "description", "column_list" };
-            dGen.AddAdHocRow = new string[] { "Add Job Column", "Add new column that will contain Job number", "Job|+|text, *" };
-            DelimitedFileWriter writer = new DelimitedFileWriter();
-            writer.FilePath = MappingConfigFilePath;
-            ProcessingPipeline pipeline2 = ProcessingPipeline.Assemble("CreateColumnMapping", dGen, writer);
+        private static void CreateDefaultColumnMappingConfigFile()
+        {
+            var dGen = new DataGenerator
+            {
+                AddAdHocRow = new[] { "name", "description", "column_list" }
+            };
+            dGen.AddAdHocRow = new[] { "Add Job Column", "Add new column that will contain Job number", "Job|+|text, *" };
+            var writer = new DelimitedFileWriter {FilePath = MappingConfigFilePath};
+            var pipeline2 = ProcessingPipeline.Assemble("CreateColumnMapping", dGen, writer);
             pipeline2.RunRoot(null);
         }
 
@@ -215,13 +230,11 @@ namespace MageUIComponents {
         /// Save the contents of the column mapping display list
         /// to the config file
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SaveColumnMappingList() {
+        private void SaveColumnMappingList()
+        {
             IBaseModule source = new GVPipelineSource(ColumnMappingDisplayList, DisplaySourceMode.All);
-            DelimitedFileWriter writer = new DelimitedFileWriter();
-            writer.FilePath = MappingConfigFilePath;
-            ProcessingPipeline pipeline = ProcessingPipeline.Assemble("SaveColumnMapping", source, writer);
+            var writer = new DelimitedFileWriter {FilePath = MappingConfigFilePath};
+            var pipeline = ProcessingPipeline.Assemble("SaveColumnMapping", source, writer);
             pipeline.RunRoot(null);
             UnsavedChanges(false);
         }
@@ -231,7 +244,8 @@ namespace MageUIComponents {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SaveColumnMappingsBtn_Click(object sender, EventArgs e) {
+        private void SaveColumnMappingsBtn_Click(object sender, EventArgs e)
+        {
             SaveColumnMappingList();
         }
 
@@ -240,7 +254,8 @@ namespace MageUIComponents {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DeleteColumnMappingBtn_Click(object sender, EventArgs e) {
+        private void DeleteColumnMappingBtn_Click(object sender, EventArgs e)
+        {
             ColumnMappingDisplayList.DeleteSelectedItems();
             UnsavedChanges(true);
         }
@@ -251,13 +266,15 @@ namespace MageUIComponents {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DisplaySelectedColumnMappingInEditingPanel(object sender, EventArgs e) {
-            Dictionary<string, string> fields = ColumnMappingDisplayList.SeletedItemFields;
-            if (fields.Count == 0) return;
+        private void DisplaySelectedColumnMappingInEditingPanel(object sender, EventArgs e)
+        {
+            var fields = ColumnMappingDisplayList.SeletedItemFields;
+            if (fields.Count == 0)
+                return;
 
             MappingName = fields["name"];
             MappingDescription = fields["description"];
-            string colSpecs = fields["column_list"];
+            var colSpecs = fields["column_list"];
 
             DisplayColumnListInEditingPanel(colSpecs, false);
         }
@@ -268,10 +285,13 @@ namespace MageUIComponents {
         /// </summary>
         /// <param name="name"></param>
         /// <returns>true if name is not in list</returns>
-        private bool IsColumnMappingNameUnique(string name) {
-            bool isUnique = true;
-            foreach (DataGridViewRow row in ColumnMappingDisplayList.List.Rows) {
-                if (row.Cells[0].Value.ToString() == name) {
+        private bool IsColumnMappingNameUnique(string name)
+        {
+            var isUnique = true;
+            foreach (DataGridViewRow row in ColumnMappingDisplayList.List.Rows)
+            {
+                if (row.Cells[0].Value.ToString() == name)
+                {
                     isUnique = false;
                     break;
                 }
@@ -297,35 +317,33 @@ namespace MageUIComponents {
         /// </summary>
         /// <param name="colItems"></param>
         /// <returns></returns>
-        /// <summary>
-        /// roll the individual column specs in collection of field arrays
-        /// int a column list in column mapping format
-        /// </summary>
-        /// <param name="colItems"></param>
-        /// <returns></returns>
-        private static string GetColumnListFromColumnSpecItems(Collection<string[]> colItems) {
-            List<string> specs = new List<string>();
-            foreach (string[] colFlds in colItems) {
-                List<string> fields = new List<string>();
+        private static string GetColumnListFromColumnSpecItems(Collection<string[]> colItems)
+        {
+            var specs = new List<string>();
+            foreach (var colFlds in colItems)
+            {
+                var fields = new List<string> {colFlds[OutputColIdx]};
 
                 // always have an output column name
-                fields.Add(colFlds[OutputColIdx]);
 
                 // input column name may be blank if same as output column name
-                string inputCol = (colFlds[InputColIdx] != colFlds[OutputColIdx]) ? colFlds[InputColIdx] : "";
+                var inputCol = (colFlds[InputColIdx] != colFlds[OutputColIdx]) ? colFlds[InputColIdx] : "";
 
                 // add input column name if present, or if placeholder needed
-                if (!string.IsNullOrEmpty(inputCol) || !string.IsNullOrEmpty(colFlds[DataTypeColIdx])) {
+                if (!string.IsNullOrEmpty(inputCol) || !string.IsNullOrEmpty(colFlds[DataTypeColIdx]))
+                {
                     fields.Add(inputCol);
                 }
 
                 // add data type to spec if present
-                if (!string.IsNullOrEmpty(colFlds[DataTypeColIdx])) {
+                if (!string.IsNullOrEmpty(colFlds[DataTypeColIdx]))
+                {
                     fields.Add(colFlds[DataTypeColIdx]);
                 }
 
                 // add data size to spec if present
-                if (!string.IsNullOrEmpty(colFlds[SizeColIdx])) {
+                if (!string.IsNullOrEmpty(colFlds[SizeColIdx]))
+                {
                     fields.Add(colFlds[SizeColIdx]);
                 }
                 // roll this column spec's fields up to delimited string
@@ -340,13 +358,17 @@ namespace MageUIComponents {
         /// </summary>
         /// <param name="colList">column list in string format</param>
         /// <returns>List of column specs</returns>
-        private static Collection<string[]> GetColumnSpecItemsFromColumnList(string colList) {
-            Collection<string[]> rows = new Collection<string[]>();
-            if (!string.IsNullOrEmpty(colList)) {
-                foreach (string colSpec in colList.Split(',')) {
-                    string[] specFields = colSpec.Trim().Split('|');
-                    string[] row = new string[] { "", "", "", "" };
-                    for (int i = 0; i < specFields.Length; i++) {
+        private static Collection<string[]> GetColumnSpecItemsFromColumnList(string colList)
+        {
+            var rows = new Collection<string[]>();
+            if (!string.IsNullOrEmpty(colList))
+            {
+                foreach (var colSpec in colList.Split(','))
+                {
+                    var specFields = colSpec.Trim().Split('|');
+                    var row = new[] { "", "", "", "" };
+                    for (var i = 0; i < specFields.Length; i++)
+                    {
                         row[i] = specFields[i];
                     }
                     //if (string.IsNullOrEmpty(row[1]) && row[0] != "*") {
@@ -362,12 +384,14 @@ namespace MageUIComponents {
 
         #region Editing Panel Functions
 
-        private void DisplayColumnListInEditingPanel(Collection<MageColumnDef> colDefs) {
-            Collection<string[]> colItems = new Collection<string[]>();
-            foreach (MageColumnDef colDef in colDefs) {
-                colItems.Add(new string[] { colDef.Name, "", colDef.DataType, colDef.Size });
+        private void DisplayColumnListInEditingPanel(Collection<MageColumnDef> colDefs)
+        {
+            var colItems = new Collection<string[]>();
+            foreach (var colDef in colDefs)
+            {
+                colItems.Add(new[] { colDef.Name, "", colDef.DataType, colDef.Size });
             }
-            string colSpecs = GetColumnListFromColumnSpecItems(colItems);
+            var colSpecs = GetColumnListFromColumnSpecItems(colItems);
             DisplayColumnListInEditingPanel(colSpecs, true);
         }
 
@@ -376,12 +400,14 @@ namespace MageUIComponents {
         /// and use Mage pipeline to
         /// load into the column spec display list in the editing panel
         /// </summary>
-        /// <param name="colSpecs"></param>
-        private void DisplayColumnListInEditingPanel(string colList, bool useInputColPicker) {
+        /// <param name="colList"></param>
+        /// <param name="useInputColPicker"></param>
+        private void DisplayColumnListInEditingPanel(string colList, bool useInputColPicker)
+        {
             ColumnSpecEditingDisplayList.List.Rows.Clear();
             ColumnSpecEditingDisplayList.List.Columns.Clear();
 
-			mAddingMapping = true;
+            mAddingMapping = true;
 
             AddEditingColumnForOutputColumnName();
             AddEditingColumnForInputColumnName(useInputColPicker);
@@ -390,57 +416,67 @@ namespace MageUIComponents {
 
             // parse the column list string into fields
             // and add them to pipeline source module
-            Collection<string[]> rows = GetColumnSpecItemsFromColumnList(colList);
+            var rows = GetColumnSpecItemsFromColumnList(colList);
             AddMissingInputColumns(rows, mInputColumnDefs);
-            foreach (string[] row in rows) {
-				
-				// Auto-fix data type int to integer
-				if (row.Length > 3 && row[2].ToLower() == "int")
-					row[2] = "integer";
+            foreach (var row in rows)
+            {
 
-				ColumnSpecEditingDisplayList.List.Rows.Add(row);
-                
+                // Auto-fix data type int to integer
+                if (row.Length > 3 && row[2].ToLower() == "int")
+                    row[2] = "integer";
+
+                ColumnSpecEditingDisplayList.List.Rows.Add(row);
+
             }
 
-			mAddingMapping = false;
+            mAddingMapping = false;
         }
 
-        private void AddEditingColumnForOutputColumnName() {
-            DataGridViewTextBoxColumn col1 = new DataGridViewTextBoxColumn();
-            col1.Name = "Output Column";
+        private void AddEditingColumnForOutputColumnName()
+        {
+            var col1 = new DataGridViewTextBoxColumn {Name = "Output Column"};
             ColumnSpecEditingDisplayList.List.Columns.Add(col1);
         }
 
-        private void AddEditingColumnForInputColumnName(bool useInputColPicker) {
-            if (mInputColumnDefs.Count > 0 && useInputColPicker) {
-                DataGridViewComboBoxColumn col2 = new DataGridViewComboBoxColumn();
-                col2.Name = "Input Column";
-                col2.DisplayStyle = DataGridViewComboBoxDisplayStyle.ComboBox;
-                col2.FlatStyle = FlatStyle.Popup;
+        private void AddEditingColumnForInputColumnName(bool useInputColPicker)
+        {
+            if (mInputColumnDefs.Count > 0 && useInputColPicker)
+            {
+                var col2 = new DataGridViewComboBoxColumn
+                {
+                    Name = "Input Column",
+                    DisplayStyle = DataGridViewComboBoxDisplayStyle.ComboBox,
+                    FlatStyle = FlatStyle.Popup
+                };
                 col2.Items.AddRange("", "+");
-                foreach (MageColumnDef colDef in mInputColumnDefs) {
+                foreach (var colDef in mInputColumnDefs)
+                {
                     col2.Items.Add(colDef.Name);
                 }
                 ColumnSpecEditingDisplayList.List.Columns.Add(col2);
-            } else {
-                DataGridViewTextBoxColumn col2 = new DataGridViewTextBoxColumn();
-                col2.Name = "Input Column";
+            }
+            else
+            {
+                var col2 = new DataGridViewTextBoxColumn {Name = "Input Column"};
                 ColumnSpecEditingDisplayList.List.Columns.Add(col2);
             }
         }
 
-        private void AddEditingColumnForDataType() {
-            DataGridViewComboBoxColumn col3 = new DataGridViewComboBoxColumn();
-            col3.Name = "Data Type";
-            col3.DisplayStyle = DataGridViewComboBoxDisplayStyle.ComboBox;
-            col3.FlatStyle = FlatStyle.Popup;
+        private void AddEditingColumnForDataType()
+        {
+            var col3 = new DataGridViewComboBoxColumn
+            {
+                Name = "Data Type",
+                DisplayStyle = DataGridViewComboBoxDisplayStyle.ComboBox,
+                FlatStyle = FlatStyle.Popup
+            };
             col3.Items.AddRange("", "text", "integer", "smallint", "double", "real", "float", "char", "datetime");
             ColumnSpecEditingDisplayList.List.Columns.Add(col3);
         }
 
-        private void AddEditingColumnForDataSize() {
-            DataGridViewTextBoxColumn col4 = new DataGridViewTextBoxColumn();
-            col4.Name = "Data Size";
+        private void AddEditingColumnForDataSize()
+        {
+            var col4 = new DataGridViewTextBoxColumn {Name = "Data Size"};
             ColumnSpecEditingDisplayList.List.Columns.Add(col4);
         }
 
@@ -449,16 +485,22 @@ namespace MageUIComponents {
         /// try to find a match in input column list and set it if found
         /// </summary>
         /// <param name="rows"></param>
-        private static void AddMissingInputColumns(Collection<string[]> rows, Collection<MageColumnDef> colDefs) {
+        /// <param name="colDefs"></param>
+        private static void AddMissingInputColumns(Collection<string[]> rows, Collection<MageColumnDef> colDefs)
+        {
             // make list of input column names
-            List<string> inputColList = new List<string>();
-            foreach (MageColumnDef colDef in colDefs) {
+            var inputColList = new List<string>();
+            foreach (var colDef in colDefs)
+            {
                 inputColList.Add(colDef.Name);
             }
             // try to match up missing input columns
-            foreach (string[] row in rows) {
-                if (string.IsNullOrEmpty(row[1]) && row[0] != "*") {
-                    if (inputColList.Contains(row[0])) {
+            foreach (var row in rows)
+            {
+                if (string.IsNullOrEmpty(row[1]) && row[0] != "*")
+                {
+                    if (inputColList.Contains(row[0]))
+                    {
                         row[1] = row[0];
                     }
                 }
@@ -470,8 +512,9 @@ namespace MageUIComponents {
         /// int a column list in column mapping format
         /// </summary>
         /// <returns></returns>
-        private string GetColListFromEditingPanel() {
-            Collection<string[]> colItems = GetColumnSpecItemsFromEditingPanel();
+        private string GetColListFromEditingPanel()
+        {
+            var colItems = GetColumnSpecItemsFromEditingPanel();
             return GetColumnListFromColumnSpecItems(colItems);
         }
 
@@ -480,12 +523,16 @@ namespace MageUIComponents {
         /// as a collection of field arrays
         /// </summary>
         /// <returns></returns>
-        private Collection<string[]> GetColumnSpecItemsFromEditingPanel() {
-            Collection<string[]> colItems = new Collection<string[]>();
-            foreach (DataGridViewRow lvi in ColumnSpecEditingDisplayList.List.Rows) {
-                string[] colItem = new string[] { "", "", "", "" };
-                for (int i = 0; i < 4; i++) {
-                    if (lvi.Cells[i].Value != null) {
+        private Collection<string[]> GetColumnSpecItemsFromEditingPanel()
+        {
+            var colItems = new Collection<string[]>();
+            foreach (DataGridViewRow lvi in ColumnSpecEditingDisplayList.List.Rows)
+            {
+                var colItem = new[] { "", "", "", "" };
+                for (var i = 0; i < 4; i++)
+                {
+                    if (lvi.Cells[i].Value != null)
+                    {
                         colItem[i] = lvi.Cells[i].Value.ToString();
                     }
                 }
@@ -500,14 +547,16 @@ namespace MageUIComponents {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AddNewColumnMappingBtn_Click(object sender, EventArgs e) {
+        private void AddNewColumnMappingBtn_Click(object sender, EventArgs e)
+        {
 
-            if (!IsColumnMappingNameUnique(MappingName)) {
+            if (!IsColumnMappingNameUnique(MappingName))
+            {
                 MessageBox.Show("There is already a column mapping with the same name");
                 return;
             }
-			string[] data = new string[] { MappingName, MappingDescription, GetColListFromEditingPanel(), "", "" };
-            MageDataEventArgs args = new MageDataEventArgs(data);
+            var data = new[] { MappingName, MappingDescription, GetColListFromEditingPanel(), "", "" };
+            var args = new MageDataEventArgs(data);
             ColumnMappingDisplayList.HandleDataRow(this, args);
             ColumnMappingDisplayList.HandleDataRow(this, new MageDataEventArgs(null));
             UnsavedChanges(true);
@@ -520,9 +569,11 @@ namespace MageUIComponents {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ReplaceExistingColumnMapptingBtn_Click(object sender, EventArgs e) {
-            if (ColumnMappingDisplayList.SelectedItemCount > 0) {
-                DataGridViewRow lvi = ColumnMappingDisplayList.List.SelectedRows[0];
+        private void ReplaceExistingColumnMapptingBtn_Click(object sender, EventArgs e)
+        {
+            if (ColumnMappingDisplayList.SelectedItemCount > 0)
+            {
+                var lvi = ColumnMappingDisplayList.List.SelectedRows[0];
                 lvi.Cells[0].Value = MappingName;
                 lvi.Cells[1].Value = MappingDescription;
                 lvi.Cells[2].Value = GetColListFromEditingPanel();
@@ -535,7 +586,8 @@ namespace MageUIComponents {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DeleteColumnSpecBtn_Click(object sender, EventArgs e) {
+        private void DeleteColumnSpecBtn_Click(object sender, EventArgs e)
+        {
             ColumnSpecEditingDisplayList.DeleteSelectedItems();
         }
 
@@ -544,9 +596,11 @@ namespace MageUIComponents {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ClearEditingPanelBtn_Click(object sender, EventArgs e) {
-            DialogResult r = MessageBox.Show("Are you sure you want to clear the current column mapping?", "Confirm clear", MessageBoxButtons.OKCancel);
-            if (r == DialogResult.OK) {
+        private void ClearEditingPanelBtn_Click(object sender, EventArgs e)
+        {
+            var r = MessageBox.Show("Are you sure you want to clear the current column mapping?", "Confirm clear", MessageBoxButtons.OKCancel);
+            if (r == DialogResult.OK)
+            {
                 MappingName = "New Column Map";
                 MappingDescription = "";
                 ColumnSpecEditingDisplayList.List.Rows.Clear();
@@ -558,8 +612,9 @@ namespace MageUIComponents {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void NewColumnBtn_Click(object sender, EventArgs e) {
-			string[] lvi = GetDefaultNewColumn();
+        private void NewColumnBtn_Click(object sender, EventArgs e)
+        {
+            var lvi = GetDefaultNewColumn();
             ColumnSpecEditingDisplayList.List.Rows.Add(lvi);
         }
 
@@ -568,10 +623,12 @@ namespace MageUIComponents {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void InsertColumnBtn_Click(object sender, EventArgs e) {
-			string[] lvi = GetDefaultNewColumn();
-            int idx = 0;
-            if (ColumnSpecEditingDisplayList.SelectedItemCount > 0) {
+        private void InsertColumnBtn_Click(object sender, EventArgs e)
+        {
+            var lvi = GetDefaultNewColumn();
+            var idx = 0;
+            if (ColumnSpecEditingDisplayList.SelectedItemCount > 0)
+            {
                 idx = ColumnSpecEditingDisplayList.List.SelectedRows[0].Index;
             }
             ColumnSpecEditingDisplayList.List.Rows.Insert(idx, lvi);
@@ -582,8 +639,8 @@ namespace MageUIComponents {
         /// </summary>
         /// <returns></returns>
 		private static string[] GetDefaultNewColumn()
-		{
-			string[] newColData = new string[] { "New_Column", "", "text", "" };
+        {
+            var newColData = new[] { "New_Column", "", "text", "" };
             return newColData;
         }
 
@@ -592,11 +649,13 @@ namespace MageUIComponents {
 
         #region List Item Movement
 
-        private void MoveColSpecItemUpBtn_Click(object sender, EventArgs e) {
+        private void MoveColSpecItemUpBtn_Click(object sender, EventArgs e)
+        {
             ColumnSpecEditingDisplayList.MoveListItem(true);
         }
 
-        private void MoveColSpecItemDownBtn_Click(object sender, EventArgs e) {
+        private void MoveColSpecItemDownBtn_Click(object sender, EventArgs e)
+        {
             ColumnSpecEditingDisplayList.MoveListItem(false);
         }
 
@@ -608,7 +667,8 @@ namespace MageUIComponents {
         /// Enable/disable controls depending on unsaved status
         /// </summary>
         /// <param name="dirty"></param>
-        private void UnsavedChanges(bool dirty) {
+        private void UnsavedChanges(bool dirty)
+        {
             SaveColumnMappingsBtn.Enabled = dirty;
         }
 
@@ -616,7 +676,8 @@ namespace MageUIComponents {
         /// Are there unsaved changes to the column mapping
         /// </summary>
         /// <returns></returns>
-        private bool UnsavedChanges() {
+        private bool UnsavedChanges()
+        {
             return SaveColumnMappingsBtn.Enabled;
         }
 
@@ -626,10 +687,13 @@ namespace MageUIComponents {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ColumnMappingForm_FormClosing(object sender, FormClosingEventArgs e) {
-            if (UnsavedChanges()) {
-                DialogResult r = MessageBox.Show("There are unsaved changes - are you sure you want to close", "Confirm close", MessageBoxButtons.OKCancel);
-                if (r != DialogResult.OK) {
+        private void ColumnMappingForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (UnsavedChanges())
+            {
+                var r = MessageBox.Show("There are unsaved changes - are you sure you want to close", "Confirm close", MessageBoxButtons.OKCancel);
+                if (r != DialogResult.OK)
+                {
                     e.Cancel = true;
                 }
             }
@@ -637,21 +701,21 @@ namespace MageUIComponents {
 
         #endregion
 
-		#region Event Handlers
+        #region Event Handlers
 
-		private void HandleColumnSpecEditingListDataError(object sender, DataGridViewDataErrorEventArgs e)
-		{
-			string sAction;
+        private void HandleColumnSpecEditingListDataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            string sAction;
 
-			if (mAddingMapping)
-				sAction = "Error adding mapping";
-			else
-				sAction = "Data grid error";
+            if (mAddingMapping)
+                sAction = "Error adding mapping";
+            else
+                sAction = "Data grid error";
 
-			System.Windows.Forms.MessageBox.Show(sAction + ", row " + (e.RowIndex+1) + ", column " + (e.ColumnIndex+1) + ": " + e.Exception.Message);
-		}
+            MessageBox.Show(sAction + ", row " + (e.RowIndex + 1) + ", column " + (e.ColumnIndex + 1) + ": " + e.Exception.Message);
+        }
 
-		#endregion
+        #endregion
 
         #region Column Cleanup Functions
 
@@ -659,9 +723,12 @@ namespace MageUIComponents {
         /// Clean off superflous data size values for data types that don't need them
         /// </summary>
         /// <param name="colDefs"></param>
-        private static void NormalizeColumnSize(Collection<MageColumnDef> colDefs) {
-            foreach (MageColumnDef colDef in colDefs) {
-                switch (colDef.DataType) {
+        private static void NormalizeColumnSize(Collection<MageColumnDef> colDefs)
+        {
+            foreach (var colDef in colDefs)
+            {
+                switch (colDef.DataType)
+                {
                     case "text":
                     case "int":
                     case "float":
@@ -678,15 +745,20 @@ namespace MageUIComponents {
         /// <summary>
         /// </summary>
         /// <returns></returns>
-        private BaseModule GetReaderForInputPreview() {
+        private BaseModule GetReaderForInputPreview()
+        {
             BaseModule rdr = null;
-            if (mInputFileInfo.ContainsKey("Name") && mInputFileInfo.ContainsKey("Folder")) {
-                DelimitedFileReader reader = new DelimitedFileReader();
-                reader.FilePath = Path.Combine(mInputFileInfo["Folder"], mInputFileInfo["Name"]);
+            if (mInputFileInfo.ContainsKey("Name") && mInputFileInfo.ContainsKey("Folder"))
+            {
+                var reader = new DelimitedFileReader
+                {
+                    FilePath = Path.Combine(mInputFileInfo["Folder"], mInputFileInfo["Name"])
+                };
                 rdr = reader;
                 mPreviewSourceLabel = Path.GetFileName(mInputFileInfo["Name"]);
             }
-            if (rdr == null) {
+            if (rdr == null)
+            {
                 throw new MageException("No input file was selected");
             }
             return rdr;
@@ -699,22 +771,30 @@ namespace MageUIComponents {
         /// to read preview of selected file processing output file/database
         /// </summary>
         /// <returns></returns>
-        private BaseModule GetReaderForOutputPreview() {
+        private BaseModule GetReaderForOutputPreview()
+        {
             BaseModule rdr = null;
-            if (mOutputInfo.ContainsKey("OutputFolder") && mOutputInfo.ContainsKey("OutputFile")) {
-                DelimitedFileReader reader = new DelimitedFileReader();
-                reader.FilePath = Path.Combine(mOutputInfo["OutputFolder"], mOutputInfo["OutputFile"]);
+            if (mOutputInfo.ContainsKey("OutputFolder") && mOutputInfo.ContainsKey("OutputFile"))
+            {
+                var reader = new DelimitedFileReader
+                {
+                    FilePath = Path.Combine(mOutputInfo["OutputFolder"], mOutputInfo["OutputFile"])
+                };
                 rdr = reader;
                 mPreviewSourceLabel = Path.GetFileName(mOutputInfo["OutputFile"]);
             }
-            if (mOutputInfo.ContainsKey("DatabaseName")) {
-                SQLiteReader reader = new SQLiteReader();
-                reader.Database = mOutputInfo["DatabaseName"];
-                reader.SQLText = string.Format("SELECT * FROM \"{0}\";", mOutputInfo["TableName"]);
+            if (mOutputInfo.ContainsKey("DatabaseName"))
+            {
+                var reader = new SQLiteReader
+                {
+                    Database = mOutputInfo["DatabaseName"],
+                    SQLText = string.Format("SELECT * FROM \"{0}\";", mOutputInfo["TableName"])
+                };
                 rdr = reader;
                 mPreviewSourceLabel = Path.GetFileName(mOutputInfo["DatabaseName"]) + "/" + mOutputInfo["TableName"];
             }
-            if (rdr == null) {
+            if (rdr == null)
+            {
                 throw new MageException("No ouput file or database was specified");
             }
             return rdr;
@@ -726,12 +806,12 @@ namespace MageUIComponents {
         /// </summary>
         /// <param name="reader"></param>
         /// <returns></returns>
-        private static SimpleSink GetPreviewFromSource(BaseModule reader, int numRows) {
-            SimpleSink sink = new SimpleSink();
-            sink.RowsToSave = numRows;
+        private static SimpleSink GetPreviewFromSource(BaseModule reader, int numRows)
+        {
+            var sink = new SimpleSink {RowsToSave = numRows};
 
-			ProcessingPipeline pipeline = ProcessingPipeline.Assemble("GetFileColumns", reader, sink);
-			pipeline.RunRoot(null);
+            var pipeline = ProcessingPipeline.Assemble("GetFileColumns", reader, sink);
+            pipeline.RunRoot(null);
 
             return sink;
         }
@@ -741,38 +821,48 @@ namespace MageUIComponents {
         /// preview from file processing input target
         /// </summary>
         /// <returns></returns>
-        private SimpleSink GetInputPreview(int numRows) {
-            BaseModule reader = GetReaderForInputPreview();
-            SimpleSink sink = GetPreviewFromSource(reader, numRows);
+        private SimpleSink GetInputPreview(int numRows)
+        {
+            var reader = GetReaderForInputPreview();
+            var sink = GetPreviewFromSource(reader, numRows);
             ImputeColumnTypes(sink);
             InitializeInputColumnDefs(sink.Columns);
             return sink;
         }
 
-        private static void ImputeColumnTypes(SimpleSink sink) {
+        private static void ImputeColumnTypes(SimpleSink sink)
+        {
             //a) If it has letters, then is text/varchar
             //b) If has a decimal point, then it's a float
             //c) Otherwise, it's an int
-            for (int i = 0; i < sink.Columns.Count; i++) {
-                bool intType = true;
-                int intVal = 0;
-                bool floatType = true;
-                float floatVal = 0;
-				foreach (string[] row in sink.Rows)
-				{
-                    if (!int.TryParse(row[i], out intVal)) {
+            for (var i = 0; i < sink.Columns.Count; i++)
+            {
+                var intType = true;
+                var floatType = true;
+                foreach (var row in sink.Rows)
+                {
+                    var intVal = 0;
+                    if (!int.TryParse(row[i], out intVal))
+                    {
                         intType = false;
                     }
-                    if (!float.TryParse(row[i], out floatVal)) {
+                    float floatVal = 0;
+                    if (!float.TryParse(row[i], out floatVal))
+                    {
                         floatType = false;
                     }
                 }
                 sink.Columns[i].Size = "";
-                if (intType) {
+                if (intType)
+                {
                     sink.Columns[i].DataType = "integer";
-                } else if (floatType) {
+                }
+                else if (floatType)
+                {
                     sink.Columns[i].DataType = "float";
-                } else {
+                }
+                else
+                {
                     sink.Columns[i].DataType = "text";
                 }
             }
@@ -783,9 +873,10 @@ namespace MageUIComponents {
         /// preview from file processing output target
         /// </summary>
         /// <returns></returns>
-        private SimpleSink GetOutputPreview(int numRows) {
-            BaseModule reader = GetReaderForOutputPreview();
-            SimpleSink sink = GetPreviewFromSource(reader, numRows);
+        private SimpleSink GetOutputPreview(int numRows)
+        {
+            var reader = GetReaderForOutputPreview();
+            var sink = GetPreviewFromSource(reader, numRows);
             return sink;
         }
 
@@ -793,7 +884,8 @@ namespace MageUIComponents {
         /// setup input column stuff from given set of column definitions
         /// </summary>
         /// <param name="colDefs"></param>
-        private void InitializeInputColumnDefs(Collection<MageColumnDef> colDefs) {
+        private void InitializeInputColumnDefs(Collection<MageColumnDef> colDefs)
+        {
             NormalizeColumnSize(colDefs);
             mInputColumnDefs = colDefs;
         }
@@ -803,41 +895,52 @@ namespace MageUIComponents {
         /// in the preview display list
         /// </summary>
         /// <param name="sink"></param>
-        private void DisplayPreviewRows(BaseModule sink) {
-            ISinkModule display = RowPreviewDisplayList.MakeSink();
-            ProcessingPipeline pipeline = ProcessingPipeline.Assemble("DisplayPreview", sink, display);
+        private void DisplayPreviewRows(BaseModule sink)
+        {
+            var display = RowPreviewDisplayList.MakeSink();
+            var pipeline = ProcessingPipeline.Assemble("DisplayPreview", sink, display);
             pipeline.RunRoot(null);
             RowPreviewDisplayList.PageTitle = "Preview of " + mPreviewSourceLabel;
         }
 
-        private void LoadColumnListFromInput() {
-            try {
-                SimpleSink sink = GetInputPreview(PreviewRowLimit);
+        private void LoadColumnListFromInput()
+        {
+            try
+            {
+                var sink = GetInputPreview(PreviewRowLimit);
                 DisplayColumnListInEditingPanel(mInputColumnDefs);
                 DisplayPreviewRows(sink);
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 MessageBox.Show(e.Message);
             }
         }
 
-        private void LoadColumnListFromOutput() {
-            try {
+        private void LoadColumnListFromOutput()
+        {
+            try
+            {
                 GetInputPreview(2);
-                SimpleSink sink = GetOutputPreview(PreviewRowLimit);
-                Collection<MageColumnDef> colDefs = sink.Columns;
+                var sink = GetOutputPreview(PreviewRowLimit);
+                var colDefs = sink.Columns;
                 NormalizeColumnSize(colDefs);
                 DisplayColumnListInEditingPanel(colDefs);
                 DisplayPreviewRows(sink);
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 MessageBox.Show(e.Message);
             }
         }
 
-        private void LoadColumnListFromInputBtn_Click(object sender, EventArgs e) {
+        private void LoadColumnListFromInputBtn_Click(object sender, EventArgs e)
+        {
             LoadColumnListFromInput();
         }
 
-        private void LoadColumnListFromOutputBtn_Click(object sender, EventArgs e) {
+        private void LoadColumnListFromOutputBtn_Click(object sender, EventArgs e)
+        {
             LoadColumnListFromOutput();
         }
 

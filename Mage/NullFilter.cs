@@ -15,7 +15,7 @@ namespace Mage
         {
             if (OutputColumnDefs != null)
             {
-                string[] outRow = MapDataRow(vals);
+                var outRow = MapDataRow(vals);
                 vals = outRow;
             }
             return true;

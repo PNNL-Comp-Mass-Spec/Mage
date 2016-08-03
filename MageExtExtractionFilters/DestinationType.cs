@@ -18,11 +18,11 @@ namespace MageExtExtractionFilters
 
         #region Properties
 
-        public Types Type { get; set; }
+        public Types Type { get; }
 
-        public string ContainerPath { get; set; }
+        public string ContainerPath { get; }
 
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary>
         /// Return an appropriate name for the metadata file or table
@@ -31,7 +31,7 @@ namespace MageExtExtractionFilters
         {
             get
             {
-                string destName = "";
+                var destName = "";
                 switch (Type)
                 {
                     case DestinationType.Types.SQLite_Output:
@@ -60,7 +60,7 @@ namespace MageExtExtractionFilters
         {
             get
             {
-                string destName = "";
+                var destName = "";
                 switch (Type)
                 {
                     case DestinationType.Types.SQLite_Output:
@@ -89,7 +89,7 @@ namespace MageExtExtractionFilters
         {
             get
             {
-                string destName = "";
+                var destName = "";
                 switch (Type)
                 {
                     case DestinationType.Types.SQLite_Output:
@@ -114,11 +114,6 @@ namespace MageExtExtractionFilters
         #endregion
 
         #region Constructors
-
-        public DestinationType()
-        {
-
-        }
 
         public DestinationType(string type, string path, string name)
         {
@@ -149,7 +144,7 @@ namespace MageExtExtractionFilters
         {
             get
             {
-                string filePath = "";
+                var filePath = "";
                 if (Type == Types.File_Output && !string.IsNullOrEmpty(Name))
                 {
                     filePath = Path.Combine(ContainerPath, Name);
@@ -167,10 +162,10 @@ namespace MageExtExtractionFilters
         /// <returns></returns>
         public static bool VerifyDestinationOptionsWithUser(DestinationType destination)
         {
-            bool ok = true;
+            var ok = true;
             if (!string.IsNullOrEmpty(destination.FilePath))
             {
-                StringBuilder sb = new StringBuilder();
+                var sb = new StringBuilder();
                 sb.AppendLine(string.Format("A copy of file '{0}' exists.  What action do you wish to take?", destination.Name));
                 sb.AppendLine("");
                 sb.AppendLine("Yes - delete existing file and continue with extraction");
@@ -178,7 +173,7 @@ namespace MageExtExtractionFilters
                 sb.AppendLine("Cancel - retain existing file and abort extraction");
                 if (File.Exists(destination.FilePath))
                 {
-                    DialogResult dr = MessageBox.Show(sb.ToString(), "Output file options", MessageBoxButtons.YesNoCancel);
+                    var dr = MessageBox.Show(sb.ToString(), "Output file options", MessageBoxButtons.YesNoCancel);
                     switch (dr)
                     {
                         case DialogResult.Cancel:
@@ -216,6 +211,7 @@ namespace MageExtExtractionFilters
         /// <summary>
         /// get destination writer module based on destination type
         /// </summary>
+        /// <param name="prefix"></param>
         /// <param name="inputFilePath"></param>
         /// <returns></returns>
         public BaseModule GetDestinationWriterModule(string prefix, string inputFilePath)
@@ -228,17 +224,22 @@ namespace MageExtExtractionFilters
                 case DestinationType.Types.SQLite_Output:
                     autoName = prefix + "_" + Path.GetFileNameWithoutExtension(inputFilePath);
                     destName = (!string.IsNullOrEmpty(this.Name)) ? this.Name : autoName;
-                    SQLiteWriter sw = new SQLiteWriter();
-                    sw.DbPath = this.ContainerPath;
-                    sw.TableName = destName.Replace("-", "_");
+                    var sw = new SQLiteWriter
+                    {
+                        DbPath = this.ContainerPath,
+                        TableName = destName.Replace("-", "_")
+                    };
                     writer = sw;
                     break;
                 case DestinationType.Types.File_Output:
                     autoName = prefix + "_" + Path.GetFileName(inputFilePath);
                     destName = (!string.IsNullOrEmpty(this.Name)) ? this.Name : autoName;
-                    DelimitedFileWriter dw = new DelimitedFileWriter();
-                    dw.FilePath = Path.Combine(this.ContainerPath, destName);
-                    dw.Append = "Yes"; // TODO: only append if concatenating
+                    var dw = new DelimitedFileWriter
+                    {
+                        FilePath = Path.Combine(this.ContainerPath, destName),
+                        Append = "Yes"
+                    };
+                    // TODO: only append if concatenating
                     writer = dw;
                     break;
             }

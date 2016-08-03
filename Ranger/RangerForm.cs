@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using MageUIComponents;
 using Mage;
 using MageDisplayLib;
 using RangerLib;
@@ -24,14 +18,14 @@ namespace Ranger {
                 // set up configuration folder and files
                 SavedState.SetupConfigFiles("MageRanger");
             } catch (Exception ex) {
-                System.Windows.Forms.MessageBox.Show("Error loading settings: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Error loading settings: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
 
 			try {
 				// restore settings to UI component panels
 				SavedState.RestoreSavedPanelParameters(PanelSupport.GetParameterPanelList(this));
 			} catch (Exception ex) {
-				System.Windows.Forms.MessageBox.Show("Error restoring saved settings; will auto-delete SavedState.xml.  Message details: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show("Error restoring saved settings; will auto-delete SavedState.xml.  Message details: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				// Delete the SavedState.xml file
 				try {
 					System.IO.File.Delete(SavedState.FilePath);
@@ -79,7 +73,7 @@ namespace Ranger {
 
         private void SaveBtn_Click(object sender, EventArgs e) {
             StatusCtl.Text = "Processing...";
-            bool ran = BuildAndRunPipeline();
+            var ran = BuildAndRunPipeline();
             if (ran) {
                 SavedState.SaveParameters(PanelSupport.GetParameterPanelList(this));
             } else {
@@ -88,13 +82,13 @@ namespace Ranger {
         }
 
         private bool BuildAndRunPipeline() {
-            bool ran = false;
+            var ran = false;
             // make new pipeline to generate parameter table
-            ParamTableGenerator ptg = new ParamTableGenerator();
+            var ptg = new ParamTableGenerator();
 
             // populate pipeline with specs for each parameter to be generated
-            foreach (IModuleParameters iP in mParamPanels) {
-                Dictionary<string, string> p = iP.GetParameters();
+            foreach (var iP in mParamPanels) {
+                var p = iP.GetParameters();
                 if (p["Active"] == "On") {
                     ptg.AddParamColumn(p);
                 }
@@ -112,12 +106,12 @@ namespace Ranger {
             }
             // inform user of how many rows will be generated and
             // allow for confirmation or cancellation
-            string prompt = string.Format("This will generate {0} rows", ptg.GeneratedParameterCount);
-            DialogResult r = MessageBox.Show(prompt, "Confirm save", MessageBoxButtons.OKCancel);
+            var prompt = string.Format("This will generate {0} rows", ptg.GeneratedParameterCount);
+            var r = MessageBox.Show(prompt, "Confirm save", MessageBoxButtons.OKCancel);
             if (r == DialogResult.OK) {
                 // connect pipeline and run it
                 ran = true;
-                ProcessingPipeline pipeline = ptg.GetPipeline();
+                var pipeline = ptg.GetPipeline();
                 pipeline.OnStatusMessageUpdated += HandleStatusMessageUpdated;
                 pipeline.OnRunCompleted += HandlePipelineCompletion;
                 pipeline.Run();
@@ -141,7 +135,7 @@ namespace Ranger {
             // the current pipleline will call this function from its own thread
             // we need to do the cross-thread thing to update the GUI
             MessageHandler ncb = SetStatusMessage;
-            Invoke(ncb, new object[] { args.Message });
+            Invoke(ncb, args.Message);
         }
 
         /// <summary>
@@ -158,7 +152,7 @@ namespace Ranger {
             // the current pipleline will call this function from its own thread
             // we need to do the cross-thread thing to update the GUI
             MessageHandler ncb = SetStatusMessage;
-            Invoke(ncb, new object[] { args.Message });
+            Invoke(ncb, args.Message);
         }
 
         // this is targeted by the cross-thread invoke from HandleStatusMessageUpdated

@@ -48,13 +48,13 @@ namespace Mage
         /// Template to use for fields in generated header row
         /// (must be valid for string.Format)
         /// </summary>
-        public static string SimulatedHeaderTemplate { get; set; }
+        public static string SimulatedHeaderTemplate { get; }
 
         /// <summary>
         /// Template to use for fields in generated rows
         /// (must be valid for string.Format)
         /// </summary>
-        public static string SimulatedDataTemplate { get; set; }
+        public static string SimulatedDataTemplate { get; }
 
         #endregion
 
@@ -118,8 +118,8 @@ namespace Mage
 
         private void OutputAdHocRows()
         {
-            bool hx = IncludeHeaderInOutput;
-            foreach (string[] row in mAdHocRows)
+            var hx = IncludeHeaderInOutput;
+            foreach (var row in mAdHocRows)
             {
                 if (hx)
                 {
@@ -136,7 +136,7 @@ namespace Mage
 
         private void OutputGeneratedRows()
         {
-            for (int i = 0; i < Rows; i++)
+            for (var i = 0; i < Rows; i++)
             {
                 string[] fields;
                 if (i == 0 && IncludeHeaderInOutput)
@@ -158,7 +158,7 @@ namespace Mage
         public static string[] MakeSimulatedHeaderRow(int numCols)
         {
             var row = new string[numCols];
-            for (int j = 0; j < numCols; j++)
+            for (var j = 0; j < numCols; j++)
             {
                 row[j] = string.Format(SimulatedHeaderTemplate, j + 1);
             }
@@ -174,7 +174,7 @@ namespace Mage
         public static string[] MakeSimulatedDataRow(int i, int numCols)
         {
             var row = new string[numCols];
-            for (int j = 0; j < numCols; j++)
+            for (var j = 0; j < numCols; j++)
             {
                 row[j] = string.Format(SimulatedDataTemplate, i + 1, j + 1);
             }
@@ -185,7 +185,7 @@ namespace Mage
         {
             // output the column definitions
             var columnDefs = new List<MageColumnDef>();
-            foreach (string field in fields)
+            foreach (var field in fields)
             {
                 var colDef = new MageColumnDef(field, "text", "10");
                 columnDefs.Add(colDef);

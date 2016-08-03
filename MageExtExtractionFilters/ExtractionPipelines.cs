@@ -169,7 +169,7 @@ namespace MageExtExtractionFilters
                     return msg;
                 }
 
-                bool bInvalid = true;
+                var bInvalid = true;
 
                 if (t.ToLower() == "msgfplus" && f.ToLower().StartsWith("msgfplus"))
                 {

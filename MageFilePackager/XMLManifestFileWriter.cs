@@ -14,6 +14,11 @@ namespace MageFilePackager
 
         private StreamWriter _mOutFile;
 
+        public XMLManifestFileWriter(string filePath)
+        {
+            FilePath = filePath;
+        }
+
         #endregion
 
         #region Properties
@@ -21,7 +26,7 @@ namespace MageFilePackager
         /// <summary>
         /// full path for output files
         /// </summary>
-        public string FilePath { get; set; }
+        public string FilePath { get; }
 
         public Dictionary<string, string> Prefixes { get; set; }
 
@@ -72,7 +77,7 @@ namespace MageFilePackager
         /// </summary>
         public override void Prepare()
         {
-            string dirPath = Path.GetDirectoryName(FilePath);
+            var dirPath = Path.GetDirectoryName(FilePath);
             if (!string.IsNullOrEmpty(dirPath) && !Directory.Exists(dirPath))
             {
                 Directory.CreateDirectory(dirPath);
@@ -144,7 +149,7 @@ namespace MageFilePackager
             //            _mOutFile.WriteLine("<paths>");
             if (Prefixes != null)
             {
-                foreach (KeyValuePair<string, string> kv in Prefixes)
+                foreach (var kv in Prefixes)
                 {
                     _mOutFile.WriteLine(string.Format("<prefix source='{0}' value='{1}' />", kv.Key, kv.Value));
                 }
@@ -161,7 +166,7 @@ namespace MageFilePackager
         {
             var sb = new StringBuilder();
             sb.Append("<path ");
-            for (int i = 0; i < InputColumnDefs.Count; i++)
+            for (var i = 0; i < InputColumnDefs.Count; i++)
             {
                 sb.Append(string.Format("{0}='{1}' ", InputColumnDefs[i].Name, vals[i]));
             }

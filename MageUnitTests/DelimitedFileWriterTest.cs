@@ -12,69 +12,22 @@ namespace MageUnitTests
     public class DelimitedFileWriterTest
     {
 
-
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #region Additional test attributes
-        // 
-        //You can use the following additional attributes as you write your tests:
-        //
-        //Use ClassInitialize to run code before running the first test in the class
-        //[ClassInitialize()]
-        //public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
-        //
-        //Use ClassCleanup to run code after all tests in a class have run
-        //[ClassCleanup()]
-        //public static void MyClassCleanup()
-        //{
-        //}
-        //
-        //Use TestInitialize to run code before running each test
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
-        //Use TestCleanup to run code after each test has run
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        //
-        #endregion
-
         [TestMethod()]
         public void WriteTest()
         {
-            int cols = 5;
-            int rows = 21;
-            string testFile = "delim_test.txt";
+            var cols = 5;
+            var rows = 21;
+            var testFile = "delim_test.txt";
 
-            DataGenerator dGen = new DataGenerator();
-            dGen.Rows = rows;
-            dGen.Cols = cols;
+            var dGen = new DataGenerator
+            {
+                Rows = rows,
+                Cols = cols
+            };
 
-            SimpleSink source = WriteDelimitedFileWithTestData(testFile, dGen);
+            var source = WriteDelimitedFileWithTestData(testFile, dGen);
 
-            SimpleSink result = DelimitedFileReaderTest.ReadDelimitedFile(testFile);
+            var result = DelimitedFileReaderTest.ReadDelimitedFile(testFile);
 
             Assert.AreEqual(rows, source.Rows.Count, "Source row count does not match");
             Assert.AreEqual(cols, source.Columns.Count, "Source column count does ot match");
@@ -85,7 +38,7 @@ namespace MageUnitTests
 
         public SimpleSink WriteDelimitedFileWithTestData(string filePath, IBaseModule dGen)
         {
-            ProcessingPipeline pipeline = new ProcessingPipeline("Delimited_File_Writer");
+            var pipeline = new ProcessingPipeline("Delimited_File_Writer");
 
             pipeline.RootModule = pipeline.AddModule("Gen", dGen);
             pipeline.MakeModule("Writer", "DelimitedFileWriter");
@@ -98,7 +51,7 @@ namespace MageUnitTests
 
             pipeline.RunRoot(null);
 
-            SimpleSink result = (SimpleSink)pipeline.GetModule("Results");
+            var result = (SimpleSink)pipeline.GetModule("Results");
             return result;
         }
 
@@ -110,11 +63,10 @@ namespace MageUnitTests
         [TestMethod()]
         public void HeaderTest()
         {
-            DelimitedFileWriter target = new DelimitedFileWriter();
-            string expected = "Test Value";
-            string actual;
+            var target = new DelimitedFileWriter();
+            var expected = "Test Value";
             target.Header = expected;
-            actual = target.Header;
+            var actual = target.Header;
             Assert.AreEqual(expected, actual);
         }
 
@@ -124,11 +76,10 @@ namespace MageUnitTests
         [TestMethod()]
         public void FilePathTest()
         {
-            DelimitedFileWriter target = new DelimitedFileWriter();
-            string expected = "Test Value";
-            string actual;
+            var target = new DelimitedFileWriter();
+            var expected = "Test Value";
             target.FilePath = expected;
-            actual = target.FilePath;
+            var actual = target.FilePath;
             Assert.AreEqual(expected, actual);
         }
 
@@ -138,11 +89,10 @@ namespace MageUnitTests
         [TestMethod()]
         public void DelimiterTest()
         {
-            DelimitedFileWriter target = new DelimitedFileWriter();
-            string expected = ",";
-            string actual;
+            var target = new DelimitedFileWriter();
+            var expected = ",";
             target.Delimiter = expected;
-            actual = target.Delimiter;
+            var actual = target.Delimiter;
             Assert.AreEqual(expected, actual);
         }
     }

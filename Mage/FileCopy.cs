@@ -82,11 +82,11 @@ namespace Mage
         {
             try
             {
-                bool bShowDoneMsg = true;
+                var bShowDoneMsg = true;
 
                 if (sourcePath.StartsWith(MYEMSL_PATH_FLAG))
                 {
-                    Int64 myEMSLFileID = DatasetInfoBase.ExtractMyEMSLFileID(sourcePath);
+                    var myEMSLFileID = DatasetInfoBase.ExtractMyEMSLFileID(sourcePath);
                     string destPathClean;
                     DatasetInfoBase.ExtractMyEMSLFileID(destPath, out destPathClean);
 
@@ -123,7 +123,7 @@ namespace Mage
                     UpdateStatus(this, new MageStatusEventArgs("Start Copy->" + sourceFile));
                     if (OverwriteExistingFiles)
                     {
-                        bool bFileExists = File.Exists(destPath);
+                        var bFileExists = File.Exists(destPath);
                         File.Copy(sourcePath, destPath, true);
                         if (bFileExists)
                         {
@@ -211,11 +211,11 @@ namespace Mage
                 string prefix;
                 if (InputColumnPos.ContainsKey(ColumnToUseForPrefix))
                 {
-                    string leader = (!string.IsNullOrEmpty(PrefixLeader)) ? PrefixLeader + "_" : "";
+                    var leader = (!string.IsNullOrEmpty(PrefixLeader)) ? PrefixLeader + "_" : "";
                     prefix = leader + fields[fieldPos[ColumnToUseForPrefix]];
 
                     // Replace any invalid characters with an underscore
-                    foreach (char chInvalidChar in Path.GetInvalidFileNameChars())
+                    foreach (var chInvalidChar in Path.GetInvalidFileNameChars())
                         prefix = prefix.Replace(chInvalidChar, '_');
 
                 }
@@ -237,8 +237,8 @@ namespace Mage
         protected void CopyAll(DirectoryInfo source, DirectoryInfo target)
         {
 
-            string sourceFile = "??";
-            string sourcePath = "??";
+            var sourceFile = "??";
+            var sourcePath = "??";
 
             try
             {
@@ -259,7 +259,7 @@ namespace Mage
             try
             {
                 // Copy each file into its new directory.
-                foreach (FileInfo fi in source.GetFiles())
+                foreach (var fi in source.GetFiles())
                 {
                     sourceFile = fi.Name;
                     sourcePath = fi.FullName;
@@ -270,11 +270,11 @@ namespace Mage
                 }
 
                 // Copy each subdirectory using recursion.
-                foreach (DirectoryInfo diSourceSubDir in source.GetDirectories())
+                foreach (var diSourceSubDir in source.GetDirectories())
                 {
                     try
                     {
-                        DirectoryInfo nextTargetSubDir = target.CreateSubdirectory(diSourceSubDir.Name);
+                        var nextTargetSubDir = target.CreateSubdirectory(diSourceSubDir.Name);
                         CopyAll(diSourceSubDir, nextTargetSubDir);
 
                     }
@@ -322,7 +322,9 @@ namespace Mage
         /// <param name="target">Path that folder will be copied to</param>
         protected void CopyAllMyEMSL(DirectoryInfo sourceFolder, DirectoryInfo target)
         {
-
+            if (target == null)
+                throw new ArgumentNullException(nameof(target));
+            
             try
             {
                 // Check if the target directory exists, if not, create it.
@@ -344,7 +346,7 @@ namespace Mage
                 // Download the files 
                 string subDir;
                 string parentFolders;
-                string datasetName = DetermineDatasetName(sourceFolder.FullName);
+                var datasetName = DetermineDatasetName(sourceFolder.FullName);
 
                 GetMyEMSLParentFoldersAndSubDir(sourceFolder.FullName, datasetName, out subDir, out parentFolders);
 
@@ -360,23 +362,25 @@ namespace Mage
 
                     if (!string.IsNullOrEmpty(subDir))
                     {
+                        if (target.Parent == null)
+                            throw new NullReferenceException("parent directory of " + target.FullName + " is null");
+
                         // The downloader will append the subfolder name, thus use target.Parent
                         target = target.Parent;
                     }
+                    
+                    var success = ProcessMyEMSLDownloadQueue(target.FullName, Downloader.DownloadFolderLayout.SingleDataset);
 
-                    bool success = ProcessMyEMSLDownloadQueue(target.FullName, Downloader.DownloadFolderLayout.SingleDataset);
+                    if (success) return;
 
-                    if (!success)
+                    var message = "MyEMSL Download Error";
+                    if (m_MyEMSLDatasetInfoCache.ErrorMessages.Count > 0)
                     {
-                        string message = "MyEMSL Download Error";
-                        if (m_MyEMSLDatasetInfoCache.ErrorMessages.Count > 0)
-                        {
-                            message += ": " + m_MyEMSLDatasetInfoCache.ErrorMessages.First();
-                        }
-
-                        UpdateStatus(this, new MageStatusEventArgs("FAILED->" + message, 1));
-                        OnWarningMessage(new MageStatusEventArgs(message));
+                        message += ": " + m_MyEMSLDatasetInfoCache.ErrorMessages.First();
                     }
+
+                    UpdateStatus(this, new MageStatusEventArgs("FAILED->" + message, 1));
+                    OnWarningMessage(new MageStatusEventArgs(message));
                 }
 
             }

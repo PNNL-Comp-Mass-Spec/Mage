@@ -112,10 +112,7 @@ namespace Mage
                 // Code to dispose the managed resources of the class
             }
             // Code to dispose the un-managed resources of the class
-            if (mConnection != null)
-            {
-                mConnection.Dispose();
-            }
+            mConnection?.Dispose();
 
             //           isDisposed = true;
         }
@@ -149,7 +146,7 @@ namespace Mage
         {
             base.HandleColumnDef(sender, args);
             // make table schema
-            List<MageColumnDef> cd = OutputColumnDefs ?? InputColumnDefs;
+            var cd = OutputColumnDefs ?? InputColumnDefs;
             mSchema = MakeTableSchema(cd);
             // create db and table in database
             CreateTableInDatabase();
@@ -208,7 +205,7 @@ namespace Mage
                 TableName = TableName,
                 Columns = new List<ColumnSchema>()
             };
-            foreach (MageColumnDef colDef in colDefs)
+            foreach (var colDef in colDefs)
             {
                 var cs = new ColumnSchema
                 {
@@ -220,7 +217,7 @@ namespace Mage
                 {
                     foreach (var overrideDef in ColDefOverride)
                     {
-                        if (String.Compare(overrideDef.Name, cs.ColumnName, StringComparison.CurrentCultureIgnoreCase) == 0)
+                        if (string.Compare(overrideDef.Name, cs.ColumnName, StringComparison.CurrentCultureIgnoreCase) == 0)
                         {
                             cs.ColumnType = overrideDef.DataType;
                             break;
@@ -263,17 +260,14 @@ namespace Mage
         {
             if (mConnection == null)
             {
-                string sqliteConnString = CreateSQLiteConnectionString(DbPath, DbPassword);
+                var sqliteConnString = CreateSQLiteConnectionString(DbPath, DbPassword);
                 mConnection = new SQLiteConnection(sqliteConnString);
                 mConnection.Open();
             }
         }
         private void CloseDBConnection()
         {
-            if (mConnection != null)
-            {
-                mConnection.Close();
-            }
+            mConnection?.Close();
         }
 
         private void CreateTableInDatabase()
@@ -282,7 +276,7 @@ namespace Mage
             AssureDBExists();
 
             // Prepare a CREATE TABLE DDL statement
-            string stmt = BuildCreateTableQuery(mSchema);
+            var stmt = BuildCreateTableQuery(mSchema);
             traceLog.Info(Environment.NewLine + Environment.NewLine + stmt + Environment.NewLine + Environment.NewLine);
 
             try
@@ -305,26 +299,26 @@ namespace Mage
             // traceLog.Debug("preparing to insert tablular data ...");
 
             AssureDBConnection();
-            SQLiteTransaction tx = mConnection.BeginTransaction();
+            var tx = mConnection.BeginTransaction();
             // traceLog.Debug("Starting to insert block of rows for table [" + mSchema.TableName + "]");
             try
             {
                 List<DbType> columnDataTypes;
 
-                SQLiteCommand insert = BuildSQLiteInsert(mSchema, out columnDataTypes);
+                var insert = BuildSQLiteInsert(mSchema, out columnDataTypes);
 
-                foreach (string[] row in mRows)
+                foreach (var row in mRows)
                 {
                     insert.Connection = mConnection;
                     insert.Transaction = tx;
                     var pnames = new List<string>();
-                    for (int j = 0; j <= mSchema.Columns.Count - 1; j++)
+                    for (var j = 0; j <= mSchema.Columns.Count - 1; j++)
                     {
                         // Check for the row having fewer columns of data than the header
                         if (j >= row.Length)
                             break;
 
-                        string pname = "@" + GetNormalizedName(mSchema.Columns[j].ColumnName, pnames);
+                        var pname = "@" + GetNormalizedName(mSchema.Columns[j].ColumnName, pnames);
 
                         if (columnDataTypes[j] == DbType.DateTime)
                         {
@@ -393,10 +387,10 @@ namespace Mage
 
             sb.Append("CREATE TABLE [" + ts.TableName + "] (" + Environment.NewLine);
 
-            for (int i = 0; i <= ts.Columns.Count - 1; i++)
+            for (var i = 0; i <= ts.Columns.Count - 1; i++)
             {
-                ColumnSchema col = ts.Columns[i];
-                string cline = BuildColumnStatement(col);
+                var col = ts.Columns[i];
+                var cline = BuildColumnStatement(col);
                 sb.Append(cline);
                 if (i < ts.Columns.Count - 1)
                 {
@@ -406,7 +400,7 @@ namespace Mage
             sb.Append(Environment.NewLine);
             sb.Append(");" + Environment.NewLine);
 
-            string query = sb.ToString();
+            var query = sb.ToString();
             return query;
         }
 
@@ -431,7 +425,7 @@ namespace Mage
                 sb.Append(" NOT NULL");
             }
 
-            string defval = StripParens(col.DefaultValue);
+            var defval = StripParens(col.DefaultValue);
             defval = DiscardNational(defval);
             //traceLog.Debug(("DEFAULT VALUE BEFORE [" & col.DefaultValue & "] AFTER [") + defval & "]")
             if (!string.IsNullOrEmpty(defval) && defval.ToUpper().Contains("GETDATE"))
@@ -461,7 +455,7 @@ namespace Mage
             }
             //builder.PageSize = 4096
             //builder.UseUTF16Encoding = True
-            string connstring = builder.ConnectionString;
+            var connstring = builder.ConnectionString;
 
             return connstring;
         }
@@ -472,7 +466,7 @@ namespace Mage
             traceLog.Debug("Creating SQLite database...");
 
             // Create the SQLite database file
-            string dirPath = Path.GetDirectoryName(sqlitePath);
+            var dirPath = Path.GetDirectoryName(sqlitePath);
             if (!string.IsNullOrEmpty(dirPath))
             {
                 Directory.CreateDirectory(dirPath);
@@ -491,7 +485,7 @@ namespace Mage
 
             var sb = new StringBuilder();
             sb.Append("INSERT INTO [" + ts.TableName + "] (");
-            for (int i = 0; i <= ts.Columns.Count - 1; i++)
+            for (var i = 0; i <= ts.Columns.Count - 1; i++)
             {
                 sb.Append("[" + ts.Columns[i].ColumnName + "]");
                 if (i < ts.Columns.Count - 1)
@@ -503,16 +497,16 @@ namespace Mage
             sb.Append(") VALUES (");
 
             var pnames = new List<string>();
-            for (int i = 0; i <= ts.Columns.Count - 1; i++)
+            for (var i = 0; i <= ts.Columns.Count - 1; i++)
             {
-                string pname = "@" + GetNormalizedName(ts.Columns[i].ColumnName, pnames);
+                var pname = "@" + GetNormalizedName(ts.Columns[i].ColumnName, pnames);
                 sb.Append(pname);
                 if (i < ts.Columns.Count - 1)
                 {
                     sb.Append(", ");
                 }
 
-                DbType dbType = GetDbTypeOfColumn(ts.Columns[i]);
+                var dbType = GetDbTypeOfColumn(ts.Columns[i]);
                 var prm = new SQLiteParameter(pname, dbType, ts.Columns[i].ColumnName);
                 res.Parameters.Add(prm);
 
@@ -534,7 +528,7 @@ namespace Mage
         private string GetNormalizedName(string str, List<string> names)
         {
             var sb = new StringBuilder();
-            for (int i = 0; i <= str.Length - 1; i++)
+            for (var i = 0; i <= str.Length - 1; i++)
             {
                 if (Char.IsLetterOrDigit(str[i]) || str[i] == '_')
                 {
@@ -545,11 +539,11 @@ namespace Mage
                     sb.Append("_");
                 }
             }
-            // for
+            
             // Avoid returning duplicate name
             if (names.Contains(sb.ToString()))
             {
-                return GetNormalizedName(sb.ToString() + "_", names);
+                return GetNormalizedName(sb + "_", names);
             }
 
             return sb.ToString();
@@ -563,7 +557,7 @@ namespace Mage
                 return null;
             }
 
-            DbType dt = GetDbTypeOfColumn(columnSchema);
+            var dt = GetDbTypeOfColumn(columnSchema);
 
             switch (dt)
             {
@@ -754,7 +748,7 @@ namespace Mage
         private string StripParens(string value)
         {
             var rx = new Regex("\\(([^\\)]*)\\)");
-            Match m = rx.Match(value);
+            var m = rx.Match(value);
             if (!m.Success)
             {
                 return value;
@@ -793,7 +787,7 @@ namespace Mage
         private static string DiscardNational(string value)
         {
             var rx = new Regex("N\\'([^\\']*)\\'");
-            Match m = rx.Match(value);
+            var m = rx.Match(value);
             if (m.Success)
             {
                 return m.Groups[1].Value;
@@ -810,8 +804,8 @@ namespace Mage
         {
             public string ColumnName = "";
             public string ColumnType = "";
-            public bool IsNullable = true;
-            public string DefaultValue = "";
+            public readonly bool IsNullable = true;
+            public readonly string DefaultValue = "";
             //           public bool IsIdentity = false;
             //           public bool IsCaseSensitivite = false; // null??
         }

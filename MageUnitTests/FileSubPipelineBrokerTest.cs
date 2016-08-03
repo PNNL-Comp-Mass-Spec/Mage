@@ -24,86 +24,42 @@ namespace MageUnitTests
 
         #endregion
 
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #region Additional test attributes
-        // 
-        //You can use the following additional attributes as you write your tests:
-        //
-        //Use ClassInitialize to run code before running the first test in the class
-        //[ClassInitialize()]
-        //public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
-        //
-        //Use ClassCleanup to run code after all tests in a class have run
-        //[ClassCleanup()]
-        //public static void MyClassCleanup()
-        //{
-        //}
-        //
-        //Use TestInitialize to run code before running each test
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
-        //Use TestCleanup to run code after each test has run
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        //
-        #endregion
-
-
         [TestMethod()]
         public void FileSubPipelineBrokerBasicTest()
         {
 
             // set up test parameters
-            string IDColumnName = "Padding";
-            string IDColContents = "Borked";
-            string folderColName = "Folder_Col";
-            string fileColName = "File_Col";
-            string TestFolderPath = System.Environment.CurrentDirectory;
-            string TestInputFileName = "victim.txt";
-            string destFolder = System.Environment.CurrentDirectory;
+            var IDColumnName = "Padding";
+            var IDColContents = "Borked";
+            var folderColName = "Folder_Col";
+            var fileColName = "File_Col";
+            var TestFolderPath = System.Environment.CurrentDirectory;
+            var TestInputFileName = "victim.txt";
+            var destFolder = System.Environment.CurrentDirectory;
 
             // set up data generator
-            DataGenerator dGen = new DataGenerator(2, 4);
-            dGen.AddAdHocRow = new string[] { folderColName, fileColName, IDColumnName };
-            dGen.AddAdHocRow = new string[] { TestFolderPath, TestInputFileName, IDColContents };
+            var dGen = new DataGenerator(2, 4)
+            {
+                AddAdHocRow = new[] { folderColName, fileColName, IDColumnName }
+            };
+
+            dGen.AddAdHocRow = new[] { TestFolderPath, TestInputFileName, IDColContents };
 
             // set up test class
-            FileSubPipelineBroker target = new FileSubPipelineBroker();
-            target.SourceFileColumnName = fileColName;
-            target.OutputFileColumnName = fileColName;
-            target.SourceFolderColumnName = folderColName;
-            target.OutputFolderPath = destFolder;
-            target.OutputColumnList = string.Format("{0}|+|text, {1}", fileColName, folderColName);
+            var target = new FileSubPipelineBroker
+            {
+                SourceFileColumnName = fileColName,
+                OutputFileColumnName = fileColName,
+                SourceFolderColumnName = folderColName,
+                OutputFolderPath = destFolder,
+                OutputColumnList = string.Format("{0}|+|text, {1}", fileColName, folderColName)
+            };
             target.SetPipelineMaker(MakeTestSubpipeline);
             target.SetOutputFileNamer(RenameOutputFile);
 
 
             // build and run pipeline
-            ProcessingPipeline pipeline = new ProcessingPipeline("FileColumnProcessorTest");
+            var pipeline = new ProcessingPipeline("FileColumnProcessorTest");
             pipeline.RootModule = pipeline.AddModule("Gen", dGen);
             pipeline.AddModule("Target", target);
             pipeline.ConnectModules("Gen", "Target");
@@ -124,8 +80,8 @@ namespace MageUnitTests
             mPipelineInputFilePath = inputFilePath;
             mPipelineOutputFilePath = outputFilePath;
 
-            ProcessingPipeline pipeline = new ProcessingPipeline("TestSubpipeline");
-            DummyModule dm = new DummyModule();
+            var pipeline = new ProcessingPipeline("TestSubpipeline");
+            var dm = new DummyModule();
             pipeline.RootModule = pipeline.AddModule("Mule", dm);
             return pipeline;
         }
@@ -142,7 +98,7 @@ namespace MageUnitTests
         [TestMethod()]
         public void SetPipelineMakerTest()
         {
-            FileSubPipelineBroker target = new FileSubPipelineBroker();
+            var target = new FileSubPipelineBroker();
             target.SetPipelineMaker(MakeTestSubpipeline);
         }
 
@@ -152,11 +108,10 @@ namespace MageUnitTests
         [TestMethod()]
         public void DatabaseNameTest()
         {
-            FileSubPipelineBroker target = new FileSubPipelineBroker(); // TODO: Initialize to an appropriate value
-            string expected = "Test Value";
-            string actual;
+            var target = new FileSubPipelineBroker(); // TODO: Initialize to an appropriate value
+            var expected = "Test Value";
             target.DatabaseName = expected;
-            actual = target.DatabaseName;
+            var actual = target.DatabaseName;
             Assert.AreEqual(expected, actual);
         }
 
@@ -166,11 +121,10 @@ namespace MageUnitTests
         [TestMethod()]
         public void FileFilterModuleNameTest()
         {
-            FileSubPipelineBroker target = new FileSubPipelineBroker(); // TODO: Initialize to an appropriate value
-            string expected = "Test Value";
-            string actual;
+            var target = new FileSubPipelineBroker(); // TODO: Initialize to an appropriate value
+            var expected = "Test Value";
             target.FileFilterModuleName = expected;
-            actual = target.FileFilterModuleName;
+            var actual = target.FileFilterModuleName;
             Assert.AreEqual(expected, actual);
         }
 
@@ -180,11 +134,10 @@ namespace MageUnitTests
         [TestMethod()]
         public void FileFilterParametersTest()
         {
-            FileSubPipelineBroker target = new FileSubPipelineBroker(); // TODO: Initialize to an appropriate value
+            var target = new FileSubPipelineBroker(); // TODO: Initialize to an appropriate value
             Dictionary<string, string> expected = null; // TODO: Initialize to an appropriate value
-            Dictionary<string, string> actual;
             target.SetFileFilterParameters(expected);
-            actual = target.GetFileFilterParameters();
+            var actual = target.GetFileFilterParameters();
             Assert.AreEqual(expected, actual);
         }
 
@@ -194,11 +147,10 @@ namespace MageUnitTests
         [TestMethod()]
         public void TableNameTest()
         {
-            FileSubPipelineBroker target = new FileSubPipelineBroker(); // TODO: Initialize to an appropriate value
-            string expected = "Test Value";
-            string actual;
+            var target = new FileSubPipelineBroker(); // TODO: Initialize to an appropriate value
+            var expected = "Test Value";
             target.TableName = expected;
-            actual = target.TableName;
+            var actual = target.TableName;
             Assert.AreEqual(expected, actual);
         }
 

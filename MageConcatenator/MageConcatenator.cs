@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
 using log4net;
@@ -48,8 +47,8 @@ namespace MageConcatenator
 
             // These settings are loaded from file MageConcatenator.exe.config
             // Typically gigasax and DMS5
-            Mage.Globals.DMSServer = Settings.Default.DMSServer;
-            Mage.Globals.DMSDatabase = Settings.Default.DMSDatabase;
+            Globals.DMSServer = Settings.Default.DMSServer;
+            Globals.DMSDatabase = Settings.Default.DMSDatabase;
 
             ModuleDiscovery.DMSServerOverride = Globals.DMSServer;
             ModuleDiscovery.DMSDatabaseOverride = Globals.DMSDatabase;
@@ -68,9 +67,9 @@ namespace MageConcatenator
             {
                 // set up configuration folder and files
                 // Set log4net path and kick the logger into action
-                string LogFileName = Path.Combine(SavedState.DataDirectory, "log.txt");
-                log4net.GlobalContext.Properties["LogName"] = LogFileName;
-                ILog traceLog = LogManager.GetLogger("TraceLog");
+                var LogFileName = Path.Combine(SavedState.DataDirectory, "log.txt");
+                GlobalContext.Properties["LogName"] = LogFileName;
+                var traceLog = LogManager.GetLogger("TraceLog");
                 traceLog.Info("Starting");
             }
             catch (Exception ex)
@@ -181,7 +180,7 @@ namespace MageConcatenator
         /// <param name="command"></param>
         private void BuildAndRunPipeline(MageCommandEventArgs command)
         {
-            DisplaySourceMode mode = (command.Mode == "selected") ? DisplaySourceMode.Selected : DisplaySourceMode.All;
+            var mode = (command.Mode == "selected") ? DisplaySourceMode.Selected : DisplaySourceMode.All;
 
             mPipelineQueue.Pipelines.Clear();
 
@@ -192,16 +191,16 @@ namespace MageConcatenator
                 switch (command.Action)
                 {
                     case "get_files_from_local_folder":
-                        Dictionary<string, string> runtimeParms = GetRuntimeParmsForLocalFolder();
-                        string sFolder = runtimeParms["Folder"];
+                        var runtimeParms = GetRuntimeParmsForLocalFolder();
+                        var sFolder = runtimeParms["Folder"];
                         if (!Directory.Exists(sFolder))
                         {
                             MessageBox.Show("Folder not found: " + sFolder, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             return;
                         }
-                        ISinkModule sink = FileListDisplayControl.MakeSink("Files", 15);
+                        var sink = FileListDisplayControl.MakeSink("Files", 15);
 
-                        ProcessingPipeline pipeline = Pipelines.MakePipelineToGetLocalFileList(sink, runtimeParms);
+                        var pipeline = Pipelines.MakePipelineToGetLocalFileList(sink, runtimeParms);
                         mPipelineQueue.Pipelines.Enqueue(pipeline);
                         mFinalPipelineName = pipeline.PipelineName;
                         break;
@@ -221,7 +220,7 @@ namespace MageConcatenator
                     // Clear any warnings
                     statusPanel1.ClearWarnings();
 
-                    foreach (ProcessingPipeline p in mPipelineQueue.Pipelines.ToArray())
+                    foreach (var p in mPipelineQueue.Pipelines.ToArray())
                     {
                         ConnectPipelineToStatusDisplay(p);
                         mFinalPipelineName = p.PipelineName;
@@ -259,7 +258,7 @@ namespace MageConcatenator
             else
             {
                 BoolFnDelegate ec = EnableCancel;
-                Invoke(ec, new object[] { false });
+                Invoke(ec, false);
             }
         }
 
@@ -301,10 +300,10 @@ namespace MageConcatenator
                 foreach (var selectedFileRow in FileListDisplayControl.SelectedItemRowsDictionaryList)
                 {
 
-                    string sourceFilePath = Path.Combine(selectedFileRow["Folder"], selectedFileRow["File"]);
+                    var sourceFilePath = Path.Combine(selectedFileRow["Folder"], selectedFileRow["File"]);
 
                     // Make sure the target file is not in the source file list
-                    if (System.String.Compare(sourceFilePath, mCombineFilesTargetFilePath, System.StringComparison.OrdinalIgnoreCase) == 0)
+                    if (String.Compare(sourceFilePath, mCombineFilesTargetFilePath, StringComparison.OrdinalIgnoreCase) == 0)
                     {
                         // Auto-rename the target file
                         var fiTargetFile = new FileInfo(mCombineFilesTargetFilePath);
@@ -364,7 +363,7 @@ namespace MageConcatenator
         private List<clsFileInfo> GetSelectedFiles()
         {
             var lstSelectedFiles = new List<clsFileInfo>();
-            var mCombineFilesPaths = new SortedSet<string>();
+            var combineFilesPaths = new SortedSet<string>();
 
             foreach (var selectedFileRow in FileListDisplayControl.SelectedItemRowsDictionaryList)
             {
@@ -387,7 +386,7 @@ namespace MageConcatenator
                 }
 
                 var fullPath = Path.Combine(folderPath, filename);
-                if (mCombineFilesPaths.Contains(fullPath))
+                if (combineFilesPaths.Contains(fullPath))
                 {
                     continue;
                 }
@@ -399,7 +398,7 @@ namespace MageConcatenator
                 };
 
                 lstSelectedFiles.Add(fileInfo);
-                mCombineFilesPaths.Add(fullPath);
+                combineFilesPaths.Add(fullPath);
             }
 
             return lstSelectedFiles;
@@ -534,7 +533,7 @@ namespace MageConcatenator
         /// </summary>
         private void AdjustFileProcessingPanels()
         {
-            int fileCount = FileListDisplayControl.ItemCount;
+            var fileCount = FileListDisplayControl.ItemCount;
             if (fileCount == 0)
             {
                 FolderDestinationPanel1.Enabled = false;
@@ -667,8 +666,7 @@ namespace MageConcatenator
         {
             if (e.Action == "cancel_operation")
             {
-                if (mFileCombiner != null)
-                    mFileCombiner.Cancel();
+                mFileCombiner?.Cancel();
             }
         }
 
@@ -679,7 +677,7 @@ namespace MageConcatenator
         private void SetupCommandHandler()
         {
             // get reference to the method that handles command events
-            MethodInfo methodInfo = this.GetType().GetMethod("DoCommand");
+            var methodInfo = GetType().GetMethod("DoCommand");
             Control subjectControl = this;
 
             PanelSupport.DiscoverAndConnectCommandHandlers(subjectControl, methodInfo);
@@ -699,8 +697,8 @@ namespace MageConcatenator
 
         private void cmdAbout_Click(object sender, EventArgs e)
         {
-            string message = "Written by Matthew Monroe for the Department of Energy.  This is version " +
-                             System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString() + " (" + PROGRAM_DATE + ")";
+            var message = "Written by Matthew Monroe for the Department of Energy.  This is version " +
+                             System.Reflection.Assembly.GetExecutingAssembly().GetName().Version + " (" + PROGRAM_DATE + ")";
             MessageBox.Show(message, "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 

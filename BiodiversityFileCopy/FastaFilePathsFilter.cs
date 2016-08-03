@@ -10,9 +10,9 @@ namespace BiodiversityFileCopy
   {
     public override bool BuildPaths(string[] outRow, ref string srcFilePath, ref string destFilepath)
     {
-      if (srcFilePath == null) throw new ArgumentNullException("srcFilePath");
-      string sourceFolder = outRow[SourceFldrIdx];
-      string fastaFileName = outRow[DatasetIdx];
+      if (srcFilePath == null) throw new ArgumentNullException(nameof(srcFilePath));
+      var sourceFolder = outRow[SourceFldrIdx];
+      var fastaFileName = outRow[DatasetIdx];
       srcFilePath = Path.Combine(sourceFolder, fastaFileName);
       var ogName = outRow[OrgNameIdx];
       destFilepath = Path.Combine(DestinationRootFolderPath, ogName, OutputSubfolderName, fastaFileName);

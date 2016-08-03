@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.Collections.ObjectModel;
 using Mage;
@@ -17,7 +13,7 @@ namespace MageUIComponents {
 
         #region Member Variables
 
-        private List<FlexQueryItemPanel> QueryItemPanels = new List<FlexQueryItemPanel>();
+        private readonly List<FlexQueryItemPanel> QueryItemPanels = new List<FlexQueryItemPanel>();
 
         #endregion
 
@@ -46,7 +42,7 @@ namespace MageUIComponents {
         }
 
         public void SetParameters(Dictionary<string, string> paramList) {
-            foreach (KeyValuePair<string, string> paramDef in paramList) {
+            foreach (var paramDef in paramList) {
                 switch (paramDef.Key) {
                     case "QueryItem0":
                         DecodeQueryItem(paramDef.Value, QueryItemPanels[0]);
@@ -72,10 +68,10 @@ namespace MageUIComponents {
 
         public Collection<string> QueryItems {
             get {
-                Collection<string> items = new Collection<string>();
-                foreach (FlexQueryItemPanel pnl in QueryItemPanels) {
+                var items = new Collection<string>();
+                foreach (var pnl in QueryItemPanels) {
                     if (pnl.Value != "") {
-                        string item = EncodeQueryItem(pnl);
+                        var item = EncodeQueryItem(pnl);
                         items.Add(item);
                     }
                 }
@@ -88,13 +84,13 @@ namespace MageUIComponents {
         #region Initialize Query Item Picklists
 
         public void SetComparisionPickList(string[] items) {
-            foreach (FlexQueryItemPanel pnl in QueryItemPanels) {
+            foreach (var pnl in QueryItemPanels) {
                 pnl.SetComparisionPickList(items);
             }
         }
 
         public void SetColumnPickList(string[] items) {
-            foreach (FlexQueryItemPanel pnl in QueryItemPanels) {
+            foreach (var pnl in QueryItemPanels) {
                 pnl.SetColumnPickList(items);
             }
         }
@@ -108,26 +104,25 @@ namespace MageUIComponents {
         }
 
         private static void DecodeQueryItem(string item, FlexQueryItemPanel pnl) {
-            string[] flds = item.Split('|');
+            var flds = item.Split('|');
             pnl.Relation = flds[0];
             pnl.Column = flds[1];
             pnl.Comparision = flds[2];
             pnl.Value = flds[3];
         }
 
-		private void GetJobsCtl_Click(object sender, EventArgs e) {
-            if (OnAction != null) {
-                OnAction(this, new MageCommandEventArgs("get_entities_from_flex_query", QueryName));
-            }
-        }
+		private void GetJobsCtl_Click(object sender, EventArgs e)
+		{
+		    OnAction?.Invoke(this, new MageCommandEventArgs("get_entities_from_flex_query", QueryName));
+		}
 
         #endregion
 
         public SQLBuilder GetSQLBuilder(string queryTemplate) {
-            Dictionary<string, string> args = new Dictionary<string, string>();
-            SQLBuilder builder = new SQLBuilder(queryTemplate, ref args);
-            foreach (string item in QueryItems.ToArray()) {
-                string[] flds = item.Split('|');
+            var args = new Dictionary<string, string>();
+            var builder = new SQLBuilder(queryTemplate, ref args);
+            foreach (var item in QueryItems.ToArray()) {
+                var flds = item.Split('|');
                 if (!string.IsNullOrEmpty(flds[0]) && !string.IsNullOrEmpty(flds[1]) && !string.IsNullOrEmpty(flds[2]) && !string.IsNullOrEmpty(flds[3])) {
                     builder.AddPredicateItem(flds[0], flds[1], flds[2], flds[3]);
                 }

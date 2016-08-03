@@ -13,69 +13,19 @@ namespace MageUnitTests
     public class ProcessingPipelineTest
     {
 
-
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #region Additional test attributes
-        // 
-        //You can use the following additional attributes as you write your tests:
-        //
-        //Use ClassInitialize to run code before running the first test in the class
-        //[ClassInitialize()]
-        //public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
-        //
-        //Use ClassCleanup to run code after all tests in a class have run
-        //[ClassCleanup()]
-        //public static void MyClassCleanup()
-        //{
-        //}
-        //
-        //Use TestInitialize to run code before running each test
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
-        //Use TestCleanup to run code after each test has run
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        //
-        #endregion
-
-
         /// <summary>
         ///A test for SetModuleParameter
         ///</summary>
         [TestMethod()]
         public void SetModuleParameterTest()
         {
-            ProcessingPipeline target = new ProcessingPipeline("TestPipeline");
-            TestModule tm = new TestModule();
+            var target = new ProcessingPipeline("TestPipeline");
+            var tm = new TestModule();
 
             target.AddModule("TM", tm);
-            string tVal1 = "Test Value1";
+            var tVal1 = "Test Value1";
             target.SetModuleParameter("TM", "OutputColumnList", tVal1);
-            string tVal2 = "Dummy Value";
+            var tVal2 = "Dummy Value";
             target.SetModuleParameter("TM", "Dummy", tVal2);
 
             Assert.AreEqual(tVal1, tm.OutputColumnList);
@@ -88,7 +38,7 @@ namespace MageUnitTests
         [TestMethod()]
         public void MakeModuleTest()
         {
-            IBaseModule mod = null;
+            IBaseModule mod;
 
             mod = ProcessingPipeline.MakeModule("NullFilter");
             Assert.AreNotEqual(null, mod);
@@ -126,21 +76,19 @@ namespace MageUnitTests
         [TestMethod()]
         public void PipelineFromModuleListTest()
         {
-            string pipelineName = "Test Pipeline";
-            ProcessingPipeline pipeline = null;
+            var pipelineName = "Test Pipeline";
 
-            DelimitedFileReader reader = new DelimitedFileReader();
-            NullFilter filter = new NullFilter();
-            SQLiteWriter writer = new SQLiteWriter();
+            var reader = new DelimitedFileReader();
+            var filter = new NullFilter();
+            var writer = new SQLiteWriter();
 
-            Collection<object> moduleList = null;
-            moduleList = new Collection<object>() { reader, filter, writer };
-            pipeline = ProcessingPipeline.Assemble(pipelineName, moduleList);
+            var moduleList = new Collection<object>() { reader, filter, writer };
+            var pipeline = ProcessingPipeline.Assemble(pipelineName, moduleList);
 
             Assert.AreNotEqual(null, pipeline, "Pipeline not created");
             Assert.AreEqual(pipelineName, pipeline.PipelineName, "Pipeline name does not match");
 
-            IBaseModule mod = null;
+            IBaseModule mod;
 
             mod = pipeline.GetModule("DelimitedFileReader1");
             Assert.AreNotEqual(null, mod);
@@ -156,12 +104,11 @@ namespace MageUnitTests
         [TestMethod()]
         public void PipelineFromNamesListTest()
         {
-            string pipelineName = "Test Pipeline";
-            ProcessingPipeline pipeline = null;
+            var pipelineName = "Test Pipeline";
 
-            Collection<object> moduleList = null;
+            Collection<object> moduleList;
             moduleList = new Collection<object>() { "DelimitedFileReader", "NullFilter", "SimpleSink" };
-            pipeline = ProcessingPipeline.Assemble(pipelineName, moduleList);
+            var pipeline = ProcessingPipeline.Assemble(pipelineName, moduleList);
 
             Assert.AreNotEqual(null, pipeline, "Pipeline not created");
             Assert.AreEqual(pipelineName, pipeline.PipelineName, "Pipeline name does not match");
@@ -183,7 +130,7 @@ namespace MageUnitTests
         [TestMethod()]
         public void PipelineFromNamedModuleListTest1()
         {
-            string pipelineName = "Test Pipeline";
+            var pipelineName = "Test Pipeline";
             ProcessingPipeline pipeline = null;
 
             Collection<ModuleDef> namedModuleList = null;
@@ -215,11 +162,11 @@ namespace MageUnitTests
         [TestMethod()]
         public void PipelineFromNamedModuleListTest2()
         {
-            string pipelineName = "Test Pipeline";
+            var pipelineName = "Test Pipeline";
             ProcessingPipeline pipeline = null;
 
-            DelimitedFileReader reader = new DelimitedFileReader();
-            SQLiteWriter writer = new SQLiteWriter();
+            var reader = new DelimitedFileReader();
+            var writer = new SQLiteWriter();
 
             Collection<ModuleDef> namedModuleList = null;
             namedModuleList = new Collection<ModuleDef>() {
@@ -262,10 +209,11 @@ namespace MageUnitTests
         [TestMethod()]
         public void AsembleXML()
         {
-            ProcessingPipeline pipeline = ProcessingPipeline.Assemble(pipelineXML);
+            var pipeline = ProcessingPipeline.Assemble(pipelineXML);
 
-            IBaseModule mod = pipeline.GetModule("Reader");
-            MSSQLReader target = mod as MSSQLReader;
+            var mod = pipeline.GetModule("Reader");
+            var target = mod as MSSQLReader;
+            Assert.IsTrue(target != null);
             Assert.AreEqual(target.Server, Globals.DMSServer);
             Assert.AreEqual(pipeline.PipelineName, "Test_Pipeline");
         }
@@ -286,24 +234,25 @@ namespace MageUnitTests
         [DeploymentItem(@"..\..\TestItems\Sarc_MS_Filtered_isos.csv")]
         public void AssembleXMLAndRun()
         {
-            int maxRows = 7;
+            var maxRows = 7;
 
-            ProcessingPipeline pipeline = ProcessingPipeline.Assemble(pipelineXML2);
+            var pipeline = ProcessingPipeline.Assemble(pipelineXML2);
 
-            SimpleSink sink = new SimpleSink(maxRows);
+            var sink = new SimpleSink(maxRows);
             //            pipeline.ConnectExternalModule(sink);
             //            sink.ModuleName = "Caboose";
             pipeline.AppendModule(sink);
 
-            IBaseModule mod = pipeline.GetModule("Module1");
-            DelimitedFileReader target = mod as DelimitedFileReader;
+            var mod = pipeline.GetModule("Module1");
+            var target = mod as DelimitedFileReader;
+            Assert.IsTrue(target != null);
             Assert.AreEqual(target.FilePath, "Sarc_MS_Filtered_isos.csv");
 
             pipeline.RunRoot(null);
 
             // did the test sink object get the expected number of data rows
             // on its standard tabular input?
-            Collection<string[]> rows = sink.Rows;
+            var rows = sink.Rows;
             Assert.AreEqual(maxRows, rows.Count, "Sink did not receive the expected number of rows");
 
         }
@@ -336,7 +285,7 @@ namespace MageUnitTests
         [TestMethod()]
         public void AssembleComplexXML()
         {
-            ProcessingPipeline pipeline = ProcessingPipeline.Assemble(pipelineXML3);
+            var pipeline = ProcessingPipeline.Assemble(pipelineXML3);
 
         }
     }

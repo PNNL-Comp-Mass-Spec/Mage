@@ -187,13 +187,16 @@ namespace Mage
             var doc = new System.Xml.XmlDocument();
             doc.LoadXml(xml);
 
-            System.Xml.XmlNode queryNode = doc.SelectSingleNode(".//query");
+            var queryNode = doc.SelectSingleNode(".//query");
             if (queryNode == null)
                 return;
 
             // step through all item nodes in query
             foreach (System.Xml.XmlNode itemNode in queryNode.ChildNodes)
             {
+                if (itemNode.Attributes == null)
+                    continue;
+
                 switch (itemNode.Name)
                 {
                     case "connection":
@@ -205,15 +208,15 @@ namespace Mage
                         Columns = itemNode.Attributes["cols"].InnerText;
                         break;
                     case "predicate":
-                        string rel = itemNode.Attributes["rel"].InnerText;
-                        string col = itemNode.Attributes["col"].InnerText;
-                        string cmp = itemNode.Attributes["cmp"].InnerText;
-                        string val = itemNode.Attributes["val"].InnerText;
+                        var rel = itemNode.Attributes["rel"].InnerText;
+                        var col = itemNode.Attributes["col"].InnerText;
+                        var cmp = itemNode.Attributes["cmp"].InnerText;
+                        var val = itemNode.Attributes["val"].InnerText;
                         SetColumnDefaultPredicate(rel, col, cmp, val);
                         break;
                     case "sort":
-                        string colx = itemNode.Attributes["col"].InnerText;
-                        string dir = itemNode.Attributes["dir"].InnerText;
+                        var colx = itemNode.Attributes["col"].InnerText;
+                        var dir = itemNode.Attributes["dir"].InnerText;
                         AddSortingItem(colx, dir);
                         break;
                     case "sproc":
@@ -221,10 +224,10 @@ namespace Mage
                         SprocName = itemNode.Attributes["name"].InnerText;
                         break;
                     case "param":
-                        string key = itemNode.Attributes["name"].InnerText;
+                        var key = itemNode.Attributes["name"].InnerText;
                         if (itemNode.Attributes["value"] != null)
                         {
-                            string value = itemNode.Attributes["value"].InnerText;
+                            var value = itemNode.Attributes["value"].InnerText;
                             mSprocParameters[key] = value;
                         }
                         break;
@@ -234,11 +237,11 @@ namespace Mage
             // find any special runtime arguments (name is marked by prefix)
             // strip the prefix, add to specialArgs, and remove from runtime arguments list
             var tempArgs = new Dictionary<string, string>(args);
-            foreach (KeyValuePair<string, string> arg in tempArgs)
+            foreach (var arg in tempArgs)
             {
                 if (arg.Key.StartsWith(":"))
                 { // special runtime parameters have prefix
-                    string key = arg.Key.Substring(1, arg.Key.Length - 1);
+                    var key = arg.Key.Substring(1, arg.Key.Length - 1);
                     mSpecialArgs[key] = arg.Value;
                     args.Remove(arg.Key);
                 }
@@ -247,7 +250,7 @@ namespace Mage
             // if this is straight query, apply args to predicate
             if (string.IsNullOrEmpty(SprocName) && args != null)
             {
-                foreach (KeyValuePair<string, string> arg in args)
+                foreach (var arg in args)
                 {
                     if (!string.IsNullOrEmpty(arg.Value))
                     {
@@ -259,7 +262,7 @@ namespace Mage
             // if this is stored procedure query, apply args to parameters
             if (!string.IsNullOrEmpty(SprocName) && args != null)
             {
-                foreach (KeyValuePair<string, string> arg in args)
+                foreach (var arg in args)
                 {
                     mSprocParameters[arg.Key] = arg.Value;
                 }
@@ -282,7 +285,7 @@ namespace Mage
             var doc = new System.Xml.XmlDocument();
             doc.LoadXml(xml);
 
-            System.Xml.XmlNode queryNode = doc.SelectSingleNode(".//query");
+            var queryNode = doc.SelectSingleNode(".//query");
             if (queryNode == null)
                 return descriptions;
 
@@ -295,12 +298,18 @@ namespace Mage
                         descriptions[":Description:"] = itemNode.InnerText;
                         break;
                     case "param":
-                        string name = itemNode.Attributes["name"].InnerText;
-                        descriptions[name] = itemNode.InnerText;
+                        if (itemNode.Attributes != null)
+                        {
+                            var name = itemNode.Attributes["name"].InnerText;
+                            descriptions[name] = itemNode.InnerText;
+                        }
                         break;
                     case "predicate":
-                        string col = itemNode.Attributes["col"].InnerText;
-                        descriptions[col] = itemNode.InnerText;
+                        if (itemNode.Attributes != null)
+                        {
+                            var col = itemNode.Attributes["col"].InnerText;
+                            descriptions[col] = itemNode.InnerText;
+                        }
                         break;
                 }
             }
@@ -337,7 +346,7 @@ namespace Mage
         {
             if (mDefaultPredicates.ContainsKey(col))
             {
-                QueryPredicate p = mDefaultPredicates[col];
+                var p = mDefaultPredicates[col];
                 val = val ?? p.val;
                 AddPredicateItem(p.rel, p.col, p.cmp, val);
             }
@@ -398,7 +407,7 @@ namespace Mage
             {
                 col = col
             };
-            string d = dir.ToUpper();
+            var d = dir.ToUpper();
             sorting.dir = (d == "DESC") ? d : "ASC";
             mSortingItems.Add(sorting);
         }
@@ -417,10 +426,10 @@ namespace Mage
         {
             // look for wildcard characters
 
-            bool exact_match = (val.Substring(0, 1) == "~");
-            bool regex_all = val.Contains("*");
-            bool regex_one = val.Contains("?");
-            bool sql_any = val.Contains("%");
+            var exact_match = (val.Substring(0, 1) == "~");
+            var regex_all = val.Contains("*");
+            var regex_one = val.Contains("?");
+            var sql_any = val.Contains("%");
 
             // force exact match
             if (exact_match)
@@ -455,9 +464,9 @@ namespace Mage
             var p_and = new List<string>();
             var p_or = new List<string>();
 
-            foreach (QueryPredicate predicate in mPredicates)
+            foreach (var predicate in mPredicates)
             {
-                string sWhereItem = MakeWhereItem(predicate);
+                var sWhereItem = MakeWhereItem(predicate);
                 if (!String.IsNullOrEmpty(sWhereItem))
                 {
                     switch (predicate.rel.ToLower())
@@ -483,14 +492,14 @@ namespace Mage
             }
             //
             // 'and' all predicate clauses together
-            string pred = string.Join(" AND ", p_and);
+            var pred = string.Join(" AND ", p_and);
             if (!string.IsNullOrEmpty(pred))
             {
                 baseSql.Append(" WHERE " + pred);
             }
 
             //columns to display
-            string display_cols = Columns;
+            var display_cols = Columns;
 
             // construct final query according to its intended use
             var sql = new StringBuilder();
@@ -511,7 +520,7 @@ namespace Mage
                 case "filtered_and_sorted": // (not paged)
                     sql.Append("SELECT " + display_cols);
                     sql.Append(baseSql);
-                    string orderBy = MakeOrderBy(mSortingItems);
+                    var orderBy = MakeOrderBy(mSortingItems);
                     sql.Append((!string.IsNullOrEmpty(orderBy)) ? string.Format(" ORDER BY {0}", orderBy) : "");
                     break;
             }
@@ -530,7 +539,7 @@ namespace Mage
         private static string MakeOrderBy(IEnumerable<QuerySort> sortItems)
         {
             var a = new List<string>();
-            foreach (QuerySort item in sortItems)
+            foreach (var item in sortItems)
             {
                 a.Add(string.Format("[{0}] {1}", item.col, item.dir));
             }
@@ -545,11 +554,11 @@ namespace Mage
         /// <returns>SQL text for predicate</returns>
         private static string MakeWhereItem(QueryPredicate predicate)
         {
-            string col = predicate.col;
-            string cmp = predicate.cmp;
-            string val = predicate.val;
+            var col = predicate.col;
+            var cmp = predicate.cmp;
+            var val = predicate.val;
 
-            string str = "";
+            var str = "";
             double ignore;
             switch (cmp)
             {

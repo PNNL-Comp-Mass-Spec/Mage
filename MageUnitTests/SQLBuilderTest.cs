@@ -14,65 +14,13 @@ namespace MageUnitTests
     public class SQLBuilderTest
     {
 
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #region Additional test attributes
-        // 
-        //You can use the following additional attributes as you write your tests:
-        //
-        //Use ClassInitialize to run code before running the first test in the class
-        //[ClassInitialize()]
-        //public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
-        //
-        //Use ClassCleanup to run code after all tests in a class have run
-        //[ClassCleanup()]
-        //public static void MyClassCleanup()
-        //{
-        //}
-        //
-        //Use TestInitialize to run code before running each test
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
-        //Use TestCleanup to run code after each test has run
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        //
-        #endregion
-
         /// <summary>
         /// Demonstrates use of column default predicate settings
         /// </summary>
         [TestMethod()]
         public void DefaultPredicateTest()
         {
-            SQLBuilder target = new SQLBuilder();
-            string expected;
-            string actual;
-
-            target.Table = "T_X";
+            var target = new SQLBuilder {Table = "T_X"};
 
             target.SetColumnDefaultPredicate("AND", "Bob", "MatchesText", "");
             target.SetColumnDefaultPredicate("OR", "Paul", "Equals", "");
@@ -84,8 +32,8 @@ namespace MageUnitTests
             target.AddPredicateItem("John", "0");
             target.AddPredicateItem("Sue", "Your aunt");
 
-            expected = "SELECT * FROM T_X WHERE [Bob] = 'Your uncle' AND [Sue] LIKE '%Your aunt%' AND ([Paul] = 42 OR NOT [John] = 0)";
-            actual = target.BuildQuerySQL();
+            var expected = "SELECT * FROM T_X WHERE [Bob] = 'Your uncle' AND [Sue] LIKE '%Your aunt%' AND ([Paul] = 42 OR NOT [John] = 0)";
+            var actual = target.BuildQuerySQL();
             Assert.AreEqual(expected, actual);
         }
 
@@ -96,12 +44,9 @@ namespace MageUnitTests
         [TestMethod()]
         public void TableTest()
         {
-            SQLBuilder target = new SQLBuilder();
-            string expected;
-            string actual;
-            target.Table = "T_X";
-            expected = "SELECT * FROM T_X";
-            actual = target.BuildQuerySQL();
+            var target = new SQLBuilder {Table = "T_X"};
+            var expected = "SELECT * FROM T_X";
+            var actual = target.BuildQuerySQL();
             Assert.AreEqual(expected, actual);
         }
 
@@ -111,15 +56,13 @@ namespace MageUnitTests
         [TestMethod()]
         public void ColumnsTest()
         {
-            SQLBuilder target = new SQLBuilder();
-            string expected;
-            string actual;
+            var target = new SQLBuilder();
 
             Assert.IsNotNull(target);
             target.Table = "T_X";
             target.Columns = "Uno, Dos, Tres";
-            expected = "SELECT Uno, Dos, Tres FROM T_X";
-            actual = target.BuildQuerySQL();
+            var expected = "SELECT Uno, Dos, Tres FROM T_X";
+            var actual = target.BuildQuerySQL();
             Assert.AreEqual(expected, actual);
         }
 
@@ -129,16 +72,14 @@ namespace MageUnitTests
         [TestMethod()]
         public void AddSortingItemTest()
         {
-            SQLBuilder target = new SQLBuilder();
-            string expected;
-            string actual;
+            var target = new SQLBuilder();
 
-            string col = "Bob";
-            string dir = "ASC";
+            var col = "Bob";
+            var dir = "ASC";
             target.AddSortingItem(col, dir);
             target.Table = "T_X";
-            expected = "SELECT * FROM T_X ORDER BY [Bob] ASC";
-            actual = target.BuildQuerySQL();
+            var expected = "SELECT * FROM T_X ORDER BY [Bob] ASC";
+            var actual = target.BuildQuerySQL();
             Assert.AreEqual(expected, actual);
         }
 
@@ -148,15 +89,12 @@ namespace MageUnitTests
         [TestMethod()]
         public void AddPredicateItemTest()
         {
-            SQLBuilder target = new SQLBuilder();
-            string expected;
-            string actual;
+            var target = new SQLBuilder {Table = "T_X"};
 
-            target.Table = "T_X";
 
             target.AddPredicateItem("AND", "Bob", "MatchesText", "Your uncle");
-            expected = "SELECT * FROM T_X WHERE [Bob] = 'Your uncle'";
-            actual = target.BuildQuerySQL();
+            var expected = "SELECT * FROM T_X WHERE [Bob] = 'Your uncle'";
+            var actual = target.BuildQuerySQL();
             Assert.AreEqual(expected, actual);
 
             target.AddPredicateItem("AND", "Sue", "ContainsText", "Your aunt");
@@ -176,31 +114,28 @@ namespace MageUnitTests
         [DeploymentItem(@"..\..\..\TestItems\QueryDefinitions.xml")]
         public void XMLInitiationTest()
         {
-            string expected;
-            string actual;
-
             // runtime parameters for query
-            Dictionary<string, string> runtimeParameters = new Dictionary<string, string>();
-            string testDB = "DMS5_T3";
+            var runtimeParameters = new Dictionary<string, string>();
+            var testDB = "DMS5_T3";
             runtimeParameters[":Database"] = testDB;
             runtimeParameters["Dataset"] = "sarc";
 
             // get XML query definition by name
-            string queryDefXML = ModuleDiscovery.GetQueryXMLDef("Factors_List_Report");
+            var queryDefXML = ModuleDiscovery.GetQueryXMLDef("Factors_List_Report");
             Assert.AreNotEqual("", queryDefXML);
 
-            SQLBuilder target = new SQLBuilder(queryDefXML, ref runtimeParameters);
+            var target = new SQLBuilder(queryDefXML, ref runtimeParameters);
             //           SQLBuilder target = new SQLBuilder();
             //           target.InitializeFromXML(queryDefXML, ref runtimeParameters);
-            Dictionary<string, string> specialArgs = target.SpecialArgs;
+            var specialArgs = target.SpecialArgs;
 
             Assert.AreEqual(Globals.DMSServer.ToLower(), specialArgs["Server"].ToLower());
             Assert.AreEqual(testDB, specialArgs["Database"]);
             Assert.AreEqual("", target.SprocName);
 
 
-            expected = "SELECT Dataset, Dataset_ID, Factor, Value FROM V_Custom_Factors_List_Report WHERE [Dataset] LIKE '%sarc%'";
-            actual = target.BuildQuerySQL();
+            var expected = "SELECT Dataset, Dataset_ID, Factor, Value FROM V_Custom_Factors_List_Report WHERE [Dataset] LIKE '%sarc%'";
+            var actual = target.BuildQuerySQL();
             Assert.AreEqual(expected, actual);
         }
 
@@ -210,23 +145,22 @@ namespace MageUnitTests
         {
 
             // expected predefined parameter
-            string defParam = "@MinimumPMTQualityScore";
-            string defValue = "9";
+            var defParam = "@MinimumPMTQualityScore";
+            var defValue = "9";
 
             // runtime parameters for query
-            string testParam = "@ExperimentFilter";
-            string testValue = "borked";
-            Dictionary<string, string> runtimeParameters = new Dictionary<string, string>();
-            runtimeParameters[testParam] = testValue;
+            var testParam = "@ExperimentFilter";
+            var testValue = "borked";
+            var runtimeParameters = new Dictionary<string, string> {[testParam] = testValue};
 
             // get XML query definition by name
-            string queryDefXML = ModuleDiscovery.GetQueryXMLDef("GetMassTagsPlusPepProphetStats");
+            var queryDefXML = ModuleDiscovery.GetQueryXMLDef("GetMassTagsPlusPepProphetStats");
             Assert.AreNotEqual("", queryDefXML);
 
-            SQLBuilder target = new SQLBuilder(queryDefXML, ref runtimeParameters);
+            var target = new SQLBuilder(queryDefXML, ref runtimeParameters);
             Assert.AreEqual("GetMassTagsPlusPepProphetStats", target.SprocName);
 
-            Dictionary<string, string> sprocParams = target.SprocParameters;
+            var sprocParams = target.SprocParameters;
             Assert.AreEqual(testValue, sprocParams[testParam]);
             Assert.AreEqual(defValue, sprocParams[defParam]);
         }
@@ -237,10 +171,10 @@ namespace MageUnitTests
         {
 
             // get XML query definition by name
-            string queryDefXML = ModuleDiscovery.GetQueryXMLDef("GetMassTagsPlusPepProphetStats");
+            var queryDefXML = ModuleDiscovery.GetQueryXMLDef("GetMassTagsPlusPepProphetStats");
             Assert.AreNotEqual("", queryDefXML);
 
-            Dictionary<string, string> descriptions = SQLBuilder.GetDescriptionsFromXML(queryDefXML);
+            var descriptions = SQLBuilder.GetDescriptionsFromXML(queryDefXML);
 
             Assert.AreEqual("", descriptions["@MinimumHighDiscriminantScore"]);
             Assert.AreEqual("Descriptive text for MassCorrectionIDFilterList", descriptions["@MassCorrectionIDFilterList"]);

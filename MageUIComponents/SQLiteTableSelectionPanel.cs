@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Mage;
 
@@ -34,11 +28,13 @@ namespace MageUIComponents {
         }
 
         private void SQLiteTableSelectionPanel_Load(object sender, EventArgs e) {
-            SQLiteReader reader = new SQLiteReader();
-            reader.Database = DatabasePath;
-            reader.SQLText = "SELECT tbl_name as Table_Name FROM sqlite_master WHERE type = 'table'";
-            ISinkModule display = TableListCtl.MakeSink();
-            ProcessingPipeline pipeline = ProcessingPipeline.Assemble("GetDBTableList", reader, display);
+            var reader = new SQLiteReader
+            {
+                Database = DatabasePath,
+                SQLText = "SELECT tbl_name as Table_Name FROM sqlite_master WHERE type = 'table'"
+            };
+            var display = TableListCtl.MakeSink();
+            var pipeline = ProcessingPipeline.Assemble("GetDBTableList", reader, display);
             pipeline.RunRoot(null);
         }
 

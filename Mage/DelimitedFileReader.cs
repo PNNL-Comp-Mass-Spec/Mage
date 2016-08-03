@@ -94,17 +94,17 @@ namespace Mage
         /// </summary>
         private void OutputContents()
         {
-            bool checkDelimiter = true;
-            bool tabDelimited = true;
-            char[] delim = "\t".ToCharArray();
+            var checkDelimiter = true;
+            var tabDelimited = true;
+            var delim = "\t".ToCharArray();
 
             // This RegEx is used to parse CSV files
             // It assures that we only split on commas that are not inside double-quoted strings
             var r = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
 
-            string delimitedFilePathLocal = DownloadFileIfRequired(FilePath);
+            var delimitedFilePathLocal = DownloadFileIfRequired(FilePath);
 
-            bool downloadedMyEMSLFile = delimitedFilePathLocal != FilePath;
+            var downloadedMyEMSLFile = delimitedFilePathLocal != FilePath;
 
             try
             {
@@ -164,15 +164,15 @@ namespace Mage
 
         private static bool SwitchToCSV(string line)
         {
-            bool tabs = line.Contains("\t");
-            bool commas = line.Contains(",");
+            var tabs = line.Contains("\t");
+            var commas = line.Contains(",");
             return commas && !tabs;
         }
 
 
         private void OutputFileContents()
         {
-            char[] delim = Delimiter.ToCharArray();
+            var delim = Delimiter.ToCharArray();
 
             using (var fileReader = new StreamReader(new FileStream(FilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
             {
@@ -184,7 +184,7 @@ namespace Mage
                         ReportProcessingAborted();
                         break;
                     }
-                    string[] fields = line.Split(delim);
+                    var fields = line.Split(delim);
                     if (doHeaderLine)
                     {
                         doHeaderLine = false;
@@ -212,7 +212,7 @@ namespace Mage
                         ReportProcessingAborted();
                         break;
                     }
-                    string[] fields = r.Split(line);
+                    var fields = r.Split(line);
                     if (doHeaderLine)
                     {
                         doHeaderLine = false;
@@ -231,7 +231,7 @@ namespace Mage
         {
             // output the column definitions
             var colDefs = new List<MageColumnDef>();
-            foreach (string field in fields)
+            foreach (var field in fields)
             {
                 colDefs.Add(new MageColumnDef(field, "text", "10"));
             }

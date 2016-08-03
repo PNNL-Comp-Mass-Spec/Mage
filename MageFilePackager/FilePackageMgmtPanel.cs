@@ -5,9 +5,11 @@ using System.Windows.Forms;
 using Mage;
 using MageDisplayLib;
 
-namespace MageFilePackager {
+namespace MageFilePackager
+{
 
-    public partial class FilePackageMgmtPanel : UserControl, IModuleParameters {
+    public partial class FilePackageMgmtPanel : UserControl, IModuleParameters
+    {
 
         //       public event EventHandler<MageCommandEventArgs> OnAction;
 
@@ -18,22 +20,27 @@ namespace MageFilePackager {
 
         #endregion
 
-        public FilePackageMgmtPanel() {
+        public FilePackageMgmtPanel()
+        {
             InitializeComponent();
         }
 
         #region IModuleParameters Members
 
-        public Dictionary<string, string> GetParameters() {
+        public Dictionary<string, string> GetParameters()
+        {
             return new Dictionary<string, string>
-                       { 
+                       {
                 { "OutputFilePath",   OutputFilePath}
             };
         }
 
-        public void SetParameters(Dictionary<string, string> paramList) {
-            foreach (KeyValuePair<string, string> paramDef in paramList) {
-                switch (paramDef.Key) {
+        public void SetParameters(Dictionary<string, string> paramList)
+        {
+            foreach (var paramDef in paramList)
+            {
+                switch (paramDef.Key)
+                {
                     case "OutputFilePath":
                         OutputFilePath = paramDef.Value;
                         break;
@@ -45,7 +52,8 @@ namespace MageFilePackager {
 
         #region Properties
 
-        public string ListTitle {
+        public string ListTitle
+        {
             get { return packageListDisplayControl1.PageTitle; }
             set { packageListDisplayControl1.PageTitle = value; }
         }
@@ -55,12 +63,19 @@ namespace MageFilePackager {
 
         public string FileListLabelPrefix { get; set; }
 
-        public string TotalSizeDisplay { get { return ContentInfoCtl.Text; } set { ContentInfoCtl.Text = value; } }
+        public string TotalSizeDisplay
+        {
+            get { return ContentInfoCtl.Text; }
+            set { ContentInfoCtl.Text = value; }
+        }
 
         // local path for manifest file
-        public string OutputFilePath {
-            get {
-                if (!string.IsNullOrEmpty(_outputPath) && !Path.HasExtension(_outputPath)) {
+        public string OutputFilePath
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(_outputPath) && !Path.HasExtension(_outputPath))
+                {
                     if (_outputPath.EndsWith("\\"))
                         _outputPath += "download_pkg";
                     _outputPath += ".xml";
@@ -74,9 +89,11 @@ namespace MageFilePackager {
 
         #region Package Content Actions
 
-        private void ClearPackageList() {
-            DialogResult result = MessageBox.Show("Are you sure?", "Delete current package contents", MessageBoxButtons.YesNo);
-            if (result == System.Windows.Forms.DialogResult.Yes) {
+        private void ClearPackageList()
+        {
+            var result = MessageBox.Show("Are you sure?", "Delete current package contents", MessageBoxButtons.YesNo);
+            if (result == System.Windows.Forms.DialogResult.Yes)
+            {
                 packageListDisplayControl1.Clear();
                 TotalSizeDisplay = "";
             }
@@ -85,33 +102,38 @@ namespace MageFilePackager {
         /// <summary>
         /// Add selected files from file list to package list
         /// </summary>
-        private void AddSelectedFilesToPackageList() {
-            string entityType = FileSourceList.PageTitle.Replace(FileListLabelPrefix, "");
+        private void AddSelectedFilesToPackageList()
+        {
+            var entityType = FileSourceList.PageTitle.Replace(FileListLabelPrefix, "");
             SetPackageContentUsingRemapping(entityType, new GVPipelineSource(FileSourceList, "selected"));
         }
 
         /// <summary>
         /// Add all files from file list to package list
         /// </summary>
-        private void AddAllFilesToPackageList() {
-            string entityType = FileSourceList.PageTitle.Replace(FileListLabelPrefix, "");
+        private void AddAllFilesToPackageList()
+        {
+            var entityType = FileSourceList.PageTitle.Replace(FileListLabelPrefix, "");
             SetPackageContentUsingRemapping(entityType, new GVPipelineSource(FileSourceList, "All"));
         }
 
         /// <summary>
         /// Add selected files from tree display of files to package list
         /// </summary>
-        private void AddFilesToPackageListFromTree() {
-            if (FileSourceList.List.RowCount == 0) {
+        private void AddFilesToPackageListFromTree()
+        {
+            if (FileSourceList.List.RowCount == 0)
+            {
                 MessageBox.Show("File list is empty");
                 return;
             }
-            string entityType = FileSourceList.PageTitle.Replace(FileListLabelPrefix, "");
+            var entityType = FileSourceList.PageTitle.Replace(FileListLabelPrefix, "");
             var nfSource = new GVPipelineSource(FileSourceList, "All");
             var packageFilter = GetPackageFilter(entityType);
 
             var fileTree = new FileTreeForm { FileListSource = nfSource, PackageFilter = packageFilter };
-            if (fileTree.ShowDialog() == DialogResult.OK) {
+            if (fileTree.ShowDialog() == DialogResult.OK)
+            {
                 var treeSource = fileTree.GetSource();
                 SetPackageContentWithoutRemapping(treeSource);
             }
@@ -121,7 +143,8 @@ namespace MageFilePackager {
         /// Set package contents display (don't remap columns)
         /// </summary>
         /// <param name="filesToAdd"></param>
-        public void SetPackageContentWithoutRemapping(BaseModule filesToAdd) {
+        public void SetPackageContentWithoutRemapping(BaseModule filesToAdd)
+        {
             var newContents = GetCurrentPackageContents();
             ProcessingPipeline.Assemble("Add", filesToAdd, newContents).RunRoot(null);
             SetPackageContents(newContents);
@@ -133,7 +156,8 @@ namespace MageFilePackager {
         /// </summary>
         /// <param name="entityType"></param>
         /// <param name="fileToAdd"></param>
-        public void SetPackageContentUsingRemapping(string entityType, BaseModule fileToAdd) {
+        public void SetPackageContentUsingRemapping(string entityType, BaseModule fileToAdd)
+        {
             var newContents = GetCurrentPackageContents();
             var packageFilter = GetPackageFilter(entityType);
             ProcessingPipeline.Assemble("Add", fileToAdd, packageFilter, newContents).RunRoot(null);
@@ -145,7 +169,8 @@ namespace MageFilePackager {
         /// Replace contents of package list with conents of source
         /// </summary>
         /// <param name="newContents">Contains contents to set</param>
-        private void SetPackageContents(SimpleSink newContents) {
+        private void SetPackageContents(SimpleSink newContents)
+        {
             var sink = packageListDisplayControl1.MakeSink(ListTitle, 15);
             ProcessingPipeline.Assemble("PackageFileContent", new SinkWrapper(newContents), sink).RunRoot(null);
         }
@@ -154,10 +179,12 @@ namespace MageFilePackager {
         /// 
         /// </summary>
         /// <returns></returns>
-        private SimpleSink GetCurrentPackageContents() {
+        private SimpleSink GetCurrentPackageContents()
+        {
             var nvSink = new Accummulator();
             // save current content of package from content display
-            if (packageListDisplayControl1.ItemCount > 0) {
+            if (packageListDisplayControl1.ItemCount > 0)
+            {
                 var cvSource = new GVPipelineSource(packageListDisplayControl1, "All");
                 ProcessingPipeline.Assemble("Remember", cvSource, nvSink).RunRoot(null);
                 nvSink.RetainColumnDefs = true;
@@ -173,13 +200,16 @@ namespace MageFilePackager {
         /// display contents of file package in tree view 
         /// and allow user to choose which files to keep
         /// </summary>
-        private void EditPackageListAsTree() {
-            if (packageListDisplayControl1.List.RowCount == 0) {
+        private void EditPackageListAsTree()
+        {
+            if (packageListDisplayControl1.List.RowCount == 0)
+            {
                 MessageBox.Show("Package list is empty");
                 return;
             }
             var fileTree = new FileTreeForm { FileListSource = new GVPipelineSource(packageListDisplayControl1, "All") };
-            if (fileTree.ShowDialog() == DialogResult.OK) {
+            if (fileTree.ShowDialog() == DialogResult.OK)
+            {
                 var treeSource = fileTree.GetSource();
                 SetPackageContentWithoutRemapping(treeSource);
             }
@@ -188,25 +218,32 @@ namespace MageFilePackager {
         /// <summary>
         /// save current contents of file package to CSV file
         /// </summary>
-        private void SavePackageListToFile() {
-            if (packageListDisplayControl1.ItemCount == 0) {
+        private void SavePackageListToFile()
+        {
+            if (packageListDisplayControl1.ItemCount == 0)
+            {
                 MessageBox.Show("Package list is empty");
                 return;
             }
-            var saveFileDialog = new SaveFileDialog {
+            var saveFileDialog = new SaveFileDialog
+            {
                 DefaultExt = "txt",
                 FileName = _outputPath,
                 RestoreDirectory = true
             };
-            if (saveFileDialog.ShowDialog() != DialogResult.OK) {
+            if (saveFileDialog.ShowDialog() != DialogResult.OK)
+            {
                 return;
             }
             OutputFilePath = saveFileDialog.FileName;
-            try {
+            try
+            {
                 IBaseModule source = new GVPipelineSource(packageListDisplayControl1, "All");
                 var writer = new DelimitedFileWriter { FilePath = _outputPath };
                 ProcessingPipeline.Assemble("SaveListDisplayPipeline", source, writer).RunRoot(null);
-            } catch (MageException ex) {
+            }
+            catch (MageException ex)
+            {
                 MessageBox.Show(ex.Message);
             }
         }
@@ -214,23 +251,29 @@ namespace MageFilePackager {
         /// <summary>
         /// replace contents of file package from CSV file
         /// </summary>
-        private void LoadPackageListFromFile() {
-            var openFileDialog1 = new OpenFileDialog {
+        private void LoadPackageListFromFile()
+        {
+            var openFileDialog1 = new OpenFileDialog
+            {
                 RestoreDirectory = true,
                 AddExtension = true,
                 CheckFileExists = false,
                 DefaultExt = "txt",
                 Filter = "Text|*.txt;|All files (*.*)|*.*"
             };
-            if (openFileDialog1.ShowDialog() != DialogResult.OK) {
+            if (openFileDialog1.ShowDialog() != DialogResult.OK)
+            {
                 return;
             }
             OutputFilePath = openFileDialog1.FileName;
-            try {
+            try
+            {
                 var reader = new DelimitedFileReader { FilePath = _outputPath };
                 ProcessingPipeline.Assemble("RestoreListDisplayPipeline", reader, packageListDisplayControl1).RunRoot(null);
                 TotalSizeDisplay = TotalGB(TotalKB());
-            } catch (MageException ex) {
+            }
+            catch (MageException ex)
+            {
                 MessageBox.Show(ex.Message);
             }
         }
@@ -244,13 +287,16 @@ namespace MageFilePackager {
         /// create XML manifest for file package contents
         /// and optionally save to file and/or submit to DMS web service
         /// </summary>
-        private void MakeManifest() {
-            if (packageListDisplayControl1.ItemCount == 0) {
+        private void MakeManifest()
+        {
+            if (packageListDisplayControl1.ItemCount == 0)
+            {
                 MessageBox.Show("Package list is empty");
                 return;
             }
             var submissionForm = new SubmissionForm();
-            if (submissionForm.ShowDialog() != DialogResult.OK) {
+            if (submissionForm.ShowDialog() != DialogResult.OK)
+            {
                 return;
             }
             var parameters = new Dictionary<string, string>
@@ -262,27 +308,33 @@ namespace MageFilePackager {
                                  };
 
             BaseModule gvPipelineSource = new GVPipelineSource(packageListDisplayControl1, "All");
-            var xmlSink = new XMLSink {
+            var xmlSink = new XMLSink
+            {
                 Prefixes = FilePackageFilter.PrefixList,
                 Parameters = parameters
             };
             ProcessingPipeline.Assemble("XML", gvPipelineSource, xmlSink).RunRoot(null);
 
-            if (submissionForm.SaveToFile) {
+            if (submissionForm.SaveToFile)
+            {
                 var fw = new StreamWriter(submissionForm.ManifestFilePath);
                 fw.Write(xmlSink.Text);
                 fw.Close();
             }
 
-            if (submissionForm.SendToServer) {
+            if (submissionForm.SendToServer)
+            {
                 var postDataList = new Dictionary<string, string>
                                        {
                                            {"manifest", xmlSink.Text}
                                        };
 
-                try {
-                    string result = DMSHttp.Post(submissionForm.URL, postDataList);
-                } catch (Exception ex) {
+                try
+                {
+                    var result = DMSHttp.Post(submissionForm.URL, postDataList);
+                }
+                catch (Exception ex)
+                {
                     MessageBox.Show(ex.Message);
                 }
             }
@@ -297,7 +349,8 @@ namespace MageFilePackager {
         /// </summary>
         /// <param name="totalKB"> </param>
         /// <returns></returns>
-        private string TotalGB(float totalKB) {
+        private string TotalGB(float totalKB)
+        {
             return string.Format("{0:###,###,##0.0 GBytes}", totalKB / 1048576);
         }
 
@@ -305,16 +358,21 @@ namespace MageFilePackager {
         /// calculate total size of all files in file package
         /// </summary>
         /// <returns></returns>
-        private float TotalKB() {
+        private float TotalKB()
+        {
             float totalKB = 0;
             // find file size column
-            int idx = -1;
-            foreach (DataGridViewColumn col in packageListDisplayControl1.List.Columns) {
-                if (col.Name == "KB") idx = col.Index;
+            var idx = -1;
+            foreach (DataGridViewColumn col in packageListDisplayControl1.List.Columns)
+            {
+                if (col.Name == "KB")
+                    idx = col.Index;
             }
             // build total
-            if (idx != -1) {
-                foreach (DataGridViewRow row in packageListDisplayControl1.List.Rows) {
+            if (idx != -1)
+            {
+                foreach (DataGridViewRow row in packageListDisplayControl1.List.Rows)
+                {
                     float temp;
                     float.TryParse(row.Cells[idx].Value.ToString(), out temp);
                     totalKB += temp;
@@ -328,11 +386,13 @@ namespace MageFilePackager {
         /// </summary>
         /// <param name="entityType"></param>
         /// <returns></returns>
-        private FilePackageFilter GetPackageFilter(string entityType) {
-            const string baseColMap = "Item, Name, KB|" + FileListFilter.COLUMN_NAME_FILE_SIZE + ", Path|+|text, Source|+|text, ";
-            string idColMap = "ID";
-            string sourceType = "unknown";
-            switch (entityType) {
+        private FilePackageFilter GetPackageFilter(string entityType)
+        {
+            const string baseColMap = "Item, Name, KB|" + FileListInfoBase.COLUMN_NAME_FILE_SIZE + ", Path|+|text, Source|+|text, ";
+            var idColMap = "ID";
+            var sourceType = "unknown";
+            switch (entityType)
+            {
                 case "Data Packages":
                     idColMap = " ID";
                     sourceType = "Data_Package";
@@ -356,28 +416,36 @@ namespace MageFilePackager {
 
         #region Control Event Handlers
 
-        private void SaveBtnClick(object sender, EventArgs e) {
+        private void SaveBtnClick(object sender, EventArgs e)
+        {
             SavePackageListToFile();
         }
-        private void OpenBtnClick(object sender, EventArgs e) {
+        private void OpenBtnClick(object sender, EventArgs e)
+        {
             LoadPackageListFromFile();
         }
-        private void AddFromTreeBtnClick(object sender, EventArgs e) {
+        private void AddFromTreeBtnClick(object sender, EventArgs e)
+        {
             AddFilesToPackageListFromTree();
         }
-        private void SubmitBtnClick(object sender, EventArgs e) {
+        private void SubmitBtnClick(object sender, EventArgs e)
+        {
             MakeManifest();
         }
-        private void ClearBtnClick(object sender, EventArgs e) {
+        private void ClearBtnClick(object sender, EventArgs e)
+        {
             ClearPackageList();
         }
-        private void AddSelectedFilesBtnClick(object sender, EventArgs e) {
+        private void AddSelectedFilesBtnClick(object sender, EventArgs e)
+        {
             AddSelectedFilesToPackageList();
         }
-        private void AddAllFilesBtnClick(object sender, EventArgs e) {
+        private void AddAllFilesBtnClick(object sender, EventArgs e)
+        {
             AddAllFilesToPackageList();
         }
-        private void EditPackageListBtnClick(object sender, EventArgs e) {
+        private void EditPackageListBtnClick(object sender, EventArgs e)
+        {
             EditPackageListAsTree();
         }
 

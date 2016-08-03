@@ -3,7 +3,6 @@ using System.Text;
 using Mage;
 using MageExtExtractionFilters;
 using System.IO;
-using System.Collections.ObjectModel;
 
 namespace MageExtractorTest
 {
@@ -70,8 +69,8 @@ namespace MageExtractorTest
             Console.WriteLine(string.Format("Extraction Tests Begin"));
 
             // get test cases to run
-            string testCaseFilePath = Path.Combine(mTestRootFolderPath, Path.Combine(mTestCasesFolder, "LocalJobExtractionTestCases.txt")); // JobExtractionTestCases.txt
-            SimpleSink cases = GetFileContentsToSink(testCaseFilePath);
+            var testCaseFilePath = Path.Combine(mTestRootFolderPath, Path.Combine(mTestCasesFolder, "LocalJobExtractionTestCases.txt")); // JobExtractionTestCases.txt
+            var cases = GetFileContentsToSink(testCaseFilePath);
 
             // run each case
             RunExtractionTestCases(cases);
@@ -81,22 +80,22 @@ namespace MageExtractorTest
         public void RunExtractionTestCases(SimpleSink cases)
         {
             UpdateMessage(string.Format("Extraction Tests Begin"));
-            string testResultsPath = Path.Combine(mTestRootFolderPath, mExtractionResultsFromTestFolder);
+            var testResultsPath = Path.Combine(mTestRootFolderPath, mExtractionResultsFromTestFolder);
 
-            foreach (string file in Directory.GetFiles(testResultsPath))
+            foreach (var file in Directory.GetFiles(testResultsPath))
             {
                 File.Delete(file);
             }
 
-            ExtractionType extractionParms = new ExtractionType();
+            var extractionParms = new ExtractionType();
             DestinationType destination = null;
-            foreach (string[] testCase in cases.Rows)
+            foreach (var testCase in cases.Rows)
             {
 
                 // get job list to extract from
-                string jobListFileName = testCase[JobListFileIdx].ToString();
-                string jobListFilePath = Path.Combine(mTestRootFolderPath, Path.Combine(mJobListTestFileFolder, jobListFileName));
-                SimpleSink jobList = GetFileContentsToSink(jobListFilePath);
+                var jobListFileName = testCase[JobListFileIdx].ToString();
+                var jobListFilePath = Path.Combine(mTestRootFolderPath, Path.Combine(mJobListTestFileFolder, jobListFileName));
+                var jobList = GetFileContentsToSink(jobListFilePath);
 
                 // adjust job list for local folders
                 AdjustFolderPathForLocalFolders(jobList);
@@ -108,9 +107,9 @@ namespace MageExtractorTest
                 extractionParms.KeepAllResults = testCase[KeepAllIdx].ToString();
 
                 // set up destination
-                string type = testCase[DestinationTypeIdx].ToString();
-                string outputPath = Path.Combine(testResultsPath, testCase[ContainerIdx].ToString());
-                string item = testCase[NameIdx].ToString();
+                var type = testCase[DestinationTypeIdx].ToString();
+                var outputPath = Path.Combine(testResultsPath, testCase[ContainerIdx].ToString());
+                var item = testCase[NameIdx].ToString();
                 destination = new DestinationType(type, outputPath, item);
 
                 UpdateMessage(string.Format("Test Case:{0} ============", jobListFileName));
@@ -122,8 +121,8 @@ namespace MageExtractorTest
 
         protected void TestExtractFromJobList(BaseModule jobList, ExtractionType extractionParms, DestinationType destination)
         {
-            PipelineQueue pq = ExtractionPipelines.MakePipelineQueueToExtractFromJobList(jobList, extractionParms, destination);
-            foreach (ProcessingPipeline p in pq.Pipelines.ToArray())
+            var pq = ExtractionPipelines.MakePipelineQueueToExtractFromJobList(jobList, extractionParms, destination);
+            foreach (var p in pq.Pipelines.ToArray())
             {
                 ConnectPipelineToMessageHandler(p);
             }
@@ -138,11 +137,11 @@ namespace MageExtractorTest
         private void AdjustFolderPathForLocalFolders(SimpleSink jobList)
         {
             // adjust job list for local folders
-            int folderColIdx = jobList.ColumnIndex["Folder"];
-            string localPath = Path.Combine(mTestRootFolderPath, mJobInputResultsFolder);
-            for (int i = 0; i < jobList.Rows.Count; i++)
+            var folderColIdx = jobList.ColumnIndex["Folder"];
+            var localPath = Path.Combine(mTestRootFolderPath, mJobInputResultsFolder);
+            for (var i = 0; i < jobList.Rows.Count; i++)
             {
-                string folder = jobList.Rows[i][folderColIdx].ToString();
+                var folder = jobList.Rows[i][folderColIdx].ToString();
                 jobList.Rows[i][folderColIdx] = folder.Replace("[local]", localPath);
             }
         }
@@ -155,13 +154,13 @@ namespace MageExtractorTest
         {
             // "Sequest Synopsis" "Sequest First Hits"  "X!Tandem First Protein"  "X!Tandem All Proteins"  "Inspect Synopsis"
 
-            string testCaseFilePath = Path.Combine(mTestRootFolderPath, Path.Combine(mTestCasesFolder, "FileListTestCases.txt"));
-            SimpleSink cases = GetFileContentsToSink(testCaseFilePath);
+            var testCaseFilePath = Path.Combine(mTestRootFolderPath, Path.Combine(mTestCasesFolder, "FileListTestCases.txt"));
+            var cases = GetFileContentsToSink(testCaseFilePath);
 
-            ExtractionType extractionParms = new ExtractionType();
-            foreach (string[] testCase in cases.Rows)
+            var extractionParms = new ExtractionType();
+            foreach (var testCase in cases.Rows)
             {
-                string jobListFile = testCase[0].ToString();
+                var jobListFile = testCase[0].ToString();
                 extractionParms.RType = ResultType.TypeList[testCase[1].ToString()];
                 TestFindFilesForJobList(jobListFile, extractionParms);
             }
@@ -174,17 +173,17 @@ namespace MageExtractorTest
         protected void TestFindFilesForJobList(string jobListFileName, ExtractionType extractionParms)
         {
 
-            SimpleSink jobList = GetFileContentsToSink(Path.Combine(mTestRootFolderPath, Path.Combine(mJobListTestFileFolder, jobListFileName)));
+            var jobList = GetFileContentsToSink(Path.Combine(mTestRootFolderPath, Path.Combine(mJobListTestFileFolder, jobListFileName)));
 
-            SimpleSink fileListSink = new SimpleSink();
+            var fileListSink = new SimpleSink();
 
-            ProcessingPipeline p = ExtractionPipelines.MakePipelineToGetListOfFiles(new SinkWrapper(jobList), fileListSink, extractionParms);
+            var p = ExtractionPipelines.MakePipelineToGetListOfFiles(new SinkWrapper(jobList), fileListSink, extractionParms);
             ConnectPipelineToMessageHandler(p);
             p.RunRoot(null);
 
-            string goodFileName = Path.GetFileNameWithoutExtension(jobListFileName) + "_file_list.txt";
-            SimpleSink goodValues = GetFileContentsToSink(Path.Combine(mTestRootFolderPath, Path.Combine(mJobListTestKnownGoodFolder, goodFileName)));
-            string errorMsg = CompareSinks(fileListSink, goodValues);
+            var goodFileName = Path.GetFileNameWithoutExtension(jobListFileName) + "_file_list.txt";
+            var goodValues = GetFileContentsToSink(Path.Combine(mTestRootFolderPath, Path.Combine(mJobListTestKnownGoodFolder, goodFileName)));
+            var errorMsg = CompareSinks(fileListSink, goodValues);
             if (string.IsNullOrEmpty(errorMsg))
             {
                 Console.WriteLine(string.Format("Passed:{0}", jobListFileName));
@@ -202,27 +201,27 @@ namespace MageExtractorTest
 
         private SimpleSink GetFileContentsToSink(string path)
         {
-            DelimitedFileReader reader = new DelimitedFileReader();
+            var reader = new DelimitedFileReader();
             reader.FilePath = path;
-            SimpleSink sink = new SimpleSink();
+            var sink = new SimpleSink();
             ProcessingPipeline.Assemble("FileContents", reader, sink).RunRoot(null);
             return sink;
         }
 
         private void WriteSinkContentsToFile(SimpleSink sink, string path)
         {
-            DelimitedFileWriter writer = new DelimitedFileWriter();
+            var writer = new DelimitedFileWriter();
             writer.FilePath = path;
             ProcessingPipeline.Assemble("SinkDump", sink, writer).RunRoot(null);
         }
 
         private static string CompareSinks(SimpleSink source, SimpleSink result)
         {
-            StringBuilder mb = new StringBuilder();
-            Collection<MageColumnDef> sourceCols = source.Columns;
-            Collection<MageColumnDef> resultCols = result.Columns;
-            Collection<string[]> sourceRows = source.Rows;
-            Collection<string[]> resultRows = result.Rows;
+            var mb = new StringBuilder();
+            var sourceCols = source.Columns;
+            var resultCols = result.Columns;
+            var sourceRows = source.Rows;
+            var resultRows = result.Rows;
 
             if (sourceCols.Count != resultCols.Count)
             {
@@ -233,7 +232,7 @@ namespace MageExtractorTest
                 mb.AppendLine("Row count does not match");
             }
 
-            for (int i = 0; i < sourceCols.Count; i++)
+            for (var i = 0; i < sourceCols.Count; i++)
             {
                 if (sourceCols[i].Name != resultCols[i].Name)
                 {
@@ -241,9 +240,9 @@ namespace MageExtractorTest
                 }
             }
 
-            for (int i = 0; i < sourceRows.Count; i++)
+            for (var i = 0; i < sourceRows.Count; i++)
             {
-                for (int j = 0; j < sourceCols.Count; j++)
+                for (var j = 0; j < sourceCols.Count; j++)
                 {
                     if (sourceRows[i][j].ToString() != resultRows[i][j].ToString())
                     {

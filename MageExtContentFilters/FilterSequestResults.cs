@@ -17,7 +17,7 @@ namespace MageExtContentFilters
         {
             //Implements IFilterResults.EvaluatePeptide
 
-            return this.EvaluateSequest(peptideSequence, xCorrValue, delCNValue, delCN2Value, chargeState, peptideMass, -1, -1, -1, -1, -1, -1);
+            return EvaluateSequest(peptideSequence, xCorrValue, delCNValue, delCN2Value, chargeState, peptideMass, -1, -1, -1, -1, -1, -1);
         }
 
 
@@ -25,25 +25,22 @@ namespace MageExtContentFilters
         {
             //Implements IFilterResults.EvaluatePeptide
 
-            string currCritName = null;
-            string currCritOperator = null;
-
-            bool currEval = false;
-            int peptideLength = this.GetPeptideLength(peptideSequence);
-            int termState = 0;
+            var currEval = false;
+            var peptideLength = GetPeptideLength(peptideSequence);
+            var termState = 0;
 
             if (cleavageState == -1)
             {
-                cleavageState = Convert.ToInt32(this.GetCleavageState(peptideSequence));
+                cleavageState = Convert.ToInt32(GetCleavageState(peptideSequence));
             }
 
-            foreach (string filterGroupID in this.m_FilterGroups.Keys)
+            foreach (var filterGroupID in m_FilterGroups.Keys)
             {
                 currEval = true;
-                foreach (FilterCriteriaDef filterRow in m_FilterGroups[filterGroupID])
+                foreach (var filterRow in m_FilterGroups[filterGroupID])
                 {
-                    currCritName = filterRow.CriteriaName;
-                    currCritOperator = filterRow.CriteriaOperator;
+                    var currCritName = filterRow.CriteriaName;
+                    var currCritOperator = filterRow.CriteriaOperator;
 
                     switch (currCritName)
                     {
@@ -53,7 +50,6 @@ namespace MageExtContentFilters
                                 if (!CompareInteger(chargeState, currCritOperator, filterRow.CriteriaValueInt))
                                 {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -63,7 +59,6 @@ namespace MageExtContentFilters
                                 if (!CompareDouble(msgfSpecProb, currCritOperator, filterRow.CriteriaValueFloat))
                                 {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -73,7 +68,6 @@ namespace MageExtContentFilters
                                 if (!CompareInteger(cleavageState, currCritOperator, filterRow.CriteriaValueInt))
                                 {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -81,12 +75,11 @@ namespace MageExtContentFilters
                             if (termState > -1)
                             {
                                 if (termState < 0)
-                                    termState = this.GetTerminusState(peptideSequence);
+                                    termState = GetTerminusState(peptideSequence);
 
                                 if (!CompareInteger(termState, currCritOperator, filterRow.CriteriaValueInt))
                                 {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -96,7 +89,6 @@ namespace MageExtContentFilters
                                 if (!CompareInteger(peptideLength, currCritOperator, filterRow.CriteriaValueInt))
                                 {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -106,7 +98,6 @@ namespace MageExtContentFilters
                                 if (!CompareDouble(peptideMass, currCritOperator, filterRow.CriteriaValueFloat, 0.000001))
                                 {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -116,7 +107,6 @@ namespace MageExtContentFilters
                                 if (!CompareDouble(xCorrValue, currCritOperator, filterRow.CriteriaValueFloat, 0.0001))
                                 {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -126,7 +116,6 @@ namespace MageExtContentFilters
                                 if (!CompareDouble(delCNValue, currCritOperator, filterRow.CriteriaValueFloat, 0.0001))
                                 {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -136,7 +125,6 @@ namespace MageExtContentFilters
                                 if (!CompareDouble(delCN2Value, currCritOperator, filterRow.CriteriaValueFloat, 0.0001))
                                 {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -146,7 +134,6 @@ namespace MageExtContentFilters
                                 if (!CompareInteger(spectrumCount, currCritOperator, filterRow.CriteriaValueInt))
                                 {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -156,7 +143,6 @@ namespace MageExtContentFilters
                                 if (!CompareDouble(discriminantScore, currCritOperator, filterRow.CriteriaValueFloat, 0.000001))
                                 {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -166,7 +152,6 @@ namespace MageExtContentFilters
                                 if (!CompareDouble(NETAbsoluteDifference, currCritOperator, filterRow.CriteriaValueFloat, 0.000001))
                                 {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -176,7 +161,6 @@ namespace MageExtContentFilters
                                 if (!CompareInteger(rankXc, currCritOperator, filterRow.CriteriaValueInt))
                                 {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -190,7 +174,7 @@ namespace MageExtContentFilters
 
                 }
 
-                if (currEval == true)
+                if (currEval)
                     break;                           //Subject passed the criteria for this filtergroup
             }
 

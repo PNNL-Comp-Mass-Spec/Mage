@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Mage;
 using System.IO;
@@ -49,7 +45,7 @@ namespace MageUIComponents {
         }
 
         public void SetParameters(Dictionary<string, string> paramList) {
-            foreach (KeyValuePair<string, string> paramDef in paramList) {
+            foreach (var paramDef in paramList) {
                 switch (paramDef.Key) {
                     case "DatabaseName":
                         DatabaseName = paramDef.Value;
@@ -64,21 +60,22 @@ namespace MageUIComponents {
         #endregion
 
 		private void SelectSqLiteDbCtl_Click(object sender, EventArgs e) {
-            OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            openFileDialog1.RestoreDirectory = true;
-            openFileDialog1.AddExtension = true;
-            openFileDialog1.CheckFileExists = false;
-            openFileDialog1.DefaultExt = "db3";
-            openFileDialog1.Filter = "SQLite3|*.db;*.db3|All files (*.*)|*.*";
-            if (openFileDialog1.ShowDialog() == DialogResult.OK) {
+		    var openFileDialog1 = new OpenFileDialog
+		    {
+		        RestoreDirectory = true,
+		        AddExtension = true,
+		        CheckFileExists = false,
+		        DefaultExt = "db3",
+		        Filter = "SQLite3|*.db;*.db3|All files (*.*)|*.*"
+		    };
+		    if (openFileDialog1.ShowDialog() == DialogResult.OK) {
                 DatabaseName = ValidateFileExtension(openFileDialog1.FileName);
             }
         }
 
 		private void DefineSqLiteTableCtl_Click(object sender, EventArgs e) {
-            SQLiteTableSelectionPanel selectionForm = new SQLiteTableSelectionPanel();
-            selectionForm.DatabasePath = DatabaseName;
-            if (selectionForm.ShowDialog() == DialogResult.OK) {
+		    var selectionForm = new SQLiteTableSelectionPanel {DatabasePath = DatabaseName};
+		    if (selectionForm.ShowDialog() == DialogResult.OK) {
                 TableName = selectionForm.TableName;
             }
         }
@@ -86,7 +83,7 @@ namespace MageUIComponents {
 		private string ValidateFileExtension(string filePath)
 		{
 			var fiFile = new FileInfo(filePath);
-			string extension = fiFile.Extension.ToLower();			
+			var extension = fiFile.Extension.ToLower();			
 
 			if (extension != ".db3" && extension != ".db" && extension != ".sqlite3" && extension != ".sqlite")
 			{
@@ -94,7 +91,8 @@ namespace MageUIComponents {
 				filePath = Path.ChangeExtension(filePath, extension);
 			}
 
-			if (Path.GetFileNameWithoutExtension(filePath).Length == 0)
+		    var baseFileName = Path.GetFileNameWithoutExtension(filePath);
+		    if (baseFileName != null && baseFileName.Length == 0)
 			{
 				if (filePath.Length == extension.Length)
 					filePath = Path.Combine("MageResults") + extension;

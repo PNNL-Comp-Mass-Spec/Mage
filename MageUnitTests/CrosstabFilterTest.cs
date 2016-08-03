@@ -12,55 +12,6 @@ namespace MageUnitTests
     public class CrosstabFilterTest
     {
 
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #region Additional test attributes
-        // 
-        //You can use the following additional attributes as you write your tests:
-        //
-        //Use ClassInitialize to run code before running the first test in the class
-        //[ClassInitialize()]
-        //public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
-        //
-        //Use ClassCleanup to run code after all tests in a class have run
-        //[ClassCleanup()]
-        //public static void MyClassCleanup()
-        //{
-        //}
-        //
-        //Use TestInitialize to run code before running each test
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
-        //Use TestCleanup to run code after each test has run
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        //
-        #endregion
-
-
         /// <summary>
         ///A test for FactorValueCol
         ///</summary>
@@ -72,18 +23,19 @@ namespace MageUnitTests
 
             // create Delimited file reader module
             // and connect together
-            DelimitedFileReader reader = new DelimitedFileReader();
-            reader.FilePath = "factors_test.txt";
+            var reader = new DelimitedFileReader {FilePath = "factors_test.txt"};
 
-            CrosstabFilter target = new CrosstabFilter();
-            target.EntityNameCol = "Dataset";
-            target.EntityIDCol = "Dataset_ID";
-            target.FactorNameCol = "Factor";
-            target.FactorValueCol = "Value";
+            var target = new CrosstabFilter
+            {
+                EntityNameCol = "Dataset",
+                EntityIDCol = "Dataset_ID",
+                FactorNameCol = "Factor",
+                FactorValueCol = "Value"
+            };
 
-            SimpleSink sink = new SimpleSink();
+            var sink = new SimpleSink();
 
-            ProcessingPipeline pipeline = new ProcessingPipeline("Test");
+            var pipeline = new ProcessingPipeline("Test");
             pipeline.RootModule = pipeline.AddModule("Reader", reader);
             pipeline.AddModule("Target", target);
             pipeline.AddModule("Sink", sink);
@@ -103,11 +55,10 @@ namespace MageUnitTests
         [TestMethod()]
         public void FactorValueColTest()
         {
-            CrosstabFilter target = new CrosstabFilter();
-            string expected = "Test Value";
-            string actual;
+            var target = new CrosstabFilter();
+            var expected = "Test Value";
             target.FactorValueCol = expected;
-            actual = target.FactorValueCol;
+            var actual = target.FactorValueCol;
             Assert.AreEqual(expected, actual);
         }
 
@@ -117,11 +68,10 @@ namespace MageUnitTests
         [TestMethod()]
         public void FactorNameColTest()
         {
-            CrosstabFilter target = new CrosstabFilter();
-            string expected = "Test Value";
-            string actual;
+            var target = new CrosstabFilter();
+            var expected = "Test Value";
             target.FactorNameCol = expected;
-            actual = target.FactorNameCol;
+            var actual = target.FactorNameCol;
             Assert.AreEqual(expected, actual);
         }
 
@@ -131,11 +81,10 @@ namespace MageUnitTests
         [TestMethod()]
         public void EntityNameColTest()
         {
-            CrosstabFilter target = new CrosstabFilter();
-            string expected = "Test Value";
-            string actual;
+            var target = new CrosstabFilter();
+            var expected = "Test Value";
             target.EntityNameCol = expected;
-            actual = target.EntityNameCol;
+            var actual = target.EntityNameCol;
             Assert.AreEqual(expected, actual);
         }
 
@@ -145,11 +94,10 @@ namespace MageUnitTests
         [TestMethod()]
         public void EntityIDColTest()
         {
-            CrosstabFilter target = new CrosstabFilter();
-            string expected = "Test Value";
-            string actual;
+            var target = new CrosstabFilter();
+            var expected = "Test Value";
             target.EntityIDCol = expected;
-            actual = target.EntityIDCol;
+            var actual = target.EntityIDCol;
             Assert.AreEqual(expected, actual);
         }
     }

@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MageConcatenator));
+            var resources = new System.ComponentModel.ComponentResourceManager(typeof(MageConcatenator));
             this.pnlControlsAndStatus = new System.Windows.Forms.Panel();
             this.cmdAbout = new System.Windows.Forms.Button();
             this.chkAddFileName = new System.Windows.Forms.CheckBox();

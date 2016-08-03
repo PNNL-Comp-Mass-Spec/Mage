@@ -1,12 +1,15 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Mage;
 using System.Collections.ObjectModel;
 
-namespace MageDisplayLib {
+namespace MageDisplayLib
+{
 
-    public partial class GridViewDisplayControl : UserControl, IMageDisplayControl, ISinkModule, IModuleParameters {
+    public partial class GridViewDisplayControl : UserControl, IMageDisplayControl, ISinkModule, IModuleParameters
+    {
 
         /// <summary>
         /// Signals anyone interested that row selection has changed
@@ -21,7 +24,8 @@ namespace MageDisplayLib {
         /// Gets settings for this panel
         /// </summary>
         /// <returns></returns>
-        public Dictionary<string, string> GetParameters() {
+        public Dictionary<string, string> GetParameters()
+        {
             mParameters["ShiftClickMode"] = chkShiftClickMode.Checked.ToString();
             return mParameters;
         }
@@ -30,50 +34,58 @@ namespace MageDisplayLib {
         /// Sets settings for this panel
         /// </summary>
         /// <returns></returns>
-        public void SetParameters(Dictionary<string, string> paramList) {
-            bool bChecked;
+        public void SetParameters(Dictionary<string, string> paramList)
+        {
             string sValue;
 
-            if (paramList.TryGetValue("ShiftClickMode", out sValue)) {
+            if (paramList.TryGetValue("ShiftClickMode", out sValue))
+            {
+                bool bChecked;
                 if (bool.TryParse(paramList["ShiftClickMode"], out bChecked))
-                     chkShiftClickMode.Checked = bChecked;
+                    chkShiftClickMode.Checked = bChecked;
             }
         }
 
 
-		#endregion
+        #endregion
 
-		#region Member Variables
+        #region Member Variables
 
-		/// <summary>
-		/// stash the Mage column defs we received on STI
-		/// in case we need to output them later
-		/// </summary>
-		private Collection<MageColumnDef> mColumnDefs = null;
+        /// <summary>
+        /// stash the Mage column defs we received on STI
+        /// in case we need to output them later
+        /// </summary>
+        private Collection<MageColumnDef> mColumnDefs;
 
-		private bool mAllowDisableShiftClickMode = true;
+        private bool mAllowDisableShiftClickMode = true;
 
         #endregion
-		
+
         #region Properties
 
-		/// <summary>
-		/// Defines whether or not checkbox "Use Shift+Click, Ctrl+Click" is visible
-		/// </summary>
-		public bool AllowDisableShiftClickMode {
-			get {
-				return mAllowDisableShiftClickMode;
-			}
-			set {
-				mAllowDisableShiftClickMode = value;
-				if (value) {
-					chkShiftClickMode.Visible = true;
-				} else {
-					chkShiftClickMode.Visible = false;
-					chkShiftClickMode.Checked = true;
-				}
-			}
-		}
+        /// <summary>
+        /// Defines whether or not checkbox "Use Shift+Click, Ctrl+Click" is visible
+        /// </summary>
+        public bool AllowDisableShiftClickMode
+        {
+            get
+            {
+                return mAllowDisableShiftClickMode;
+            }
+            set
+            {
+                mAllowDisableShiftClickMode = value;
+                if (value)
+                {
+                    chkShiftClickMode.Visible = true;
+                }
+                else
+                {
+                    chkShiftClickMode.Visible = false;
+                    chkShiftClickMode.Checked = true;
+                }
+            }
+        }
 
         /// <summary>
         /// Set to True to automatically set column widths after populating the grid
@@ -84,16 +96,22 @@ namespace MageDisplayLib {
         /// <summary>
         /// Defines whether or not multiple items can be selected in the data grid view 
         /// </summary>
-        public bool MultiSelect {
-            get { 
-                return gvQueryResults.MultiSelect; 
+        public bool MultiSelect
+        {
+            get
+            {
+                return gvQueryResults.MultiSelect;
             }
-            set { 
-                gvQueryResults.MultiSelect = value; 
-                if (value) {
-					chkShiftClickMode.Visible = mAllowDisableShiftClickMode;
-                } else {
-					this.AllowDisableShiftClickMode = false;
+            set
+            {
+                gvQueryResults.MultiSelect = value;
+                if (value)
+                {
+                    chkShiftClickMode.Visible = mAllowDisableShiftClickMode;
+                }
+                else
+                {
+                    AllowDisableShiftClickMode = false;
                 }
             }
         }
@@ -101,14 +119,19 @@ namespace MageDisplayLib {
         /// <summary>
         /// Supplemental information about rows in list display (typicall number of rows)
         /// </summary>
-        public string Notice { get { return this.lblNotice.Text; } set { this.lblNotice.Text = value; } }
+        public string Notice
+        {
+            get { return lblNotice.Text; }
+            set { lblNotice.Text = value; }
+        }
 
         /// <summary>
         /// Title field in header above list display rows
         /// </summary>
-        public string PageTitle {
-            get { return this.lblPageTitle.Text; }
-            set { this.lblPageTitle.Text = value; }
+        public string PageTitle
+        {
+            get { return lblPageTitle.Text; }
+            set { lblPageTitle.Text = value; }
         }
 
         /// <summary>
@@ -124,8 +147,10 @@ namespace MageDisplayLib {
         /// <summary>
         /// Number of items currently in display
         /// </summary>
-        public int ItemCount {
-            get {
+        public int ItemCount
+        {
+            get
+            {
                 return gvQueryResults.Rows.Count;
             }
         }
@@ -133,8 +158,10 @@ namespace MageDisplayLib {
         /// <summary>
         /// Number of selected items currently in display
         /// </summary>
-        public int SelectedItemCount {
-            get {
+        public int SelectedItemCount
+        {
+            get
+            {
                 return gvQueryResults.SelectedRows.Count;
             }
         }
@@ -155,7 +182,7 @@ namespace MageDisplayLib {
                 {
                     var rowValues = new List<string>();
 
-                    for (int i = 0; i < item.Cells.Count; i++)
+                    for (var i = 0; i < item.Cells.Count; i++)
                     {
                         rowValues.Add(item.Cells[i].Value.ToString());
                     }
@@ -177,15 +204,15 @@ namespace MageDisplayLib {
                 var lstSelectedRows = new List<Dictionary<string, string>>();
 
                 gvQueryResults.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-                
+
                 foreach (DataGridViewRow item in gvQueryResults.SelectedRows)
                 {
                     var rowValues = new Dictionary<string, string>();
 
-                    for (int i = 0; i < ColumnDefs.Count; i++)
+                    for (var i = 0; i < ColumnDefs.Count; i++)
                     {
-                        string colName = ColumnDefs[i].Name;
-                        string fieldVal = item.Cells[i].Value.ToString();
+                        var colName = ColumnDefs[i].Name;
+                        var fieldVal = item.Cells[i].Value.ToString();
                         rowValues.Add(colName, fieldVal);
                     }
                     lstSelectedRows.Add(rowValues);
@@ -193,20 +220,24 @@ namespace MageDisplayLib {
 
                 return lstSelectedRows;
             }
-        }        
+        }
 
         /// <summary>
         /// Get contents of first selected row as key/value pairs
         /// where key is column name and value is contents of column
         /// </summary>
-        public Dictionary<string, string> SeletedItemFields {
-            get {
+        public Dictionary<string, string> SeletedItemFields
+        {
+            get
+            {
                 var fields = new Dictionary<string, string>();
-                if (gvQueryResults.SelectedRows.Count > 0) {
-                    DataGridViewRow item = gvQueryResults.SelectedRows[0];
-                    for (int i = 0; i < ColumnDefs.Count; i++) {
-                        string colName = ColumnDefs[i].Name;
-                        string fieldVal = item.Cells[i].Value.ToString();
+                if (gvQueryResults.SelectedRows.Count > 0)
+                {
+                    var item = gvQueryResults.SelectedRows[0];
+                    for (var i = 0; i < ColumnDefs.Count; i++)
+                    {
+                        var colName = ColumnDefs[i].Name;
+                        var fieldVal = item.Cells[i].Value.ToString();
                         fields.Add(colName, fieldVal);
                     }
                 }
@@ -217,10 +248,13 @@ namespace MageDisplayLib {
         /// <summary>
         /// Get collection of columnn names
         /// </summary>
-        public Collection<string> ColumnNames {
-            get {
-                Collection<string> names = new Collection<string>();
-                foreach (MageColumnDef colDef in ColumnDefs) {
+        public Collection<string> ColumnNames
+        {
+            get
+            {
+                var names = new Collection<string>();
+                foreach (var colDef in ColumnDefs)
+                {
                     names.Add(colDef.Name);
                 }
                 return names;
@@ -234,7 +268,8 @@ namespace MageDisplayLib {
         /// <summary>
         /// construct a new GridViewDisplayControl object
         /// </summary>
-        public GridViewDisplayControl() {
+        public GridViewDisplayControl()
+        {
             InitializeComponent();
 
             ItemBlockSize = 100;
@@ -252,8 +287,8 @@ namespace MageDisplayLib {
             gvQueryResults.AllowUserToResizeColumns = true;
             gvQueryResults.ReadOnly = true;
 
-			this.AllowDisableShiftClickMode = true;
-			this.MultiSelect = true;
+            AllowDisableShiftClickMode = true;
+            MultiSelect = true;
 
             //Get and Set the Current Cell 
             ////gvQueryResults.CurrentCell.RowIndex;
@@ -270,15 +305,17 @@ namespace MageDisplayLib {
         /// delegates for inter-thread access to DataGridView control
         /// </summary>
         private delegate void DisplayColumnCallback(Collection<MageColumnDef> colDefs);
-		private delegate void DisplayRowBlockCallback(Collection<string[]> rows);
+        private delegate void DisplayRowBlockCallback(Collection<string[]> rows);
 
         /// <summary>
         /// Set up columns for DataGridView control
         /// </summary>
         /// <param name="colDefs"></param>
-        private void HandleDisplayColumnSetup(Collection<MageColumnDef> colDefs) {
+        private void HandleDisplayColumnSetup(Collection<MageColumnDef> colDefs)
+        {
             gvQueryResults.ColumnCount = colDefs.Count;
-            for (int i = 0; i < colDefs.Count; i++) {
+            for (var i = 0; i < colDefs.Count; i++)
+            {
                 gvQueryResults.Columns[i].Name = colDefs[i].Name;
             }
         }
@@ -288,18 +325,24 @@ namespace MageDisplayLib {
         /// </summary>
         /// <param name="rows"></param>
 		private void HandleDisplayRowBlock(Collection<string[]> rows)
-		{
-            if (rows != null) {
-                if (gvQueryResults.Columns.Count > 0) {
-					foreach (string[] row in rows)
-					{
+        {
+            if (rows != null)
+            {
+                if (gvQueryResults.Columns.Count > 0)
+                {
+                    foreach (var row in rows)
+                    {
                         gvQueryResults.Rows.Add(row);
                     }
                     UpdateNoticeFld(".");
-                } else {
+                }
+                else
+                {
                     UpdateNoticeFld("Cannot add row: no columns are defined");
                 }
-            } else {
+            }
+            else
+            {
                 UpdateNoticeFld("");
                 if (AutoSizeColumnWidths)
                     AutoSizeColumnWidthsNow();
@@ -311,20 +354,26 @@ namespace MageDisplayLib {
         /// actually update the notice filed
         /// </summary>
         /// <param name="text"></param>
-        private void UpdateNoticeFld(string text) {
-            if (text != null && text == ".") {
-                if (lblNotice.Text.Length > 64) {
+        private void UpdateNoticeFld(string text)
+        {
+            if (text != null && text == ".")
+            {
+                if (lblNotice.Text.Length > 64)
+                {
                     lblNotice.Text = lblNotice.Text.Replace(".", "");
                 }
                 lblNotice.Text = "." + lblNotice.Text;
                 lblNotice.Update();
-            } else {
-                string strStatus;
-                strStatus = gvQueryResults.Rows.Count.ToString() + " row";
-                if (gvQueryResults.Rows.Count != 1) {
+            }
+            else
+            {
+                var strStatus = gvQueryResults.Rows.Count + " row";
+                if (gvQueryResults.Rows.Count != 1)
+                {
                     strStatus += "s";
                 }
-                if (text != null && text.Length > 0) {
+                if (!string.IsNullOrEmpty(text))
+                {
                     strStatus = text + "; " + strStatus;
                 }
                 lblNotice.Text = strStatus;
@@ -338,7 +387,8 @@ namespace MageDisplayLib {
         /// <summary>
         /// Empty the current display contents
         /// </summary>
-        public void Clear() {
+        public void Clear()
+        {
             gvQueryResults.Rows.Clear();
             gvQueryResults.Columns.Clear();
             gvQueryResults.Update();
@@ -348,21 +398,24 @@ namespace MageDisplayLib {
         /// <summary>
         /// De-selects all of the rows in the display
         /// </summary>
-        public void ClearSelection() {
+        public void ClearSelection()
+        {
             gvQueryResults.ClearSelection();
         }
 
         /// <summary>
         /// Select all rows in display
         /// </summary>
-        public void SelectAllRows() {
+        public void SelectAllRows()
+        {
             gvQueryResults.SelectAll();
         }
 
         /// <summary>
         /// Remove the currently selected items from the display list
         /// </summary>
-        public void DeleteSelectedItems() {
+        public void DeleteSelectedItems()
+        {
             gvQueryResults.DeleteSelectedItems();
             UpdateNoticeFieldWithRowInfo();
         }
@@ -370,8 +423,9 @@ namespace MageDisplayLib {
         /// <summary>
         /// Remove the items from the display list that are currently not selected
         /// </summary>
-        public void DeleteNotSelectedItems() {
-            gvQueryResults.DeleteNotSelectedItems();           
+        public void DeleteNotSelectedItems()
+        {
+            gvQueryResults.DeleteNotSelectedItems();
             UpdateNoticeFieldWithRowInfo();
         }
 
@@ -383,7 +437,8 @@ namespace MageDisplayLib {
         // See file GridViewDisplayControlActions.cs
 
         // Toggles support for Shift+Click selection mode in gvQueryResults
-        private void chkShiftClickSelect_CheckedChanged(object sender, EventArgs e) {
+        private void chkShiftClickSelect_CheckedChanged(object sender, EventArgs e)
+        {
             gvQueryResults.ShiftClickSelect = chkShiftClickMode.Checked;
         }
 
@@ -392,20 +447,20 @@ namespace MageDisplayLib {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void gvQueryResults_SelectionChanged(object sender, EventArgs e) {
+        private void gvQueryResults_SelectionChanged(object sender, EventArgs e)
+        {
             UpdateNoticeFieldWithRowInfo();
-            if (SelectionChanged != null) {
-                SelectionChanged(this, new EventArgs());
-            }
+            SelectionChanged?.Invoke(this, new EventArgs());
         }
 
         /// <summary>
         /// Update notice field with number of rows and selection
         /// </summary>
-        private void UpdateNoticeFieldWithRowInfo() {
-            string s = (SelectedItemCount > 0) ? SelectedItemCount.ToString() + "/" : "";
-            string i = ItemCount.ToString();
-            string r = (ItemCount == 1) ? " row" : " rows";
+        private void UpdateNoticeFieldWithRowInfo()
+        {
+            var s = (SelectedItemCount > 0) ? SelectedItemCount.ToString() + "/" : "";
+            var i = ItemCount.ToString();
+            var r = (ItemCount == 1) ? " row" : " rows";
             lblNotice.Text = s + i + r;
         }
 
@@ -420,7 +475,7 @@ namespace MageDisplayLib {
         /// <summary>
         /// internal buffer to accumulate data rows from standard tabular input
         /// </summary>
-		private Collection<string[]> mRowBuffer = new Collection<string[]>();
+		private readonly Collection<string[]> mRowBuffer = new Collection<string[]>();
 
 
         #endregion
@@ -446,10 +501,11 @@ namespace MageDisplayLib {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        public void HandleColumnDef(object sender, MageColumnEventArgs args) {
+        public void HandleColumnDef(object sender, MageColumnEventArgs args)
+        {
             mColumnDefs = new Collection<MageColumnDef>(args.ColumnDefs);
             DisplayColumnCallback csd = HandleDisplayColumnSetup;
-            Invoke(csd, new object[] { args.ColumnDefs });
+            Invoke(csd, args.ColumnDefs);
         }
 
         /// <summary>
@@ -457,17 +513,21 @@ namespace MageDisplayLib {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        public void HandleDataRow(object sender, MageDataEventArgs args) {
-            bool endOfData = !args.DataAvailable;
-            if (args.DataAvailable) {
+        public void HandleDataRow(object sender, MageDataEventArgs args)
+        {
+            var endOfData = !args.DataAvailable;
+            if (args.DataAvailable)
+            {
                 mRowBuffer.Add(args.Fields);
             }
-            if (mRowBuffer.Count == ItemBlockSize || endOfData) {
+            if (mRowBuffer.Count == ItemBlockSize || endOfData)
+            {
                 DisplayRowBlockCallback drc = HandleDisplayRowBlock;
-                Invoke(drc, new object[] { mRowBuffer });
+                Invoke(drc, mRowBuffer);
                 mRowBuffer.Clear();
             }
-            if (endOfData) {
+            if (endOfData)
+            {
                 DisplayRowBlockCallback drc = HandleDisplayRowBlock;
                 Invoke(drc, new object[] { null });
             }
@@ -481,8 +541,10 @@ namespace MageDisplayLib {
         /// return suitable ISinkModule reference to this object
         /// </summary>
         /// <returns>ISinkModule reference</returns>
-        public ISinkModule MakeSink() {
-            return MakeSink(10);
+        public ISinkModule MakeSink()
+        {
+            const int BLOCK_SIZE = 10;
+            return MakeSink(BLOCK_SIZE);
         }
 
         /// <summary>
@@ -491,7 +553,8 @@ namespace MageDisplayLib {
         /// <param name="title"></param>
         /// <param name="blkSz"></param>
         /// <returns>ISinkModule reference</returns>
-        public ISinkModule MakeSink(string title, int blkSz) {
+        public ISinkModule MakeSink(string title, int blkSz)
+        {
             PageTitle = title;
             return MakeSink(blkSz);
         }
@@ -501,7 +564,8 @@ namespace MageDisplayLib {
         /// </summary>
         /// <param name="blkSz"></param>
         /// <returns>ISinkModule reference</returns>
-        public ISinkModule MakeSink(int blkSz) {
+        public ISinkModule MakeSink(int blkSz)
+        {
             Clear();
             return this;
         }
@@ -528,20 +592,22 @@ namespace MageDisplayLib {
         /// Move the first currently selected item up or down in the list
         /// </summary>
         /// <param name="moveUp"></param>
-        public void MoveListItem(bool moveUp) {
+        public void MoveListItem(bool moveUp)
+        {
             string cache;
-            int selIdx;
-            MyDataGridView lv = gvQueryResults;
+            var lv = gvQueryResults;
 
-            selIdx = lv.SelectedRows[0].Index;
-            if (moveUp) {
+            var selIdx = lv.SelectedRows[0].Index;
+            if (moveUp)
+            {
                 // ignore moveup of row(0)
                 if (selIdx == 0)
                     return;
 
                 // move the subitems for the previous row
                 // to cache to make room for the selected row
-                for (int i = 0; i < lv.Rows[selIdx].Cells.Count; i++) {
+                for (var i = 0; i < lv.Rows[selIdx].Cells.Count; i++)
+                {
                     cache = lv.Rows[selIdx - 1].Cells[i].Value.ToString();
                     lv.Rows[selIdx - 1].Cells[i].Value =
                       lv.Rows[selIdx].Cells[i].Value.ToString();
@@ -549,13 +615,16 @@ namespace MageDisplayLib {
                 }
                 lv.Rows[selIdx - 1].Selected = true;
                 lv.Rows[selIdx].Selected = false;
-            } else {
+            }
+            else
+            {
                 // ignore movedown of last item
                 if (selIdx == lv.Rows.Count - 1)
                     return;
                 // move the Cells for the next row
                 // to cache so we can move the selected row down
-                for (int i = 0; i < lv.Rows[selIdx].Cells.Count; i++) {
+                for (var i = 0; i < lv.Rows[selIdx].Cells.Count; i++)
+                {
                     cache = lv.Rows[selIdx + 1].Cells[i].Value.ToString();
                     lv.Rows[selIdx + 1].Cells[i].Value =
                       lv.Rows[selIdx].Cells[i].Value.ToString();
@@ -574,12 +643,12 @@ namespace MageDisplayLib {
         /// Displays data in a customizable grid
         /// Rows can be selected/deselected by clicking on the row; Ctrl+Click is not required (or supported)
         /// </summary>
-        public class MyDataGridView : System.Windows.Forms.DataGridView
-	    {
+        public class MyDataGridView : DataGridView
+        {
 
-            private System.Collections.Hashtable myHashTable = new System.Collections.Hashtable();
+            private readonly Hashtable myHashTable = new Hashtable();
             string s;
-            bool mLayoutSuspended = false;
+            bool mLayoutSuspended;
             bool mAllowDelete = true;
 
             /// <summary>
@@ -596,14 +665,16 @@ namespace MageDisplayLib {
             /// <summary>
             /// True when SuspendLayout() is en effect for this data grid
             /// </summary>
-            public bool LayoutSuspended {
+            public bool LayoutSuspended
+            {
                 get { return mLayoutSuspended; }
             }
 
             /// <summary>
             /// Clears the current selection by unselecting all selected cells.
             /// </summary>
-            new public void ClearSelection() {
+            public new void ClearSelection()
+            {
                 base.ClearSelection();
 
                 myHashTable.Clear();
@@ -613,65 +684,76 @@ namespace MageDisplayLib {
             /// Remove the items from the display list that are currently not selected
             /// </summary>
             /// 
-            public void DeleteNotSelectedItems() {
-                if (this.AllowDelete) {
-                    List<DataGridViewRow> toRemove = new List<DataGridViewRow>();
+            public void DeleteNotSelectedItems()
+            {
+                if (AllowDelete)
+                {
+                    var toRemove = new List<DataGridViewRow>();
 
-                    this.SuspendLayout();
+                    SuspendLayout();
                     mLayoutSuspended = true;
 
-                    foreach (DataGridViewRow item in this.Rows) {
-                        if (!item.Selected && !item.IsNewRow) {
+                    foreach (DataGridViewRow item in Rows)
+                    {
+                        if (!item.Selected && !item.IsNewRow)
+                        {
                             toRemove.Add(item);
                         }
                     }
-                    foreach (DataGridViewRow item in toRemove) {
-                        this.Rows.Remove(item);
+                    foreach (var item in toRemove)
+                    {
+                        Rows.Remove(item);
                     }
 
                     mLayoutSuspended = false;
-                    this.ResumeLayout();
+                    ResumeLayout();
 
-                    this.Update();
+                    Update();
                 }
             }
 
             /// <summary>
             /// Remove the currently selected items from the display list
             /// </summary>           
-            public void DeleteSelectedItems() {
+            public void DeleteSelectedItems()
+            {
 
-                if (this.SelectedRows.Count > 0 && this.AllowDelete) {
-                    this.SuspendLayout();
+                if (SelectedRows.Count > 0 && AllowDelete)
+                {
+                    SuspendLayout();
                     mLayoutSuspended = true;
 
-                    List<DataGridViewRow> toRemove = new List<DataGridViewRow>(this.SelectedRows.Count);
+                    var toRemove = new List<DataGridViewRow>(SelectedRows.Count);
 
                     // Cache the rows that are selected
-                    foreach (DataGridViewRow item in this.SelectedRows) {
+                    foreach (DataGridViewRow item in SelectedRows)
+                    {
                         toRemove.Add(item);
                     }
 
                     // Remove each row
-                    foreach (DataGridViewRow item in toRemove) {
-                        this.Rows.Remove(item);
+                    foreach (var item in toRemove)
+                    {
+                        Rows.Remove(item);
                     }
 
                     mLayoutSuspended = false;
-                    this.ResumeLayout();
+                    ResumeLayout();
 
-                    this.Update();
+                    Update();
                 }
-                
+
             }
 
             /// <summary>
             /// Highlights the rows that are tracked in myHashTable
             /// </summary>
-            protected void HighlightSelectedRows() {
+            protected void HighlightSelectedRows()
+            {
 
                 // Select all rows clicked
-                foreach (System.Windows.Forms.DataGridViewRow SelectedRow in myHashTable.Values) {
+                foreach (DataGridViewRow SelectedRow in myHashTable.Values)
+                {
                     SelectedRow.Selected = true;
                 }
 
@@ -680,32 +762,37 @@ namespace MageDisplayLib {
             /// <summary>
             /// Selects all the cells in the System.Windows.Forms.DataGridView.
             /// </summary>
-            new public void SelectAll() {
-                if (this.MultiSelect) {
-                    this.SuspendLayout();
+            public new void SelectAll()
+            {
+                if (MultiSelect)
+                {
+                    SuspendLayout();
 
                     base.SelectAll();
 
                     myHashTable.Clear();
 
-                    foreach (System.Windows.Forms.DataGridViewRow SelectedRow in this.Rows) {
+                    foreach (DataGridViewRow SelectedRow in Rows)
+                    {
                         myHashTable.Add(SelectedRow.Index.ToString(), SelectedRow);
                     }
 
                     HighlightSelectedRows();
 
-                    this.ResumeLayout();
+                    ResumeLayout();
                 }
             }
 
             /// <summary>
             /// Updates myHashTable to track the currently selected rows
             /// </summary>
-            protected void SynchronizeHashTableWithSelectedRows() {
+            protected void SynchronizeHashTableWithSelectedRows()
+            {
 
                 myHashTable.Clear();
 
-                foreach (System.Windows.Forms.DataGridViewRow SelectedRow in this.SelectedRows) {
+                foreach (DataGridViewRow SelectedRow in SelectedRows)
+                {
                     myHashTable.Add(SelectedRow.Index.ToString(), SelectedRow);
                 }
 
@@ -714,12 +801,13 @@ namespace MageDisplayLib {
             /// <summary>
             /// Initializes a new instance of the MageDisplayLib.MyDataGridView class.
             /// </summary>
-            public MyDataGridView() {
-                this.AllowUserToAddRows = false;
-                this.AllowUserToDeleteRows = false;
-                this.AllowUserToResizeColumns = true;
-                this.AllowUserToOrderColumns = false;
-                this.ReadOnly = true;
+            public MyDataGridView()
+            {
+                AllowUserToAddRows = false;
+                AllowUserToDeleteRows = false;
+                AllowUserToResizeColumns = true;
+                AllowUserToOrderColumns = false;
+                ReadOnly = true;
 
             }
 
@@ -728,7 +816,8 @@ namespace MageDisplayLib {
             ///  Updates myHashTable with the currently selected rows
             /// </summary>
             /// <param name="e"></param>
-            protected override void OnRowsAdded(DataGridViewRowsAddedEventArgs e) {
+            protected override void OnRowsAdded(DataGridViewRowsAddedEventArgs e)
+            {
                 base.OnRowsAdded(e);
                 SynchronizeHashTableWithSelectedRows();
             }
@@ -738,7 +827,8 @@ namespace MageDisplayLib {
             /// ///  Updates myHashTable with the currently selected rows
             /// </summary>
             /// <param name="e"></param>
-            protected override void OnRowsRemoved(DataGridViewRowsRemovedEventArgs e) {
+            protected override void OnRowsRemoved(DataGridViewRowsRemovedEventArgs e)
+            {
                 base.OnRowsRemoved(e);
 
                 // Make sure myHashTable is up-to-date
@@ -749,37 +839,47 @@ namespace MageDisplayLib {
             /// Selects/deselects the row in which the mouse was clicked
             /// </summary>
             /// <param name="e"></param>
-            protected override void OnCellMouseDown(System.Windows.Forms.DataGridViewCellMouseEventArgs e) {
-                if (ShiftClickSelect || !this.MultiSelect || e.Button != System.Windows.Forms.MouseButtons.Left) {
+            protected override void OnCellMouseDown(DataGridViewCellMouseEventArgs e)
+            {
+                if (ShiftClickSelect || !MultiSelect || e.Button != MouseButtons.Left)
+                {
                     // Use the default behavior for click, Shift+Click, Ctrl+Click, or click of middle or right button.
                     base.OnCellMouseDown(e);
                     SynchronizeHashTableWithSelectedRows();
-                } else {
-					if ((e.RowIndex >= 0) && (e.RowIndex < this.Rows.Count) && (e.ColumnIndex >= 0) && (e.ColumnIndex < this.Columns.Count)) {
-						// A cell was clicked
-						// Do not call the base class .OnCellMouseDown() event
+                }
+                else
+                {
+                    if ((e.RowIndex >= 0) && (e.RowIndex < Rows.Count) && (e.ColumnIndex >= 0) && (e.ColumnIndex < Columns.Count))
+                    {
+                        // A cell was clicked
+                        // Do not call the base class .OnCellMouseDown() event
 
-						s = e.RowIndex.ToString();
+                        s = e.RowIndex.ToString();
 
-						if (myHashTable.ContainsKey(s)) {
-							//If the row is in the hashtable, remove it
-							myHashTable.Remove(s);
-							this.Rows[e.RowIndex].Selected = false;
-						} else {
-							// Otherwise, insert it into the hashtable
-							this.Rows[e.RowIndex].Selected = false;
+                        if (myHashTable.ContainsKey(s))
+                        {
+                            //If the row is in the hashtable, remove it
+                            myHashTable.Remove(s);
+                            Rows[e.RowIndex].Selected = false;
+                        }
+                        else
+                        {
+                            // Otherwise, insert it into the hashtable
+                            Rows[e.RowIndex].Selected = false;
 
-							myHashTable.Add(s, this.Rows[e.RowIndex]);
-						}
+                            myHashTable.Add(s, Rows[e.RowIndex]);
+                        }
 
-						this.SuspendLayout();
-						this.HighlightSelectedRows();
-						this.ResumeLayout();
-					} else {
-						// User likely clicked on the header row
-						// Call the base-class method
-						base.OnCellMouseDown(e);
-					}
+                        SuspendLayout();
+                        HighlightSelectedRows();
+                        ResumeLayout();
+                    }
+                    else
+                    {
+                        // User likely clicked on the header row
+                        // Call the base-class method
+                        base.OnCellMouseDown(e);
+                    }
                 }
 
             }

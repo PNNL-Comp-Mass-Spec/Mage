@@ -36,7 +36,7 @@ namespace MageFilePackager
             // apply field mapping to output
             if (OutputColumnDefs != null)
             {
-                string[] outRow = MapDataRow(vals);
+                var outRow = MapDataRow(vals);
                 vals = outRow;
             }
             return true;

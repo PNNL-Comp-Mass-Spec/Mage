@@ -1,7 +1,6 @@
 ﻿using Mage;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace MageUnitTests
 {
@@ -14,67 +13,16 @@ namespace MageUnitTests
     public class MSSQLReaderTest
     {
 
-
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #region Additional test attributes
-        // 
-        //You can use the following additional attributes as you write your tests:
-        //
-        //Use ClassInitialize to run code before running the first test in the class
-        //[ClassInitialize()]
-        //public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
-        //
-        //Use ClassCleanup to run code after all tests in a class have run
-        //[ClassCleanup()]
-        //public static void MyClassCleanup()
-        //{
-        //}
-        //
-        //Use TestInitialize to run code before running each test
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
-        //Use TestCleanup to run code after each test has run
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        //
-        #endregion
-
-
         /// <summary>
         ///A test for sqlText
         ///</summary>
         [TestMethod()]
         public void SQLTextPropertyTest()
         {
-            MSSQLReader target = new MSSQLReader();
-            string expected = "Test Value";
-            string actual;
+            var target = new MSSQLReader();
+            var expected = "Test Value";
             target.SQLText = expected;
-            actual = target.SQLText;
+            var actual = target.SQLText;
             Assert.AreEqual(expected, actual);
         }
 
@@ -84,11 +32,10 @@ namespace MageUnitTests
         [TestMethod()]
         public void SprocNamePropertyTest()
         {
-            MSSQLReader target = new MSSQLReader();
-            string expected = "Test Value";
-            string actual;
+            var target = new MSSQLReader();
+            var expected = "Test Value";
             target.SprocName = expected;
-            actual = target.SprocName;
+            var actual = target.SprocName;
             Assert.AreEqual(expected, actual);
         }
 
@@ -98,11 +45,10 @@ namespace MageUnitTests
         [TestMethod()]
         public void ServerPropertyTest()
         {
-            MSSQLReader target = new MSSQLReader();
-            string expected = "Test Value";
-            string actual;
+            var target = new MSSQLReader();
+            var expected = "Test Value";
             target.Server = expected;
-            actual = target.Server;
+            var actual = target.Server;
             Assert.AreEqual(expected, actual);
         }
 
@@ -112,11 +58,10 @@ namespace MageUnitTests
         [TestMethod()]
         public void DatabasePropertyTest()
         {
-            MSSQLReader target = new MSSQLReader();
-            string expected = "Test Value";
-            string actual;
+            var target = new MSSQLReader();
+            var expected = "Test Value";
             target.Database = expected;
-            actual = target.Database;
+            var actual = target.Database;
             Assert.AreEqual(expected, actual);
         }
 
@@ -126,29 +71,31 @@ namespace MageUnitTests
         {
 
             // runtime parameters for query
-            Dictionary<string, string> runtimeParameters = new Dictionary<string, string>();
-            runtimeParameters["Dataset"] = "sarc";
+            var runtimeParameters = new Dictionary<string, string>
+            {
+                ["Dataset"] = "sarc"
+            };
 
             // get XML query definition by name
-            string queryDefXML = ModuleDiscovery.GetQueryXMLDef("Factors_List_Report");
+            var queryDefXML = ModuleDiscovery.GetQueryXMLDef("Factors_List_Report");
             Assert.AreNotEqual("", queryDefXML);
 
             // create MSSQLReader module initialized from XML definition
-            MSSQLReader target = new MSSQLReader(queryDefXML, runtimeParameters);
+            var target = new MSSQLReader(queryDefXML, runtimeParameters);
             Assert.AreNotEqual(null, target);
 
-            string expected = "SELECT Dataset, Dataset_ID, Factor, Value FROM V_Custom_Factors_List_Report WHERE [Dataset] LIKE '%sarc%'";
+            var expected = "SELECT Dataset, Dataset_ID, Factor, Value FROM V_Custom_Factors_List_Report WHERE [Dataset] LIKE '%sarc%'";
             Assert.AreEqual(expected, target.SQLText);
 
             // create test sink module and connect to MSSQLReader module
-            int maxRows = 7;
-            SimpleSink sink = new SimpleSink(maxRows);
+            var maxRows = 7;
+            var sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
             target.DataRowAvailable += sink.HandleDataRow;
 
             target.Run(null);
 
-            string[] colList = new string[] { "Dataset", "Dataset_ID", "Factor", "Value" };
+            var colList = new[] { "Dataset", "Dataset_ID", "Factor", "Value" };
             CheckRowsetResults(sink, maxRows, colList);
         }
 
@@ -160,9 +107,9 @@ namespace MageUnitTests
         {
             // create MSSQLReader module and test sink module 
             // and connect together
-            MSSQLReader target = new MSSQLReader();
-            int maxRows = 7;
-            SimpleSink sink = new SimpleSink(maxRows);
+            var target = new MSSQLReader();
+            var maxRows = 7;
+            var sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
             target.DataRowAvailable += sink.HandleDataRow;
 
@@ -172,12 +119,14 @@ namespace MageUnitTests
             target.Database = Globals.DMSDatabase;
 
             // define query
-            string[] colList = new string[] { "Dataset", "Dataset_ID", "Factor", "Value" };
-            string colNames = string.Join(", ", colList);
+            var colList = new[] { "Dataset", "Dataset_ID", "Factor", "Value" };
+            var colNames = string.Join(", ", colList);
             //
-            SQLBuilder builder = new SQLBuilder();
-            builder.Table = "V_Custom_Factors_List_Report";
-            builder.Columns = colNames;
+            var builder = new SQLBuilder
+            {
+                Table = "V_Custom_Factors_List_Report",
+                Columns = colNames
+            };
             builder.AddPredicateItem("Dataset", "sarc");
             target.SQLText = builder.BuildQuerySQL();
 
@@ -195,9 +144,9 @@ namespace MageUnitTests
         {
             // create MSSQLReader module and test sink module 
             // and connect together (no pipeline object used)
-            MSSQLReader target = new MSSQLReader();
-            int maxRows = 7;
-            SimpleSink sink = new SimpleSink(maxRows);
+            var target = new MSSQLReader();
+            var maxRows = 7;
+            var sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
             target.DataRowAvailable += sink.HandleDataRow;
 
@@ -207,13 +156,20 @@ namespace MageUnitTests
             target.Database = Globals.DMSDatabase;
 
             // define columns (noramlly not needed for production code, but necessary for unit test)
-            string[] colList = new string[] { "DatasetID", "volName", "path", "datasetFolder", "resultsFolder", "datasetName", "JobId", "ColumnID", "AcquisitionTime", "Labelling", "InstrumentName", "ToolID", "BlockNum", "ReplicateName", "ExperimentID", "RunOrder", "BatchID", "ArchPath", "DatasetFullPath", "Organism", "Campaign", "ParameterFileName", "SettingsFileName" };
-            string colNames = string.Join(", ", colList);
+            var colList = new[] {
+                "DatasetID", "volName", "path", "datasetFolder", "resultsFolder",
+                "datasetName", "JobId", "ColumnID", "AcquisitionTime", "Labelling",
+                "InstrumentName", "ToolID", "BlockNum", "ReplicateName", "ExperimentID",
+                "RunOrder", "BatchID", "ArchPath", "DatasetFullPath", "Organism", "Campaign",
+                "ParameterFileName", "SettingsFileName" };
+            var colNames = string.Join(", ", colList);
 
             // define query
-            SQLBuilder builder = new SQLBuilder();
-            builder.Table = "V_Analysis_Job_Export_MultiAlign";
-            builder.Columns = colNames;
+            var builder = new SQLBuilder
+            {
+                Table = "V_Analysis_Job_Export_MultiAlign",
+                Columns = colNames
+            };
             builder.AddPredicateItem("datasetName", "ContainsText", "sarc_ms");
             target.SQLText = builder.BuildQuerySQL();
 
@@ -231,9 +187,9 @@ namespace MageUnitTests
         {
             // create MSSQLReader module and test sink module 
             // and connect together (no pipeline object used)
-            MSSQLReader target = new MSSQLReader();
-            int maxRows = 5;
-            SimpleSink sink = new SimpleSink(maxRows);
+            var target = new MSSQLReader();
+            var maxRows = 5;
+            var sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
             target.DataRowAvailable += sink.HandleDataRow;
 
@@ -242,13 +198,15 @@ namespace MageUnitTests
             target.Database = "MTS_Master";
 
             // define columns (noramlly not needed for production code, but necessary for unit test)
-            string[] colList = new string[] { "Server_Name", "MT_DB_ID", "MT_DB_Name", "State_ID", "State" };
-            string colNames = string.Join(", ", colList);
+            var colList = new[] { "Server_Name", "MT_DB_ID", "MT_DB_Name", "State_ID", "State" };
+            var colNames = string.Join(", ", colList);
 
             // define query
-            SQLBuilder builder = new SQLBuilder();
-            builder.Table = "V_MT_DBs";
-            builder.Columns = colNames;
+            var builder = new SQLBuilder
+            {
+                Table = "V_MT_DBs",
+                Columns = colNames
+            };
             target.SQLText = builder.BuildQuerySQL();
 
             target.Run(null);
@@ -264,15 +222,15 @@ namespace MageUnitTests
         {
             // create MSSQLReader module and test sink module 
             // and connect together (no pipeline object used)
-            MSSQLReader target = new MSSQLReader();
-            int maxRows = 7;
-            SimpleSink sink = new SimpleSink(maxRows);
+            var target = new MSSQLReader();
+            var maxRows = 7;
+            var sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
             target.DataRowAvailable += sink.HandleDataRow;
 
             // define columns (noramlly not needed for production code, but necessary for unit test)
-            string[] colList = new string[] { "Job", "State", "Dataset", "Dataset_ID", "Tool", "Parameter_File", "Settings_File", "Instrument", "Experiment", "Campaign" };
-            string colNames = string.Join(", ", colList);
+            var colList = new[] { "Job", "State", "Dataset", "Dataset_ID", "Tool", "Parameter_File", "Settings_File", "Instrument", "Experiment", "Campaign" };
+            var colNames = string.Join(", ", colList);
 
             // Define and run a database query
             // Defaults are gigasax and DMS5
@@ -290,9 +248,9 @@ namespace MageUnitTests
         {
             // create MSSQLReader module and test sink module 
             // and connect together (no pipeline object used)
-            MSSQLReader target = new MSSQLReader();
-            int maxRows = 4;
-            SimpleSink sink = new SimpleSink(maxRows);
+            var target = new MSSQLReader();
+            var maxRows = 4;
+            var sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
             target.DataRowAvailable += sink.HandleDataRow;
 
@@ -308,7 +266,9 @@ namespace MageUnitTests
             target.Run(null);
 
             // define columns (noramlly not needed for production code, but necessary for unit test)
-            string[] colList = new string[] { "Job", "State", "Priority", "Request", "Created", "Start", "Finish", "Processor", "Dataset", "Processor Group", "Processor Group Assignee" };
+            var colList = new[] {
+                "Job", "State", "Priority", "Request", "Created", "Start", "Finish", "Processor",
+                "Dataset" };
 
             CheckRowsetResults(sink, maxRows, colList);
         }
@@ -319,30 +279,36 @@ namespace MageUnitTests
         {
 
             // runtime parameters for query
-            Dictionary<string, string> runtimeParameters = new Dictionary<string, string>();
+            var runtimeParameters = new Dictionary<string, string>();
             //            runtimeParameters["@ExperimentFilter"] = "sarc";
 
             // get XML query definition by name
-            string queryDefXML = ModuleDiscovery.GetQueryXMLDef("GetMassTagsPlusPepProphetStats");
+            var queryDefXML = ModuleDiscovery.GetQueryXMLDef("GetMassTagsPlusPepProphetStats");
             Assert.AreNotEqual("", queryDefXML);
 
             // create MSSQLReader module initialized from XML definition
-            MSSQLReader target = new MSSQLReader(queryDefXML, runtimeParameters);
+            var target = new MSSQLReader(queryDefXML, runtimeParameters);
             Assert.AreNotEqual(null, target);
 
-            string expected = "GetMassTagsPlusPepProphetStats";
+            var expected = "GetMassTagsPlusPepProphetStats";
             Assert.AreEqual(expected, target.SprocName);
 
             // create test sink module and connect to MSSQLReader module
-            int maxRows = 7;
-            SimpleSink sink = new SimpleSink(maxRows);
+            var maxRows = 7;
+            var sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
             target.DataRowAvailable += sink.HandleDataRow;
 
             target.Run(null);
 
             // define columns (noramlly not needed for production code, but necessary for unit test)
-            string[] colList = new string[] { "Mass_Tag_ID", "Peptide", "Monoisotopic_Mass", "NET_Value_to_Use", "NET_Obs_Count", "PNET", "High_Normalized_Score", "StD_GANET", "High_Discriminant_Score", "Peptide_Obs_Count_Passing_Filter", "Mod_Count", "Mod_Description", "High_Peptide_Prophet_Probability", "ObsCount_CS1", "ObsCount_CS2", "ObsCount_CS3", "PepProphet_FScore_Max_CS1", "PepProphet_FScore_Max_CS2", "PepProphet_FScore_Max_CS3", "PepProphet_Probability_Max_CS1", "PepProphet_Probability_Max_CS2", "PepProphet_Probability_Max_CS3", "PepProphet_FScore_Avg_CS1", "PepProphet_FScore_Avg_CS2", "PepProphet_FScore_Avg_CS3", "Cleavage_State" };
+            var colList = new[] {
+                "Mass_Tag_ID", "Peptide", "Monoisotopic_Mass", "NET_Value_to_Use", "NET_Obs_Count", "PNET",
+                "High_Normalized_Score", "StD_GANET", "High_Discriminant_Score", "Peptide_Obs_Count_Passing_Filter",
+                "Mod_Count", "Mod_Description", "High_Peptide_Prophet_Probability", "ObsCount_CS1", "ObsCount_CS2",
+                "ObsCount_CS3", "PepProphet_FScore_Max_CS1", "PepProphet_FScore_Max_CS2", "PepProphet_FScore_Max_CS3",
+                "PepProphet_Probability_Max_CS1", "PepProphet_Probability_Max_CS2", "PepProphet_Probability_Max_CS3",
+                "PepProphet_FScore_Avg_CS1", "PepProphet_FScore_Avg_CS2", "PepProphet_FScore_Avg_CS3", "Cleavage_State" };
 
             CheckRowsetResults(sink, maxRows, colList);
         }
@@ -352,9 +318,9 @@ namespace MageUnitTests
         {
             // create MSSQLReader module and test sink module 
             // and connect together (no pipeline object used)
-            MSSQLReader target = new MSSQLReader();
-            int maxRows = 4;
-            SimpleSink sink = new SimpleSink(maxRows);
+            var target = new MSSQLReader();
+            var maxRows = 4;
+            var sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
             target.DataRowAvailable += sink.HandleDataRow;
 
@@ -377,7 +343,13 @@ namespace MageUnitTests
             target.Run(null);
 
             // define columns (noramlly not needed for production code, but necessary for unit test)
-            string[] colList = new string[] { "Mass_Tag_ID", "Peptide", "Monoisotopic_Mass", "NET_Value_to_Use", "NET_Obs_Count", "PNET", "High_Normalized_Score", "StD_GANET", "High_Discriminant_Score", "Peptide_Obs_Count_Passing_Filter", "Mod_Count", "Mod_Description", "High_Peptide_Prophet_Probability", "ObsCount_CS1", "ObsCount_CS2", "ObsCount_CS3", "PepProphet_FScore_Max_CS1", "PepProphet_FScore_Max_CS2", "PepProphet_FScore_Max_CS3", "PepProphet_Probability_Max_CS1", "PepProphet_Probability_Max_CS2", "PepProphet_Probability_Max_CS3", "PepProphet_FScore_Avg_CS1", "PepProphet_FScore_Avg_CS2", "PepProphet_FScore_Avg_CS3", "Cleavage_State" };
+            var colList = new[] {
+                "Mass_Tag_ID", "Peptide", "Monoisotopic_Mass", "NET_Value_to_Use", "NET_Obs_Count", "PNET",
+                "High_Normalized_Score", "StD_GANET", "High_Discriminant_Score", "Peptide_Obs_Count_Passing_Filter",
+                "Mod_Count", "Mod_Description", "High_Peptide_Prophet_Probability", "ObsCount_CS1", "ObsCount_CS2",
+                "ObsCount_CS3", "PepProphet_FScore_Max_CS1", "PepProphet_FScore_Max_CS2", "PepProphet_FScore_Max_CS3",
+                "PepProphet_Probability_Max_CS1", "PepProphet_Probability_Max_CS2", "PepProphet_Probability_Max_CS3",
+                "PepProphet_FScore_Avg_CS1", "PepProphet_FScore_Avg_CS2", "PepProphet_FScore_Avg_CS3", "Cleavage_State" };
 
             CheckRowsetResults(sink, maxRows, colList);
         }
@@ -386,9 +358,9 @@ namespace MageUnitTests
         public void MTSDatabaseListReadTest()
         {
             // create MSSQLReader module and test sink module and connect together
-            MSSQLReader target = new MSSQLReader();
-            int maxRows = 4;
-            SimpleSink sink = new SimpleSink(maxRows);
+            var target = new MSSQLReader();
+            var maxRows = 4;
+            var sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
             target.DataRowAvailable += sink.HandleDataRow;
 
@@ -405,7 +377,7 @@ namespace MageUnitTests
             target.Run(null);
 
             // define columns (noramlly not needed for production code, but necessary for unit test)
-            string[] colList = new string[] { "Name", "Description", "Organism", "Campaign" };
+            var colList = new[] { "Name", "Description", "Organism", "Campaign" };
 
             CheckRowsetResults(sink, maxRows, colList);
         }
@@ -414,16 +386,16 @@ namespace MageUnitTests
         {
 
             // did the test sink module get the expected row definitions
-            Collection<MageColumnDef> cols = sink.Columns;
+            var cols = sink.Columns;
             Assert.AreEqual(cols.Count, colList.Length);
-            for (int i = 0; i < cols.Count; i++)
+            for (var i = 0; i < cols.Count; i++)
             {
                 Assert.AreEqual(cols[i].Name, colList[i], "Did not get get the expected row definitions");
             }
 
             // did the test sink module get the expected number of data rows
             // on its standard tabular input?
-            Collection<string[]> rows = sink.Rows;
+            var rows = sink.Rows;
 
             Assert.AreEqual(maxRows, rows.Count, "Did not get get the expected number of data rows");
 

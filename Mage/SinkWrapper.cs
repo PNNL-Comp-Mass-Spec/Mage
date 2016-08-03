@@ -35,7 +35,7 @@ namespace Mage
         public override void Run(object state)
         {
             OnColumnDefAvailable(new MageColumnEventArgs(mSink.Columns.ToArray()));
-            foreach (string[] row in mSink.Rows)
+            foreach (var row in mSink.Rows)
             {
                 if (Abort)
                     break;

@@ -14,22 +14,19 @@ namespace MageExtContentFilters
 
         public bool EvaluateInspect(string peptideSequence, int chargeState, double peptideMass, double MQScore, double TotalPRMScore, double FScore, double PValue, double msgfSpecProb, int rankTotalPRMScore)
         {
-            string currCritName = null;
-            string currCritOperator = null;
+            var currEval = true;
+            var peptideLength = GetPeptideLength(peptideSequence);
+            var termState = 0;
 
-            bool currEval = true;
-            int peptideLength = this.GetPeptideLength(peptideSequence);
-            int termState = 0;
+            var cleavageState = Convert.ToInt32(GetCleavageState(peptideSequence));
 
-            int cleavageState = Convert.ToInt32(this.GetCleavageState(peptideSequence));
-
-            foreach (string filterGroupID in this.m_FilterGroups.Keys)
+            foreach (var filterGroupID in m_FilterGroups.Keys)
             {
                 currEval = true;
-                foreach (FilterCriteriaDef filterRow in m_FilterGroups[filterGroupID])
+                foreach (var filterRow in m_FilterGroups[filterGroupID])
                 {
-                    currCritName = filterRow.CriteriaName;
-                    currCritOperator = filterRow.CriteriaOperator;
+                    var currCritName = filterRow.CriteriaName;
+                    var currCritOperator = filterRow.CriteriaOperator;
 
                     switch (currCritName)
                     {
@@ -39,7 +36,6 @@ namespace MageExtContentFilters
                                 if (!CompareInteger(chargeState, currCritOperator, filterRow.CriteriaValueInt))
                                 {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -49,7 +45,6 @@ namespace MageExtContentFilters
                                 if (!CompareDouble(msgfSpecProb, currCritOperator, filterRow.CriteriaValueFloat))
                                 {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -59,7 +54,6 @@ namespace MageExtContentFilters
                                 if (!CompareInteger(cleavageState, currCritOperator, filterRow.CriteriaValueInt))
                                 {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -67,12 +61,11 @@ namespace MageExtContentFilters
                             if (termState > -1)
                             {
                                 if (termState < 0)
-                                    termState = this.GetTerminusState(peptideSequence);
+                                    termState = GetTerminusState(peptideSequence);
 
                                 if (!CompareInteger(termState, currCritOperator, filterRow.CriteriaValueInt))
                                 {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -82,7 +75,6 @@ namespace MageExtContentFilters
                                 if (!CompareInteger(peptideLength, currCritOperator, filterRow.CriteriaValueInt))
                                 {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -92,7 +84,6 @@ namespace MageExtContentFilters
                                 if (!CompareDouble(peptideMass, currCritOperator, filterRow.CriteriaValueFloat, 0.000001))
                                 {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -102,7 +93,6 @@ namespace MageExtContentFilters
                                 if (!CompareDouble(MQScore, currCritOperator, filterRow.CriteriaValueFloat, 0.000001))
                                 {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -112,7 +102,6 @@ namespace MageExtContentFilters
                                 if (!CompareDouble(TotalPRMScore, currCritOperator, filterRow.CriteriaValueFloat, 0.000001))
                                 {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -122,7 +111,6 @@ namespace MageExtContentFilters
                                 if (!CompareDouble(FScore, currCritOperator, filterRow.CriteriaValueFloat, 0.000001))
                                 {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -132,7 +120,6 @@ namespace MageExtContentFilters
                                 if (!CompareDouble(PValue, currCritOperator, filterRow.CriteriaValueFloat))
                                 {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -142,7 +129,6 @@ namespace MageExtContentFilters
                                 if (!CompareInteger(rankTotalPRMScore, currCritOperator, filterRow.CriteriaValueInt))
                                 {
                                     currEval = false;
-                                    break;
                                 }
                             }
                             break;
@@ -156,7 +142,7 @@ namespace MageExtContentFilters
 
                 }
 
-                if (currEval == true)
+                if (currEval)
                     break;                           //Subject passed the criteria for this filtergroup
             }
 

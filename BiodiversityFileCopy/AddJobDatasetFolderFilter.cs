@@ -28,7 +28,7 @@ namespace BiodiversityFileCopy
     protected override bool CheckFilter(ref string[] vals)
     {
       if (OutputColumnDefs != null) {
-        string[] outRow = MapDataRow(vals);
+        var outRow = MapDataRow(vals);
 
         var resultsFolderPath = outRow[JobResultsFolderIndex];
         outRow[DatasetFolderIdx] = Path.GetDirectoryName(resultsFolderPath);

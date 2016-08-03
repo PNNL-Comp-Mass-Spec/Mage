@@ -126,12 +126,12 @@ namespace Mage
         {
             if (args.DataAvailable)
             {
-                bool concatenateOutput = !string.IsNullOrEmpty(OutputFileName);
-                string sourceFolder = args.Fields[InputColumnPos[SourceFolderColumnName]];
-                string sourceFile = args.Fields[InputColumnPos[SourceFileColumnName]];
+                var concatenateOutput = !string.IsNullOrEmpty(OutputFileName);
+                var sourceFolder = args.Fields[InputColumnPos[SourceFolderColumnName]];
+                var sourceFile = args.Fields[InputColumnPos[SourceFileColumnName]];
 
                 string fileType;
-                bool sourceIsFolder = false;
+                var sourceIsFolder = false;
 
                 if (string.IsNullOrWhiteSpace(FileTypeColumnName))
                 {
@@ -172,7 +172,7 @@ namespace Mage
                 else
                     sourcePath = Path.GetFullPath(Path.Combine(sourceFolder, sourceFile));
 
-                string destFolder = OutputFolderPath;
+                var destFolder = OutputFolderPath;
                 string destFile;
 
                 if (sourceFile == BaseModule.kNoFilesFound)
@@ -187,11 +187,11 @@ namespace Mage
                         destFile = GetOutputFileName(sourceFile, InputColumnPos, args.Fields);
                 }
 
-                string destPath = Path.GetFullPath(Path.Combine(destFolder, destFile));
+                var destPath = Path.GetFullPath(Path.Combine(destFolder, destFile));
 
                 // package fields as dictionary
                 var context = new Dictionary<string, string>();
-                foreach (KeyValuePair<string, int> colPos in InputColumnPos)
+                foreach (var colPos in InputColumnPos)
                 {
                     context.Add(colPos.Key, args.Fields[colPos.Value] ?? String.Empty);
                 }
@@ -218,14 +218,14 @@ namespace Mage
                     }
                 }
 
-                string[] outRow = MapDataRow(args.Fields);
+                var outRow = MapDataRow(args.Fields);
 
-                int fileNameOutColIndx = OutputColumnPos[OutputFileColumnName];
+                var fileNameOutColIndx = OutputColumnPos[OutputFileColumnName];
                 outRow[fileNameOutColIndx] = (concatenateOutput) ? sourceFile : destFile;
 
                 // Strip off the MyEMSLID from the filename
                 string newFilePath;
-                Int64 myEMSLFileID = MyEMSLReader.DatasetInfoBase.ExtractMyEMSLFileID(outRow[fileNameOutColIndx], out newFilePath);
+                var myEMSLFileID = MyEMSLReader.DatasetInfoBase.ExtractMyEMSLFileID(outRow[fileNameOutColIndx], out newFilePath);
                 if (myEMSLFileID > 0)
                     outRow[fileNameOutColIndx] = newFilePath;
 

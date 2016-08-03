@@ -87,10 +87,7 @@ namespace Mage
                 // Code to dispose the managed resources of the class
             }
             // Code to dispose the un-managed resources of the class
-            if (mConnection != null)
-            {
-                mConnection.Dispose();
-            }
+            mConnection?.Dispose();
 
             //            isDisposed = true;
         }
@@ -110,7 +107,7 @@ namespace Mage
             SetParameters(builder.SpecialArgs);
 
             // we are doing straight SQL query, build the SQL
-            string sql = builder.BuildQuerySQL();
+            var sql = builder.BuildQuerySQL();
             // change MSSQL quote characters to SQLite quote characters
             sql = sql.Replace('[', '"').Replace(']', '"');
             SQLText = sql;
@@ -149,7 +146,7 @@ namespace Mage
                 CommandTimeout = CommandTimeoutSeconds
             };
 
-            SQLiteDataReader myReader = cmd.ExecuteReader();
+            var myReader = cmd.ExecuteReader();
             GetData(myReader);
         }
 
@@ -166,7 +163,7 @@ namespace Mage
                         //builder.PageSize = 4096
                         //builder.UseUTF16Encoding = True
             */
-            string connstring = builder.ConnectionString;
+            var connstring = builder.ConnectionString;
             mConnection = new SQLiteConnection(connstring);
             mConnection.Open();
         }
@@ -190,7 +187,7 @@ namespace Mage
 
             OutputColumnDefinitions(myReader); // if ColumnDefAvailable
 
-            int totalRows = 0;
+            var totalRows = 0;
             OutputDataRows(myReader, ref totalRows);
 
             stopTime = DateTime.UtcNow;
@@ -212,7 +209,7 @@ namespace Mage
                 myReader.GetValues(a);
 
                 var dataVals = new string[a.Length];
-                for (int i = 0; i < a.Length; i++)
+                for (var i = 0; i < a.Length; i++)
                     dataVals[i] = a[i].ToString();
 
                 OnDataRowAvailable(new MageDataEventArgs(dataVals));
@@ -239,19 +236,22 @@ namespace Mage
 
             // Get list of fields in result set and process each field
             var columnDefs = new List<MageColumnDef>();
-            DataTable schemaTable = myReader.GetSchemaTable();
-            foreach (DataRow drField in schemaTable.Rows)
+            var schemaTable = myReader.GetSchemaTable();
+            if (schemaTable != null)
             {
-                MageColumnDef columnDef = GetColumnInfo(drField);
-                if (!columnDef.Hidden)
+                foreach (DataRow drField in schemaTable.Rows)
                 {
-                    // pass information about this column to the listeners
-                    columnDefs.Add(columnDef);
-                }
-                else
-                {
-                    // Column is marked as hidden; do not process it
-                    UpdateStatusMessage("Skipping hidden column [" + columnDef.Name + "]");
+                    var columnDef = GetColumnInfo(drField);
+                    if (!columnDef.Hidden)
+                    {
+                        // pass information about this column to the listeners
+                        columnDefs.Add(columnDef);
+                    }
+                    else
+                    {
+                        // Column is marked as hidden; do not process it
+                        UpdateStatusMessage("Skipping hidden column [" + columnDef.Name + "]");
+                    }
                 }
             }
 
@@ -279,7 +279,7 @@ namespace Mage
                 Size = drField["ColumnSize"].ToString()
             };
 
-            string colHidden = drField["IsHidden"].ToString();
+            var colHidden = drField["IsHidden"].ToString();
             columnDef.Hidden = !(string.IsNullOrEmpty(colHidden) || colHidden.ToLower() == "false");
             return columnDef;
         }

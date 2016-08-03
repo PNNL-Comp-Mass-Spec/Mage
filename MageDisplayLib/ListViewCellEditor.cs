@@ -17,12 +17,12 @@ namespace MageDisplayLib
         /// <summary>
         /// default cell editor
         /// </summary>
-        private TextBox mDefaultCellEditor = null;
+        private TextBox mDefaultCellEditor;
 
         /// <summary>
         /// the ListView control that we provide cell editing for
         /// </summary>
-        private ListViewEx mListView = null;
+        private readonly ListViewEx mListView;
 
         /// <summary>
         /// The ListViewItem representing the row 
@@ -33,28 +33,28 @@ namespace MageDisplayLib
         /// <summary>
         /// The columm index of the cell currently being edited
         /// </summary>
-        private int mSubItemUnderEdit = 0;
+        private int mSubItemUnderEdit;
 
         /// <summary>
         /// position of last mouse click (used to determine which cell to edit)
         /// </summary>
-        private int mLastClickX = 0;
-        private int mLastClickY = 0;
+        private int mLastClickX;
+        private int mLastClickY;
 
         /// <summary>
         /// position of last horizontal scroll
         /// </summary>
-        private int mLastScrollX = 0;
+        private int mLastScrollX;
 
         /// <summary>
         /// List of ComboBox cell editors
         /// </summary>
-        private List<Control> mPickers = new List<Control>();
+        private readonly List<Control> mPickers = new List<Control>();
 
         /// <summary>
         /// Association between column index and its ComboBox cell editor
         /// </summary>
-        private Dictionary<int, int> mColumnPickers = new Dictionary<int, int>();
+        private readonly Dictionary<int, int> mColumnPickers = new Dictionary<int, int>();
 
         #endregion
 
@@ -95,10 +95,10 @@ namespace MageDisplayLib
         /// </summary>
         private void SetupCellEditing()
         {
-            mListView.MouseDown += new MouseEventHandler(this.HandleLVMouseDown);
-            mListView.DoubleClick += new EventHandler(this.HandleLVDoubleClick);
+            mListView.MouseDown += HandleLVMouseDown;
+            mListView.DoubleClick += HandleLVDoubleClick;
 
-            TextBox editBox = new TextBox();
+            var editBox = new TextBox();
             InitializeEditingTextBox(editBox);
             mDefaultCellEditor = editBox;
         }
@@ -110,12 +110,12 @@ namespace MageDisplayLib
         /// <param name="columns">List of column indexes to use this picker for</param>
         public void AddPicker(string[] choices, int[] columns)
         {
-            ComboBox cmbBox = new ComboBox();
+            var cmbBox = new ComboBox();
             InitializeEditingComboBox(cmbBox);
-            int pickerIdx = mPickers.Count;
+            var pickerIdx = mPickers.Count;
             mPickers.Add(cmbBox);
             cmbBox.Items.AddRange(choices);
-            foreach (int col in columns)
+            foreach (var col in columns)
             {
                 mColumnPickers[col] = pickerIdx;
             }
@@ -130,9 +130,9 @@ namespace MageDisplayLib
             mListView.Controls.AddRange(new Control[] { cmbBox });
             cmbBox.Size = new Size(0, 0);
             cmbBox.Location = new Point(0, 0);
-            cmbBox.SelectedIndexChanged += new EventHandler(this.HandleEditingComboBoxSelectionChanged);
-            cmbBox.LostFocus += new EventHandler(this.HandleEditingComboBoxLostFocus);
-            cmbBox.KeyPress += new KeyPressEventHandler(this.HandleEditingComboBoxKeyPress);
+            cmbBox.SelectedIndexChanged += HandleEditingComboBoxSelectionChanged;
+            cmbBox.LostFocus += HandleEditingComboBoxLostFocus;
+            cmbBox.KeyPress += HandleEditingComboBoxKeyPress;
             //            cmbBox.BackColor = Color.SkyBlue;
             cmbBox.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbBox.Hide();
@@ -142,26 +142,27 @@ namespace MageDisplayLib
         {
             if (e.KeyChar == 13 || e.KeyChar == 27)
             {
-                ComboBox cellEditor = sender as ComboBox;
-                cellEditor.Hide();
+                var cellEditor = sender as ComboBox;
+                cellEditor?.Hide();
             }
         }
 
         private void HandleEditingComboBoxSelectionChanged(object sender, EventArgs e)
         {
-            ComboBox cellEditor = sender as ComboBox;
-            int sel = cellEditor.SelectedIndex;
-            if (sel >= 0)
-            {
-                string itemSel = cellEditor.Items[sel].ToString();
-                mListViewItemUnderEdit.SubItems[mSubItemUnderEdit].Text = itemSel;
-            }
+            var cellEditor = sender as ComboBox;
+            if (cellEditor == null) return;
+
+            var sel = cellEditor.SelectedIndex;
+            if (sel < 0) return;
+
+            var itemSel = cellEditor.Items[sel].ToString();
+            mListViewItemUnderEdit.SubItems[mSubItemUnderEdit].Text = itemSel;
         }
 
         private void HandleEditingComboBoxLostFocus(object sender, EventArgs e)
         {
-            ComboBox cellEditor = sender as ComboBox;
-            cellEditor.Hide();
+            var cellEditor = sender as ComboBox;
+            cellEditor?.Hide();
         }
 
         #endregion
@@ -173,8 +174,8 @@ namespace MageDisplayLib
             mListView.Controls.AddRange(new Control[] { editBox });
             editBox.Size = new Size(0, 0);
             editBox.Location = new Point(0, 0);
-            editBox.KeyPress += new KeyPressEventHandler(this.HandleEditTextboxKeyPress);
-            editBox.LostFocus += new EventHandler(this.HandleEditingTextBoxLostFocus);
+            editBox.KeyPress += HandleEditTextboxKeyPress;
+            editBox.LostFocus += HandleEditingTextBoxLostFocus;
             //           editBox.BackColor = Color.LightYellow;
             editBox.BorderStyle = BorderStyle.Fixed3D;
             editBox.Hide();
@@ -184,19 +185,26 @@ namespace MageDisplayLib
 
         private void HandleEditTextboxKeyPress(object sender, KeyPressEventArgs e)
         {
-            TextBox cellEditor = sender as TextBox;
+            var cellEditor = sender as TextBox;
             if (e.KeyChar == 13)
             {
-                mListViewItemUnderEdit.SubItems[mSubItemUnderEdit].Text = cellEditor.Text;
-                cellEditor.Hide();
+                if (cellEditor != null)
+                {
+                    mListViewItemUnderEdit.SubItems[mSubItemUnderEdit].Text = cellEditor.Text;
+                    cellEditor.Hide();
+                }
             }
             if (e.KeyChar == 27)
-                cellEditor.Hide();
+            {
+                cellEditor?.Hide();
+            }
         }
 
         private void HandleEditingTextBoxLostFocus(object sender, EventArgs e)
         {
-            TextBox cellEditor = sender as TextBox;
+            var cellEditor = sender as TextBox;
+            if (cellEditor == null) return;
+
             mListViewItemUnderEdit.SubItems[mSubItemUnderEdit].Text = cellEditor.Text;
             cellEditor.Hide(); //  mEditBox.Hide();
         }
@@ -234,10 +242,10 @@ namespace MageDisplayLib
         /// <param name="e"></param>
         public void HandleLVDoubleClick(object sender, EventArgs e)
         {
-            int[] cellParams = GetSubitemIndexFromXPos(mLastClickX + mLastScrollX, mListView);
+            var cellParams = GetSubitemIndexFromXPos(mLastClickX + mLastScrollX, mListView);
             mSubItemUnderEdit = cellParams[0];
-            int cellStartPos = cellParams[1] - mLastScrollX;
-            int cellEndPos = cellParams[2] - mLastScrollX;
+            var cellStartPos = cellParams[1] - mLastScrollX;
+            var cellEndPos = cellParams[2] - mLastScrollX;
 
             Control cellEditor = mDefaultCellEditor;
             if (mColumnPickers.ContainsKey(mSubItemUnderEdit))
@@ -256,13 +264,12 @@ namespace MageDisplayLib
         /// <returns></returns>
         private static int[] GetSubitemIndexFromXPos(int mouseX, ListView lv)
         {
-            int[] results = new int[3];
-            int cellStartPos = 0;
-            int cellEndPos = 0;
-            int cellWidth = 0;
-            for (int i = 0; i < lv.Columns.Count; i++)
+            var results = new int[3];
+            var cellStartPos = 0;
+            var cellEndPos = 0;
+            for (var i = 0; i < lv.Columns.Count; i++)
             {
-                cellWidth = lv.Columns[i].Width;
+                var cellWidth = lv.Columns[i].Width;
                 cellEndPos = cellStartPos + cellWidth;
                 if (mouseX > cellStartPos && mouseX < cellEndPos)
                 {
@@ -288,7 +295,7 @@ namespace MageDisplayLib
         /// <param name="cellEditor"></param>
         private static void ShowCellEditor(int cellStartPos, int cellEndPos, ListViewItem lvi, int subItemIdx, Control cellEditor)
         {
-            Rectangle r = new Rectangle(cellStartPos, lvi.Bounds.Y, cellEndPos, lvi.Bounds.Bottom);
+            // var r = new Rectangle(cellStartPos, lvi.Bounds.Y, cellEndPos, lvi.Bounds.Bottom);
             cellEditor.Size = new Size(cellEndPos - cellStartPos, lvi.Bounds.Bottom - lvi.Bounds.Top);
             cellEditor.Location = new Point(cellStartPos, lvi.Bounds.Y);
             cellEditor.Show();

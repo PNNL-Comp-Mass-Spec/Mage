@@ -1,25 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Mage;
-using System.IO;
 
-namespace MageUIComponents {
+namespace MageUIComponents
+{
 
-    public partial class ColumnMapSelectionForm : Form {
+    public partial class ColumnMapSelectionForm : Form
+    {
 
-		#region Member Variables
+        #region Member Variables
 
-		private string mColumnMapToAutoSelect = string.Empty;
+        private string mColumnMapToAutoSelect = string.Empty;
 
-		ProcessingPipeline mGetColumnMappingPipeline;
+        ProcessingPipeline mGetColumnMappingPipeline;
 
-		#endregion
+        #endregion
 
         #region Properties
 
@@ -28,28 +24,35 @@ namespace MageUIComponents {
         /// <summary>
         /// Currently selected column mapping
         /// </summary>
-        public string ColumnMapping {
+        public string ColumnMapping
+        {
             get { return ColumnMappingCtl.Text; }
             set { ColumnMappingCtl.Text = value; }
         }
 
-		/// <summary>
-		/// Column map name to auto-select
-		/// </summary>
-		public string ColumnMapToSelect {
-			set {
-				ColumnMappingCtl.Text = value;
-				mColumnMapToAutoSelect = ColumnMappingCtl.Text;
-			}
-		}
+        /// <summary>
+        /// Column map name to auto-select
+        /// </summary>
+        public string ColumnMapToSelect
+        {
+            set
+            {
+                ColumnMappingCtl.Text = value;
+                mColumnMapToAutoSelect = ColumnMappingCtl.Text;
+            }
+        }
         /// <summary>
         /// Return the output column list for the currently selected column mapping
         /// </summary>
-        public string OutputColumnList {
-            get {
-                string outputColList = "";
-                foreach (DataGridViewRow lvi in gridViewDisplayControl1.List.Rows) {
-                    if (lvi.Cells[0].Value.ToString() == ColumnMapping) {
+        public string OutputColumnList
+        {
+            get
+            {
+                var outputColList = "";
+                foreach (DataGridViewRow lvi in gridViewDisplayControl1.List.Rows)
+                {
+                    if (lvi.Cells[0].Value.ToString() == ColumnMapping)
+                    {
                         outputColList = lvi.Cells[2].Value.ToString();
                     }
                 }
@@ -59,15 +62,17 @@ namespace MageUIComponents {
 
         #endregion
 
-        public ColumnMapSelectionForm() {
+        public ColumnMapSelectionForm()
+        {
             InitializeComponent();
             ColumnMapping = "(automatic)";
             gridViewDisplayControl1.List.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-			gridViewDisplayControl1.MultiSelect = false;
-			gridViewDisplayControl1.List.AllowDelete = false;
+            gridViewDisplayControl1.MultiSelect = false;
+            gridViewDisplayControl1.List.AllowDelete = false;
         }
 
-        private void ColumnMapSelectionForm_Load(object sender, EventArgs e) {
+        private void ColumnMapSelectionForm_Load(object sender, EventArgs e)
+        {
             LoadColumnMappingList();
         }
 
@@ -75,56 +80,63 @@ namespace MageUIComponents {
         /// build and run pipeline to get contents of column mapping definition file
         /// and use it to set up file processing panel
         /// </summary>
-        private void LoadColumnMappingList() {
-            DelimitedFileReader reader = new DelimitedFileReader();
-            reader.FilePath = MappingConfigFilePath;
-            ISinkModule display = gridViewDisplayControl1.MakeSink("Column Mappings", 50);
-			
-			mGetColumnMappingPipeline = ProcessingPipeline.Assemble("PipelineToGetColumnMappingConfig", reader, display);
-			mGetColumnMappingPipeline.OnRunCompleted += HandlePipelineCompletion;
-			mGetColumnMappingPipeline.RunRoot(null);
+        private void LoadColumnMappingList()
+        {
+            var reader = new DelimitedFileReader {FilePath = MappingConfigFilePath};
+            var display = gridViewDisplayControl1.MakeSink("Column Mappings", 50);
+
+            mGetColumnMappingPipeline = ProcessingPipeline.Assemble("PipelineToGetColumnMappingConfig", reader, display);
+            mGetColumnMappingPipeline.OnRunCompleted += HandlePipelineCompletion;
+            mGetColumnMappingPipeline.RunRoot(null);
         }
 
-        private void DisplayControl_SelectionChanged(object sender, EventArgs e) {
-            if (gridViewDisplayControl1.List.SelectedRows.Count > 0) {
+        private void DisplayControl_SelectionChanged(object sender, EventArgs e)
+        {
+            if (gridViewDisplayControl1.List.SelectedRows.Count > 0)
+            {
                 ColumnMapping = gridViewDisplayControl1.List.SelectedRows[0].Cells[0].Value.ToString();
             }
         }
 
 
-		private void UpdateSelectedColumnMapping() {
-			if (!string.IsNullOrEmpty(mColumnMapToAutoSelect)) {
+        private void UpdateSelectedColumnMapping()
+        {
+            if (!string.IsNullOrEmpty(mColumnMapToAutoSelect))
+            {
 
-				List<DataGridViewRow> toSelect = new List<DataGridViewRow>(1);
+                var toSelect = new List<DataGridViewRow>(1);
 
-				// Find the row with the given filter set ID
-				foreach (DataGridViewRow item in gridViewDisplayControl1.List.Rows) {
-					if (item.Cells[0].Value.ToString() == mColumnMapToAutoSelect) {
-						item.Selected = true;
-						ColumnMappingCtl.Text = mColumnMapToAutoSelect;
-						gridViewDisplayControl1.List.FirstDisplayedCell = item.Cells[0];
-						break;
-					}
-				}
-			}
-		}
+                // Find the row with the given filter set ID
+                foreach (DataGridViewRow item in gridViewDisplayControl1.List.Rows)
+                {
+                    if (item.Cells[0].Value.ToString() == mColumnMapToAutoSelect)
+                    {
+                        item.Selected = true;
+                        ColumnMappingCtl.Text = mColumnMapToAutoSelect;
+                        gridViewDisplayControl1.List.FirstDisplayedCell = item.Cells[0];
+                        break;
+                    }
+                }
+            }
+        }
 
-		#region Functions for handling status updates
+        #region Functions for handling status updates
 
-		private delegate void VoidFnDelegate();
+        private delegate void VoidFnDelegate();
 
-		/// <summary>
-		/// Handle updating filter set id on completion of running pipeline
-		/// </summary>
-		/// <param name="sender">(ignored)</param>
-		/// <param name="args">Contains status information to be displayed</param>
-		private void HandlePipelineCompletion(object sender, MageStatusEventArgs args) {
-			// Must use a delegate and Invoke to avoid "cross-thread operation not valid" exceptions
-			VoidFnDelegate uf = UpdateSelectedColumnMapping;
-			Invoke(uf);
-		}
+        /// <summary>
+        /// Handle updating filter set id on completion of running pipeline
+        /// </summary>
+        /// <param name="sender">(ignored)</param>
+        /// <param name="args">Contains status information to be displayed</param>
+        private void HandlePipelineCompletion(object sender, MageStatusEventArgs args)
+        {
+            // Must use a delegate and Invoke to avoid "cross-thread operation not valid" exceptions
+            VoidFnDelegate uf = UpdateSelectedColumnMapping;
+            Invoke(uf);
+        }
 
-		#endregion
+        #endregion
 
     }
 }

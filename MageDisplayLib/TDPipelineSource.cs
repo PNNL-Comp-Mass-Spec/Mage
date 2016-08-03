@@ -14,10 +14,10 @@ namespace MageDisplayLib
         #region Member Variables
 
         // object whose data we are serving
-        private TextDisplayControl myTextControl = null;
+        private readonly TextDisplayControl myTextControl;
 
         // delimiter for parsing text into tabular format
-        private char[] mDelimiter = new char[] { '\t' };
+        private char[] mDelimiter = { '\t' };
 
         private bool doHeaderLine = true;
 
@@ -53,7 +53,7 @@ namespace MageDisplayLib
         /// <summary>
         /// there is a header line ("Yes" or "No")
         /// </summary>
-        public string Header { get; set; }
+        public string Header { get; }
 
 
         #endregion
@@ -75,11 +75,11 @@ namespace MageDisplayLib
 
         private void OutputRowsFromList()
         {
-            foreach (string line in myTextControl.Lines)
+            foreach (var line in myTextControl.Lines)
             {
                 if (string.IsNullOrEmpty(line))
                     continue;
-                string[] fields = line.Split(mDelimiter);
+                var fields = line.Split(mDelimiter);
                 if (doHeaderLine)
                 {
                     doHeaderLine = false;
@@ -96,10 +96,10 @@ namespace MageDisplayLib
         private void OutputHeaderLine(string[] fields)
         {
             // output the column definitions
-            List<MageColumnDef> columnDefs = new List<MageColumnDef>();
-            foreach (string field in fields)
+            var columnDefs = new List<MageColumnDef>();
+            foreach (var field in fields)
             {
-                MageColumnDef colDef = new MageColumnDef(field, "text", "10");
+                var colDef = new MageColumnDef(field, "text", "10");
                 columnDefs.Add(colDef);
             }
             OnColumnDefAvailable(new MageColumnEventArgs(columnDefs.ToArray()));

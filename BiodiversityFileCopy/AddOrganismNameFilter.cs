@@ -27,7 +27,7 @@ namespace BiodiversityFileCopy
     protected override bool CheckFilter(ref string[] vals)
     {
       if (OutputColumnDefs != null) {
-        string[] outRow = MapDataRow(vals);
+        var outRow = MapDataRow(vals);
 
         var ogName = OrganismLookup[outRow[PkgIdIdx]];
         outRow[OrgNameIdx] = ogName;

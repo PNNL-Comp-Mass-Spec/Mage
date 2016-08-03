@@ -124,10 +124,10 @@ namespace Mage
         {
 
             // get values of critical fields using precalculated indexes
-            string entityName = args.Fields[mEntityIdx];
-            string entityID = args.Fields[mEntityIDIdx];
-            string factor = args.Fields[mFactorIdx];
-            string value = args.Fields[mValueIdx];
+            var entityName = args.Fields[mEntityIdx];
+            var entityID = args.Fields[mEntityIDIdx];
+            var factor = args.Fields[mFactorIdx];
+            var value = args.Fields[mValueIdx];
 
             // make sure entity ID (and name) are in master list
             mEntityList[entityID] = entityName;
@@ -149,7 +149,7 @@ namespace Mage
         {
             // iterate over all the entity IDs in the master list
             // and create an output row for each one
-            foreach (string entityID in mEntityList.Keys)
+            foreach (var entityID in mEntityList.Keys)
             {
 
                 // create list to hold output row fields
@@ -164,9 +164,9 @@ namespace Mage
 
                 // add fields for all factors
                 // and set field values for factors that the entity has vales for
-                foreach (string factor in mFactorList.Keys)
+                foreach (var factor in mFactorList.Keys)
                 {
-                    string fieldValue = "";
+                    var fieldValue = "";
                     if (mFactorList[factor].ContainsKey(entityID))
                     {
                         fieldValue = mFactorList[factor][entityID];
@@ -195,7 +195,7 @@ namespace Mage
 
 
             // add a column for each factor
-            foreach (string fac in mFactorList.Keys)
+            foreach (var fac in mFactorList.Keys)
             {
                 outCols.Add(new MageColumnDef(fac, "text", "15"));
             }

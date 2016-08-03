@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
 using Mage;
 
@@ -26,7 +20,7 @@ namespace MageUIComponents {
         }
 
         public void SetParameters(Dictionary<string, string> paramList) {
-            foreach (KeyValuePair<string, string> paramDef in paramList) {
+            foreach (var paramDef in paramList) {
                 switch (paramDef.Key) {
                     case "ParamName":
                         ParamNameCtl.Text = paramDef.Value;

@@ -1,10 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Mage;
 using MageUIComponents;
@@ -53,7 +48,7 @@ namespace MageMetadataProcessor {
         }
 
         public void SetParameters(Dictionary<string, string> paramList) {
-            foreach (KeyValuePair<string, string> paramDef in paramList) {
+            foreach (var paramDef in paramList) {
                 switch (paramDef.Key) {
                     case "TableName":
                         TableName = paramDef.Value;
@@ -68,24 +63,21 @@ namespace MageMetadataProcessor {
         #endregion
 
         private void BrowseForFileBtn_Click(object sender, EventArgs e) {
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-            saveFileDialog1.Title = "Save display to file";
+            var saveFileDialog1 = new SaveFileDialog {Title = "Save display to file"};
             saveFileDialog1.ShowDialog();
             if (saveFileDialog1.FileName != "") {
                 DBFilePathCtl.Text = saveFileDialog1.FileName;
             }
         }
 
-        private void SaveAllBtn_Click(object sender, EventArgs e) {
-            if (OnAction != null) {
-                OnAction(this, new MageCommandEventArgs("save_to_db", "all"));
-            }
+        private void SaveAllBtn_Click(object sender, EventArgs e)
+        {
+            OnAction?.Invoke(this, new MageCommandEventArgs("save_to_db", "all"));
         }
 
-        private void SaveSelectedBtn_Click(object sender, EventArgs e) {
-            if (OnAction != null) {
-                OnAction(this, new MageCommandEventArgs("save_to_db", "selected"));
-            }
+        private void SaveSelectedBtn_Click(object sender, EventArgs e)
+        {
+            OnAction?.Invoke(this, new MageCommandEventArgs("save_to_db", "selected"));
         }
 
         private void ClearColMapBtn_Click(object sender, EventArgs e) {
@@ -94,8 +86,7 @@ namespace MageMetadataProcessor {
         }
 
         private void SelectColMapBtn_Click(object sender, EventArgs e) {
-            ColumnMapSelectionForm selectionForm = new ColumnMapSelectionForm();
-            selectionForm.ColumnMapping = ColumnMapping;
+            var selectionForm = new ColumnMapSelectionForm {ColumnMapping = ColumnMapping};
             if (selectionForm.ShowDialog() == DialogResult.OK) {
                 ColumnMapping = selectionForm.ColumnMapping;
                 OutputColumnList = selectionForm.OutputColumnList;

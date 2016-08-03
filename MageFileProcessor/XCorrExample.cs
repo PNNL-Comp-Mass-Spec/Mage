@@ -8,7 +8,7 @@ namespace MageFileProcessor
     {
 
         // Indexes into the row field data array
-        private int xCorrIdx = 0;
+        private int xCorrIdx;
 
         // Precalulate field indexes
         protected override void ColumnDefsFinished()
@@ -22,7 +22,7 @@ namespace MageFileProcessor
         // the fields array contains value of each column for the row
         protected override bool CheckFilter(ref string[] fields)
         {
-            bool accepted = false;
+            var accepted = false;
 
             // convert XCorr from text to number
             // and accept it if it meets minimum value

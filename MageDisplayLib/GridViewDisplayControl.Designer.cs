@@ -28,9 +28,9 @@ namespace MageDisplayLib
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            var dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            var dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            var dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.chkShiftClickMode = new System.Windows.Forms.CheckBox();
             this.lblPageTitle = new System.Windows.Forms.Label();

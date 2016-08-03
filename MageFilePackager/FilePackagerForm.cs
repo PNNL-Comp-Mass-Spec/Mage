@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml;
@@ -60,7 +59,7 @@ namespace MageFilePackager
             InitializeComponent();
 
             const bool isBetaVersion = true;
-            SetFormTitle("2016-07-13", isBetaVersion);
+            SetFormTitle("2016-08-03", isBetaVersion);
 
             SetTags();
 
@@ -98,7 +97,7 @@ namespace MageFilePackager
             {
                 // set up configuration folder and files
                 // Set log4net path and kick the logger into action
-                string logFileName = Path.Combine(SavedState.DataDirectory, "log.txt");
+                var logFileName = Path.Combine(SavedState.DataDirectory, "log.txt");
                 GlobalContext.Properties["LogName"] = logFileName;
                 _traceLog = LogManager.GetLogger("TraceLog");
                 _traceLog.Info("Starting");
@@ -158,8 +157,8 @@ namespace MageFilePackager
 
         private void SetFormTitle(string programDate, bool beta)
         {
-            Version objVersion = Assembly.GetExecutingAssembly().GetName().Version;
-            string version = string.Format("{0}.{1}.{2}", objVersion.Major, objVersion.Minor, objVersion.Build);
+            var objVersion = Assembly.GetExecutingAssembly().GetName().Version;
+            var version = string.Format("{0}.{1}.{2}", objVersion.Major, objVersion.Minor, objVersion.Build);
 
             txtVersion.Text = "Version " + version;
 
@@ -235,7 +234,7 @@ namespace MageFilePackager
         /// <param name="command"></param>
         private void BuildAndRunPipeline(MageCommandEventArgs command)
         {
-            DisplaySourceMode mode = (command.Mode == "selected") ? DisplaySourceMode.Selected : DisplaySourceMode.All;
+            var mode = (command.Mode == "selected") ? DisplaySourceMode.Selected : DisplaySourceMode.All;
 
             try
             {
@@ -253,7 +252,7 @@ namespace MageFilePackager
                             MessageBox.Show("Unknown query type '" + queryName + "'.  Your QueryDefinitions.xml file is out-of-date", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             return;
                         }
-                        Dictionary<string, string> queryParameters = GetRuntimeParmsForEntityQuery();
+                        var queryParameters = GetRuntimeParmsForEntityQuery();
                         if (!ValidQueryParameters(queryName, queryParameters))
                         {
                             return;
@@ -264,7 +263,7 @@ namespace MageFilePackager
 
                     case "get_entities_from_flex_query":
                         queryDefXML = ModuleDiscovery.GetQueryXMLDef(command.Mode);
-                        SQLBuilder builder = JobFlexQueryPanel.GetSQLBuilder(queryDefXML);
+                        var builder = JobFlexQueryPanel.GetSQLBuilder(queryDefXML);
                         if (builder.HasPredicate)
                         {
                             var reader = new MSSQLReader(builder);
@@ -281,7 +280,7 @@ namespace MageFilePackager
 
                     case "get_files_from_entities":
                         entityType = JobListDisplayControl.PageTitle;
-                        Dictionary<string, string> runtimeParms = GetRuntimeParmsForEntityFileType(entityType);
+                        var runtimeParms = GetRuntimeParmsForEntityFileType(entityType);
                         var source = new GVPipelineSource(JobListDisplayControl, mode);
                         sink = FileListDisplayControl.MakeSink("Files", 15);
                         _mCurrentPipeline = Pipelines.MakeFileListPipeline(source, sink, runtimeParms);
@@ -312,11 +311,11 @@ namespace MageFilePackager
 
         private bool ValidQueryParameters(string queryName, Dictionary<string, string> queryParameters)
         {
-            string msg = string.Empty;
-            bool bFilterDefined = false;
+            var msg = string.Empty;
+            var bFilterDefined = false;
 
             // ReSharper disable LoopCanBeConvertedToQuery
-            foreach (KeyValuePair<string, string> entry in queryParameters)
+            foreach (var entry in queryParameters)
             {
                 // ReSharper restore LoopCanBeConvertedToQuery
                 if (!string.IsNullOrEmpty(entry.Key) && !string.IsNullOrEmpty(entry.Value))
@@ -361,16 +360,16 @@ namespace MageFilePackager
             {
                 var cSepChars = new[] { ',', '\t' };
 
-                string sWarning = queryName == TagJobIDs ? "Job number '" : "Use dataset IDs, not dataset names: '";
+                var sWarning = queryName == TagJobIDs ? "Job number '" : "Use dataset IDs, not dataset names: '";
 
                 // Validate that the job numbers or dataset IDs are all numeric
-                foreach (KeyValuePair<string, string> entry in queryParameters)
+                foreach (var entry in queryParameters)
                 {
-                    string sValue = entry.Value.Replace(Environment.NewLine, ",");
+                    var sValue = entry.Value.Replace(Environment.NewLine, ",");
 
-                    string[] values = sValue.Split(cSepChars);
+                    var values = sValue.Split(cSepChars);
 
-                    foreach (string datasetID in values)
+                    foreach (var datasetID in values)
                     {
                         int iValue;
                         if (!int.TryParse(datasetID, out iValue))
@@ -458,7 +457,7 @@ namespace MageFilePackager
         /// </summary>
         private void AdjustFileExtractionPanel()
         {
-            int entityCount = JobListDisplayControl.ItemCount;
+            var entityCount = JobListDisplayControl.ItemCount;
             EntityFilePanel1.Enabled = entityCount != 0;
         }
 
@@ -512,8 +511,8 @@ namespace MageFilePackager
                 if (_mCurrentCmdSender is IMageDisplayControl)
                 {
                     var ldc = _mCurrentCmdSender as IMageDisplayControl;
-                    string type = ldc.PageTitle;
-                    Collection<string> colNames = ldc.ColumnNames;
+                    var type = ldc.PageTitle;
+                    var colNames = ldc.ColumnNames;
                     if (colNames.Contains("Item"))
                     {
                         type = "Files";
@@ -572,8 +571,8 @@ namespace MageFilePackager
             var doc = new XmlDocument();
             doc.Load("QueryDefinitions.xml");
             // find query node by name
-            string xpath = string.Format(".//query[@name='{0}']", queryName);
-            XmlNode queryNode = doc.SelectSingleNode(xpath);
+            var xpath = string.Format(".//query[@name='{0}']", queryName);
+            var queryNode = doc.SelectSingleNode(xpath);
             return (queryNode != null) ? queryNode.OuterXml : "";
             //--            return ModuleDiscovery.GetQueryXMLDef(queryName);
         }
@@ -581,7 +580,7 @@ namespace MageFilePackager
         private Dictionary<string, string> GetRuntimeParmsForEntityQuery()
         {
             Control queryPage = EntityListSourceTabs.SelectedTab;
-            IModuleParameters panel = PanelSupport.GetParameterPanel(queryPage);
+            var panel = PanelSupport.GetParameterPanel(queryPage);
             return panel.GetParameters();
         }
 
@@ -678,7 +677,7 @@ namespace MageFilePackager
         private void SetupCommandHandler()
         {
             // get reference to the method that handles command events
-            MethodInfo methodInfo = GetType().GetMethod("DoCommand");
+            var methodInfo = GetType().GetMethod("DoCommand");
             Control subjectControl = this;
 
             PanelSupport.DiscoverAndConnectCommandHandlers(subjectControl, methodInfo);

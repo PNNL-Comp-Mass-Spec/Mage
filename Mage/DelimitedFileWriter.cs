@@ -83,10 +83,7 @@ namespace Mage
                 // Code to dispose the managed resources of the class
             }
             // Code to dispose the un-managed resources of the class
-            if (mOutFile != null)
-            {
-                mOutFile.Dispose();
-            }
+            mOutFile?.Dispose();
 
             //            isDisposed = true;
         }
@@ -105,7 +102,7 @@ namespace Mage
             if (string.IsNullOrWhiteSpace(FilePath))
                 throw new MageException("FilePath must be defined before calling Prepare in DelimitedFileWriter");
 
-            string dirPath = Path.GetDirectoryName(FilePath);
+            var dirPath = Path.GetDirectoryName(FilePath);
             if (!string.IsNullOrEmpty(dirPath) && !Directory.Exists(dirPath))
             {
                 Directory.CreateDirectory(dirPath);
@@ -114,7 +111,7 @@ namespace Mage
             {
                 mAppendFlag = File.Exists(FilePath);
             }
-            string ext = Path.GetExtension(FilePath).ToLower();
+            var ext = Path.GetExtension(FilePath).ToLower();
             if (ext == ".csv")
             {
                 Delimiter = ",";
@@ -138,10 +135,7 @@ namespace Mage
         public override void Cleanup()
         {
             base.Cleanup();
-            if (mOutFile != null)
-            {
-                mOutFile.Close();
-            }
+            mOutFile?.Close();
         }
 
         /// <summary>
@@ -188,14 +182,14 @@ namespace Mage
             // otherwise just use the input column definitions
             if (OutputColumnDefs != null)
             {
-                foreach (MageColumnDef col in OutputColumnDefs)
+                foreach (var col in OutputColumnDefs)
                 {
                     h.Add(col.Name);
                 }
             }
             else
             {
-                foreach (MageColumnDef col in InputColumnDefs)
+                foreach (var col in InputColumnDefs)
                 {
                     h.Add(col.Name);
                 }
@@ -205,10 +199,10 @@ namespace Mage
 
         private void OutputDataRow(string[] vals)
         {
-            string delim = "";
+            var delim = "";
             // remap results according to our output column definitions, if we have them
             // otherwise just use the as-delivered format
-            string[] outRow = vals;
+            var outRow = vals;
             if (OutputColumnDefs != null)
             {
                 outRow = MapDataRow(vals);

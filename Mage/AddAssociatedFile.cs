@@ -38,14 +38,14 @@ namespace Mage
         /// that contains the input folder path
         /// (optional - defaults to "Folder")
         /// </summary>
-        public string SourceFolderColumnName { get; set; }
+        public string SourceFolderColumnName { get; }
 
         /// <summary>
         /// name of the column in the standard tabular input
         /// that contains the input file name
         /// optional - defaults to "Name")
         /// </summary>
-        public string SourceFileColumnName { get; set; }
+        public string SourceFileColumnName { get; }
 
         /// <summary>
         /// name of the output column that receives name of associated file
@@ -63,7 +63,7 @@ namespace Mage
             }
             set
             {
-                string[] flds = value.Split('|');
+                var flds = value.Split('|');
                 mSourceFileNameFragment = flds[0];
                 mAssociatedFileNameFragment = flds[1];
             }
@@ -86,7 +86,7 @@ namespace Mage
         public override void HandleColumnDef(object sender, MageColumnEventArgs args)
         {
             base.HandleColumnDef(sender, args);
-            List<MageColumnDef> columnDefs = OutputColumnDefs ?? InputColumnDefs;
+            var columnDefs = OutputColumnDefs ?? InputColumnDefs;
             OnColumnDefAvailable(new MageColumnEventArgs(columnDefs.ToArray()));
 
             mInputFolderIdx = InputColumnPos[SourceFolderColumnName];
@@ -103,9 +103,9 @@ namespace Mage
         {
             if (args.DataAvailable)
             {
-                string folderPathSpec = args.Fields[mInputFolderIdx];
-                string resultFileName = args.Fields[mInputFileIdx];
-                string assocFileName = base.ReplaceEx(resultFileName, mSourceFileNameFragment, mAssociatedFileNameFragment);
+                var folderPathSpec = args.Fields[mInputFolderIdx];
+                var resultFileName = args.Fields[mInputFileIdx];
+                var assocFileName = base.ReplaceEx(resultFileName, mSourceFileNameFragment, mAssociatedFileNameFragment);
 
                 if (assocFileName == kNoFilesFound)
                 {
@@ -125,13 +125,13 @@ namespace Mage
                         folderPaths.Add(folderPathSpec);
                     }
 
-                    foreach (string resultFolderPath in folderPaths)
+                    foreach (var resultFolderPath in folderPaths)
                     {
                         if (resultFolderPath.StartsWith(MYEMSL_PATH_FLAG))
                         {
                             string subDir;
                             string parentFolders;
-                            string datasetName = DetermineDatasetName(resultFolderPath);
+                            var datasetName = DetermineDatasetName(resultFolderPath);
 
                             GetMyEMSLParentFoldersAndSubDir(resultFolderPath, datasetName, out subDir, out parentFolders);
 
@@ -142,7 +142,7 @@ namespace Mage
                             if (m_RecentlyFoundMyEMSLFiles.Count > 0)
                             {
                                 var archiveFileInfo = m_RecentlyFoundMyEMSLFiles[0];
-                                string encodedFilePath = DatasetInfoBase.AppendMyEMSLFileID(archiveFileInfo.FileInfo.Filename, archiveFileInfo.FileID);
+                                var encodedFilePath = DatasetInfoBase.AppendMyEMSLFileID(archiveFileInfo.FileInfo.Filename, archiveFileInfo.FileID);
                                 args.Fields[mAssocFileIdx] = encodedFilePath;
 
                                 CacheFilterPassingFile(archiveFileInfo.FileInfo);

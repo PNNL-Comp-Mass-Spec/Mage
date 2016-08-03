@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using MageDisplayLib;
-using Mage;
 
 namespace MageConcatenator
 {
@@ -21,26 +20,26 @@ namespace MageConcatenator
         /// The particular GridViewDisplayControl object that this object is attached to
         /// and supplies context menu items for
         /// </summary>
-        private GridViewDisplayControl mDisplayUserControl = null;
+        private readonly GridViewDisplayControl mDisplayUserControl;
 
         /// <summary>
         /// The DataGridView control contained by the attached GridViewDisplayControl
         /// (broken out as separate reference for convenience)
         /// </summary>
-        private DataGridView mDisplayView = null;
+        private readonly DataGridView mDisplayView;
 
         /// <summary>
         /// List of names of all menu items created by this class
         /// </summary>
-        private List<string> mAllMenuItems = new List<string>();
+        private readonly List<string> mAllMenuItems = new List<string>();
 
         /// <summary>
         /// Lists of names of menu items 
         /// that are sensitive to presence of certain columns in list display
         /// </summary>
-        private List<string> mFolderSensitiveMenuItems = new List<string>();
-        private List<string> mJobSensitiveMenuItems = new List<string>();
-        private List<string> mDatasetSensitiveMenuItems = new List<string>();
+        private readonly List<string> mFolderSensitiveMenuItems = new List<string>();
+        private readonly List<string> mJobSensitiveMenuItems = new List<string>();
+        private readonly List<string> mDatasetSensitiveMenuItems = new List<string>();
 
         #endregion
 
@@ -69,14 +68,13 @@ namespace MageConcatenator
         private void SetupContextMenus()
         {
 
-            List<ToolStripItem> mMyMenuItems = new List<ToolStripItem>();
-            mMyMenuItems.Add(new ToolStripSeparator());
+            var mMyMenuItems = new List<ToolStripItem> {new ToolStripSeparator()};
             mMyMenuItems.AddRange(GetFolderMenuItems().ToArray());
             mMyMenuItems.AddRange(GetWebActionMenuItems().ToArray());
 
             mDisplayUserControl.AppendContextMenuItems(mMyMenuItems.ToArray());
 
-            foreach (ToolStripItem tsmi in mMyMenuItems)
+            foreach (var tsmi in mMyMenuItems)
             {
                 tsmi.Enabled = false;
                 mAllMenuItems.Add(tsmi.Name);
@@ -91,11 +89,16 @@ namespace MageConcatenator
         /// Return the index to the given column
         /// </summary>
         /// <param name="colName">Name of column to get index for</param>
-        /// <returns>Position of column in item array</returns>
+        /// <returns>Position of column in item array; -1 if not found</returns>
         private int GetColumnIndex(string colName)
         {
-            int i = mDisplayView.Columns[colName].Index;
-            return i;
+            var dataGridViewColumn = mDisplayView.Columns[colName];
+            if (dataGridViewColumn != null)
+            {
+                var i = dataGridViewColumn.Index;
+                return i;
+            }
+            return -1;
         }
 
         /// <summary>
@@ -105,8 +108,8 @@ namespace MageConcatenator
         /// <returns>List of contents of column for each selected row</returns>
         private string[] GetItemList(string colName)
         {
-            List<string> lst = new List<string>();
-            int i = GetColumnIndex(colName);
+            var lst = new List<string>();
+            var i = GetColumnIndex(colName);
             if (i != -1)
             {
                 foreach (DataGridViewRow objRow in mDisplayView.SelectedRows)
@@ -127,13 +130,13 @@ namespace MageConcatenator
         /// <returns>Menu items</returns>
         private ToolStripItem[] GetWebActionMenuItems()
         {
-            List<ToolStripItem> tsmil = new List<ToolStripItem>();
-            ToolStripMenuItem tsmi = null;
-            ToolStripMenuItem webmi = new ToolStripMenuItem("Open DMS web page");
-            webmi.Name = "WebPageSubmenu";
+            var tsmil = new List<ToolStripItem>();
+            var webmi = new ToolStripMenuItem("Open DMS web page") {
+                Name = "WebPageSubmenu"
+            };
             tsmil.Add(webmi);
 
-            tsmi = new ToolStripMenuItem("Job detail", null, HandleJobWebAction, "JobDetailWebPage");
+            var tsmi = new ToolStripMenuItem("Job detail", null, HandleJobWebAction, "JobDetailWebPage");
             mJobSensitiveMenuItems.Add(tsmi.Name);
             webmi.DropDownItems.Add(tsmi);
 
@@ -164,7 +167,7 @@ namespace MageConcatenator
         /// <param name="columnName">column to get trailing URL segment from</param>
         private void LaunchWebBrowser(string url, string columnName)
         {
-            string[] itemList = GetItemList(columnName);
+            var itemList = GetItemList(columnName);
             if (mDisplayView.SelectedRows.Count == 0)
             {
                 MessageBox.Show("No rows selected");
@@ -186,8 +189,8 @@ namespace MageConcatenator
 
         private ToolStripItem[] GetFolderMenuItems()
         {
-            List<ToolStripItem> l = new List<ToolStripItem>();
-            ToolStripMenuItem tsmi = new ToolStripMenuItem("Open Folder", null, HandleFolderAction, "OpenFolder");
+            var l = new List<ToolStripItem>();
+            var tsmi = new ToolStripMenuItem("Open Folder", null, HandleFolderAction, "OpenFolder");
             mFolderSensitiveMenuItems.Add(tsmi.Name);
             l.Add(tsmi);
             return l.ToArray();
@@ -210,7 +213,7 @@ namespace MageConcatenator
         /// <param name="columnName"></param>
         private void OpenWindowsExplorer(string columnName)
         {
-            string[] itemList = GetItemList(columnName);
+            var itemList = GetItemList(columnName);
             if (mDisplayView.SelectedRows.Count == 0)
             {
                 MessageBox.Show("No rows selected");
@@ -222,7 +225,7 @@ namespace MageConcatenator
             }
             else
             {
-                string filePath = itemList[0];
+                var filePath = itemList[0];
                 System.Diagnostics.Process.Start("explorer.exe", filePath);
             }
         }
@@ -256,7 +259,7 @@ namespace MageConcatenator
                 AdjustMenuItemsFromNameList(mJobSensitiveMenuItems, false);
                 AdjustMenuItemsFromNameList(mDatasetSensitiveMenuItems, false);
                 //
-                foreach (MageColumnDef colDef in mDisplayUserControl.ColumnDefs)
+                foreach (var colDef in mDisplayUserControl.ColumnDefs)
                 {
                     switch (colDef.Name)
                     {
@@ -282,11 +285,11 @@ namespace MageConcatenator
         /// <param name="active"></param>
         private void AdjustMenuItemsFromNameList(List<string> itemNames, bool active)
         {
-            foreach (string name in itemNames)
+            foreach (var name in itemNames)
             {
                 if (!string.IsNullOrEmpty(name))
                 {
-                    foreach (ToolStripItem tsi in mDisplayView.ContextMenuStrip.Items.Find(name, true))
+                    foreach (var tsi in mDisplayView.ContextMenuStrip.Items.Find(name, true))
                     {
                         tsi.Enabled = active;
                     }

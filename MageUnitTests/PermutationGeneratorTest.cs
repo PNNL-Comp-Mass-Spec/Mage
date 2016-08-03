@@ -12,67 +12,18 @@ namespace MageUnitTests
     public class PermutationGeneratorTest
     {
 
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #region Additional test attributes
-        // 
-        //You can use the following additional attributes as you write your tests:
-        //
-        //Use ClassInitialize to run code before running the first test in the class
-        //[ClassInitialize()]
-        //public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
-        //
-        //Use ClassCleanup to run code after all tests in a class have run
-        //[ClassCleanup()]
-        //public static void MyClassCleanup()
-        //{
-        //}
-        //
-        //Use TestInitialize to run code before running each test
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
-        //Use TestCleanup to run code after each test has run
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        //
-        #endregion
-
         /// <summary>
         ///A test for AddParamColumn
         ///</summary>
         [TestMethod()]
         public void AddParamColumnTest()
         {
-            int actual;
-            PermutationGenerator target = new PermutationGenerator();
+            var target = new PermutationGenerator();
             target.AddParamColumn("one", "1", "5", "1");
             target.AddParamColumn("two", "0", "2", "1");
             target.AddParamColumn("three", "1", "1", "1");
 
-            actual = target.ParamCount;
+            var actual = target.ParamCount;
             Assert.AreEqual(3, actual, "Number of parameters did not match");
         }
 
@@ -82,10 +33,9 @@ namespace MageUnitTests
         [TestMethod()]
         public void PredictedOutputRowCountTest()
         {
-            int actual;
-            PermutationGenerator target = new PermutationGenerator();
+            var target = new PermutationGenerator();
 
-            actual = target.ParamCount;
+            var actual = target.ParamCount;
             Assert.AreEqual(0, actual);
 
             target.AddParamColumn("one", "1", "5", "1");
@@ -102,11 +52,10 @@ namespace MageUnitTests
         [TestMethod()]
         public void IncludeHeaderInOutputTest()
         {
-            PermutationGenerator target = new PermutationGenerator();
-            bool expected = false;
-            bool actual;
+            var target = new PermutationGenerator();
+            var expected = false;
             target.IncludeHeaderInOutput = expected;
-            actual = target.IncludeHeaderInOutput;
+            var actual = target.IncludeHeaderInOutput;
             Assert.AreEqual(expected, actual);
 
             expected = true;
@@ -121,22 +70,20 @@ namespace MageUnitTests
         [TestMethod()]
         public void BasicPermutationGenerator()
         {
-            PermutationGenerator target = new PermutationGenerator();
+            var target = new PermutationGenerator();
             target.AddParamColumn("one", "1", "5", "1");
             target.AddParamColumn("two", "0", "2", "1");
             target.AddParamColumn("three", "1", "1", "1");
 
             // create test sink module and connect to MSSQLReader module
-            SimpleSink sink = new SimpleSink();
+            var sink = new SimpleSink();
             target.ColumnDefAvailable += sink.HandleColumnDef;
             target.DataRowAvailable += sink.HandleDataRow;
 
             target.Run(null);
 
-            int actual;
-            int expected;
-            expected = target.ParamCount;
-            actual = sink.Columns.Count;
+            var expected = target.ParamCount;
+            var actual = sink.Columns.Count;
             Assert.AreEqual(expected, actual, "Number of columns did not match");
 
             actual = sink.Rows.Count;
@@ -149,7 +96,7 @@ namespace MageUnitTests
         [TestMethod()]
         public void PermutationGeneratorWithMappedColumns()
         {
-            PermutationGenerator target = new PermutationGenerator();
+            var target = new PermutationGenerator();
             target.AddParamColumn("one", "1", "5", "1");
             target.AddParamColumn("two", "0", "2", "1");
             target.AddParamColumn("three", "1", "1", "1");
@@ -158,16 +105,14 @@ namespace MageUnitTests
             target.AutoColumnName = "ref";
 
             // create test sink module and connect to MSSQLReader module
-            SimpleSink sink = new SimpleSink();
+            var sink = new SimpleSink();
             target.ColumnDefAvailable += sink.HandleColumnDef;
             target.DataRowAvailable += sink.HandleDataRow;
 
             target.Run(null);
 
-            int actual;
-            int expected;
-            expected = target.ParamCount;
-            actual = sink.Columns.Count;
+            var expected = target.ParamCount;
+            var actual = sink.Columns.Count;
             Assert.AreEqual(5, actual, "Number of columns did not match");
 
             actual = sink.Rows.Count;
@@ -178,7 +123,7 @@ namespace MageUnitTests
         public void PermutationGeneratorWriteSQLite()
         {
 
-            PermutationGenerator PGen = new PermutationGenerator();
+            var PGen = new PermutationGenerator();
             PGen.AddParamColumn("one", "1", "5", "1");
             PGen.AddParamColumn("two", "0", "2", "1");
             PGen.AddParamColumn("three", "1", "1", "1");
@@ -188,11 +133,13 @@ namespace MageUnitTests
             PGen.AutoColumnName = "ref";
             PGen.AutoColumnFormat = "ParamSet_{0:000000}";
 
-            ProcessingPipeline pipeline = new ProcessingPipeline("PGen_2_SQLite");
+            var pipeline = new ProcessingPipeline("PGen_2_SQLite");
 
-            SQLiteWriter writer = new SQLiteWriter();
-            writer.DbPath = "param_permutations.db";
-            writer.TableName = "param_permutations";
+            var writer = new SQLiteWriter
+            {
+                DbPath = "param_permutations.db",
+                TableName = "param_permutations"
+            };
 
             pipeline.RootModule = pipeline.AddModule("Gen", PGen);
             pipeline.AddModule("Writer", writer);
@@ -206,7 +153,7 @@ namespace MageUnitTests
         public void PermutationGeneratorWriteFile()
         {
 
-            PermutationGenerator PGen = new PermutationGenerator();
+            var PGen = new PermutationGenerator();
             PGen.AddParamColumn("one", "1", "5", "1");
             PGen.AddParamColumn("two", "0", "2", "1");
             PGen.AddParamColumn("three", "1", "1", "1");
@@ -216,10 +163,9 @@ namespace MageUnitTests
             PGen.AutoColumnName = "ref";
             PGen.AutoColumnFormat = "ParamSet_{0:000000}";
 
-            ProcessingPipeline pipeline = new ProcessingPipeline("PGen_2_File");
+            var pipeline = new ProcessingPipeline("PGen_2_File");
 
-            DelimitedFileWriter writer = new DelimitedFileWriter();
-            writer.FilePath = "param_permutations.txt";
+            var writer = new DelimitedFileWriter {FilePath = "param_permutations.txt"};
 
             pipeline.RootModule = pipeline.AddModule("Gen", PGen);
             pipeline.AddModule("Writer", writer);

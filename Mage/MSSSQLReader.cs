@@ -149,10 +149,7 @@ namespace Mage
                 // Code to dispose the managed resources of the class
             }
             // Code to dispose the un-managed resources of the class
-            if (mConnection != null)
-            {
-                mConnection.Dispose();
-            }
+            mConnection?.Dispose();
 
             //            isDisposed = true;
         }
@@ -175,7 +172,7 @@ namespace Mage
             if (!string.IsNullOrEmpty(builder.SprocName))
             { // if query is via sproc call, set sproc arguments
                 SprocName = builder.SprocName;
-                foreach (KeyValuePair<string, string> parm in builder.SprocParameters)
+                foreach (var parm in builder.SprocParameters)
                 {
                     SetSprocParam(parm.Key, parm.Value);
                 }
@@ -238,7 +235,7 @@ namespace Mage
         /// </summary>
         private void Connect()
         {
-            string cnStr = mConnectionString.Replace("@server@", Server);
+            var cnStr = mConnectionString.Replace("@server@", Server);
             cnStr = cnStr.Replace("@database@", Database);
             mConnection = new SqlConnection
             {
@@ -269,7 +266,7 @@ namespace Mage
 
             try
             {
-                SqlDataReader myReader = cmd.ExecuteReader();
+                var myReader = cmd.ExecuteReader();
                 GetData(myReader);
             }
             catch (Exception e)
@@ -288,8 +285,8 @@ namespace Mage
         /// </summary>
         private void GetDataFromDatabaseSproc()
         {
-            SqlCommand myCmd = GetSprocCmd(SprocName, mSprocParameters);
-            SqlDataReader myReader = myCmd.ExecuteReader();
+            var myCmd = GetSprocCmd(SprocName, mSprocParameters);
+            var myReader = myCmd.ExecuteReader();
             GetData(myReader);
         }
 
@@ -309,7 +306,7 @@ namespace Mage
 
             OutputColumnDefinitions(myReader, out columnDefs);
 
-            int totalRows = 0;
+            var totalRows = 0;
             OutputDataRows(myReader, columnDefs, ref totalRows);
 
             stopTime = DateTime.UtcNow;
@@ -338,9 +335,9 @@ namespace Mage
 
                 var dataVals = new string[a.Length];
 
-                for (int i = 0; i < a.Length; i++)
+                for (var i = 0; i < a.Length; i++)
                 {
-                    bool valProcessed = false;
+                    var valProcessed = false;
 
                     if (i < columnDefs.Count)
                     {
@@ -403,20 +400,23 @@ namespace Mage
             // Get list of fields in result set and process each field
             columnDefs = new List<MageColumnDef>();
 
-            DataTable schemaTable = myReader.GetSchemaTable();
-            foreach (DataRow drField in schemaTable.Rows)
+            var schemaTable = myReader.GetSchemaTable();
+            if (schemaTable != null)
             {
-                // initialize column definition with canonical fields
-                MageColumnDef columnDef = GetColumnInfo(drField);
-                if (!columnDef.Hidden)
+                foreach (DataRow drField in schemaTable.Rows)
                 {
-                    // pass information about this column to the listeners
-                    columnDefs.Add(columnDef);
-                }
-                else
-                {
-                    // Column is marked as hidden; do not process it
-                    UpdateStatusMessage("Skipping hidden column [" + columnDef.Name + "]");
+                    // initialize column definition with canonical fields
+                    var columnDef = GetColumnInfo(drField);
+                    if (!columnDef.Hidden)
+                    {
+                        // pass information about this column to the listeners
+                        columnDefs.Add(columnDef);
+                    }
+                    else
+                    {
+                        // Column is marked as hidden; do not process it
+                        UpdateStatusMessage("Skipping hidden column [" + columnDef.Name + "]");
+                    }
                 }
             }
 
@@ -443,7 +443,7 @@ namespace Mage
                 Size = drField["ColumnSize"].ToString()
             };
 
-            string colHidden = drField["IsHidden"].ToString();
+            var colHidden = drField["IsHidden"].ToString();
             columnDef.Hidden = !(string.IsNullOrEmpty(colHidden) || colHidden.ToLower() == "false");
             return columnDef;
         }
@@ -485,16 +485,16 @@ namespace Mage
                     Connection = mConnection
                 };
 
-                string sqlText = string.Format("SELECT * FROM INFORMATION_SCHEMA.PARAMETERS WHERE SPECIFIC_NAME = '{0}'", sprocName);
+                var sqlText = string.Format("SELECT * FROM INFORMATION_SCHEMA.PARAMETERS WHERE SPECIFIC_NAME = '{0}'", sprocName);
                 cmd.CommandText = sqlText;
                 //
-                SqlDataReader rdr = cmd.ExecuteReader();
+                var rdr = cmd.ExecuteReader();
 
                 // column positions for the argument data we need
-                int namIdx = rdr.GetOrdinal("PARAMETER_NAME");
-                int typIdx = rdr.GetOrdinal("DATA_TYPE");
-                int modIdx = rdr.GetOrdinal("PARAMETER_MODE");
-                int sizIdx = rdr.GetOrdinal("CHARACTER_MAXIMUM_LENGTH");
+                var namIdx = rdr.GetOrdinal("PARAMETER_NAME");
+                var typIdx = rdr.GetOrdinal("DATA_TYPE");
+                var modIdx = rdr.GetOrdinal("PARAMETER_MODE");
+                var sizIdx = rdr.GetOrdinal("CHARACTER_MAXIMUM_LENGTH");
 
                 // more stuff for the SqlCommand being built
                 builtCmd.CommandType = CommandType.StoredProcedure;
@@ -508,9 +508,9 @@ namespace Mage
                 {
                     var a = new object[rdr.FieldCount];
                     rdr.GetValues(a);
-                    string argName = a[namIdx].ToString();
-                    string argType = a[typIdx].ToString();
-                    string argMode = a[modIdx].ToString();
+                    var argName = a[namIdx].ToString();
+                    var argType = a[typIdx].ToString();
+                    var argMode = a[modIdx].ToString();
                     switch (argType)
                     {
                         case "tinyint":
@@ -534,12 +534,12 @@ namespace Mage
                             }
                             break;
                         case "decimal":
-                            int preIdx = rdr.GetOrdinal("NUMERIC_PRECISION");
-                            int scaIdx = rdr.GetOrdinal("NUMERIC_SCALE");
+                            var preIdx = rdr.GetOrdinal("NUMERIC_PRECISION");
+                            var scaIdx = rdr.GetOrdinal("NUMERIC_SCALE");
                             builtCmd.Parameters.Add(new SqlParameter(argName, SqlDbType.Decimal));
                             builtCmd.Parameters[argName].Direction = ParamDirection(argMode);
                             builtCmd.Parameters[argName].Precision = (byte)a[preIdx];
-                            object obj = a[scaIdx];
+                            var obj = a[scaIdx];
                             builtCmd.Parameters[argName].Scale = Convert.ToByte(obj);
                             if (parms.ContainsKey(argName))
                             {

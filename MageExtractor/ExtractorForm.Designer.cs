@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExtractorForm));
+            var resources = new System.ComponentModel.ComponentResourceManager(typeof(ExtractorForm));
             this.EntityListSourceTabs = new System.Windows.Forms.TabControl();
             this.QueryTabPage = new System.Windows.Forms.TabPage();
             this.JobSimpleQueryPanel = new MageUIComponents.JobListPanel();

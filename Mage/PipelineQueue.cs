@@ -84,7 +84,7 @@ namespace Mage
         /// <param name="pipelines"></param>
         public void Run(params ProcessingPipeline[] pipelines)
         {
-            foreach (ProcessingPipeline pipeline in pipelines)
+            foreach (var pipeline in pipelines)
             {
                 Add(pipeline);
             }
@@ -125,13 +125,10 @@ namespace Mage
         public void Cancel()
         {
             Globals.AbortRequested = true;
-            if (mCurrentPipeline != null)
-            {
-                mCurrentPipeline.Cancel();
-            }
+            mCurrentPipeline?.Cancel();
             while (mPipelineQueue.Count > 0)
             {
-                ProcessingPipeline nextPipeline = mPipelineQueue.Dequeue();
+                var nextPipeline = mPipelineQueue.Dequeue();
                 nextPipeline.Cancel();
             }
         }
@@ -151,10 +148,7 @@ namespace Mage
             {
                 if (Globals.AbortRequested)
                 {
-                    if (OnRunCompleted != null)
-                    {
-                        OnRunCompleted(this, new MageStatusEventArgs("Pipeline: Processing aborted"));
-                    }
+                    OnRunCompleted?.Invoke(this, new MageStatusEventArgs("Pipeline: Processing aborted"));
                     break;
                 }
 
@@ -192,10 +186,7 @@ namespace Mage
         /// <param name="msg"></param>
         private void UpdatePipelineStarted(string msg)
         {
-            if (OnPipelineStarted != null)
-            {
-                OnPipelineStarted(this, new MageStatusEventArgs(msg));
-            }
+            OnPipelineStarted?.Invoke(this, new MageStatusEventArgs(msg));
         }
 
         #endregion

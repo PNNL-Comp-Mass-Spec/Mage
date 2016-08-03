@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 using MageDisplayLib;
-using Mage;
 
 namespace MageFilePackager
 {
@@ -76,7 +75,7 @@ namespace MageFilePackager
 
             _displayUserControl.AppendContextMenuItems(mMyMenuItems.ToArray());
 
-            foreach (ToolStripItem tsmi in mMyMenuItems)
+            foreach (var tsmi in mMyMenuItems)
             {
                 tsmi.Enabled = false;
                 _allMenuItems.Add(tsmi.Name);
@@ -91,11 +90,14 @@ namespace MageFilePackager
         /// Return the index to the given column
         /// </summary>
         /// <param name="colName">Name of column to get index for</param>
-        /// <returns>Position of column in item array</returns>
+        /// <returns>Position of column in item array, 0 if _displayView.Columns does not contains colName</returns>
         private int GetColumnIndex(string colName)
         {
             var dataGridViewColumn = _displayView.Columns[colName];
-            return (dataGridViewColumn != null) ? dataGridViewColumn.Index : 0;
+            if (dataGridViewColumn == null)
+                return 0;
+
+            return dataGridViewColumn.Index;
         }
 
         /// <summary>
@@ -106,7 +108,7 @@ namespace MageFilePackager
         private string[] GetItemList(string colName)
         {
             var lst = new List<string>();
-            int i = GetColumnIndex(colName);
+            var i = GetColumnIndex(colName);
             if (i != -1)
             {
                 foreach (DataGridViewRow objRow in _displayView.SelectedRows)
@@ -162,7 +164,7 @@ namespace MageFilePackager
         /// <param name="columnName">column to get trailing URL segment from</param>
         private void LaunchWebBrowser(string url, string columnName)
         {
-            string[] itemList = GetItemList(columnName);
+            var itemList = GetItemList(columnName);
             if (_displayView.SelectedRows.Count == 0)
             {
                 MessageBox.Show("No rows selected");
@@ -208,7 +210,7 @@ namespace MageFilePackager
         /// <param name="columnName"></param>
         private void OpenWindowsExplorer(string columnName)
         {
-            string[] itemList = GetItemList(columnName);
+            var itemList = GetItemList(columnName);
             if (_displayView.SelectedRows.Count == 0)
             {
                 MessageBox.Show("No rows selected");
@@ -220,7 +222,7 @@ namespace MageFilePackager
             }
             else
             {
-                string filePath = itemList[0];
+                var filePath = itemList[0];
                 Process.Start("explorer.exe", filePath);
             }
         }
@@ -254,7 +256,7 @@ namespace MageFilePackager
                 AdjustMenuItemsFromNameList(_jobSensitiveMenuItems, false);
                 AdjustMenuItemsFromNameList(_datasetSensitiveMenuItems, false);
                 //
-                foreach (MageColumnDef colDef in _displayUserControl.ColumnDefs)
+                foreach (var colDef in _displayUserControl.ColumnDefs)
                 {
                     switch (colDef.Name)
                     {
@@ -280,11 +282,11 @@ namespace MageFilePackager
         /// <param name="active"></param>
         private void AdjustMenuItemsFromNameList(IEnumerable<string> itemNames, bool active)
         {
-            foreach (string name in itemNames)
+            foreach (var name in itemNames)
             {
                 if (!string.IsNullOrEmpty(name))
                 {
-                    foreach (ToolStripItem tsi in _displayView.ContextMenuStrip.Items.Find(name, true))
+                    foreach (var tsi in _displayView.ContextMenuStrip.Items.Find(name, true))
                     {
                         tsi.Enabled = active;
                     }

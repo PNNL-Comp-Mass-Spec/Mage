@@ -1,21 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Mage;
-using System.Collections.ObjectModel;
 
-namespace MageUIComponents {
+namespace MageUIComponents
+{
 
-    public partial class FileProcessingPanel : UserControl {
+    public partial class FileProcessingPanel : UserControl
+    {
 
-        public FileProcessingPanel() {
+        public FileProcessingPanel()
+        {
             InitializeComponent();
-            this.FilterParametersCtl.Enabled = false;
+            FilterParametersCtl.Enabled = false;
         }
 
         /// <summary>
@@ -36,7 +33,7 @@ namespace MageUIComponents {
         /// <summary>
         /// stores parameter sets for filters, keyed by filter name.
         /// </summary>
-        private Dictionary<string, Dictionary<string, string>> mParameters = new Dictionary<string, Dictionary<string, string>>();
+        private readonly Dictionary<string, Dictionary<string, string>> mParameters = new Dictionary<string, Dictionary<string, string>>();
 
         /// <summary>
         /// output column list from seleted column mapping (if any)
@@ -50,7 +47,8 @@ namespace MageUIComponents {
         /// <summary>
         /// return class name for selected filter
         /// </summary>
-        public string SelectedFilterClassName {
+        public string SelectedFilterClassName
+        {
             get { return ModuleDiscovery.SelectedFilterClassName(FilterSelectionCtl.Text); }
         }
 
@@ -64,14 +62,18 @@ namespace MageUIComponents {
         /// (added by filter's parameter panel)
         /// </summary>
         /// <returns></returns>
-        public Dictionary<string, string> GetParameters() {
+        public Dictionary<string, string> GetParameters()
+        {
             // if there is a parameter set for the currently selected filter
             // use it as starting point for parameter
             // otherwise start with blank collection.
-            Dictionary<string, string> p = null;
-            if (mParameters.ContainsKey(FilterSelectionCtl.Text)) {
+            Dictionary<string, string> p;
+            if (mParameters.ContainsKey(FilterSelectionCtl.Text))
+            {
                 p = mParameters[FilterSelectionCtl.Text];
-            } else {
+            }
+            else
+            {
                 p = new Dictionary<string, string>();
             }
             // add the canonical parameters for the processing panel itself
@@ -80,7 +82,8 @@ namespace MageUIComponents {
             return p;
         }
 
-        public void SetParameters(Dictionary<string, string> paramList) {
+        public void SetParameters(Dictionary<string, string> paramList)
+        {
             ///mParameters[FilterSelectionCtl.Text] = paramList;
             // FUTURE: set individual controls from items in the list
         }
@@ -93,10 +96,9 @@ namespace MageUIComponents {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ProcessSelectedFilesCtl_Click(object sender, EventArgs e) {
-            if (OnAction != null) {
-                OnAction(this, new MageCommandEventArgs("process_file_contents", "selected"));
-            }
+        private void ProcessSelectedFilesCtl_Click(object sender, EventArgs e)
+        {
+            OnAction?.Invoke(this, new MageCommandEventArgs("process_file_contents", "selected"));
         }
 
         /// <summary>
@@ -105,10 +107,9 @@ namespace MageUIComponents {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-		private void ProcessAllFilesCtl_Click(object sender, EventArgs e) {
-            if (OnAction != null) {
-                OnAction(this, new MageCommandEventArgs("process_file_contents", "all"));
-            }
+		private void ProcessAllFilesCtl_Click(object sender, EventArgs e)
+        {
+            OnAction?.Invoke(this, new MageCommandEventArgs("process_file_contents", "all"));
         }
 
         #region Support functions
@@ -118,23 +119,27 @@ namespace MageUIComponents {
         /// see if there is a parameter panel associated with the currently selected filter
         /// and, if there is one, present it to the user and save its returned parameter values
         /// </summary>
-        private void GetFilterParams() {
-            string FilterLabel = FilterSelectionCtl.Text;
-            string panelName = ModuleDiscovery.GetParameterPanelForFilter(FilterLabel);
-            if (!string.IsNullOrEmpty(panelName)) {
+        private void GetFilterParams()
+        {
+            var FilterLabel = FilterSelectionCtl.Text;
+            var panelName = ModuleDiscovery.GetParameterPanelForFilter(FilterLabel);
+            if (!string.IsNullOrEmpty(panelName))
+            {
                 // create an instance of the parameter panel
-                Type modType = ModuleDiscovery.GetModuleTypeFromClassName(panelName);
-                Form paramForm = (Form)Activator.CreateInstance(modType);
+                var modType = ModuleDiscovery.GetModuleTypeFromClassName(panelName);
+                var paramForm = (Form)Activator.CreateInstance(modType);
 
                 // need reference that lets us access its parameters
-                IModuleParameters iPar = (IModuleParameters)paramForm;
+                var iPar = (IModuleParameters)paramForm;
 
                 // initialize its current parameter values
-                if (mParameters.ContainsKey(FilterLabel)) {
+                if (mParameters.ContainsKey(FilterLabel))
+                {
                     iPar.SetParameters(mParameters[FilterLabel]);
                 }
                 // popup the parameter panel and save its parameter values
-                if (paramForm.ShowDialog() == DialogResult.OK) {
+                if (paramForm.ShowDialog() == DialogResult.OK)
+                {
                     mParameters[FilterLabel] = iPar.GetParameters();
                 }
             }
@@ -149,7 +154,8 @@ namespace MageUIComponents {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-		private void FilterParametersCtl_Click(object sender, EventArgs e) {
+		private void FilterParametersCtl_Click(object sender, EventArgs e)
+        {
             GetFilterParams();
         }
 
@@ -158,16 +164,20 @@ namespace MageUIComponents {
         /// that is associated with currently selected filter
         /// according to whether or not such a panel exists
         /// </summary>
-        private void AdjustFilterParameterAccessButton() {
-            string panelName = ModuleDiscovery.GetParameterPanelForFilter(FilterSelectionCtl.Text);
-            if (!string.IsNullOrEmpty(panelName)) {
-                this.FilterParametersCtl.Enabled = true;
-                Type modType = ModuleDiscovery.GetModuleTypeFromClassName(panelName);
-                Form paramForm = (Form)Activator.CreateInstance(modType);
-                IModuleParameters iPar = (IModuleParameters)paramForm;
+        private void AdjustFilterParameterAccessButton()
+        {
+            var panelName = ModuleDiscovery.GetParameterPanelForFilter(FilterSelectionCtl.Text);
+            if (!string.IsNullOrEmpty(panelName))
+            {
+                FilterParametersCtl.Enabled = true;
+                var modType = ModuleDiscovery.GetModuleTypeFromClassName(panelName);
+                var paramForm = (Form)Activator.CreateInstance(modType);
+                var iPar = (IModuleParameters)paramForm;
                 mParameters[FilterSelectionCtl.Text] = iPar.GetParameters();
-            } else {
-                this.FilterParametersCtl.Enabled = false;
+            }
+            else
+            {
+                FilterParametersCtl.Enabled = false;
             }
         }
 
@@ -178,10 +188,11 @@ namespace MageUIComponents {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SelectColMapBtn_Click(object sender, EventArgs e) {
-            ColumnMapSelectionForm selectionForm = new ColumnMapSelectionForm();
-			selectionForm.ColumnMapToSelect = ColumnMapSelectionCtl.Text;
-            if (selectionForm.ShowDialog() == DialogResult.OK) {
+        private void SelectColMapBtn_Click(object sender, EventArgs e)
+        {
+            var selectionForm = new ColumnMapSelectionForm { ColumnMapToSelect = ColumnMapSelectionCtl.Text };
+            if (selectionForm.ShowDialog() == DialogResult.OK)
+            {
                 ColumnMapSelectionCtl.Text = selectionForm.ColumnMapping;
                 mOutputColumnList = selectionForm.OutputColumnList;
             }
@@ -193,11 +204,15 @@ namespace MageUIComponents {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void EditColumnMappingBtn_Click(object sender, EventArgs e) {
-            ColumnMappingForm editingForm = new ColumnMappingForm();
-            editingForm.InputFileInfo = GetSelectedFileInfo();
-            editingForm.OutputInfo = GetSelectedOutputInfo();
-            if (editingForm.ShowDialog() == DialogResult.OK) {
+        private void EditColumnMappingBtn_Click(object sender, EventArgs e)
+        {
+            var editingForm = new ColumnMappingForm
+            {
+                InputFileInfo = GetSelectedFileInfo(),
+                OutputInfo = GetSelectedOutputInfo()
+            };
+            if (editingForm.ShowDialog() == DialogResult.OK)
+            {
                 ColumnMapSelectionCtl.Text = editingForm.ColumnMapping;
                 mOutputColumnList = editingForm.OutputColumnList;
             }
@@ -208,7 +223,8 @@ namespace MageUIComponents {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ClearColMapBtn_Click(object sender, EventArgs e) {
+        private void ClearColMapBtn_Click(object sender, EventArgs e)
+        {
             ColumnMapSelectionCtl.Text = "(automatic)";
             mOutputColumnList = "";
         }
@@ -220,10 +236,11 @@ namespace MageUIComponents {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SelectFilterBtn_Click(object sender, EventArgs e) {
-            FilterSelectionForm selectionForm = new FilterSelectionForm();
-            selectionForm.FilterNameToSelect = FilterSelectionCtl.Text;			
-            if (selectionForm.ShowDialog() == DialogResult.OK) {
+        private void SelectFilterBtn_Click(object sender, EventArgs e)
+        {
+            var selectionForm = new FilterSelectionForm { FilterNameToSelect = FilterSelectionCtl.Text };
+            if (selectionForm.ShowDialog() == DialogResult.OK)
+            {
                 FilterSelectionCtl.Text = selectionForm.FilterName;
             }
         }
@@ -233,7 +250,8 @@ namespace MageUIComponents {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void FilterSelectionCtl_TextChanged(object sender, EventArgs e) {
+        private void FilterSelectionCtl_TextChanged(object sender, EventArgs e)
+        {
             AdjustFilterParameterAccessButton();
         }
 
@@ -242,7 +260,8 @@ namespace MageUIComponents {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ClearFilterBtn_Click(object sender, EventArgs e) {
+        private void ClearFilterBtn_Click(object sender, EventArgs e)
+        {
             FilterSelectionCtl.Text = "All Pass";
         }
 

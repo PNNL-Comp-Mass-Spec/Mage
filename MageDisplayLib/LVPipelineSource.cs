@@ -18,11 +18,11 @@ namespace MageDisplayLib
         #region Member Variables
 
         // object whose data we are serving
-        private ListDisplayControl myListControl = null;
+        private readonly ListDisplayControl myListControl;
 
-        private List<MageColumnDef> mColumnDefs = new List<MageColumnDef>();
+        private readonly List<MageColumnDef> mColumnDefs = new List<MageColumnDef>();
 
-        private List<List<string>> RowBuffer = new List<List<string>>();
+        private readonly List<List<string>> RowBuffer = new List<List<string>>();
 
         #endregion
 
@@ -58,7 +58,11 @@ namespace MageDisplayLib
         /// <summary>
         /// set the module to stop execution
         /// </summary>
-        public bool Stop { get { return Abort; } set { Abort = value; } }
+        public bool Stop
+        {
+            get { return Abort; }
+            set { Abort = value; }
+        }
 
         #endregion
 
@@ -81,7 +85,7 @@ namespace MageDisplayLib
 
         private void GetColumnDefs()
         {
-            foreach (MageColumnDef colDef in myListControl.ColumnDefs)
+            foreach (var colDef in myListControl.ColumnDefs)
             {
                 mColumnDefs.Add(colDef);
             }
@@ -94,7 +98,7 @@ namespace MageDisplayLib
                 case DisplaySourceMode.All:
                     foreach (ListViewItem item in myListControl.List.Items)
                     {
-                        List<string> row = new List<string>();
+                        var row = new List<string>();
                         foreach (ListViewItem.ListViewSubItem subItem in item.SubItems)
                         {
                             row.Add(subItem.Text);
@@ -105,7 +109,7 @@ namespace MageDisplayLib
                 case DisplaySourceMode.Selected:
                     foreach (ListViewItem item in myListControl.List.SelectedItems)
                     {
-                        List<string> row = new List<string>();
+                        var row = new List<string>();
                         foreach (ListViewItem.ListViewSubItem subItem in item.SubItems)
                         {
                             row.Add(subItem.Text);
@@ -121,7 +125,7 @@ namespace MageDisplayLib
             OnColumnDefAvailable(new MageColumnEventArgs(mColumnDefs.ToArray()));
 
             // output the rows from the list control according to current mode setting
-            foreach (List<string> row in RowBuffer)
+            foreach (var row in RowBuffer)
             {
                 if (Abort)
                     break;

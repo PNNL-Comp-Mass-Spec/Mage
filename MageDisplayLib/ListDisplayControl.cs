@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Mage;
 using System.Collections.ObjectModel;
-using System.IO;
 
-namespace MageDisplayLib {
+namespace MageDisplayLib
+{
     // callbacks
 
     /// <summary>
@@ -47,7 +42,8 @@ namespace MageDisplayLib {
     /// running in the UI thread.
     /// 
     /// </summary>
-    public partial class ListDisplayControl : UserControl {
+    public partial class ListDisplayControl : UserControl
+    {
 
         /// <summary>
         /// this event fires to send command to external handler(s)
@@ -72,7 +68,8 @@ namespace MageDisplayLib {
         /// <summary>
         /// SQL data type
         /// </summary>
-        protected enum eSqlDataColType {
+        protected enum eSqlDataColType
+        {
             /// <summary>
             /// 
             /// </summary>
@@ -98,12 +95,12 @@ namespace MageDisplayLib {
         /// <summary>
         /// Generic data type of each column
         /// </summary>
-        private List<eSqlDataColType> mListViewColTypes = new List<eSqlDataColType>();
+        private readonly List<eSqlDataColType> mListViewColTypes = new List<eSqlDataColType>();
 
         /// <summary>
-        /// Convience array listing column names
+        /// Convenience array listing column names
         /// </summary>
-        private List<string> mListViewColNames = new List<string>();
+        private readonly List<string> mListViewColNames = new List<string>();
 
         /// <summary>
         /// Sort info
@@ -114,7 +111,7 @@ namespace MageDisplayLib {
         /// <summary>
         ///  cell editor for ListView for this object
         /// </summary>
-        private ListViewCellEditor mCellEditor = null;
+        private readonly ListViewCellEditor mCellEditor;
 
         #endregion
 
@@ -123,14 +120,19 @@ namespace MageDisplayLib {
         /// <summary>
         /// Supplemental information about rows in list display (typically number of rows)
         /// </summary>
-        public string Notice { get { return this.lblNotice.Text; } set { this.lblNotice.Text = value; } }
+        public string Notice
+        {
+            get { return lblNotice.Text; }
+            set { lblNotice.Text = value; }
+        }
 
         /// <summary>
         /// Title field in header above list display rows
         /// </summary>
-        public string PageTitle {
-            get { return this.lblPageTitle.Text; }
-            set { this.lblPageTitle.Text = value; }
+        public string PageTitle
+        {
+            get { return lblPageTitle.Text; }
+            set { lblPageTitle.Text = value; }
         }
 
         /// <summary>
@@ -141,15 +143,21 @@ namespace MageDisplayLib {
         /// <summary>
         /// Get collection of definitions of columns
         /// </summary>
-        public Collection<MageColumnDef> ColumnDefs { get { return new Collection<MageColumnDef>(Accumulator.ColumnDefs); } }
+        public Collection<MageColumnDef> ColumnDefs
+        {
+            get { return new Collection<MageColumnDef>(Accumulator.ColumnDefs); }
+        }
 
         /// <summary>
         /// Get collection of columnn names
         /// </summary>
-        public Collection<string> ColumnNames {
-            get {
-                Collection<string> names = new Collection<string>();
-                foreach (MageColumnDef colDef in Accumulator.ColumnDefs) {
+        public Collection<string> ColumnNames
+        {
+            get
+            {
+                var names = new Collection<string>();
+                foreach (var colDef in Accumulator.ColumnDefs)
+                {
                     names.Add(colDef.Name);
                 }
                 return names;
@@ -165,8 +173,10 @@ namespace MageDisplayLib {
         /// <summary>
         /// The list view control used by this object
         /// </summary>
-        public ListView List {
-            get {
+        public ListView List
+        {
+            get
+            {
                 return lvQueryResults;
             }
         }
@@ -174,8 +184,10 @@ namespace MageDisplayLib {
         /// <summary>
         /// Number of items currently in display
         /// </summary>
-        public int ItemCount {
-            get {
+        public int ItemCount
+        {
+            get
+            {
                 return lvQueryResults.Items.Count;
             }
         }
@@ -183,8 +195,10 @@ namespace MageDisplayLib {
         /// <summary>
         /// Number of selected items currently in display
         /// </summary>
-        public int SelectedItemCount {
-            get {
+        public int SelectedItemCount
+        {
+            get
+            {
                 return lvQueryResults.SelectedItems.Count;
             }
         }
@@ -193,14 +207,18 @@ namespace MageDisplayLib {
         /// Get contents of first selected row as key/value pairs
         /// where key is column name and value is contents of column
         /// </summary>
-        public Dictionary<string, string> SeletedItemFields {
-            get {
-                Dictionary<string, string> fields = new Dictionary<string, string>();
-                if (lvQueryResults.SelectedItems.Count > 0) {
-                    ListViewItem item = lvQueryResults.SelectedItems[0];
-                    for (int i = 0; i < ColumnDefs.Count; i++) {
-                        string colName = ColumnDefs[i].Name;
-                        string fieldVal = item.SubItems[i].Text;
+        public Dictionary<string, string> SeletedItemFields
+        {
+            get
+            {
+                var fields = new Dictionary<string, string>();
+                if (lvQueryResults.SelectedItems.Count > 0)
+                {
+                    var item = lvQueryResults.SelectedItems[0];
+                    for (var i = 0; i < ColumnDefs.Count; i++)
+                    {
+                        var colName = ColumnDefs[i].Name;
+                        var fieldVal = item.SubItems[i].Text;
                         fields.Add(colName, fieldVal);
                     }
                 }
@@ -211,7 +229,11 @@ namespace MageDisplayLib {
         /// <summary>
         /// Show or hide the header panel
         /// </summary>
-        public bool HeaderVisible { get { return panel1.Visible; } set { panel1.Visible = value; } }
+        public bool HeaderVisible
+        {
+            get { return panel1.Visible; }
+            set { panel1.Visible = value; }
+        }
 
         #endregion
 
@@ -220,10 +242,11 @@ namespace MageDisplayLib {
         /// <summary>
         /// construct new Mage ListDisplayControl object
         /// </summary>
-        public ListDisplayControl() {
+        public ListDisplayControl()
+        {
             InitializeComponent();
             SetupContextMenus(lvQueryResults);
-            mCellEditor = new ListViewCellEditor(this.lvQueryResults);
+            mCellEditor = new ListViewCellEditor(lvQueryResults);
         }
 
         #endregion
@@ -233,9 +256,12 @@ namespace MageDisplayLib {
         /// <summary>
         /// Remove the currently selected items from the display list
         /// </summary>
-        public void DeleteSelectedItems() {
-            foreach (ListViewItem item in lvQueryResults.Items) {
-                if (item.Selected) {
+        public void DeleteSelectedItems()
+        {
+            foreach (ListViewItem item in lvQueryResults.Items)
+            {
+                if (item.Selected)
+                {
                     item.Remove();
                 }
             }
@@ -246,9 +272,12 @@ namespace MageDisplayLib {
         /// <summary>
         /// Remove the items from the display list that are currently not selected
         /// </summary>
-        public void DeleteNotSelectedItems() {
-            foreach (ListViewItem item in lvQueryResults.Items) {
-                if (!item.Selected) {
+        public void DeleteNotSelectedItems()
+        {
+            foreach (ListViewItem item in lvQueryResults.Items)
+            {
+                if (!item.Selected)
+                {
                     item.Remove();
                 }
             }
@@ -259,7 +288,8 @@ namespace MageDisplayLib {
         /// <summary>
         /// Empty the current display contents
         /// </summary>
-        public void Clear() {
+        public void Clear()
+        {
             lvQueryResults.Items.Clear();
             lvQueryResults.Columns.Clear();
             lvQueryResults.Update();
@@ -269,9 +299,11 @@ namespace MageDisplayLib {
         /// <summary>
         /// select all rows in display
         /// </summary>
-        public void SelectAllRows() {
+        public void SelectAllRows()
+        {
             lvQueryResults.SuspendLayout();
-            foreach (ListViewItem objItem in lvQueryResults.Items) {
+            foreach (ListViewItem objItem in lvQueryResults.Items)
+            {
                 objItem.Selected = true;
             }
             lvQueryResults.ResumeLayout();
@@ -286,8 +318,10 @@ namespace MageDisplayLib {
         /// and wire up its events to this user control's event handlers
         /// </summary>
         /// <returns></returns>
-        public LVAccumulator MakeAccumulator() {
-            return MakeAccumulator(100);
+        public LVAccumulator MakeAccumulator()
+        {
+            const int BLOCK_SIZE = 100;
+            return MakeAccumulator(BLOCK_SIZE);
         }
 
         /// <summary>
@@ -295,11 +329,14 @@ namespace MageDisplayLib {
         /// </summary>
         /// <param name="blksz"></param>
         /// <returns></returns>
-        public LVAccumulator MakeAccumulator(int blksz) {
-            Accumulator = new LVAccumulator();
-            Accumulator.ItemBlockSize = blksz;
-            Accumulator.OnItemBlockRetrieved += this.HandleLVItemBlock;
-            Accumulator.OnColumnBlockRetrieved += this.HandleColumnBlock;
+        public LVAccumulator MakeAccumulator(int blksz)
+        {
+            Accumulator = new LVAccumulator
+            {
+                ItemBlockSize = blksz
+            };
+            Accumulator.OnItemBlockRetrieved += HandleLVItemBlock;
+            Accumulator.OnColumnBlockRetrieved += HandleColumnBlock;
             return Accumulator;
         }
 
@@ -309,15 +346,19 @@ namespace MageDisplayLib {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        public void HandleLVItemBlock(object sender, ItemBlockEventArgs args) {
+        public void HandleLVItemBlock(object sender, ItemBlockEventArgs args)
+        {
             NoticeCallback ncb = UpdateNoticeFld;
-            ListViewItem[] itemBlock = args.GetItemBlock();
-            if (itemBlock != null) {
+            var itemBlock = args.GetItemBlock();
+            if (itemBlock != null)
+            {
                 ItemBlockCallback lcb = UpdateListViewItems;
                 Invoke(lcb, new object[] { itemBlock });
-                Invoke(ncb, new object[] { "." });
-            } else {
-                Invoke(ncb, new object[] { string.Empty });
+                Invoke(ncb, ".");
+            }
+            else
+            {
+                Invoke(ncb, string.Empty);
             }
         }
 
@@ -327,7 +368,8 @@ namespace MageDisplayLib {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        public void HandleColumnBlock(object sender, ColumnHeaderEventArgs args) {
+        public void HandleColumnBlock(object sender, ColumnHeaderEventArgs args)
+        {
             //            lvQueryResults.Columns.AddRange(columnBlock);
             ColumnBlockCallback cb = UpdateListViewColumns;
             Invoke(cb, new object[] { args.GetColumnBlock() });
@@ -338,7 +380,8 @@ namespace MageDisplayLib {
         /// actually update the ListView control
         /// </summary>
         /// <param name="columnBlock"></param>
-        private void UpdateListViewColumns(ColumnHeader[] columnBlock) {
+        private void UpdateListViewColumns(ColumnHeader[] columnBlock)
+        {
             lvQueryResults.Columns.AddRange(columnBlock);
 
             // Determine the data types for each column
@@ -346,13 +389,15 @@ namespace MageDisplayLib {
             mListViewColNames.Clear();
 
             // Parse out the data type from the .Tag member of each column
-            for (int i = 0; i < lvQueryResults.Columns.Count; i++) {
+            for (var i = 0; i < lvQueryResults.Columns.Count; i++)
+            {
 
                 mListViewColNames.Add(lvQueryResults.Columns[i].Name);
 
-                string colType = lvQueryResults.Columns[i].Tag.ToString();
+                var colType = lvQueryResults.Columns[i].Tag.ToString();
 
-                switch (colType) {
+                switch (colType)
+                {
                     case "bit":
                     case "tinyint":
                     case "smallint":
@@ -419,10 +464,12 @@ namespace MageDisplayLib {
         /// actually update the ListView control
         /// </summary>
         /// <param name="itemBlock"></param>
-        private void UpdateListViewItems(ListViewItem[] itemBlock) {
-            int i = lvQueryResults.Items.Count;
+        private void UpdateListViewItems(ListViewItem[] itemBlock)
+        {
+            var i = lvQueryResults.Items.Count;
             lvQueryResults.Items.AddRange(itemBlock);
-            if (i > 0) lvQueryResults.Update();
+            if (i > 0)
+                lvQueryResults.Update();
         }
 
         /// <summary>
@@ -430,18 +477,20 @@ namespace MageDisplayLib {
         /// actually update the notice filed
         /// </summary>
         /// <param name="text"></param>
-        private void UpdateNoticeFld(string text) {
-            if (text != null && text == ".") {
+        private void UpdateNoticeFld(string text)
+        {
+            if (text != null && text == ".")
+            {
                 lblNotice.Text += ".";
                 lblNotice.Update();
-            } else {
-                string strStatus;
-
-                strStatus = lvQueryResults.Items.Count.ToString() + " row";
+            }
+            else
+            {
+                var strStatus = lvQueryResults.Items.Count.ToString() + " row";
                 if (lvQueryResults.Items.Count != 1)
                     strStatus += "s";
 
-                if (text != null && text.Length > 0)
+                if (!string.IsNullOrEmpty(text))
                     strStatus = text + "; " + strStatus;
 
                 lblNotice.Text = strStatus;
@@ -458,11 +507,12 @@ namespace MageDisplayLib {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void lvQueryResults_ColumnClicked(object sender, System.Windows.Forms.ColumnClickEventArgs e) {
-            int intColIndex = e.Column;
+        private void lvQueryResults_ColumnClicked(object sender, ColumnClickEventArgs e)
+        {
+            var intColIndex = e.Column;
             string strSortInfo;
-            bool SortNumeric = false;
-            bool SortDate = false;
+            var SortNumeric = false;
+            var SortDate = false;
 
             if (mListViewSortColIndex == intColIndex)
                 // User clicked the same column; reverse the sort order
@@ -471,7 +521,8 @@ namespace MageDisplayLib {
                 // User clicked a new column, change the column sort index
                 mListViewSortColIndex = intColIndex;
 
-            switch (mListViewColTypes[intColIndex]) {
+            switch (mListViewColTypes[intColIndex])
+            {
                 case eSqlDataColType.numInt:
                 case eSqlDataColType.numFloat:
                     SortNumeric = true;
@@ -506,20 +557,20 @@ namespace MageDisplayLib {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void lvQueryResults_SelectedIndexChanged(object sender, EventArgs e) {
+        private void lvQueryResults_SelectedIndexChanged(object sender, EventArgs e)
+        {
             UpdateNoticeFieldWithRowInfo();
-            if (SelectionChanged != null) {
-                SelectionChanged(this, new EventArgs());
-            }
+            SelectionChanged?.Invoke(this, new EventArgs());
         }
 
         /// <summary>
         /// Update notice field with number of rows and selection
         /// </summary>
-        private void UpdateNoticeFieldWithRowInfo() {
-            string s = (SelectedItemCount > 0) ? SelectedItemCount.ToString() + "/" : "";
-            string i = ItemCount.ToString();
-            string r = (ItemCount == 1) ? " row" : " rows";
+        private void UpdateNoticeFieldWithRowInfo()
+        {
+            var s = (SelectedItemCount > 0) ? SelectedItemCount.ToString() + "/" : "";
+            var i = ItemCount.ToString();
+            var r = (ItemCount == 1) ? " row" : " rows";
             lblNotice.Text = s + i + r;
         }
 
@@ -536,7 +587,8 @@ namespace MageDisplayLib {
         /// <param name="mod">Module name of module whose standard tabular output we will connect to</param>
         /// <param name="lc">ListDisplayControl object to connect to module</param>
         /// <param name="blkSz">Number of rows to be accumulated into each update block</param>
-        public static void ConnectToPipeline(string title, ProcessingPipeline pipeline, string mod, ListDisplayControl lc, int blkSz) {
+        public static void ConnectToPipeline(string title, ProcessingPipeline pipeline, string mod, ListDisplayControl lc, int blkSz)
+        {
             lc.PageTitle = title;
             ConnectToPipeline(pipeline, mod, lc, blkSz);
         }
@@ -549,10 +601,11 @@ namespace MageDisplayLib {
         /// <param name="mod">Module name of module whose standard tabular output we will connect to</param>
         /// <param name="lc">ListDisplayControl object to connect to module</param>
         /// <param name="blkSz">Number of rows to be accumulated into each update block</param>
-        public static void ConnectToPipeline(ProcessingPipeline pipeline, string mod, ListDisplayControl lc, int blkSz) {
+        public static void ConnectToPipeline(ProcessingPipeline pipeline, string mod, ListDisplayControl lc, int blkSz)
+        {
             // connect list display control to pipeline via an accumulator object
             lc.Clear();
-            LVAccumulator lva = lc.MakeAccumulator();
+            var lva = lc.MakeAccumulator();
             pipeline.ConnectExternalModule(mod, lva.HandleColumnDef, lva.HandleDataRow);
             lva.ItemBlockSize = blkSz;
             //            lc.PageTitle = mod;
@@ -563,8 +616,10 @@ namespace MageDisplayLib {
         /// Mage pipeline can use to populate this control
         /// </summary>
         /// <returns></returns>
-        public ISinkModule MakeSink() {
-            return MakeSink(10);
+        public ISinkModule MakeSink()
+        {
+            const int BLOCK_SIZE = 10;
+            return MakeSink(BLOCK_SIZE);
         }
 
         /// <summary>
@@ -574,7 +629,8 @@ namespace MageDisplayLib {
         /// <param name="title"></param>
         /// <param name="blkSz"></param>
         /// <returns></returns>
-        public ISinkModule MakeSink(string title, int blkSz) {
+        public ISinkModule MakeSink(string title, int blkSz)
+        {
             PageTitle = title;
             return MakeSink(blkSz);
         }
@@ -585,9 +641,10 @@ namespace MageDisplayLib {
         /// </summary>
         /// <param name="blkSz"></param>
         /// <returns></returns>
-        public ISinkModule MakeSink(int blkSz) {
+        public ISinkModule MakeSink(int blkSz)
+        {
             Clear();
-            LVAccumulator lva = MakeAccumulator();
+            var lva = MakeAccumulator();
             lva.ItemBlockSize = blkSz;
             return lva;
         }
@@ -601,20 +658,22 @@ namespace MageDisplayLib {
         /// Move the first currently selected item up or down in the list
         /// </summary>
         /// <param name="moveUp"></param>
-        public void MoveListViewItem(bool moveUp) {
+        public void MoveListViewItem(bool moveUp)
+        {
             string cache;
-            int selIdx;
             ListView lv = lvQueryResults;
 
-            selIdx = lv.SelectedItems[0].Index;
-            if (moveUp) {
+            var selIdx = lv.SelectedItems[0].Index;
+            if (moveUp)
+            {
                 // ignore moveup of row(0)
                 if (selIdx == 0)
                     return;
 
                 // move the subitems for the previous row
                 // to cache to make room for the selected row
-                for (int i = 0; i < lv.Items[selIdx].SubItems.Count; i++) {
+                for (var i = 0; i < lv.Items[selIdx].SubItems.Count; i++)
+                {
                     cache = lv.Items[selIdx - 1].SubItems[i].Text;
                     lv.Items[selIdx - 1].SubItems[i].Text =
                       lv.Items[selIdx].SubItems[i].Text;
@@ -625,13 +684,16 @@ namespace MageDisplayLib {
 
                 lv.Refresh();
                 lv.Focus();
-            } else {
+            }
+            else
+            {
                 // ignore movedown of last item
                 if (selIdx == lv.Items.Count - 1)
                     return;
                 // move the subitems for the next row
                 // to cache so we can move the selected row down
-                for (int i = 0; i < lv.Items[selIdx].SubItems.Count; i++) {
+                for (var i = 0; i < lv.Items[selIdx].SubItems.Count; i++)
+                {
                     cache = lv.Items[selIdx + 1].SubItems[i].Text;
                     lv.Items[selIdx + 1].SubItems[i].Text =
                       lv.Items[selIdx].SubItems[i].Text;

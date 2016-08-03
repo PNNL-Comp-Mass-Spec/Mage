@@ -74,15 +74,15 @@ namespace RangerLib
             var allCols = new List<string>();
             var operatorColOverwrites = new Dictionary<string, string>();
 
-            foreach (string paramName in mPGenModule.ParamNames)
+            foreach (var paramName in mPGenModule.ParamNames)
             {
                 allCols.Add(paramName);
-                string operatorColName = paramName + "_Operator";
+                var operatorColName = paramName + "_Operator";
                 allCols.Add(operatorColName + "|+|text");
                 operatorColOverwrites.Add(operatorColName, mParamOperatorLookup[paramName]);
             }
-            string genColspec = string.Join(", ", mPGenModule.ParamNames);
-            string allColspec = string.Join(", ", allCols.ToArray());
+            var genColspec = string.Join(", ", mPGenModule.ParamNames);
+            var allColspec = string.Join(", ", allCols.ToArray());
 
             // set output column parameters for permutation generator module
             mPGenModule.AutoColumnName = "ref";
@@ -96,7 +96,7 @@ namespace RangerLib
             };
             filter.SetContext(operatorColOverwrites);
 
-            IBaseModule writer = null;
+            IBaseModule writer;
             if (!string.IsNullOrEmpty(FilePath))
             {
                 // create module to write to file

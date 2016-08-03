@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Mage;
 using MageDisplayLib;
-using System.IO;
 
 
 namespace MageExtractorTest {
@@ -26,22 +19,21 @@ namespace MageExtractorTest {
         #endregion
 
         private void button1_Click(object sender, EventArgs e) {
-            DisplaySourceMode mode = DisplaySourceMode.Selected;
+            var mode = DisplaySourceMode.Selected;
             RunTests(mode);
         }
         private void button2_Click(object sender, EventArgs e) {
-            DisplaySourceMode mode = DisplaySourceMode.All;
+            var mode = DisplaySourceMode.All;
             RunTests(mode);
         }
         private void RunTests(DisplaySourceMode mode) {
             BaseModule display = new GVPipelineSource(gridViewDisplayControl1, mode);
-            SimpleSink testCases = new SimpleSink();
+            var testCases = new SimpleSink();
             ProcessingPipeline.Assemble("TestCases", display, testCases).RunRoot(null);
 
             textBox1.Clear();
 
-            ExtractorTests et = new ExtractorTests();
-            et.TestRootFolderPath = TestRootPathCtl.Text;
+            var et = new ExtractorTests {TestRootFolderPath = TestRootPathCtl.Text};
             et.OnMessageUpdated += HandleMessage;
             et.RunExtractionTestCases(testCases);
         }
@@ -53,7 +45,7 @@ namespace MageExtractorTest {
         private void HandleMessage(object sender, MageStatusEventArgs args) {
             if (textBox1.InvokeRequired) {
                 MessageHandler ncb = DisplayMessage;
-                textBox1.Invoke(ncb, new object[] { args.Message });
+                textBox1.Invoke(ncb, args.Message);
             } else {
                 DisplayMessage(args.Message);
             }
@@ -129,8 +121,7 @@ namespace MageExtractorTest {
         }
 
         private void TestCodeBuiltImportPipelines() {
-            ProcessingPipeline pipeline;
-            pipeline = ImportContentsOfFiles(@"C:\Data\syn2", "_syn.txt", "Name|+|text, *", @"C:\Data\syn2\junk.db3", "t_bob", "database");
+            var pipeline = ImportContentsOfFiles(@"C:\Data\syn2", "_syn.txt", "Name|+|text, *", @"C:\Data\syn2\junk.db3", "t_bob", "database");
             pipeline.RunRoot(null);
             pipeline = ImportContentsOfFiles(@"C:\Data\syn2", "_syn.txt", "Name|+|text, *", @"C:\Data\syn2\", "junk.txt", "file");
             pipeline.RunRoot(null);
@@ -139,23 +130,27 @@ namespace MageExtractorTest {
         private ProcessingPipeline ImportContentsOfFiles(string sourceFolderPath, string fileNameSelector, string columnMap, string containerPath, string name, string destinationType) {
             // make source module in pipeline 
             // to get filtered list of files in local directory
-            FileListFilter reader = new FileListFilter();
-            reader.FolderPath = sourceFolderPath;
-            reader.FileNameSelector = fileNameSelector;
-            reader.FileTypeColumnName = "Item";
-            reader.FileColumnName = "Name";
-            reader.SourceFolderColumnName = "Folder";
-            reader.OutputColumnList = "Item|+|text, Name|+|text, Folder|+|text";
-            reader.IncludeFilesOrFolders = "File";
+            var reader = new FileListFilter
+            {
+                FolderPath = sourceFolderPath,
+                FileNameSelector = fileNameSelector,
+                FileTypeColumnName = "Item",
+                FileColumnName = "Name",
+                SourceFolderColumnName = "Folder",
+                OutputColumnList = "Item|+|text, Name|+|text, Folder|+|text",
+                IncludeFilesOrFolders = "File"
+            };
 
             // make file sub-pipeline processing broker module 
             // to run a filter pipeline against files from list
             // and extract their contents
-            FileSubPipelineBroker broker = new FileSubPipelineBroker();
-            broker.FileFilterModuleName = "NullFilter";
-            broker.SourceFileColumnName = "Name";
-            broker.SourceFolderColumnName = "Folder";
-            broker.FileFilterParameters = "OutputColumnList:" + columnMap;
+            var broker = new FileSubPipelineBroker
+            {
+                FileFilterModuleName = "NullFilter",
+                SourceFileColumnName = "Name",
+                SourceFolderColumnName = "Folder",
+                FileFilterParameters = "OutputColumnList:" + columnMap
+            };
 
             // output extracted filed contents
             // to SQLite or delimited file(s)

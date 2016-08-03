@@ -15,54 +15,6 @@ namespace MageUnitTests
     public class FileListFilterTest
     {
 
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
-        #region Additional test attributes
-        // 
-        //You can use the following additional attributes as you write your tests:
-        //
-        //Use ClassInitialize to run code before running the first test in the class
-        //[ClassInitialize()]
-        //public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
-        //
-        //Use ClassCleanup to run code after all tests in a class have run
-        //[ClassCleanup()]
-        //public static void MyClassCleanup()
-        //{
-        //}
-        //
-        //Use TestInitialize to run code before running each test
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
-        //Use TestCleanup to run code after each test has run
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        //
-        #endregion
-
         /// <summary>
         ///A test for FileListFilter run as source using RegEx file selector mode
         ///</summary>
@@ -71,9 +23,9 @@ namespace MageUnitTests
         public void RunFileListFilterAsSourceRegEx()
         {
 
-            string testFolderPath = Path.GetFullPath(".");
+            var testFolderPath = Path.GetFullPath(".");
 
-            FileListFilter target = new FileListFilter();
+            var target = new FileListFilter();
             target.AddFolderPath(testFolderPath);
             target.FileNameSelector = "2.txt;3.txt";
 
@@ -83,22 +35,22 @@ namespace MageUnitTests
             target.OutputColumnList = string.Format("{0}|+|text, {1}|+|text, {2}|+|text", target.FileTypeColumnName, target.FileColumnName, target.SourceFolderColumnName);
             target.IncludeFilesOrFolders = "File";
 
-            SimpleSink sink = new SimpleSink();
+            var sink = new SimpleSink();
 
-            ProcessingPipeline pipeline = new ProcessingPipeline("RunAsSource");
-            string sourceModName = "Source";
-            string sinkModName = "Sink";
+            var pipeline = new ProcessingPipeline("RunAsSource");
+            var sourceModName = "Source";
+            var sinkModName = "Sink";
             pipeline.RootModule = pipeline.AddModule(sourceModName, target);
             pipeline.AddModule(sinkModName, sink);
             pipeline.ConnectModules(sourceModName, sinkModName);
 
             pipeline.RunRoot(null);
 
-            int hits = 0;
-            int fileNameColIndx = 1;
-            foreach (string[] item in sink.Rows)
+            var hits = 0;
+            var fileNameColIndx = 1;
+            foreach (var item in sink.Rows)
             {
-                string s = item[fileNameColIndx];
+                var s = item[fileNameColIndx];
                 if (s == "TargetFile2.txt")
                     ++hits;
                 if (s == "TargetFile3.txt")
@@ -118,9 +70,9 @@ namespace MageUnitTests
         public void RunFileListFilterAsSourceFileSearch()
         {
 
-            string testFolderPath = Path.GetFullPath(".");
+            var testFolderPath = Path.GetFullPath(".");
 
-            FileListFilter target = new FileListFilter();
+            var target = new FileListFilter();
             target.AddFolderPath(testFolderPath);
             target.FileNameSelector = "*2.txt;*3.txt";
             target.FileSelectorMode = "FileSearch";
@@ -131,22 +83,22 @@ namespace MageUnitTests
             target.OutputColumnList = string.Format("{0}|+|text, {1}|+|text, {2}|+|text", target.FileTypeColumnName, target.FileColumnName, target.SourceFolderColumnName);
             target.IncludeFilesOrFolders = "File";
 
-            SimpleSink sink = new SimpleSink();
+            var sink = new SimpleSink();
 
-            ProcessingPipeline pipeline = new ProcessingPipeline("RunAsSource");
-            string sourceModName = "Source";
-            string sinkModName = "Sink";
+            var pipeline = new ProcessingPipeline("RunAsSource");
+            var sourceModName = "Source";
+            var sinkModName = "Sink";
             pipeline.RootModule = pipeline.AddModule(sourceModName, target);
             pipeline.AddModule(sinkModName, sink);
             pipeline.ConnectModules(sourceModName, sinkModName);
 
             pipeline.RunRoot(null);
 
-            int hits = 0;
-            int fileNameColIndx = 1;
-            foreach (string[] item in sink.Rows)
+            var hits = 0;
+            var fileNameColIndx = 1;
+            foreach (var item in sink.Rows)
             {
-                string s = item[fileNameColIndx];
+                var s = item[fileNameColIndx];
                 if (s == "TargetFile2.txt")
                     ++hits;
                 if (s == "TargetFile3.txt")
@@ -185,33 +137,32 @@ namespace MageUnitTests
         public void GetFileNamesFromSourceFolderTest()
         {
 
-            FileListFilterExtracter target = new FileListFilterExtracter(); // TODO: Initialize to an appropriate value
-            Dictionary<string, string> parms = new Dictionary<string, string>();
-            parms.Add("FolderPath", "TestFolderPath");
+            var target = new FileListFilterExtracter(); // TODO: Initialize to an appropriate value
+            var parms = new Dictionary<string, string> {
+                { "FolderPath", "TestFolderPath"}
+            };
             target.SetParameters(parms);
 
             parms.Clear();
             parms.Add("FileNameSelector", "TestFileNameSelector");
             target.SetParameters(parms);
 
-            List<string[]> outputBuffer = target.OutputBuffer;
+            var outputBuffer = target.OutputBuffer;
             Assert.AreEqual(1, outputBuffer.Count);
         }
 
         [TestMethod()]
         public void PropertiesSetTest()
         {
-            string expected;
-            string actual;
-            Dictionary<string, string> parms = new Dictionary<string, string>();
+            var parms = new Dictionary<string, string>();
 
-            FileListFilter target = new FileListFilter();
+            var target = new FileListFilter();
 
-            expected = "Test01";
+            var expected = "Test01";
             parms.Clear();
             parms.Add("FileColumnName", expected);
             target.SetParameters(parms);
-            actual = target.FileColumnName;
+            var actual = target.FileColumnName;
             Assert.AreEqual(expected, actual);
 
             expected = "Test03";
@@ -229,11 +180,10 @@ namespace MageUnitTests
         [TestMethod()]
         public void FileColumnNameTest()
         {
-            FileListFilter target = new FileListFilter();
-            string expected = "Test Value";
-            string actual;
+            var target = new FileListFilter();
+            var expected = "Test Value";
             target.FileColumnName = expected;
-            actual = target.FileColumnName;
+            var actual = target.FileColumnName;
             Assert.AreEqual(expected, actual);
         }
 
@@ -243,11 +193,10 @@ namespace MageUnitTests
         [TestMethod()]
         public void SourceFolderColumnNameTest()
         {
-            FileListFilter target = new FileListFilter();
-            string expected = "Test Value";
-            string actual;
+            var target = new FileListFilter();
+            var expected = "Test Value";
             target.SourceFolderColumnName = expected;
-            actual = target.SourceFolderColumnName;
+            var actual = target.SourceFolderColumnName;
             Assert.AreEqual(expected, actual);
         }
 

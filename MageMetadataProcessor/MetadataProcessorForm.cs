@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Reflection;
 using System.Windows.Forms;
 using log4net;
 using Mage;
@@ -17,13 +16,13 @@ namespace MageMetadataProcessor
         #region Member Variables
 
         // current Mage pipeline that is running or has most recently run
-        ProcessingPipeline mCurrentPipeline = null;
+        ProcessingPipeline mCurrentPipeline;
 
         // current command that is being executed or has most recently been executed
-        MageCommandEventArgs mCurrentCmd = null;
+        MageCommandEventArgs mCurrentCmd;
 
         // object that sent the current command
-        object mCurrentCmdSender = null;
+        private object mCurrentCmdSender;
 
         //private static readonly ILog traceLog = LogManager.GetLogger("TraceLog");
         private ILog traceLog; //= LogManager.GetLogger("TraceLog");
@@ -41,8 +40,8 @@ namespace MageMetadataProcessor
 
             // These settings are loaded from file MageMetadataProcessor.exe.config
             // Typically gigasax and DMS5
-            Mage.Globals.DMSServer = Settings.Default.DMSServer;
-            Mage.Globals.DMSDatabase = Settings.Default.DMSDatabase;
+            Globals.DMSServer = Settings.Default.DMSServer;
+            Globals.DMSDatabase = Settings.Default.DMSDatabase;
 
             ModuleDiscovery.DMSServerOverride = Globals.DMSServer;
             ModuleDiscovery.DMSDatabaseOverride = Globals.DMSDatabase;
@@ -54,15 +53,15 @@ namespace MageMetadataProcessor
             }
             catch (Exception ex)
             {
-                System.Windows.Forms.MessageBox.Show("Error loading settings: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Error loading settings: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
 
             // tell modules where to look for loadable module DLLs
-            FileInfo fi = new FileInfo(System.Windows.Forms.Application.ExecutablePath);
+            var fi = new FileInfo(Application.ExecutablePath);
             ModuleDiscovery.ExternalModuleFolder = fi.DirectoryName;
 
             //Set log4net path
-            string LogFileName = Path.Combine(SavedState.DataDirectory, "log.txt");
+            var LogFileName = Path.Combine(SavedState.DataDirectory, "log.txt");
             log4net.GlobalContext.Properties["LogName"] = LogFileName;
 
             traceLog = LogManager.GetLogger("TraceLog");
@@ -124,14 +123,13 @@ namespace MageMetadataProcessor
         private void BuildAndRunPipeline(MageCommandEventArgs command)
         {
             mCurrentPipeline = null;
-            DisplaySourceMode mode = (command.Mode == "selected") ? DisplaySourceMode.Selected : DisplaySourceMode.All;
-            GVPipelineSource source = null;
-            ISinkModule display = null;
+            var mode = (command.Mode == "selected") ? DisplaySourceMode.Selected : DisplaySourceMode.All;
+            ISinkModule display;
 
             // Typically gigasax and DMS5
-            string server = Globals.DMSServer;
-            string database = Globals.DMSDatabase;
-            string sql = "";
+            var server = Globals.DMSServer;
+            var database = Globals.DMSDatabase;
+            string sql;
 
             switch (command.Action)
             {
@@ -162,10 +160,10 @@ namespace MageMetadataProcessor
                     mCurrentPipeline = MakeCrosstabQueryPipeline(display, server, database, sql);
                     break;
                 case "save_to_db":
-                    source = new GVPipelineSource(gridViewDisplayControl1, mode);
-                    string filePath = sqLiteDBPanel1.DBFilePath;
-                    string tableName = sqLiteDBPanel1.TableName;
-                    string outputColumnList = sqLiteDBPanel1.OutputColumnList;
+                    var source = new GVPipelineSource(gridViewDisplayControl1, mode);
+                    var filePath = sqLiteDBPanel1.DBFilePath;
+                    var tableName = sqLiteDBPanel1.TableName;
+                    var outputColumnList = sqLiteDBPanel1.OutputColumnList;
 
                     if (string.IsNullOrEmpty(filePath))
                     {
@@ -285,22 +283,25 @@ namespace MageMetadataProcessor
         /// </summary>
         /// <param name="sourceObject">Mage module that can deliver contents of ListView on standard tabular input</param>
         /// <param name="filePath">File to save contents to</param>
+        /// <param name="tableName"></param>
+        /// <param name="outputColumnList"></param>
         /// <returns></returns>
         private static ProcessingPipeline MakeSaveToDBPipeline(IBaseModule sourceObject, string filePath, string tableName, string outputColumnList)
         {
-            SQLiteWriter writer = new SQLiteWriter();
-            writer.DbPath = filePath;
-            writer.TableName = tableName;
+            var writer = new SQLiteWriter
+            {
+                DbPath = filePath,
+                TableName = tableName
+            };
 
-            ProcessingPipeline pipeline = null;
+            ProcessingPipeline pipeline;
             if (string.IsNullOrEmpty(outputColumnList))
             {
                 pipeline = ProcessingPipeline.Assemble("SaveListDisplayPipeline", sourceObject, writer);
             }
             else
             {
-                NullFilter filter = new NullFilter();
-                filter.OutputColumnList = outputColumnList;
+                var filter = new NullFilter {OutputColumnList = outputColumnList};
                 pipeline = ProcessingPipeline.Assemble("SaveListDisplayPipeline", sourceObject, filter, writer);
             }
             return pipeline;
@@ -308,26 +309,32 @@ namespace MageMetadataProcessor
 
         private ProcessingPipeline MakeRawQueryPipeline(ISinkModule display, string server, string database, string sql)
         {
-            MSSQLReader reader = new MSSQLReader();
-            reader.Server = server;
-            reader.Database = database;
-            reader.SQLText = sql;
+            var reader = new MSSQLReader
+            {
+                Server = server,
+                Database = database,
+                SQLText = sql
+            };
 
             return ProcessingPipeline.Assemble("MetadataPreview", reader, display);
         }
 
         private ProcessingPipeline MakeCrosstabQueryPipeline(ISinkModule display, string server, string database, string sql)
         {
-            MSSQLReader reader = new MSSQLReader();
-            reader.Server = server;
-            reader.Database = database;
-            reader.SQLText = sql;
+            var reader = new MSSQLReader
+            {
+                Server = server,
+                Database = database,
+                SQLText = sql
+            };
 
-            CrosstabFilter filter = new CrosstabFilter();
-            filter.EntityNameCol = "Dataset";
-            filter.EntityIDCol = "Dataset_ID";
-            filter.FactorNameCol = "Factor";
-            filter.FactorValueCol = "Value";
+            var filter = new CrosstabFilter
+            {
+                EntityNameCol = "Dataset",
+                EntityIDCol = "Dataset_ID",
+                FactorNameCol = "Factor",
+                FactorValueCol = "Value"
+            };
 
             return ProcessingPipeline.Assemble("MetadataPreview", reader, filter, display);
         }
@@ -351,7 +358,7 @@ namespace MageMetadataProcessor
         private void SetupCommandHandler()
         {
             // get reference to the method that handles command events
-            MethodInfo methodInfo = this.GetType().GetMethod("DoCommand");
+            var methodInfo = this.GetType().GetMethod("DoCommand");
             Control subjectControl = this;
 
             PanelSupport.DiscoverAndConnectCommandHandlers(subjectControl, methodInfo);

@@ -45,8 +45,7 @@ namespace MageFilePackager
             }
             finally
             {
-                if (sw != null)
-                    sw.Close();
+                sw?.Close();
             }
 
             // Receive Response
@@ -64,8 +63,7 @@ namespace MageFilePackager
             }
             finally
             {
-                if (sr != null)
-                    sr.Close();
+                sr?.Close();
             }
             return responseData;
         }
@@ -78,7 +76,7 @@ namespace MageFilePackager
         private static string FormatPostData(Dictionary<string, string> postDataList)
         {
             var sb = new StringBuilder();
-            foreach (KeyValuePair<string, string> item in postDataList)
+            foreach (var item in postDataList)
             {
                 sb.Append(string.Format("&{0}={1}", item.Key, item.Value));
             }

@@ -69,7 +69,7 @@ namespace Mage
             if (mFileNameColIndx < 0)
                 return;
 
-            string sourceFileName = mOutputBuffer[outputBufferRowIdx][mFileNameColIndx];
+            var sourceFileName = mOutputBuffer[outputBufferRowIdx][mFileNameColIndx];
             GetFileInfo(outputBufferRowIdx, fileInfo, folderPath, sourceFileName, datasetName);
         }
 
@@ -106,7 +106,7 @@ namespace Mage
             {
                 if (e is ArgumentNullException || e is System.Security.SecurityException || e is ArgumentException || e is PathTooLongException || e is DirectoryNotFoundException)
                 {
-                    string msg = e.Message;
+                    var msg = e.Message;
                     ReportSearchErrorToOutput(outputBufferRowIdx, msg);
                 }
                 else if (e is IOException)
@@ -147,7 +147,7 @@ namespace Mage
             if (m_RecentlyFoundMyEMSLFiles.Count > 0)
             {
                 var archiveFile = m_RecentlyFoundMyEMSLFiles.First();
-                string encodedFilePath = DatasetInfoBase.AppendMyEMSLFileID(Path.Combine(parentFolders, archiveFile.FileInfo.RelativePathWindows), archiveFile.FileID);
+                var encodedFilePath = DatasetInfoBase.AppendMyEMSLFileID(Path.Combine(parentFolders, archiveFile.FileInfo.RelativePathWindows), archiveFile.FileID);
                 return new FileInfo(encodedFilePath);
             }
 

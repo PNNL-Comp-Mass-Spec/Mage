@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace MageDisplayLib {
+namespace MageDisplayLib
+{
 
     /// <summary>
     /// intercepts horizontal scrollbar events, gets X position of scroll, and fires onScroll event
     /// </summary>
-    public class ListViewEx : ListView {
+    public class ListViewEx : ListView
+    {
 
         /// <summary>
         /// event that is fired to simulate a .Net scroll event
@@ -30,12 +29,14 @@ namespace MageDisplayLib {
         /// (since ListView does not provide scrolling event)
         /// </summary>
         /// <param name="m"></param>
-        protected override void WndProc(ref Message m) {
+        protected override void WndProc(ref Message m)
+        {
             base.WndProc(ref m);
 
-            if (m.Msg == WM_HSCROLL) {
-                ScrollEventArgs hargs = new ScrollEventArgs(ScrollEventType.EndScroll, GetScrollPos(this.Handle, SB_HORZ));
-                if (onScroll != null) onScroll(this, hargs);
+            if (m.Msg == WM_HSCROLL)
+            {
+                var hargs = new ScrollEventArgs(ScrollEventType.EndScroll, GetScrollPos(Handle, SB_HORZ));
+                onScroll?.Invoke(this, hargs);
             }
 
         }

@@ -36,8 +36,8 @@ namespace MageDisplayLib
 
         #region Member Variables
 
-        private List<ListViewItem> itemAccumulator = new List<ListViewItem>();
-        private List<ColumnHeader> columnAccumulator = new List<ColumnHeader>();
+        private readonly List<ListViewItem> itemAccumulator = new List<ListViewItem>();
+        private readonly List<ColumnHeader> columnAccumulator = new List<ColumnHeader>();
         private List<MageColumnDef> mColumnDefs = new List<MageColumnDef>();
 
         #endregion
@@ -106,36 +106,34 @@ namespace MageDisplayLib
         /// <param name="args"></param>
         public void HandleDataRow(object sender, MageDataEventArgs args)
         {
-            bool endOfData = !args.DataAvailable;
+            var endOfData = !args.DataAvailable;
             if (args.DataAvailable)
             {
                 ListViewItem lvi = null;
-                for (int i = 0; i < args.Fields.Length; i++)
+                for (var i = 0; i < args.Fields.Length; i++)
                 {
                     object val = args.Fields[i];
-                    string s = (val != null) ? val.ToString() : "-";
+                    var s = (val != null) ? val.ToString() : "-";
                     if (i == 0)
                     {
-                        lvi = new ListViewItem(val.ToString());
+                        if (val != null)
+                            lvi = new ListViewItem(val.ToString());
                     }
                     else
                     {
-                        lvi.SubItems.Add(s);
+                        lvi?.SubItems.Add(s);
                     }
                 }
-                this.itemAccumulator.Add(lvi);
+                itemAccumulator.Add(lvi);
             }
-            if (itemAccumulator.Count == this.ItemBlockSize || endOfData)
+            if (itemAccumulator.Count == ItemBlockSize || endOfData)
             {
-                if (OnItemBlockRetrieved != null)
-                {
-                    OnItemBlockRetrieved(this, new ItemBlockEventArgs(new Collection<ListViewItem>(itemAccumulator)));
-                }
-                this.itemAccumulator.Clear();
+                OnItemBlockRetrieved?.Invoke(this, new ItemBlockEventArgs(new Collection<ListViewItem>(itemAccumulator)));
+                itemAccumulator.Clear();
             }
-            if (endOfData && OnItemBlockRetrieved != null)
+            if (endOfData)
             {
-                OnItemBlockRetrieved(this, new ItemBlockEventArgs(null));
+                OnItemBlockRetrieved?.Invoke(this, new ItemBlockEventArgs(null));
             }
         }
 
@@ -154,32 +152,29 @@ namespace MageDisplayLib
         {
             mColumnDefs = new List<MageColumnDef>(args.ColumnDefs);
 
-            foreach (MageColumnDef columnDef in mColumnDefs)
+            foreach (var columnDef in mColumnDefs)
             {
-                ColumnHeader ch = new ColumnHeader();
+                var ch = new ColumnHeader();
                 // sort out column display size
-                string colSize = columnDef.Size;
-                int colSizeToUse = 6;
-                if (colSize != null && colSize.Length > 0)
+                var colSize = columnDef.Size;
+                var colSizeToUse = 6;
+                if (!string.IsNullOrEmpty(colSize))
                 {
-                    int w = int.Parse(colSize);
+                    var w = int.Parse(colSize);
                     w = (w < 6) ? 6 : w;
                     w = (w > 20) ? 20 : w;
                     colSizeToUse = w;
                 }
 
-                int pixels = colSizeToUse * 10;
+                var pixels = colSizeToUse * 10;
                 ch.Text = columnDef.Name;
                 ch.Name = columnDef.Name;
                 ch.Width = pixels;
-                string colType = columnDef.DataType;
+                var colType = columnDef.DataType;
                 ch.Tag = colType;
                 columnAccumulator.Add(ch);
             }
-            if (this.OnColumnBlockRetrieved != null)
-            {
-                OnColumnBlockRetrieved(this, new ColumnHeaderEventArgs(new Collection<ColumnHeader>(columnAccumulator)));
-            }
+            OnColumnBlockRetrieved?.Invoke(this, new ColumnHeaderEventArgs(new Collection<ColumnHeader>(columnAccumulator)));
         }
         #endregion
     }
@@ -191,7 +186,7 @@ namespace MageDisplayLib
     /// </summary>
     public class ItemBlockEventArgs : EventArgs
     {
-        private ListViewItem[] ItemBlock = null;
+        private readonly ListViewItem[] ItemBlock;
 
         /// <summary>
         /// get list of items being passed in the event
@@ -209,7 +204,7 @@ namespace MageDisplayLib
         /// <param name="itemBlock"></param>
         public ItemBlockEventArgs(Collection<ListViewItem> itemBlock)
         {
-            ItemBlock = (itemBlock == null) ? null : itemBlock.ToArray();
+            ItemBlock = itemBlock?.ToArray();
         }
     }
 
@@ -218,7 +213,7 @@ namespace MageDisplayLib
     /// </summary>
     public class ColumnHeaderEventArgs : EventArgs
     {
-        private ColumnHeader[] ColumnBlock = null;
+        private readonly ColumnHeader[] ColumnBlock;
 
         /// <summary>
         /// return array of column definitions
@@ -234,9 +229,9 @@ namespace MageDisplayLib
         /// with information contained in given collection of ColumnHeader objects
         /// </summary>
         /// <param name="columnBlock"></param>
-        public ColumnHeaderEventArgs(Collection<ColumnHeader> columnBlock)
+        public ColumnHeaderEventArgs(IEnumerable<ColumnHeader> columnBlock)
         {
-            ColumnBlock = (columnBlock == null) ? null : columnBlock.ToArray();
+            ColumnBlock = columnBlock?.ToArray();
         }
     }
 
