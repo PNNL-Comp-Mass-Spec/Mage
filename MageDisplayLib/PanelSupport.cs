@@ -22,17 +22,19 @@ namespace MageDisplayLib
         /// <returns></returns>
         public static IModuleParameters GetParameterPanel(Control ctrl)
         {
-            IModuleParameters panel = null;
-            List<Control> userControlList = new List<Control>();
+            var userControlList = new List<Control>();
             AddControlsToList(ctrl, typeof(UserControl), userControlList);
-            foreach (Control userControl in userControlList)
+
+            foreach (var userControl in userControlList)
             {
-                if (typeof(IModuleParameters).IsInstanceOfType(userControl))
+                var control = userControl as IModuleParameters;
+                if (control != null)
                 {
-                    panel = (IModuleParameters)userControl;
+                    return control;
                 }
             }
-            return panel;
+
+            return null;
         }
 
         /// <summary>
@@ -46,14 +48,14 @@ namespace MageDisplayLib
         {
             // go through list of user controls looking for those that have command event "OnAction"
             // and wire them to the command handler function
-            List<Control> userPanelList = new List<Control>();
+            var userPanelList = new List<Control>();
             AddControlsToList(subjectControl, typeof(UserControl), userPanelList);
-            foreach (Control panel in userPanelList)
+            foreach (var panel in userPanelList)
             {
-                EventInfo eventInfo = panel.GetType().GetEvent("OnAction");
+                var eventInfo = panel.GetType().GetEvent("OnAction");
                 if (eventInfo != null)
                 { // panel defines the command event, wire it up
-                    Delegate handler = Delegate.CreateDelegate(eventInfo.EventHandlerType, subjectControl, methodInfo);
+                    var handler = Delegate.CreateDelegate(eventInfo.EventHandlerType, subjectControl, methodInfo);
                     eventInfo.AddEventHandler(panel, handler);
                 }
             }
@@ -62,7 +64,7 @@ namespace MageDisplayLib
         /// <summary>
         /// Build list of controls of the specified type 
         /// that are contained in the given control or its children 
-        /// (uses recursion to walk down the descendent hierarchy)
+        /// (uses recursion to walk down the descendant hierarchy)
         /// </summary>
         /// <param name="subjectControl">given control to examine</param>
         /// <param name="controlType">specified type of control to collect into list</param>
@@ -85,10 +87,10 @@ namespace MageDisplayLib
         /// </summary>
         public static Dictionary<string, IModuleParameters> GetParameterPanelList(Control subjectControl)
         {
-            Dictionary<string, IModuleParameters> outputList = new Dictionary<string, IModuleParameters>();
-            List<Control> paramPanelList = new List<Control>();
+            var outputList = new Dictionary<string, IModuleParameters>();
+            var paramPanelList = new List<Control>();
             AddControlsToList(subjectControl, typeof(IModuleParameters), paramPanelList);
-            foreach (Control ctrl in paramPanelList)
+            foreach (var ctrl in paramPanelList)
             {
                 outputList.Add(ctrl.Name, (IModuleParameters)ctrl);
             }
@@ -105,12 +107,12 @@ namespace MageDisplayLib
             rawList = rawList.Replace("\t", ",");
             rawList = rawList.Replace(" ", ",");
             rawList = rawList.Replace(Environment.NewLine, ", ").TrimEnd(',', ' ');
-            string cleanList = "";
+            var cleanList = "";
 
             var items = new Dictionary<string, string>();
-            foreach (string field in rawList.Split(','))
+            foreach (var field in rawList.Split(','))
             {
-                string s = field.Trim();
+                var s = field.Trim();
                 if (!string.IsNullOrEmpty(s))
                 {
                     items[s] = "";
@@ -123,6 +125,41 @@ namespace MageDisplayLib
             return cleanList;
         }
 
+        /// <summary>
+        /// Convert the value to a string, treating null as an empty string
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static string FixNull(object value)
+        {
+            if (value == null)
+                return string.Empty;
+
+            return value.ToString();
+        }
+
+        /// <summary>
+        /// Get a delimiter appropriate for use when copying all of the data values in a column
+        /// </summary>
+        /// <param name="delimiter"></param>
+        /// <returns>Newline if delimiter is null empty; tab if delimiter is tab, and delimiter plus space otherwise</returns>
+        public static string GetColumnDataCopyDelimiter(string delimiter)
+        {
+            string delimiterToUse;
+            if (string.IsNullOrEmpty(delimiter))
+            {
+                delimiterToUse = Environment.NewLine;
+            }
+            else
+            {
+                if (delimiter.StartsWith("\t") || delimiter.EndsWith(" "))
+                    delimiterToUse = delimiter;
+                else
+                    delimiterToUse = delimiter + " ";
+            }
+
+            return delimiterToUse;
+        }
     }
 
 }
