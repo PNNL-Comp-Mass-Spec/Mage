@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Mage;
 
 namespace RangerLib
@@ -15,7 +12,7 @@ namespace RangerLib
         /// <summary>
         /// Lookup for operator associated with a parameter name
         /// </summary>
-        private Dictionary<string, string> mParamOperatorLookup = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> mParamOperatorLookup = new Dictionary<string, string>();
 
         /// <summary>
         /// inform user of how many rows will be generated (after parameters are set)

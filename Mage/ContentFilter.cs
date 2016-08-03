@@ -1,23 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Mage {
+namespace Mage
+{
 
     /// <summary>
     /// processes input rows from standard tabular input
     /// and passes only selected ones to standard tabular output
     /// it is meant to be the base clase for subclasses that actually do the filtering
     /// </summary>
-    public class ContentFilter : BaseModule {
+    public class ContentFilter : BaseModule
+    {
 
         #region Member Variables
 
         private int totalRowsCounter;
         private int passedRowsCounter;
-	    private const int reportRowBlockSize = 1000;
+        private const int reportRowBlockSize = 1000;
 
-	    private const int mMinimumReportIntervalMsec = 500;
-	    private DateTime mLastReportTimeUTC = DateTime.UtcNow;
+        private const int mMinimumReportIntervalMsec = 500;
+        private DateTime mLastReportTimeUTC = DateTime.UtcNow;
 
         #endregion        
 
@@ -32,7 +34,8 @@ namespace Mage {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        public override void HandleColumnDef(object sender, MageColumnEventArgs args) {
+        public override void HandleColumnDef(object sender, MageColumnEventArgs args)
+        {
             base.HandleColumnDef(sender, args);
             List<MageColumnDef> cd = OutputColumnDefs ?? InputColumnDefs;
             OnColumnDefAvailable(new MageColumnEventArgs(cd.ToArray()));
@@ -50,25 +53,30 @@ namespace Mage {
         /// <param name="sender"></param>
         /// <param name="args"></param>
         /// </summary>
-        public override void HandleDataRow(object sender, MageDataEventArgs args) {
-            if (args.DataAvailable) {
-				// do filtering here
-				string[] vals = args.Fields;
-				if (CheckFilter(ref vals))
-				{
-					passedRowsCounter++;
-					OnDataRowAvailable(new MageDataEventArgs(vals));
-				}
+        public override void HandleDataRow(object sender, MageDataEventArgs args)
+        {
+            if (args.DataAvailable)
+            {
+                // do filtering here
+                string[] vals = args.Fields;
+                if (CheckFilter(ref vals))
+                {
+                    passedRowsCounter++;
+                    OnDataRowAvailable(new MageDataEventArgs(vals));
+                }
                 // report progress
-                if (++totalRowsCounter % reportRowBlockSize == 0) {
-					string msg = "Processed " + totalRowsCounter + " total rows, passed " + passedRowsCounter;
-					if (DateTime.UtcNow.Subtract(mLastReportTimeUTC).TotalMilliseconds >= mMinimumReportIntervalMsec)
-					{
-						OnStatusMessageUpdated(new MageStatusEventArgs(msg));
-						mLastReportTimeUTC = DateTime.UtcNow;
-					}
-                }               
-            } else {
+                if (++totalRowsCounter % reportRowBlockSize == 0)
+                {
+                    string msg = "Processed " + totalRowsCounter + " total rows, passed " + passedRowsCounter;
+                    if (DateTime.UtcNow.Subtract(mLastReportTimeUTC).TotalMilliseconds >= mMinimumReportIntervalMsec)
+                    {
+                        OnStatusMessageUpdated(new MageStatusEventArgs(msg));
+                        mLastReportTimeUTC = DateTime.UtcNow;
+                    }
+                }
+            }
+            else
+            {
                 OnDataRowAvailable(new MageDataEventArgs(null));
             }
         }
@@ -84,16 +92,17 @@ namespace Mage {
         /// <returns></returns>
 		protected virtual bool CheckFilter(ref string[] vals)
         {
-	        const bool accepted = false;
+            const bool accepted = false;
 
-	        return accepted;
+            return accepted;
         }
 
-	    /// <summary>
+        /// <summary>
         /// called when all column definitions are complete
         /// this function can be overridden by subclasses to set up processing
         /// </summary>
-        protected virtual void ColumnDefsFinished() {
+        protected virtual void ColumnDefsFinished()
+        {
 
         }
 
@@ -105,7 +114,7 @@ namespace Mage {
         /// <param name="fields">file metada</param>
         /// <returns></returns>
 		public virtual string RenameOutputFile(string sourceFile, Dictionary<string, int> fieldPos, string[] fields)
-		{
+        {
             return sourceFile;
         }
 

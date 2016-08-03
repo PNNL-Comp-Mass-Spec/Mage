@@ -1,11 +1,9 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Mage;
 using System.Windows.Forms;
 
-namespace MageDisplayLib {
+namespace MageDisplayLib
+{
 
     /// <summary>
     /// this is a pipeline module 
@@ -15,7 +13,8 @@ namespace MageDisplayLib {
     /// available via Mage pipeline data source module connections
     /// </summary>
 
-    public class GVPipelineSource : BaseModule {
+    public class GVPipelineSource : BaseModule
+    {
 
         #region Member Variables
 
@@ -48,7 +47,8 @@ namespace MageDisplayLib {
         /// </summary>
         /// <param name="gv">GVPipelineSource object</param>
         /// <param name="mode">selected or all</param>
-        public GVPipelineSource(GridViewDisplayControl gv, DisplaySourceMode mode) {
+        public GVPipelineSource(GridViewDisplayControl gv, DisplaySourceMode mode)
+        {
             mInputMode = mode;
             Initialize(gv);
         }
@@ -59,10 +59,14 @@ namespace MageDisplayLib {
         /// </summary>
         /// <param name="gv">GVPipelineSource object</param>
         /// <param name="mode">"Selected" or "All"</param>
-        public GVPipelineSource(GridViewDisplayControl gv, string mode) {
-            if (mode == "All") {
+        public GVPipelineSource(GridViewDisplayControl gv, string mode)
+        {
+            if (mode == "All")
+            {
                 mInputMode = DisplaySourceMode.All;
-            } else {
+            }
+            else
+            {
                 mInputMode = DisplaySourceMode.Selected;
             }
             Initialize(gv);
@@ -72,7 +76,8 @@ namespace MageDisplayLib {
         /// Get column definition and data rows into internal buffers
         /// so that this module can be run by non-UI thread
         /// </summary>
-        private void Initialize(GridViewDisplayControl gv) {
+        private void Initialize(GridViewDisplayControl gv)
+        {
             myListControl = gv;
             GetColumnDefs();
             GetRowsFromList();
@@ -97,7 +102,8 @@ namespace MageDisplayLib {
         /// (override of base class)
         /// </summary>
         /// <param name="state">Mage ProcessingPipeline object that contains the module (if there is one)</param>
-        public override void Run(object state) {
+        public override void Run(object state)
+        {
             OutputListItems();
         }
 
@@ -111,14 +117,15 @@ namespace MageDisplayLib {
         /// <param name="row"></param>
         /// <returns></returns>
 		private static string[] GetOutputRowFromGridRow(DataGridViewRow row)
-		{
+        {
             int n = row.Cells.Count;
-			string[] vals = new string[n];
-            for (int i = 0; i < n; i++) {
-				if (row.Cells[i].Value == null)
-					vals[i] = string.Empty;
-				else
-					vals[i] = row.Cells[i].Value.ToString();
+            string[] vals = new string[n];
+            for (int i = 0; i < n; i++)
+            {
+                if (row.Cells[i].Value == null)
+                    vals[i] = string.Empty;
+                else
+                    vals[i] = row.Cells[i].Value.ToString();
             }
             return vals;
         }
@@ -127,7 +134,8 @@ namespace MageDisplayLib {
         /// get Mage column definitions from the GridViewDisplay
         /// into our internal bufferes
         /// </summary>
-        private void GetColumnDefs() {
+        private void GetColumnDefs()
+        {
             mColumnDefs = new List<MageColumnDef>(myListControl.ColumnDefs);
         }
 
@@ -135,19 +143,23 @@ namespace MageDisplayLib {
         /// get data rows from the GridViewDisplay
         /// into our internal buffers
         /// </summary>
-        private void GetRowsFromList() {
-            switch (mInputMode) {
+        private void GetRowsFromList()
+        {
+            switch (mInputMode)
+            {
                 case DisplaySourceMode.All:
                     DataGridViewRowCollection allRows = myListControl.List.Rows;
-                    foreach (DataGridViewRow row in allRows) {
-						string[] vals = GetOutputRowFromGridRow(row);
+                    foreach (DataGridViewRow row in allRows)
+                    {
+                        string[] vals = GetOutputRowFromGridRow(row);
                         mRowBuffer.Add(vals);
                     }
                     break;
                 case DisplaySourceMode.Selected:
                     DataGridViewSelectedRowCollection selRows = myListControl.List.SelectedRows;
-                    foreach (DataGridViewRow row in selRows) {
-						string[] vals = GetOutputRowFromGridRow(row);
+                    foreach (DataGridViewRow row in selRows)
+                    {
+                        string[] vals = GetOutputRowFromGridRow(row);
                         mRowBuffer.Add(vals);
                     }
                     break;
@@ -158,13 +170,15 @@ namespace MageDisplayLib {
         /// Deliver the contents of our internal buffers
         /// to standard tabular output
         /// </summary>
-        private void OutputListItems() {
+        private void OutputListItems()
+        {
             OnColumnDefAvailable(new MageColumnEventArgs(mColumnDefs.ToArray()));
 
             // output the rows from the list control according to current mode setting
-			foreach (string[] row in mRowBuffer)
-			{
-                if (Abort) break;
+            foreach (string[] row in mRowBuffer)
+            {
+                if (Abort)
+                    break;
                 OnDataRowAvailable(new MageDataEventArgs(row));
             }
             OnDataRowAvailable(new MageDataEventArgs(null));

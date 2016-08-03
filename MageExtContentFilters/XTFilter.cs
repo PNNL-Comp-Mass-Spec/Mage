@@ -1,6 +1,7 @@
 ﻿using Mage;
 
-namespace MageExtContentFilters {
+namespace MageExtContentFilters
+{
 
     /// <summary>
     /// Filter X!Tandem results using the FilterSetID defined by the base class
@@ -10,7 +11,8 @@ namespace MageExtContentFilters {
 	/// The list of auto-discovered filters is then used to populate the gridview on form FilterSelectionForm.cs
 	/// </remarks>
     [MageAttribute("Filter", "XTFilter", "XT filter", "Uses filter criteria defined in DMS")]
-    class XTFilter : ContentFilter {
+    class XTFilter : ContentFilter
+    {
 
         #region Member Variables
 
@@ -41,7 +43,8 @@ namespace MageExtContentFilters {
         /// called before pipeline runs - module can do any special setup that it needs
         /// (override of base class)
         /// </summary>
-        public override void Prepare() {
+        public override void Prepare()
+        {
             base.Prepare();
             SetupXTFilter();
         }
@@ -50,7 +53,8 @@ namespace MageExtContentFilters {
         /// this is called when all the field column definitions 
         /// have been read from standard tabular input
         /// </summary>
-        protected override void ColumnDefsFinished() {
+        protected override void ColumnDefsFinished()
+        {
             PrecalculateFieldIndexes();
         }
 
@@ -63,20 +67,21 @@ namespace MageExtContentFilters {
         /// <param name="fields">Row, as array of fields</param>
         /// <returns>Whether or not row should be included in output</returns>
 		protected override bool CheckFilter(ref string[] fields)
-		{
+        {
             var accepted = false;
-			var peptideSequence = GetColumnValue(fields, peptideSequenceIndex, string.Empty);
-			var hyperScoreValue = GetColumnValue(fields, hyperScoreValueIndex, -1d);
-			var logEValue = GetColumnValue(fields, logEValueIndex, -1d);
-			var delCN2Value = GetColumnValue(fields, delCN2ValueIndex, -1d);
-			var chargeState = GetColumnValue(fields, chargeStateIndex, -1);
-			var peptideMass = GetColumnValue(fields, peptideMassIndex, -1d);
-			var msgfSpecProb = GetColumnValue(fields, msgfSpecProbIndex, -1d);
-	
+            var peptideSequence = GetColumnValue(fields, peptideSequenceIndex, string.Empty);
+            var hyperScoreValue = GetColumnValue(fields, hyperScoreValueIndex, -1d);
+            var logEValue = GetColumnValue(fields, logEValueIndex, -1d);
+            var delCN2Value = GetColumnValue(fields, delCN2ValueIndex, -1d);
+            var chargeState = GetColumnValue(fields, chargeStateIndex, -1);
+            var peptideMass = GetColumnValue(fields, peptideMassIndex, -1d);
+            var msgfSpecProb = GetColumnValue(fields, msgfSpecProbIndex, -1d);
+
             accepted = mXTFilter.EvaluateXTandem(peptideSequence, hyperScoreValue, logEValue, delCN2Value, chargeState, peptideMass, msgfSpecProb);
 
-            if (accepted && OutputColumnDefs != null) {
-				var outRow = MapDataRow(fields);
+            if (accepted && OutputColumnDefs != null)
+            {
+                var outRow = MapDataRow(fields);
                 fields = outRow;
             }
             return accepted;
@@ -87,7 +92,8 @@ namespace MageExtContentFilters {
         /// that is obtained for the given FilterSetID from DMS
         /// my means of a Mage pipeline
         /// </summary>
-        private void SetupXTFilter() {
+        private void SetupXTFilter()
+        {
 
             // Create Mage module to query DMS (typically on gigasax)
             var reader = new MSSQLReader
@@ -108,20 +114,21 @@ namespace MageExtContentFilters {
             pipeline.RunRoot(null);
 
             // create new Sequest filter object with retrieved filter criteria
-			mXTFilter = new FilterXTResults(filterCriteria.Rows, FilterSetID);
+            mXTFilter = new FilterXTResults(filterCriteria.Rows, FilterSetID);
         }
 
         /// <summary>
         /// set up indexes into row fields array based on column name
         /// </summary>
-        private void PrecalculateFieldIndexes() {
+        private void PrecalculateFieldIndexes()
+        {
             peptideSequenceIndex = GetColumnIndex(InputColumnPos, "Peptide_Sequence");
             hyperScoreValueIndex = GetColumnIndex(InputColumnPos, "Peptide_Hyperscore");
             logEValueIndex = GetColumnIndex(InputColumnPos, "Peptide_Expectation_Value_Log(e)");
             delCN2ValueIndex = GetColumnIndex(InputColumnPos, "DeltaCn2");
             chargeStateIndex = GetColumnIndex(InputColumnPos, "Charge");
             peptideMassIndex = GetColumnIndex(InputColumnPos, "Peptide_MH");
-			msgfSpecProbIndex = GetColumnIndex(InputColumnPos, "MSGF_SpecProb");            
+            msgfSpecProbIndex = GetColumnIndex(InputColumnPos, "MSGF_SpecProb");
         }
         /*
         Result_ID

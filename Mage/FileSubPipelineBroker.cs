@@ -3,10 +3,11 @@ using System.IO;
 using System.Reflection;
 
 
-namespace Mage {
+namespace Mage
+{
 
     /// <summary>
-    /// delegate for a client-supplied function that this module can call to build its sub-pipeline
+    /// Delegate for a client-supplied function that this module can call to build its sub-pipeline
     /// </summary>
     /// <param name="inputFilePath">path to input file that sub-pipeline should process</param>
     /// <param name="outputFilePath">path to output file that sub-pipeling should deliver results to</param>
@@ -43,7 +44,8 @@ namespace Mage {
     /// the sub-pipeline can also be supplied by the client by setting the FileProcessingPipelineGenerator
     /// delegate to call the client's pipeline generator function
     /// </summary>
-    public class FileSubPipelineBroker : FileContentProcessor {
+    public class FileSubPipelineBroker : FileContentProcessor
+    {
 
         #region Member Variables
 
@@ -70,7 +72,8 @@ namespace Mage {
         /// for each file handled by this broker module
         /// </summary>
         /// <param name="maker"></param>
-        public void SetPipelineMaker(FileProcessingPipelineGenerator maker) {
+        public void SetPipelineMaker(FileProcessingPipelineGenerator maker)
+        {
             ProcessingPipelineMaker = maker;
         }
 
@@ -94,7 +97,8 @@ namespace Mage {
         /// SQLite database table name
         /// (parameter for SQLite database writer for internally defined sub-pipelines using SQLite Writer)
         /// </summary>
-        public string TableName {
+        public string TableName
+        {
             get { return mTableName; }
             set { mTableName = value.Trim(); }
         }
@@ -103,17 +107,22 @@ namespace Mage {
         /// Deal with file filter parameters as delimited string
         /// "key:value; key:value; 
         /// </summary>
-        public string FileFilterParameters {
-            get {
+        public string FileFilterParameters
+        {
+            get
+            {
                 var s = new List<string>();
-                foreach(KeyValuePair<string, string> kv in mFileFilterParameters) {
-                    s.Add(string.Format("{0}:{1}", kv.Key, kv.Value)); 
+                foreach (KeyValuePair<string, string> kv in mFileFilterParameters)
+                {
+                    s.Add(string.Format("{0}:{1}", kv.Key, kv.Value));
                 }
                 return string.Join(", ", s);
             }
-            set {
+            set
+            {
                 var parms = new Dictionary<string, string>();
-                foreach (string def in value.Split(';')) {
+                foreach (string def in value.Split(';'))
+                {
                     string[] pair = def.Split(':');
                     parms.Add(pair[0].Trim(), pair[1].Trim());
                 }
@@ -121,11 +130,12 @@ namespace Mage {
             }
         }
 
-       /// <summary>
+        /// <summary>
         /// (needs work)
         /// </summary>
         /// <param name="parms"></param>
-        public void SetFileFilterParameters(Dictionary<string, string> parms) {
+        public void SetFileFilterParameters(Dictionary<string, string> parms)
+        {
             mFileFilterParameters = parms;
         }
 
@@ -134,7 +144,8 @@ namespace Mage {
         /// (needs work)
         /// </summary>
         /// <returns></returns>
-        public Dictionary<string, string> GetFileFilterParameters() {
+        public Dictionary<string, string> GetFileFilterParameters()
+        {
             return mFileFilterParameters;
         }
 
@@ -145,7 +156,8 @@ namespace Mage {
         /// <summary>
         /// construct a new Mage file subpipeline broker module
         /// </summary>
-        public FileSubPipelineBroker() {
+        public FileSubPipelineBroker()
+        {
             // set up to use our own default sub-pipeline maker 
             //in case the client doesn't give us another one
             FileFilterModuleName = ""; // client must set this property to use internally defined sub-pipelines
@@ -161,15 +173,20 @@ namespace Mage {
         /// called before pipeline runs - module can do any special setup that it needs
         /// (override of base class)
         /// </summary>
-        public override void Prepare() {
+        public override void Prepare()
+        {
             base.Prepare();
 
-            if (!string.IsNullOrEmpty(FileFilterModuleName)) {
+            if (!string.IsNullOrEmpty(FileFilterModuleName))
+            {
                 // optionally, set up our sub-pipeline generator delegate to use
                 // an internally-defined sub-pipeline, according to module settings
-                if (!string.IsNullOrEmpty(DatabaseName)) {
+                if (!string.IsNullOrEmpty(DatabaseName))
+                {
                     ProcessingPipelineMaker = new FileProcessingPipelineGenerator(MakeDefaultSQLiteProcessingPipeline);
-                } else {
+                }
+                else
+                {
                     ProcessingPipelineMaker = new FileProcessingPipelineGenerator(MakeDefaultFileProcessingPipeline);
                 }
                 // set up to use the file renaming function provided by the filter module
@@ -184,14 +201,17 @@ namespace Mage {
         /// <param name="sourcePath"></param>
         /// <param name="destPath"></param>
         /// <param name="context"></param>
-        protected override void ProcessFile(string sourceFile, string sourcePath, string destPath, Dictionary<string, string> context) {
-            if (ProcessingPipelineMaker != null) {
+        protected override void ProcessFile(string sourceFile, string sourcePath, string destPath, Dictionary<string, string> context)
+        {
+            if (ProcessingPipelineMaker != null)
+            {
                 mPipeline = ProcessingPipelineMaker(sourcePath, destPath, context);
                 mPipeline.OnStatusMessageUpdated += UpdateStatus;
                 mPipeline.RunRoot(null); // we are already in a pipeline thread - don't run sub-pipeline in a new one
 
                 // sub-pipeline encountered fatal error, interrupt the main pipeline
-                if (!string.IsNullOrEmpty(mPipeline.CompletionCode)) {
+                if (!string.IsNullOrEmpty(mPipeline.CompletionCode))
+                {
                     throw new MageException(mPipeline.CompletionCode);
                 }
                 mFileCount++;
@@ -202,14 +222,15 @@ namespace Mage {
 
         #region Internally-Defined Processing Pipelines
 
-        private ProcessingPipeline MakeDefaultFileProcessingPipeline(string inputFilePath, string outputFilePath, Dictionary<string, string> context) {
+        private ProcessingPipeline MakeDefaultFileProcessingPipeline(string inputFilePath, string outputFilePath, Dictionary<string, string> context)
+        {
             var reader = new DelimitedFileReader();
             var filter = ProcessingPipeline.MakeModule(FileFilterModuleName) as BaseModule;
             var writer = new DelimitedFileWriter();
 
             filter.SetParameters(mFileFilterParameters);
             filter.SetContext(context);
- 
+
             reader.FilePath = inputFilePath;
             writer.FilePath = outputFilePath;
             bool concatenateFiles = (!string.IsNullOrEmpty(OutputFileName)) && (mFileCount > 0);
@@ -218,7 +239,8 @@ namespace Mage {
             return ProcessingPipeline.Assemble("DefaultFileProcessingPipeline", reader, filter, writer);
         }
 
-        private ProcessingPipeline MakeDefaultSQLiteProcessingPipeline(string inputFilePath, string outputFilePath, Dictionary<string, string> context) {
+        private ProcessingPipeline MakeDefaultSQLiteProcessingPipeline(string inputFilePath, string outputFilePath, Dictionary<string, string> context)
+        {
             var reader = new DelimitedFileReader();
             var filter = ProcessingPipeline.MakeModule(FileFilterModuleName) as BaseModule;
             var writer = new SQLiteWriter();
@@ -241,13 +263,15 @@ namespace Mage {
         /// if such a renaming method is present
         /// </summary>
         /// <param name="filterModule"></param>
-        protected void SetupFileRenamer(string filterModule) {
+        protected void SetupFileRenamer(string filterModule)
+        {
             var pipeline = new ProcessingPipeline("FileProcessingSubPipeline");
             pipeline.MakeModule(filterModule, FileFilterModuleName);
             var bm = (BaseModule)pipeline.GetModule(filterModule);
-           
+
             var mi = bm.GetType().GetMethod("RenameOutputFile");
-            if (mi != null) {
+            if (mi != null)
+            {
                 var filterMod = (ContentFilter)bm;
                 SetOutputFileNamer(new OutputFileNamer(filterMod.RenameOutputFile));
             }

@@ -233,13 +233,13 @@ namespace MageExtExtractionFilters
             var msgfPlus = false;
 
             dctColumnMapping = new Dictionary<MSGFDBColumns, int>
-		    {
-		        {MSGFDBColumns.Scan, GetColumnIndex(columnHeaders, "Scan")},
-		        {MSGFDBColumns.Peptide, GetColumnIndex(columnHeaders, "Peptide")},
-		        {MSGFDBColumns.Charge, GetColumnIndex(columnHeaders, "Charge")},
-		        {MSGFDBColumns.MH, GetColumnIndex(columnHeaders, "MH")},
-		        {MSGFDBColumns.Protein, GetColumnIndex(columnHeaders, "Protein")}
-		    };
+            {
+                {MSGFDBColumns.Scan, GetColumnIndex(columnHeaders, "Scan")},
+                {MSGFDBColumns.Peptide, GetColumnIndex(columnHeaders, "Peptide")},
+                {MSGFDBColumns.Charge, GetColumnIndex(columnHeaders, "Charge")},
+                {MSGFDBColumns.MH, GetColumnIndex(columnHeaders, "MH")},
+                {MSGFDBColumns.Protein, GetColumnIndex(columnHeaders, "Protein")}
+            };
 
             var columnIndex = GetColumnIndex(columnHeaders, "MSGFDB_SpecProb");
 

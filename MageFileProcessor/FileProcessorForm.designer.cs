@@ -1,5 +1,7 @@
-﻿namespace MageFileProcessor {
-    partial class FileProcessorForm {
+﻿namespace MageFileProcessor
+{
+    partial class FileProcessorForm
+    {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -9,8 +11,10 @@
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing) {
-            if (disposing && (components != null)) {
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
                 components.Dispose();
             }
             base.Dispose(disposing);
@@ -22,7 +26,8 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent() {
+        private void InitializeComponent()
+        {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FileProcessorForm));
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -485,7 +490,7 @@
             // 
             // txtAbout2
             // 
-            this.txtAbout2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtAbout2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtAbout2.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtAbout2.Location = new System.Drawing.Point(16, 51);
@@ -499,7 +504,7 @@
             // 
             // txtAbout1
             // 
-            this.txtAbout1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtAbout1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtAbout1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtAbout1.Location = new System.Drawing.Point(16, 12);
@@ -671,7 +676,7 @@
             // statusPanel1
             // 
             this.statusPanel1.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
-            this.statusPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.statusPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.statusPanel1.EnableCancel = true;
             this.statusPanel1.Location = new System.Drawing.Point(-1, 97);
@@ -685,7 +690,7 @@
             // 
             // FileProcessingPanel1
             // 
-            this.FileProcessingPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.FileProcessingPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.FileProcessingPanel1.Location = new System.Drawing.Point(-1, -2);
             this.FileProcessingPanel1.Margin = new System.Windows.Forms.Padding(5);
@@ -859,16 +864,16 @@
         private System.Windows.Forms.TabPage DataPackageJobsTabPage;
         private MageUIComponents.JobDataPackagePanel JobDataPackagePanel1;
         private System.Windows.Forms.Panel panel1;
-		private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panel2;
         private MageUIComponents.LocalFolderPanel LocalFolderPanel1;
         private MageUIComponents.EntityFilePanel EntityFilePanel1;
         private System.Windows.Forms.TabControl FileSourceTabs;
         private System.Windows.Forms.TabPage GetEntityFilesTabPage;
-		private System.Windows.Forms.TabPage GetLocalFileTabPage;
+        private System.Windows.Forms.TabPage GetLocalFileTabPage;
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.TabPage DatasetTabPage;
-		private MageUIComponents.DatasetQueryPanel DatasetQueryPanel1;
+        private MageUIComponents.DatasetQueryPanel DatasetQueryPanel1;
         private System.Windows.Forms.TabPage DatasetIDTabPage;
         private MageUIComponents.DatasetIDListPanel DatasetIDListPanel1;
         private System.Windows.Forms.TabPage ManifestFileTabPage;
@@ -878,30 +883,30 @@
         private MageDisplayLib.GridViewDisplayControl JobListDisplayControl;
         private MageDisplayLib.GridViewDisplayControl FileListDisplayControl;
         private System.Windows.Forms.TabPage JobsFlexQueryTabPage;
-		private MageUIComponents.FlexQueryPanel JobFlexQueryPanel;
-		private System.Windows.Forms.TabPage AboutTabPage;
-		private System.Windows.Forms.Panel pnlAbout;
-		private System.Windows.Forms.TextBox txtAbout3;
-		private System.Windows.Forms.LinkLabel lblAboutLink;
-		private System.Windows.Forms.TextBox txtAbout2;
-		private System.Windows.Forms.TextBox txtAbout1;
-		private System.Windows.Forms.TextBox txtVersion;
-		private System.Windows.Forms.TabPage DataPackageDatasetsTabPage;
-		private MageUIComponents.JobDataPackagePanel JobDataPackagePanel2;
-		private System.Windows.Forms.Panel panel3;
-		private System.Windows.Forms.Panel panel4;
-		private System.Windows.Forms.TabControl FilterOutputTabs;
-		private System.Windows.Forms.TabPage CopyFilesTabPage;
-		private MageUIComponents.FileCopyPanel FileCopyPanel1;
-		private System.Windows.Forms.TabPage ProcessFilesToLocalTabPage;
-		private MageUIComponents.FolderDestinationPanel FolderDestinationPanel1;
-		private System.Windows.Forms.TabPage ProcessFileToSQLiteDBTabPage;
-		private MageUIComponents.SQLiteDestinationPanel SQLiteDestinationPanel1;
-		private System.Windows.Forms.Panel panel5;
-		private MageDisplayLib.StatusPanel statusPanel1;
-		private MageUIComponents.FileProcessingPanel FileProcessingPanel1;
-		private System.Windows.Forms.TabPage DatasetNameTabPage;
-		private MageUIComponents.DatasetNameListPanel datasetNameListPanel1;
+        private MageUIComponents.FlexQueryPanel JobFlexQueryPanel;
+        private System.Windows.Forms.TabPage AboutTabPage;
+        private System.Windows.Forms.Panel pnlAbout;
+        private System.Windows.Forms.TextBox txtAbout3;
+        private System.Windows.Forms.LinkLabel lblAboutLink;
+        private System.Windows.Forms.TextBox txtAbout2;
+        private System.Windows.Forms.TextBox txtAbout1;
+        private System.Windows.Forms.TextBox txtVersion;
+        private System.Windows.Forms.TabPage DataPackageDatasetsTabPage;
+        private MageUIComponents.JobDataPackagePanel JobDataPackagePanel2;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.TabControl FilterOutputTabs;
+        private System.Windows.Forms.TabPage CopyFilesTabPage;
+        private MageUIComponents.FileCopyPanel FileCopyPanel1;
+        private System.Windows.Forms.TabPage ProcessFilesToLocalTabPage;
+        private MageUIComponents.FolderDestinationPanel FolderDestinationPanel1;
+        private System.Windows.Forms.TabPage ProcessFileToSQLiteDBTabPage;
+        private MageUIComponents.SQLiteDestinationPanel SQLiteDestinationPanel1;
+        private System.Windows.Forms.Panel panel5;
+        private MageDisplayLib.StatusPanel statusPanel1;
+        private MageUIComponents.FileProcessingPanel FileProcessingPanel1;
+        private System.Windows.Forms.TabPage DatasetNameTabPage;
+        private MageUIComponents.DatasetNameListPanel datasetNameListPanel1;
         private System.Windows.Forms.TextBox txtServer;
     }
 }

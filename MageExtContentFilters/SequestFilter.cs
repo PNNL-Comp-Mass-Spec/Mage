@@ -1,6 +1,7 @@
 ﻿using Mage;
 
-namespace MageExtContentFilters {
+namespace MageExtContentFilters
+{
 
     /// <summary>
     /// Filter Sequest results using the FilterSetID defined by the base class
@@ -10,7 +11,8 @@ namespace MageExtContentFilters {
 	/// The list of auto-discovered filters is then used to populate the gridview on form FilterSelectionForm.cs
 	/// </remarks>
     [MageAttribute("Filter", "SEQUEST", "SEQUEST filter", "Uses filter criteria defined in DMS")]
-    class SequestFilter : ContentFilter {
+    class SequestFilter : ContentFilter
+    {
 
         #region Member Variables
 
@@ -28,8 +30,8 @@ namespace MageExtContentFilters {
         ////private int discriminantScoreIndex = 0;
         ////private int NETAbsoluteDifferenceIndex = 0;
         private int cleavageStateIndex = 0;
-		private int msgfSpecProbIndex = 0;
-		private int rankXcIndex = 0;
+        private int msgfSpecProbIndex = 0;
+        private int rankXcIndex = 0;
 
         #endregion
 
@@ -46,7 +48,8 @@ namespace MageExtContentFilters {
         /// called before pipeline runs - module can do any special setup that it needs
         /// (override of base class)
         /// </summary>
-        public override void Prepare() {
+        public override void Prepare()
+        {
             base.Prepare();
             SetupSequestFilter();
         }
@@ -55,7 +58,8 @@ namespace MageExtContentFilters {
         /// this is called when all the field column definitions 
         /// have been read from standard tabular input
         /// </summary>
-        protected override void ColumnDefsFinished() {
+        protected override void ColumnDefsFinished()
+        {
             PrecalculateFieldIndexes();
         }
 
@@ -68,27 +72,28 @@ namespace MageExtContentFilters {
         /// <param name="fields">Row, as array of fields</param>
         /// <returns>Whether or not row should be included in output</returns>
 		protected override bool CheckFilter(ref string[] fields)
-		{
+        {
             var accepted = false;
-         
-			var peptideSequence = GetColumnValue(fields, peptideSequenceIndex, string.Empty);
-			var xCorrValue = GetColumnValue(fields, xCorrValueIndex, -1d);
-			var delCNValue = GetColumnValue(fields, delCNValueIndex, -1d);
-			var delCN2Value = GetColumnValue(fields, delCN2ValueIndex, -1d);
-			var chargeState = GetColumnValue(fields, chargeStateIndex, -1);
-			var peptideMass = GetColumnValue(fields, peptideMassIndex, -1d);
-			var cleavageState = GetColumnValue(fields, cleavageStateIndex, -1);
-			var msgfSpecProb = GetColumnValue(fields, msgfSpecProbIndex, -1d);
-			var rankXc = GetColumnValue(fields, rankXcIndex, -1);
 
-			var spectrumCount = -1;
-			double discriminantScore = -1;
-			double NETAbsoluteDifference = -1;
+            var peptideSequence = GetColumnValue(fields, peptideSequenceIndex, string.Empty);
+            var xCorrValue = GetColumnValue(fields, xCorrValueIndex, -1d);
+            var delCNValue = GetColumnValue(fields, delCNValueIndex, -1d);
+            var delCN2Value = GetColumnValue(fields, delCN2ValueIndex, -1d);
+            var chargeState = GetColumnValue(fields, chargeStateIndex, -1);
+            var peptideMass = GetColumnValue(fields, peptideMassIndex, -1d);
+            var cleavageState = GetColumnValue(fields, cleavageStateIndex, -1);
+            var msgfSpecProb = GetColumnValue(fields, msgfSpecProbIndex, -1d);
+            var rankXc = GetColumnValue(fields, rankXcIndex, -1);
 
-			accepted = mSeqFilter.EvaluateSequest(peptideSequence, xCorrValue, delCNValue, delCN2Value, chargeState, peptideMass, spectrumCount, discriminantScore, NETAbsoluteDifference, cleavageState, msgfSpecProb, rankXc);
+            var spectrumCount = -1;
+            double discriminantScore = -1;
+            double NETAbsoluteDifference = -1;
 
-            if (accepted && OutputColumnDefs != null) {
-				var outRow = MapDataRow(fields);
+            accepted = mSeqFilter.EvaluateSequest(peptideSequence, xCorrValue, delCNValue, delCN2Value, chargeState, peptideMass, spectrumCount, discriminantScore, NETAbsoluteDifference, cleavageState, msgfSpecProb, rankXc);
+
+            if (accepted && OutputColumnDefs != null)
+            {
+                var outRow = MapDataRow(fields);
                 fields = outRow;
             }
             return accepted;
@@ -99,7 +104,8 @@ namespace MageExtContentFilters {
         /// that is obtained for the given FilterSetID from DMS
         /// my means of a Mage pipeline
         /// </summary>
-        private void SetupSequestFilter() {
+        private void SetupSequestFilter()
+        {
 
             // Create Mage module to query DMS (typically on gigasax)
             var reader = new MSSQLReader
@@ -126,7 +132,8 @@ namespace MageExtContentFilters {
         /// <summary>
         /// set up indexes into row fields array based on column name
         /// </summary>
-        private void PrecalculateFieldIndexes() {
+        private void PrecalculateFieldIndexes()
+        {
             peptideSequenceIndex = GetColumnIndex(InputColumnPos, "Peptide");
             xCorrValueIndex = GetColumnIndex(InputColumnPos, "XCorr");
             delCNValueIndex = GetColumnIndex(InputColumnPos, "DelCn");
@@ -134,9 +141,9 @@ namespace MageExtContentFilters {
             chargeStateIndex = GetColumnIndex(InputColumnPos, "ChargeState");
             peptideMassIndex = GetColumnIndex(InputColumnPos, "MH");
             cleavageStateIndex = GetColumnIndex(InputColumnPos, "NumTrypticEnds");
-			msgfSpecProbIndex = GetColumnIndex(InputColumnPos, "MSGF_SpecProb");
-			rankXcIndex = GetColumnIndex(InputColumnPos, "RankXc");
-			
+            msgfSpecProbIndex = GetColumnIndex(InputColumnPos, "MSGF_SpecProb");
+            rankXcIndex = GetColumnIndex(InputColumnPos, "RankXc");
+
         }
 
     }

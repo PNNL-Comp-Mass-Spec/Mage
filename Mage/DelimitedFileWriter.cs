@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Mage {
+namespace Mage
+{
 
     /// <summary>
     /// Mage module that writes that data that it receives via its 
     /// Mage standard tabular input to a delimited text file
     /// </summary>
-    public class DelimitedFileWriter : BaseModule, IDisposable {
+    public class DelimitedFileWriter : BaseModule, IDisposable
+    {
 
         #region Member Variables
 
@@ -51,7 +53,8 @@ namespace Mage {
         /// Header = "Yes";
         /// Append = "No";
         /// </summary>
-        public DelimitedFileWriter() {
+        public DelimitedFileWriter()
+        {
             Delimiter = "\t";
             Header = "Yes";
             Append = "No";
@@ -63,7 +66,8 @@ namespace Mage {
         /// <summary>
         /// dispose of held resources
         /// </summary>
-        public void Dispose() {
+        public void Dispose()
+        {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
@@ -72,12 +76,15 @@ namespace Mage {
         /// dispose of held resources
         /// </summary>
         /// <param name="disposing"></param>
-        private void Dispose(bool disposing) {
-            if (disposing) {
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
                 // Code to dispose the managed resources of the class
             }
             // Code to dispose the un-managed resources of the class
-            if (mOutFile != null) {
+            if (mOutFile != null)
+            {
                 mOutFile.Dispose();
             }
 
@@ -95,26 +102,32 @@ namespace Mage {
         /// </summary>
         public override void Prepare()
         {
-	        if (string.IsNullOrWhiteSpace(FilePath))
-		        throw new MageException("FilePath must be defined before calling Prepare in DelimitedFileWriter");
+            if (string.IsNullOrWhiteSpace(FilePath))
+                throw new MageException("FilePath must be defined before calling Prepare in DelimitedFileWriter");
 
             string dirPath = Path.GetDirectoryName(FilePath);
-            if (!string.IsNullOrEmpty(dirPath) && !Directory.Exists(dirPath)) {
+            if (!string.IsNullOrEmpty(dirPath) && !Directory.Exists(dirPath))
+            {
                 Directory.CreateDirectory(dirPath);
             }
-            if (Append == "Yes") {
+            if (Append == "Yes")
+            {
                 mAppendFlag = File.Exists(FilePath);
             }
             string ext = Path.GetExtension(FilePath).ToLower();
-            if (ext == ".csv") {
+            if (ext == ".csv")
+            {
                 Delimiter = ",";
             }
-			try {
-				mOutFile = new StreamWriter(FilePath, mAppendFlag);
-			} catch (Exception ex) {
-				throw new MageException("Error initializing file " + FilePath + ": " + ex.Message);
-			}
-            
+            try
+            {
+                mOutFile = new StreamWriter(FilePath, mAppendFlag);
+            }
+            catch (Exception ex)
+            {
+                throw new MageException("Error initializing file " + FilePath + ": " + ex.Message);
+            }
+
         }
 
         /// <summary>
@@ -122,9 +135,11 @@ namespace Mage {
         /// this module closes the output file
         /// (override of base class)
         /// </summary>
-        public override void Cleanup() {
+        public override void Cleanup()
+        {
             base.Cleanup();
-            if (mOutFile != null) {
+            if (mOutFile != null)
+            {
                 mOutFile.Close();
             }
         }
@@ -135,9 +150,11 @@ namespace Mage {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        public override void HandleColumnDef(object sender, MageColumnEventArgs args) {
+        public override void HandleColumnDef(object sender, MageColumnEventArgs args)
+        {
             base.HandleColumnDef(sender, args);
-            if (Header == "Yes" && !mAppendFlag) {
+            if (Header == "Yes" && !mAppendFlag)
+            {
                 OutputHeader();
             }
         }
@@ -148,10 +165,14 @@ namespace Mage {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        public override void HandleDataRow(object sender, MageDataEventArgs args) {
-            if (args.DataAvailable) {
+        public override void HandleDataRow(object sender, MageDataEventArgs args)
+        {
+            if (args.DataAvailable)
+            {
                 OutputDataRow(args.Fields);
-            } else {
+            }
+            else
+            {
                 mOutFile.Close();
             }
         }
@@ -160,33 +181,41 @@ namespace Mage {
 
         #region Support Functions
 
-        private void OutputHeader() {
+        private void OutputHeader()
+        {
             var h = new List<string>();
             // use our output column definitions, if we have them
             // otherwise just use the input column definitions
-            if (OutputColumnDefs != null) {
-                foreach (MageColumnDef col in OutputColumnDefs) {
+            if (OutputColumnDefs != null)
+            {
+                foreach (MageColumnDef col in OutputColumnDefs)
+                {
                     h.Add(col.Name);
                 }
-            } else {
-                foreach (MageColumnDef col in InputColumnDefs) {
+            }
+            else
+            {
+                foreach (MageColumnDef col in InputColumnDefs)
+                {
                     h.Add(col.Name);
                 }
             }
             mOutFile.WriteLine(string.Join(Delimiter, h));
         }
 
-		private void OutputDataRow(string[] vals)
-		{
+        private void OutputDataRow(string[] vals)
+        {
             string delim = "";
             // remap results according to our output column definitions, if we have them
             // otherwise just use the as-delivered format
-			string[] outRow = vals;
-            if (OutputColumnDefs != null) {
+            string[] outRow = vals;
+            if (OutputColumnDefs != null)
+            {
                 outRow = MapDataRow(vals);
             }
-            foreach (var item in outRow) {
-				mOutFile.Write(delim + (item ?? ""));
+            foreach (var item in outRow)
+            {
+                mOutFile.Write(delim + (item ?? ""));
                 delim = Delimiter;
             }
             mOutFile.WriteLine();

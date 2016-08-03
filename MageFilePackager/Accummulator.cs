@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Mage;
+﻿using Mage;
 
-namespace MageFilePackager {
+namespace MageFilePackager
+{
 
     /// <summary>
     /// A variation on a Mage sink module 
     /// that can acccumulate rows from multiple pipeline runs
     /// Using initial column definitions
     /// </summary>
-    class Accummulator : SimpleSink {
+    class Accummulator : SimpleSink
+    {
 
-        public Accummulator() {
+        public Accummulator()
+        {
             RetainColumnDefs = false;
         }
 
@@ -27,8 +26,10 @@ namespace MageFilePackager {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        public override void HandleColumnDef(object sender, MageColumnEventArgs args) {
-            if (!RetainColumnDefs) {
+        public override void HandleColumnDef(object sender, MageColumnEventArgs args)
+        {
+            if (!RetainColumnDefs)
+            {
                 base.HandleColumnDef(sender, args);
             }
         }

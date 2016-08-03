@@ -1,29 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace MageDisplayLib {
+namespace MageDisplayLib
+{
 
     /// <summary>
     /// how data rows will be served from display list
     /// </summary>
-    public enum DisplaySourceMode { 
+    public enum DisplaySourceMode
+    {
         /// <summary>
         /// serve all rows in display
         /// </summary>
-        All, 
+        All,
         /// <summary>
         /// serve only selected rows in display
         /// </summary>
-        Selected 
+        Selected
     }
 
     /// <summary>
     /// defines common features of Mage list display user controls
     /// </summary>
-    public interface IMageDisplayControl {
+    public interface IMageDisplayControl
+    {
 
         /// <summary>
         /// get or set the visible title field for this control

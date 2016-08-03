@@ -2,7 +2,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
-namespace MageUnitTests {
+namespace MageUnitTests
+{
 
 
     /// <summary>
@@ -10,7 +11,8 @@ namespace MageUnitTests {
     ///to contain all AddColumnFilterTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class AddColumnFilterTest {
+    public class AddColumnFilterTest
+    {
 
 
         private TestContext testContextInstance;
@@ -19,11 +21,14 @@ namespace MageUnitTests {
         ///Gets or sets the test context which provides
         ///information about and functionality for the current test run.
         ///</summary>
-        public TestContext TestContext {
-            get {
+        public TestContext TestContext
+        {
+            get
+            {
                 return testContextInstance;
             }
-            set {
+            set
+            {
                 testContextInstance = value;
             }
         }
@@ -62,7 +67,8 @@ namespace MageUnitTests {
         ///A test for AddColumnFilter 
         ///</summary>
         [TestMethod()]
-        public void AddColumnFilterConstructorTest() {
+        public void AddColumnFilterConstructorTest()
+        {
 
             var initialColumns = new string[] { "Alpha", "Beta", "Gamma" };
             string[] expectedColumns = { "Alpha", "Added1|+|text", "Beta", "Added2|+|text", "Gamma" };
@@ -99,7 +105,7 @@ namespace MageUnitTests {
 
             Assert.AreNotEqual(gen.AdHocRows.Count, sink.Rows.Count, "Expected number of rows did not match");
 
-			Collection<string[]> rows = sink.Rows;
+            Collection<string[]> rows = sink.Rows;
 
             Assert.AreEqual("Overwrite1", rows[0][1].ToString(), "Expected overwritten values did not match");
             Assert.AreEqual("Overwrite2", rows[0][3].ToString(), "Expected overwritten values did not match");

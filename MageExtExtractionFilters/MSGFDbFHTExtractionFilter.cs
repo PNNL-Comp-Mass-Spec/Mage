@@ -2,12 +2,14 @@
 using Mage;
 using MageExtContentFilters;
 
-namespace MageExtExtractionFilters {
+namespace MageExtExtractionFilters
+{
 
     /// <summary>
     /// MSGFDb Extraction Filter
     /// </summary>
-    public class MSGFDbFHTExtractionFilter : ExtractionFilter {
+    public class MSGFDbFHTExtractionFilter : ExtractionFilter
+    {
 
         #region Member Variables
 
@@ -31,7 +33,8 @@ namespace MageExtExtractionFilters {
 
         #region Properties
 
-        public FilterMSGFDbResults ResultChecker {
+        public FilterMSGFDbResults ResultChecker
+        {
             get { return mMSGFDbFilter; }
             set { mMSGFDbFilter = value; }
         }
@@ -43,7 +46,8 @@ namespace MageExtExtractionFilters {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        public override void HandleColumnDef(object sender, MageColumnEventArgs args) {
+        public override void HandleColumnDef(object sender, MageColumnEventArgs args)
+        {
             mFilterResultsColumnName = "Passed_Filter";
             OutputColumnList = "Job, Passed_Filter|+|text, *";
             base.HandleColumnDef(sender, args);
@@ -59,22 +63,27 @@ namespace MageExtExtractionFilters {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        public override void HandleDataRow(object sender, MageDataEventArgs args) {
-            if (args.DataAvailable) {
+        public override void HandleDataRow(object sender, MageDataEventArgs args)
+        {
+            if (args.DataAvailable)
+            {
 
                 var outRow = MapDataRow(args.Fields);
 
                 var accepted = CheckFilter(ref outRow);
-                
-                if (accepted) {
+
+                if (accepted)
+                {
                     mPassedRowsCounter++;
                     OnDataRowAvailable(new MageDataEventArgs(outRow));
                 }
 
-				++mTotalRowsCounter;
-				ReportProgress();
+                ++mTotalRowsCounter;
+                ReportProgress();
 
-            } else {
+            }
+            else
+            {
                 OnDataRowAvailable(new MageDataEventArgs(null));
             }
         }
@@ -87,27 +96,32 @@ namespace MageExtExtractionFilters {
         /// <param name="vals"></param>
         /// <returns></returns>
 		protected bool CheckFilter(ref string[] vals)
-		{
+        {
             var accept = true;
-            if (mMSGFDbFilter == null) {
-                if (mFilterResultsColIdx >= 0) {
+            if (mMSGFDbFilter == null)
+            {
+                if (mFilterResultsColIdx >= 0)
+                {
                     vals[mFilterResultsColIdx] = "Not Checked";
                 }
-            } else {
-				var peptideSequence = GetColumnValue(vals, peptideSequenceIndex, "");
-				var chargeState = GetColumnValue(vals, chargeStateIndex, 0);
-				var peptideMass = GetColumnValue(vals, peptideMassIndex, -1d);
-				var SpecProb = GetColumnValue(vals, msgfDbSpecProbValueIndex, -1d);
-				var PValue = GetColumnValue(vals, pValueIndex, -1d);
-				var FDR = GetColumnValue(vals, FDRIndex, -1d);
-				var PepFDR = GetColumnValue(vals, pepFDRIndex, -1d);
-				var msgfSpecProb = GetColumnValue(vals, msgfSpecProbIndex, -1d);
-				var rankMSGFDbSpecProb = 1;
+            }
+            else
+            {
+                var peptideSequence = GetColumnValue(vals, peptideSequenceIndex, "");
+                var chargeState = GetColumnValue(vals, chargeStateIndex, 0);
+                var peptideMass = GetColumnValue(vals, peptideMassIndex, -1d);
+                var SpecProb = GetColumnValue(vals, msgfDbSpecProbValueIndex, -1d);
+                var PValue = GetColumnValue(vals, pValueIndex, -1d);
+                var FDR = GetColumnValue(vals, FDRIndex, -1d);
+                var PepFDR = GetColumnValue(vals, pepFDRIndex, -1d);
+                var msgfSpecProb = GetColumnValue(vals, msgfSpecProbIndex, -1d);
+                var rankMSGFDbSpecProb = 1;
 
-				var pass = mMSGFDbFilter.EvaluateMSGFDB(peptideSequence, chargeState, peptideMass, SpecProb, PValue, FDR, PepFDR, msgfSpecProb, rankMSGFDbSpecProb);
+                var pass = mMSGFDbFilter.EvaluateMSGFDB(peptideSequence, chargeState, peptideMass, SpecProb, PValue, FDR, PepFDR, msgfSpecProb, rankMSGFDbSpecProb);
 
                 accept = pass || mKeepAllResults;
-                if (mFilterResultsColIdx >= 0) {
+                if (mFilterResultsColIdx >= 0)
+                {
                     vals[mFilterResultsColIdx] = ((pass) ? "Passed-" : "Failed-") + mExtractionType.ResultFilterSetID;
                 }
             }
@@ -118,40 +132,46 @@ namespace MageExtExtractionFilters {
         /// set up indexes into row fields array based on column name
         /// (saves time when referencing result columns later)
         /// </summary>
-        private void PrecalculateFieldIndexes() {
-            if (string.IsNullOrEmpty(OutputColumnList)) {
+        private void PrecalculateFieldIndexes()
+        {
+            if (string.IsNullOrEmpty(OutputColumnList))
+            {
                 PrecalculateFieldIndexes(InputColumnPos);
-            } else {
+            }
+            else
+            {
                 PrecalculateFieldIndexes(OutputColumnPos);
             }
         }
 
-        private void PrecalculateFieldIndexes(Dictionary<string, int> columnPos) {
-			Dictionary<MSGFDbExtractionFilter.MSGFDBColumns, int> dctColumnMapping;
+        private void PrecalculateFieldIndexes(Dictionary<string, int> columnPos)
+        {
+            Dictionary<MSGFDbExtractionFilter.MSGFDBColumns, int> dctColumnMapping;
 
-			MSGFDbExtractionFilter.DetermineFieldIndexes(columnPos, out dctColumnMapping);
+            MSGFDbExtractionFilter.DetermineFieldIndexes(columnPos, out dctColumnMapping);
 
-			peptideSequenceIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.Peptide);
-			chargeStateIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.Charge);
-			peptideMassIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.MH);
+            peptideSequenceIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.Peptide);
+            chargeStateIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.Charge);
+            peptideMassIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.MH);
 
-			msgfDbSpecProbValueIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.MSGFDB_SpecProbOrEValue);
-			// rankMSGFDbSpecProbIndex = 1;
+            msgfDbSpecProbValueIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.MSGFDB_SpecProbOrEValue);
+            // rankMSGFDbSpecProbIndex = 1;
 
-			pValueIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.PValueOrEValue);
+            pValueIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.PValueOrEValue);
 
-			// Note that FDR and PepFDR may not be present
-			FDRIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.FDROrQValue);
-			pepFDRIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.PepFDROrPepQValue);
+            // Note that FDR and PepFDR may not be present
+            FDRIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.FDROrQValue);
+            pepFDRIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.PepFDROrPepQValue);
 
-			msgfSpecProbIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.MSGF_SpecProb);
+            msgfSpecProbIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.MSGF_SpecProb);
         }
 
         /// <summary>
         /// Return an MSGFDB filter object that is preset with filter criteria
         /// that is obtained (my means of a Mage pipeline) for the given FilterSetID from DMS
         /// </summary>
-        public static FilterMSGFDbResults MakeMSGFDbResultChecker(string FilterSetID) {
+        public static FilterMSGFDbResults MakeMSGFDbResultChecker(string FilterSetID)
+        {
 
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("Extraction_Filter_Set_List");
             var runtimeParms = new Dictionary<string, string>() { { "Filter_Set_ID", FilterSetID } };

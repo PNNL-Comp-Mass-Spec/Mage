@@ -1,7 +1,7 @@
-﻿using MageExtExtractionFilters;
-
-namespace MageExtractor {
-    partial class ExtractorForm {
+﻿namespace MageExtractor
+{
+    partial class ExtractorForm
+    {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -11,8 +11,10 @@ namespace MageExtractor {
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing) {
-            if (disposing && (components != null)) {
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
                 components.Dispose();
             }
             base.Dispose(disposing);
@@ -24,7 +26,8 @@ namespace MageExtractor {
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent() {
+        private void InitializeComponent()
+        {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExtractorForm));
             this.EntityListSourceTabs = new System.Windows.Forms.TabControl();
             this.QueryTabPage = new System.Windows.Forms.TabPage();
@@ -291,7 +294,7 @@ namespace MageExtractor {
             // 
             // txtAbout2
             // 
-            this.txtAbout2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtAbout2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtAbout2.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtAbout2.Location = new System.Drawing.Point(16, 54);
@@ -305,7 +308,7 @@ namespace MageExtractor {
             // 
             // txtAbout1
             // 
-            this.txtAbout1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.txtAbout1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtAbout1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtAbout1.Location = new System.Drawing.Point(16, 12);
@@ -503,23 +506,23 @@ namespace MageExtractor {
         private System.Windows.Forms.TabPage DataPackageTabPage;
         private MageUIComponents.JobDataPackagePanel JobDataPackagePanel1;
         private System.Windows.Forms.Panel panel1;
-		private MageDisplayLib.GridViewDisplayControl JobListDisplayCtl;
+        private MageDisplayLib.GridViewDisplayControl JobListDisplayCtl;
         private System.Windows.Forms.TabPage JobsFlexQueryTabPage;
         private MageUIComponents.FlexQueryPanel JobFlexQueryPanel;
-		private System.Windows.Forms.TabPage AboutTabPage;
-		private System.Windows.Forms.Panel pnlAbout;
-		private System.Windows.Forms.TextBox txtAbout1;
-		private System.Windows.Forms.TextBox txtAbout2;
-		private System.Windows.Forms.LinkLabel lblAboutLink;
+        private System.Windows.Forms.TabPage AboutTabPage;
+        private System.Windows.Forms.Panel pnlAbout;
+        private System.Windows.Forms.TextBox txtAbout1;
+        private System.Windows.Forms.TextBox txtAbout2;
+        private System.Windows.Forms.LinkLabel lblAboutLink;
         private System.Windows.Forms.TextBox txtAbout3;
-		private MageDisplayLib.StatusPanel statusPanel1;
-		private System.Windows.Forms.Panel panel5;
-		private ExtractionSettingsPanel extractionSettingsPanel1;
-		private System.Windows.Forms.Panel panel4;
-		private System.Windows.Forms.TabControl FilterOutputTabs;
-		private System.Windows.Forms.TabPage ProcessFilesToLocalTabPage;
-		private MageUIComponents.FolderDestinationPanel FolderDestinationPanel1;
-		private System.Windows.Forms.TabPage ProcessFileToSQLiteDBTabPage;
+        private MageDisplayLib.StatusPanel statusPanel1;
+        private System.Windows.Forms.Panel panel5;
+        private ExtractionSettingsPanel extractionSettingsPanel1;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.TabControl FilterOutputTabs;
+        private System.Windows.Forms.TabPage ProcessFilesToLocalTabPage;
+        private MageUIComponents.FolderDestinationPanel FolderDestinationPanel1;
+        private System.Windows.Forms.TabPage ProcessFileToSQLiteDBTabPage;
         private MageUIComponents.SQLiteDestinationPanel SQLiteDestinationPanel1;
         private System.Windows.Forms.TextBox txtServer;
         private System.Windows.Forms.TextBox txtVersion;

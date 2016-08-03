@@ -2,14 +2,15 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace MageUnitTests
 {
-    
-    
+
+
     /// <summary>
     ///This is a test class for CrosstabFilterTest and is intended
     ///to contain all CrosstabFilterTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class CrosstabFilterTest {
+    public class CrosstabFilterTest
+    {
 
         private TestContext testContextInstance;
 
@@ -17,11 +18,14 @@ namespace MageUnitTests
         ///Gets or sets the test context which provides
         ///information about and functionality for the current test run.
         ///</summary>
-        public TestContext TestContext {
-            get {
+        public TestContext TestContext
+        {
+            get
+            {
                 return testContextInstance;
             }
-            set {
+            set
+            {
                 testContextInstance = value;
             }
         }
@@ -62,7 +66,8 @@ namespace MageUnitTests
         ///</summary>
         [TestMethod()]
         [DeploymentItem(@"..\..\..\TestItems\factors_test.txt")]
-        public void CrosstabFilterMainTest() {
+        public void CrosstabFilterMainTest()
+        {
             //  "SELECT Dataset, Dataset_ID, Factor, Value FROM V_Custom_Factors_List_Report"
 
             // create Delimited file reader module
@@ -96,8 +101,9 @@ namespace MageUnitTests
         ///A test for FactorValueCol
         ///</summary>
         [TestMethod()]
-        public void FactorValueColTest() {
-            CrosstabFilter target = new CrosstabFilter(); 
+        public void FactorValueColTest()
+        {
+            CrosstabFilter target = new CrosstabFilter();
             string expected = "Test Value";
             string actual;
             target.FactorValueCol = expected;
@@ -109,8 +115,9 @@ namespace MageUnitTests
         ///A test for FactorNameCol
         ///</summary>
         [TestMethod()]
-        public void FactorNameColTest() {
-            CrosstabFilter target = new CrosstabFilter(); 
+        public void FactorNameColTest()
+        {
+            CrosstabFilter target = new CrosstabFilter();
             string expected = "Test Value";
             string actual;
             target.FactorNameCol = expected;
@@ -122,8 +129,9 @@ namespace MageUnitTests
         ///A test for EntityNameCol
         ///</summary>
         [TestMethod()]
-        public void EntityNameColTest() {
-            CrosstabFilter target = new CrosstabFilter(); 
+        public void EntityNameColTest()
+        {
+            CrosstabFilter target = new CrosstabFilter();
             string expected = "Test Value";
             string actual;
             target.EntityNameCol = expected;
@@ -135,8 +143,9 @@ namespace MageUnitTests
         ///A test for EntityIDCol
         ///</summary>
         [TestMethod()]
-        public void EntityIDColTest() {
-            CrosstabFilter target = new CrosstabFilter(); 
+        public void EntityIDColTest()
+        {
+            CrosstabFilter target = new CrosstabFilter();
             string expected = "Test Value";
             string actual;
             target.EntityIDCol = expected;

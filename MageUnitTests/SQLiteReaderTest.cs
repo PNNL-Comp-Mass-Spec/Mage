@@ -2,7 +2,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-namespace MageUnitTests {
+namespace MageUnitTests
+{
 
 
     /// <summary>
@@ -10,7 +11,8 @@ namespace MageUnitTests {
     ///to contain all SQLiteReaderTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class SQLiteReaderTest {
+    public class SQLiteReaderTest
+    {
 
 
         private TestContext testContextInstance;
@@ -19,11 +21,14 @@ namespace MageUnitTests {
         ///Gets or sets the test context which provides
         ///information about and functionality for the current test run.
         ///</summary>
-        public TestContext TestContext {
-            get {
+        public TestContext TestContext
+        {
+            get
+            {
                 return testContextInstance;
             }
-            set {
+            set
+            {
                 testContextInstance = value;
             }
         }
@@ -63,8 +68,9 @@ namespace MageUnitTests {
         ///A test for Run
         ///</summary>
         [TestMethod()]
-		[DeploymentItem(@"..\..\..\TestItems\Metadata.db")]
-        public void QueryTest() {
+        [DeploymentItem(@"..\..\..\TestItems\Metadata.db")]
+        public void QueryTest()
+        {
             int maxRows = 7;
             string[] colList = new string[] { "Dataset", "Dataset_ID", "Factor", "Value" };
             string colNames = string.Join(", ", colList);
@@ -75,20 +81,22 @@ namespace MageUnitTests {
 
             // did the test sink object get the expected row definitions
             Collection<MageColumnDef> cols = sink.Columns;
-            for (int i = 0; i < cols.Count; i++) {
+            for (int i = 0; i < cols.Count; i++)
+            {
                 Assert.AreEqual(cols[i].Name, colList[i]);
             }
 
             // did the test sink object get the expected number of data rows
             // on its standard tabular input?
-			Collection<string[]> rows = sink.Rows;
+            Collection<string[]> rows = sink.Rows;
             Assert.AreEqual(maxRows, rows.Count);
 
             // are there the expected number of fields in the data row?
             Assert.AreEqual(colList.Length, rows[0].Length);
         }
 
-        public static SimpleSink ReadSQLiteDB(int maxRows, string sqlText, string filePath) {
+        public static SimpleSink ReadSQLiteDB(int maxRows, string sqlText, string filePath)
+        {
             ProcessingPipeline pipeline = new ProcessingPipeline("SQLite_Reader");
 
             SQLiteReader target = new SQLiteReader();
@@ -107,9 +115,10 @@ namespace MageUnitTests {
         }
 
         [TestMethod()]
-		[DeploymentItem(@"..\..\..\TestItems\Metadata.db")]
-		[DeploymentItem(@"..\..\..\TestItems\SQLiteQueryDefinitions.xml")]
-        public void QueryFromConfigTest() {
+        [DeploymentItem(@"..\..\..\TestItems\Metadata.db")]
+        [DeploymentItem(@"..\..\..\TestItems\SQLiteQueryDefinitions.xml")]
+        public void QueryFromConfigTest()
+        {
             int maxRows = 5;
 
             // runtime parameters for query 
@@ -123,12 +132,13 @@ namespace MageUnitTests {
             // did the test sink object get the expected row definitions
             string[] colList = new string[] { "Dataset", "Dataset_ID", "Factor", "Value" };
             Collection<MageColumnDef> cols = result.Columns;
-            for (int i = 0; i < cols.Count; i++) {
+            for (int i = 0; i < cols.Count; i++)
+            {
                 Assert.AreEqual(cols[i].Name, colList[i]);
             }
 
             // did the test sink object get the expected number of data rows on its standard tabular input?
-			Collection<string[]> rows = result.Rows;
+            Collection<string[]> rows = result.Rows;
             Assert.AreEqual(maxRows, rows.Count);
 
             // are there the expected number of fields in the data row?
@@ -137,8 +147,8 @@ namespace MageUnitTests {
             // go through the rows and get value in "Factor" and "Value" columns
             int nameIndex = result.ColumnIndex["Factor"];
             int valIndex = result.ColumnIndex["Value"];
-			foreach (string[] row in result.Rows)
-			{
+            foreach (string[] row in result.Rows)
+            {
                 string name = row[nameIndex];
                 string value = row[valIndex];
             }
@@ -148,7 +158,8 @@ namespace MageUnitTests {
         /// example of packaged reader pipeline
         /// </summary>
         /// <returns></returns>
-        public SimpleSink GetDataFromSQLite(string queryDefName, Dictionary<string, string> runtimeParameters, int maxRows) {
+        public SimpleSink GetDataFromSQLite(string queryDefName, Dictionary<string, string> runtimeParameters, int maxRows)
+        {
 
             // get XML query definition by name 
             ModuleDiscovery.QueryDefinitionFileName = "SQLiteQueryDefinitions.xml";  // omit if using default query def file
@@ -175,7 +186,8 @@ namespace MageUnitTests {
         /// </summary>
         /// <param name="maxRows"></param>
         /// <returns></returns>
-        public SimpleSink QueryFromConfig(int maxRows) {
+        public SimpleSink QueryFromConfig(int maxRows)
+        {
 
             // runtime parameters for query (probably pass this in as an argument)
             Dictionary<string, string> runtimeParameters = new Dictionary<string, string>();
@@ -211,7 +223,8 @@ namespace MageUnitTests {
         ///A test for database
         ///</summary>
         [TestMethod()]
-        public void DatabasePropertyTest() {
+        public void DatabasePropertyTest()
+        {
             SQLiteReader target = new SQLiteReader();
             string expected = "Test Value";
             string actual;
@@ -224,7 +237,8 @@ namespace MageUnitTests {
         ///A test for sqlText
         ///</summary>
         [TestMethod()]
-        public void SQLTextPropertyTest() {
+        public void SQLTextPropertyTest()
+        {
             SQLiteReader target = new SQLiteReader();
             string expected = "Test Value";
             string actual;

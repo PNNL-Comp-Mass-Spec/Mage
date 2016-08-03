@@ -8,21 +8,23 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Data;
 
-namespace Mage {
+namespace Mage
+{
 
     /// <summary>
     /// Insert data received on standard tabular input
     /// into the specified SQLite database and table.
     /// The table and database will be created if they do not already exist.
     /// </summary>
-    public sealed class SQLiteWriter : BaseModule, IDisposable {
+    public sealed class SQLiteWriter : BaseModule, IDisposable
+    {
 
         private static readonly ILog traceLog = LogManager.GetLogger("TraceLog"); // traceLog.Debug
 
         #region Member Variables
 
         // buffer for accumulating rows into output block
-		private readonly List<string[]> mRows = new List<string[]>();
+        private readonly List<string[]> mRows = new List<string[]>();
 
         // description of table we will be inserting rows into
         private TableSchema mSchema;
@@ -43,11 +45,11 @@ namespace Mage {
         /// </summary>
         public string TableName { get; set; }
 
-		/// <summary>
-		/// Optional list of column defs that will be used when creating the target table in the SqLite database
-		/// </summary>
-		/// <remarks>This list does not need to contain all of the columns; only those for which the data type is not text (e.g. integer or real)</remarks>
-		public List<MageColumnDef> ColDefOverride { get; set; }
+        /// <summary>
+        /// Optional list of column defs that will be used when creating the target table in the SqLite database
+        /// </summary>
+        /// <remarks>This list does not need to contain all of the columns; only those for which the data type is not text (e.g. integer or real)</remarks>
+        public List<MageColumnDef> ColDefOverride { get; set; }
 
         /// <summary>
         /// Path to the SQLite database file
@@ -62,11 +64,14 @@ namespace Mage {
         /// <summary>
         /// number of input rows that are grouped into SQLite transaction blocks 
         /// </summary>
-        public string BlockSize {
+        public string BlockSize
+        {
             get { return mBlockSize.ToString(CultureInfo.InvariantCulture); }
-            set {
+            set
+            {
                 int val;
-                if (int.TryParse(value, out val)) {
+                if (int.TryParse(value, out val))
+                {
                     mBlockSize = val;
                 }
             }
@@ -79,7 +84,8 @@ namespace Mage {
         /// <summary>
         /// construct a new Mage SQLite writer module
         /// </summary>
-        public SQLiteWriter() {
+        public SQLiteWriter()
+        {
         }
 
         #endregion
@@ -89,7 +95,8 @@ namespace Mage {
         /// <summary>
         /// dispose of held resources
         /// </summary>
-        public void Dispose() {
+        public void Dispose()
+        {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
@@ -98,12 +105,15 @@ namespace Mage {
         /// dispose of held resources
         /// </summary>
         /// <param name="disposing"></param>
-        private void Dispose(bool disposing) {
-            if (disposing) {
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
                 // Code to dispose the managed resources of the class
             }
             // Code to dispose the un-managed resources of the class
-            if (mConnection != null) {
+            if (mConnection != null)
+            {
                 mConnection.Dispose();
             }
 
@@ -119,7 +129,8 @@ namespace Mage {
         /// this module closes the database connection
         /// (override of base class)
         /// </summary>
-        public override void Cleanup() {
+        public override void Cleanup()
+        {
             base.Cleanup();
             CloseDBConnection();
         }
@@ -134,7 +145,8 @@ namespace Mage {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        public override void HandleColumnDef(object sender, MageColumnEventArgs args) {
+        public override void HandleColumnDef(object sender, MageColumnEventArgs args)
+        {
             base.HandleColumnDef(sender, args);
             // make table schema
             List<MageColumnDef> cd = OutputColumnDefs ?? InputColumnDefs;
@@ -151,23 +163,34 @@ namespace Mage {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        public override void HandleDataRow(object sender, MageDataEventArgs args) {
-            if (args.DataAvailable) {
-                if (OutputColumnDefs != null) {
+        public override void HandleDataRow(object sender, MageDataEventArgs args)
+        {
+            if (args.DataAvailable)
+            {
+                if (OutputColumnDefs != null)
+                {
                     mRows.Add(MapDataRow(args.Fields));
-                } else {
+                }
+                else
+                {
                     mRows.Add(args.Fields);
                 }
-                if (++mRowsAccumulated < mBlockSize) {
+                if (++mRowsAccumulated < mBlockSize)
+                {
                     // Accumulate row (so that data can be added in chunks, using a single transaction for each chunk)
-                } else {
+                }
+                else
+                {
                     mRowsAccumulated = 0;
-					// Add the cached data to the SQLite database
+                    // Add the cached data to the SQLite database
                     CopyTabularDataRowsToSQLiteDB();
                     mRows.Clear();
                 }
-            } else {
-                if (mRowsAccumulated > 0) {
+            }
+            else
+            {
+                if (mRowsAccumulated > 0)
+                {
                     // Add the cached data to the SQLite database
                     CopyTabularDataRowsToSQLiteDB();
                 }
@@ -178,44 +201,47 @@ namespace Mage {
 
         #region Helper Functions
 
-        private TableSchema MakeTableSchema(IEnumerable<MageColumnDef> colDefs) {
+        private TableSchema MakeTableSchema(IEnumerable<MageColumnDef> colDefs)
+        {
             var ts = new TableSchema
             {
-	            TableName = TableName,
-	            Columns = new List<ColumnSchema>()
+                TableName = TableName,
+                Columns = new List<ColumnSchema>()
             };
-	        foreach (MageColumnDef colDef in colDefs) {
+            foreach (MageColumnDef colDef in colDefs)
+            {
                 var cs = new ColumnSchema
                 {
-	                ColumnName = colDef.Name,
-	                ColumnType = colDef.DataType
+                    ColumnName = colDef.Name,
+                    ColumnType = colDef.DataType
                 };
 
-		        if (ColDefOverride != null)
-	            {
-		            foreach (var overrideDef in ColDefOverride)
-		            {
-			            if (String.Compare(overrideDef.Name, cs.ColumnName, StringComparison.CurrentCultureIgnoreCase) == 0)
-			            {
-				            cs.ColumnType = overrideDef.DataType;
-							break;
-			            }
-		            }
-	            }
+                if (ColDefOverride != null)
+                {
+                    foreach (var overrideDef in ColDefOverride)
+                    {
+                        if (String.Compare(overrideDef.Name, cs.ColumnName, StringComparison.CurrentCultureIgnoreCase) == 0)
+                        {
+                            cs.ColumnType = overrideDef.DataType;
+                            break;
+                        }
+                    }
+                }
 
-				// Check for a column type of "varchar" or "char"
-				if (cs.ColumnType.Contains("char"))
-				{
-					// Change to text
-					cs.ColumnType = "text";
-				}
+                // Check for a column type of "varchar" or "char"
+                if (cs.ColumnType.Contains("char"))
+                {
+                    // Change to text
+                    cs.ColumnType = "text";
+                }
 
-				ts.Columns.Add(cs);
+                ts.Columns.Add(cs);
             }
             return ts;
         }
 
-        private void UpdateStatus(string message) {
+        private void UpdateStatus(string message)
+        {
             OnStatusMessageUpdated(new MageStatusEventArgs(message));
         }
 
@@ -224,27 +250,34 @@ namespace Mage {
         #region "Top level SQLite Stuff"
 
         // create the target file if it doesn't exist.
-        private void AssureDBExists() {
-            if (!File.Exists(DbPath)) {
+        private void AssureDBExists()
+        {
+            if (!File.Exists(DbPath))
+            {
                 CreateSQLiteDatabaseOnly(DbPath);
                 //File.Delete(DbPath)
             }
         }
 
-        private void AssureDBConnection() {
-            if (mConnection == null) {
+        private void AssureDBConnection()
+        {
+            if (mConnection == null)
+            {
                 string sqliteConnString = CreateSQLiteConnectionString(DbPath, DbPassword);
                 mConnection = new SQLiteConnection(sqliteConnString);
                 mConnection.Open();
             }
         }
-        private void CloseDBConnection() {
-            if (mConnection != null) {
+        private void CloseDBConnection()
+        {
+            if (mConnection != null)
+            {
                 mConnection.Close();
             }
         }
 
-        private void CreateTableInDatabase() {
+        private void CreateTableInDatabase()
+        {
             // create the target file if it doesn't exist.
             AssureDBExists();
 
@@ -252,19 +285,23 @@ namespace Mage {
             string stmt = BuildCreateTableQuery(mSchema);
             traceLog.Info(Environment.NewLine + Environment.NewLine + stmt + Environment.NewLine + Environment.NewLine);
 
-            try {
+            try
+            {
                 // Execute the query in order to actually create the table.
                 AssureDBConnection();
                 var cmd = new SQLiteCommand(stmt, mConnection);
                 cmd.ExecuteNonQuery();
-            } catch (SQLiteException ex) {
+            }
+            catch (SQLiteException ex)
+            {
                 traceLog.Debug("CreateTableInDatabase failed: " + ex.Message);
             }
             traceLog.Debug("added schema for SQLite table [" + mSchema.TableName + "]");
         }
 
 
-        private void CopyTabularDataRowsToSQLiteDB() {
+        private void CopyTabularDataRowsToSQLiteDB()
+        {
             // traceLog.Debug("preparing to insert tablular data ...");
 
             AssureDBConnection();
@@ -272,41 +309,41 @@ namespace Mage {
             // traceLog.Debug("Starting to insert block of rows for table [" + mSchema.TableName + "]");
             try
             {
-				List<DbType> columnDataTypes;
+                List<DbType> columnDataTypes;
 
-				SQLiteCommand insert = BuildSQLiteInsert(mSchema, out columnDataTypes);
+                SQLiteCommand insert = BuildSQLiteInsert(mSchema, out columnDataTypes);
 
-				foreach (string[] row in mRows)
-				{
+                foreach (string[] row in mRows)
+                {
                     insert.Connection = mConnection;
                     insert.Transaction = tx;
                     var pnames = new List<string>();
                     for (int j = 0; j <= mSchema.Columns.Count - 1; j++)
                     {
-						// Check for the row having fewer columns of data than the header
-	                    if (j >= row.Length)
-		                    break;
+                        // Check for the row having fewer columns of data than the header
+                        if (j >= row.Length)
+                            break;
 
                         string pname = "@" + GetNormalizedName(mSchema.Columns[j].ColumnName, pnames);
 
-	                    if (columnDataTypes[j] == DbType.DateTime)
-	                    {
-		                    DateTime dtDate;
-		                    if (DateTime.TryParse(row[j], out dtDate))
-		                    {
-			                    insert.Parameters[pname].Value = dtDate.ToString("yyyy-MM-dd HH:mm:ss");
-		                    }
-		                    else
-		                    {
-								insert.Parameters[pname].Value = null;
-		                    }
-	                    }
-	                    else
-	                    {
-		                    // Old: insert.Parameters[pname].Value = CastValueForColumn(row[j], mSchema.Columns[j]);
-		                    insert.Parameters[pname].Value = row[j];
-	                    }
-	                    pnames.Add(pname);
+                        if (columnDataTypes[j] == DbType.DateTime)
+                        {
+                            DateTime dtDate;
+                            if (DateTime.TryParse(row[j], out dtDate))
+                            {
+                                insert.Parameters[pname].Value = dtDate.ToString("yyyy-MM-dd HH:mm:ss");
+                            }
+                            else
+                            {
+                                insert.Parameters[pname].Value = null;
+                            }
+                        }
+                        else
+                        {
+                            // Old: insert.Parameters[pname].Value = CastValueForColumn(row[j], mSchema.Columns[j]);
+                            insert.Parameters[pname].Value = row[j];
+                        }
+                        pnames.Add(pname);
                     }
                     insert.ExecuteNonQuery();
                 }
@@ -314,23 +351,29 @@ namespace Mage {
                 tx.Commit();
 
                 // traceLog.Debug("finished inserting block of rows for table [" + mSchema.TableName + "]");
-            } catch (SQLiteException ex) {
+            }
+            catch (SQLiteException ex)
+            {
                 tx.Rollback();
                 traceLog.Debug("unexpected exception: " + ex.Message);
                 UpdateStatus("unexpected exception: " + ex.Message);
             }
         }
 
-        private void ExecuteSQLInDatabase(string stmt) {
+        private void ExecuteSQLInDatabase(string stmt)
+        {
             AssureDBExists();
 
             traceLog.Info(Environment.NewLine + Environment.NewLine + stmt + Environment.NewLine + Environment.NewLine);
 
-            try {
+            try
+            {
                 AssureDBConnection();
                 var cmd = new SQLiteCommand(stmt, mConnection);
                 cmd.ExecuteNonQuery();
-            } catch (SQLiteException ex) {
+            }
+            catch (SQLiteException ex)
+            {
                 traceLog.Debug("ExecuteSQLInDatabase failed: " + ex.Message);
             }
             traceLog.Debug("Executed raw SQL");
@@ -344,16 +387,19 @@ namespace Mage {
 
         // returns the CREATE TABLE DDL for creating the SQLite table 
         // from the specified table schema object.
-        private string BuildCreateTableQuery(TableSchema ts) {
+        private string BuildCreateTableQuery(TableSchema ts)
+        {
             var sb = new StringBuilder();
 
             sb.Append("CREATE TABLE [" + ts.TableName + "] (" + Environment.NewLine);
 
-            for (int i = 0; i <= ts.Columns.Count - 1; i++) {
+            for (int i = 0; i <= ts.Columns.Count - 1; i++)
+            {
                 ColumnSchema col = ts.Columns[i];
                 string cline = BuildColumnStatement(col);
                 sb.Append(cline);
-                if (i < ts.Columns.Count - 1) {
+                if (i < ts.Columns.Count - 1)
+                {
                     sb.Append("," + Environment.NewLine);
                 }
             }
@@ -366,28 +412,35 @@ namespace Mage {
 
         /// Used when creating the CREATE TABLE DDL. Creates a single row
         /// for the specified column.
-        private string BuildColumnStatement(ColumnSchema col) {
+        private string BuildColumnStatement(ColumnSchema col)
+        {
             var sb = new StringBuilder();
             sb.Append("\t" + "\"" + col.ColumnName + "\"" + "\t" + "\t");
 
-            if (col.ColumnType == "int") {
+            if (col.ColumnType == "int")
+            {
                 sb.Append("integer");
-            } else {
+            }
+            else
+            {
                 sb.Append(col.ColumnType);
             }
             //End If
-			if (!col.IsNullable)
-			{
+            if (!col.IsNullable)
+            {
                 sb.Append(" NOT NULL");
             }
 
-			string defval = StripParens(col.DefaultValue);
+            string defval = StripParens(col.DefaultValue);
             defval = DiscardNational(defval);
             //traceLog.Debug(("DEFAULT VALUE BEFORE [" & col.DefaultValue & "] AFTER [") + defval & "]")
-            if (!string.IsNullOrEmpty(defval) && defval.ToUpper().Contains("GETDATE")) {
+            if (!string.IsNullOrEmpty(defval) && defval.ToUpper().Contains("GETDATE"))
+            {
                 traceLog.Debug("converted SQL Server GETDATE() to CURRENT_TIMESTAMP for column [" + col.ColumnName + "]");
                 sb.Append(" DEFAULT (CURRENT_TIMESTAMP)");
-            } else if (string.IsNullOrEmpty(defval) && IsValidDefaultValue(defval)) {
+            }
+            else if (string.IsNullOrEmpty(defval) && IsValidDefaultValue(defval))
+            {
                 sb.Append(" DEFAULT " + defval);
             }
 
@@ -395,13 +448,15 @@ namespace Mage {
         }
 
         // Creates SQLite connection string from the specified DB file path.
-        private static string CreateSQLiteConnectionString(string sqlitePath, string password) {
+        private static string CreateSQLiteConnectionString(string sqlitePath, string password)
+        {
             var builder = new SQLiteConnectionStringBuilder
             {
-	            DataSource = sqlitePath
+                DataSource = sqlitePath
             };
 
-	        if (password != null) {
+            if (password != null)
+            {
                 builder.Password = password;
             }
             //builder.PageSize = 4096
@@ -412,12 +467,14 @@ namespace Mage {
         }
 
         // Creates the SQLite database from the schema read from the SQL Server.
-        private static void CreateSQLiteDatabaseOnly(string sqlitePath) {
+        private static void CreateSQLiteDatabaseOnly(string sqlitePath)
+        {
             traceLog.Debug("Creating SQLite database...");
 
             // Create the SQLite database file
             string dirPath = Path.GetDirectoryName(sqlitePath);
-            if (!string.IsNullOrEmpty(dirPath)) {
+            if (!string.IsNullOrEmpty(dirPath))
+            {
                 Directory.CreateDirectory(dirPath);
             }
             SQLiteConnection.CreateFile(sqlitePath);
@@ -426,28 +483,32 @@ namespace Mage {
         }
 
         // Creates a command object needed to insert values into a specific SQLite table.
-		private SQLiteCommand BuildSQLiteInsert(TableSchema ts, out List<DbType> columnDataTypes)
-		{
+        private SQLiteCommand BuildSQLiteInsert(TableSchema ts, out List<DbType> columnDataTypes)
+        {
             var res = new SQLiteCommand();
 
-			columnDataTypes = new List<DbType>(ts.Columns.Count - 1);
+            columnDataTypes = new List<DbType>(ts.Columns.Count - 1);
 
             var sb = new StringBuilder();
             sb.Append("INSERT INTO [" + ts.TableName + "] (");
-            for (int i = 0; i <= ts.Columns.Count - 1; i++) {
+            for (int i = 0; i <= ts.Columns.Count - 1; i++)
+            {
                 sb.Append("[" + ts.Columns[i].ColumnName + "]");
-                if (i < ts.Columns.Count - 1) {
+                if (i < ts.Columns.Count - 1)
+                {
                     sb.Append(", ");
                 }
             }
-            
+
             sb.Append(") VALUES (");
 
             var pnames = new List<string>();
-            for (int i = 0; i <= ts.Columns.Count - 1; i++) {
+            for (int i = 0; i <= ts.Columns.Count - 1; i++)
+            {
                 string pname = "@" + GetNormalizedName(ts.Columns[i].ColumnName, pnames);
                 sb.Append(pname);
-                if (i < ts.Columns.Count - 1) {
+                if (i < ts.Columns.Count - 1)
+                {
                     sb.Append(", ");
                 }
 
@@ -455,7 +516,7 @@ namespace Mage {
                 var prm = new SQLiteParameter(pname, dbType, ts.Columns[i].ColumnName);
                 res.Parameters.Add(prm);
 
-	            columnDataTypes.Add(dbType);
+                columnDataTypes.Add(dbType);
 
                 // Remember the parameter name in order to avoid duplicates
                 pnames.Add(pname);
@@ -470,112 +531,140 @@ namespace Mage {
         // Used in order to avoid breaking naming rules (e.g., when a table has
         // a name in SQL Server that cannot be used as a basis for a matching index
         // name in SQLite).
-        private string GetNormalizedName(string str, List<string> names) {
+        private string GetNormalizedName(string str, List<string> names)
+        {
             var sb = new StringBuilder();
-            for (int i = 0; i <= str.Length - 1; i++) {
-                if (Char.IsLetterOrDigit(str[i]) || str[i] == '_') {
+            for (int i = 0; i <= str.Length - 1; i++)
+            {
+                if (Char.IsLetterOrDigit(str[i]) || str[i] == '_')
+                {
                     sb.Append(str[i]);
-                } else {
+                }
+                else
+                {
                     sb.Append("_");
                 }
             }
             // for
             // Avoid returning duplicate name
-            if (names.Contains(sb.ToString())) {
+            if (names.Contains(sb.ToString()))
+            {
                 return GetNormalizedName(sb.ToString() + "_", names);
             }
 
-	        return sb.ToString();
+            return sb.ToString();
         }
 
         // Used in order to adjust the value received from SQL Server for the SQLite database.
-        private static object CastValueForColumn(object val, ColumnSchema columnSchema) {
-            if (val is DBNull) {
+        private static object CastValueForColumn(object val, ColumnSchema columnSchema)
+        {
+            if (val is DBNull)
+            {
                 return null;
             }
 
             DbType dt = GetDbTypeOfColumn(columnSchema);
 
-            switch (dt) {
+            switch (dt)
+            {
                 case DbType.Int32:
-                    if (val is string && string.IsNullOrEmpty((string)val)) {
+                    if (val is string && string.IsNullOrEmpty((string)val))
+                    {
                         return null;
                     }
-                    if (val is short) {
+                    if (val is short)
+                    {
                         return Convert.ToInt32(Convert.ToInt16(val));
                     }
-                    if (val is byte) {
+                    if (val is byte)
+                    {
                         return Convert.ToInt32(Convert.ToByte(val));
                     }
-                    if (val is long) {
+                    if (val is long)
+                    {
                         return Convert.ToInt32(Convert.ToInt64(val));
                     }
-                    if (val is decimal) {
+                    if (val is decimal)
+                    {
                         return Convert.ToInt32(Convert.ToDecimal(val));
                     }
-                    break; 
+                    break;
 
                 case DbType.Int16:
-                    if (val is int) {
+                    if (val is int)
+                    {
                         return Convert.ToInt16(Convert.ToInt32(val));
                     }
-                    if (val is byte) {
+                    if (val is byte)
+                    {
                         return Convert.ToInt16(Convert.ToByte(val));
                     }
-                    if (val is long) {
+                    if (val is long)
+                    {
                         return Convert.ToInt16(Convert.ToInt64(val));
                     }
-                    if (val is decimal) {
+                    if (val is decimal)
+                    {
                         return Convert.ToInt16(Convert.ToDecimal(val));
                     }
-                    break; 
+                    break;
 
                 case DbType.Int64:
-                    if (val is int) {
+                    if (val is int)
+                    {
                         return Convert.ToInt64(Convert.ToInt32(val));
                     }
-                    if (val is short) {
+                    if (val is short)
+                    {
                         return Convert.ToInt64(Convert.ToInt16(val));
                     }
-                    if (val is byte) {
+                    if (val is byte)
+                    {
                         return Convert.ToInt64(Convert.ToByte(val));
                     }
-                    if (val is decimal) {
+                    if (val is decimal)
+                    {
                         return Convert.ToInt64(Convert.ToDecimal(val));
                     }
                     break;
 
                 case DbType.Single:
-                    if (val is double) {
+                    if (val is double)
+                    {
                         return Convert.ToSingle(Convert.ToDouble(val));
                     }
-                    if (val is decimal) {
+                    if (val is decimal)
+                    {
                         return Convert.ToSingle(Convert.ToDecimal(val));
                     }
-                    break; 
+                    break;
 
                 case DbType.Double:
-                    if (val is float) {
+                    if (val is float)
+                    {
                         return Convert.ToDouble(Convert.ToSingle(val));
                     }
-                    if (val is double) {
+                    if (val is double)
+                    {
                         return Convert.ToDouble(val);
                     }
-                    if (val is decimal) {
+                    if (val is decimal)
+                    {
                         return Convert.ToDouble(Convert.ToDecimal(val));
                     }
                     break;
 
                 case DbType.String:
-                    if (val is Guid) {
+                    if (val is Guid)
+                    {
                         return ((Guid)val).ToString();
                     }
-                    break; 
+                    break;
 
                 case DbType.Binary:
                 case DbType.Boolean:
                 case DbType.DateTime:
-                    break; 
+                    break;
                 default:
 
                     traceLog.Error("argument exception - illegal database type");
@@ -586,56 +675,74 @@ namespace Mage {
         }
 
         /// Matches SQL Server types to general DB types
-        private static DbType GetDbTypeOfColumn(ColumnSchema cs) {
-            if (cs.ColumnType == "tinyint") {
+        private static DbType GetDbTypeOfColumn(ColumnSchema cs)
+        {
+            if (cs.ColumnType == "tinyint")
+            {
                 return DbType.Byte;
             }
-            if (cs.ColumnType == "int") {
+            if (cs.ColumnType == "int")
+            {
                 return DbType.Int32;
             }
-            if (cs.ColumnType == "smallint") {
+            if (cs.ColumnType == "smallint")
+            {
                 return DbType.Int16;
             }
-            if (cs.ColumnType == "bigint") {
+            if (cs.ColumnType == "bigint")
+            {
                 return DbType.Int64;
             }
-            if (cs.ColumnType == "bit") {
+            if (cs.ColumnType == "bit")
+            {
                 return DbType.Boolean;
             }
-            if (cs.ColumnType == "nvarchar" || cs.ColumnType == "varchar" || cs.ColumnType == "text" || cs.ColumnType == "ntext") {
+            if (cs.ColumnType == "nvarchar" || cs.ColumnType == "varchar" || cs.ColumnType == "text" || cs.ColumnType == "ntext")
+            {
                 return DbType.String;
             }
-            if (cs.ColumnType == "float") {
+            if (cs.ColumnType == "float")
+            {
                 return DbType.Double;
             }
-            if (cs.ColumnType == "real") {
+            if (cs.ColumnType == "real")
+            {
                 return DbType.Single;
             }
-            if (cs.ColumnType == "blob") {
+            if (cs.ColumnType == "blob")
+            {
                 return DbType.Binary;
             }
-            if (cs.ColumnType == "numeric") {
+            if (cs.ColumnType == "numeric")
+            {
                 return DbType.Double;
             }
-            if (cs.ColumnType == "timestamp" || cs.ColumnType == "datetime") {
+            if (cs.ColumnType == "timestamp" || cs.ColumnType == "datetime")
+            {
                 return DbType.DateTime;
             }
-            if (cs.ColumnType == "nchar" || cs.ColumnType == "char") {
+            if (cs.ColumnType == "nchar" || cs.ColumnType == "char")
+            {
                 return DbType.String;
             }
-            if (cs.ColumnType == "uniqueidentifier") {
+            if (cs.ColumnType == "uniqueidentifier")
+            {
                 return DbType.String;
             }
-            if (cs.ColumnType == "xml") {
+            if (cs.ColumnType == "xml")
+            {
                 return DbType.String;
             }
-            if (cs.ColumnType == "sql_variant") {
+            if (cs.ColumnType == "sql_variant")
+            {
                 return DbType.Object;
             }
-            if (cs.ColumnType == "integer") {
+            if (cs.ColumnType == "integer")
+            {
                 return DbType.Int64;
             }
-            if (cs.ColumnType == "double") {
+            if (cs.ColumnType == "double")
+            {
                 return DbType.Double;
             }
 
@@ -644,62 +751,73 @@ namespace Mage {
         }
 
         // Strip any parentheses from the string.
-        private string StripParens(string value) {
+        private string StripParens(string value)
+        {
             var rx = new Regex("\\(([^\\)]*)\\)");
             Match m = rx.Match(value);
-            if (!m.Success) {
+            if (!m.Success)
+            {
                 return value;
             }
 
-	        return StripParens(m.Groups[1].Value);
+            return StripParens(m.Groups[1].Value);
         }
 
         // Check if the DEFAULT clause is valid by SQLite standards
-        private static bool IsValidDefaultValue(string value) {
-            if (IsSingleQuoted(value)) {
+        private static bool IsValidDefaultValue(string value)
+        {
+            if (IsSingleQuoted(value))
+            {
                 return true;
             }
 
             double testnum;
-            if (!double.TryParse(value, out testnum)) {
+            if (!double.TryParse(value, out testnum))
+            {
                 return false;
             }
             return true;
         }
 
-        private static bool IsSingleQuoted(string value) {
+        private static bool IsSingleQuoted(string value)
+        {
             value = value.Trim();
-            if (value.StartsWith("'") && value.EndsWith("'")) {
+            if (value.StartsWith("'") && value.EndsWith("'"))
+            {
                 return true;
             }
             return false;
         }
 
         // Discards the national prefix if exists (e.g., N'sometext') which is not supported in SQLite.
-        private static string DiscardNational(string value) {
+        private static string DiscardNational(string value)
+        {
             var rx = new Regex("N\\'([^\\']*)\\'");
             Match m = rx.Match(value);
-            if (m.Success) {
+            if (m.Success)
+            {
                 return m.Groups[1].Value;
             }
 
-	        return value;
+            return value;
         }
 
         #endregion
 
         #region "Internal classes for SQLite
 
-        private class ColumnSchema {
+        private class ColumnSchema
+        {
             public string ColumnName = "";
             public string ColumnType = "";
-	        public bool IsNullable = true;
-	        public string DefaultValue = "";
-	        //           public bool IsIdentity = false;
+            public bool IsNullable = true;
+            public string DefaultValue = "";
+            //           public bool IsIdentity = false;
             //           public bool IsCaseSensitivite = false; // null??
         }
 
-        private class TableSchema {
+        private class TableSchema
+        {
             public string TableName = "";
             public List<ColumnSchema> Columns;
         }

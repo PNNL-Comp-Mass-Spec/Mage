@@ -14,28 +14,28 @@ using MageUIComponents;
 namespace MageFileProcessor
 {
 
-	public partial class FileProcessorForm : Form
-	{
+    public partial class FileProcessorForm : Form
+    {
 
-		#region Constants
-		protected const string TAG_JOB_IDs = "Job_ID_List";
-		protected const string TAG_JOB_IDs_FROM_DATASETS = "Jobs_From_Dataset_List";
-		protected const string TAG_DATASET_LIST = "Datasets";
-		protected const string TAG_DATASET_ID_LIST = "Dataset_List";
-		protected const string TAG_DATASET_NAME_LIST = "Dataset_Name_List";
-		protected const string TAG_DATA_PACKAGE_ID = "Data_Package";
-		protected const string TAG_DATA_PACKAGE_DS_IDs = "Data_Package_Datasets";
+        #region Constants
+        protected const string TAG_JOB_IDs = "Job_ID_List";
+        protected const string TAG_JOB_IDs_FROM_DATASETS = "Jobs_From_Dataset_List";
+        protected const string TAG_DATASET_LIST = "Datasets";
+        protected const string TAG_DATASET_ID_LIST = "Dataset_List";
+        protected const string TAG_DATASET_NAME_LIST = "Dataset_Name_List";
+        protected const string TAG_DATA_PACKAGE_ID = "Data_Package";
+        protected const string TAG_DATA_PACKAGE_DS_IDs = "Data_Package_Datasets";
 
-		#endregion
+        #endregion
 
-		#region Member Variables
+        #region Member Variables
 
-		/// <summary>
-		/// Pipeline queue for running the multiple pipelines that make up the workflows for this module
-		/// </summary>
-		private PipelineQueue mPipelineQueue = new PipelineQueue();
+        /// <summary>
+        /// Pipeline queue for running the multiple pipelines that make up the workflows for this module
+        /// </summary>
+        private PipelineQueue mPipelineQueue = new PipelineQueue();
 
-		private string mFinalPipelineName = string.Empty;
+        private string mFinalPipelineName = string.Empty;
 
         /// <summary>
         /// 
@@ -43,752 +43,753 @@ namespace MageFileProcessor
         /// <remarks>Used to determine which field names to use for source files when copying files or processing files</remarks>
         private string mFileSourcePipelineName = string.Empty;
 
-		// current command that is being executed or has most recently been executed
-		MageCommandEventArgs mCurrentCmd;
+        // current command that is being executed or has most recently been executed
+        MageCommandEventArgs mCurrentCmd;
 
-		// object that sent the current command
-		object mCurrentCmdSender;
+        // object that sent the current command
+        object mCurrentCmdSender;
 
-		#endregion
+        #endregion
 
-		#region Initialization
+        #region Initialization
 
         /// <summary>
         /// Constructor
         /// </summary>
-		public FileProcessorForm()
-		{
-			InitializeComponent();
+        public FileProcessorForm()
+        {
+            InitializeComponent();
 
-			const bool isBetaVersion = false;
-			SetFormTitle("2016-07-13", isBetaVersion);
+            const bool isBetaVersion = false;
+            SetFormTitle("2016-07-13", isBetaVersion);
 
-			SetTags();
+            SetTags();
 
-			SetAboutText();
+            SetAboutText();
 
             // These settings are loaded from file MageFileProcessor.exe.config
             // Typically gigasax and DMS5
             Mage.Globals.DMSServer = Settings.Default.DMSServer;
             Mage.Globals.DMSDatabase = Settings.Default.DMSDatabase;
-            
+
             txtServer.Text = "DMS Server: " + Mage.Globals.DMSServer;
-            
+
             ModuleDiscovery.DMSServerOverride = Globals.DMSServer;
             ModuleDiscovery.DMSDatabaseOverride = Globals.DMSDatabase;
 
-			try
-			{
-				// set up configuration folder and files
+            try
+            {
+                // set up configuration folder and files
                 SavedState.SetupConfigFiles("MageFileProcessor");
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show("Error loading settings: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-			}
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading settings: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
 
-			try
-			{
-				// set up configuration folder and files
-				// Set log4net path and kick the logger into action
-				var LogFileName = Path.Combine(SavedState.DataDirectory, "log.txt");
-				GlobalContext.Properties["LogName"] = LogFileName;
-				var traceLog = LogManager.GetLogger("TraceLog");
-				traceLog.Info("Starting");
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show("Error instantiating trace log: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-			}
+            try
+            {
+                // set up configuration folder and files
+                // Set log4net path and kick the logger into action
+                var LogFileName = Path.Combine(SavedState.DataDirectory, "log.txt");
+                GlobalContext.Properties["LogName"] = LogFileName;
+                var traceLog = LogManager.GetLogger("TraceLog");
+                traceLog.Info("Starting");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error instantiating trace log: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
 
-			// setup UI component panels
-			SetupStatusPanel();
-			SetupCommandHandler();
-			SetupFilterSelectionListForFileProcessor();
-			SetupColumnMapping();
+            // setup UI component panels
+            SetupStatusPanel();
+            SetupCommandHandler();
+            SetupFilterSelectionListForFileProcessor();
+            SetupColumnMapping();
 
-			// setup context menus for list displays
-		    
+            // setup context menus for list displays
+
             // ReSharper disable once ObjectCreationAsStatement
-			new GridViewDisplayActions(JobListDisplayControl);
-		    
+            new GridViewDisplayActions(JobListDisplayControl);
+
             // ReSharper disable once ObjectCreationAsStatement
-			new GridViewDisplayActions(FileListDisplayControl);
+            new GridViewDisplayActions(FileListDisplayControl);
 
-			// Connect click events
-			lblAboutLink.LinkClicked += lblAboutLink_LinkClicked;
+            // Connect click events
+            lblAboutLink.LinkClicked += lblAboutLink_LinkClicked;
 
-			// Connect the pipeline queue to message handlers
-			ConnectPipelineQueueToStatusDisplay(mPipelineQueue);
+            // Connect the pipeline queue to message handlers
+            ConnectPipelineQueueToStatusDisplay(mPipelineQueue);
 
-			// connect callbacks for UI panels
-			FileProcessingPanel1.GetSelectedFileInfo += GetSelectedFileItem;
-			FileProcessingPanel1.GetSelectedOutputInfo += GetSelectedOutputItem;
+            // connect callbacks for UI panels
+            FileProcessingPanel1.GetSelectedFileInfo += GetSelectedFileItem;
+            FileProcessingPanel1.GetSelectedOutputInfo += GetSelectedOutputItem;
 
-			SetupFlexQueryPanels(); // must be done before restoring saved state
+            SetupFlexQueryPanels(); // must be done before restoring saved state
 
-			try
-			{
-				// restore settings to UI component panels
-				SavedState.RestoreSavedPanelParameters(PanelSupport.GetParameterPanelList(this));
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show("Error restoring saved settings; will auto-delete SavedState.xml.  Message details: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-				// Delete the SavedState.xml file
-				try
-				{
-					File.Delete(SavedState.FilePath);
-				}
-				catch (Exception ex2)
-				{
-					// Ignore errors here
-					Console.WriteLine("Error deleting SavedState file: " + ex2.Message);
-				}
-			}
+            try
+            {
+                // restore settings to UI component panels
+                SavedState.RestoreSavedPanelParameters(PanelSupport.GetParameterPanelList(this));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error restoring saved settings; will auto-delete SavedState.xml.  Message details: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                // Delete the SavedState.xml file
+                try
+                {
+                    File.Delete(SavedState.FilePath);
+                }
+                catch (Exception ex2)
+                {
+                    // Ignore errors here
+                    Console.WriteLine("Error deleting SavedState file: " + ex2.Message);
+                }
+            }
 
-			AdjustInitialUIState();
-		}
+            AdjustInitialUIState();
+        }
 
-		private void SetAboutText()
-		{
-			txtAbout1.Text = "Mage File Processor can search for files associated with DMS analysis jobs or datasets, then copy those files to the local computer.  The files can optionally be combined into a single tab-delimited text file or a single SQLite database.";
-			txtAbout2.Text = "Written by Gary Kiebel and Matthew Monroe in 2011 for the Department of Energy (PNNL, Richland, WA).";
-			lblAboutLink.Text = "http://prismwiki.pnl.gov/wiki/Mage_Suite";
-		}
+        private void SetAboutText()
+        {
+            txtAbout1.Text = "Mage File Processor can search for files associated with DMS analysis jobs or datasets, then copy those files to the local computer.  The files can optionally be combined into a single tab-delimited text file or a single SQLite database.";
+            txtAbout2.Text = "Written by Gary Kiebel and Matthew Monroe in 2011 for the Department of Energy (PNNL, Richland, WA).";
+            lblAboutLink.Text = "http://prismwiki.pnl.gov/wiki/Mage_Suite";
+        }
 
-		private void SetFormTitle(string programDate, bool beta)
-		{
-			var objVersion = Assembly.GetExecutingAssembly().GetName().Version;
-			var version = string.Format("{0}.{1}.{2}", objVersion.Major, objVersion.Minor, objVersion.Build);
+        private void SetFormTitle(string programDate, bool beta)
+        {
+            var objVersion = Assembly.GetExecutingAssembly().GetName().Version;
+            var version = string.Format("{0}.{1}.{2}", objVersion.Major, objVersion.Minor, objVersion.Build);
 
-			txtVersion.Text = "Version " + version;
+            txtVersion.Text = "Version " + version;
 
-			if (!string.IsNullOrEmpty(programDate))
-			{
-				if (beta)
-					txtVersion.Text += string.Format(" ({0}, beta)", programDate);
-				else
-					txtVersion.Text += string.Format(" ({0})", programDate);
-			}
+            if (!string.IsNullOrEmpty(programDate))
+            {
+                if (beta)
+                    txtVersion.Text += string.Format(" ({0}, beta)", programDate);
+                else
+                    txtVersion.Text += string.Format(" ({0})", programDate);
+            }
 
-			if (beta)
-				this.Text += " (beta)";
+            if (beta)
+                this.Text += " (beta)";
 
-		}
+        }
 
-		private void SetTags()
-		{
-			this.JobListTabPage.Tag = TAG_JOB_IDs;
-			this.JobsFromDatasetIDTabPage.Tag = TAG_JOB_IDs_FROM_DATASETS;
-			this.DatasetTabPage.Tag = TAG_DATASET_LIST;
-			this.DatasetIDTabPage.Tag = TAG_DATASET_ID_LIST;
-			this.DatasetNameTabPage.Tag = TAG_DATASET_NAME_LIST;
-			this.DataPackageJobsTabPage.Tag = TAG_DATA_PACKAGE_ID;
-			this.DataPackageDatasetsTabPage.Tag = TAG_DATA_PACKAGE_DS_IDs;
-		}
+        private void SetTags()
+        {
+            this.JobListTabPage.Tag = TAG_JOB_IDs;
+            this.JobsFromDatasetIDTabPage.Tag = TAG_JOB_IDs_FROM_DATASETS;
+            this.DatasetTabPage.Tag = TAG_DATASET_LIST;
+            this.DatasetIDTabPage.Tag = TAG_DATASET_ID_LIST;
+            this.DatasetNameTabPage.Tag = TAG_DATASET_NAME_LIST;
+            this.DataPackageJobsTabPage.Tag = TAG_DATA_PACKAGE_ID;
+            this.DataPackageDatasetsTabPage.Tag = TAG_DATA_PACKAGE_DS_IDs;
+        }
 
 
-		#endregion
+        #endregion
 
-		#region Command Processing
+        #region Command Processing
 
-		private void ConnectPipelineToStatusDisplay(ProcessingPipeline pipeline)
-		{
-			// Clear any warnings
-			statusPanel1.ClearWarnings();
+        private void ConnectPipelineToStatusDisplay(ProcessingPipeline pipeline)
+        {
+            // Clear any warnings
+            statusPanel1.ClearWarnings();
 
-			pipeline.OnStatusMessageUpdated += HandlePipelineUpdate;
-			pipeline.OnWarningMessageUpdated += HandlePipelineWarning;
-			pipeline.OnRunCompleted += HandlePipelineCompletion;
-		}
+            pipeline.OnStatusMessageUpdated += HandlePipelineUpdate;
+            pipeline.OnWarningMessageUpdated += HandlePipelineWarning;
+            pipeline.OnRunCompleted += HandlePipelineCompletion;
+        }
 
-		private void ConnectPipelineQueueToStatusDisplay(PipelineQueue pipelineQueue)
-		{
-			// Clear any warnings
-			statusPanel1.ClearWarnings();
+        private void ConnectPipelineQueueToStatusDisplay(PipelineQueue pipelineQueue)
+        {
+            // Clear any warnings
+            statusPanel1.ClearWarnings();
 
-			pipelineQueue.OnRunCompleted += HandlePipelineQueueCompletion;
-			pipelineQueue.OnPipelineStarted += HandlePipelineQueueUpdate;
+            pipelineQueue.OnRunCompleted += HandlePipelineQueueCompletion;
+            pipelineQueue.OnPipelineStarted += HandlePipelineQueueUpdate;
 
-		}
+        }
 
-		/// <summary>
-		/// execute a command by building and running 
-		/// the appropriate pipeline (or cancelling
-		/// the current pipeline activity)
-		/// </summary>
-		/// <param name="sender">(ignored)</param>
-		/// <param name="command">Command to execute</param>
-		public void DoCommand(object sender, MageCommandEventArgs command)
-		{
+        /// <summary>
+        /// execute a command by building and running 
+        /// the appropriate pipeline (or cancelling
+        /// the current pipeline activity)
+        /// </summary>
+        /// <param name="sender">(ignored)</param>
+        /// <param name="command">Command to execute</param>
+        public void DoCommand(object sender, MageCommandEventArgs command)
+        {
 
-			// remember who sent us the command
-			mCurrentCmdSender = sender;
+            // remember who sent us the command
+            mCurrentCmdSender = sender;
 
-			if (command.Action == "display_reloaded")
-			{
-				mCurrentCmd = command;
-				AdjusttPostCommndUIState(null);
-				return;
-			}
+            if (command.Action == "display_reloaded")
+            {
+                mCurrentCmd = command;
+                AdjusttPostCommndUIState(null);
+                return;
+            }
 
-			// cancel the currently running pipeline
-			if (command.Action == "cancel_operation" && mPipelineQueue != null && mPipelineQueue.IsRunning)
-			{
-				mPipelineQueue.Cancel();
-				return;
-			}
+            // cancel the currently running pipeline
+            if (command.Action == "cancel_operation" && mPipelineQueue != null && mPipelineQueue.IsRunning)
+            {
+                mPipelineQueue.Cancel();
+                return;
+            }
 
-			// don't allow another pipeline if one is currently running
-			if (mPipelineQueue != null && mPipelineQueue.IsRunning)
-			{
-				MessageBox.Show("Pipeline is already active", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
-				return;
-			}
+            // don't allow another pipeline if one is currently running
+            if (mPipelineQueue != null && mPipelineQueue.IsRunning)
+            {
+                MessageBox.Show("Pipeline is already active", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
-			// construct suitable Mage pipeline for the given command
-			// and run that pipeline
-			BuildAndRunPipeline(command);
-		}
+            // construct suitable Mage pipeline for the given command
+            // and run that pipeline
+            BuildAndRunPipeline(command);
+        }
 
-		/// <summary>
-		/// Construct and run a Mage pipeline for the given command
-		/// </summary>
-		/// <param name="command"></param>
-		private void BuildAndRunPipeline(MageCommandEventArgs command)
-		{
-			var mode = (command.Mode == "selected") ? DisplaySourceMode.Selected : DisplaySourceMode.All;
+        /// <summary>
+        /// Construct and run a Mage pipeline for the given command
+        /// </summary>
+        /// <param name="command"></param>
+        private void BuildAndRunPipeline(MageCommandEventArgs command)
+        {
+            var mode = (command.Mode == "selected") ? DisplaySourceMode.Selected : DisplaySourceMode.All;
 
-			mPipelineQueue.Pipelines.Clear();
+            mPipelineQueue.Pipelines.Clear();
 
-			try
-			{
-				// build and run the pipeline appropriate to the command
-				Dictionary<string, string> runtimeParms;
-				GVPipelineSource source;
-				ISinkModule sink;
-				string queryDefXML;
-				ProcessingPipeline pipeline;
+            try
+            {
+                // build and run the pipeline appropriate to the command
+                Dictionary<string, string> runtimeParms;
+                GVPipelineSource source;
+                ISinkModule sink;
+                string queryDefXML;
+                ProcessingPipeline pipeline;
 
-				switch (command.Action)
-				{
-					case "get_entities_from_query":
-						string queryName;
-						queryDefXML = GetQueryDefinition(out queryName);
-						if (string.IsNullOrEmpty(queryDefXML))
-						{
-							MessageBox.Show("Unknown query type '" + queryName + "'.  Your QueryDefinitions.xml file is out-of-date", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-							return;
-						}
+                switch (command.Action)
+                {
+                    case "get_entities_from_query":
+                        string queryName;
+                        queryDefXML = GetQueryDefinition(out queryName);
+                        if (string.IsNullOrEmpty(queryDefXML))
+                        {
+                            MessageBox.Show("Unknown query type '" + queryName + "'.  Your QueryDefinitions.xml file is out-of-date", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            return;
+                        }
 
-						var queryParameters = GetRuntimeParmsForEntityQuery();
-						if (!ValidQueryParameters(queryName, queryParameters))
-						{
-							return;
-						}
-						sink = JobListDisplayControl.MakeSink(command.Mode, 15);
+                        var queryParameters = GetRuntimeParmsForEntityQuery();
+                        if (!ValidQueryParameters(queryName, queryParameters))
+                        {
+                            return;
+                        }
+                        sink = JobListDisplayControl.MakeSink(command.Mode, 15);
 
-						pipeline = Pipelines.MakeJobQueryPipeline(sink, queryDefXML, queryParameters);
-						mPipelineQueue.Pipelines.Enqueue(pipeline);						
-						mFinalPipelineName = pipeline.PipelineName;
-						break;
+                        pipeline = Pipelines.MakeJobQueryPipeline(sink, queryDefXML, queryParameters);
+                        mPipelineQueue.Pipelines.Enqueue(pipeline);
+                        mFinalPipelineName = pipeline.PipelineName;
+                        break;
 
-					case "get_entities_from_flex_query":
-						queryDefXML = ModuleDiscovery.GetQueryXMLDef(command.Mode);
-						var builder = JobFlexQueryPanel.GetSQLBuilder(queryDefXML);
-						if (!builder.HasPredicate)
-						{
-							MessageBox.Show("You must define one or more search criteria before searching", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-							return;
-						}
+                    case "get_entities_from_flex_query":
+                        queryDefXML = ModuleDiscovery.GetQueryXMLDef(command.Mode);
+                        var builder = JobFlexQueryPanel.GetSQLBuilder(queryDefXML);
+                        if (!builder.HasPredicate)
+                        {
+                            MessageBox.Show("You must define one or more search criteria before searching", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            return;
+                        }
 
-						var reader = new MSSQLReader(builder);
-						sink = JobListDisplayControl.MakeSink("Jobs", 15);
+                        var reader = new MSSQLReader(builder);
+                        sink = JobListDisplayControl.MakeSink("Jobs", 15);
 
-						pipeline = ProcessingPipeline.Assemble("Get Jobs", reader, sink);
-						mPipelineQueue.Pipelines.Enqueue(pipeline);
-						mFinalPipelineName = pipeline.PipelineName;
-						break;
+                        pipeline = ProcessingPipeline.Assemble("Get Jobs", reader, sink);
+                        mPipelineQueue.Pipelines.Enqueue(pipeline);
+                        mFinalPipelineName = pipeline.PipelineName;
+                        break;
 
-					case "get_files_from_entities":
-						var entityType = JobListDisplayControl.PageTitle;
-						runtimeParms = GetRuntimeParmsForEntityFileType(entityType);
-						source = new GVPipelineSource(JobListDisplayControl, mode);
-						sink = FileListDisplayControl.MakeSink("Files", 15);
+                    case "get_files_from_entities":
+                        var entityType = JobListDisplayControl.PageTitle;
+                        runtimeParms = GetRuntimeParmsForEntityFileType(entityType);
+                        source = new GVPipelineSource(JobListDisplayControl, mode);
+                        sink = FileListDisplayControl.MakeSink("Files", 15);
 
-						pipeline = Pipelines.MakeFileListPipeline(source, sink, runtimeParms);
-						mPipelineQueue.Pipelines.Enqueue(pipeline);
-						mFinalPipelineName = pipeline.PipelineName;
+                        pipeline = Pipelines.MakeFileListPipeline(source, sink, runtimeParms);
+                        mPipelineQueue.Pipelines.Enqueue(pipeline);
+                        mFinalPipelineName = pipeline.PipelineName;
                         mFileSourcePipelineName = pipeline.PipelineName;
-						break;
+                        break;
 
-					case "get_files_from_local_folder":
-						runtimeParms = GetRuntimeParmsForLocalFolder();
-						var sFolder = runtimeParms["Folder"];
-						if (!Directory.Exists(sFolder))
-						{
-							MessageBox.Show("Folder not found: " + sFolder, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-							return;
-						}
-						sink = FileListDisplayControl.MakeSink("Files", 15);
+                    case "get_files_from_local_folder":
+                        runtimeParms = GetRuntimeParmsForLocalFolder();
+                        var sFolder = runtimeParms["Folder"];
+                        if (!Directory.Exists(sFolder))
+                        {
+                            MessageBox.Show("Folder not found: " + sFolder, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            return;
+                        }
+                        sink = FileListDisplayControl.MakeSink("Files", 15);
 
-						pipeline = Pipelines.MakePipelineToGetLocalFileList(sink, runtimeParms);
-						mPipelineQueue.Pipelines.Enqueue(pipeline);
-						mFinalPipelineName = pipeline.PipelineName;
+                        pipeline = Pipelines.MakePipelineToGetLocalFileList(sink, runtimeParms);
+                        mPipelineQueue.Pipelines.Enqueue(pipeline);
+                        mFinalPipelineName = pipeline.PipelineName;
                         mFileSourcePipelineName = pipeline.PipelineName;
-						break;
+                        break;
 
-					case "get_files_from_local_manifest":
-						runtimeParms = GetRuntimeParmsForManifestFile();
-						var sFile = runtimeParms["ManifestFilePath"];
-						if (!File.Exists(sFile))
-						{
-							MessageBox.Show("Manifest file not found: " + sFile, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-							return;
-						}
-						sink = FileListDisplayControl.MakeSink("Files", 15);
+                    case "get_files_from_local_manifest":
+                        runtimeParms = GetRuntimeParmsForManifestFile();
+                        var sFile = runtimeParms["ManifestFilePath"];
+                        if (!File.Exists(sFile))
+                        {
+                            MessageBox.Show("Manifest file not found: " + sFile, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            return;
+                        }
+                        sink = FileListDisplayControl.MakeSink("Files", 15);
 
-						pipeline = Pipelines.MakePipelineToGetFilesFromManifest(sink, runtimeParms);
-						mPipelineQueue.Pipelines.Enqueue(pipeline);
-						mFinalPipelineName = pipeline.PipelineName;
+                        pipeline = Pipelines.MakePipelineToGetFilesFromManifest(sink, runtimeParms);
+                        mPipelineQueue.Pipelines.Enqueue(pipeline);
+                        mFinalPipelineName = pipeline.PipelineName;
                         mFileSourcePipelineName = pipeline.PipelineName;
-						break;
+                        break;
 
-					case "copy_files":
-						runtimeParms = GetRuntimeParmsForCopyFiles();
-						if (string.IsNullOrEmpty(runtimeParms["OutputFolder"]))
-						{
-							MessageBox.Show("Destination folder cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-							return;
-						}
+                    case "copy_files":
+                        runtimeParms = GetRuntimeParmsForCopyFiles();
+                        if (string.IsNullOrEmpty(runtimeParms["OutputFolder"]))
+                        {
+                            MessageBox.Show("Destination folder cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            return;
+                        }
 
-						source = new GVPipelineSource(FileListDisplayControl, mode);
+                        source = new GVPipelineSource(FileListDisplayControl, mode);
 
-						pipeline = Pipelines.MakeFileCopyPipeline(source, runtimeParms);
-						mPipelineQueue.Pipelines.Enqueue(pipeline);
-						mFinalPipelineName = pipeline.PipelineName;
-						break;
+                        pipeline = Pipelines.MakeFileCopyPipeline(source, runtimeParms);
+                        mPipelineQueue.Pipelines.Enqueue(pipeline);
+                        mFinalPipelineName = pipeline.PipelineName;
+                        break;
 
-					case "process_file_contents":
-						var filterParms = FileProcessingPanel1.GetParameters();
-						runtimeParms = GetRuntimeParmsForFileProcessing();
+                    case "process_file_contents":
+                        var filterParms = FileProcessingPanel1.GetParameters();
+                        runtimeParms = GetRuntimeParmsForFileProcessing();
 
-						switch (FilterOutputTabs.SelectedTab.Tag.ToString())
-						{
-							case "File_Output":
-								if (string.IsNullOrEmpty(runtimeParms["OutputFolder"]))
-								{
-									MessageBox.Show("Destination folder cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-									return;
-								}
-								
-								if (string.IsNullOrEmpty(runtimeParms["OutputFile"]))
-								{
-									MessageBox.Show("Destination file cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-									return;
-								}
-								break;
+                        switch (FilterOutputTabs.SelectedTab.Tag.ToString())
+                        {
+                            case "File_Output":
+                                if (string.IsNullOrEmpty(runtimeParms["OutputFolder"]))
+                                {
+                                    MessageBox.Show("Destination folder cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                    return;
+                                }
 
-							case "SQLite_Output":
-								if (string.IsNullOrEmpty(runtimeParms["DatabaseName"]))
-								{
-									MessageBox.Show("SQLite Database path cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-									return;
-								}
-								
-								if (string.IsNullOrEmpty(runtimeParms["TableName"]))
-								{
-									MessageBox.Show("SQLite destination table name cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-									return;
-								}
-								break;
+                                if (string.IsNullOrEmpty(runtimeParms["OutputFile"]))
+                                {
+                                    MessageBox.Show("Destination file cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                    return;
+                                }
+                                break;
 
-							default:
-								MessageBox.Show("Programming bug in BuildAndRunPipeline: control FilterOutputTabs has an unrecognized tab with tag " + FilterOutputTabs.SelectedTab.Tag, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-								return;		
-						}
-						
-						source = new GVPipelineSource(FileListDisplayControl, mode);
+                            case "SQLite_Output":
+                                if (string.IsNullOrEmpty(runtimeParms["DatabaseName"]))
+                                {
+                                    MessageBox.Show("SQLite Database path cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                    return;
+                                }
 
-						mPipelineQueue = Pipelines.MakePipelineQueueToPreProcessThenFilterFiles(source, runtimeParms, filterParms);
-						mFinalPipelineName = mPipelineQueue.Pipelines.Last().PipelineName;
-						
-						break;
+                                if (string.IsNullOrEmpty(runtimeParms["TableName"]))
+                                {
+                                    MessageBox.Show("SQLite destination table name cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                    return;
+                                }
+                                break;
+
+                            default:
+                                MessageBox.Show("Programming bug in BuildAndRunPipeline: control FilterOutputTabs has an unrecognized tab with tag " + FilterOutputTabs.SelectedTab.Tag, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                return;
+                        }
+
+                        source = new GVPipelineSource(FileListDisplayControl, mode);
+
+                        mPipelineQueue = Pipelines.MakePipelineQueueToPreProcessThenFilterFiles(source, runtimeParms, filterParms);
+                        mFinalPipelineName = mPipelineQueue.Pipelines.Last().PipelineName;
+
+                        break;
 
 
-					default:
-						return;
-				}
+                    default:
+                        return;
+                }
 
-				if (mPipelineQueue.Pipelines.Count == 0)
-				{
-					MessageBox.Show(string.Format("Could not build pipeline for '{0}' operation", command.Action), "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-				}
-				else
-				{
-					mCurrentCmd = command;
+                if (mPipelineQueue.Pipelines.Count == 0)
+                {
+                    MessageBox.Show(string.Format("Could not build pipeline for '{0}' operation", command.Action), "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+                else
+                {
+                    mCurrentCmd = command;
 
-					// Clear any warnings
-					statusPanel1.ClearWarnings();				
+                    // Clear any warnings
+                    statusPanel1.ClearWarnings();
 
-					foreach (var p in mPipelineQueue.Pipelines.ToArray())
-					{
-						ConnectPipelineToStatusDisplay(p);
-						mFinalPipelineName = p.PipelineName;
-					}
+                    foreach (var p in mPipelineQueue.Pipelines.ToArray())
+                    {
+                        ConnectPipelineToStatusDisplay(p);
+                        mFinalPipelineName = p.PipelineName;
+                    }
 
-					ConnectPipelineQueueToStatusDisplay(mPipelineQueue);
-					
-					EnableCancel(true);
-					mPipelineQueue.Run();
-				}
-			}
-			catch (Exception e)
-			{
-				MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-			}
-		}
+                    ConnectPipelineQueueToStatusDisplay(mPipelineQueue);
 
-		private bool ValidQueryParameters(string queryName, Dictionary<string, string> queryParameters)
-		{
-			var msg = string.Empty;
-			var bFilterDefined = false;
+                    EnableCancel(true);
+                    mPipelineQueue.Run();
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
 
-			foreach (var entry in queryParameters)
-			{
-				if (!string.IsNullOrEmpty(entry.Key) && !string.IsNullOrEmpty(entry.Value))
-				{
-					if (entry.Value.Trim().Length > 0)
-					{
-						bFilterDefined = true;
-						break;
-					}
-				}
-			}
+        private bool ValidQueryParameters(string queryName, Dictionary<string, string> queryParameters)
+        {
+            var msg = string.Empty;
+            var bFilterDefined = false;
 
-			if (!bFilterDefined)
-			{
+            foreach (var entry in queryParameters)
+            {
+                if (!string.IsNullOrEmpty(entry.Key) && !string.IsNullOrEmpty(entry.Value))
+                {
+                    if (entry.Value.Trim().Length > 0)
+                    {
+                        bFilterDefined = true;
+                        break;
+                    }
+                }
+            }
 
-				switch (queryName)
-				{
-					case TAG_JOB_IDs:
-						msg = "Job ID list cannot be empty";
-						break;
-					case TAG_JOB_IDs_FROM_DATASETS:
-						msg = "Dataset list cannot be empty";
-						break;
-					case TAG_DATASET_ID_LIST:
-						msg = "Dataset ID list cannot be empty";
-						break;
-					case TAG_DATA_PACKAGE_ID:
-					case TAG_DATA_PACKAGE_DS_IDs:
-						msg = "Please enter a data package ID";
-						break;
-					default:
-						msg = "You must define one or more search criteria before searching for jobs";
-						break;
-				}
-			}
+            if (!bFilterDefined)
+            {
 
-			if (string.IsNullOrEmpty(msg) && (queryName == TAG_JOB_IDs || queryName == TAG_JOB_IDs_FROM_DATASETS || queryName == TAG_DATASET_ID_LIST))
-			{
-				var cSepChars = new[] { ',', '\t' };
-				string sWarning;
+                switch (queryName)
+                {
+                    case TAG_JOB_IDs:
+                        msg = "Job ID list cannot be empty";
+                        break;
+                    case TAG_JOB_IDs_FROM_DATASETS:
+                        msg = "Dataset list cannot be empty";
+                        break;
+                    case TAG_DATASET_ID_LIST:
+                        msg = "Dataset ID list cannot be empty";
+                        break;
+                    case TAG_DATA_PACKAGE_ID:
+                    case TAG_DATA_PACKAGE_DS_IDs:
+                        msg = "Please enter a data package ID";
+                        break;
+                    default:
+                        msg = "You must define one or more search criteria before searching for jobs";
+                        break;
+                }
+            }
 
-				if (queryName == TAG_JOB_IDs)
-					sWarning = "Job number '";
-				else
-					sWarning = "Use dataset IDs, not dataset names: '";
+            if (string.IsNullOrEmpty(msg) && (queryName == TAG_JOB_IDs || queryName == TAG_JOB_IDs_FROM_DATASETS || queryName == TAG_DATASET_ID_LIST))
+            {
+                var cSepChars = new[] { ',', '\t' };
+                string sWarning;
 
-				// Validate that the job numbers or dataset IDs are all numeric
-				foreach (var entry in queryParameters)
-				{
-					var sValue = entry.Value.Replace(Environment.NewLine, ",");
+                if (queryName == TAG_JOB_IDs)
+                    sWarning = "Job number '";
+                else
+                    sWarning = "Use dataset IDs, not dataset names: '";
 
-					var values = sValue.Split(cSepChars);
+                // Validate that the job numbers or dataset IDs are all numeric
+                foreach (var entry in queryParameters)
+                {
+                    var sValue = entry.Value.Replace(Environment.NewLine, ",");
 
-					foreach (var datasetID in values)
-					{
-						int iValue;
-						if (!int.TryParse(datasetID, out iValue))
-						{
-							msg = sWarning + datasetID + "' is not numeric";
-							break;
-						}
-					}
+                    var values = sValue.Split(cSepChars);
 
-					if (!string.IsNullOrEmpty(msg))
-						break;
-				}
-			}
+                    foreach (var datasetID in values)
+                    {
+                        int iValue;
+                        if (!int.TryParse(datasetID, out iValue))
+                        {
+                            msg = sWarning + datasetID + "' is not numeric";
+                            break;
+                        }
+                    }
 
-			if (string.IsNullOrEmpty(msg))
-				return true;
-			
-			MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-			return false;
-		}
+                    if (!string.IsNullOrEmpty(msg))
+                        break;
+                }
+            }
 
-		#endregion
+            if (string.IsNullOrEmpty(msg))
+                return true;
 
-		#region Functions for setting UI state
+            MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            return false;
+        }
 
-		const string mFileListLabelPrefix = "Files From ";
+        #endregion
 
-		/// <summary>
-		/// Set initial conditions for display components
-		/// </summary>
-		private void AdjustInitialUIState()
-		{
-			// initial labels for display list control panels
-			JobListDisplayControl.PageTitle = "Entities";
-			FileListDisplayControl.PageTitle = "Files";
+        #region Functions for setting UI state
+
+        const string mFileListLabelPrefix = "Files From ";
+
+        /// <summary>
+        /// Set initial conditions for display components
+        /// </summary>
+        private void AdjustInitialUIState()
+        {
+            // initial labels for display list control panels
+            JobListDisplayControl.PageTitle = "Entities";
+            FileListDisplayControl.PageTitle = "Files";
             FileListDisplayControl.AutoSizeColumnWidths = true;
 
-			JobDatasetIDList1.Legend = "(Dataset IDs)";
-			JobDatasetIDList1.ListName = "Dataset_ID";
+            JobDatasetIDList1.Legend = "(Dataset IDs)";
+            JobDatasetIDList1.ListName = "Dataset_ID";
 
-			// disable certain UI component panels 
-			EntityFilePanel1.Enabled = false;
-			FileProcessingPanel1.Enabled = false;
-			FileCopyPanel1.Enabled = false;
-			FolderDestinationPanel1.Enabled = false;
-			SQLiteDestinationPanel1.Enabled = false;
+            // disable certain UI component panels 
+            EntityFilePanel1.Enabled = false;
+            FileProcessingPanel1.Enabled = false;
+            FileCopyPanel1.Enabled = false;
+            FolderDestinationPanel1.Enabled = false;
+            SQLiteDestinationPanel1.Enabled = false;
 
-			EnableDisableOutputTabs();
-			EnableCancel(false);
-		}
+            EnableDisableOutputTabs();
+            EnableCancel(false);
+        }
 
-		/// <summary>
-		/// Enable/Disable the cancel button
-		/// </summary>
-		/// <param name="enabled"></param>
-		private void EnableCancel(bool enabled)
-		{
-			statusPanel1.ShowCancel = enabled;
-			statusPanel1.EnableCancel = enabled;
-		}
+        /// <summary>
+        /// Enable/Disable the cancel button
+        /// </summary>
+        /// <param name="enabled"></param>
+        private void EnableCancel(bool enabled)
+        {
+            statusPanel1.ShowCancel = enabled;
+            statusPanel1.EnableCancel = enabled;
+        }
 
-		/// <summary>
-		/// Adjust the labelling and status of various UI components
-		/// (called when a command pipeline completes via cross-thread invoke from HandleStatusMessageUpdated)
-		/// </summary>
-		/// <param name="status"></param>
-		private void AdjusttPostCommndUIState(object status)
-		{
-			if (mCurrentCmd == null) return;
+        /// <summary>
+        /// Adjust the labelling and status of various UI components
+        /// (called when a command pipeline completes via cross-thread invoke from HandleStatusMessageUpdated)
+        /// </summary>
+        /// <param name="status"></param>
+        private void AdjusttPostCommndUIState(object status)
+        {
+            if (mCurrentCmd == null)
+                return;
 
-			EnableCancel(false);
+            EnableCancel(false);
 
-			AdjustEntityFileTabLabels();
-			AdjustListDisplayTitleFromColumDefs();
-			AdjustFileListLabels();
-			AdjustFileExtractionPanel();
-			AdjustFileProcessingPanels();
+            AdjustEntityFileTabLabels();
+            AdjustListDisplayTitleFromColumDefs();
+            AdjustFileListLabels();
+            AdjustFileExtractionPanel();
+            AdjustFileProcessingPanels();
 
-			SavedState.SaveParameters(PanelSupport.GetParameterPanelList(this));
-		}
+            SavedState.SaveParameters(PanelSupport.GetParameterPanelList(this));
+        }
 
-		/// <summary>
-		/// Processing files is only possible when file list contains files,
-		/// adjust the processing panels to inform user
-		/// </summary>
-		private void AdjustFileProcessingPanels()
-		{
-			var fileCount = FileListDisplayControl.ItemCount;
-			if (fileCount == 0)
-			{
-				FileCopyPanel1.Enabled = false;
-				FolderDestinationPanel1.Enabled = false;
-				SQLiteDestinationPanel1.Enabled = false;
-			}
-			else
-			{
-				FileCopyPanel1.Enabled = true;
-				FolderDestinationPanel1.Enabled = true;
-				SQLiteDestinationPanel1.Enabled = true;
-			}
-		}
+        /// <summary>
+        /// Processing files is only possible when file list contains files,
+        /// adjust the processing panels to inform user
+        /// </summary>
+        private void AdjustFileProcessingPanels()
+        {
+            var fileCount = FileListDisplayControl.ItemCount;
+            if (fileCount == 0)
+            {
+                FileCopyPanel1.Enabled = false;
+                FolderDestinationPanel1.Enabled = false;
+                SQLiteDestinationPanel1.Enabled = false;
+            }
+            else
+            {
+                FileCopyPanel1.Enabled = true;
+                FolderDestinationPanel1.Enabled = true;
+                SQLiteDestinationPanel1.Enabled = true;
+            }
+        }
 
-		/// <summary>
-		/// Finding files for entities is only possible 
-		/// when there are entities in the entity list
-		/// </summary>
-		private void AdjustFileExtractionPanel()
-		{
-			var entityCount = JobListDisplayControl.ItemCount;
-			if (entityCount == 0)
-			{
-				EntityFilePanel1.Enabled = false;
-			}
-			else
-			{
-				EntityFilePanel1.Enabled = true;
-			}
-		}
+        /// <summary>
+        /// Finding files for entities is only possible 
+        /// when there are entities in the entity list
+        /// </summary>
+        private void AdjustFileExtractionPanel()
+        {
+            var entityCount = JobListDisplayControl.ItemCount;
+            if (entityCount == 0)
+            {
+                EntityFilePanel1.Enabled = false;
+            }
+            else
+            {
+                EntityFilePanel1.Enabled = true;
+            }
+        }
 
-		/// <summary>
-		/// Since the list of files can be derived from different sources,
-		/// adjust the labelling to inform the user about which one was used
-		/// </summary>
-		private void AdjustFileListLabels()
-		{
-			switch (mCurrentCmd.Action)
-			{
-				case "get_files_from_entities":
-					FileListDisplayControl.PageTitle = mFileListLabelPrefix + JobListDisplayControl.PageTitle;
-					// FileCopyPanel1.ApplyPrefixToFileName = "Yes";
-					FileCopyPanel1.PrefixColumnName = GetBestPrefixIDColumnName(FileListDisplayControl.ColumnDefs);
-					break;
-				case "get_files_from_local_folder":
-					FileListDisplayControl.PageTitle = mFileListLabelPrefix + "Local Folder";
-					FileCopyPanel1.ApplyPrefixToFileName = "No";
-					FileCopyPanel1.PrefixColumnName = "";
-					break;
-				case "get_files_from_local_manifest":
-					FileListDisplayControl.PageTitle = mFileListLabelPrefix + "Manifest";
-					FileCopyPanel1.ApplyPrefixToFileName = "No";
-					FileCopyPanel1.PrefixColumnName = "";
-					break;
-			}
-		}
+        /// <summary>
+        /// Since the list of files can be derived from different sources,
+        /// adjust the labelling to inform the user about which one was used
+        /// </summary>
+        private void AdjustFileListLabels()
+        {
+            switch (mCurrentCmd.Action)
+            {
+                case "get_files_from_entities":
+                    FileListDisplayControl.PageTitle = mFileListLabelPrefix + JobListDisplayControl.PageTitle;
+                    // FileCopyPanel1.ApplyPrefixToFileName = "Yes";
+                    FileCopyPanel1.PrefixColumnName = GetBestPrefixIDColumnName(FileListDisplayControl.ColumnDefs);
+                    break;
+                case "get_files_from_local_folder":
+                    FileListDisplayControl.PageTitle = mFileListLabelPrefix + "Local Folder";
+                    FileCopyPanel1.ApplyPrefixToFileName = "No";
+                    FileCopyPanel1.PrefixColumnName = "";
+                    break;
+                case "get_files_from_local_manifest":
+                    FileListDisplayControl.PageTitle = mFileListLabelPrefix + "Manifest";
+                    FileCopyPanel1.ApplyPrefixToFileName = "No";
+                    FileCopyPanel1.PrefixColumnName = "";
+                    break;
+            }
+        }
 
-		/// <summary>
-		/// adjust tab label for file source actions according to entity type
-		/// </summary>
-		private void AdjustEntityFileTabLabels()
-		{
-			switch (mCurrentCmd.Action)
-			{
-				case "get_entities_from_query":
-					GetEntityFilesTabPage.Text = string.Format("Get Files From {0}", JobListDisplayControl.PageTitle);
-					break;
-			}
-		}
+        /// <summary>
+        /// adjust tab label for file source actions according to entity type
+        /// </summary>
+        private void AdjustEntityFileTabLabels()
+        {
+            switch (mCurrentCmd.Action)
+            {
+                case "get_entities_from_query":
+                    GetEntityFilesTabPage.Text = string.Format("Get Files From {0}", JobListDisplayControl.PageTitle);
+                    break;
+            }
+        }
 
-		/// <summary>
-		/// If the contents of a list display have been restored from file, 
-		/// make a guess at the type of information it contains
-		/// according to the combination of columns it has,
-		/// and set its title accordingly
-		/// </summary>
-		private void AdjustListDisplayTitleFromColumDefs()
-		{
-		    if (mCurrentCmd.Action != "reload_list_display" && mCurrentCmd.Action != "display_reloaded")
-		    {
-		        return;
-		    }
+        /// <summary>
+        /// If the contents of a list display have been restored from file, 
+        /// make a guess at the type of information it contains
+        /// according to the combination of columns it has,
+        /// and set its title accordingly
+        /// </summary>
+        private void AdjustListDisplayTitleFromColumDefs()
+        {
+            if (mCurrentCmd.Action != "reload_list_display" && mCurrentCmd.Action != "display_reloaded")
+            {
+                return;
+            }
 
-		    if (!(mCurrentCmdSender is IMageDisplayControl))
-		    {
-		        return;
-		    }
+            if (!(mCurrentCmdSender is IMageDisplayControl))
+            {
+                return;
+            }
 
-		    var ldc = (IMageDisplayControl)mCurrentCmdSender;
-		    var type = ldc.PageTitle;
-		    
+            var ldc = (IMageDisplayControl)mCurrentCmdSender;
+            var type = ldc.PageTitle;
+
             var colNames = ldc.ColumnNames;
-		    if (colNames.Contains("Item"))
-		    {
-		        type = "Files";
-		    }
-		    else
-		    {
-		        if (colNames.Contains("Job"))
-		        {
-		            type = "Jobs";
+            if (colNames.Contains("Item"))
+            {
+                type = "Files";
+            }
+            else
+            {
+                if (colNames.Contains("Job"))
+                {
+                    type = "Jobs";
 
-		        }
-		        else if (colNames.Contains("Dataset_ID"))
-		        {
-		            type = "Datasets";
-		        }
-		    }
+                }
+                else if (colNames.Contains("Dataset_ID"))
+                {
+                    type = "Datasets";
+                }
+            }
 
-		    ldc.PageTitle = type;
-		}
+            ldc.PageTitle = type;
+        }
 
-	    /// <summary>
-		/// control enable state of filter panel based on output tab choice
-		/// </summary>
-		private void EnableDisableOutputTabs()
-		{
-			var mode = this.FilterOutputTabs.SelectedTab.Tag.ToString();
-			if (mode == "Copy_Files")
-			{
-				FileProcessingPanel1.Enabled = false;
-				//FileProcessingPanel1.Visible = false;
-				//panel3.Height = 180;
-			}
-			else
-			{
-				if (FolderDestinationPanel1.Enabled || SQLiteDestinationPanel1.Enabled)
-				{
-					FileProcessingPanel1.Enabled = true;
-					//FileProcessingPanel1.Visible = true;
-					//panel3.Height = 280;
-				}
-			}
-		}
+        /// <summary>
+        /// control enable state of filter panel based on output tab choice
+        /// </summary>
+        private void EnableDisableOutputTabs()
+        {
+            var mode = this.FilterOutputTabs.SelectedTab.Tag.ToString();
+            if (mode == "Copy_Files")
+            {
+                FileProcessingPanel1.Enabled = false;
+                //FileProcessingPanel1.Visible = false;
+                //panel3.Height = 180;
+            }
+            else
+            {
+                if (FolderDestinationPanel1.Enabled || SQLiteDestinationPanel1.Enabled)
+                {
+                    FileProcessingPanel1.Enabled = true;
+                    //FileProcessingPanel1.Visible = true;
+                    //panel3.Height = 280;
+                }
+            }
+        }
 
-		private void FilterOutputTabs_Selected(object sender, TabControlEventArgs e)
-		{
-			EnableDisableOutputTabs();
-		}
+        private void FilterOutputTabs_Selected(object sender, TabControlEventArgs e)
+        {
+            EnableDisableOutputTabs();
+        }
 
-		#endregion
+        #endregion
 
-		#region Support functions for building runtime parameter lists from component panels
+        #region Support functions for building runtime parameter lists from component panels
 
-		private string GetQueryDefinition(out string queryName)
-		{
-			// Note: Tab page tag field contains name of query to look up in query def file
-			Control queryPage = EntityListSourceTabs.SelectedTab;
-			queryName = queryPage.Tag.ToString();
-			return ModuleDiscovery.GetQueryXMLDef(queryName);
-		}
+        private string GetQueryDefinition(out string queryName)
+        {
+            // Note: Tab page tag field contains name of query to look up in query def file
+            Control queryPage = EntityListSourceTabs.SelectedTab;
+            queryName = queryPage.Tag.ToString();
+            return ModuleDiscovery.GetQueryXMLDef(queryName);
+        }
 
-		private Dictionary<string, string> GetRuntimeParmsForEntityQuery()
-		{
-			Control queryPage = EntityListSourceTabs.SelectedTab;
-			var panel = PanelSupport.GetParameterPanel(queryPage);
-			return panel.GetParameters();
-		}
+        private Dictionary<string, string> GetRuntimeParmsForEntityQuery()
+        {
+            Control queryPage = EntityListSourceTabs.SelectedTab;
+            var panel = PanelSupport.GetParameterPanel(queryPage);
+            return panel.GetParameters();
+        }
 
-		private Dictionary<string, string> GetRuntimeParmsForLocalFolder()
-		{
-			var rp = new Dictionary<string, string>
-			{
-				{"FileNameFilter", LocalFolderPanel1.FileNameFilter},
+        private Dictionary<string, string> GetRuntimeParmsForLocalFolder()
+        {
+            var rp = new Dictionary<string, string>
+            {
+                {"FileNameFilter", LocalFolderPanel1.FileNameFilter},
                 {"FileSelectionMode", LocalFolderPanel1.FileSelectionMode},
-				{"Folder", LocalFolderPanel1.Folder},
-				{"SearchInSubfolders", LocalFolderPanel1.SearchInSubfolders},
-				{"SubfolderSearchName", LocalFolderPanel1.SubfolderSearchName}                
-			};
-			return rp;
-		}
+                {"Folder", LocalFolderPanel1.Folder},
+                {"SearchInSubfolders", LocalFolderPanel1.SearchInSubfolders},
+                {"SubfolderSearchName", LocalFolderPanel1.SubfolderSearchName}
+            };
+            return rp;
+        }
 
-		private Dictionary<string, string> GetRuntimeParmsForManifestFile()
-		{
-			var rp = new Dictionary<string, string>
-			{
-				{"ManifestFilePath", LocalManifestPanel1.ManifestFilePath}
-			};
-			return rp;
-		}
+        private Dictionary<string, string> GetRuntimeParmsForManifestFile()
+        {
+            var rp = new Dictionary<string, string>
+            {
+                {"ManifestFilePath", LocalManifestPanel1.ManifestFilePath}
+            };
+            return rp;
+        }
 
-		private Dictionary<string, string> GetRuntimeParmsForFileProcessing()
-		{
-			var rp = new Dictionary<string, string>
-			{
-				{"OutputFolder", FolderDestinationPanel1.OutputFolder},
-				{"OutputFile", FolderDestinationPanel1.OutputFile},
-				{"DatabaseName", SQLiteDestinationPanel1.DatabaseName},
-				{"TableName", SQLiteDestinationPanel1.TableName},
-				{"OutputMode", FilterOutputTabs.SelectedTab.Tag.ToString()},
-				{"ManifestFileName", string.Format("Manifest_{0:yyyy-MM-dd_hhmmss}.txt", DateTime.Now)}
-			};
+        private Dictionary<string, string> GetRuntimeParmsForFileProcessing()
+        {
+            var rp = new Dictionary<string, string>
+            {
+                {"OutputFolder", FolderDestinationPanel1.OutputFolder},
+                {"OutputFile", FolderDestinationPanel1.OutputFile},
+                {"DatabaseName", SQLiteDestinationPanel1.DatabaseName},
+                {"TableName", SQLiteDestinationPanel1.TableName},
+                {"OutputMode", FilterOutputTabs.SelectedTab.Tag.ToString()},
+                {"ManifestFileName", string.Format("Manifest_{0:yyyy-MM-dd_hhmmss}.txt", DateTime.Now)}
+            };
 
             if (mFileSourcePipelineName == Pipelines.PIPELINE_GET_LOCAL_FILES)
             {
@@ -799,155 +800,155 @@ namespace MageFileProcessor
                 rp.Add("SourceFileColumnName", "Name");
             }
 
-			return rp;
-		}
+            return rp;
+        }
 
-		private Dictionary<string, string> GetRuntimeParmsForCopyFiles()
-		{
-			var rp = new Dictionary<string, string>
-			{
-				{"OutputFolder", FileCopyPanel1.OutputFolder},
-				{"ManifestFileName", string.Format("Manifest_{0:yyyy-MM-dd_hhmmss}.txt", DateTime.Now)},
-				{"ApplyPrefixToFileName", FileCopyPanel1.ApplyPrefixToFileName},
-				{"PrefixLeader", FileCopyPanel1.PrefixLeader},
-				{"ColumnToUseForPrefix", FileCopyPanel1.PrefixColumnName},
-				{"OverwriteExistingFiles", FileCopyPanel1.OverwriteExistingFiles},
-				{"SourceFolderColumnName", "Folder"}
-			};
+        private Dictionary<string, string> GetRuntimeParmsForCopyFiles()
+        {
+            var rp = new Dictionary<string, string>
+            {
+                {"OutputFolder", FileCopyPanel1.OutputFolder},
+                {"ManifestFileName", string.Format("Manifest_{0:yyyy-MM-dd_hhmmss}.txt", DateTime.Now)},
+                {"ApplyPrefixToFileName", FileCopyPanel1.ApplyPrefixToFileName},
+                {"PrefixLeader", FileCopyPanel1.PrefixLeader},
+                {"ColumnToUseForPrefix", FileCopyPanel1.PrefixColumnName},
+                {"OverwriteExistingFiles", FileCopyPanel1.OverwriteExistingFiles},
+                {"SourceFolderColumnName", "Folder"}
+            };
 
             if (mFileSourcePipelineName == Pipelines.PIPELINE_GET_LOCAL_FILES)
-		    {
+            {
                 rp.Add("SourceFileColumnName", "File");
                 rp.Add("OutputColumnList", "File, *");
                 rp.Add("OutputFileColumnName", "File");
-		    }
-		    else
-		    {
+            }
+            else
+            {
                 rp.Add("SourceFileColumnName", "Name");
                 rp.Add("OutputColumnList", "Name, *");
-		        rp.Add("OutputFileColumnName", "Name");
-		    }
+                rp.Add("OutputFileColumnName", "Name");
+            }
 
-		    return rp;
-		}
+            return rp;
+        }
 
-		private Dictionary<string, string> GetRuntimeParmsForEntityFileType(string entityType)
-		{
-			var rp = new Dictionary<string, string>
-			{
-				{"FileSelectors", EntityFilePanel1.FileSelectors},
-				{"FileSelectionMode", EntityFilePanel1.FileSelectionMode},
-				{"IncludeFilesOrFolders", EntityFilePanel1.IncludeFilesOrFolders},
-				{"SearchInSubfolders", EntityFilePanel1.SearchInSubfolders},
-				{"SubfolderSearchName", EntityFilePanel1.SubfolderSearchName},
-				{"SourceFolderColumnName", "Folder"},
-				{"FileColumnName", "Name"}
-			};
-			switch (entityType)
-			{
-				case "Jobs":
-					rp.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_DATE + "|+|text, Folder, Job, Dataset, Dataset_ID, Tool, Settings_File, Parameter_File, Instrument");
-					break;
-				case "Datasets":
-					rp.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_DATE + "|+|text, Folder, Dataset, Dataset_ID, Experiment, Campaign, State, Instrument, Created, Type, Comment");
-					break;
-			}
-			return rp;
-		}
+        private Dictionary<string, string> GetRuntimeParmsForEntityFileType(string entityType)
+        {
+            var rp = new Dictionary<string, string>
+            {
+                {"FileSelectors", EntityFilePanel1.FileSelectors},
+                {"FileSelectionMode", EntityFilePanel1.FileSelectionMode},
+                {"IncludeFilesOrFolders", EntityFilePanel1.IncludeFilesOrFolders},
+                {"SearchInSubfolders", EntityFilePanel1.SearchInSubfolders},
+                {"SubfolderSearchName", EntityFilePanel1.SubfolderSearchName},
+                {"SourceFolderColumnName", "Folder"},
+                {"FileColumnName", "Name"}
+            };
+            switch (entityType)
+            {
+                case "Jobs":
+                    rp.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_DATE + "|+|text, Folder, Job, Dataset, Dataset_ID, Tool, Settings_File, Parameter_File, Instrument");
+                    break;
+                case "Datasets":
+                    rp.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_DATE + "|+|text, Folder, Dataset, Dataset_ID, Experiment, Campaign, State, Instrument, Created, Type, Comment");
+                    break;
+            }
+            return rp;
+        }
 
-		/// <summary>
-		/// Get "best" column name to use for naming prefix according to hueristec
-		/// </summary>
-		/// <returns></returns>
-		private static string GetBestPrefixIDColumnName(IEnumerable<MageColumnDef> colDefs)
-		{
-			var IDColumnName = "";
-			// define list of potential candidate names in order of precedence
-			var candidateIDColumnNames = new Dictionary<string, bool>
-			{
+        /// <summary>
+        /// Get "best" column name to use for naming prefix according to hueristec
+        /// </summary>
+        /// <returns></returns>
+        private static string GetBestPrefixIDColumnName(IEnumerable<MageColumnDef> colDefs)
+        {
+            var IDColumnName = "";
+            // define list of potential candidate names in order of precedence
+            var candidateIDColumnNames = new Dictionary<string, bool>
+            {
                 { "Job", false }, { "Dataset_ID", false }, { "Dataset", false }
             };
 
-			// go through actual column names and make the potential candidates
-			foreach (var colDef in colDefs)
-			{
-				if (candidateIDColumnNames.ContainsKey(colDef.Name))
-				{
-					candidateIDColumnNames[colDef.Name] = true;
-				}
-			}
-			// use the higest precedence marked potential candiate
-			foreach (var candidateIDColName in candidateIDColumnNames)
-			{
-				if (candidateIDColName.Value)
-				{
-					IDColumnName = candidateIDColName.Key;
-					break;
-				}
-			}
-			return IDColumnName;
-		}
+            // go through actual column names and make the potential candidates
+            foreach (var colDef in colDefs)
+            {
+                if (candidateIDColumnNames.ContainsKey(colDef.Name))
+                {
+                    candidateIDColumnNames[colDef.Name] = true;
+                }
+            }
+            // use the higest precedence marked potential candiate
+            foreach (var candidateIDColName in candidateIDColumnNames)
+            {
+                if (candidateIDColName.Value)
+                {
+                    IDColumnName = candidateIDColName.Key;
+                    break;
+                }
+            }
+            return IDColumnName;
+        }
 
-		#endregion
+        #endregion
 
-		#region Functions for handling status updates
+        #region Functions for handling status updates
 
-		private delegate void CompletionStateUpdated(object status);
-		private delegate void VoidFnDelegate();
+        private delegate void CompletionStateUpdated(object status);
+        private delegate void VoidFnDelegate();
 
-		private void HandlePipelineUpdate(object sender, MageStatusEventArgs args)
-		{
-			statusPanel1.HandleStatusMessageUpdated(this, new MageStatusEventArgs(args.Message));
-			Console.WriteLine(args.Message);
-		}
+        private void HandlePipelineUpdate(object sender, MageStatusEventArgs args)
+        {
+            statusPanel1.HandleStatusMessageUpdated(this, new MageStatusEventArgs(args.Message));
+            Console.WriteLine(args.Message);
+        }
 
-		private void HandlePipelineWarning(object sender, MageStatusEventArgs args)
-		{
-			statusPanel1.HandleWarningMessageUpdated(this, new MageStatusEventArgs(args.Message));
-			Console.WriteLine("Warning: " + args.Message);
-		}
+        private void HandlePipelineWarning(object sender, MageStatusEventArgs args)
+        {
+            statusPanel1.HandleWarningMessageUpdated(this, new MageStatusEventArgs(args.Message));
+            Console.WriteLine("Warning: " + args.Message);
+        }
 
-		/// <summary>
-		/// handle updating control enable status on completion of running pipeline
-		/// </summary>
-		/// <param name="sender">(ignored)</param>
-		/// <param name="args">Contains status information to be displayed</param>
-		private void HandlePipelineCompletion(object sender, MageStatusEventArgs args)
-		{
-			statusPanel1.HandleCompletionMessageUpdate(this, new MageStatusEventArgs(args.Message));
-			Console.WriteLine(args.Message);
+        /// <summary>
+        /// handle updating control enable status on completion of running pipeline
+        /// </summary>
+        /// <param name="sender">(ignored)</param>
+        /// <param name="args">Contains status information to be displayed</param>
+        private void HandlePipelineCompletion(object sender, MageStatusEventArgs args)
+        {
+            statusPanel1.HandleCompletionMessageUpdate(this, new MageStatusEventArgs(args.Message));
+            Console.WriteLine(args.Message);
 
-			var pipeline = sender as ProcessingPipeline;
-			if (pipeline != null)
-			{
-				if (pipeline.PipelineName == mFinalPipelineName)
-				{
+            var pipeline = sender as ProcessingPipeline;
+            if (pipeline != null)
+            {
+                if (pipeline.PipelineName == mFinalPipelineName)
+                {
 
-					CompletionStateUpdated csu = AdjusttPostCommndUIState;
-					Invoke(csu, new object[] { null });
+                    CompletionStateUpdated csu = AdjusttPostCommndUIState;
+                    Invoke(csu, new object[] { null });
 
-					// Must use a delegate and Invoke to avoid "cross-thread operation not valid" exceptions
-					VoidFnDelegate et = EnableDisableOutputTabs;
-					Invoke(et);
-				}
-			}
+                    // Must use a delegate and Invoke to avoid "cross-thread operation not valid" exceptions
+                    VoidFnDelegate et = EnableDisableOutputTabs;
+                    Invoke(et);
+                }
+            }
 
-			if (args.Message.StartsWith(MSSQLReader.SQL_COMMAND_ERROR))
-				MessageBox.Show(args.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            if (args.Message.StartsWith(MSSQLReader.SQL_COMMAND_ERROR))
+                MessageBox.Show(args.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
-		}
+        }
 
-		private void HandlePipelineQueueUpdate(object sender, MageStatusEventArgs args)
-		{
-			// Console.WriteLine("PipelineQueueUpdate: " + args.Message);
-		}
+        private void HandlePipelineQueueUpdate(object sender, MageStatusEventArgs args)
+        {
+            // Console.WriteLine("PipelineQueueUpdate: " + args.Message);
+        }
 
-		private void HandlePipelineQueueCompletion(object sender, MageStatusEventArgs args)
-		{
-			// Console.WriteLine("PipelineQueueCompletion: " + args.Message);
-		}
+        private void HandlePipelineQueueCompletion(object sender, MageStatusEventArgs args)
+        {
+            // Console.WriteLine("PipelineQueueCompletion: " + args.Message);
+        }
 
-		/*
+        /*
 		 * To be deleted
 		 * 
         private void HandlePipelineCompletion(object sender, MageStatusEventArgs args) {
@@ -966,111 +967,111 @@ namespace MageFileProcessor
         }
 		*/
 
-		private void lblAboutLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-		{
-			try
-			{
-				LaunchMageFileProcessorHelpPage();
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show("Unable to open link that was clicked: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-			}
-		}
+        private void lblAboutLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                LaunchMageFileProcessorHelpPage();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Unable to open link that was clicked: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
 
-		private void LaunchMageFileProcessorHelpPage()
-		{
-			// Change the color of the link text by setting LinkVisited 
-			// to true.
-			lblAboutLink.LinkVisited = true;
+        private void LaunchMageFileProcessorHelpPage()
+        {
+            // Change the color of the link text by setting LinkVisited 
+            // to true.
+            lblAboutLink.LinkVisited = true;
 
-			//Call the Process.Start method to open the default browser 
-			//with a URL:
-			Process.Start(lblAboutLink.Text);
-		}
+            //Call the Process.Start method to open the default browser 
+            //with a URL:
+            Process.Start(lblAboutLink.Text);
+        }
 
-		#endregion
+        #endregion
 
-		#region Panel Support Functions
+        #region Panel Support Functions
 
-		/// <summary>
-		/// set up status panel
-		/// </summary>
-		private void SetupStatusPanel()
-		{
-			statusPanel1.OwnerControl = this;
-		}
+        /// <summary>
+        /// set up status panel
+        /// </summary>
+        private void SetupStatusPanel()
+        {
+            statusPanel1.OwnerControl = this;
+        }
 
-		/// <summary>
-		/// wire up the command event in panels that have it
-		/// to the DoCommand event handler method
-		/// </summary>
-		private void SetupCommandHandler()
-		{
-			// get reference to the method that handles command events
-			var methodInfo = this.GetType().GetMethod("DoCommand");
-			Control subjectControl = this;
+        /// <summary>
+        /// wire up the command event in panels that have it
+        /// to the DoCommand event handler method
+        /// </summary>
+        private void SetupCommandHandler()
+        {
+            // get reference to the method that handles command events
+            var methodInfo = this.GetType().GetMethod("DoCommand");
+            Control subjectControl = this;
 
-			PanelSupport.DiscoverAndConnectCommandHandlers(subjectControl, methodInfo);
-		}
+            PanelSupport.DiscoverAndConnectCommandHandlers(subjectControl, methodInfo);
+        }
 
-		/// <summary>
-		/// set up filter selection list for file processing panel
-		/// </summary>
-		private static void SetupFilterSelectionListForFileProcessor()
-		{
-			ModuleDiscovery.SetupFilters();
-		}
+        /// <summary>
+        /// set up filter selection list for file processing panel
+        /// </summary>
+        private static void SetupFilterSelectionListForFileProcessor()
+        {
+            ModuleDiscovery.SetupFilters();
+        }
 
-		/// <summary>
-		/// setup path to column mapping config file for selection forms
-		/// </summary>
-		private void SetupColumnMapping()
-		{
-			const string columnMappingFileName = "ColumnMapping.txt";
-			var path = Path.Combine(SavedState.DataDirectory, columnMappingFileName);  // "ColumnMappingConfig.db")
-			if (!File.Exists(path))
-			{
-				File.Copy(columnMappingFileName, path);
-			}
-			ColumnMapSelectionForm.MappingConfigFilePath = path;
-			ColumnMappingForm.MappingConfigFilePath = path;
-		}
+        /// <summary>
+        /// setup path to column mapping config file for selection forms
+        /// </summary>
+        private void SetupColumnMapping()
+        {
+            const string columnMappingFileName = "ColumnMapping.txt";
+            var path = Path.Combine(SavedState.DataDirectory, columnMappingFileName);  // "ColumnMappingConfig.db")
+            if (!File.Exists(path))
+            {
+                File.Copy(columnMappingFileName, path);
+            }
+            ColumnMapSelectionForm.MappingConfigFilePath = path;
+            ColumnMappingForm.MappingConfigFilePath = path;
+        }
 
-		/// <summary>
-		/// Initialize parameters for flex query panels
-		/// </summary>
-		private void SetupFlexQueryPanels()
-		{
-			JobFlexQueryPanel.QueryName = "Job_Flex_Query";
-			JobFlexQueryPanel.SetColumnPickList(new[] { "Job", "State", "Dataset", "Dataset_ID", "Tool", "Parameter_File", "Settings_File", "Instrument", "Experiment", "Campaign", "Organism", "Organism DB", "Protein Collection List", "Protein Options", "Comment", "Results Folder", "Folder", "Dataset_Created", "Job_Finish", "Request_ID" });
-			JobFlexQueryPanel.SetComparisionPickList(new[] { "ContainsText", "DoesNotContainText", "StartsWithText", "MatchesText", "MatchesTextOrBlank", "Equals", "NotEqual", "GreaterThan", "GreaterThanOrEqualTo", "LessThan", "LessThanOrEqualTo", "MostRecentWeeks", "LaterThan", "EarlierThan", "InList" });
-		}
+        /// <summary>
+        /// Initialize parameters for flex query panels
+        /// </summary>
+        private void SetupFlexQueryPanels()
+        {
+            JobFlexQueryPanel.QueryName = "Job_Flex_Query";
+            JobFlexQueryPanel.SetColumnPickList(new[] { "Job", "State", "Dataset", "Dataset_ID", "Tool", "Parameter_File", "Settings_File", "Instrument", "Experiment", "Campaign", "Organism", "Organism DB", "Protein Collection List", "Protein Options", "Comment", "Results Folder", "Folder", "Dataset_Created", "Job_Finish", "Request_ID" });
+            JobFlexQueryPanel.SetComparisionPickList(new[] { "ContainsText", "DoesNotContainText", "StartsWithText", "MatchesText", "MatchesTextOrBlank", "Equals", "NotEqual", "GreaterThan", "GreaterThanOrEqualTo", "LessThan", "LessThanOrEqualTo", "MostRecentWeeks", "LaterThan", "EarlierThan", "InList" });
+        }
 
-		#endregion
+        #endregion
 
-		#region Callback Functions for UI Panel Use
+        #region Callback Functions for UI Panel Use
 
-		/// <summary>
-		/// Get fields from selected item in file list
-		/// </summary>
-		/// <returns></returns>
-		private Dictionary<string, string> GetSelectedFileItem()
-		{
-			return FileListDisplayControl.SeletedItemFields;
-		}
+        /// <summary>
+        /// Get fields from selected item in file list
+        /// </summary>
+        /// <returns></returns>
+        private Dictionary<string, string> GetSelectedFileItem()
+        {
+            return FileListDisplayControl.SeletedItemFields;
+        }
 
-		private Dictionary<string, string> GetSelectedOutputItem()
-		{
-			if ("SQLite_Output" == FilterOutputTabs.SelectedTab.Tag.ToString())
-			{
-				return SQLiteDestinationPanel1.GetParameters();
-			}
-			
-			return FolderDestinationPanel1.GetParameters();
-		}
+        private Dictionary<string, string> GetSelectedOutputItem()
+        {
+            if ("SQLite_Output" == FilterOutputTabs.SelectedTab.Tag.ToString())
+            {
+                return SQLiteDestinationPanel1.GetParameters();
+            }
 
-		#endregion
-	}
+            return FolderDestinationPanel1.GetParameters();
+        }
+
+        #endregion
+    }
 
 }

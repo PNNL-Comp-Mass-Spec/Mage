@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Mage {
+namespace Mage
+{
 
     /// <summary>
     /// Interface for Mage pipeline module
     /// </summary>
-    public interface IBaseModule : ISinkModule {
+    public interface IBaseModule : ISinkModule
+    {
 
         /// <summary>
         /// name of this module in pipeline
@@ -18,10 +20,10 @@ namespace Mage {
         /// </summary>
         void Prepare();
 
-		/// <summary>
-		/// Called after pipeline completes processing all of the data rows
-		/// </summary>
-		bool PostProcess();
+        /// <summary>
+        /// Called after pipeline completes processing all of the data rows
+        /// </summary>
+        bool PostProcess();
 
         /// <summary>
         /// called after pipeline run is complete - module can do any special cleanup
@@ -41,7 +43,7 @@ namespace Mage {
         /// </summary>
         /// <param name="parameters">list of key/value pairs</param>
         void SetParameters(Dictionary<string, string> parameters);
- 
+
         // Standard tabular output stream
 
         /// <summary>

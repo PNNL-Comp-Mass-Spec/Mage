@@ -1,5 +1,7 @@
-﻿namespace MageUIComponents {
-    partial class FlexQueryItemPanel {
+﻿namespace MageUIComponents
+{
+    partial class FlexQueryItemPanel
+    {
         /// <summary> 
         /// Required designer variable.
         /// </summary>
@@ -9,8 +11,10 @@
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing) {
-            if (disposing && (components != null)) {
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
                 components.Dispose();
             }
             base.Dispose(disposing);
@@ -22,7 +26,8 @@
         /// Required method for Designer support - do not modify 
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent() {
+        private void InitializeComponent()
+        {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.RelationCtl = new System.Windows.Forms.ComboBox();
             this.ColumnCtl = new System.Windows.Forms.ComboBox();
@@ -53,7 +58,7 @@
             // 
             // RelationCtl
             // 
-            this.RelationCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.RelationCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.RelationCtl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.RelationCtl.FormattingEnabled = true;
@@ -65,7 +70,7 @@
             // 
             // ColumnCtl
             // 
-            this.ColumnCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.ColumnCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ColumnCtl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ColumnCtl.FormattingEnabled = true;
@@ -78,7 +83,7 @@
             // 
             // ComparisonCtl
             // 
-            this.ComparisonCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.ComparisonCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ComparisonCtl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ComparisonCtl.FormattingEnabled = true;
@@ -89,7 +94,7 @@
             // 
             // ValueCtl
             // 
-            this.ValueCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.ValueCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ValueCtl.Location = new System.Drawing.Point(355, 3);
             this.ValueCtl.Name = "ValueCtl";

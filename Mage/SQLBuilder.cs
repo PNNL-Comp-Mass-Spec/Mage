@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Mage {
+namespace Mage
+{
 
     /// <summary>
     /// Constucts SQL query from templates and run-time parameters
     /// </summary>
-    public class SQLBuilder {
+    public class SQLBuilder
+    {
 
         #region Member Variables
 
@@ -64,8 +66,10 @@ namespace Mage {
         /// <summary>
         /// are there any predicate clauses?
         /// </summary>
-        public bool HasPredicate {
-            get {
+        public bool HasPredicate
+        {
+            get
+            {
                 return (mPredicates.Count > 0);
             }
         }
@@ -77,7 +81,8 @@ namespace Mage {
         /// <summary>
         /// a query predicate item
         /// </summary>
-        protected class QueryPredicate {
+        protected class QueryPredicate
+        {
 
             /// <summary>
             /// relationship with other predicate items ("AND" or "OR")
@@ -103,7 +108,8 @@ namespace Mage {
             /// <summary>
             /// construct a basic query predicate item
             /// </summary>
-            public QueryPredicate() {
+            public QueryPredicate()
+            {
                 rel = "AND";
             }
         }
@@ -111,7 +117,8 @@ namespace Mage {
         /// <summary>
         /// List of sort column/direction pairs
         /// </summary>
-        protected class QuerySort {
+        protected class QuerySort
+        {
 
             /// <summary>
             /// soring column
@@ -126,7 +133,8 @@ namespace Mage {
             /// <summary>
             /// construct new QuerySort object
             /// </summary>
-            public QuerySort() {
+            public QuerySort()
+            {
                 col = "";
                 dir = "ASC";
             }
@@ -139,7 +147,8 @@ namespace Mage {
         /// <summary>
         /// construct new Mage SQLBuilder object
         /// </summary>
-        public SQLBuilder() {
+        public SQLBuilder()
+        {
             SprocName = "";
             Table = "";
             Columns = "*";
@@ -152,7 +161,8 @@ namespace Mage {
         /// </summary>
         /// <param name="xml"></param>
         /// <param name="args"></param>
-        public SQLBuilder(string xml, ref Dictionary<string, string> args) {
+        public SQLBuilder(string xml, ref Dictionary<string, string> args)
+        {
             QueryType = "filtered_and_sorted";
             InitializeFromXML(xml, ref args);
         }
@@ -167,7 +177,8 @@ namespace Mage {
         /// </summary>
         /// <param name="xml">Specifications for query</param>
         /// <param name="args">Key/Value parameter that will be mixed into query</param>
-        public void InitializeFromXML(string xml, ref Dictionary<string, string> args) {
+        public void InitializeFromXML(string xml, ref Dictionary<string, string> args)
+        {
             Columns = "*";
             SprocName = "";
             Table = "";
@@ -177,11 +188,14 @@ namespace Mage {
             doc.LoadXml(xml);
 
             System.Xml.XmlNode queryNode = doc.SelectSingleNode(".//query");
-            if (queryNode == null) return;
+            if (queryNode == null)
+                return;
 
             // step through all item nodes in query
-            foreach (System.Xml.XmlNode itemNode in queryNode.ChildNodes) {
-                switch (itemNode.Name) {
+            foreach (System.Xml.XmlNode itemNode in queryNode.ChildNodes)
+            {
+                switch (itemNode.Name)
+                {
                     case "connection":
                         mSpecialArgs["Server"] = itemNode.Attributes["server"].InnerText;
                         mSpecialArgs["Database"] = itemNode.Attributes["database"].InnerText;
@@ -208,7 +222,8 @@ namespace Mage {
                         break;
                     case "param":
                         string key = itemNode.Attributes["name"].InnerText;
-                        if (itemNode.Attributes["value"] != null) {
+                        if (itemNode.Attributes["value"] != null)
+                        {
                             string value = itemNode.Attributes["value"].InnerText;
                             mSprocParameters[key] = value;
                         }
@@ -219,8 +234,10 @@ namespace Mage {
             // find any special runtime arguments (name is marked by prefix)
             // strip the prefix, add to specialArgs, and remove from runtime arguments list
             var tempArgs = new Dictionary<string, string>(args);
-            foreach (KeyValuePair<string, string> arg in tempArgs) {
-                if (arg.Key.StartsWith(":")) { // special runtime parameters have prefix
+            foreach (KeyValuePair<string, string> arg in tempArgs)
+            {
+                if (arg.Key.StartsWith(":"))
+                { // special runtime parameters have prefix
                     string key = arg.Key.Substring(1, arg.Key.Length - 1);
                     mSpecialArgs[key] = arg.Value;
                     args.Remove(arg.Key);
@@ -228,17 +245,22 @@ namespace Mage {
             }
 
             // if this is straight query, apply args to predicate
-            if (string.IsNullOrEmpty(SprocName) && args != null) {
-                foreach (KeyValuePair<string, string> arg in args) {
-                    if (!string.IsNullOrEmpty(arg.Value)) {
+            if (string.IsNullOrEmpty(SprocName) && args != null)
+            {
+                foreach (KeyValuePair<string, string> arg in args)
+                {
+                    if (!string.IsNullOrEmpty(arg.Value))
+                    {
                         AddPredicateItem(arg.Key, arg.Value);
                     }
                 }
             }
 
             // if this is stored procedure query, apply args to parameters
-            if (!string.IsNullOrEmpty(SprocName) && args != null) {
-                foreach (KeyValuePair<string, string> arg in args) {
+            if (!string.IsNullOrEmpty(SprocName) && args != null)
+            {
+                foreach (KeyValuePair<string, string> arg in args)
+                {
                     mSprocParameters[arg.Key] = arg.Value;
                 }
             }
@@ -253,18 +275,22 @@ namespace Mage {
         /// </summary>
         /// <param name="xml">Specifications for query</param>
         /// <returns></returns>
-        public static Dictionary<string, string> GetDescriptionsFromXML(string xml) {
+        public static Dictionary<string, string> GetDescriptionsFromXML(string xml)
+        {
             var descriptions = new Dictionary<string, string>();
 
             var doc = new System.Xml.XmlDocument();
             doc.LoadXml(xml);
 
             System.Xml.XmlNode queryNode = doc.SelectSingleNode(".//query");
-            if (queryNode == null) return descriptions;
+            if (queryNode == null)
+                return descriptions;
 
             // step through all item nodes in query
-            foreach (System.Xml.XmlNode itemNode in queryNode.ChildNodes) {
-                switch (itemNode.Name) {
+            foreach (System.Xml.XmlNode itemNode in queryNode.ChildNodes)
+            {
+                switch (itemNode.Name)
+                {
                     case "description":
                         descriptions[":Description:"] = itemNode.InnerText;
                         break;
@@ -289,15 +315,16 @@ namespace Mage {
         /// <param name="col">Column name</param>
         /// <param name="cmp">Comparision type</param>
         /// <param name="val">Comparision value</param>
-        public void SetColumnDefaultPredicate(string rel, string col, string cmp, string val) {
+        public void SetColumnDefaultPredicate(string rel, string col, string cmp, string val)
+        {
             var p = new QueryPredicate
             {
-	            rel = rel,
-	            col = col,
-	            cmp = cmp,
-	            val = val
+                rel = rel,
+                col = col,
+                cmp = cmp,
+                val = val
             };
-	        mDefaultPredicates[col] = p;
+            mDefaultPredicates[col] = p;
         }
 
         /// <summary>
@@ -306,15 +333,19 @@ namespace Mage {
         /// </summary>
         /// <param name="col">Column name</param>
         /// <param name="val">Comparision value</param>
-        public void AddPredicateItem(string col, string val) {
-            if (mDefaultPredicates.ContainsKey(col)) {
+        public void AddPredicateItem(string col, string val)
+        {
+            if (mDefaultPredicates.ContainsKey(col))
+            {
                 QueryPredicate p = mDefaultPredicates[col];
                 val = val ?? p.val;
                 AddPredicateItem(p.rel, p.col, p.cmp, val);
-            } else
-                if (val != null) {
-                    AddPredicateItem("AND", col, "ContainsText", val);
-                }
+            }
+            else
+                if (val != null)
+            {
+                AddPredicateItem("AND", col, "ContainsText", val);
+            }
         }
 
         /// <summary>
@@ -323,7 +354,8 @@ namespace Mage {
         /// <param name="col">Column name</param>
         /// <param name="cmp">Comparision type</param>
         /// <param name="val">Comparision value</param>
-        public void AddPredicateItem(string col, string cmp, string val) {
+        public void AddPredicateItem(string col, string cmp, string val)
+        {
             AddPredicateItem("AND", col, cmp, val);
         }
 
@@ -334,17 +366,19 @@ namespace Mage {
         /// <param name="col">Column name</param>
         /// <param name="cmp">Comparision type</param>
         /// <param name="val">Comparision value</param>
-        public void AddPredicateItem(string rel, string col, string cmp, string val) {
-            if (!string.IsNullOrEmpty(val)) { // (someday) reject if any field empty, not just value field
+        public void AddPredicateItem(string rel, string col, string cmp, string val)
+        {
+            if (!string.IsNullOrEmpty(val))
+            { // (someday) reject if any field empty, not just value field
                 //  ConvertWildcards(ref cmp, ref val);
                 var p = new QueryPredicate
                 {
-	                rel = rel,
-	                col = col,
-	                cmp = cmp,
-	                val = val
+                    rel = rel,
+                    col = col,
+                    cmp = cmp,
+                    val = val
                 };
-	            mPredicates.Add(p);
+                mPredicates.Add(p);
             }
         }
 
@@ -353,19 +387,20 @@ namespace Mage {
         /// </summary>
         /// <param name="col">Sort column name</param>
         /// <param name="dir">Sort direction ("ASC"/"DESC")</param>
-        public void AddSortingItem(string col, string dir) {
-	        if (string.IsNullOrEmpty(col))
-	        {
-		        return;
-	        }
+        public void AddSortingItem(string col, string dir)
+        {
+            if (string.IsNullOrEmpty(col))
+            {
+                return;
+            }
 
-	        var sorting = new QuerySort
-	        {
-		        col = col
-	        };
-	        string d = dir.ToUpper();
-	        sorting.dir = (d == "DESC") ? d : "ASC";
-	        mSortingItems.Add(sorting);
+            var sorting = new QuerySort
+            {
+                col = col
+            };
+            string d = dir.ToUpper();
+            sorting.dir = (d == "DESC") ? d : "ASC";
+            mSortingItems.Add(sorting);
         }
 
         /// <summary>
@@ -378,7 +413,8 @@ namespace Mage {
         /// </summary>
         /// <param name="cmp"></param>
         /// <param name="val"></param>
-        protected static void ConvertWildcards(ref string cmp, ref string val) {
+        protected static void ConvertWildcards(ref string cmp, ref string val)
+        {
             // look for wildcard characters
 
             bool exact_match = (val.Substring(0, 1) == "~");
@@ -387,36 +423,45 @@ namespace Mage {
             bool sql_any = val.Contains("%");
 
             // force exact match
-            if (exact_match) {
+            if (exact_match)
+            {
                 val = val.Replace("~", "");
                 cmp = "MatchesText";
-            } else
-                if (regex_all || regex_one) {
-                    cmp = "wildcards";
-                } else {
-                    var exceptions = new[] { "MatchesText", "MTx", "MatchesTextOrBlank", "MTxOB" };
-                    if (!sql_any && !exceptions.Contains(cmp)) {
-                        // quote underscores in the absence of '%' or regex/glob wildcards
-                        val = val.Replace("_", "[_]");
-                    }
+            }
+            else
+                if (regex_all || regex_one)
+            {
+                cmp = "wildcards";
+            }
+            else
+            {
+                var exceptions = new[] { "MatchesText", "MTx", "MatchesTextOrBlank", "MTxOB" };
+                if (!sql_any && !exceptions.Contains(cmp))
+                {
+                    // quote underscores in the absence of '%' or regex/glob wildcards
+                    val = val.Replace("_", "[_]");
                 }
+            }
         }
 
         /// <summary>
         /// build mssql T-SQL SQL query from component parts
         /// </summary>
         /// <returns>SQL string</returns>
-        public string BuildQuerySQL() {
+        public string BuildQuerySQL()
+        {
 
             // process the predicate list
             var p_and = new List<string>();
             var p_or = new List<string>();
 
-	        foreach (QueryPredicate predicate in mPredicates)
+            foreach (QueryPredicate predicate in mPredicates)
             {
-	            string sWhereItem = MakeWhereItem(predicate);
-	            if (!String.IsNullOrEmpty(sWhereItem)) {
-                    switch (predicate.rel.ToLower()) {
+                string sWhereItem = MakeWhereItem(predicate);
+                if (!String.IsNullOrEmpty(sWhereItem))
+                {
+                    switch (predicate.rel.ToLower())
+                    {
                         case "and":
                             p_and.Add(sWhereItem);
                             break;
@@ -427,18 +472,20 @@ namespace Mage {
                 }
             }
 
-	        // build guts of query
+            // build guts of query
             var baseSql = new StringBuilder();
             baseSql.Append(" FROM " + Table);
             //
             // collect all 'or' clauses as one grouped item and put it into the 'and' item array
-            if (p_or.Count > 0) {
+            if (p_or.Count > 0)
+            {
                 p_and.Add("(" + string.Join(" OR ", p_or) + ")");
             }
             //
             // 'and' all predicate clauses together
             string pred = string.Join(" AND ", p_and);
-            if (!string.IsNullOrEmpty(pred)) {
+            if (!string.IsNullOrEmpty(pred))
+            {
                 baseSql.Append(" WHERE " + pred);
             }
 
@@ -447,7 +494,8 @@ namespace Mage {
 
             // construct final query according to its intended use
             var sql = new StringBuilder();
-            switch (QueryType) {
+            switch (QueryType)
+            {
                 case "count_only": // query for returning count of total rows
                     sql.Append("SELECT COUNT(*) AS numrows");
                     sql.Append(baseSql);
@@ -479,9 +527,11 @@ namespace Mage {
         /// </summary>
         /// <param name="sortItems"></param>
         /// <returns>SQL text for sorting</returns>
-        private static string MakeOrderBy(IEnumerable<QuerySort> sortItems) {
+        private static string MakeOrderBy(IEnumerable<QuerySort> sortItems)
+        {
             var a = new List<string>();
-            foreach (QuerySort item in sortItems) {
+            foreach (QuerySort item in sortItems)
+            {
                 a.Add(string.Format("[{0}] {1}", item.col, item.dir));
             }
             return string.Join(", ", a);
@@ -493,14 +543,16 @@ namespace Mage {
         /// </summary>
         /// <param name="predicate">List of predicate items</param>
         /// <returns>SQL text for predicate</returns>
-        private static string MakeWhereItem(QueryPredicate predicate) {
+        private static string MakeWhereItem(QueryPredicate predicate)
+        {
             string col = predicate.col;
             string cmp = predicate.cmp;
             string val = predicate.val;
 
             string str = "";
             double ignore;
-            switch (cmp) {
+            switch (cmp)
+            {
                 case "wildcards":
                     val = val.Replace("_", "[_]");
                     val = val.Replace("*", "%");
@@ -529,49 +581,59 @@ namespace Mage {
                     break;
                 case "Equals":
                 case "EQn":
-                    if (Double.TryParse(val, out ignore)) {
+                    if (Double.TryParse(val, out ignore))
+                    {
                         str += string.Format("[{0}] = {1}", col, val);
-                    } else {
+                    }
+                    else
+                    {
                         str += string.Format("[{0}] = '{1}'", col, val);
                     }
                     break;
                 case "NotEqual":
                 case "NEn":
-                    if (Double.TryParse(val, out ignore)) {
+                    if (Double.TryParse(val, out ignore))
+                    {
                         str += string.Format("NOT [{0}] = {1}", col, val);
-                    } else {
+                    }
+                    else
+                    {
                         str += string.Format("NOT [{0}] = '{1}'", col, val);
                     }
                     break;
                 case "GreaterThan":
                 case "GTn":
-                    if (Double.TryParse(val, out ignore)) {
+                    if (Double.TryParse(val, out ignore))
+                    {
                         str += string.Format("[{0}] > {1}", col, val);
                     }
                     break;
                 case "LessThan":
                 case "LTn":
-                    if (Double.TryParse(val, out ignore)) {
+                    if (Double.TryParse(val, out ignore))
+                    {
                         str += string.Format("[{0}] < {1}", col, val);
                     }
                     break;
                 case "LessThanOrEqualTo":
                 case "LTOEn":
-                    if (Double.TryParse(val, out ignore)) {
+                    if (Double.TryParse(val, out ignore))
+                    {
                         str += string.Format("[{0}] <= {1}", col, val);
                     }
                     break;
                 case "GreaterThanOrEqualTo":
                 case "GTOEn":
-                    if (Double.TryParse(val, out ignore)) {
+                    if (Double.TryParse(val, out ignore))
+                    {
                         str += string.Format("[{0}] >= {1}", col, val);
                     }
                     break;
                 case "InList":
                     str += string.Format(" {0} IN ({1}) ", col, val);
                     break;
-				case "InListText":
-					str += string.Format(" {0} IN ({1}) ", col, QuoteList(val));
+                case "InListText":
+                    str += string.Format(" {0} IN ({1}) ", col, QuoteList(val));
                     break;
                 case "MatchesTextOrBlank":
                 case "MTxOB":
@@ -596,28 +658,28 @@ namespace Mage {
             return str;
         }
 
-		/// <summary>
-		/// Adds single quotes to a comma separated list of values
-		/// </summary>
-		/// <param name="valList"></param>
-		/// <returns></returns>
-	    private static string QuoteList(string valList)
-		{
-			var values = valList.Split(',');
-			var quotedList = new StringBuilder();
+        /// <summary>
+        /// Adds single quotes to a comma separated list of values
+        /// </summary>
+        /// <param name="valList"></param>
+        /// <returns></returns>
+        private static string QuoteList(string valList)
+        {
+            var values = valList.Split(',');
+            var quotedList = new StringBuilder();
 
-			foreach (var value in values)
-			{
-				if (quotedList.Length > 0)
-					quotedList.Append(",");
+            foreach (var value in values)
+            {
+                if (quotedList.Length > 0)
+                    quotedList.Append(",");
 
-				quotedList.Append("'" + value.Trim() + "'");
-			}
+                quotedList.Append("'" + value.Trim() + "'");
+            }
 
-			return quotedList.ToString();
-		}
+            return quotedList.ToString();
+        }
 
-	    #endregion
+        #endregion
 
     }
 }

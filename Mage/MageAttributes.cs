@@ -1,6 +1,7 @@
 ﻿using System;
 
-namespace Mage {
+namespace Mage
+{
 
     /// <summary>
     /// Definition of custom attribute than can be used to decorate
@@ -8,7 +9,8 @@ namespace Mage {
     /// at runtime
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public sealed class MageAttribute : Attribute {
+    public sealed class MageAttribute : Attribute
+    {
 
         /// <summary>
         /// type of module
@@ -62,7 +64,8 @@ namespace Mage {
         /// <param name="ID">attribute ID</param>
         /// <param name="label">attribute label</param>
         /// <param name="description">attribute description</param>
-        public MageAttribute(string type, string ID, string label, string description) {
+        public MageAttribute(string type, string ID, string label, string description)
+        {
             ModID = ID;
             ModLabel = label;
             ModType = type;

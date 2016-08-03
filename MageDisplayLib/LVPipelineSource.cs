@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
 using Mage;
 
-
-namespace MageDisplayLib {
+namespace MageDisplayLib
+{
 
     /// <summary>
     /// this is a pipeline module 
@@ -15,7 +12,8 @@ namespace MageDisplayLib {
     /// It is an adapter for making rows in a ListDisplayControl object
     /// available via Mage pipeline data source module connections
     /// </summary>
-    public class LVPipelineSource : BaseModule {
+    public class LVPipelineSource : BaseModule
+    {
 
         #region Member Variables
 
@@ -37,12 +35,15 @@ namespace MageDisplayLib {
         /// </summary>
         /// <param name="lc"></param>
         /// <param name="mode"></param>
-        public LVPipelineSource(ListDisplayControl lc, DisplaySourceMode mode) {
+        public LVPipelineSource(ListDisplayControl lc, DisplaySourceMode mode)
+        {
             myListControl = lc;
-            if (lc.List.Items.Count == 0) {
+            if (lc.List.Items.Count == 0)
+            {
                 throw new MageException("There are no items to process");
             }
-            if (mode == DisplaySourceMode.Selected && lc.List.SelectedItems.Count == 0) {
+            if (mode == DisplaySourceMode.Selected && lc.List.SelectedItems.Count == 0)
+            {
                 throw new MageException("There are no items selected to process");
             }
             GetColumnDefs();
@@ -69,7 +70,8 @@ namespace MageDisplayLib {
         /// (override of base class)
         /// </summary>
         /// <param name="state">Mage ProcessingPipeline object that contains the module (if there is one)</param>
-        public override void Run(object state) {
+        public override void Run(object state)
+        {
             OutputListItems();
         }
 
@@ -77,27 +79,35 @@ namespace MageDisplayLib {
 
         #region Private Functions
 
-        private void GetColumnDefs() {
-            foreach (MageColumnDef colDef in myListControl.ColumnDefs) {
+        private void GetColumnDefs()
+        {
+            foreach (MageColumnDef colDef in myListControl.ColumnDefs)
+            {
                 mColumnDefs.Add(colDef);
             }
         }
 
-        private void GetRowsFromList(DisplaySourceMode mode) {
-            switch (mode) {
+        private void GetRowsFromList(DisplaySourceMode mode)
+        {
+            switch (mode)
+            {
                 case DisplaySourceMode.All:
-                    foreach (ListViewItem item in myListControl.List.Items) {
+                    foreach (ListViewItem item in myListControl.List.Items)
+                    {
                         List<string> row = new List<string>();
-                        foreach (ListViewItem.ListViewSubItem subItem in item.SubItems) {
+                        foreach (ListViewItem.ListViewSubItem subItem in item.SubItems)
+                        {
                             row.Add(subItem.Text);
                         }
                         RowBuffer.Add(row);
                     }
                     break;
                 case DisplaySourceMode.Selected:
-                    foreach (ListViewItem item in myListControl.List.SelectedItems) {
+                    foreach (ListViewItem item in myListControl.List.SelectedItems)
+                    {
                         List<string> row = new List<string>();
-                        foreach (ListViewItem.ListViewSubItem subItem in item.SubItems) {
+                        foreach (ListViewItem.ListViewSubItem subItem in item.SubItems)
+                        {
                             row.Add(subItem.Text);
                         }
                         RowBuffer.Add(row);
@@ -106,12 +116,15 @@ namespace MageDisplayLib {
             }
         }
 
-        private void OutputListItems() {
+        private void OutputListItems()
+        {
             OnColumnDefAvailable(new MageColumnEventArgs(mColumnDefs.ToArray()));
 
             // output the rows from the list control according to current mode setting
-            foreach (List<string> row in RowBuffer) {
-                if (Abort) break;
+            foreach (List<string> row in RowBuffer)
+            {
+                if (Abort)
+                    break;
                 OnDataRowAvailable(new MageDataEventArgs(row.ToArray()));
             }
             OnDataRowAvailable(new MageDataEventArgs(null));

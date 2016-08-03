@@ -1,5 +1,7 @@
-﻿namespace MageUIComponents {
-    partial class FolderDestinationPanel {
+﻿namespace MageUIComponents
+{
+    partial class FolderDestinationPanel
+    {
         /// <summary> 
         /// Required designer variable.
         /// </summary>
@@ -9,8 +11,10 @@
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing) {
-            if (disposing && (components != null)) {
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
                 components.Dispose();
             }
             base.Dispose(disposing);
@@ -22,7 +26,8 @@
         /// Required method for Designer support - do not modify 
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent() {
+        private void InitializeComponent()
+        {
             this.panel3 = new System.Windows.Forms.Panel();
             this.DefineDestinationFileCtl = new System.Windows.Forms.Button();
             this.SelectFolderCtl = new System.Windows.Forms.Button();
@@ -96,7 +101,7 @@
             // OutputFileCtl
             // 
             this.OutputFileCtl.AcceptsReturn = true;
-            this.OutputFileCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.OutputFileCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.OutputFileCtl.Location = new System.Drawing.Point(133, 40);
             this.OutputFileCtl.Margin = new System.Windows.Forms.Padding(4);
@@ -107,7 +112,7 @@
             // OutputFolderCtl
             // 
             this.OutputFolderCtl.AcceptsReturn = true;
-            this.OutputFolderCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.OutputFolderCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.OutputFolderCtl.Location = new System.Drawing.Point(133, 10);
             this.OutputFolderCtl.Margin = new System.Windows.Forms.Padding(4);
@@ -138,6 +143,6 @@
         private System.Windows.Forms.TextBox OutputFolderCtl;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox OutputFileCtl;
-		private System.Windows.Forms.Button DefineDestinationFileCtl;
+        private System.Windows.Forms.Button DefineDestinationFileCtl;
     }
 }

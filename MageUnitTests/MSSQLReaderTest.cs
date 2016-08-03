@@ -1,18 +1,18 @@
 ﻿using Mage;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Data;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Collections.ObjectModel;
 
-namespace MageUnitTests {
+namespace MageUnitTests
+{
 
     /// <summary>
     ///This is a test class for MSSQLReaderTest and is intended
     ///to contain all MSSQLReaderTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class MSSQLReaderTest {
+    public class MSSQLReaderTest
+    {
 
 
         private TestContext testContextInstance;
@@ -21,11 +21,14 @@ namespace MageUnitTests {
         ///Gets or sets the test context which provides
         ///information about and functionality for the current test run.
         ///</summary>
-        public TestContext TestContext {
-            get {
+        public TestContext TestContext
+        {
+            get
+            {
                 return testContextInstance;
             }
-            set {
+            set
+            {
                 testContextInstance = value;
             }
         }
@@ -65,7 +68,8 @@ namespace MageUnitTests {
         ///A test for sqlText
         ///</summary>
         [TestMethod()]
-        public void SQLTextPropertyTest() {
+        public void SQLTextPropertyTest()
+        {
             MSSQLReader target = new MSSQLReader();
             string expected = "Test Value";
             string actual;
@@ -78,7 +82,8 @@ namespace MageUnitTests {
         ///A test for sprocName
         ///</summary>
         [TestMethod()]
-        public void SprocNamePropertyTest() {
+        public void SprocNamePropertyTest()
+        {
             MSSQLReader target = new MSSQLReader();
             string expected = "Test Value";
             string actual;
@@ -91,7 +96,8 @@ namespace MageUnitTests {
         ///A test for server
         ///</summary>
         [TestMethod()]
-        public void ServerPropertyTest() {
+        public void ServerPropertyTest()
+        {
             MSSQLReader target = new MSSQLReader();
             string expected = "Test Value";
             string actual;
@@ -104,7 +110,8 @@ namespace MageUnitTests {
         ///A test for database
         ///</summary>
         [TestMethod()]
-        public void DatabasePropertyTest() {
+        public void DatabasePropertyTest()
+        {
             MSSQLReader target = new MSSQLReader();
             string expected = "Test Value";
             string actual;
@@ -114,8 +121,9 @@ namespace MageUnitTests {
         }
 
         [TestMethod()]
-		[DeploymentItem(@"..\..\..\TestItems\QueryDefinitions.xml")]
-        public void XMLQueryDatasetFactors() {
+        [DeploymentItem(@"..\..\..\TestItems\QueryDefinitions.xml")]
+        public void XMLQueryDatasetFactors()
+        {
 
             // runtime parameters for query
             Dictionary<string, string> runtimeParameters = new Dictionary<string, string>();
@@ -148,7 +156,8 @@ namespace MageUnitTests {
         /// Test to get factors for dataset name
         /// </summary>
         [TestMethod()]
-        public void QueryDatasetFactors() {
+        public void QueryDatasetFactors()
+        {
             // create MSSQLReader module and test sink module 
             // and connect together
             MSSQLReader target = new MSSQLReader();
@@ -182,7 +191,8 @@ namespace MageUnitTests {
         /// using SQLBuilder to make the SQL
         ///</summary>
         [TestMethod()]
-        public void QueryWithSQLBuilderTest() {
+        public void QueryWithSQLBuilderTest()
+        {
             // create MSSQLReader module and test sink module 
             // and connect together (no pipeline object used)
             MSSQLReader target = new MSSQLReader();
@@ -217,7 +227,8 @@ namespace MageUnitTests {
         /// using SQLBuilder to make the SQL
         ///</summary>
         [TestMethod()]
-        public void QueryAllMTDBs() {
+        public void QueryAllMTDBs()
+        {
             // create MSSQLReader module and test sink module 
             // and connect together (no pipeline object used)
             MSSQLReader target = new MSSQLReader();
@@ -249,7 +260,8 @@ namespace MageUnitTests {
         ///A test for straight SQL query against DMS
         ///</summary>
         [TestMethod()]
-        public void QueryTest() {
+        public void QueryTest()
+        {
             // create MSSQLReader module and test sink module 
             // and connect together (no pipeline object used)
             MSSQLReader target = new MSSQLReader();
@@ -261,7 +273,7 @@ namespace MageUnitTests {
             // define columns (noramlly not needed for production code, but necessary for unit test)
             string[] colList = new string[] { "Job", "State", "Dataset", "Dataset_ID", "Tool", "Parameter_File", "Settings_File", "Instrument", "Experiment", "Campaign" };
             string colNames = string.Join(", ", colList);
- 
+
             // Define and run a database query
             // Defaults are gigasax and DMS5
             target.Server = Globals.DMSServer;
@@ -274,7 +286,8 @@ namespace MageUnitTests {
         }
 
         [TestMethod()]
-        public void DMSSprocReadTest() {
+        public void DMSSprocReadTest()
+        {
             // create MSSQLReader module and test sink module 
             // and connect together (no pipeline object used)
             MSSQLReader target = new MSSQLReader();
@@ -301,12 +314,13 @@ namespace MageUnitTests {
         }
 
         [TestMethod()]
-		[DeploymentItem(@"..\..\..\TestItems\QueryDefinitions.xml")]
-        public void XMLMTSSprocReadTest() {
+        [DeploymentItem(@"..\..\..\TestItems\QueryDefinitions.xml")]
+        public void XMLMTSSprocReadTest()
+        {
 
             // runtime parameters for query
             Dictionary<string, string> runtimeParameters = new Dictionary<string, string>();
-//            runtimeParameters["@ExperimentFilter"] = "sarc";
+            //            runtimeParameters["@ExperimentFilter"] = "sarc";
 
             // get XML query definition by name
             string queryDefXML = ModuleDiscovery.GetQueryXMLDef("GetMassTagsPlusPepProphetStats");
@@ -324,7 +338,7 @@ namespace MageUnitTests {
             SimpleSink sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
             target.DataRowAvailable += sink.HandleDataRow;
-            
+
             target.Run(null);
 
             // define columns (noramlly not needed for production code, but necessary for unit test)
@@ -334,7 +348,8 @@ namespace MageUnitTests {
         }
 
         [TestMethod()]
-        public void MTSSprocReadTest() {
+        public void MTSSprocReadTest()
+        {
             // create MSSQLReader module and test sink module 
             // and connect together (no pipeline object used)
             MSSQLReader target = new MSSQLReader();
@@ -368,7 +383,8 @@ namespace MageUnitTests {
         }
 
         [TestMethod()]
-        public void MTSDatabaseListReadTest() {
+        public void MTSDatabaseListReadTest()
+        {
             // create MSSQLReader module and test sink module and connect together
             MSSQLReader target = new MSSQLReader();
             int maxRows = 4;
@@ -394,18 +410,20 @@ namespace MageUnitTests {
             CheckRowsetResults(sink, maxRows, colList);
         }
 
-        private static void CheckRowsetResults(SimpleSink sink, int maxRows, string[] colList) {
+        private static void CheckRowsetResults(SimpleSink sink, int maxRows, string[] colList)
+        {
 
             // did the test sink module get the expected row definitions
             Collection<MageColumnDef> cols = sink.Columns;
             Assert.AreEqual(cols.Count, colList.Length);
-            for (int i = 0; i < cols.Count; i++) {
+            for (int i = 0; i < cols.Count; i++)
+            {
                 Assert.AreEqual(cols[i].Name, colList[i], "Did not get get the expected row definitions");
             }
 
             // did the test sink module get the expected number of data rows
             // on its standard tabular input?
-			Collection<string[]> rows = sink.Rows;
+            Collection<string[]> rows = sink.Rows;
 
             Assert.AreEqual(maxRows, rows.Count, "Did not get get the expected number of data rows");
 

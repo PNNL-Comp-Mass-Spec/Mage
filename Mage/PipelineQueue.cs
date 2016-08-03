@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Threading;
 
-namespace Mage {
+namespace Mage
+{
 
     /// <summary>
     /// Runs one or more Mage pipelines from a queue
     /// in a worker thread.
     /// </summary>
-    public sealed class PipelineQueue {
+    public sealed class PipelineQueue
+    {
 
         /// <summary>
         /// event that is fired when next pipeline in queue begins procession
@@ -40,14 +42,16 @@ namespace Mage {
         /// <summary>
         /// Get currently running pipeline
         /// </summary>
-        public ProcessingPipeline CurrentPipeline {
+        public ProcessingPipeline CurrentPipeline
+        {
             get { return mCurrentPipeline; }
         }
 
         /// <summary>
         /// Is queue currently running
         /// </summary>
-        public bool IsRunning {
+        public bool IsRunning
+        {
             get { return mQueueRunning; }
         }
 
@@ -69,7 +73,8 @@ namespace Mage {
         /// Adds a pipeline to the queue
         /// </summary>
         /// <param name="pipeline"></param>
-        public void Add(ProcessingPipeline pipeline) {
+        public void Add(ProcessingPipeline pipeline)
+        {
             mPipelineQueue.Enqueue(pipeline);
         }
 
@@ -77,8 +82,10 @@ namespace Mage {
         /// Add pipelines to queue and run the queue
         /// </summary>
         /// <param name="pipelines"></param>
-        public void Run(params ProcessingPipeline[] pipelines) {
-            foreach (ProcessingPipeline pipeline in pipelines) {
+        public void Run(params ProcessingPipeline[] pipelines)
+        {
+            foreach (ProcessingPipeline pipeline in pipelines)
+            {
                 Add(pipeline);
             }
             Run();
@@ -87,9 +94,11 @@ namespace Mage {
         /// <summary>
         /// Run the queue in a worker thread
         /// </summary>
-        public void Run() {
+        public void Run()
+        {
             Globals.AbortRequested = false;
-            if (!mQueueRunning) {
+            if (!mQueueRunning)
+            {
                 mQueueRunning = true;
                 ThreadPool.QueueUserWorkItem(RunPipelinesInQueue);
             }
@@ -99,24 +108,29 @@ namespace Mage {
         /// Run the queue in the caller's thread
         /// </summary>
         /// <param name="state"></param>
-        public void RunRoot(object state) {
-			Globals.AbortRequested = false;
-            if (!mQueueRunning) {
+        public void RunRoot(object state)
+        {
+            Globals.AbortRequested = false;
+            if (!mQueueRunning)
+            {
                 mQueueRunning = true;
                 RunPipelinesInQueue(state);
             }
         }
- 
+
         /// <summary>
         /// Cancel the currently running pipeline
         /// and set the abort flag to stop the queue
         /// </summary>
-        public void Cancel() {
-			Globals.AbortRequested = true;
-            if (mCurrentPipeline != null) {
+        public void Cancel()
+        {
+            Globals.AbortRequested = true;
+            if (mCurrentPipeline != null)
+            {
                 mCurrentPipeline.Cancel();
             }
-            while (mPipelineQueue.Count > 0) {
+            while (mPipelineQueue.Count > 0)
+            {
                 ProcessingPipeline nextPipeline = mPipelineQueue.Dequeue();
                 nextPipeline.Cancel();
             }
@@ -131,10 +145,14 @@ namespace Mage {
         /// unless abort flag is set
         /// </summary>
         /// <param name="state"></param>
-        private void RunPipelinesInQueue(object state) {
-            while (mPipelineQueue.Count > 0) {
-				if (Globals.AbortRequested) {
-                    if (OnRunCompleted != null) {
+        private void RunPipelinesInQueue(object state)
+        {
+            while (mPipelineQueue.Count > 0)
+            {
+                if (Globals.AbortRequested)
+                {
+                    if (OnRunCompleted != null)
+                    {
                         OnRunCompleted(this, new MageStatusEventArgs("Pipeline: Processing aborted"));
                     }
                     break;
@@ -157,12 +175,14 @@ namespace Mage {
         /// <summary>
         /// To inform subscribers
         /// </summary>
-        private void UpdateQueueCompleted() {
-            if (OnRunCompleted != null) {
-				if (Globals.AbortRequested)
-					OnRunCompleted(this, new MageStatusEventArgs("Aborted"));
-				else
-					OnRunCompleted(this, new MageStatusEventArgs("Done"));
+        private void UpdateQueueCompleted()
+        {
+            if (OnRunCompleted != null)
+            {
+                if (Globals.AbortRequested)
+                    OnRunCompleted(this, new MageStatusEventArgs("Aborted"));
+                else
+                    OnRunCompleted(this, new MageStatusEventArgs("Done"));
             }
         }
 
@@ -170,8 +190,10 @@ namespace Mage {
         /// To inform subscribers
         /// </summary>
         /// <param name="msg"></param>
-        private void UpdatePipelineStarted(string msg) {
-            if (OnPipelineStarted != null) {
+        private void UpdatePipelineStarted(string msg)
+        {
+            if (OnPipelineStarted != null)
+            {
                 OnPipelineStarted(this, new MageStatusEventArgs(msg));
             }
         }

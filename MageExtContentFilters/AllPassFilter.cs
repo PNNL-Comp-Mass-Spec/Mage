@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Mage;
+﻿using Mage;
 
-namespace MageExtContentFilters {
+namespace MageExtContentFilters
+{
 
     /// <summary>
     /// A filter that passes all rows, but applies any column mapping
@@ -14,15 +11,17 @@ namespace MageExtContentFilters {
 	/// The list of auto-discovered filters is then used to populate the gridview on form FilterSelectionForm.cs
 	/// </remarks>
     [MageAttribute("Filter", "AllPassFilter", "All Pass", "Pass everything and apply output column mapping")]
-    public class AllPassFilter : ContentFilter {
+    public class AllPassFilter : ContentFilter
+    {
 
         /// <summary>
         /// Pass all rows and apply column mapping
         /// </summary>
 		protected override bool CheckFilter(ref string[] vals)
-		{
-            if (OutputColumnDefs != null) {
-				string[] outRow = MapDataRow(vals);
+        {
+            if (OutputColumnDefs != null)
+            {
+                string[] outRow = MapDataRow(vals);
                 vals = outRow;
             }
             return true;

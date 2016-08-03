@@ -3,7 +3,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.IO;
 
-namespace MageUnitTests {
+namespace MageUnitTests
+{
 
 
     /// <summary>
@@ -11,7 +12,8 @@ namespace MageUnitTests {
     ///to contain all FileListFilterTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class FileListFilterTest {
+    public class FileListFilterTest
+    {
 
         private TestContext testContextInstance;
 
@@ -19,11 +21,14 @@ namespace MageUnitTests {
         ///Gets or sets the test context which provides
         ///information about and functionality for the current test run.
         ///</summary>
-        public TestContext TestContext {
-            get {
+        public TestContext TestContext
+        {
+            get
+            {
                 return testContextInstance;
             }
-            set {
+            set
+            {
                 testContextInstance = value;
             }
         }
@@ -62,8 +67,9 @@ namespace MageUnitTests {
         ///A test for FileListFilter run as source using RegEx file selector mode
         ///</summary>
         [TestMethod()]
-		[DeploymentItem(@"..\..\..\TestItems\TargetFolder")]
-        public void RunFileListFilterAsSourceRegEx() {
+        [DeploymentItem(@"..\..\..\TestItems\TargetFolder")]
+        public void RunFileListFilterAsSourceRegEx()
+        {
 
             string testFolderPath = Path.GetFullPath(".");
 
@@ -90,11 +96,13 @@ namespace MageUnitTests {
 
             int hits = 0;
             int fileNameColIndx = 1;
-			foreach (string[] item in sink.Rows)
-			{
+            foreach (string[] item in sink.Rows)
+            {
                 string s = item[fileNameColIndx];
-                if (s == "TargetFile2.txt") ++hits;
-                if (s == "TargetFile3.txt") ++hits;
+                if (s == "TargetFile2.txt")
+                    ++hits;
+                if (s == "TargetFile3.txt")
+                    ++hits;
             }
 
             Assert.AreEqual(2, sink.Rows.Count, "Expected total of files found did not match");
@@ -106,8 +114,9 @@ namespace MageUnitTests {
         ///A test for FileListFilter run as source using file search selector mode
         ///</summary>
         [TestMethod()]
-		[DeploymentItem(@"..\..\..\TestItems\TargetFolder")]
-        public void RunFileListFilterAsSourceFileSearch() {
+        [DeploymentItem(@"..\..\..\TestItems\TargetFolder")]
+        public void RunFileListFilterAsSourceFileSearch()
+        {
 
             string testFolderPath = Path.GetFullPath(".");
 
@@ -135,11 +144,13 @@ namespace MageUnitTests {
 
             int hits = 0;
             int fileNameColIndx = 1;
-			foreach (string[] item in sink.Rows)
-			{
+            foreach (string[] item in sink.Rows)
+            {
                 string s = item[fileNameColIndx];
-                if (s == "TargetFile2.txt") ++hits;
-                if (s == "TargetFile3.txt") ++hits;
+                if (s == "TargetFile2.txt")
+                    ++hits;
+                if (s == "TargetFile3.txt")
+                    ++hits;
             }
 
             Assert.AreEqual(2, sink.Rows.Count, "Expected total of files found did not match");
@@ -147,33 +158,34 @@ namespace MageUnitTests {
 
         }
 
-		/// <summary>
-		/// A class to provide access to private member variables of FileListFilter.
-		/// Original method was using private accessors, deprecated starting in 2010
-		/// Another option was using PrivateObject, which requires 
-		///    Microsoft.VisualStudio.TestTools.UnitTesting and performs operations using reflection.
-		/// </summary>
-	    private class FileListFilterExtracter : FileListFilter
-	    {
-		    public List<string[]> OutputBuffer
-		    {
-				get { return mOutputBuffer; }
-			    set
-			    {
-					mOutputBuffer.Clear();
-				    mOutputBuffer.AddRange(value);
-			    }
-		    } 
-	    }
+        /// <summary>
+        /// A class to provide access to private member variables of FileListFilter.
+        /// Original method was using private accessors, deprecated starting in 2010
+        /// Another option was using PrivateObject, which requires 
+        ///    Microsoft.VisualStudio.TestTools.UnitTesting and performs operations using reflection.
+        /// </summary>
+        private class FileListFilterExtracter : FileListFilter
+        {
+            public List<string[]> OutputBuffer
+            {
+                get { return mOutputBuffer; }
+                set
+                {
+                    mOutputBuffer.Clear();
+                    mOutputBuffer.AddRange(value);
+                }
+            }
+        }
 
         /// <summary>
         ///A test for GetFileNamesFromSourceFolder
         ///</summary>
         [TestMethod()]
         [DeploymentItem("Mage.dll")]
-        public void GetFileNamesFromSourceFolderTest() {
+        public void GetFileNamesFromSourceFolderTest()
+        {
 
-			FileListFilterExtracter target = new FileListFilterExtracter(); // TODO: Initialize to an appropriate value
+            FileListFilterExtracter target = new FileListFilterExtracter(); // TODO: Initialize to an appropriate value
             Dictionary<string, string> parms = new Dictionary<string, string>();
             parms.Add("FolderPath", "TestFolderPath");
             target.SetParameters(parms);
@@ -182,12 +194,13 @@ namespace MageUnitTests {
             parms.Add("FileNameSelector", "TestFileNameSelector");
             target.SetParameters(parms);
 
-			List<string[]> outputBuffer = target.OutputBuffer;
+            List<string[]> outputBuffer = target.OutputBuffer;
             Assert.AreEqual(1, outputBuffer.Count);
         }
 
         [TestMethod()]
-        public void PropertiesSetTest() {
+        public void PropertiesSetTest()
+        {
             string expected;
             string actual;
             Dictionary<string, string> parms = new Dictionary<string, string>();
@@ -214,7 +227,8 @@ namespace MageUnitTests {
         ///A test for FileColumnName
         ///</summary>
         [TestMethod()]
-        public void FileColumnNameTest() {
+        public void FileColumnNameTest()
+        {
             FileListFilter target = new FileListFilter();
             string expected = "Test Value";
             string actual;
@@ -227,7 +241,8 @@ namespace MageUnitTests {
         ///A test for SourceFolderColumnName
         ///</summary>
         [TestMethod()]
-        public void SourceFolderColumnNameTest() {
+        public void SourceFolderColumnNameTest()
+        {
             FileListFilter target = new FileListFilter();
             string expected = "Test Value";
             string actual;

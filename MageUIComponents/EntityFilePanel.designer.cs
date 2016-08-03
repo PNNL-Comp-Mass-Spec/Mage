@@ -1,5 +1,7 @@
-﻿namespace MageUIComponents {
-    partial class EntityFilePanel {
+﻿namespace MageUIComponents
+{
+    partial class EntityFilePanel
+    {
         /// <summary> 
         /// Required designer variable.
         /// </summary>
@@ -9,8 +11,10 @@
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing) {
-            if (disposing && (components != null)) {
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
                 components.Dispose();
             }
             base.Dispose(disposing);
@@ -22,7 +26,8 @@
         /// Required method for Designer support - do not modify 
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent() {
+        private void InitializeComponent()
+        {
             this.panel1 = new System.Windows.Forms.Panel();
             this.SearchGroupBoxCtl = new System.Windows.Forms.GroupBox();
             this.SubfolderSearchNameCtl = new System.Windows.Forms.TextBox();
@@ -218,7 +223,7 @@
             // 
             // FileSelectorsCtl
             // 
-            this.FileSelectorsCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.FileSelectorsCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.FileSelectorsCtl.Location = new System.Drawing.Point(117, 7);
             this.FileSelectorsCtl.Margin = new System.Windows.Forms.Padding(4);

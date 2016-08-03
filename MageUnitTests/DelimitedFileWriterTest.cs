@@ -1,7 +1,7 @@
 ﻿using Mage;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-namespace MageUnitTests {
+namespace MageUnitTests
+{
 
 
     /// <summary>
@@ -9,7 +9,8 @@ namespace MageUnitTests {
     ///to contain all DelimitedFileWriterTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class DelimitedFileWriterTest {
+    public class DelimitedFileWriterTest
+    {
 
 
         private TestContext testContextInstance;
@@ -18,11 +19,14 @@ namespace MageUnitTests {
         ///Gets or sets the test context which provides
         ///information about and functionality for the current test run.
         ///</summary>
-        public TestContext TestContext {
-            get {
+        public TestContext TestContext
+        {
+            get
+            {
                 return testContextInstance;
             }
-            set {
+            set
+            {
                 testContextInstance = value;
             }
         }
@@ -58,7 +62,8 @@ namespace MageUnitTests {
         #endregion
 
         [TestMethod()]
-        public void WriteTest() {
+        public void WriteTest()
+        {
             int cols = 5;
             int rows = 21;
             string testFile = "delim_test.txt";
@@ -78,7 +83,8 @@ namespace MageUnitTests {
             General.CompareSinks(source, result);
         }
 
-        public SimpleSink WriteDelimitedFileWithTestData(string filePath, IBaseModule dGen) {
+        public SimpleSink WriteDelimitedFileWithTestData(string filePath, IBaseModule dGen)
+        {
             ProcessingPipeline pipeline = new ProcessingPipeline("Delimited_File_Writer");
 
             pipeline.RootModule = pipeline.AddModule("Gen", dGen);
@@ -102,8 +108,9 @@ namespace MageUnitTests {
         ///A test for Header
         ///</summary>
         [TestMethod()]
-        public void HeaderTest() {
-            DelimitedFileWriter target = new DelimitedFileWriter(); 
+        public void HeaderTest()
+        {
+            DelimitedFileWriter target = new DelimitedFileWriter();
             string expected = "Test Value";
             string actual;
             target.Header = expected;
@@ -115,8 +122,9 @@ namespace MageUnitTests {
         ///A test for FilePath
         ///</summary>
         [TestMethod()]
-        public void FilePathTest() {
-            DelimitedFileWriter target = new DelimitedFileWriter(); 
+        public void FilePathTest()
+        {
+            DelimitedFileWriter target = new DelimitedFileWriter();
             string expected = "Test Value";
             string actual;
             target.FilePath = expected;
@@ -128,8 +136,9 @@ namespace MageUnitTests {
         ///A test for Delimiter
         ///</summary>
         [TestMethod()]
-        public void DelimiterTest() {
-            DelimitedFileWriter target = new DelimitedFileWriter(); 
+        public void DelimiterTest()
+        {
+            DelimitedFileWriter target = new DelimitedFileWriter();
             string expected = ",";
             string actual;
             target.Delimiter = expected;

@@ -2,13 +2,14 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace MageUnitTests
 {
-    
+
     /// <summary>
     ///This is a test class for ProcessingPipelineTest and is intended
     ///to contain all ProcessingPipelineTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class QueryDefinitionTest {
+    public class QueryDefinitionTest
+    {
 
         private TestContext testContextInstance;
 
@@ -16,11 +17,14 @@ namespace MageUnitTests
         ///Gets or sets the test context which provides
         ///information about and functionality for the current test run.
         ///</summary>
-        public TestContext TestContext {
-            get {
+        public TestContext TestContext
+        {
+            get
+            {
                 return testContextInstance;
             }
-            set {
+            set
+            {
                 testContextInstance = value;
             }
         }
@@ -60,8 +64,9 @@ namespace MageUnitTests
         ///A test for GetQueryXMLDef
         ///</summary>
         [TestMethod()]
-		[DeploymentItem(@"..\..\..\TestItems\QueryDefinitions.xml")]
-        public void GetQueryXMLDefTest() {
+        [DeploymentItem(@"..\..\..\TestItems\QueryDefinitions.xml")]
+        public void GetQueryXMLDefTest()
+        {
             string queryName = "Mage_Analysis_Jobs";
             string actual;
             actual = ModuleDiscovery.GetQueryXMLDef(queryName);

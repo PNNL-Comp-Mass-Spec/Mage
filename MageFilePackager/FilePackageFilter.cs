@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using Mage;
 
-namespace MageFilePackager {
+namespace MageFilePackager
+{
 
     // cleans up input file search data and normalizes it for inclusion in manifest
-    class FilePackageFilter : ContentFilter {
+    class FilePackageFilter : ContentFilter
+    {
 
         // Indexes into the row field data array
         private int _sourceIdx;
@@ -23,15 +25,19 @@ namespace MageFilePackager {
                                                                   };
 
         // Precalulate field indexes
-        protected override void ColumnDefsFinished() {
+        protected override void ColumnDefsFinished()
+        {
             _folderIdx = InputColumnPos["Folder"];
             _storagePathIdx = (InputColumnPos.ContainsKey("Storage_Path")) ? InputColumnPos["Storage_Path"] : -1;
             _archivePathIdx = InputColumnPos["Archive_Path"];
             _purgedIdx = (InputColumnPos.ContainsKey("Purged")) ? InputColumnPos["Purged"] : -1;
-            for (int i = 0; i < OutputColumnDefs.Count; i++) {
+            for (int i = 0; i < OutputColumnDefs.Count; i++)
+            {
                 MageColumnDef cd = OutputColumnDefs[i];
-                if (cd.Name == "Source") _sourceIdx = i;
-                if (cd.Name == "Path") _pathIdx = i;
+                if (cd.Name == "Source")
+                    _sourceIdx = i;
+                if (cd.Name == "Path")
+                    _pathIdx = i;
             }
         }
 
@@ -41,21 +47,25 @@ namespace MageFilePackager {
         /// <param name="vals"></param>
         /// <returns></returns>
 		protected override bool CheckFilter(ref string[] vals)
-		{
+        {
 
             // apply field mapping to output
-            if (OutputColumnDefs != null) {
-				string[] outRow = MapDataRow(vals);
+            if (OutputColumnDefs != null)
+            {
+                string[] outRow = MapDataRow(vals);
 
                 // what kind DMS entity does the file belong to?
                 string source = outRow[_sourceIdx];
 
-                if (source == "Data_Package") {
+                if (source == "Data_Package")
+                {
                     // we don't have an actual archive path to work with
                     // - fake one from storage path
                     string folderPath = vals[_folderIdx];
                     outRow[_pathIdx] = folderPath.Replace(DataPackageShareRoot, "");
-                } else {
+                }
+                else
+                {
                     // we have an actual archive path to work with
                     string archivePath = vals[_folderIdx];
 
@@ -64,8 +74,9 @@ namespace MageFilePackager {
                     // with the archive root path
                     string prefix = (PrefixList.ContainsKey(source)) ? PrefixList[source] : "";
                     string purged = vals[_purgedIdx];
-                    if (purged == "0") {
-						string storageRoot = vals[_storagePathIdx];
+                    if (purged == "0")
+                    {
+                        string storageRoot = vals[_storagePathIdx];
                         string archiveRoot = vals[_archivePathIdx];
                         archivePath = archivePath.Replace(storageRoot, archiveRoot);
                     }

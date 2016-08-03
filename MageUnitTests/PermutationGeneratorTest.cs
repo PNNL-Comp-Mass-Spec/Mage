@@ -1,7 +1,7 @@
 ﻿using Mage;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-namespace MageUnitTests {
+namespace MageUnitTests
+{
 
 
     /// <summary>
@@ -9,7 +9,8 @@ namespace MageUnitTests {
     ///to contain all PermutationGeneratorTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class PermutationGeneratorTest {
+    public class PermutationGeneratorTest
+    {
 
         private TestContext testContextInstance;
 
@@ -17,11 +18,14 @@ namespace MageUnitTests {
         ///Gets or sets the test context which provides
         ///information about and functionality for the current test run.
         ///</summary>
-        public TestContext TestContext {
-            get {
+        public TestContext TestContext
+        {
+            get
+            {
                 return testContextInstance;
             }
-            set {
+            set
+            {
                 testContextInstance = value;
             }
         }
@@ -60,9 +64,10 @@ namespace MageUnitTests {
         ///A test for AddParamColumn
         ///</summary>
         [TestMethod()]
-        public void AddParamColumnTest() {
+        public void AddParamColumnTest()
+        {
             int actual;
-            PermutationGenerator target = new PermutationGenerator(); 
+            PermutationGenerator target = new PermutationGenerator();
             target.AddParamColumn("one", "1", "5", "1");
             target.AddParamColumn("two", "0", "2", "1");
             target.AddParamColumn("three", "1", "1", "1");
@@ -75,7 +80,8 @@ namespace MageUnitTests {
         ///A test for PredictedOutputRowCount
         ///</summary>
         [TestMethod()]
-        public void PredictedOutputRowCountTest() {
+        public void PredictedOutputRowCountTest()
+        {
             int actual;
             PermutationGenerator target = new PermutationGenerator();
 
@@ -94,9 +100,10 @@ namespace MageUnitTests {
         ///A test for IncludeHeaderInOutput
         ///</summary>
         [TestMethod()]
-        public void IncludeHeaderInOutputTest() {
+        public void IncludeHeaderInOutputTest()
+        {
             PermutationGenerator target = new PermutationGenerator();
-            bool expected = false; 
+            bool expected = false;
             bool actual;
             target.IncludeHeaderInOutput = expected;
             actual = target.IncludeHeaderInOutput;
@@ -112,7 +119,8 @@ namespace MageUnitTests {
         ///A test for Run
         ///</summary>
         [TestMethod()]
-        public void BasicPermutationGenerator() {
+        public void BasicPermutationGenerator()
+        {
             PermutationGenerator target = new PermutationGenerator();
             target.AddParamColumn("one", "1", "5", "1");
             target.AddParamColumn("two", "0", "2", "1");
@@ -139,7 +147,8 @@ namespace MageUnitTests {
         ///A test for Run
         ///</summary>
         [TestMethod()]
-        public void PermutationGeneratorWithMappedColumns() {
+        public void PermutationGeneratorWithMappedColumns()
+        {
             PermutationGenerator target = new PermutationGenerator();
             target.AddParamColumn("one", "1", "5", "1");
             target.AddParamColumn("two", "0", "2", "1");
@@ -166,7 +175,8 @@ namespace MageUnitTests {
         }
 
         [TestMethod()]
-        public void PermutationGeneratorWriteSQLite() {
+        public void PermutationGeneratorWriteSQLite()
+        {
 
             PermutationGenerator PGen = new PermutationGenerator();
             PGen.AddParamColumn("one", "1", "5", "1");
@@ -193,7 +203,8 @@ namespace MageUnitTests {
         }
 
         [TestMethod()]
-        public void PermutationGeneratorWriteFile() {
+        public void PermutationGeneratorWriteFile()
+        {
 
             PermutationGenerator PGen = new PermutationGenerator();
             PGen.AddParamColumn("one", "1", "5", "1");

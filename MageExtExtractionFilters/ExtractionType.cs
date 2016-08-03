@@ -1,7 +1,9 @@
 ﻿
-namespace MageExtExtractionFilters {
+namespace MageExtExtractionFilters
+{
 
-    public class ExtractionType {
+    public class ExtractionType
+    {
 
         public ResultType RType { get; set; }
 

@@ -1,5 +1,7 @@
-﻿namespace MageUIComponents {
-    partial class JobDataPackagePanel {
+﻿namespace MageUIComponents
+{
+    partial class JobDataPackagePanel
+    {
         /// <summary> 
         /// Required designer variable.
         /// </summary>
@@ -9,8 +11,10 @@
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing) {
-            if (disposing && (components != null)) {
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
                 components.Dispose();
             }
             base.Dispose(disposing);
@@ -22,7 +26,8 @@
         /// Required method for Designer support - do not modify 
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent() {
+        private void InitializeComponent()
+        {
             this.panel1 = new System.Windows.Forms.Panel();
             this.GetDatasetsCtl = new System.Windows.Forms.Button();
             this.DataPackageIDCtl = new System.Windows.Forms.TextBox();
@@ -109,6 +114,6 @@
         private System.Windows.Forms.TextBox DataPackageIDCtl;
         private System.Windows.Forms.Button GetJobsCtl;
         private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.Button GetDatasetsCtl;
+        private System.Windows.Forms.Button GetDatasetsCtl;
     }
 }

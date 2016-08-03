@@ -1,8 +1,8 @@
 ﻿using Mage;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-namespace MageUnitTests {
+namespace MageUnitTests
+{
 
 
     /// <summary>
@@ -10,7 +10,8 @@ namespace MageUnitTests {
     ///to contain all ProcessingPipelineTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class ProcessingPipelineTest {
+    public class ProcessingPipelineTest
+    {
 
 
         private TestContext testContextInstance;
@@ -19,11 +20,14 @@ namespace MageUnitTests {
         ///Gets or sets the test context which provides
         ///information about and functionality for the current test run.
         ///</summary>
-        public TestContext TestContext {
-            get {
+        public TestContext TestContext
+        {
+            get
+            {
                 return testContextInstance;
             }
-            set {
+            set
+            {
                 testContextInstance = value;
             }
         }
@@ -63,7 +67,8 @@ namespace MageUnitTests {
         ///A test for SetModuleParameter
         ///</summary>
         [TestMethod()]
-        public void SetModuleParameterTest() {
+        public void SetModuleParameterTest()
+        {
             ProcessingPipeline target = new ProcessingPipeline("TestPipeline");
             TestModule tm = new TestModule();
 
@@ -81,7 +86,8 @@ namespace MageUnitTests {
         /// Tests ability to make Mage basic modules by class name
         ///</summary>
         [TestMethod()]
-        public void MakeModuleTest() {
+        public void MakeModuleTest()
+        {
             IBaseModule mod = null;
 
             mod = ProcessingPipeline.MakeModule("NullFilter");
@@ -118,7 +124,8 @@ namespace MageUnitTests {
         /// Tests assembling pipeline from list of module objects
         ///</summary>
         [TestMethod()]
-        public void PipelineFromModuleListTest() {
+        public void PipelineFromModuleListTest()
+        {
             string pipelineName = "Test Pipeline";
             ProcessingPipeline pipeline = null;
 
@@ -147,7 +154,8 @@ namespace MageUnitTests {
         /// Tests assembling pipeline from list of module class names as strings
         ///</summary>
         [TestMethod()]
-        public void PipelineFromNamesListTest() {
+        public void PipelineFromNamesListTest()
+        {
             string pipelineName = "Test Pipeline";
             ProcessingPipeline pipeline = null;
 
@@ -173,15 +181,16 @@ namespace MageUnitTests {
         /// where modules are defined by class name
         ///</summary>
         [TestMethod()]
-        public void PipelineFromNamedModuleListTest1() {
+        public void PipelineFromNamedModuleListTest1()
+        {
             string pipelineName = "Test Pipeline";
             ProcessingPipeline pipeline = null;
 
             Collection<ModuleDef> namedModuleList = null;
-            namedModuleList = new Collection<ModuleDef>() { 
-                new ModuleDef("Larry", "DelimitedFileReader"), 
-                new ModuleDef("Moe", "NullFilter"), 
-                new ModuleDef("Curly", "SimpleSink") 
+            namedModuleList = new Collection<ModuleDef>() {
+                new ModuleDef("Larry", "DelimitedFileReader"),
+                new ModuleDef("Moe", "NullFilter"),
+                new ModuleDef("Curly", "SimpleSink")
             };
             pipeline = ProcessingPipeline.Assemble(pipelineName, namedModuleList);
 
@@ -204,7 +213,8 @@ namespace MageUnitTests {
         /// some modules are defined by class name
         ///</summary>
         [TestMethod()]
-        public void PipelineFromNamedModuleListTest2() {
+        public void PipelineFromNamedModuleListTest2()
+        {
             string pipelineName = "Test Pipeline";
             ProcessingPipeline pipeline = null;
 
@@ -212,10 +222,10 @@ namespace MageUnitTests {
             SQLiteWriter writer = new SQLiteWriter();
 
             Collection<ModuleDef> namedModuleList = null;
-            namedModuleList = new Collection<ModuleDef>() { 
-                new ModuleDef("Larry", reader), 
-                new ModuleDef("Moe", "NullFilter"), 
-                new ModuleDef("Curly", writer) 
+            namedModuleList = new Collection<ModuleDef>() {
+                new ModuleDef("Larry", reader),
+                new ModuleDef("Moe", "NullFilter"),
+                new ModuleDef("Curly", writer)
             };
             pipeline = ProcessingPipeline.Assemble(pipelineName, namedModuleList);
 
@@ -250,7 +260,8 @@ namespace MageUnitTests {
         ///A test for Build
         ///</summary>
         [TestMethod()]
-        public void AsembleXML() {
+        public void AsembleXML()
+        {
             ProcessingPipeline pipeline = ProcessingPipeline.Assemble(pipelineXML);
 
             IBaseModule mod = pipeline.GetModule("Reader");
@@ -273,7 +284,8 @@ namespace MageUnitTests {
         ///</summary>
         [TestMethod()]
         [DeploymentItem(@"..\..\TestItems\Sarc_MS_Filtered_isos.csv")]
-        public void AssembleXMLAndRun() {
+        public void AssembleXMLAndRun()
+        {
             int maxRows = 7;
 
             ProcessingPipeline pipeline = ProcessingPipeline.Assemble(pipelineXML2);
@@ -291,7 +303,7 @@ namespace MageUnitTests {
 
             // did the test sink object get the expected number of data rows
             // on its standard tabular input?
-			Collection<string[]> rows = sink.Rows;
+            Collection<string[]> rows = sink.Rows;
             Assert.AreEqual(maxRows, rows.Count, "Sink did not receive the expected number of rows");
 
         }
@@ -322,7 +334,8 @@ namespace MageUnitTests {
 ";
 
         [TestMethod()]
-        public void AssembleComplexXML() {
+        public void AssembleComplexXML()
+        {
             ProcessingPipeline pipeline = ProcessingPipeline.Assemble(pipelineXML3);
 
         }

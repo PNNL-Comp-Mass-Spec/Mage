@@ -295,7 +295,7 @@ namespace Mage
                     else
                     {
                         OnWarningMessage(new MageStatusEventArgs(e.Message));
-                    }                    
+                    }
                     ReportSearchErrorToOutput(outputBufferRowIdx, msg);
                 }
                 else if (e is IOException)

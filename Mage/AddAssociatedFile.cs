@@ -3,7 +3,8 @@ using System.Linq;
 using System.IO;
 using MyEMSLReader;
 
-namespace Mage {
+namespace Mage
+{
 
     /// <summary>
     /// This modules accepts a list of files on standard tabular input
@@ -11,7 +12,7 @@ namespace Mage {
     /// name to standard ouput stream
     /// </summary>
 	public class AddAssociatedFile : FileProcessingBase
-	{
+    {
 
         #region Member Variables
 
@@ -19,10 +20,11 @@ namespace Mage {
 
         #region Constructors
 
-		/// <summary>
-		/// Constructor
-		/// </summary>
-        public AddAssociatedFile() {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public AddAssociatedFile()
+        {
             SourceFolderColumnName = "Folder";
             SourceFileColumnName = "Name";
         }
@@ -53,12 +55,15 @@ namespace Mage {
         /// <summary>
         /// associated file name replacement pattern
         /// </summary>
-        public string AssocFileNameReplacementPattern { 
-            get {
+        public string AssocFileNameReplacementPattern
+        {
+            get
+            {
                 return string.Format("{0}|{1}", mSourceFileNameFragment, mAssociatedFileNameFragment);
             }
-            set {
-                string[] flds = value.Split('|'); 
+            set
+            {
+                string[] flds = value.Split('|');
                 mSourceFileNameFragment = flds[0];
                 mAssociatedFileNameFragment = flds[1];
             }
@@ -78,7 +83,8 @@ namespace Mage {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        public override void HandleColumnDef(object sender, MageColumnEventArgs args) {
+        public override void HandleColumnDef(object sender, MageColumnEventArgs args)
+        {
             base.HandleColumnDef(sender, args);
             List<MageColumnDef> columnDefs = OutputColumnDefs ?? InputColumnDefs;
             OnColumnDefAvailable(new MageColumnEventArgs(columnDefs.ToArray()));
@@ -93,8 +99,10 @@ namespace Mage {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        public override void HandleDataRow(object sender, MageDataEventArgs args) {
-            if (args.DataAvailable) {
+        public override void HandleDataRow(object sender, MageDataEventArgs args)
+        {
+            if (args.DataAvailable)
+            {
                 string folderPathSpec = args.Fields[mInputFolderIdx];
                 string resultFileName = args.Fields[mInputFileIdx];
                 string assocFileName = base.ReplaceEx(resultFileName, mSourceFileNameFragment, mAssociatedFileNameFragment);
@@ -103,43 +111,45 @@ namespace Mage {
                 {
                     args.Fields[mAssocFileIdx] = "";
                 }
-                else 
+                else
                 {
                     // folderPathSpec may contain multiple folders, separated by a vertical bar
                     // If that is the case, then we'll search for files in each folder, preferentially using files in the folder listed first
                     var folderPaths = new List<string>();
-                    if (folderPathSpec.Contains('|')) {
+                    if (folderPathSpec.Contains('|'))
+                    {
                         folderPaths = folderPathSpec.Split('|').ToList();
                     }
-                    else {
+                    else
+                    {
                         folderPaths.Add(folderPathSpec);
                     }
 
                     foreach (string resultFolderPath in folderPaths)
                     {
-						if (resultFolderPath.StartsWith(MYEMSL_PATH_FLAG))
-						{
-							string subDir;
-							string parentFolders;
-							string datasetName = DetermineDatasetName(resultFolderPath);
+                        if (resultFolderPath.StartsWith(MYEMSL_PATH_FLAG))
+                        {
+                            string subDir;
+                            string parentFolders;
+                            string datasetName = DetermineDatasetName(resultFolderPath);
 
-							GetMyEMSLParentFoldersAndSubDir(resultFolderPath, datasetName, out subDir, out parentFolders);
+                            GetMyEMSLParentFoldersAndSubDir(resultFolderPath, datasetName, out subDir, out parentFolders);
 
-							string assocFileNameClean;
-							DatasetInfoBase.ExtractMyEMSLFileID(assocFileName, out assocFileNameClean);
+                            string assocFileNameClean;
+                            DatasetInfoBase.ExtractMyEMSLFileID(assocFileName, out assocFileNameClean);
 
-							m_RecentlyFoundMyEMSLFiles = m_MyEMSLDatasetInfoCache.FindFiles(assocFileNameClean, subDir, datasetName, recurse: false);
-							if (m_RecentlyFoundMyEMSLFiles.Count > 0)
-							{
-								var archiveFileInfo = m_RecentlyFoundMyEMSLFiles[0];
-								string encodedFilePath = DatasetInfoBase.AppendMyEMSLFileID(archiveFileInfo.FileInfo.Filename, archiveFileInfo.FileID);
-								args.Fields[mAssocFileIdx] = encodedFilePath;
+                            m_RecentlyFoundMyEMSLFiles = m_MyEMSLDatasetInfoCache.FindFiles(assocFileNameClean, subDir, datasetName, recurse: false);
+                            if (m_RecentlyFoundMyEMSLFiles.Count > 0)
+                            {
+                                var archiveFileInfo = m_RecentlyFoundMyEMSLFiles[0];
+                                string encodedFilePath = DatasetInfoBase.AppendMyEMSLFileID(archiveFileInfo.FileInfo.Filename, archiveFileInfo.FileID);
+                                args.Fields[mAssocFileIdx] = encodedFilePath;
 
-								CacheFilterPassingFile(archiveFileInfo.FileInfo);
-								
-							}
-						}
-						else if (File.Exists(Path.Combine(resultFolderPath, assocFileName)))
+                                CacheFilterPassingFile(archiveFileInfo.FileInfo);
+
+                            }
+                        }
+                        else if (File.Exists(Path.Combine(resultFolderPath, assocFileName)))
                         {
                             args.Fields[mAssocFileIdx] = assocFileName;
                             break;

@@ -1,11 +1,9 @@
-﻿using System;
-using Mage;
+﻿using Mage;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 
-namespace MageUnitTests {
+namespace MageUnitTests
+{
 
 
     /// <summary>
@@ -13,7 +11,8 @@ namespace MageUnitTests {
     ///to contain all DelimitedFileReaderTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class DelimitedFileReaderTest {
+    public class DelimitedFileReaderTest
+    {
 
 
         private TestContext testContextInstance;
@@ -22,11 +21,14 @@ namespace MageUnitTests {
         ///Gets or sets the test context which provides
         ///information about and functionality for the current test run.
         ///</summary>
-        public TestContext TestContext {
-            get {
+        public TestContext TestContext
+        {
+            get
+            {
                 return testContextInstance;
             }
-            set {
+            set
+            {
                 testContextInstance = value;
             }
         }
@@ -66,7 +68,8 @@ namespace MageUnitTests {
         ///A test for Header
         ///</summary>
         [TestMethod()]
-        public void HeaderTest() {
+        public void HeaderTest()
+        {
             DelimitedFileReader target = new DelimitedFileReader();
             string expected = "Test Value";
             string actual;
@@ -79,7 +82,8 @@ namespace MageUnitTests {
         ///A test for FilePath
         ///</summary>
         [TestMethod()]
-        public void FilePathTest() {
+        public void FilePathTest()
+        {
             DelimitedFileReader target = new DelimitedFileReader();
             string expected = "Test Value";
             string actual;
@@ -92,7 +96,8 @@ namespace MageUnitTests {
         ///A test for Delimiter
         ///</summary>
         [TestMethod()]
-        public void DelimiterTest() {
+        public void DelimiterTest()
+        {
             DelimitedFileReader target = new DelimitedFileReader();
             string expected = "Test Value";
             string actual;
@@ -106,8 +111,9 @@ namespace MageUnitTests {
         ///A test for Run
         ///</summary>
         [TestMethod()]
-		[DeploymentItem(@"..\..\..\MageUnitTests\TestItems\Sarc_MS_Filtered_isos.csv")]
-        public void ReadCommaDelimitedFileTest() {
+        [DeploymentItem(@"..\..\..\MageUnitTests\TestItems\Sarc_MS_Filtered_isos.csv")]
+        public void ReadCommaDelimitedFileTest()
+        {
             // create DelimitedFileReader object and test sink object 
             // and connect together
             DelimitedFileReader target = new DelimitedFileReader();
@@ -124,13 +130,14 @@ namespace MageUnitTests {
             string[] colList = new string[] { "frame_num", "ims_scan_num", "charge", "abundance", "mz", "fit", "average_mw", "monoisotopic_mw", "mostabundant_mw", "fwhm", "signal_noise", "mono_abundance", "mono_plus2_abundance", "orig_intensity", "TIA_orig_intensity", "drift_time", "flag" };
             Collection<MageColumnDef> cols = sink.Columns;
             Assert.AreEqual(cols.Count, colList.Length);
-            for (int i = 0; i < cols.Count; i++) {
+            for (int i = 0; i < cols.Count; i++)
+            {
                 Assert.AreEqual(cols[i].Name, colList[i]);
             }
 
             // did the test sink object get the expected number of data rows
             // on its standard tabular input?
-			Collection<string[]> rows = sink.Rows;
+            Collection<string[]> rows = sink.Rows;
             Assert.AreEqual(maxRows, rows.Count);
 
             // are there the expected number of fields in the data row?
@@ -138,7 +145,7 @@ namespace MageUnitTests {
         }
 
         [TestMethod()]
-		[DeploymentItem(@"..\..\..\MageUnitTests\TestItems\tab_delim.txt")]
+        [DeploymentItem(@"..\..\..\MageUnitTests\TestItems\tab_delim.txt")]
         public void ReadTabDelimitedFileTest()
         {
             SimpleSink result = ReadDelimitedFile(@"tab_delim.txt");
@@ -147,7 +154,8 @@ namespace MageUnitTests {
         }
 
 
-        public static SimpleSink ReadDelimitedFile(string filePath) {
+        public static SimpleSink ReadDelimitedFile(string filePath)
+        {
             ProcessingPipeline pipeline = new ProcessingPipeline("Delimited_File_Reader");
 
             pipeline.RootModule = pipeline.MakeModule("Reader", "DelimitedFileReader");

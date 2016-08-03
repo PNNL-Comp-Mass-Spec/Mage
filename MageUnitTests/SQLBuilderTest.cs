@@ -2,7 +2,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
-namespace MageUnitTests {
+namespace MageUnitTests
+{
 
 
     /// <summary>
@@ -10,7 +11,8 @@ namespace MageUnitTests {
     ///to contain all SQLBuilderTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class SQLBuilderTest {
+    public class SQLBuilderTest
+    {
 
         private TestContext testContextInstance;
 
@@ -18,11 +20,14 @@ namespace MageUnitTests {
         ///Gets or sets the test context which provides
         ///information about and functionality for the current test run.
         ///</summary>
-        public TestContext TestContext {
-            get {
+        public TestContext TestContext
+        {
+            get
+            {
                 return testContextInstance;
             }
-            set {
+            set
+            {
                 testContextInstance = value;
             }
         }
@@ -61,7 +66,8 @@ namespace MageUnitTests {
         /// Demonstrates use of column default predicate settings
         /// </summary>
         [TestMethod()]
-        public void DefaultPredicateTest() {
+        public void DefaultPredicateTest()
+        {
             SQLBuilder target = new SQLBuilder();
             string expected;
             string actual;
@@ -88,7 +94,8 @@ namespace MageUnitTests {
         ///A test for Table
         ///</summary>
         [TestMethod()]
-        public void TableTest() {
+        public void TableTest()
+        {
             SQLBuilder target = new SQLBuilder();
             string expected;
             string actual;
@@ -102,7 +109,8 @@ namespace MageUnitTests {
         ///A test for Columns
         ///</summary>
         [TestMethod()]
-        public void ColumnsTest() {
+        public void ColumnsTest()
+        {
             SQLBuilder target = new SQLBuilder();
             string expected;
             string actual;
@@ -119,7 +127,8 @@ namespace MageUnitTests {
         ///A test for AddSortingItem
         ///</summary>
         [TestMethod()]
-        public void AddSortingItemTest() {
+        public void AddSortingItemTest()
+        {
             SQLBuilder target = new SQLBuilder();
             string expected;
             string actual;
@@ -137,7 +146,8 @@ namespace MageUnitTests {
         ///A test for AddPredicateItem
         ///</summary>
         [TestMethod()]
-        public void AddPredicateItemTest() {
+        public void AddPredicateItemTest()
+        {
             SQLBuilder target = new SQLBuilder();
             string expected;
             string actual;
@@ -163,8 +173,9 @@ namespace MageUnitTests {
         }
 
         [TestMethod()]
-		[DeploymentItem(@"..\..\..\TestItems\QueryDefinitions.xml")]
-        public void XMLInitiationTest() {
+        [DeploymentItem(@"..\..\..\TestItems\QueryDefinitions.xml")]
+        public void XMLInitiationTest()
+        {
             string expected;
             string actual;
 
@@ -194,8 +205,9 @@ namespace MageUnitTests {
         }
 
         [TestMethod()]
-		[DeploymentItem(@"..\..\..\TestItems\QueryDefinitions.xml")]
-        public void XMLSprocInitiationTest() {
+        [DeploymentItem(@"..\..\..\TestItems\QueryDefinitions.xml")]
+        public void XMLSprocInitiationTest()
+        {
 
             // expected predefined parameter
             string defParam = "@MinimumPMTQualityScore";
@@ -220,8 +232,9 @@ namespace MageUnitTests {
         }
 
         [TestMethod()]
-		[DeploymentItem(@"..\..\..\TestItems\QueryDefinitions.xml")]
-        public void XMLPredefineDescriptionsTest() {
+        [DeploymentItem(@"..\..\..\TestItems\QueryDefinitions.xml")]
+        public void XMLPredefineDescriptionsTest()
+        {
 
             // get XML query definition by name
             string queryDefXML = ModuleDiscovery.GetQueryXMLDef("GetMassTagsPlusPepProphetStats");

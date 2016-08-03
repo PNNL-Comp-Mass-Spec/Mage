@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 
-namespace Mage {
+namespace Mage
+{
 
 
     /// <summary>
     /// Process input rows into key/value store
     /// </summary>
-    public class KVSink : BaseModule {
+    public class KVSink : BaseModule
+    {
 
         #region Member Variables
 
@@ -38,21 +40,25 @@ namespace Mage {
 
         #endregion
 
-		/// <summary>
-		/// Handler for ColumnDefAvailable events
-		/// </summary>
-        public override void HandleColumnDef(object sender, MageColumnEventArgs args) {
+        /// <summary>
+        /// Handler for ColumnDefAvailable events
+        /// </summary>
+        public override void HandleColumnDef(object sender, MageColumnEventArgs args)
+        {
             base.HandleColumnDef(sender, args);
             mKeyColIdx = InputColumnPos[KeyColumnName];
             mValColIdx = InputColumnPos[ValueColumnName];
         }
 
-		/// <summary>
-		/// Handler for DataRowAvailable events
-		/// </summary>
-        public override void HandleDataRow(object sender, MageDataEventArgs args) {
-            if (args.DataAvailable) {
-                if (args.Fields.Length >= mValColIdx) {
+        /// <summary>
+        /// Handler for DataRowAvailable events
+        /// </summary>
+        public override void HandleDataRow(object sender, MageDataEventArgs args)
+        {
+            if (args.DataAvailable)
+            {
+                if (args.Fields.Length >= mValColIdx)
+                {
                     mKV[args.Fields[mKeyColIdx]] = args.Fields[mValColIdx];
                 }
             }

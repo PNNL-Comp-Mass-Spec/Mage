@@ -1,5 +1,7 @@
-﻿namespace MageUIComponents {
-    partial class LocalFolderPanel {
+﻿namespace MageUIComponents
+{
+    partial class LocalFolderPanel
+    {
         /// <summary> 
         /// Required designer variable.
         /// </summary>
@@ -9,8 +11,10 @@
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing) {
-            if (disposing && (components != null)) {
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
                 components.Dispose();
             }
             base.Dispose(disposing);
@@ -22,7 +26,8 @@
         /// Required method for Designer support - do not modify 
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent() {
+        private void InitializeComponent()
+        {
             this.panel1 = new System.Windows.Forms.Panel();
             this.FileSelectorRadioGroupBoxCtl = new System.Windows.Forms.GroupBox();
             this.FileSearchRadioBtn = new System.Windows.Forms.RadioButton();
@@ -170,7 +175,7 @@
             // 
             // LocalFileNameFilterCtl
             // 
-            this.LocalFileNameFilterCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.LocalFileNameFilterCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.LocalFileNameFilterCtl.Location = new System.Drawing.Point(120, 42);
             this.LocalFileNameFilterCtl.Margin = new System.Windows.Forms.Padding(4);
@@ -180,7 +185,7 @@
             // 
             // LocalDirectoryCtl
             // 
-            this.LocalDirectoryCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.LocalDirectoryCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.LocalDirectoryCtl.Location = new System.Drawing.Point(120, 10);
             this.LocalDirectoryCtl.Margin = new System.Windows.Forms.Padding(4);
@@ -190,7 +195,7 @@
             // 
             // textBox3
             // 
-            this.textBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox3.Location = new System.Drawing.Point(100, -32);
             this.textBox3.Margin = new System.Windows.Forms.Padding(4);
@@ -240,7 +245,7 @@
             // 
             // textBox2
             // 
-            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox2.Location = new System.Drawing.Point(100, -62);
             this.textBox2.Margin = new System.Windows.Forms.Padding(4);
@@ -261,7 +266,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.Location = new System.Drawing.Point(100, -94);
             this.textBox1.Margin = new System.Windows.Forms.Padding(4);
@@ -304,9 +309,9 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button SelectFolderCtl;
-		private System.Windows.Forms.GroupBox SearchGroupBoxCtl;
-		private System.Windows.Forms.TextBox SubfolderSearchNameCtl;
-		private System.Windows.Forms.CheckBox SearchInSubfoldersCtl;
+        private System.Windows.Forms.GroupBox SearchGroupBoxCtl;
+        private System.Windows.Forms.TextBox SubfolderSearchNameCtl;
+        private System.Windows.Forms.CheckBox SearchInSubfoldersCtl;
         private System.Windows.Forms.GroupBox FileSelectorRadioGroupBoxCtl;
         private System.Windows.Forms.RadioButton FileSearchRadioBtn;
         private System.Windows.Forms.RadioButton RegExRadioBtn;

@@ -4,20 +4,22 @@ using System.Data.SQLite;
 using log4net;
 using System.Data;
 
-namespace Mage {
+namespace Mage
+{
 
     /// <summary>
     /// Module which can query a SQLite database and deliver 
     /// results of query via its standard tabular output events
     /// </summary>
-    public sealed class SQLiteReader : BaseModule, IDisposable {
+    public sealed class SQLiteReader : BaseModule, IDisposable
+    {
         private static readonly ILog traceLog = LogManager.GetLogger("TraceLog");
 
         #region Member Variables
 
-	    private const int CommandTimeoutSeconds = 15;
+        private const int CommandTimeoutSeconds = 15;
 
-	    private DateTime startTime;
+        private DateTime startTime;
         private DateTime stopTime;
         private TimeSpan duration;
 
@@ -44,7 +46,8 @@ namespace Mage {
         /// <summary>
         /// construct a new Mage SQLite reader module
         /// </summary>
-        public SQLiteReader() {
+        public SQLiteReader()
+        {
         }
 
         /// <summary>
@@ -54,7 +57,8 @@ namespace Mage {
         /// </summary>
         /// <param name="xml"></param>
         /// <param name="args"></param>
-        public SQLiteReader(string xml, Dictionary<string, string> args) {
+        public SQLiteReader(string xml, Dictionary<string, string> args)
+        {
             var builder = new SQLBuilder(xml, ref args);
             SetPropertiesFromBuilder(builder);
         }
@@ -66,7 +70,8 @@ namespace Mage {
         /// <summary>
         /// dispose of held resources
         /// </summary>
-        public void Dispose() {
+        public void Dispose()
+        {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
@@ -75,12 +80,15 @@ namespace Mage {
         /// dispose of held resources
         /// </summary>
         /// <param name="disposing"></param>
-        private void Dispose(bool disposing) {
-            if (disposing) {
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
                 // Code to dispose the managed resources of the class
             }
             // Code to dispose the un-managed resources of the class
-            if (mConnection != null) {
+            if (mConnection != null)
+            {
                 mConnection.Dispose();
             }
 
@@ -95,7 +103,8 @@ namespace Mage {
         /// Set this module's properties using initialized SQLBuiler
         /// </summary>
         /// <param name="builder">SQL builder</param>
-        private void SetPropertiesFromBuilder(SQLBuilder builder) {
+        private void SetPropertiesFromBuilder(SQLBuilder builder)
+        {
 
             // set this module's properties from builder's special arguments list
             SetParameters(builder.SpecialArgs);
@@ -116,11 +125,15 @@ namespace Mage {
         /// (override of base class)
         /// </summary>
         /// <param name="state">Mage ProcessingPipeline object that contains the module (if there is one)</param>
-        public override void Run(Object state) {
-            try {
+        public override void Run(Object state)
+        {
+            try
+            {
                 Connect();
                 Access();
-            } finally {
+            }
+            finally
+            {
                 Close();
             }
         }
@@ -129,22 +142,24 @@ namespace Mage {
 
         #region Private Functions
 
-        private void Access() {
+        private void Access()
+        {
             var cmd = new SQLiteCommand(SQLText, mConnection)
             {
-	            CommandTimeout = CommandTimeoutSeconds
+                CommandTimeout = CommandTimeoutSeconds
             };
 
-	        SQLiteDataReader myReader = cmd.ExecuteReader();
+            SQLiteDataReader myReader = cmd.ExecuteReader();
             GetData(myReader);
         }
 
-        private void Connect() {
+        private void Connect()
+        {
             var builder = new SQLiteConnectionStringBuilder
             {
-	            DataSource = Database
+                DataSource = Database
             };
-	        /*
+            /*
                         if (password != null) {
                             builder.Password = password;
                         }
@@ -156,7 +171,8 @@ namespace Mage {
             mConnection.Open();
         }
 
-        private void Close() {
+        private void Close()
+        {
             mConnection.Close();
         }
 
@@ -164,8 +180,10 @@ namespace Mage {
         /// output results of query to Mage standard tabular output
         /// </summary>
         /// <param name="myReader"></param>
-        private void GetData(IDataReader myReader) {
-            if (myReader == null) { // Something went wrong
+        private void GetData(IDataReader myReader)
+        {
+            if (myReader == null)
+            { // Something went wrong
                 UpdateStatusMessage("Error: SqlDataReader object is null");
                 return;
             }
@@ -184,31 +202,36 @@ namespace Mage {
 
         }
 
-        private void OutputDataRows(IDataReader myReader, ref int totalRows) {
+        private void OutputDataRows(IDataReader myReader, ref int totalRows)
+        {
             startTime = DateTime.UtcNow;
             traceLog.Debug("SQLiteReader.GetData --> Get data start:" + SQLText);
-            while (myReader.Read()) {
+            while (myReader.Read())
+            {
                 var a = new object[myReader.FieldCount];
                 myReader.GetValues(a);
 
-				var dataVals = new string[a.Length];
-				for (int i = 0; i < a.Length; i++)
-					dataVals[i] = a[i].ToString();
+                var dataVals = new string[a.Length];
+                for (int i = 0; i < a.Length; i++)
+                    dataVals[i] = a[i].ToString();
 
-				OnDataRowAvailable(new MageDataEventArgs(dataVals));
+                OnDataRowAvailable(new MageDataEventArgs(dataVals));
                 totalRows++;
-                if (Abort) {
+                if (Abort)
+                {
                     ReportProcessingAborted();
                     break;
                 }
             }
 
-            if (!Abort) {
+            if (!Abort)
+            {
                 OnDataRowAvailable(new MageDataEventArgs(null));
             }
         }
 
-        private void OutputColumnDefinitions(IDataReader myReader) {
+        private void OutputColumnDefinitions(IDataReader myReader)
+        {
             // if anyone is registered as listening for ColumnDefAvailable events, make it happen for them
             startTime = DateTime.UtcNow;
             traceLog.Debug("SQLiteReader.GetData --> Get column info start:" + SQLText);
@@ -217,12 +240,16 @@ namespace Mage {
             // Get list of fields in result set and process each field
             var columnDefs = new List<MageColumnDef>();
             DataTable schemaTable = myReader.GetSchemaTable();
-            foreach (DataRow drField in schemaTable.Rows) {
+            foreach (DataRow drField in schemaTable.Rows)
+            {
                 MageColumnDef columnDef = GetColumnInfo(drField);
-                if (!columnDef.Hidden) {
+                if (!columnDef.Hidden)
+                {
                     // pass information about this column to the listeners
                     columnDefs.Add(columnDef);
-                } else {
+                }
+                else
+                {
                     // Column is marked as hidden; do not process it
                     UpdateStatusMessage("Skipping hidden column [" + columnDef.Name + "]");
                 }
@@ -241,17 +268,18 @@ namespace Mage {
         /// </summary>
         /// <param name="drField"></param>
         /// <returns></returns>
-        private static MageColumnDef GetColumnInfo(DataRow drField) {
+        private static MageColumnDef GetColumnInfo(DataRow drField)
+        {
             // add the canonical column definition fields to column definition
 
             var columnDef = new MageColumnDef
             {
-	            Name = drField["ColumnName"].ToString(),
-	            DataType = drField["DataTypeName"].ToString(),
-	            Size = drField["ColumnSize"].ToString()
+                Name = drField["ColumnName"].ToString(),
+                DataType = drField["DataTypeName"].ToString(),
+                Size = drField["ColumnSize"].ToString()
             };
 
-	        string colHidden = drField["IsHidden"].ToString();
+            string colHidden = drField["IsHidden"].ToString();
             columnDef.Hidden = !(string.IsNullOrEmpty(colHidden) || colHidden.ToLower() == "false");
             return columnDef;
         }
@@ -260,7 +288,8 @@ namespace Mage {
         /// inform any listeners about our progress
         /// </summary>
         /// <param name="message"></param>
-        private void UpdateStatusMessage(string message) {
+        private void UpdateStatusMessage(string message)
+        {
             OnStatusMessageUpdated(new MageStatusEventArgs(message));
         }
 

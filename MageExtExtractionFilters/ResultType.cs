@@ -49,7 +49,7 @@ namespace MageExtExtractionFilters
             new ResultType("MSGF+ Synopsis First Protein",  "msg_syn",    "msgfplus",      "_msgfdb_syn.txt",  "ResultID"),
             new ResultType(MSGFDB_SYN_ALL_PROTEINS,         "msg_syn",    "msgfplus",      "_msgfdb_syn.txt",  "ResultID"),
             new ResultType("MSPathFinder First Protein",    "mspath_syn", "mspathfinder",  "_mspath_syn.txt",  "ResultID"),
-            new ResultType(MSPATHFINDER_SYN_ALL_PROTEINS,   "mspath_syn", "mspathfinder",  "_mspath_syn.txt",  "ResultID") 
+            new ResultType(MSPATHFINDER_SYN_ALL_PROTEINS,   "mspath_syn", "mspathfinder",  "_mspath_syn.txt",  "ResultID")
         };
 
         private static readonly List<MergeFile> mMergeTypes = new List<MergeFile>() {

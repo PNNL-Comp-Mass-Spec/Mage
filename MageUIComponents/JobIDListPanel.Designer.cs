@@ -1,5 +1,7 @@
-﻿namespace MageUIComponents {
-    partial class JobIDListPanel {
+﻿namespace MageUIComponents
+{
+    partial class JobIDListPanel
+    {
         /// <summary> 
         /// Required designer variable.
         /// </summary>
@@ -9,8 +11,10 @@
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing) {
-            if (disposing && (components != null)) {
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
                 components.Dispose();
             }
             base.Dispose(disposing);
@@ -22,7 +26,8 @@
         /// Required method for Designer support - do not modify 
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent() {
+        private void InitializeComponent()
+        {
             this.panel1 = new System.Windows.Forms.Panel();
             this.LegendCtl = new System.Windows.Forms.Label();
             this.JobListCtl = new System.Windows.Forms.TextBox();
@@ -56,8 +61,8 @@
             // 
             // JobListCtl
             // 
-            this.JobListCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.JobListCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.JobListCtl.Location = new System.Drawing.Point(12, 9);
             this.JobListCtl.Margin = new System.Windows.Forms.Padding(4);
@@ -100,7 +105,7 @@
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TextBox JobListCtl;
-		private System.Windows.Forms.Button GetJobsCtl;
-		private System.Windows.Forms.Label LegendCtl;
+        private System.Windows.Forms.Button GetJobsCtl;
+        private System.Windows.Forms.Label LegendCtl;
     }
 }

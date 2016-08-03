@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Mage;
 using System.Collections.ObjectModel;
 
-namespace MageDisplayLib {
+namespace MageDisplayLib
+{
 
     /// <summary>
     /// Provides column definition and data row event handlers
@@ -17,7 +17,8 @@ namespace MageDisplayLib {
     /// into a buffer.  When the buffer is full, it is emptied
     /// into the associated ListDisplayControl.
     /// </summary>
-    public class LVAccumulator : ISinkModule {
+    public class LVAccumulator : ISinkModule
+    {
 
         #region Events for ListDisplay listeners to register for
 
@@ -51,8 +52,10 @@ namespace MageDisplayLib {
         /// <summary>
         /// definition of columns
         /// </summary>
-        public Collection<MageColumnDef> ColumnDefs {
-            get {
+        public Collection<MageColumnDef> ColumnDefs
+        {
+            get
+            {
                 return new Collection<MageColumnDef>(mColumnDefs);
             }
         }
@@ -69,7 +72,8 @@ namespace MageDisplayLib {
         /// <summary>
         /// number of items to accumulate before firing an upate event
         /// </summary>
-        public LVAccumulator() {
+        public LVAccumulator()
+        {
             ItemBlockSize = 1000;
         }
 
@@ -80,7 +84,8 @@ namespace MageDisplayLib {
         /// <summary>
         /// clear any accumulate row and column information
         /// </summary>
-        public void Clear() {
+        public void Clear()
+        {
             itemAccumulator.Clear();
             columnAccumulator.Clear();
         }
@@ -99,28 +104,37 @@ namespace MageDisplayLib {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        public void HandleDataRow(object sender, MageDataEventArgs args) {
+        public void HandleDataRow(object sender, MageDataEventArgs args)
+        {
             bool endOfData = !args.DataAvailable;
-            if (args.DataAvailable) {
+            if (args.DataAvailable)
+            {
                 ListViewItem lvi = null;
-                for (int i = 0; i < args.Fields.Length; i++) {
+                for (int i = 0; i < args.Fields.Length; i++)
+                {
                     object val = args.Fields[i];
                     string s = (val != null) ? val.ToString() : "-";
-                    if (i == 0) {
+                    if (i == 0)
+                    {
                         lvi = new ListViewItem(val.ToString());
-                    } else {
+                    }
+                    else
+                    {
                         lvi.SubItems.Add(s);
                     }
                 }
                 this.itemAccumulator.Add(lvi);
             }
-            if (itemAccumulator.Count == this.ItemBlockSize || endOfData) {
-                if (OnItemBlockRetrieved != null) {
+            if (itemAccumulator.Count == this.ItemBlockSize || endOfData)
+            {
+                if (OnItemBlockRetrieved != null)
+                {
                     OnItemBlockRetrieved(this, new ItemBlockEventArgs(new Collection<ListViewItem>(itemAccumulator)));
                 }
                 this.itemAccumulator.Clear();
             }
-            if (endOfData && OnItemBlockRetrieved != null) {
+            if (endOfData && OnItemBlockRetrieved != null)
+            {
                 OnItemBlockRetrieved(this, new ItemBlockEventArgs(null));
             }
         }
@@ -136,15 +150,18 @@ namespace MageDisplayLib {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        public void HandleColumnDef(object sender, MageColumnEventArgs args) {
+        public void HandleColumnDef(object sender, MageColumnEventArgs args)
+        {
             mColumnDefs = new List<MageColumnDef>(args.ColumnDefs);
 
-            foreach (MageColumnDef columnDef in mColumnDefs) {
+            foreach (MageColumnDef columnDef in mColumnDefs)
+            {
                 ColumnHeader ch = new ColumnHeader();
                 // sort out column display size
                 string colSize = columnDef.Size;
                 int colSizeToUse = 6;
-                if (colSize != null && colSize.Length > 0) {
+                if (colSize != null && colSize.Length > 0)
+                {
                     int w = int.Parse(colSize);
                     w = (w < 6) ? 6 : w;
                     w = (w > 20) ? 20 : w;
@@ -159,7 +176,8 @@ namespace MageDisplayLib {
                 ch.Tag = colType;
                 columnAccumulator.Add(ch);
             }
-            if (this.OnColumnBlockRetrieved != null) {
+            if (this.OnColumnBlockRetrieved != null)
+            {
                 OnColumnBlockRetrieved(this, new ColumnHeaderEventArgs(new Collection<ColumnHeader>(columnAccumulator)));
             }
         }
@@ -171,14 +189,16 @@ namespace MageDisplayLib {
     /// <summary>
     /// Argument class for event that passes block of items to list view control
     /// </summary>
-    public class ItemBlockEventArgs : EventArgs {
+    public class ItemBlockEventArgs : EventArgs
+    {
         private ListViewItem[] ItemBlock = null;
 
         /// <summary>
         /// get list of items being passed in the event
         /// </summary>
         /// <returns></returns>
-        public ListViewItem[] GetItemBlock() {
+        public ListViewItem[] GetItemBlock()
+        {
             return ItemBlock;
         }
 
@@ -187,7 +207,8 @@ namespace MageDisplayLib {
         /// with informatation in given collection of ListViewItems
         /// </summary>
         /// <param name="itemBlock"></param>
-        public ItemBlockEventArgs(Collection<ListViewItem> itemBlock) {
+        public ItemBlockEventArgs(Collection<ListViewItem> itemBlock)
+        {
             ItemBlock = (itemBlock == null) ? null : itemBlock.ToArray();
         }
     }
@@ -195,14 +216,16 @@ namespace MageDisplayLib {
     /// <summary>
     /// Argument class for event that passes set of column definitions for list view control
     /// </summary>
-    public class ColumnHeaderEventArgs : EventArgs {
+    public class ColumnHeaderEventArgs : EventArgs
+    {
         private ColumnHeader[] ColumnBlock = null;
 
         /// <summary>
         /// return array of column definitions
         /// </summary>
         /// <returns></returns>
-        public ColumnHeader[] GetColumnBlock() {
+        public ColumnHeader[] GetColumnBlock()
+        {
             return ColumnBlock;
         }
 
@@ -211,7 +234,8 @@ namespace MageDisplayLib {
         /// with information contained in given collection of ColumnHeader objects
         /// </summary>
         /// <param name="columnBlock"></param>
-        public ColumnHeaderEventArgs(Collection<ColumnHeader> columnBlock) {
+        public ColumnHeaderEventArgs(Collection<ColumnHeader> columnBlock)
+        {
             ColumnBlock = (columnBlock == null) ? null : columnBlock.ToArray();
         }
     }

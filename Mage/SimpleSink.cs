@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Mage {
+namespace Mage
+{
 
     /// <summary>
     /// This Mage module can receive data over its standard tabular input
@@ -20,7 +21,8 @@ namespace Mage {
     /// Both the column definitions and any accumulated data rows can be retreived by client
     /// 
     /// </summary>
-    public class SimpleSink : BaseModule {
+    public class SimpleSink : BaseModule
+    {
 
         #region Member Variables
 
@@ -65,16 +67,18 @@ namespace Mage {
         /// <summary>
         /// construct a new Mage sink object
         /// </summary>
-        public SimpleSink() {
+        public SimpleSink()
+        {
             RowsToSave = Int32.MaxValue;
             WriteToConsole = false;
         }
- 
+
         /// <summary>
         /// construct a new Mage sink object with input row limit
         /// </summary>
         /// <param name="rows">input row limit</param>
-        public SimpleSink(int rows) {
+        public SimpleSink(int rows)
+        {
             RowsToSave = rows;
             WriteToConsole = false;
         }
@@ -84,7 +88,8 @@ namespace Mage {
         /// </summary>
         /// <param name="rows">input row limit</param>
         /// <param name="verbose">spill my guts?</param>
-        public SimpleSink(int rows, bool verbose) {
+        public SimpleSink(int rows, bool verbose)
+        {
             RowsToSave = rows;
             WriteToConsole = verbose;
         }
@@ -97,7 +102,8 @@ namespace Mage {
         /// called before pipeline runs - module can do any special setup that it needs
         /// (override of base class)
         /// </summary>
-        public override void Prepare() {
+        public override void Prepare()
+        {
             // nothing to do here
         }
 
@@ -107,21 +113,28 @@ namespace Mage {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        public override void HandleDataRow(object sender, MageDataEventArgs args) {
-            if (args.DataAvailable) {
-                if (WriteToConsole) {
-                    foreach (string item in args.Fields) {
+        public override void HandleDataRow(object sender, MageDataEventArgs args)
+        {
+            if (args.DataAvailable)
+            {
+                if (WriteToConsole)
+                {
+                    foreach (string item in args.Fields)
+                    {
                         Console.Write(item + "|");
                     }
                     Console.WriteLine();
                 }
-                if (SavedRows.Count < RowsToSave) {
+                if (SavedRows.Count < RowsToSave)
+                {
                     SavedRows.Add(args.Fields);
-                } else {
+                }
+                else
+                {
                     CancelPipeline();
                 }
 
-				OnDataRowAvailable(args);
+                OnDataRowAvailable(args);
             }
         }
 
@@ -131,15 +144,18 @@ namespace Mage {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        public override void HandleColumnDef(object sender, MageColumnEventArgs args) {
+        public override void HandleColumnDef(object sender, MageColumnEventArgs args)
+        {
             base.HandleColumnDef(sender, args);
-            foreach(MageColumnDef columnDef in args.ColumnDefs) {
-                if (WriteToConsole) {
+            foreach (MageColumnDef columnDef in args.ColumnDefs)
+            {
+                if (WriteToConsole)
+                {
                     Console.WriteLine("Column {0}, {1}, {2} ", columnDef.Name, columnDef.DataType, columnDef.Size);
                 }
             }
 
-			OnColumnDefAvailable(args);
+            OnColumnDefAvailable(args);
         }
 
         /// <summary>
@@ -148,10 +164,11 @@ namespace Mage {
         /// (override of base class)
         /// </summary>
         /// <param name="state">Mage ProcessingPipeline object that contains the module (if there is one)</param>
-        public override void Run(object state) {
+        public override void Run(object state)
+        {
             OnColumnDefAvailable(new MageColumnEventArgs(InputColumnDefs.ToArray()));
-			foreach (string[] row in SavedRows)
-			{
+            foreach (string[] row in SavedRows)
+            {
                 OnDataRowAvailable(new MageDataEventArgs(row));
             }
             OnDataRowAvailable(new MageDataEventArgs(null));
@@ -161,120 +178,125 @@ namespace Mage {
 
         #region Utility_Functions
 
-		/// <summary>
-		/// Populates value with the value for column colIndex in row rowIndex
-		/// </summary>
-		/// <param name="colIndex">Column Index</param>
-		/// <param name="rowIndex">Row to examine</param>
-		/// <param name="value">Value (double, Output) </param>
-		/// <returns>True if the column exists and contains a numeric value; otherwise false</returns>
-		public bool TryGetValueViaColumnIndex(int colIndex, int rowIndex, out double value)
-		{
-			value = 0;
-
-			if (colIndex > -1)
-			{
-				if (double.TryParse(Rows[rowIndex][colIndex], out value))
-				{
-					return true;
-				}
-			}
-			return false;
-		}
-
-		/// <summary>
-		/// Populates value with the value for column colIndex in row rowIndex
-		/// </summary>
-		/// <param name="colIndex">Column Index</param>
-		/// <param name="rowIndex">Row to examine</param>
-		/// <param name="value">Value (integer, Output) </param>
-		/// <returns>True if the column exists and contains a numeric value; otherwise false</returns>
-		public bool TryGetValueViaColumnIndex(int colIndex, int rowIndex, out int value)
-		{
-			value = 0;
-
-			if (colIndex > -1)
-			{
-				if (int.TryParse(Rows[rowIndex][colIndex], out value))
-				{
-					return true;
-				}
-			}
-			return false;
-		}
-
-		/// <summary>
-		/// Populates value with the value for column colIndex in row rowIndex
-		/// </summary>
-		/// <param name="colIndex">Column Index</param>
-		/// <param name="rowIndex">Row to examine</param>
-		/// <param name="value">Value (string, Output) </param>
-		/// <returns>True if the column exists; otherwise false</returns>
-		public bool TryGetValueViaColumnIndex(int colIndex, int rowIndex, out string value)
-		{
-			value = null;
-
-			if (colIndex > -1)
-			{
-				value = Rows[rowIndex][colIndex];
-				return true;
-			}
-			return false;
-		}
-
-		/// <summary>
-		/// Populates value with the value for column columnName in row rowIndex
-		/// </summary>
-		/// <param name="columnName">Column Name</param>
-		/// <param name="rowIndex">Row to examine</param>
-		/// <param name="value">Value (double, Output) </param>
-		/// <returns>True if the column exists and contains a numeric value; otherwise false</returns>
-        public bool TryGetValueViaColumnName(string columnName, int rowIndex, out double value) 
-		{
-            int colIndex;
+        /// <summary>
+        /// Populates value with the value for column colIndex in row rowIndex
+        /// </summary>
+        /// <param name="colIndex">Column Index</param>
+        /// <param name="rowIndex">Row to examine</param>
+        /// <param name="value">Value (double, Output) </param>
+        /// <returns>True if the column exists and contains a numeric value; otherwise false</returns>
+        public bool TryGetValueViaColumnIndex(int colIndex, int rowIndex, out double value)
+        {
             value = 0;
 
-            if (ColumnIndex.TryGetValue(columnName, out colIndex)) {
-                if (double.TryParse(Rows[rowIndex][colIndex], out value)) {
+            if (colIndex > -1)
+            {
+                if (double.TryParse(Rows[rowIndex][colIndex], out value))
+                {
                     return true;
                 }
             }
             return false;
         }
 
-		/// <summary>
-		/// Populates value with the value for column columnName in row rowIndex
-		/// </summary>
-		/// <param name="columnName">Column Name</param>
-		/// <param name="rowIndex">Row to examine</param>
-		/// <param name="value">Value (integer, Output) </param>
-		/// <returns>True if the column exists and contains a numeric value; otherwise false</returns>
-		public bool TryGetValueViaColumnName(string columnName, int rowIndex, out int value)
-		{
-            int colIndex;
+        /// <summary>
+        /// Populates value with the value for column colIndex in row rowIndex
+        /// </summary>
+        /// <param name="colIndex">Column Index</param>
+        /// <param name="rowIndex">Row to examine</param>
+        /// <param name="value">Value (integer, Output) </param>
+        /// <returns>True if the column exists and contains a numeric value; otherwise false</returns>
+        public bool TryGetValueViaColumnIndex(int colIndex, int rowIndex, out int value)
+        {
             value = 0;
 
-            if (ColumnIndex.TryGetValue(columnName, out colIndex)) {
-                if (int.TryParse(Rows[rowIndex][colIndex], out value)) {
+            if (colIndex > -1)
+            {
+                if (int.TryParse(Rows[rowIndex][colIndex], out value))
+                {
                     return true;
                 }
             }
             return false;
         }
 
-		/// <summary>
-		/// Populates value with the value for column columnName in row rowIndex
-		/// </summary>
-		/// <param name="columnName">Column Name</param>
-		/// <param name="rowIndex">Row to examine</param>
-		/// <param name="value">Value (string, Output) </param>
-		/// <returns>True if the column exists; otherwise false</returns>
-        public bool TryGetValueViaColumnName(string columnName, int rowIndex, out string value) 
-		{
+        /// <summary>
+        /// Populates value with the value for column colIndex in row rowIndex
+        /// </summary>
+        /// <param name="colIndex">Column Index</param>
+        /// <param name="rowIndex">Row to examine</param>
+        /// <param name="value">Value (string, Output) </param>
+        /// <returns>True if the column exists; otherwise false</returns>
+        public bool TryGetValueViaColumnIndex(int colIndex, int rowIndex, out string value)
+        {
+            value = null;
+
+            if (colIndex > -1)
+            {
+                value = Rows[rowIndex][colIndex];
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Populates value with the value for column columnName in row rowIndex
+        /// </summary>
+        /// <param name="columnName">Column Name</param>
+        /// <param name="rowIndex">Row to examine</param>
+        /// <param name="value">Value (double, Output) </param>
+        /// <returns>True if the column exists and contains a numeric value; otherwise false</returns>
+        public bool TryGetValueViaColumnName(string columnName, int rowIndex, out double value)
+        {
+            int colIndex;
+            value = 0;
+
+            if (ColumnIndex.TryGetValue(columnName, out colIndex))
+            {
+                if (double.TryParse(Rows[rowIndex][colIndex], out value))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Populates value with the value for column columnName in row rowIndex
+        /// </summary>
+        /// <param name="columnName">Column Name</param>
+        /// <param name="rowIndex">Row to examine</param>
+        /// <param name="value">Value (integer, Output) </param>
+        /// <returns>True if the column exists and contains a numeric value; otherwise false</returns>
+        public bool TryGetValueViaColumnName(string columnName, int rowIndex, out int value)
+        {
+            int colIndex;
+            value = 0;
+
+            if (ColumnIndex.TryGetValue(columnName, out colIndex))
+            {
+                if (int.TryParse(Rows[rowIndex][colIndex], out value))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Populates value with the value for column columnName in row rowIndex
+        /// </summary>
+        /// <param name="columnName">Column Name</param>
+        /// <param name="rowIndex">Row to examine</param>
+        /// <param name="value">Value (string, Output) </param>
+        /// <returns>True if the column exists; otherwise false</returns>
+        public bool TryGetValueViaColumnName(string columnName, int rowIndex, out string value)
+        {
             int colIndex;
             value = null;
 
-            if (ColumnIndex.TryGetValue(columnName, out colIndex)) {
+            if (ColumnIndex.TryGetValue(columnName, out colIndex))
+            {
                 value = Rows[rowIndex][colIndex];
                 return true;
             }

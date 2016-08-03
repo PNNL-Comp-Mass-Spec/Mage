@@ -3,14 +3,16 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System;
 
-namespace MageUnitTests {
+namespace MageUnitTests
+{
 
     /// <summary>
     ///This is a test class for BaseModuleTest and is intended
     ///to contain all BaseModuleTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class BaseModuleTest {
+    public class BaseModuleTest
+    {
 
 
         private TestContext testContextInstance;
@@ -19,11 +21,14 @@ namespace MageUnitTests {
         ///Gets or sets the test context which provides
         ///information about and functionality for the current test run.
         ///</summary>
-        public TestContext TestContext {
-            get {
+        public TestContext TestContext
+        {
+            get
+            {
                 return testContextInstance;
             }
-            set {
+            set
+            {
                 testContextInstance = value;
             }
         }
@@ -63,7 +68,8 @@ namespace MageUnitTests {
         ///A test for OutputColumnList
         ///</summary>
         [TestMethod()]
-        public void OutputColumnListTest() {
+        public void OutputColumnListTest()
+        {
             BaseModule target = new BaseModule(); // TODO: Initialize to an appropriate value
             string expected = "Test Value";
             string actual;
@@ -76,7 +82,8 @@ namespace MageUnitTests {
         ///A test for ModuleName
         ///</summary>
         [TestMethod()]
-        public void ModuleNameTest() {
+        public void ModuleNameTest()
+        {
             BaseModule target = new BaseModule(); // TODO: Initialize to an appropriate value
             string expected = "Test Value";
             string actual;
@@ -89,7 +96,8 @@ namespace MageUnitTests {
         ///A test for SetParameters
         ///</summary>
         [TestMethod()]
-        public void SetParametersTest() {
+        public void SetParametersTest()
+        {
             BaseModule target = new BaseModule(); // TODO: Initialize to an appropriate value
             string key = "OutputColumnList";
             string val = "Test Value";
@@ -102,7 +110,8 @@ namespace MageUnitTests {
         /// Test the column mapping feature
         /// </summary>
         [TestMethod()]
-        public void MappedOutputColumnsOverrideColTypeTest() {
+        public void MappedOutputColumnsOverrideColTypeTest()
+        {
 
             DataGenerator dGen = new DataGenerator();
             dGen.AddAdHocRow = new string[] { "Larry", "Moe", "Curly" };
@@ -134,7 +143,8 @@ namespace MageUnitTests {
         /// Test the column mapping feature
         /// </summary>
         [TestMethod()]
-        public void MappedOutputColumnsWildcardTest() {
+        public void MappedOutputColumnsWildcardTest()
+        {
             int rows = 11;
             int cols = 7;
             string insertedColumnName = "NewColName";
@@ -163,25 +173,30 @@ namespace MageUnitTests {
             // compare output column definitions from target module 
             // against expected output column list
             outColNames.Clear(); // make list of expected column names
-            for (int i = 0; i < inColNames.Count; i++) {
+            for (int i = 0; i < inColNames.Count; i++)
+            {
                 outColNames.Add(inColNames[i]);
-                if (i == 0) {
+                if (i == 0)
+                {
                     outColNames.Add(insertedColumnName);
                 }
             }
             List<MageColumnDef> actual = target.OutColDefs;
             Assert.AreEqual(outColNames.Count, actual.Count, "Number of output columns does not match.");
-            for (int i = 0; i < actual.Count; i++) {
+            for (int i = 0; i < actual.Count; i++)
+            {
                 Assert.AreEqual(outColNames[i], actual[i].Name, "Output column name does not match");
             }
 
             // compare output column position index
             // against expected position index
             Dictionary<string, int> outColPos = new Dictionary<string, int>();
-            for (int i = 0; i < outColNames.Count; i++) {
+            for (int i = 0; i < outColNames.Count; i++)
+            {
                 outColPos[outColNames[i]] = i;
             }
-            foreach (string item in target.OutColPos.Keys) {
+            foreach (string item in target.OutColPos.Keys)
+            {
                 Assert.AreEqual(outColPos[item], target.OutColPos[item], "Column postion map index does not match");
             }
         }
@@ -190,7 +205,8 @@ namespace MageUnitTests {
         /// Test the basic column mapping feature
         /// </summary>
         [TestMethod()]
-        public void MappedOutputColumnsTest() {
+        public void MappedOutputColumnsTest()
+        {
             int rows = 11;
             int cols = 7;
             DataGenerator dGen = new DataGenerator(rows, cols);
@@ -207,7 +223,8 @@ namespace MageUnitTests {
             Shuffle(outColNames);
             string outColList = string.Join(", ", outColNames);
             Dictionary<string, int> outColPos = new Dictionary<string, int>();
-            for (int i = 0; i < outColNames.Count; i++) {
+            for (int i = 0; i < outColNames.Count; i++)
+            {
                 outColPos[outColNames[i]] = i;
             }
             target.OutputColumnList = outColList;
@@ -218,23 +235,27 @@ namespace MageUnitTests {
             // against expected output column list
             List<MageColumnDef> actual = target.OutColDefs;
             Assert.AreEqual(inColNames.Count, actual.Count, "Number of output columns does not match.");
-            for (int i = 0; i < actual.Count; i++) {
+            for (int i = 0; i < actual.Count; i++)
+            {
                 Assert.AreEqual(outColNames[i], actual[i].Name, "Output column name does not match");
             }
 
             // compare output column position index
             // against expected position index
-            foreach (string item in target.OutColPos.Keys) {
+            foreach (string item in target.OutColPos.Keys)
+            {
                 Assert.AreEqual(outColPos[item], target.OutColPos[item], "Column postion map index does not match");
             }
 
             // check remapped data rows
-			List<string[]> inputRows = target.Rows;
-			List<string[]> mappedRows = target.MappedRows;
+            List<string[]> inputRows = target.Rows;
+            List<string[]> mappedRows = target.MappedRows;
             Assert.AreEqual(inputRows.Count, mappedRows.Count, "Input rows and mapped rows count does not match.");
 
-            for (int i = 0; i < inputRows.Count; i++) {
-                foreach (KeyValuePair<int, int> colMap in target.OutToInPosMap) {
+            for (int i = 0; i < inputRows.Count; i++)
+            {
+                foreach (KeyValuePair<int, int> colMap in target.OutToInPosMap)
+                {
                     Assert.AreEqual(mappedRows[i][colMap.Key], inputRows[i][colMap.Value], "Mapped data does not match");
                 }
             }
@@ -242,10 +263,12 @@ namespace MageUnitTests {
         }
 
         // rearrange the order of items in the List
-        private static void Shuffle(List<string> list) {
+        private static void Shuffle(List<string> list)
+        {
             Random rng = new Random();
             int n = list.Count;
-            while (n > 1) {
+            while (n > 1)
+            {
                 n--;
                 int k = rng.Next(n + 1);
                 string value = list[k];

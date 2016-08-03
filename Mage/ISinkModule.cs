@@ -1,10 +1,12 @@
 ﻿
-namespace Mage {
+namespace Mage
+{
 
     /// <summary>
     /// Interface for object that provides handlers for 
     /// </summary>
-    public interface ISinkModule {
+    public interface ISinkModule
+    {
 
         // module receives standard tablular input via these handlers
 

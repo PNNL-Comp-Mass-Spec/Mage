@@ -2,9 +2,11 @@
 using System.Text;
 using Mage;
 
-namespace MageFilePackager {
+namespace MageFilePackager
+{
 
-    class XMLSink : BaseModule {
+    class XMLSink : BaseModule
+    {
 
         #region Member Variables
 
@@ -29,7 +31,8 @@ namespace MageFilePackager {
 
         #region IBaseModule Members
 
-        public override void Prepare() {
+        public override void Prepare()
+        {
             base.Prepare();
             OutputParameterElements();
             OutputPrefixElements();
@@ -41,10 +44,14 @@ namespace MageFilePackager {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        public override void HandleDataRow(object sender, MageDataEventArgs args) {
-            if (args.DataAvailable) {
+        public override void HandleDataRow(object sender, MageDataEventArgs args)
+        {
+            if (args.DataAvailable)
+            {
                 OutputDataRow(args.Fields);
-            } else {
+            }
+            else
+            {
                 OutputFooter();
             }
         }
@@ -53,29 +60,37 @@ namespace MageFilePackager {
 
         #region Support Functions
 
-        private void OutputParameterElements() {
-            if (Parameters != null) {
-                foreach (KeyValuePair<string, string> kv in Parameters) {
+        private void OutputParameterElements()
+        {
+            if (Parameters != null)
+            {
+                foreach (KeyValuePair<string, string> kv in Parameters)
+                {
                     _text.Append(string.Format("<parameter name='{0}' value='{1}' />\n", kv.Key, kv.Value));
                 }
             }
         }
 
-        private void OutputPrefixElements() {
-            if (Prefixes != null) {
-                foreach (KeyValuePair<string, string> kv in Prefixes) {
+        private void OutputPrefixElements()
+        {
+            if (Prefixes != null)
+            {
+                foreach (KeyValuePair<string, string> kv in Prefixes)
+                {
                     _text.Append(string.Format("<prefix source='{0}' value='{1}' />\n", kv.Key, kv.Value));
                 }
             }
         }
 
-        private void OutputFooter() {
+        private void OutputFooter()
+        {
         }
 
-		private void OutputDataRow(string[] vals)
-		{
+        private void OutputDataRow(string[] vals)
+        {
             _text.Append("<path ");
-            for (int i = 0; i < InputColumnDefs.Count; i++) {
+            for (int i = 0; i < InputColumnDefs.Count; i++)
+            {
                 _text.Append(string.Format("{0}='{1}' ", InputColumnDefs[i].Name, vals[i]));
             }
             _text.Append(" />\n");

@@ -42,7 +42,7 @@ namespace Mage
         /// </summary>
         /// <remarks>Default is False</remarks>
         public bool ThrowExceptionIfLookupFails { get; set; }
-       
+
         #endregion
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Mage
             if (OutputColumnDefs != null)
             {
                 var outRow = MapDataRow(vals);
-                
+
                 string columnValue;
                 if (LookupKV.TryGetValue(outRow[_keyColIdx], out columnValue))
                 {
@@ -80,7 +80,7 @@ namespace Mage
                     outRow[_mergeColIdx] = string.Empty;
                 }
 
-                vals = outRow;             
+                vals = outRow;
             }
             return true;
         }

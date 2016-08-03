@@ -4,11 +4,13 @@ using System.IO;
 using System.Net;
 using System.Text;
 
-namespace MageFilePackager {
+namespace MageFilePackager
+{
+    internal static class DMSHttp
+    {
 
-    class DMSHttp {
-
-        public enum HTTPMethod {
+        public enum HTTPMethod
+        {
             HTTPGet = 0,
             HTTPPost = 1
         }
@@ -19,7 +21,8 @@ namespace MageFilePackager {
         /// <param name="url"></param>
         /// <param name="postDataList"></param>
         /// <returns></returns>
-        public static string Post(string url, Dictionary<string, string> postDataList) {
+        public static string Post(string url, Dictionary<string, string> postDataList)
+        {
 
             // format the data to be posted
             var postData = FormatPostData(postDataList);
@@ -35,24 +38,34 @@ namespace MageFilePackager {
             StreamWriter sw = null;
             StreamReader sr = null;
             String responseData;
-            try {
+            try
+            {
                 sw = new StreamWriter(request.GetRequestStream());
                 sw.Write(postData);
-            } finally {
-                if (sw != null) sw.Close();
+            }
+            finally
+            {
+                if (sw != null)
+                    sw.Close();
             }
 
             // Receive Response
-            try {
+            try
+            {
                 var response = (HttpWebResponse)request.GetResponse();
                 sr = new StreamReader(response.GetResponseStream());
                 responseData = sr.ReadToEnd();
-            } catch (WebException wex) {
+            }
+            catch (WebException wex)
+            {
                 sr = new StreamReader(wex.Response.GetResponseStream());
                 responseData = sr.ReadToEnd();
                 throw new Exception(responseData);
-            } finally {
-                if (sr != null) sr.Close();
+            }
+            finally
+            {
+                if (sr != null)
+                    sr.Close();
             }
             return responseData;
         }
@@ -62,9 +75,11 @@ namespace MageFilePackager {
         /// </summary>
         /// <param name="postDataList"></param>
         /// <returns></returns>
-        private static string FormatPostData(Dictionary<string, string> postDataList) {
+        private static string FormatPostData(Dictionary<string, string> postDataList)
+        {
             var sb = new StringBuilder();
-            foreach (KeyValuePair<string, string> item in postDataList) {
+            foreach (KeyValuePair<string, string> item in postDataList)
+            {
                 sb.Append(string.Format("&{0}={1}", item.Key, item.Value));
             }
             return sb.ToString();

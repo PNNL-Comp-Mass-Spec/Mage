@@ -310,7 +310,7 @@ namespace MageConcatenator
                         var fiTargetFile = new FileInfo(mCombineFilesTargetFilePath);
                         if (fiTargetFile.Directory == null)
                         {
-                             MessageBox.Show("Error in CombineFiles: cannot determine the parent folder path for the target file, " + mCombineFilesTargetFilePath, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            MessageBox.Show("Error in CombineFiles: cannot determine the parent folder path for the target file, " + mCombineFilesTargetFilePath, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             return;
                         }
 
@@ -329,7 +329,7 @@ namespace MageConcatenator
                     statusPanel1.HandleStatusMessageUpdated(this, new MageStatusEventArgs("No files are selected; nothing to do"));
                     return;
                 }
-                
+
 
                 // Clear any warnings
                 statusPanel1.ClearWarnings();
@@ -517,7 +517,8 @@ namespace MageConcatenator
         /// <param name="status"></param>
         private void AdjusttPostCommndUIState(object status)
         {
-            if (mCurrentCmd == null) return;
+            if (mCurrentCmd == null)
+                return;
 
             EnableCancel(false);
 
@@ -560,25 +561,25 @@ namespace MageConcatenator
         private Dictionary<string, string> GetRuntimeParmsForLocalFolder()
         {
             var rp = new Dictionary<string, string>
-			{
-				{"FileNameFilter", LocalFolderPanel1.FileNameFilter},
+            {
+                {"FileNameFilter", LocalFolderPanel1.FileNameFilter},
                 {"FileSelectionMode", LocalFolderPanel1.FileSelectionMode},
-				{"Folder", LocalFolderPanel1.Folder},
-				{"SearchInSubfolders", LocalFolderPanel1.SearchInSubfolders},
-				{"SubfolderSearchName", LocalFolderPanel1.SubfolderSearchName}                
-			};
+                {"Folder", LocalFolderPanel1.Folder},
+                {"SearchInSubfolders", LocalFolderPanel1.SearchInSubfolders},
+                {"SubfolderSearchName", LocalFolderPanel1.SubfolderSearchName}
+            };
             return rp;
         }
         private Dictionary<string, string> GetRuntimeParmsForFileProcessing()
         {
             var rp = new Dictionary<string, string>
-			{
-			    {"OutputFolder", FolderDestinationPanel1.OutputFolder},
-			    {"OutputFile", FolderDestinationPanel1.OutputFile},
-			    {"OutputMode", "File_Output"},
-			    {"ManifestFileName", string.Format("Manifest_{0:yyyy-MM-dd_hhmmss}.txt", DateTime.Now)},
-			    {"SourceFileColumnName", "File"}
-			};
+            {
+                {"OutputFolder", FolderDestinationPanel1.OutputFolder},
+                {"OutputFile", FolderDestinationPanel1.OutputFile},
+                {"OutputMode", "File_Output"},
+                {"ManifestFileName", string.Format("Manifest_{0:yyyy-MM-dd_hhmmss}.txt", DateTime.Now)},
+                {"SourceFileColumnName", "File"}
+            };
 
             return rp;
         }
@@ -714,6 +715,6 @@ namespace MageConcatenator
         }
 
         #endregion
-     
+
     }
 }

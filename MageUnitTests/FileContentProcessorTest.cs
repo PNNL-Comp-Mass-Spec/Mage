@@ -1,7 +1,8 @@
 ﻿using Mage;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
-namespace MageUnitTests {
+namespace MageUnitTests
+{
 
 
     /// <summary>
@@ -9,7 +10,8 @@ namespace MageUnitTests {
     ///to contain all FileContentProcessorTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class FileContentProcessorTest {
+    public class FileContentProcessorTest
+    {
 
 
         private TestContext testContextInstance;
@@ -18,11 +20,14 @@ namespace MageUnitTests {
         ///Gets or sets the test context which provides
         ///information about and functionality for the current test run.
         ///</summary>
-        public TestContext TestContext {
-            get {
+        public TestContext TestContext
+        {
+            get
+            {
                 return testContextInstance;
             }
-            set {
+            set
+            {
                 testContextInstance = value;
             }
         }
@@ -58,7 +63,8 @@ namespace MageUnitTests {
         #endregion
 
         [TestMethod()]
-        public void FileColumnProcessorTest() {
+        public void FileColumnProcessorTest()
+        {
 
             // set up test parameters
             string folderColName = "Folder_Col";
@@ -97,7 +103,8 @@ namespace MageUnitTests {
         ///A test for FileColumnName
         ///</summary>
         [TestMethod()]
-        public void OutputFileColumnNameTest() {
+        public void OutputFileColumnNameTest()
+        {
             FileContentProcessor target = new FileContentProcessor();
             string expected = "Test Value";
             string actual;
@@ -110,7 +117,8 @@ namespace MageUnitTests {
         ///A test for OutputFolderPath
         ///</summary>
         [TestMethod()]
-        public void OutputFolderPathTest() {
+        public void OutputFolderPathTest()
+        {
             FileContentProcessor target = new FileContentProcessor();
             string expected = "Test Value";
             string actual;
@@ -123,7 +131,8 @@ namespace MageUnitTests {
         ///A test for SourceFileColumnName
         ///</summary>
         [TestMethod()]
-        public void SourceFileColumnNameTest() {
+        public void SourceFileColumnNameTest()
+        {
             FileContentProcessor target = new FileContentProcessor();
             string expected = "Test Value";
             string actual;
@@ -136,7 +145,8 @@ namespace MageUnitTests {
         ///A test for SourceFolderColumnName
         ///</summary>
         [TestMethod()]
-        public void SourceFolderColumnNameTest() {
+        public void SourceFolderColumnNameTest()
+        {
             FileContentProcessor target = new FileContentProcessor();
             string expected = "Test Value";
             string actual;

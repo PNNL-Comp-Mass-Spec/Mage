@@ -1,15 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Mage;
 using MageExtExtractionFilters;
 using System.IO;
 using System.Collections.ObjectModel;
 
-namespace MageExtractorTest {
+namespace MageExtractorTest
+{
 
-    class ExtractorTests {
+    class ExtractorTests
+    {
 
         #region Member Variables 
 
@@ -17,7 +17,7 @@ namespace MageExtractorTest {
 
         private string mTestRootFolderPath = @"C:\Data\ExtractorTests";
 
-         private string mTestCasesFolder = "TestCases";
+        private string mTestCasesFolder = "TestCases";
 
         private string mJobListTestFileFolder = "JobListTestFiles";
         private string mJobListTestKnownGoodFolder = "JobListTestKnownGood";
@@ -39,7 +39,8 @@ namespace MageExtractorTest {
 
         #region Properties
 
-        public string TestRootFolderPath {
+        public string TestRootFolderPath
+        {
             get { return mTestRootFolderPath; }
             set { mTestRootFolderPath = value; }
         }
@@ -50,8 +51,9 @@ namespace MageExtractorTest {
 
 
         #endregion
- 
-        public void RunTests() {
+
+        public void RunTests()
+        {
             //RunAllFindFilesTests();
             RunAllExtractionTests();
         }
@@ -61,7 +63,8 @@ namespace MageExtractorTest {
         /// <summary>
         /// Execute several test cases that run extraction pipeline queue from job list to results.
         /// </summary>
-        protected void RunAllExtractionTests() {
+        protected void RunAllExtractionTests()
+        {
             // "Sequest Synopsis" "Sequest First Hits"  "X!Tandem First Protein"  "X!Tandem All Proteins"  "Inspect Synopsis"
 
             Console.WriteLine(string.Format("Extraction Tests Begin"));
@@ -75,18 +78,20 @@ namespace MageExtractorTest {
             Console.WriteLine(string.Format("Extraction Tests Complete"));
         }
 
-        public void RunExtractionTestCases(SimpleSink cases) {
+        public void RunExtractionTestCases(SimpleSink cases)
+        {
             UpdateMessage(string.Format("Extraction Tests Begin"));
             string testResultsPath = Path.Combine(mTestRootFolderPath, mExtractionResultsFromTestFolder);
 
-            foreach (string file in Directory.GetFiles(testResultsPath)) {
+            foreach (string file in Directory.GetFiles(testResultsPath))
+            {
                 File.Delete(file);
             }
 
             ExtractionType extractionParms = new ExtractionType();
             DestinationType destination = null;
-			foreach (string[] testCase in cases.Rows)
-			{
+            foreach (string[] testCase in cases.Rows)
+            {
 
                 // get job list to extract from
                 string jobListFileName = testCase[JobListFileIdx].ToString();
@@ -115,9 +120,11 @@ namespace MageExtractorTest {
         }
 
 
-        protected void TestExtractFromJobList(BaseModule jobList, ExtractionType extractionParms, DestinationType destination) {
+        protected void TestExtractFromJobList(BaseModule jobList, ExtractionType extractionParms, DestinationType destination)
+        {
             PipelineQueue pq = ExtractionPipelines.MakePipelineQueueToExtractFromJobList(jobList, extractionParms, destination);
-            foreach (ProcessingPipeline p in pq.Pipelines.ToArray()) {
+            foreach (ProcessingPipeline p in pq.Pipelines.ToArray())
+            {
                 ConnectPipelineToMessageHandler(p);
             }
             ConnectPipelineQueueToMessageHandler(pq);
@@ -128,11 +135,13 @@ namespace MageExtractorTest {
         /// Substitute local folder tree for "[local]" token in folder column
         /// </summary>
         /// <param name="jobList"></param>
-        private void AdjustFolderPathForLocalFolders(SimpleSink jobList) {
+        private void AdjustFolderPathForLocalFolders(SimpleSink jobList)
+        {
             // adjust job list for local folders
             int folderColIdx = jobList.ColumnIndex["Folder"];
             string localPath = Path.Combine(mTestRootFolderPath, mJobInputResultsFolder);
-            for (int i = 0; i < jobList.Rows.Count; i++) {
+            for (int i = 0; i < jobList.Rows.Count; i++)
+            {
                 string folder = jobList.Rows[i][folderColIdx].ToString();
                 jobList.Rows[i][folderColIdx] = folder.Replace("[local]", localPath);
             }
@@ -142,15 +151,16 @@ namespace MageExtractorTest {
 
         #region File Searching Tests
 
-        protected void RunAllFindFilesTests() {
+        protected void RunAllFindFilesTests()
+        {
             // "Sequest Synopsis" "Sequest First Hits"  "X!Tandem First Protein"  "X!Tandem All Proteins"  "Inspect Synopsis"
 
             string testCaseFilePath = Path.Combine(mTestRootFolderPath, Path.Combine(mTestCasesFolder, "FileListTestCases.txt"));
             SimpleSink cases = GetFileContentsToSink(testCaseFilePath);
 
             ExtractionType extractionParms = new ExtractionType();
-			foreach (string[] testCase in cases.Rows)
-			{
+            foreach (string[] testCase in cases.Rows)
+            {
                 string jobListFile = testCase[0].ToString();
                 extractionParms.RType = ResultType.TypeList[testCase[1].ToString()];
                 TestFindFilesForJobList(jobListFile, extractionParms);
@@ -161,7 +171,8 @@ namespace MageExtractorTest {
         /// given the name of a file containing a list of jobs, and an extraction type,
         /// get list of files that would be part of extraction.
         /// </summary>
-        protected void TestFindFilesForJobList(string jobListFileName, ExtractionType extractionParms) {
+        protected void TestFindFilesForJobList(string jobListFileName, ExtractionType extractionParms)
+        {
 
             SimpleSink jobList = GetFileContentsToSink(Path.Combine(mTestRootFolderPath, Path.Combine(mJobListTestFileFolder, jobListFileName)));
 
@@ -174,9 +185,12 @@ namespace MageExtractorTest {
             string goodFileName = Path.GetFileNameWithoutExtension(jobListFileName) + "_file_list.txt";
             SimpleSink goodValues = GetFileContentsToSink(Path.Combine(mTestRootFolderPath, Path.Combine(mJobListTestKnownGoodFolder, goodFileName)));
             string errorMsg = CompareSinks(fileListSink, goodValues);
-            if (string.IsNullOrEmpty(errorMsg)) {
+            if (string.IsNullOrEmpty(errorMsg))
+            {
                 Console.WriteLine(string.Format("Passed:{0}", jobListFileName));
-            } else {
+            }
+            else
+            {
                 Console.WriteLine(string.Format("ERROR:{0}", jobListFileName));
                 Console.WriteLine(errorMsg);
             }
@@ -186,7 +200,8 @@ namespace MageExtractorTest {
 
         #region Utility Functions
 
-        private SimpleSink GetFileContentsToSink(string path) {
+        private SimpleSink GetFileContentsToSink(string path)
+        {
             DelimitedFileReader reader = new DelimitedFileReader();
             reader.FilePath = path;
             SimpleSink sink = new SimpleSink();
@@ -194,35 +209,44 @@ namespace MageExtractorTest {
             return sink;
         }
 
-        private void WriteSinkContentsToFile(SimpleSink sink, string path) {
+        private void WriteSinkContentsToFile(SimpleSink sink, string path)
+        {
             DelimitedFileWriter writer = new DelimitedFileWriter();
             writer.FilePath = path;
             ProcessingPipeline.Assemble("SinkDump", sink, writer).RunRoot(null);
         }
 
-        private static string CompareSinks(SimpleSink source, SimpleSink result) {
+        private static string CompareSinks(SimpleSink source, SimpleSink result)
+        {
             StringBuilder mb = new StringBuilder();
             Collection<MageColumnDef> sourceCols = source.Columns;
             Collection<MageColumnDef> resultCols = result.Columns;
-			Collection<string[]> sourceRows = source.Rows;
-			Collection<string[]> resultRows = result.Rows;
+            Collection<string[]> sourceRows = source.Rows;
+            Collection<string[]> resultRows = result.Rows;
 
-            if (sourceCols.Count != resultCols.Count) {
+            if (sourceCols.Count != resultCols.Count)
+            {
                 mb.AppendLine("column count does not match");
             }
-            if (sourceRows.Count != resultRows.Count) {
+            if (sourceRows.Count != resultRows.Count)
+            {
                 mb.AppendLine("Row count does not match");
             }
 
-            for (int i = 0; i < sourceCols.Count; i++) {
-                if (sourceCols[i].Name != resultCols[i].Name) {
+            for (int i = 0; i < sourceCols.Count; i++)
+            {
+                if (sourceCols[i].Name != resultCols[i].Name)
+                {
                     mb.AppendLine("Column names do not match");
                 }
             }
 
-            for (int i = 0; i < sourceRows.Count; i++) {
-                for (int j = 0; j < sourceCols.Count; j++) {
-                    if (sourceRows[i][j].ToString() != resultRows[i][j].ToString()) {
+            for (int i = 0; i < sourceRows.Count; i++)
+            {
+                for (int j = 0; j < sourceCols.Count; j++)
+                {
+                    if (sourceRows[i][j].ToString() != resultRows[i][j].ToString())
+                    {
                         mb.AppendLine(string.Format("Row {0} cell {1} content does not match", i, j));
                     }
                 }
@@ -235,20 +259,25 @@ namespace MageExtractorTest {
 
         #region Message Handling Functions
 
-        private void ConnectPipelineToMessageHandler(ProcessingPipeline pipeline) {
+        private void ConnectPipelineToMessageHandler(ProcessingPipeline pipeline)
+        {
             pipeline.OnStatusMessageUpdated += HandlePipelineMessage;
         }
 
-        private void ConnectPipelineQueueToMessageHandler(PipelineQueue pipelineQueue) {
+        private void ConnectPipelineQueueToMessageHandler(PipelineQueue pipelineQueue)
+        {
             pipelineQueue.OnPipelineStarted += HandlePipelineMessage;
         }
 
-        private void HandlePipelineMessage(object sender, MageStatusEventArgs args) {
+        private void HandlePipelineMessage(object sender, MageStatusEventArgs args)
+        {
             UpdateMessage(args.Message);
         }
 
-        private void UpdateMessage(string message) {
-            if (OnMessageUpdated != null) {
+        private void UpdateMessage(string message)
+        {
+            if (OnMessageUpdated != null)
+            {
                 OnMessageUpdated(this, new MageStatusEventArgs(message));
             }
         }

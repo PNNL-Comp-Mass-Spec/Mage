@@ -2,7 +2,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
-namespace MageUnitTests {
+namespace MageUnitTests
+{
 
 
     /// <summary>
@@ -10,27 +11,28 @@ namespace MageUnitTests {
     ///to contain all FileCopyTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class FileCopyTest {
+    public class FileCopyTest
+    {
 
-		/// <summary>
-		/// A class to provide access to private member variables of FileCopy.
-		/// Original method was using private accessors, deprecated starting in 2010
-		/// Another option was using PrivateObject, which requires 
-		///    Microsoft.VisualStudio.TestTools.UnitTesting and performs operations using reflection.
-		/// </summary>
-	    private class FileCopyExtracter : FileCopy
-	    {
-		    public Dictionary<string, int> InputColumnPosAccessor
-		    {
-			    get { return InputColumnPos; }
-				set { InputColumnPos = value; }
-		    }
+        /// <summary>
+        /// A class to provide access to private member variables of FileCopy.
+        /// Original method was using private accessors, deprecated starting in 2010
+        /// Another option was using PrivateObject, which requires 
+        ///    Microsoft.VisualStudio.TestTools.UnitTesting and performs operations using reflection.
+        /// </summary>
+        private class FileCopyExtracter : FileCopy
+        {
+            public Dictionary<string, int> InputColumnPosAccessor
+            {
+                get { return InputColumnPos; }
+                set { InputColumnPos = value; }
+            }
 
-		    public string GetDestFileAccessor(string sourceFile, Dictionary<string, int> fieldPos, string[] fields)
-		    {
-			    return GetDestFile(sourceFile, fieldPos, fields);
-		    }
-	    }
+            public string GetDestFileAccessor(string sourceFile, Dictionary<string, int> fieldPos, string[] fields)
+            {
+                return GetDestFile(sourceFile, fieldPos, fields);
+            }
+        }
 
         private TestContext testContextInstance;
 
@@ -38,11 +40,14 @@ namespace MageUnitTests {
         ///Gets or sets the test context which provides
         ///information about and functionality for the current test run.
         ///</summary>
-        public TestContext TestContext {
-            get {
+        public TestContext TestContext
+        {
+            get
+            {
                 return testContextInstance;
             }
-            set {
+            set
+            {
                 testContextInstance = value;
             }
         }
@@ -83,56 +88,58 @@ namespace MageUnitTests {
         ///</summary>
         [TestMethod()]
         [DeploymentItem("Mage.dll")]
-        public void GetDestFileTest() {
-			FileCopyExtracter target = new FileCopyExtracter();
+        public void GetDestFileTest()
+        {
+            FileCopyExtracter target = new FileCopyExtracter();
             string expected = "";
             string actual = "";
             string sourceFile = "SourceFile";
 
             Dictionary<string, int> fieldPos = null;
-			string[] fields = null;
+            string[] fields = null;
             string IDColName = "";
 
             // typical usage - ID column in column list and ApplyPrefixToFileName set to "Yes"
             IDColName = "Tres";
-			target.InputColumnPosAccessor = new Dictionary<string, int>() { { "Uno", 0 }, { "Dos", 1 }, { IDColName, 2 } };
+            target.InputColumnPosAccessor = new Dictionary<string, int>() { { "Uno", 0 }, { "Dos", 1 }, { IDColName, 2 } };
             target.ColumnToUseForPrefix = IDColName;
             target.ApplyPrefixToFileName = "Yes";
             target.PrefixLeader = IDColName;
-			fieldPos = target.InputColumnPosAccessor;
-			fields = new string[] { "FirstField", "SecondField", "ThirdField" };
-			expected = IDColName + "_" + fields[target.InputColumnPosAccessor[target.ColumnToUseForPrefix]] + "_" + sourceFile;
-			actual = target.GetDestFileAccessor(sourceFile, fieldPos, fields);
-			Assert.AreEqual(expected, actual, "Typical usage");
+            fieldPos = target.InputColumnPosAccessor;
+            fields = new string[] { "FirstField", "SecondField", "ThirdField" };
+            expected = IDColName + "_" + fields[target.InputColumnPosAccessor[target.ColumnToUseForPrefix]] + "_" + sourceFile;
+            actual = target.GetDestFileAccessor(sourceFile, fieldPos, fields);
+            Assert.AreEqual(expected, actual, "Typical usage");
 
             // typical usage - ID column in column list and ApplyPrefixToFileName set to "No"
             IDColName = "Tres";
-			target.InputColumnPosAccessor = new Dictionary<string, int>() { { "Uno", 0 }, { "Dos", 1 }, { IDColName, 2 } };
-			target.ColumnToUseForPrefix = IDColName;
+            target.InputColumnPosAccessor = new Dictionary<string, int>() { { "Uno", 0 }, { "Dos", 1 }, { IDColName, 2 } };
+            target.ColumnToUseForPrefix = IDColName;
             target.ApplyPrefixToFileName = "No";
-			fieldPos = target.InputColumnPosAccessor;
-			fields = new string[] { "FirstField", "SecondField", "ThirdField" };
+            fieldPos = target.InputColumnPosAccessor;
+            fields = new string[] { "FirstField", "SecondField", "ThirdField" };
             expected = sourceFile;
             actual = target.GetDestFileAccessor(sourceFile, fieldPos, fields);
-			Assert.AreEqual(expected, actual, "No prefix");
+            Assert.AreEqual(expected, actual, "No prefix");
 
             // ID column NOT in column list and ApplyPrefixToFileName set to "Yes"
             IDColName = "Tres";
-			target.InputColumnPosAccessor = new Dictionary<string, int>() { { "Uno", 0 }, { "Dos", 1 }, { "ChoppedLiver", 2 } };
+            target.InputColumnPosAccessor = new Dictionary<string, int>() { { "Uno", 0 }, { "Dos", 1 }, { "ChoppedLiver", 2 } };
             target.ColumnToUseForPrefix = IDColName;
             target.ApplyPrefixToFileName = "Yes";
-			fieldPos = target.InputColumnPosAccessor;
+            fieldPos = target.InputColumnPosAccessor;
             fields = new string[] { "FirstField", "SecondField", "ThirdField" };
             expected = "Tag_0_" + sourceFile;
             actual = target.GetDestFileAccessor(sourceFile, fieldPos, fields);
-			Assert.AreEqual(expected, actual, "Missing ID column");
+            Assert.AreEqual(expected, actual, "Missing ID column");
         }
 
         /// <summary>
         ///A test for IDColumnName
         ///</summary>
         [TestMethod()]
-        public void ColumnToUseForPrefixText() {
+        public void ColumnToUseForPrefixText()
+        {
             FileCopy target = new FileCopy();
             string expected = "Test Value";
             string actual;
@@ -145,7 +152,8 @@ namespace MageUnitTests {
         ///A test for OutputMode
         ///</summary>
         [TestMethod()]
-        public void OutputModeTest() {
+        public void OutputModeTest()
+        {
             FileCopy target = new FileCopy();
             string expected = "Test Value";
             string actual;

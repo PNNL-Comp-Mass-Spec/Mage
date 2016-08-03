@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Runtime.Serialization;
 
-namespace Mage {
+namespace Mage
+{
 
     /// <summary>
     /// Definition for a single column for standard tabular output
     /// </summary>
-    public class MageColumnDef {
+    public class MageColumnDef
+    {
         /// <summary>
         /// name of the column
         /// </summary>
@@ -32,7 +34,8 @@ namespace Mage {
         /// <summary>
         /// construct an empty Mage standard tabular input/outpu column definition object
         /// </summary>
-        public MageColumnDef() {
+        public MageColumnDef()
+        {
             Name = string.Empty;
             DataType = string.Empty;
             Size = string.Empty;
@@ -45,41 +48,45 @@ namespace Mage {
         /// <param name="name">Column name</param>
         /// <param name="type">Column data type</param>
         /// <param name="size">Column size (in characters)</param>
-        public MageColumnDef(string name, string type, string size) {
+        public MageColumnDef(string name, string type, string size)
+        {
             Name = name;
             DataType = type;
             Size = size;
         }
 
-		/// <summary>
-		/// Overrides the default ToString to return the column def name and data type
-		/// </summary>
-		/// <returns></returns>
-		public override string ToString()
-		{
-			return Name + ": " + DataType;
-		}
+        /// <summary>
+        /// Overrides the default ToString to return the column def name and data type
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return Name + ": " + DataType;
+        }
     }
 
     /// <summary>
     /// Argument for a column definition event for standard tabular output
     /// </summary>
-    public class MageColumnEventArgs : EventArgs {
+    public class MageColumnEventArgs : EventArgs
+    {
         private readonly List<MageColumnDef> columDefs;
 
         /// <summary>
         /// list of column definitions
         /// </summary>
-        public Collection<MageColumnDef> ColumnDefs {
+        public Collection<MageColumnDef> ColumnDefs
+        {
             get { return new Collection<MageColumnDef>(columDefs); }
         }
 
-	    /// <summary>
+        /// <summary>
         /// construct new MageColumnEventArgs object
         /// with given column definitions list
         /// </summary>
         /// <param name="colDefs">Column definition list</param>
-        public MageColumnEventArgs(IEnumerable<MageColumnDef> colDefs) {
+        public MageColumnEventArgs(IEnumerable<MageColumnDef> colDefs)
+        {
             columDefs = new List<MageColumnDef>(colDefs);
         }
     }
@@ -87,14 +94,16 @@ namespace Mage {
     /// <summary>
     /// Argument for data row event for standard tabular output
     /// </summary>
-    public class MageDataEventArgs : EventArgs {
-		private readonly string[] fields;
+    public class MageDataEventArgs : EventArgs
+    {
+        private readonly string[] fields;
 
         /// <summary>
         /// the event contains a data row to process
         /// (false signals end of input data stream)
         /// </summary>
-        public bool DataAvailable {
+        public bool DataAvailable
+        {
             get { return fields != null; }
         }
 
@@ -102,7 +111,7 @@ namespace Mage {
         /// data row
         /// </summary>
 		public string[] Fields
-		{
+        {
             get { return fields; }
         }
 
@@ -111,7 +120,7 @@ namespace Mage {
         /// </summary>
         /// <param name="data"></param>
 		public MageDataEventArgs(string[] data)
-		{
+        {
             fields = data;
         }
     }
@@ -119,7 +128,8 @@ namespace Mage {
     /// <summary>
     /// Argument for a status message event
     /// </summary>
-    public class MageStatusEventArgs : EventArgs {
+    public class MageStatusEventArgs : EventArgs
+    {
 
         /// <summary>
         /// message text
@@ -136,7 +146,8 @@ namespace Mage {
         /// with given message text
         /// </summary>
         /// <param name="msg"></param>
-        public MageStatusEventArgs(string msg) {
+        public MageStatusEventArgs(string msg)
+        {
             Message = msg;
             ErrorCode = 0;
         }
@@ -147,7 +158,8 @@ namespace Mage {
         /// </summary>
         /// <param name="msg"></param>
         /// <param name="errorCode"></param>
-        public MageStatusEventArgs(string msg, int errorCode) {
+        public MageStatusEventArgs(string msg, int errorCode)
+        {
             Message = msg;
             ErrorCode = errorCode;
         }
@@ -157,14 +169,16 @@ namespace Mage {
     /// An exception type to call our own
     /// </summary>
     [Serializable]
-    public class MageException : Exception {
+    public class MageException : Exception
+    {
 
-	    /// <summary>
+        /// <summary>
         /// construct a new MageException object
         /// with the given exception message
         /// </summary>
         public MageException(string message)
-            : base(message) {
+            : base(message)
+        {
         }
 
         /// <summary>
@@ -174,7 +188,8 @@ namespace Mage {
         /// <param name="message"></param>
         /// <param name="innerException"></param>
         public MageException(string message, Exception innerException)
-            : base(message, innerException) {
+            : base(message, innerException)
+        {
         }
 
         /// <summary>
@@ -183,7 +198,8 @@ namespace Mage {
         /// <param name="info"></param>
         /// <param name="context"></param>
         protected MageException(SerializationInfo info, StreamingContext context)
-            : base(info, context) {
+            : base(info, context)
+        {
         }
 
     }

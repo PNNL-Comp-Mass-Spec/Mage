@@ -101,7 +101,7 @@ namespace MageExtContentFilters
         /// <param name="sOutputFilePath"></param>
         public void WriteCriteria(string sOutputFilePath)
         {
-            using ( var swOutfile = new StreamWriter(new FileStream(sOutputFilePath, FileMode.Create, FileAccess.Write, FileShare.Read)))
+            using (var swOutfile = new StreamWriter(new FileStream(sOutputFilePath, FileMode.Create, FileAccess.Write, FileShare.Read)))
             {
                 swOutfile.WriteLine("Filter_Set_ID" + "\t" + "Filter_Criteria_Group_ID" + "\t" + "Criterion_Name" + "\t" +
                                     "Operator" + "\t" + "Criterion_Value" + "\t" + "Criterion_ID");

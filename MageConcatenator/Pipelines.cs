@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 using Mage;
-using System.IO;
-using System.Collections.ObjectModel;
 
 namespace MageConcatenator
 {
@@ -16,7 +14,8 @@ namespace MageConcatenator
         public const string PIPELINE_GET_LOCAL_FILES = "PipelineToGetLocalFileList";
 
         // class is not instantiated
-        private Pipelines() {
+        private Pipelines()
+        {
         }
 
         /// <summary>

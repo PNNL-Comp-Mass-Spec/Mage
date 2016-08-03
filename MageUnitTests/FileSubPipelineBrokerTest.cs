@@ -3,7 +3,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.IO;
 
-namespace MageUnitTests {
+namespace MageUnitTests
+{
 
 
     /// <summary>
@@ -11,7 +12,8 @@ namespace MageUnitTests {
     ///to contain all FileSubPipelineBrokerTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class FileSubPipelineBrokerTest {
+    public class FileSubPipelineBrokerTest
+    {
 
         #region Member Variables
 
@@ -28,11 +30,14 @@ namespace MageUnitTests {
         ///Gets or sets the test context which provides
         ///information about and functionality for the current test run.
         ///</summary>
-        public TestContext TestContext {
-            get {
+        public TestContext TestContext
+        {
+            get
+            {
                 return testContextInstance;
             }
-            set {
+            set
+            {
                 testContextInstance = value;
             }
         }
@@ -69,7 +74,8 @@ namespace MageUnitTests {
 
 
         [TestMethod()]
-        public void FileSubPipelineBrokerBasicTest() {
+        public void FileSubPipelineBrokerBasicTest()
+        {
 
             // set up test parameters
             string IDColumnName = "Padding";
@@ -104,7 +110,7 @@ namespace MageUnitTests {
             pipeline.RunRoot(null);
 
             Assert.AreEqual("Kilroy was here", mPipelineResults, "Subpipeline creation.");
-            Assert.AreEqual(Path.Combine(TestFolderPath, TestInputFileName), mPipelineInputFilePath, "Subpipeline input file path" );
+            Assert.AreEqual(Path.Combine(TestFolderPath, TestInputFileName), mPipelineInputFilePath, "Subpipeline input file path");
             Assert.AreEqual(Path.Combine(destFolder, RenameOutputFile(TestInputFileName, null, null)), mPipelineOutputFilePath, "Subpipeline output file path");
             Assert.AreEqual("Kilroy was here too", mPipelineDummyModuleResults, "Dummy module results");
         }
@@ -112,7 +118,8 @@ namespace MageUnitTests {
         // this function builds the a file processing pipeline 
         // which is a simple file filtering process that has a file reader module, file filter module, and file writer module,
         // using a filter module specified by the FilterModuleClasssName, which must be set by the client
-        private ProcessingPipeline MakeTestSubpipeline(string inputFilePath, string outputFilePath, Dictionary<string, string> context) {
+        private ProcessingPipeline MakeTestSubpipeline(string inputFilePath, string outputFilePath, Dictionary<string, string> context)
+        {
             mPipelineResults = "Kilroy was here";
             mPipelineInputFilePath = inputFilePath;
             mPipelineOutputFilePath = outputFilePath;
@@ -124,8 +131,8 @@ namespace MageUnitTests {
         }
 
         // delegate that handles renaming of source file to output file 
-		public string RenameOutputFile(string sourceFile, Dictionary<string, int> fieldPos, string[] fields)
-		{
+        public string RenameOutputFile(string sourceFile, Dictionary<string, int> fieldPos, string[] fields)
+        {
             return "out_" + sourceFile;
         }
 
@@ -133,7 +140,8 @@ namespace MageUnitTests {
         ///A test for SetPipelineMaker
         ///</summary>
         [TestMethod()]
-        public void SetPipelineMakerTest() {
+        public void SetPipelineMakerTest()
+        {
             FileSubPipelineBroker target = new FileSubPipelineBroker();
             target.SetPipelineMaker(MakeTestSubpipeline);
         }
@@ -142,7 +150,8 @@ namespace MageUnitTests {
         ///A test for DatabaseName
         ///</summary>
         [TestMethod()]
-        public void DatabaseNameTest() {
+        public void DatabaseNameTest()
+        {
             FileSubPipelineBroker target = new FileSubPipelineBroker(); // TODO: Initialize to an appropriate value
             string expected = "Test Value";
             string actual;
@@ -155,7 +164,8 @@ namespace MageUnitTests {
         ///A test for FileFilterModuleName
         ///</summary>
         [TestMethod()]
-        public void FileFilterModuleNameTest() {
+        public void FileFilterModuleNameTest()
+        {
             FileSubPipelineBroker target = new FileSubPipelineBroker(); // TODO: Initialize to an appropriate value
             string expected = "Test Value";
             string actual;
@@ -168,7 +178,8 @@ namespace MageUnitTests {
         ///A test for FileFilterParameters
         ///</summary>
         [TestMethod()]
-        public void FileFilterParametersTest() {
+        public void FileFilterParametersTest()
+        {
             FileSubPipelineBroker target = new FileSubPipelineBroker(); // TODO: Initialize to an appropriate value
             Dictionary<string, string> expected = null; // TODO: Initialize to an appropriate value
             Dictionary<string, string> actual;
@@ -181,7 +192,8 @@ namespace MageUnitTests {
         ///A test for TableName
         ///</summary>
         [TestMethod()]
-        public void TableNameTest() {
+        public void TableNameTest()
+        {
             FileSubPipelineBroker target = new FileSubPipelineBroker(); // TODO: Initialize to an appropriate value
             string expected = "Test Value";
             string actual;
@@ -194,13 +206,15 @@ namespace MageUnitTests {
         /// This is a simple test version of a Mage module for the basic test pipeline.
         /// It just leaves a marker that it ran
         /// </summary>
-        private class DummyModule : BaseModule {
+        private class DummyModule : BaseModule
+        {
 
             /// <summary>
             /// test
             /// </summary>
             /// <param name="state"></param>
-            public override void Run(object state) {
+            public override void Run(object state)
+            {
                 FileSubPipelineBrokerTest.mPipelineDummyModuleResults = "Kilroy was here too";
             }
         }

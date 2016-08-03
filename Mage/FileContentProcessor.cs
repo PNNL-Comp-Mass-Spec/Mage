@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Mage {
- 
+namespace Mage
+{
+
     /// <summary>
     /// delegate for a function that returns and output file name for a given input file name and parameters
     /// </summary>
@@ -11,7 +12,7 @@ namespace Mage {
     /// <param name="fieldPos">index to the metadata field to be used in renaming</param>
     /// <param name="fields">list of metadata fields for original file</param>
     /// <returns></returns>
-	public delegate string OutputFileNamer(string sourceFile, Dictionary<string, int> fieldPos, string[] fields);
+    public delegate string OutputFileNamer(string sourceFile, Dictionary<string, int> fieldPos, string[] fields);
 
     /// <summary>
     /// module that provides base functions for processing one or more input files 
@@ -27,7 +28,7 @@ namespace Mage {
     /// this module outputs a record of each file processed on stardard tabular output
     /// </summary>
 	public class FileContentProcessor : FileProcessingBase
-	{
+    {
 
         #region Member Variables
 
@@ -42,7 +43,8 @@ namespace Mage {
         /// define a delegate function that will generate output file name 
         /// </summary>
         /// <param name="namer"></param>
-        public void SetOutputFileNamer(OutputFileNamer namer) {
+        public void SetOutputFileNamer(OutputFileNamer namer)
+        {
             GetOutputFileName = namer;
         }
 
@@ -98,7 +100,8 @@ namespace Mage {
         /// <summary>
         /// construct new Mage file content processor module
         /// </summary>
-        public FileContentProcessor() {
+        public FileContentProcessor()
+        {
             SourceFolderColumnName = "Folder";
             FileTypeColumnName = "";
             SourceFileColumnName = "File";
@@ -119,105 +122,117 @@ namespace Mage {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        public override void HandleDataRow(object sender, MageDataEventArgs args) {
-            if (args.DataAvailable) {
+        public override void HandleDataRow(object sender, MageDataEventArgs args)
+        {
+            if (args.DataAvailable)
+            {
                 bool concatenateOutput = !string.IsNullOrEmpty(OutputFileName);
                 string sourceFolder = args.Fields[InputColumnPos[SourceFolderColumnName]];
                 string sourceFile = args.Fields[InputColumnPos[SourceFileColumnName]];
 
-				string fileType;
-				bool sourceIsFolder = false;
+                string fileType;
+                bool sourceIsFolder = false;
 
-				if (string.IsNullOrWhiteSpace(FileTypeColumnName))
-				{
-					if (sourceFolder.StartsWith(MYEMSL_PATH_FLAG))
-					{
-						fileType = "file";
-					}
-					else if (Directory.Exists(sourceFolder))
-					{
-						if (File.Exists(Path.Combine(sourceFolder, sourceFile)))
-							fileType = "file";
-						else
-						{
-							UpdateStatus(this, new MageStatusEventArgs("FAILED->Cannot process folders with this processing mode", 1));
-							OnWarningMessage(new MageStatusEventArgs("Cannot process folders with this processing mode"));
-							System.Threading.Thread.Sleep(500);
-							return;
-						}
-					}
-					else
-					{
-						UpdateStatus(this, new MageStatusEventArgs("FAILED->Folder Not Found: " + sourceFolder, 1));
-						OnWarningMessage(new MageStatusEventArgs("Copy failed->Folder Not Found: " + sourceFolder));
-						System.Threading.Thread.Sleep(250);
-						return;
-					}
-				}
-				else
-					fileType = args.Fields[InputColumnPos[FileTypeColumnName]];
+                if (string.IsNullOrWhiteSpace(FileTypeColumnName))
+                {
+                    if (sourceFolder.StartsWith(MYEMSL_PATH_FLAG))
+                    {
+                        fileType = "file";
+                    }
+                    else if (Directory.Exists(sourceFolder))
+                    {
+                        if (File.Exists(Path.Combine(sourceFolder, sourceFile)))
+                            fileType = "file";
+                        else
+                        {
+                            UpdateStatus(this, new MageStatusEventArgs("FAILED->Cannot process folders with this processing mode", 1));
+                            OnWarningMessage(new MageStatusEventArgs("Cannot process folders with this processing mode"));
+                            System.Threading.Thread.Sleep(500);
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        UpdateStatus(this, new MageStatusEventArgs("FAILED->Folder Not Found: " + sourceFolder, 1));
+                        OnWarningMessage(new MageStatusEventArgs("Copy failed->Folder Not Found: " + sourceFolder));
+                        System.Threading.Thread.Sleep(250);
+                        return;
+                    }
+                }
+                else
+                    fileType = args.Fields[InputColumnPos[FileTypeColumnName]];
 
-				if (fileType == "folder")
-					sourceIsFolder = true;
+                if (fileType == "folder")
+                    sourceIsFolder = true;
 
                 string sourcePath;
 
-				if (sourceIsFolder)
-					sourcePath = sourceFolder;
-				else
-					sourcePath = Path.GetFullPath(Path.Combine(sourceFolder, sourceFile));
+                if (sourceIsFolder)
+                    sourcePath = sourceFolder;
+                else
+                    sourcePath = Path.GetFullPath(Path.Combine(sourceFolder, sourceFile));
 
                 string destFolder = OutputFolderPath;
-				string destFile;
+                string destFile;
 
-	            if (sourceFile == BaseModule.kNoFilesFound) {
-					destFile = kNoFilesFound;
-				} else 
-				{
-					if (concatenateOutput && !sourceIsFolder)
-						destFile = OutputFileName;
-					else
-						destFile = GetOutputFileName(sourceFile, InputColumnPos, args.Fields);
-				}
+                if (sourceFile == BaseModule.kNoFilesFound)
+                {
+                    destFile = kNoFilesFound;
+                }
+                else
+                {
+                    if (concatenateOutput && !sourceIsFolder)
+                        destFile = OutputFileName;
+                    else
+                        destFile = GetOutputFileName(sourceFile, InputColumnPos, args.Fields);
+                }
 
-				string destPath = Path.GetFullPath(Path.Combine(destFolder, destFile));
+                string destPath = Path.GetFullPath(Path.Combine(destFolder, destFile));
 
                 // package fields as dictionary
                 var context = new Dictionary<string, string>();
                 foreach (KeyValuePair<string, int> colPos in InputColumnPos)
                 {
-	                context.Add(colPos.Key, args.Fields[colPos.Value] ?? String.Empty);
+                    context.Add(colPos.Key, args.Fields[colPos.Value] ?? String.Empty);
                 }
 
-	            // process file
-                if (sourceFile == BaseModule.kNoFilesFound) {
-					// skip
-                } else
-					if (string.IsNullOrEmpty(FileTypeColumnName) && fileType != "folder")
-					{
-						ProcessFile(sourceFile, sourcePath, destPath, context);
-					} else {
-						if (fileType == "file") {
-							ProcessFile(sourceFile, sourcePath, destPath, context);
-						}
-						if (fileType == "folder") {
-							ProcessFolder(sourcePath, destPath);
-						}
-					}
+                // process file
+                if (sourceFile == BaseModule.kNoFilesFound)
+                {
+                    // skip
+                }
+                else
+                    if (string.IsNullOrEmpty(FileTypeColumnName) && fileType != "folder")
+                {
+                    ProcessFile(sourceFile, sourcePath, destPath, context);
+                }
+                else
+                {
+                    if (fileType == "file")
+                    {
+                        ProcessFile(sourceFile, sourcePath, destPath, context);
+                    }
+                    if (fileType == "folder")
+                    {
+                        ProcessFolder(sourcePath, destPath);
+                    }
+                }
 
-				string[] outRow = MapDataRow(args.Fields);
-				
+                string[] outRow = MapDataRow(args.Fields);
+
                 int fileNameOutColIndx = OutputColumnPos[OutputFileColumnName];
                 outRow[fileNameOutColIndx] = (concatenateOutput) ? sourceFile : destFile;
 
-				// Strip off the MyEMSLID from the filename
-				string newFilePath;
-				Int64 myEMSLFileID = MyEMSLReader.DatasetInfoBase.ExtractMyEMSLFileID(outRow[fileNameOutColIndx], out newFilePath);
-				if (myEMSLFileID > 0)
-					outRow[fileNameOutColIndx] = newFilePath;
+                // Strip off the MyEMSLID from the filename
+                string newFilePath;
+                Int64 myEMSLFileID = MyEMSLReader.DatasetInfoBase.ExtractMyEMSLFileID(outRow[fileNameOutColIndx], out newFilePath);
+                if (myEMSLFileID > 0)
+                    outRow[fileNameOutColIndx] = newFilePath;
 
-				OnDataRowAvailable(new MageDataEventArgs(outRow));
-            } else {
+                OnDataRowAvailable(new MageDataEventArgs(outRow));
+            }
+            else
+            {
                 OnDataRowAvailable(new MageDataEventArgs(null));
             }
         }
@@ -228,7 +243,8 @@ namespace Mage {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        public override void HandleColumnDef(object sender, MageColumnEventArgs args) {
+        public override void HandleColumnDef(object sender, MageColumnEventArgs args)
+        {
             // build lookup of column index by column name
             base.HandleColumnDef(sender, args);
             // end of column definitions from our source,
@@ -247,15 +263,17 @@ namespace Mage {
         /// <param name="sourcePath"></param>
         /// <param name="destPath"></param>
         /// <param name="context"></param>
-        protected virtual void ProcessFile(string sourceFile, string sourcePath, string destPath, Dictionary<string, string> context) {
+        protected virtual void ProcessFile(string sourceFile, string sourcePath, string destPath, Dictionary<string, string> context)
+        {
         }
 
-	    /// <summary>
-	    /// this function should be overriden by subclasses to do the actual processing
-	    /// </summary>
-	    /// <param name="sourcePath"></param>
-	    /// <param name="destPath"></param>
-	    protected virtual void ProcessFolder(string sourcePath, string destPath) {
+        /// <summary>
+        /// this function should be overriden by subclasses to do the actual processing
+        /// </summary>
+        /// <param name="sourcePath"></param>
+        /// <param name="destPath"></param>
+        protected virtual void ProcessFolder(string sourcePath, string destPath)
+        {
         }
 
         #endregion
@@ -270,7 +288,7 @@ namespace Mage {
         /// <param name="fields"></param>
         /// <returns></returns>
 		protected string GetDefaultOutputFileName(string sourceFile, Dictionary<string, int> fieldPos, string[] fields)
-		{
+        {
             return sourceFile;
         }
 
@@ -281,7 +299,8 @@ namespace Mage {
         // tell our subscribers what columns to expect from us
         // which will be information about the files processed
         // pluss any input columns that are passed through to output
-        private void ExportColumnDefs() {
+        private void ExportColumnDefs()
+        {
             OnColumnDefAvailable(new MageColumnEventArgs(OutputColumnDefs.ToArray()));
         }
 
@@ -294,7 +313,8 @@ namespace Mage {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        protected void UpdateStatus(object sender, MageStatusEventArgs args) {
+        protected void UpdateStatus(object sender, MageStatusEventArgs args)
+        {
             OnStatusMessageUpdated(args);
         }
 

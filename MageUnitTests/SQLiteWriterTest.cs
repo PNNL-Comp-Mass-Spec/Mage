@@ -1,6 +1,7 @@
 ﻿using Mage;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-namespace MageUnitTests {
+namespace MageUnitTests
+{
 
 
     /// <summary>
@@ -8,7 +9,8 @@ namespace MageUnitTests {
     ///to contain all SQLiteWriterTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class SQLiteWriterTest {
+    public class SQLiteWriterTest
+    {
 
 
         private TestContext testContextInstance;
@@ -17,11 +19,14 @@ namespace MageUnitTests {
         ///Gets or sets the test context which provides
         ///information about and functionality for the current test run.
         ///</summary>
-        public TestContext TestContext {
-            get {
+        public TestContext TestContext
+        {
+            get
+            {
                 return testContextInstance;
             }
-            set {
+            set
+            {
                 testContextInstance = value;
             }
         }
@@ -58,7 +63,8 @@ namespace MageUnitTests {
 
 
         [TestMethod()]
-        public void DoubleTap() {
+        public void DoubleTap()
+        {
             int cols = 5;
             int rows = 21;
             string dbPath = "write_test_2.db";
@@ -72,7 +78,7 @@ namespace MageUnitTests {
 
             SimpleSink source1 = WriteSQLiteDBWithTestData(dbPath, tableName, dGen);
             SimpleSink result1 = SQLiteReaderTest.ReadSQLiteDB(rows, sqlText, dbPath);
- 
+
             Assert.AreEqual(rows, source1.Rows.Count, "Source row count does not match");
             Assert.AreEqual(cols, source1.Columns.Count, "Source column count does ot match");
             Assert.AreEqual(rows, result1.Rows.Count, "Result row count does not match");
@@ -89,13 +95,14 @@ namespace MageUnitTests {
             Assert.AreEqual(cols, source2.Columns.Count, "Source column count does ot match");
             Assert.AreEqual(rows, result2.Rows.Count, "Result row count does not match");
             Assert.AreEqual(cols, result2.Columns.Count, "Result column count does not match");
-//            General.CompareSinks(source2, result2);
+            //            General.CompareSinks(source2, result2);
 
         }
 
 
         [TestMethod()]
-        public void WriteTest() {
+        public void WriteTest()
+        {
             int cols = 5;
             int rows = 21;
             string dbPath = "write_test.db";
@@ -117,7 +124,8 @@ namespace MageUnitTests {
             General.CompareSinks(source, result);
         }
 
-        public SimpleSink WriteSQLiteDBWithTestData(string dbPath, string tableName, IBaseModule dGen) {
+        public SimpleSink WriteSQLiteDBWithTestData(string dbPath, string tableName, IBaseModule dGen)
+        {
             ProcessingPipeline pipeline = new ProcessingPipeline("SQLiteWriter");
 
             SQLiteWriter target = new SQLiteWriter();
@@ -141,7 +149,8 @@ namespace MageUnitTests {
         ///A test for BlockSize
         ///</summary>
         [TestMethod()]
-        public void BlockSizeTest() {
+        public void BlockSizeTest()
+        {
             SQLiteWriter target = new SQLiteWriter();
             string expected = "42";
             string actual;
@@ -154,7 +163,8 @@ namespace MageUnitTests {
         ///A test for DbPassword
         ///</summary>
         [TestMethod()]
-        public void DbPasswordTest() {
+        public void DbPasswordTest()
+        {
             SQLiteWriter target = new SQLiteWriter();
             string expected = "Test Value";
             string actual;
@@ -167,7 +177,8 @@ namespace MageUnitTests {
         ///A test for DbPath
         ///</summary>
         [TestMethod()]
-        public void DbPathTest() {
+        public void DbPathTest()
+        {
             SQLiteWriter target = new SQLiteWriter();
             string expected = "Test Value";
             string actual;
@@ -180,7 +191,8 @@ namespace MageUnitTests {
         ///A test for TableName
         ///</summary>
         [TestMethod()]
-        public void TableNameTest() {
+        public void TableNameTest()
+        {
             SQLiteWriter target = new SQLiteWriter();
             string expected = "Test Value";
             string actual;

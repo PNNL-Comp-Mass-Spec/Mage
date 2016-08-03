@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 
-namespace Mage {
+namespace Mage
+{
 
     /// <summary>
     /// Generates all possible permutations of a set of parameters
     /// as standard tabular output
     /// </summary>
-    public class PermutationGenerator : BaseModule {
+    public class PermutationGenerator : BaseModule
+    {
 
         #region Member Variables
 
@@ -60,10 +62,13 @@ namespace Mage {
         /// <summary>
         /// list of active parameters names
         /// </summary>
-        public IEnumerable<string> ParamNames {
-            get {
+        public IEnumerable<string> ParamNames
+        {
+            get
+            {
                 var pn = new Collection<string>();
-                foreach (ParameterDef pd in mParamColDefinitions) {
+                foreach (ParameterDef pd in mParamColDefinitions)
+                {
                     pn.Add(pd.ParamName);
                 }
                 return pn;
@@ -77,7 +82,8 @@ namespace Mage {
         /// <summary>
         /// construct a new empty Mage permutation generator object
         /// </summary>
-        public PermutationGenerator() {
+        public PermutationGenerator()
+        {
             IncludeHeaderInOutput = true;
             AutoColumnName = "";
             AutoColumnFormat = "ParamSet{0:000000}";
@@ -96,7 +102,8 @@ namespace Mage {
         /// <param name="lower">Lower bound of the parameter</param>
         /// <param name="upper">Upper bound of the parameter</param>
         /// <param name="step">Amount to increment by</param>
-        public void AddParamColumn(string name, string lower, string upper, string step) {
+        public void AddParamColumn(string name, string lower, string upper, string step)
+        {
             var pDef = new ParameterDef(name, lower, upper, step);
             mParamColDefinitions.Add(pDef);
             SetCycleCountsForParamterColDefList();
@@ -107,7 +114,8 @@ namespace Mage {
         /// incremented according to parameters supplied as key/value pairs 
         /// </summary>
         /// <param name="parms">parameters as key/value pairs</param>
-        public void AddParamColumn(Dictionary<string, string> parms) {
+        public void AddParamColumn(Dictionary<string, string> parms)
+        {
             var pDef = new ParameterDef(parms);
             mParamColDefinitions.Add(pDef);
             SetCycleCountsForParamterColDefList();
@@ -122,10 +130,12 @@ namespace Mage {
         /// (override of base class)
         /// </summary>
         /// <param name="state">Mage ProcessingPipeline object that contains the module (if there is one)</param>
-        public override void Run(object state) {
+        public override void Run(object state)
+        {
             SetupInputColumns();
             SetupAutoColumn();
-            if (IncludeHeaderInOutput) {
+            if (IncludeHeaderInOutput)
+            {
                 OutputHeaderLine();
             }
             GenerateRows();
@@ -136,19 +146,24 @@ namespace Mage {
         #region Private Functions
 
         // set up auto column
-        private void SetupAutoColumn() {
+        private void SetupAutoColumn()
+        {
             mAutoColumnIndex = -1;
-            if (!string.IsNullOrEmpty(AutoColumnName)) {
-                if (OutputColumnPos.ContainsKey(AutoColumnName)) {
+            if (!string.IsNullOrEmpty(AutoColumnName))
+            {
+                if (OutputColumnPos.ContainsKey(AutoColumnName))
+                {
                     mAutoColumnIndex = OutputColumnPos[AutoColumnName];
                 }
             }
         }
 
         // set up to use BaseModule internal column handling
-        private void SetupInputColumns() {
+        private void SetupInputColumns()
+        {
             var colDefs = new List<MageColumnDef>();
-            foreach (ParameterDef pDef in mParamColDefinitions) {
+            foreach (ParameterDef pDef in mParamColDefinitions)
+            {
                 MageColumnDef colDef = new MageColumnDef(pDef.ParamName, "float", "10");
                 colDefs.Add(colDef);
             }
@@ -157,11 +172,13 @@ namespace Mage {
 
         // set the row cycle count for each parameter def object 
         // and get total row count that will be produced
-        private void SetCycleCountsForParamterColDefList() {
+        private void SetCycleCountsForParamterColDefList()
+        {
             // set cycle count for each parameter def object
             // and get total row count that will be produced
             mTotalRows = 1;
-            foreach (ParameterDef pDef in mParamColDefinitions) {
+            foreach (ParameterDef pDef in mParamColDefinitions)
+            {
                 pDef.RowCycle = mTotalRows;
                 mTotalRows *= pDef.NumberOfIncrements;
             }
@@ -169,12 +186,15 @@ namespace Mage {
 
         // generate output rows given parameter column definitions
         // and total row count and output them via standard tabular output
-        private void GenerateRows() {
+        private void GenerateRows()
+        {
             int totalCols = mParamColDefinitions.Count;
             // step through all row numbers for output rows
             // and generate a row for each and add it to list
-            for (int rowNum = 0; rowNum < mTotalRows; rowNum++) {
-                if (Abort) {
+            for (int rowNum = 0; rowNum < mTotalRows; rowNum++)
+            {
+                if (Abort)
+                {
                     ReportProcessingAborted();
                     break;
                 }
@@ -182,7 +202,8 @@ namespace Mage {
                 var row = new string[totalCols];
                 // step through each column and update row fields
                 // using previously set up column parameter objects
-                for (int colNum = 0; colNum < totalCols; colNum++) {
+                for (int colNum = 0; colNum < totalCols; colNum++)
+                {
                     ParameterDef pDef = mParamColDefinitions[colNum];
                     row[colNum] = pDef.CurrentIncrement(rowNum);
                 }
@@ -193,21 +214,29 @@ namespace Mage {
 
         // send the data row information to any listeners
         // via standard tabular output
-        private void OutputDataLine(string[] fields, int rowNum) {
-            if (fields == null) {
+        private void OutputDataLine(string[] fields, int rowNum)
+        {
+            if (fields == null)
+            {
                 OnDataRowAvailable(new MageDataEventArgs(fields));
                 return;
             }
-            if (OutputColumnDefs == null) {
+            if (OutputColumnDefs == null)
+            {
                 OnDataRowAvailable(new MageDataEventArgs(fields));
-            } else {
+            }
+            else
+            {
                 string[] outRow = MapDataRow(fields);
-                for (int i = 0; i < outRow.Length; i++) {
-                    if (outRow[i] == null) {
+                for (int i = 0; i < outRow.Length; i++)
+                {
+                    if (outRow[i] == null)
+                    {
                         outRow[i] = "";
                     }
                 }
-                if (mAutoColumnIndex > -1) {
+                if (mAutoColumnIndex > -1)
+                {
                     outRow[mAutoColumnIndex] = string.Format(AutoColumnFormat, rowNum + AutoColumnSeed);
                 }
                 OnDataRowAvailable(new MageDataEventArgs(outRow));
@@ -216,11 +245,15 @@ namespace Mage {
 
         // send the header information to any listeners
         // via standard tabular output
-        private void OutputHeaderLine() {
+        private void OutputHeaderLine()
+        {
             // output the column definitions
-            if (OutputColumnDefs != null) {
+            if (OutputColumnDefs != null)
+            {
                 OnColumnDefAvailable(new MageColumnEventArgs(OutputColumnDefs.ToArray()));
-            } else {
+            }
+            else
+            {
                 OnColumnDefAvailable(new MageColumnEventArgs(InputColumnDefs.ToArray()));
             }
         }
@@ -231,18 +264,19 @@ namespace Mage {
 
         // Class that provides permutation behavior 
         // for a single parameter
-        private class ParameterDef {
+        private class ParameterDef
+        {
             public string ParamName { get; set; }
 
             // increment range parameters
             // used to calculate specific incremental values
-	        private double UpperBound { get; set; }
-	        private double LowerBound { get; set; }
-	        private double Step { get; set; }
+            private double UpperBound { get; set; }
+            private double LowerBound { get; set; }
+            private double Step { get; set; }
 
             // list (comma-delimited) of explicit
             // incremental values
-	        private string IncrementList { get; set; }
+            private string IncrementList { get; set; }
 
             // list of increment values that this parameter object
             // will cycle through.  Increment values are either calculated 
@@ -261,14 +295,17 @@ namespace Mage {
             // get the current parameter increment value for 
             // parameter represented by this object, based on
             // the rowNum and cycle (which must be set externally)
-            public string CurrentIncrement(int rowNum) {
-                if ((rowNum != 0) && (rowNum % RowCycle == 0)) {
+            public string CurrentIncrement(int rowNum)
+            {
+                if ((rowNum != 0) && (rowNum % RowCycle == 0))
+                {
                     incrementIndex = ++incrementIndex % increments.Count;
                 }
                 return increments[incrementIndex];
             }
 
-            private void Initialize() {
+            private void Initialize()
+            {
                 ParamName = "";
                 UpperBound = 0;
                 LowerBound = 0;
@@ -277,53 +314,62 @@ namespace Mage {
                 IncrementList = "";
             }
 
-	        // constructor
-            public ParameterDef(Dictionary<string, string> paramList) {
+            // constructor
+            public ParameterDef(Dictionary<string, string> paramList)
+            {
                 Initialize();
-	            foreach (KeyValuePair<string, string> paramDef in paramList)
+                foreach (KeyValuePair<string, string> paramDef in paramList)
                 {
-	                double value;
-	                switch (paramDef.Key) {
+                    double value;
+                    switch (paramDef.Key)
+                    {
                         case "ParamName":
                             ParamName = paramDef.Value;
                             break;
                         case "Lower":
-			                if (double.TryParse(paramDef.Value, out value)) {
+                            if (double.TryParse(paramDef.Value, out value))
+                            {
                                 LowerBound = value;
                             }
                             break;
                         case "Upper":
-			                if (double.TryParse(paramDef.Value, out value)) {
+                            if (double.TryParse(paramDef.Value, out value))
+                            {
                                 UpperBound = value;
                             }
                             break;
                         case "Increment":
-			                if (double.TryParse(paramDef.Value, out value)) {
+                            if (double.TryParse(paramDef.Value, out value))
+                            {
                                 Step = value;
                             }
                             break;
                         case "IncrementList":
                             IncrementList = paramDef.Value;
                             break;
-	                }
+                    }
                 }
-	            CalculateIncrements();
+                CalculateIncrements();
             }
 
 
             // constructor
-            public ParameterDef(string name, string lower, string upper, string step) {
+            public ParameterDef(string name, string lower, string upper, string step)
+            {
                 Initialize();
                 ParamName = name;
 
-	            double value;
-                if (double.TryParse(lower, out value)) {
+                double value;
+                if (double.TryParse(lower, out value))
+                {
                     LowerBound = value;
                 }
-	            if (double.TryParse(upper, out value)) {
+                if (double.TryParse(upper, out value))
+                {
                     UpperBound = value;
                 }
-	            if (double.TryParse(step, out value)) {
+                if (double.TryParse(step, out value))
+                {
                     Step = value;
                 }
                 CalculateIncrements();
@@ -333,15 +379,20 @@ namespace Mage {
             // set up list of increment values 
             // based on increment range parameters
             // or list of increment values
-            private void CalculateIncrements() {
-                if (!string.IsNullOrEmpty(IncrementList) && Math.Abs(Step) < double.Epsilon) {
+            private void CalculateIncrements()
+            {
+                if (!string.IsNullOrEmpty(IncrementList) && Math.Abs(Step) < double.Epsilon)
+                {
                     increments.AddRange(IncrementList.Split(','));
-                } else {
+                }
+                else
+                {
                     double current = LowerBound;
-                    for (int j = 0; (current <= UpperBound); j++) {
+                    for (int j = 0; (current <= UpperBound); j++)
+                    {
                         current = LowerBound + j * Step;
-                        if (current > UpperBound) 
-							break;
+                        if (current > UpperBound)
+                            break;
 
                         increments.Add(current.ToString(CultureInfo.InvariantCulture));
                     }

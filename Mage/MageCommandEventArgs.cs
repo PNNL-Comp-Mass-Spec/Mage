@@ -1,12 +1,14 @@
 ﻿using System;
 
-namespace Mage {
+namespace Mage
+{
 
     /// <summary>
     /// This class contains a canonical Mage command that can
     /// be sent between application components
     /// </summary>
-    public class MageCommandEventArgs : EventArgs {
+    public class MageCommandEventArgs : EventArgs
+    {
 
         /// <summary>
         /// Name of the action that the command is calling for
@@ -27,7 +29,8 @@ namespace Mage {
         /// <summary>
         /// contstruct an empty commant event arg object
         /// </summary>
-        public MageCommandEventArgs() {
+        public MageCommandEventArgs()
+        {
             Action = "";
             Mode = "";
             Pipeline = null;
@@ -37,7 +40,8 @@ namespace Mage {
         /// contstruct a commant event arg object with given action name
         /// </summary>
         /// <param name="action">name of the command acion</param>
-        public MageCommandEventArgs(string action) {
+        public MageCommandEventArgs(string action)
+        {
             Action = action;
             Mode = "";
             Pipeline = null;
@@ -48,7 +52,8 @@ namespace Mage {
         /// </summary>
         /// <param name="action">name of the command acion</param>
         /// <param name="mode">modifier for command action</param>
-        public MageCommandEventArgs(string action, string mode) {
+        public MageCommandEventArgs(string action, string mode)
+        {
             Action = action;
             Mode = mode;
             Pipeline = null;
@@ -60,7 +65,8 @@ namespace Mage {
         /// <param name="action">name of the command acion</param>
         /// <param name="mode">modifier for command action</param>
         /// <param name="pipeline">Mage pipeline object that can be run to execute command action</param>
-        public MageCommandEventArgs(string action, string mode, ProcessingPipeline pipeline) {
+        public MageCommandEventArgs(string action, string mode, ProcessingPipeline pipeline)
+        {
             Action = action;
             Mode = mode;
             Pipeline = pipeline;

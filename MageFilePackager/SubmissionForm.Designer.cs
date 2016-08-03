@@ -1,5 +1,7 @@
-﻿namespace MageFilePackager {
-    partial class SubmissionForm {
+﻿namespace MageFilePackager
+{
+    partial class SubmissionForm
+    {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -9,8 +11,10 @@
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing) {
-            if (disposing && (components != null)) {
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
                 components.Dispose();
             }
             base.Dispose(disposing);
@@ -22,7 +26,8 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent() {
+        private void InitializeComponent()
+        {
             this.CancelCtl = new System.Windows.Forms.Button();
             this.OkCtl = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -89,7 +94,7 @@
             // 
             // notificationEmailCtl
             // 
-            this.notificationEmailCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.notificationEmailCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.notificationEmailCtl.Location = new System.Drawing.Point(124, 9);
             this.notificationEmailCtl.Name = "notificationEmailCtl";
@@ -99,7 +104,7 @@
             // 
             // packageNameCtl
             // 
-            this.packageNameCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.packageNameCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.packageNameCtl.Location = new System.Drawing.Point(124, 39);
             this.packageNameCtl.Name = "packageNameCtl";
@@ -109,8 +114,8 @@
             // 
             // packageDescriptonCtl
             // 
-            this.packageDescriptonCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.packageDescriptonCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.packageDescriptonCtl.Location = new System.Drawing.Point(124, 70);
             this.packageDescriptonCtl.Multiline = true;
@@ -121,7 +126,7 @@
             // 
             // urlCtl
             // 
-            this.urlCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.urlCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.urlCtl.Location = new System.Drawing.Point(124, 257);
             this.urlCtl.Name = "urlCtl";
@@ -153,7 +158,7 @@
             // 
             // manifestFilePathCtl
             // 
-            this.manifestFilePathCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.manifestFilePathCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.manifestFilePathCtl.Location = new System.Drawing.Point(124, 225);
             this.manifestFilePathCtl.Name = "manifestFilePathCtl";

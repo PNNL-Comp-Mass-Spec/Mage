@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 
-namespace Mage {
+namespace Mage
+{
 
     /// <summary>
     /// An interface to be applied to GUI parameter panels to allow
     /// parameter values to be set and retrieved via a general access mechanism.
     /// </summary>
-    public interface IModuleParameters {
+    public interface IModuleParameters
+    {
 
         /// <summary>
         /// get list of parameters

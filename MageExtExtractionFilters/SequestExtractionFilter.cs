@@ -2,12 +2,14 @@
 using Mage;
 using MageExtContentFilters;
 
-namespace MageExtExtractionFilters {
+namespace MageExtExtractionFilters
+{
 
     /// <summary>
     /// Sequest Extraction Filter
     /// </summary>
-    public class SequestExtractionFilter : ExtractionFilter {
+    public class SequestExtractionFilter : ExtractionFilter
+    {
 
         #region Member Variables
 
@@ -23,13 +25,14 @@ namespace MageExtExtractionFilters {
         private int peptideMassIndex;
         private int cleavageStateIndex;
         private int msgfSpecProbIndex;
-		private int rankXCIndex;
+        private int rankXCIndex;
 
         #endregion
 
         #region Properties
 
-        public FilterSequestResults ResultChecker {
+        public FilterSequestResults ResultChecker
+        {
             get { return mSeqFilter; }
             set { mSeqFilter = value; }
         }
@@ -41,11 +44,12 @@ namespace MageExtExtractionFilters {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        public override void HandleColumnDef(object sender, MageColumnEventArgs args) {
+        public override void HandleColumnDef(object sender, MageColumnEventArgs args)
+        {
             mFilterResultsColumnName = "Passed_Filter";
-			OutputColumnList = "Job,Passed_Filter|+|text, *";
+            OutputColumnList = "Job,Passed_Filter|+|text, *";
             base.HandleColumnDef(sender, args);
-            
+
             ////List<MageColumnDef> cd = (OutputColumnDefs != null) ? OutputColumnDefs : InputColumnDefs;
             ////OnColumnDefAvailable(new MageColumnEventArgs(cd.ToArray()));
             OnColumnDefAvailable(new MageColumnEventArgs(OutputColumnDefs.ToArray()));
@@ -57,21 +61,26 @@ namespace MageExtExtractionFilters {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        public override void HandleDataRow(object sender, MageDataEventArgs args) {
-            if (args.DataAvailable) {
+        public override void HandleDataRow(object sender, MageDataEventArgs args)
+        {
+            if (args.DataAvailable)
+            {
                 var outRow = MapDataRow(args.Fields);
 
                 var accepted = CheckFilter(ref outRow);
 
-                if (accepted) {
+                if (accepted)
+                {
                     mPassedRowsCounter++;
                     OnDataRowAvailable(new MageDataEventArgs(outRow));
                 }
 
-				++mTotalRowsCounter;
-				ReportProgress();
+                ++mTotalRowsCounter;
+                ReportProgress();
 
-            } else {
+            }
+            else
+            {
                 OnDataRowAvailable(new MageDataEventArgs(null));
             }
         }
@@ -84,32 +93,37 @@ namespace MageExtExtractionFilters {
         /// <param name="vals"></param>
         /// <returns></returns>
 		protected bool CheckFilter(ref string[] vals)
-		{
+        {
             var accept = true;
-            if (mSeqFilter == null) {
-                if (mFilterResultsColIdx >= 0) {
+            if (mSeqFilter == null)
+            {
+                if (mFilterResultsColIdx >= 0)
+                {
                     vals[mFilterResultsColIdx] = "Not Checked";
                 }
-            } else {
+            }
+            else
+            {
                 var peptideSequence = GetColumnValue(vals, peptideSequenceIndex, "");
-				var xCorrValue = GetColumnValue(vals, xCorrValueIndex, -1d);
-				var delCNValue = GetColumnValue(vals, delCNValueIndex, -1d);
-				var delCN2Value = GetColumnValue(vals, delCN2ValueIndex, -1d);
-				var chargeState = GetColumnValue(vals, chargeStateIndex, -1);
-				var peptideMass = GetColumnValue(vals, peptideMassIndex, -1d);
-				var cleavageState = GetColumnValue(vals, cleavageStateIndex, -1);
-				var msgfSpecProb = GetColumnValue(vals, msgfSpecProbIndex, -1d);
-				var rankXC = GetColumnValue(vals, rankXCIndex, -1);
+                var xCorrValue = GetColumnValue(vals, xCorrValueIndex, -1d);
+                var delCNValue = GetColumnValue(vals, delCNValueIndex, -1d);
+                var delCN2Value = GetColumnValue(vals, delCN2ValueIndex, -1d);
+                var chargeState = GetColumnValue(vals, chargeStateIndex, -1);
+                var peptideMass = GetColumnValue(vals, peptideMassIndex, -1d);
+                var cleavageState = GetColumnValue(vals, cleavageStateIndex, -1);
+                var msgfSpecProb = GetColumnValue(vals, msgfSpecProbIndex, -1d);
+                var rankXC = GetColumnValue(vals, rankXCIndex, -1);
 
                 // Legacy columns; no longer used
                 var spectrumCount = -1;
                 double discriminantScore = -1;
                 double NETAbsoluteDifference = -1;
 
-				var pass = mSeqFilter.EvaluateSequest(peptideSequence, xCorrValue, delCNValue, delCN2Value, chargeState, peptideMass, spectrumCount, discriminantScore, NETAbsoluteDifference, cleavageState, msgfSpecProb, rankXC);
+                var pass = mSeqFilter.EvaluateSequest(peptideSequence, xCorrValue, delCNValue, delCN2Value, chargeState, peptideMass, spectrumCount, discriminantScore, NETAbsoluteDifference, cleavageState, msgfSpecProb, rankXC);
 
                 accept = pass || mKeepAllResults;
-                if (mFilterResultsColIdx >= 0) {
+                if (mFilterResultsColIdx >= 0)
+                {
                     vals[mFilterResultsColIdx] = ((pass) ? "Passed-" : "Failed-") + mExtractionType.ResultFilterSetID;
                 }
             }
@@ -120,15 +134,20 @@ namespace MageExtExtractionFilters {
         /// set up indexes into row fields array based on column name
         /// (saves time when referencing result columns later)
         /// </summary>
-        private void PrecalculateFieldIndexes() {
-            if (string.IsNullOrEmpty(OutputColumnList)) {
+        private void PrecalculateFieldIndexes()
+        {
+            if (string.IsNullOrEmpty(OutputColumnList))
+            {
                 PrecalculateFieldIndexes(InputColumnPos);
-            } else {
+            }
+            else
+            {
                 PrecalculateFieldIndexes(OutputColumnPos);
             }
         }
 
-        private void PrecalculateFieldIndexes(Dictionary<string, int> columnPos) {
+        private void PrecalculateFieldIndexes(Dictionary<string, int> columnPos)
+        {
             peptideSequenceIndex = GetColumnIndex(columnPos, "Peptide");
             xCorrValueIndex = GetColumnIndex(columnPos, "XCorr");
             delCNValueIndex = GetColumnIndex(columnPos, "DelCn");
@@ -137,7 +156,7 @@ namespace MageExtExtractionFilters {
             peptideMassIndex = GetColumnIndex(columnPos, "MH");
             cleavageStateIndex = GetColumnIndex(columnPos, "NumTrypticEnds");
             msgfSpecProbIndex = GetColumnIndex(columnPos, "MSGF_SpecProb");
-			rankXCIndex = GetColumnIndex(columnPos, "RankXc");
+            rankXCIndex = GetColumnIndex(columnPos, "RankXc");
         }
 
         /// <summary>
@@ -145,8 +164,9 @@ namespace MageExtExtractionFilters {
         /// </summary>
         /// <param name="FilterSetID"></param>
         /// <returns></returns>
-        public static FilterSequestResults MakeSequestResultChecker(string FilterSetID) {
-        
+        public static FilterSequestResults MakeSequestResultChecker(string FilterSetID)
+        {
+
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("Extraction_Filter_Set_List");
             var runtimeParms = new Dictionary<string, string>() { { "Filter_Set_ID", FilterSetID } };
             var reader = new MSSQLReader(queryDefXML, runtimeParms);

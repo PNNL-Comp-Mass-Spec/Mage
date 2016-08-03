@@ -1,13 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Mage {
+namespace Mage
+{
 
     /// <summary>
     /// Mage module that can generate a simulated data stream on Mage standard tabular output
     /// or accept a set of data that it will stream to ouput
     /// </summary>
-    public class DataGenerator : BaseModule {
+    public class DataGenerator : BaseModule
+    {
 
         #region Member Variables
 
@@ -61,7 +63,8 @@ namespace Mage {
         /// <summary>
         /// Static constructor
         /// </summary>
-        static DataGenerator() {
+        static DataGenerator()
+        {
             SimulatedHeaderTemplate = "Column {0} Header";
             SimulatedDataTemplate = "Data for row-{0} column-{1}";
         }
@@ -69,7 +72,8 @@ namespace Mage {
         /// <summary>
         /// construct a new Mage data generator object
         /// </summary>
-        public DataGenerator() {
+        public DataGenerator()
+        {
             Initialize();
         }
 
@@ -77,13 +81,15 @@ namespace Mage {
         /// construct a new Mage data generator object
         /// with Rows and Cols properties set
         /// </summary>
-        public DataGenerator(int rows, int cols) {
+        public DataGenerator(int rows, int cols)
+        {
             Initialize();
             Rows = rows;
             Cols = cols;
         }
 
-        private void Initialize() {
+        private void Initialize()
+        {
             IncludeHeaderInOutput = true;
             Rows = 20;
             Cols = 5;
@@ -98,31 +104,43 @@ namespace Mage {
         /// (override of base class)
         /// </summary>
         /// <param name="state">Mage ProcessingPipeline object that contains the module (if there is one)</param>
-        public override void Run(object state) {
-            if (mAdHocRows.Count > 0) {
+        public override void Run(object state)
+        {
+            if (mAdHocRows.Count > 0)
+            {
                 OutputAdHocRows();
-            } else {
+            }
+            else
+            {
                 OutputGeneratedRows();
             }
         }
 
-        private void OutputAdHocRows() {
+        private void OutputAdHocRows()
+        {
             bool hx = IncludeHeaderInOutput;
-            foreach (string[] row in mAdHocRows) {
-                if (hx) {
+            foreach (string[] row in mAdHocRows)
+            {
+                if (hx)
+                {
                     hx = false;
                     OutputHeaderLine(row);
-                } else {
+                }
+                else
+                {
                     OutputDataLine(row);
                 }
             }
             OutputDataLine(null);
         }
 
-        private void OutputGeneratedRows() {
-	        for (int i = 0; i < Rows; i++) {
-	            string[] fields;
-	            if (i == 0 && IncludeHeaderInOutput) {
+        private void OutputGeneratedRows()
+        {
+            for (int i = 0; i < Rows; i++)
+            {
+                string[] fields;
+                if (i == 0 && IncludeHeaderInOutput)
+                {
                     fields = MakeSimulatedHeaderRow(Cols);
                     OutputHeaderLine(fields);
                 }
@@ -137,9 +155,11 @@ namespace Mage {
         /// </summary>
         /// <param name="numCols"></param>
         /// <returns></returns>
-        public static string[] MakeSimulatedHeaderRow(int numCols) {
+        public static string[] MakeSimulatedHeaderRow(int numCols)
+        {
             var row = new string[numCols];
-            for (int j = 0; j < numCols; j++) {
+            for (int j = 0; j < numCols; j++)
+            {
                 row[j] = string.Format(SimulatedHeaderTemplate, j + 1);
             }
             return row;
@@ -151,25 +171,30 @@ namespace Mage {
         /// <param name="i"></param>
         /// <param name="numCols"></param>
         /// <returns></returns>
-        public static string[] MakeSimulatedDataRow(int i, int numCols) {
+        public static string[] MakeSimulatedDataRow(int i, int numCols)
+        {
             var row = new string[numCols];
-            for (int j = 0; j < numCols; j++) {
+            for (int j = 0; j < numCols; j++)
+            {
                 row[j] = string.Format(SimulatedDataTemplate, i + 1, j + 1);
             }
             return row;
         }
 
-        private void OutputHeaderLine(IEnumerable<string> fields) {
+        private void OutputHeaderLine(IEnumerable<string> fields)
+        {
             // output the column definitions
             var columnDefs = new List<MageColumnDef>();
-            foreach (string field in fields) {
+            foreach (string field in fields)
+            {
                 var colDef = new MageColumnDef(field, "text", "10");
                 columnDefs.Add(colDef);
             }
             OnColumnDefAvailable(new MageColumnEventArgs(columnDefs.ToArray()));
         }
 
-        private void OutputDataLine(string[] fields) {
+        private void OutputDataLine(string[] fields)
+        {
             OnDataRowAvailable(new MageDataEventArgs(fields));
         }
 

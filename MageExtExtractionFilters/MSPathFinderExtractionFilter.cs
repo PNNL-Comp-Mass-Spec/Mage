@@ -113,8 +113,8 @@ namespace MageExtExtractionFilters
                     string warningMessage;
                     if (!mProteinMerger.MergeFirstProtein(ref outRow, out warningMessage))
                     {
-                         OnWarningMessage(
-                             new MageStatusEventArgs("ProteinMerger reports " + warningMessage + " for row " + mTotalRowsCounter));
+                        OnWarningMessage(
+                            new MageStatusEventArgs("ProteinMerger reports " + warningMessage + " for row " + mTotalRowsCounter));
                     }
 
                     var sScanChargePeptide = CreateRowTag(outRow, includeProtein: false, columnIndices: mColumnIndices);
@@ -280,7 +280,7 @@ namespace MageExtExtractionFilters
 
         }
 
- 
+
 
         /// <summary>
         /// Return a MSPathFinder filter object that is preset with filter criteria

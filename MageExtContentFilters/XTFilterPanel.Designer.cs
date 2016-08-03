@@ -1,5 +1,7 @@
-﻿namespace MageExtContentFilters {
-    partial class XTFilterPanel {
+﻿namespace MageExtContentFilters
+{
+    partial class XTFilterPanel
+    {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -9,8 +11,10 @@
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing) {
-            if (disposing && (components != null)) {
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
                 components.Dispose();
             }
             base.Dispose(disposing);
@@ -22,119 +26,120 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent() {
-			this.FilterSetIDCtl = new System.Windows.Forms.TextBox();
-			this.label1 = new System.Windows.Forms.Label();
-			this.panel1 = new System.Windows.Forms.Panel();
-			this.panel2 = new System.Windows.Forms.Panel();
-			this.gridViewDisplayControl1 = new MageDisplayLib.GridViewDisplayControl();
-			this.panel3 = new System.Windows.Forms.Panel();
-			this.button2 = new System.Windows.Forms.Button();
-			this.button1 = new System.Windows.Forms.Button();
-			this.panel1.SuspendLayout();
-			this.panel2.SuspendLayout();
-			this.panel3.SuspendLayout();
-			this.SuspendLayout();
-			// 
-			// FilterSetIDCtl
-			// 
-			this.FilterSetIDCtl.Location = new System.Drawing.Point(72, 7);
-			this.FilterSetIDCtl.Name = "FilterSetIDCtl";
-			this.FilterSetIDCtl.ReadOnly = true;
-			this.FilterSetIDCtl.Size = new System.Drawing.Size(126, 20);
-			this.FilterSetIDCtl.TabIndex = 0;
-			this.FilterSetIDCtl.Text = "100";
-			// 
-			// label1
-			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(5, 10);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(62, 13);
-			this.label1.TabIndex = 1;
-			this.label1.Text = "Filter Set ID";
-			// 
-			// panel1
-			// 
-			this.panel1.Controls.Add(this.label1);
-			this.panel1.Controls.Add(this.FilterSetIDCtl);
-			this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panel1.Location = new System.Drawing.Point(0, 0);
-			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(593, 35);
-			this.panel1.TabIndex = 5;
-			// 
-			// panel2
-			// 
-			this.panel2.Controls.Add(this.gridViewDisplayControl1);
-			this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel2.Location = new System.Drawing.Point(0, 35);
-			this.panel2.Name = "panel2";
-			this.panel2.Padding = new System.Windows.Forms.Padding(5);
-			this.panel2.Size = new System.Drawing.Size(593, 275);
-			this.panel2.TabIndex = 6;
+        private void InitializeComponent()
+        {
+            this.FilterSetIDCtl = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.gridViewDisplayControl1 = new MageDisplayLib.GridViewDisplayControl();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // FilterSetIDCtl
+            // 
+            this.FilterSetIDCtl.Location = new System.Drawing.Point(72, 7);
+            this.FilterSetIDCtl.Name = "FilterSetIDCtl";
+            this.FilterSetIDCtl.ReadOnly = true;
+            this.FilterSetIDCtl.Size = new System.Drawing.Size(126, 20);
+            this.FilterSetIDCtl.TabIndex = 0;
+            this.FilterSetIDCtl.Text = "100";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(5, 10);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(62, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Filter Set ID";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.FilterSetIDCtl);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(593, 35);
+            this.panel1.TabIndex = 5;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.gridViewDisplayControl1);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(0, 35);
+            this.panel2.Name = "panel2";
+            this.panel2.Padding = new System.Windows.Forms.Padding(5);
+            this.panel2.Size = new System.Drawing.Size(593, 275);
+            this.panel2.TabIndex = 6;
             // 
             // gridViewDisplayControl1
             // 
-			this.gridViewDisplayControl1.AllowDisableShiftClickMode = true;
-			this.gridViewDisplayControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.gridViewDisplayControl1.HeaderVisible = true;
-			this.gridViewDisplayControl1.ItemBlockSize = 25;
-			this.gridViewDisplayControl1.Location = new System.Drawing.Point(5, 5);
-			this.gridViewDisplayControl1.MultiSelect = true;
-			this.gridViewDisplayControl1.Name = "gridViewDisplayControl1";
-			this.gridViewDisplayControl1.Notice = "";
-			this.gridViewDisplayControl1.PageTitle = "Title";
-			this.gridViewDisplayControl1.Size = new System.Drawing.Size(583, 265);
-			this.gridViewDisplayControl1.TabIndex = 0;
-			// 
-			// panel3
-			// 
-			this.panel3.Controls.Add(this.button2);
-			this.panel3.Controls.Add(this.button1);
-			this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.panel3.Location = new System.Drawing.Point(0, 310);
-			this.panel3.Name = "panel3";
-			this.panel3.Size = new System.Drawing.Size(593, 37);
-			this.panel3.TabIndex = 7;
-			// 
-			// button2
-			// 
-			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.button2.Location = new System.Drawing.Point(506, 6);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(75, 23);
-			this.button2.TabIndex = 1;
-			this.button2.Text = "Cancel";
-			this.button2.UseVisualStyleBackColor = true;
-			// 
-			// button1
-			// 
-			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.button1.Location = new System.Drawing.Point(425, 6);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(75, 23);
-			this.button1.TabIndex = 0;
-			this.button1.Text = "OK";
-			this.button1.UseVisualStyleBackColor = true;
+            this.gridViewDisplayControl1.AllowDisableShiftClickMode = true;
+            this.gridViewDisplayControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridViewDisplayControl1.HeaderVisible = true;
+            this.gridViewDisplayControl1.ItemBlockSize = 25;
+            this.gridViewDisplayControl1.Location = new System.Drawing.Point(5, 5);
+            this.gridViewDisplayControl1.MultiSelect = true;
+            this.gridViewDisplayControl1.Name = "gridViewDisplayControl1";
+            this.gridViewDisplayControl1.Notice = "";
+            this.gridViewDisplayControl1.PageTitle = "Title";
+            this.gridViewDisplayControl1.Size = new System.Drawing.Size(583, 265);
+            this.gridViewDisplayControl1.TabIndex = 0;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.button2);
+            this.panel3.Controls.Add(this.button1);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel3.Location = new System.Drawing.Point(0, 310);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(593, 37);
+            this.panel3.TabIndex = 7;
+            // 
+            // button2
+            // 
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.button2.Location = new System.Drawing.Point(506, 6);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 1;
+            this.button2.Text = "Cancel";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.button1.Location = new System.Drawing.Point(425, 6);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "OK";
+            this.button1.UseVisualStyleBackColor = true;
             // XTFilterPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(593, 347);
-			this.Controls.Add(this.panel2);
-			this.Controls.Add(this.panel1);
-			this.Controls.Add(this.panel3);
+            this.ClientSize = new System.Drawing.Size(593, 347);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panel3);
             this.Name = "XTFilterPanel";
             this.Text = "Peptide Filter Selection (X!Tandem)";
             this.Load += new System.EventHandler(this.XTFilterPanel_Load);
-			this.panel1.ResumeLayout(false);
-			this.panel1.PerformLayout();
-			this.panel2.ResumeLayout(false);
-			this.panel3.ResumeLayout(false);
-			this.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
+            this.ResumeLayout(false);
 
         }
 

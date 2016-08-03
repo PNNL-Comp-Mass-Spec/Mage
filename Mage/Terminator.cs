@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 
-namespace Mage {
+namespace Mage
+{
 
     /// <summary>
     /// This module provides simple pass through of standard tabular input
     /// to standard tabular output and provides the ability to termainate
     /// the pipeline when a present number of rows is reached.
     /// </summary>
-    public class Terminator : BaseModule {
+    public class Terminator : BaseModule
+    {
 
         #region Member Variables
 
@@ -35,7 +37,8 @@ namespace Mage {
         /// <summary>
         /// construct a terminator module with no limit on input rows
         /// </summary>
-        public Terminator() {
+        public Terminator()
+        {
             RowsToSave = Int32.MaxValue;
         }
 
@@ -47,7 +50,8 @@ namespace Mage {
         /// called before pipeline runs - module can do any special setup that it needs
         /// (override of base class)
         /// </summary>
-        public override void Prepare() {
+        public override void Prepare()
+        {
             // nothing to do here
         }
 
@@ -57,7 +61,8 @@ namespace Mage {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        public override void HandleColumnDef(object sender, MageColumnEventArgs args) {
+        public override void HandleColumnDef(object sender, MageColumnEventArgs args)
+        {
             base.HandleColumnDef(sender, args);
             OnColumnDefAvailable(args);
         }
@@ -68,11 +73,16 @@ namespace Mage {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        public override void HandleDataRow(object sender, MageDataEventArgs args) {
-            if (!Abort) {
-                if (mRowsProcessed++ < RowsToSave) {
+        public override void HandleDataRow(object sender, MageDataEventArgs args)
+        {
+            if (!Abort)
+            {
+                if (mRowsProcessed++ < RowsToSave)
+                {
                     OnDataRowAvailable(args);
-                } else {
+                }
+                else
+                {
                     OnDataRowAvailable(new MageDataEventArgs(null));
                     CancelPipeline();
                 }

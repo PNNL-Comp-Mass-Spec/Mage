@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Mage;
 
-
-namespace MageDisplayLib {
+namespace MageDisplayLib
+{
 
     /// <summary>
     /// this is a pipeline module 
     /// that can serve the contents of a TextDisplayControl to standard tabular output
     /// </summary>
-    public class TDPipelineSource : BaseModule {
+    public class TDPipelineSource : BaseModule
+    {
 
         #region Member Variables
 
@@ -33,7 +31,8 @@ namespace MageDisplayLib {
         /// via Mage standard tabular output stream
         /// </summary>
         /// <param name="lc"></param>
-        public TDPipelineSource(TextDisplayControl lc) {
+        public TDPipelineSource(TextDisplayControl lc)
+        {
             myTextControl = lc;
             Header = "Yes";
         }
@@ -45,7 +44,8 @@ namespace MageDisplayLib {
         /// <summary>
         /// delimiter used to separate text lines into fields
         /// </summary>
-        public string Delimiter {
+        public string Delimiter
+        {
             get { return mDelimiter.ToString(); }
             set { mDelimiter = value.ToCharArray(); }
         }
@@ -63,7 +63,8 @@ namespace MageDisplayLib {
         /// output each row in associated TextDisplayList object 
         /// to Mage standard tabular output, one row at a time.
         /// (override of base class)
-        public override void Run(object state) {
+        public override void Run(object state)
+        {
             doHeaderLine = (Header == "Yes");
             OutputRowsFromList();
         }
@@ -72,32 +73,41 @@ namespace MageDisplayLib {
 
         #region Private Functions
 
-        private void OutputRowsFromList() {
-            foreach (string line in myTextControl.Lines) {
-                if (string.IsNullOrEmpty(line)) continue;
+        private void OutputRowsFromList()
+        {
+            foreach (string line in myTextControl.Lines)
+            {
+                if (string.IsNullOrEmpty(line))
+                    continue;
                 string[] fields = line.Split(mDelimiter);
-                if (doHeaderLine) {
+                if (doHeaderLine)
+                {
                     doHeaderLine = false;
                     OutputHeaderLine(fields);
-                } else {
+                }
+                else
+                {
                     OutputDataLine(fields);
                 }
             }
             OutputDataLine(null);
         }
 
-        private void OutputHeaderLine(string[] fields) {
+        private void OutputHeaderLine(string[] fields)
+        {
             // output the column definitions
-                List<MageColumnDef> columnDefs = new List<MageColumnDef>();
-                foreach (string field in fields) {
-                    MageColumnDef colDef = new MageColumnDef(field, "text", "10");
-                    columnDefs.Add(colDef);
-                }
-                OnColumnDefAvailable(new MageColumnEventArgs(columnDefs.ToArray()));
+            List<MageColumnDef> columnDefs = new List<MageColumnDef>();
+            foreach (string field in fields)
+            {
+                MageColumnDef colDef = new MageColumnDef(field, "text", "10");
+                columnDefs.Add(colDef);
+            }
+            OnColumnDefAvailable(new MageColumnEventArgs(columnDefs.ToArray()));
         }
 
-        private void OutputDataLine(string[] fields) {
-                OnDataRowAvailable(new MageDataEventArgs(fields));
+        private void OutputDataLine(string[] fields)
+        {
+            OnDataRowAvailable(new MageDataEventArgs(fields));
         }
 
         #endregion
