@@ -67,6 +67,7 @@ namespace Mage
         /// RegEx to extract the dataset name from a path similar to these examples:
         ///   \\proto-7\VOrbi05\2013_3\QC_Shew_13_02_500ng_4_HCD_26Jul13_Lynx_13-02-04
         ///   \\MyEMSL\VPro01\2013_3\QC_Shew_13_04d_500ng_10Sep13_Tiger_13-07-34
+        ///   \\adms.emsl.pnl.gov\dmsarch\VPro01\2013_3\QC_Shew_13_04a_500ng_10Sep13_Tiger_13-07-36
         ///   \\aurora.emsl.pnl.gov\archive\dmsarch\VPro01\2013_3\QC_Shew_13_04a_500ng_10Sep13_Tiger_13-07-36
         ///   \\a2.emsl.pnl.gov\dmsarch\VPro01\2013_3\QC_Shew_13_04a_500ng_10Sep13_Tiger_13-07-36
         /// The RegEx can also be used to determine the portion of a path that includes parent folders and the dataset folder

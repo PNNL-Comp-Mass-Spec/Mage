@@ -1,5 +1,8 @@
 Mage Revision History
 
+Version 1.5.6089; September 2, 2016
+	- Switch from \\aurora.emsl.pnl.gov\archive\dmsarch to \\adms.emsl.pnl.gov\dmsarch
+
 Version 1.5.6059; August 3, 2016
 	- Add context menu action "Copy data in sorted column" for GridView controls
 	- Bulk code reformatting and Resharper cleanup
