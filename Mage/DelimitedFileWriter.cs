@@ -107,7 +107,7 @@ namespace Mage
             {
                 Directory.CreateDirectory(dirPath);
             }
-            if (Append == "Yes")
+            if (OptionEnabled(Append))
             {
                 mAppendFlag = File.Exists(FilePath);
             }
@@ -147,7 +147,7 @@ namespace Mage
         public override void HandleColumnDef(object sender, MageColumnEventArgs args)
         {
             base.HandleColumnDef(sender, args);
-            if (Header == "Yes" && !mAppendFlag)
+            if (OptionEnabled(Header) && !mAppendFlag)
             {
                 OutputHeader();
             }

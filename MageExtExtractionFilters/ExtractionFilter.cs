@@ -114,7 +114,7 @@ namespace MageExtExtractionFilters
 
             var context = new Dictionary<string, string>() { { "Job", Job } };
             SetContext(context);
-            mKeepAllResults = (mExtractionType.KeepAllResults == "Yes");
+            mKeepAllResults = OptionEnabled(mExtractionType.KeepAllResults);
         }
 
         public override void Prepare()

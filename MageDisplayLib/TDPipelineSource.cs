@@ -65,7 +65,7 @@ namespace MageDisplayLib
         /// (override of base class)
         public override void Run(object state)
         {
-            doHeaderLine = (Header == "Yes");
+            doHeaderLine = OptionEnabled(Header);
             OutputRowsFromList();
         }
 

@@ -69,7 +69,7 @@ namespace Mage
         public override void Run(object state)
         {
             UpdateStatus("Reading file " + PRISM.Files.clsFileTools.CompactPathString(FilePath, 60));
-            doHeaderLine = (Header == "Yes");
+            doHeaderLine = OptionEnabled(Header);
             switch (Delimiter)
             {
                 case "AutoSense":

@@ -17,7 +17,7 @@ namespace Mage
         /// <summary>
         /// Constant used when no files are found
         /// </summary>
-        public const string kNoFilesFound = "--No Files Found--";
+        protected const string kNoFilesFound = "--No Files Found--";
 
         #region Member Variables
 
@@ -42,7 +42,7 @@ namespace Mage
         /// master list of input column definitions
         /// (default HandleColumnDef will build this) 
         /// </summary>
-        protected List<MageColumnDef> InputColumnDefs = new List<MageColumnDef>();
+        protected readonly List<MageColumnDef> InputColumnDefs = new List<MageColumnDef>();
 
         /// <summary>
         /// master list of input column position keyed to column name (for lookup of column index by column name)
@@ -181,10 +181,7 @@ namespace Mage
         {
             // Make a temporary copy of the event to avoid possibility of a race condition
             var handler = ColumnDefAvailable;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
+            handler?.Invoke(this, e);
         }
 
         /// <summary>
@@ -195,10 +192,7 @@ namespace Mage
         {
             // Make a temporary copy of the event to avoid possibility of a race condition
             var handler = StatusMessageUpdated;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
+            handler?.Invoke(this, e);
         }
 
         /// <summary>
@@ -209,10 +203,7 @@ namespace Mage
         {
             // Make a temporary copy of the event to avoid possibility of a race condition
             var handler = WarningMessageUpdated;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
+            handler?.Invoke(this, e);
         }
 
         /// <summary>
@@ -259,10 +250,7 @@ namespace Mage
         public virtual void SetPropertyByName(string key, string val)
         {
             var pi = GetType().GetProperty(key);
-            if (pi != null)
-            {
-                pi.SetValue(this, val, null);
-            }
+            pi?.SetValue(this, val, null);
         }
 
         /// <summary>
@@ -356,13 +344,10 @@ namespace Mage
         /// Terminate the execution of the containing pipeline
         /// (if one exists)
         /// </summary>
-        public virtual void CancelPipeline()
+        protected virtual void CancelPipeline()
         {
             // terminate the pipeline when row count is reached
-            if (Pipeline != null)
-            {
-                Pipeline.Cancel();
-            }
+            Pipeline?.Cancel();
         }
 
         /// <summary>
@@ -474,6 +459,18 @@ namespace Mage
         }
 
         /// <summary>
+        /// Return True if optionValue is Yes or True or 1
+        /// </summary>
+        /// <param name="optionValue"></param>
+        /// <returns></returns>
+        protected bool OptionEnabled(string optionValue)
+        {
+            return string.Equals(optionValue, "Yes", StringComparison.InvariantCultureIgnoreCase) ||
+                   string.Equals(optionValue, "True", StringComparison.InvariantCultureIgnoreCase) ||
+                   string.Equals(optionValue, "1", StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        /// <summary>
         /// Perform case insenstive replacement string replace
         /// </summary>
         /// <param name="original">Text to search</param>
@@ -481,7 +478,7 @@ namespace Mage
         /// <param name="replacement">Replacement text</param>
         /// <returns>The updated string</returns>
         /// <remarks>From "http://www.codeproject.com/KB/string/fastestcscaseinsstringrep.aspx" using Michael Epner's </remarks>
-        public string ReplaceEx(string original, string pattern, string replacement)
+        protected string ReplaceEx(string original, string pattern, string replacement)
         {
             return ReplaceEx(original, pattern, replacement, StringComparison.OrdinalIgnoreCase, -1);
         }
@@ -695,7 +692,7 @@ namespace Mage
         {
             if (!InputColumnPos.ContainsKey(inputColName))
             {
-                throw new Exception(string.Format("Tried to map input column '{0}' which does not exist", inputColName));
+                throw new Exception($"Tried to map input column '{inputColName}' which does not exist");
             }
             var inputColIdx = InputColumnPos[inputColName];
             var colDef = InputColumnDefs[inputColIdx];
