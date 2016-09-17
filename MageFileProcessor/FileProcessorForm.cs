@@ -61,8 +61,8 @@ namespace MageFileProcessor
             InitializeComponent();
 
             const bool isBetaVersion = false;
-            SetFormTitle("2016-09-02", isBetaVersion);
-
+            SetFormTitle("2016-09-16", isBetaVersion);
+            
             SetTags();
 
             SetAboutText();
@@ -325,7 +325,7 @@ namespace MageFileProcessor
 
                     case "get_files_from_local_folder":
                         runtimeParms = GetRuntimeParmsForLocalFolder();
-                        var sFolder = runtimeParms["Folder"];
+                        var sFolder = GetRuntimeParam(runtimeParms, "Folder");
                         if (!Directory.Exists(sFolder))
                         {
                             MessageBox.Show("Folder not found: " + sFolder, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -341,7 +341,7 @@ namespace MageFileProcessor
 
                     case "get_files_from_local_manifest":
                         runtimeParms = GetRuntimeParmsForManifestFile();
-                        var sFile = runtimeParms["ManifestFilePath"];
+                        var sFile = GetRuntimeParam(runtimeParms, "ManifestFilePath");
                         if (!File.Exists(sFile))
                         {
                             MessageBox.Show("Manifest file not found: " + sFile, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -357,7 +357,7 @@ namespace MageFileProcessor
 
                     case "copy_files":
                         runtimeParms = GetRuntimeParmsForCopyFiles();
-                        if (string.IsNullOrEmpty(runtimeParms["OutputFolder"]))
+                        if (string.IsNullOrEmpty(GetRuntimeParam(runtimeParms, "OutputFolder")))
                         {
                             MessageBox.Show("Destination folder cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             return;
@@ -377,13 +377,13 @@ namespace MageFileProcessor
                         switch (FilterOutputTabs.SelectedTab.Tag.ToString())
                         {
                             case "File_Output":
-                                if (string.IsNullOrEmpty(runtimeParms["OutputFolder"]))
+                                if (string.IsNullOrEmpty(GetRuntimeParam(runtimeParms, "OutputFolder")))
                                 {
                                     MessageBox.Show("Destination folder cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                                     return;
                                 }
 
-                                if (string.IsNullOrEmpty(runtimeParms["OutputFile"]))
+                                if (string.IsNullOrEmpty(GetRuntimeParam(runtimeParms, "OutputFile")))
                                 {
                                     MessageBox.Show("Destination file cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                                     return;
@@ -391,13 +391,13 @@ namespace MageFileProcessor
                                 break;
 
                             case "SQLite_Output":
-                                if (string.IsNullOrEmpty(runtimeParms["DatabaseName"]))
+                                if (string.IsNullOrEmpty(GetRuntimeParam(runtimeParms, "DatabaseName")))
                                 {
                                     MessageBox.Show("SQLite Database path cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                                     return;
                                 }
 
-                                if (string.IsNullOrEmpty(runtimeParms["TableName"]))
+                                if (string.IsNullOrEmpty(GetRuntimeParam(runtimeParms, "TableName")))
                                 {
                                     MessageBox.Show("SQLite destination table name cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                                     return;
@@ -750,6 +750,21 @@ namespace MageFileProcessor
             return ModuleDiscovery.GetQueryXMLDef(queryName);
         }
 
+        /// <summary>
+        /// Return the value for the given runtime parameter
+        /// </summary>
+        /// <param name="runtimeParams">Runtime parameters</param>
+        /// <param name="keyName">Parameter to find</param>
+        /// <returns>The value for the parameter</returns>
+        /// <remarks>Raises an exception if the runtimeParams dictionary does not have the desired key</remarks>
+        private string GetRuntimeParam(IReadOnlyDictionary<string, string> runtimeParams, string keyName)
+        {
+            if (!runtimeParams.ContainsKey(keyName))
+                throw new Exception("runtimeParams does not contain key " + keyName);
+
+            return runtimeParams[keyName];
+        }
+
         private Dictionary<string, string> GetRuntimeParmsForEntityQuery()
         {
             Control queryPage = EntityListSourceTabs.SelectedTab;
@@ -816,7 +831,8 @@ namespace MageFileProcessor
                 {"PrefixLeader", FileCopyPanel1.PrefixLeader},
                 {"ColumnToUseForPrefix", FileCopyPanel1.PrefixColumnName},
                 {"OverwriteExistingFiles", FileCopyPanel1.OverwriteExistingFiles},
-                {"SourceFolderColumnName", "Folder"}
+                {"SourceFolderColumnName", "Folder"},
+                {"ResolveCacheInfoFiles", FileCopyPanel1.ResolveCacheInfoFiles}
             };
 
             if (mFileSourcePipelineName == Pipelines.PIPELINE_GET_LOCAL_FILES)

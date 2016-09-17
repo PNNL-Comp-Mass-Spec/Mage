@@ -51,6 +51,11 @@ namespace Mage
         /// </summary>
         public bool OverwriteExistingFiles { set; get; }
 
+        /// <summary>
+        /// Whether or not to open CacheInfo.txt files, read the file pointer, and copy the target file
+        /// </summary>
+        public bool ResolveCacheInfoFiles { set; get; }
+
         #endregion
 
         #region Constructors
@@ -62,9 +67,10 @@ namespace Mage
         {
             ColumnToUseForPrefix = "";
             ApplyPrefixToFileName = "";
-            SetOutputFileNamer(new OutputFileNamer(GetDestFile));
+            SetOutputFileNamer(GetDestFile);
             PrefixLeader = "";
             OverwriteExistingFiles = false;
+            ResolveCacheInfoFiles = false;
         }
 
         #endregion
@@ -117,6 +123,13 @@ namespace Mage
                         }
 
                     }
+
+                    if (ResolveCacheInfoFiles && destPathClean.EndsWith("cacheinfo.txt", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        var fileCopied = ProcessCacheInfoFile(destPathClean, OverwriteExistingFiles);
+                        if (!fileCopied)
+                            bShowDoneMsg = false;
+                    }
                 }
                 else
                 {
@@ -145,6 +158,13 @@ namespace Mage
                         {
                             File.Copy(sourcePath, destPath, false);
                         }
+                    }
+
+                    if (ResolveCacheInfoFiles && destPath.EndsWith("cacheinfo.txt", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        var fileCopied = ProcessCacheInfoFile(destPath, OverwriteExistingFiles);
+                        if (!fileCopied)
+                            bShowDoneMsg = false;
                     }
                 }
 
@@ -196,7 +216,6 @@ namespace Mage
 
         }
 
-
         /// <summary>
         /// determine the name to be used for the destination file
         /// </summary>
@@ -206,7 +225,7 @@ namespace Mage
         /// <returns></returns>
         protected string GetDestFile(string sourceFile, Dictionary<string, int> fieldPos, string[] fields)
         {
-            if (ApplyPrefixToFileName == "Yes")
+            if (OptionEnabled(ApplyPrefixToFileName))
             {
                 string prefix;
                 if (InputColumnPos.ContainsKey(ColumnToUseForPrefix))
@@ -234,7 +253,7 @@ namespace Mage
         /// </summary>
         /// <param name="source">Path to folder to be copied</param>
         /// <param name="target">Path that folder will be copied to</param>
-        protected void CopyAll(DirectoryInfo source, DirectoryInfo target)
+        private void CopyAll(DirectoryInfo source, DirectoryInfo target)
         {
 
             var sourceFile = "??";
@@ -320,7 +339,7 @@ namespace Mage
         /// </summary>
         /// <param name="sourceFolder">Path to folder to be copied</param>
         /// <param name="target">Path that folder will be copied to</param>
-        protected void CopyAllMyEMSL(DirectoryInfo sourceFolder, DirectoryInfo target)
+        private void CopyAllMyEMSL(DirectoryInfo sourceFolder, DirectoryInfo target)
         {
             if (target == null)
                 throw new ArgumentNullException(nameof(target));
@@ -389,6 +408,97 @@ namespace Mage
                 UpdateStatus(this, new MageStatusEventArgs("FAILED->" + e.Message, 1));
                 OnWarningMessage(new MageStatusEventArgs("MyEMSL download failed->" + e.Message));
                 System.Threading.Thread.Sleep(250);
+            }
+        }
+
+
+        /// <summary>
+        /// Open CacheInfo.txt files, read the file pointer, and copy the target file to the destination folder
+        /// </summary>
+        /// <param name="cacheInfoFilePath"></param>
+        /// <param name="overwriteExistingFiles"></param>
+        /// <returns>
+        /// True if success, false if an error, including that the remote file was not found
+        /// Also returns false if the target file already exists in the destination folder and overwriteExistingFiles is false
+        /// </returns>
+        private bool ProcessCacheInfoFile(string cacheInfoFilePath, bool overwriteExistingFiles)
+        {
+            try
+            {
+                var cacheInfoFile = new FileInfo(cacheInfoFilePath);
+                if (!cacheInfoFile.Exists)
+                {
+                    UpdateStatus(this, new MageStatusEventArgs("WARNING->CacheInfo file not found: " + cacheInfoFilePath, 0));
+                    OnWarningMessage(new MageStatusEventArgs("WARNING->CacheInfo file not found: " + cacheInfoFilePath));
+                    return false;
+                }
+
+                if (cacheInfoFile.DirectoryName == null)
+                {
+                    UpdateStatus(this, new MageStatusEventArgs("WARNING->CacheInfo file directory is null: " + cacheInfoFilePath, 0));
+                    OnWarningMessage(new MageStatusEventArgs("WARNING->CacheInfo file directory is null: " + cacheInfoFilePath));
+                    return false;
+                }
+
+                using (var reader = new StreamReader(new FileStream(cacheInfoFile.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
+                {
+                    if (reader.EndOfStream)
+                    {
+                        UpdateStatus(this, new MageStatusEventArgs("WARNING->CacheInfo file is empty: " + cacheInfoFilePath, 0));
+                        OnWarningMessage(new MageStatusEventArgs("WARNING->CacheInfo fileis empty: " + cacheInfoFilePath));
+                        return false;
+                    }
+
+                    var remoteFilePath = reader.ReadLine();
+
+                    if (string.IsNullOrWhiteSpace(remoteFilePath))
+                    {
+                        UpdateStatus(this, new MageStatusEventArgs("WARNING->CacheInfo file is empty: " + cacheInfoFilePath, 0));
+                        OnWarningMessage(new MageStatusEventArgs("WARNING->CacheInfo fileis empty: " + cacheInfoFilePath));
+                        return false;
+                    }
+
+                    var remoteFile = new FileInfo(remoteFilePath);
+                    if (!remoteFile.Exists)
+                    {
+                        UpdateStatus(this, new MageStatusEventArgs("Remote file not found: " + remoteFilePath, 1));
+                        OnWarningMessage(new MageStatusEventArgs("Remote file not found: " + remoteFilePath));
+                        return false;
+                    }
+
+                    var destPath = Path.Combine(cacheInfoFile.DirectoryName, remoteFile.Name);
+
+                    if (File.Exists(destPath))
+                    {
+                        if (overwriteExistingFiles)
+                        {
+                            UpdateStatus(this, new MageStatusEventArgs("NOTE->Copy replaced existing file: " + destPath, 0));
+                        }
+                        else
+                        {
+                            UpdateStatus(this, new MageStatusEventArgs("WARNING->Skipping existing file: " + destPath, 0));
+                            OnWarningMessage(new MageStatusEventArgs("WARNING->Skipping existing file: " + destPath));
+                            return false;
+                        }
+                        UpdateStatus(this, new MageStatusEventArgs("Start Copy->" + remoteFile.Name));
+                        File.Copy(remoteFile.FullName, destPath, true);
+                        
+                    }
+                    else
+                    {
+                        UpdateStatus(this, new MageStatusEventArgs("Start Copy->" + remoteFile.Name));
+                        File.Copy(remoteFile.FullName, destPath, false);
+                    }
+
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                UpdateStatus(this, new MageStatusEventArgs("FAILED->" + e.Message + " -- " + cacheInfoFilePath, 1));
+                OnWarningMessage(new MageStatusEventArgs("Cache info processing failed->" + e.Message + " -- " + cacheInfoFilePath));
+                System.Threading.Thread.Sleep(250);
+                return false;
             }
         }
 

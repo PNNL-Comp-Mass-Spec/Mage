@@ -35,7 +35,6 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.IncludeFoldersCtl = new System.Windows.Forms.CheckBox();
             this.IncludefilesCtl = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.FileSelectorRadioGroupBoxCtl = new System.Windows.Forms.GroupBox();
             this.FileSearchRadioBtn = new System.Windows.Forms.RadioButton();
             this.RegExRadioBtn = new System.Windows.Forms.RadioButton();
@@ -43,6 +42,7 @@
             this.GetFilesForSelectedEntriesCtl = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.FileSelectorsCtl = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.SearchGroupBoxCtl.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -52,9 +52,9 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.textBox1);
             this.panel1.Controls.Add(this.SearchGroupBoxCtl);
             this.panel1.Controls.Add(this.groupBox1);
-            this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.FileSelectorRadioGroupBoxCtl);
             this.panel1.Controls.Add(this.GetFilesForAllEntriesCtl);
             this.panel1.Controls.Add(this.GetFilesForSelectedEntriesCtl);
@@ -138,16 +138,6 @@
             this.IncludefilesCtl.Text = "Include Files";
             this.IncludefilesCtl.UseVisualStyleBackColor = true;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(11, 44);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(382, 17);
-            this.label1.TabIndex = 11;
-            this.label1.Text = "Multiple file filters can be used (separate with semi-colon \';\')";
-            // 
             // FileSelectorRadioGroupBoxCtl
             // 
             this.FileSelectorRadioGroupBoxCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -223,13 +213,25 @@
             // 
             // FileSelectorsCtl
             // 
-            this.FileSelectorsCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.FileSelectorsCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.FileSelectorsCtl.Location = new System.Drawing.Point(117, 7);
             this.FileSelectorsCtl.Margin = new System.Windows.Forms.Padding(4);
             this.FileSelectorsCtl.Name = "FileSelectorsCtl";
             this.FileSelectorsCtl.Size = new System.Drawing.Size(329, 22);
             this.FileSelectorsCtl.TabIndex = 6;
+            // 
+            // textBox1
+            // 
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox1.Location = new System.Drawing.Point(19, 37);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(418, 39);
+            this.textBox1.TabIndex = 14;
+            this.textBox1.Text = "Multiple file filters can be used (separate with a semicolon)\r\nRelative paths are" +
+    " supported, for example ..\\*CacheInfo.txt";
             // 
             // EntityFilePanel
             // 
@@ -262,12 +264,12 @@
         private System.Windows.Forms.GroupBox FileSelectorRadioGroupBoxCtl;
         private System.Windows.Forms.RadioButton FileSearchRadioBtn;
         private System.Windows.Forms.RadioButton RegExRadioBtn;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckBox IncludefilesCtl;
         private System.Windows.Forms.CheckBox IncludeFoldersCtl;
         private System.Windows.Forms.GroupBox SearchGroupBoxCtl;
         private System.Windows.Forms.CheckBox SearchInSubfoldersCtl;
         private System.Windows.Forms.TextBox SubfolderSearchNameCtl;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }

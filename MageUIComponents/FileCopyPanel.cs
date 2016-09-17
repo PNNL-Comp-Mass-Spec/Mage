@@ -23,7 +23,7 @@ namespace MageUIComponents
             get { return (OverwriteExistingCtl.Checked) ? "Yes" : "No"; }
             set
             {
-                OverwriteExistingCtl.Checked = (value == "Yes");
+                OverwriteExistingCtl.Checked = string.Equals(value, "Yes", StringComparison.InvariantCultureIgnoreCase);
             }
         }
 
@@ -38,7 +38,7 @@ namespace MageUIComponents
             get { return (usePrefixCtl.Checked) ? "Yes" : "No"; }
             set
             {
-                usePrefixCtl.Checked = (value == "Yes");
+                usePrefixCtl.Checked = string.Equals(value, "Yes", StringComparison.InvariantCultureIgnoreCase);
                 AdjustPrefixNameFields();
             }
         }
@@ -55,6 +55,15 @@ namespace MageUIComponents
             set { prefixColNameCtl.Text = value; }
         }
 
+        public string ResolveCacheInfoFiles
+        {
+            get { return (ResolveCacheInfoFilesCtl.Checked) ? "Yes" : "No"; }
+            set
+            {
+                ResolveCacheInfoFilesCtl.Checked = string.Equals(value, "Yes", StringComparison.InvariantCultureIgnoreCase);
+            }
+        }
+
         #endregion
 
         #region IModuleParameters Members
@@ -66,7 +75,8 @@ namespace MageUIComponents
 				{ "OverwriteExistingFiles", OverwriteExistingFiles},
 				{ "ApplyPrefixToFileName",  ApplyPrefixToFileName}, 
 				{ "PrefixLeader",           PrefixLeader}, 
-				{ "PrefixColumnName",       PrefixColumnName}
+				{ "PrefixColumnName",       PrefixColumnName},
+                { "ResolveCacheInfoFiles",  ResolveCacheInfoFiles}
             };
         }
 

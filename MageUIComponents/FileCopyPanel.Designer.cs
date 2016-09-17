@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.panel3 = new System.Windows.Forms.Panel();
+            this.ResolveCacheInfoFilesCtl = new System.Windows.Forms.CheckBox();
             this.OverwriteExistingCtl = new System.Windows.Forms.CheckBox();
             this.prefixLeaderCtl = new System.Windows.Forms.TextBox();
             this.prefixLeaderLabelCtl = new System.Windows.Forms.Label();
@@ -46,6 +47,7 @@
             // panel3
             // 
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel3.Controls.Add(this.ResolveCacheInfoFilesCtl);
             this.panel3.Controls.Add(this.OverwriteExistingCtl);
             this.panel3.Controls.Add(this.prefixLeaderCtl);
             this.panel3.Controls.Add(this.prefixLeaderLabelCtl);
@@ -59,16 +61,27 @@
             this.panel3.Controls.Add(this.OutputFolderCtl);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(7, 6);
-            this.panel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel3.Margin = new System.Windows.Forms.Padding(4);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(845, 79);
+            this.panel3.Size = new System.Drawing.Size(1057, 79);
             this.panel3.TabIndex = 4;
+            // 
+            // ResolveCacheInfoFilesCtl
+            // 
+            this.ResolveCacheInfoFilesCtl.AutoSize = true;
+            this.ResolveCacheInfoFilesCtl.Location = new System.Drawing.Point(729, 48);
+            this.ResolveCacheInfoFilesCtl.Margin = new System.Windows.Forms.Padding(4);
+            this.ResolveCacheInfoFilesCtl.Name = "ResolveCacheInfoFilesCtl";
+            this.ResolveCacheInfoFilesCtl.Size = new System.Drawing.Size(177, 21);
+            this.ResolveCacheInfoFilesCtl.TabIndex = 14;
+            this.ResolveCacheInfoFilesCtl.Text = "Resolve CacheInfo files";
+            this.ResolveCacheInfoFilesCtl.UseVisualStyleBackColor = true;
             // 
             // OverwriteExistingCtl
             // 
             this.OverwriteExistingCtl.AutoSize = true;
-            this.OverwriteExistingCtl.Location = new System.Drawing.Point(681, 43);
-            this.OverwriteExistingCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.OverwriteExistingCtl.Location = new System.Drawing.Point(505, 48);
+            this.OverwriteExistingCtl.Margin = new System.Windows.Forms.Padding(4);
             this.OverwriteExistingCtl.Name = "OverwriteExistingCtl";
             this.OverwriteExistingCtl.Size = new System.Drawing.Size(170, 21);
             this.OverwriteExistingCtl.TabIndex = 13;
@@ -77,8 +90,8 @@
             // 
             // prefixLeaderCtl
             // 
-            this.prefixLeaderCtl.Location = new System.Drawing.Point(532, 42);
-            this.prefixLeaderCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.prefixLeaderCtl.Location = new System.Drawing.Point(356, 51);
+            this.prefixLeaderCtl.Margin = new System.Windows.Forms.Padding(4);
             this.prefixLeaderCtl.Name = "prefixLeaderCtl";
             this.prefixLeaderCtl.Size = new System.Drawing.Size(131, 22);
             this.prefixLeaderCtl.TabIndex = 12;
@@ -86,7 +99,7 @@
             // prefixLeaderLabelCtl
             // 
             this.prefixLeaderLabelCtl.AutoSize = true;
-            this.prefixLeaderLabelCtl.Location = new System.Drawing.Point(447, 47);
+            this.prefixLeaderLabelCtl.Location = new System.Drawing.Point(354, 33);
             this.prefixLeaderLabelCtl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.prefixLeaderLabelCtl.Name = "prefixLeaderLabelCtl";
             this.prefixLeaderLabelCtl.Size = new System.Drawing.Size(76, 17);
@@ -96,7 +109,7 @@
             // prefixColNameLabelCtl
             // 
             this.prefixColNameLabelCtl.AutoSize = true;
-            this.prefixColNameLabelCtl.Location = new System.Drawing.Point(184, 47);
+            this.prefixColNameLabelCtl.Location = new System.Drawing.Point(184, 33);
             this.prefixColNameLabelCtl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.prefixColNameLabelCtl.Name = "prefixColNameLabelCtl";
             this.prefixColNameLabelCtl.Size = new System.Drawing.Size(91, 17);
@@ -105,8 +118,8 @@
             // 
             // prefixColNameCtl
             // 
-            this.prefixColNameCtl.Location = new System.Drawing.Point(283, 42);
-            this.prefixColNameCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.prefixColNameCtl.Location = new System.Drawing.Point(187, 51);
+            this.prefixColNameCtl.Margin = new System.Windows.Forms.Padding(4);
             this.prefixColNameCtl.Name = "prefixColNameCtl";
             this.prefixColNameCtl.Size = new System.Drawing.Size(155, 22);
             this.prefixColNameCtl.TabIndex = 9;
@@ -116,8 +129,8 @@
             this.usePrefixCtl.AutoSize = true;
             this.usePrefixCtl.Checked = true;
             this.usePrefixCtl.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.usePrefixCtl.Location = new System.Drawing.Point(8, 44);
-            this.usePrefixCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.usePrefixCtl.Location = new System.Drawing.Point(8, 48);
+            this.usePrefixCtl.Margin = new System.Windows.Forms.Padding(4);
             this.usePrefixCtl.Name = "usePrefixCtl";
             this.usePrefixCtl.Size = new System.Drawing.Size(180, 21);
             this.usePrefixCtl.TabIndex = 8;
@@ -128,8 +141,8 @@
             // CopyAllCtl
             // 
             this.CopyAllCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.CopyAllCtl.Location = new System.Drawing.Point(577, 7);
-            this.CopyAllCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.CopyAllCtl.Location = new System.Drawing.Point(789, 7);
+            this.CopyAllCtl.Margin = new System.Windows.Forms.Padding(4);
             this.CopyAllCtl.Name = "CopyAllCtl";
             this.CopyAllCtl.Size = new System.Drawing.Size(127, 28);
             this.CopyAllCtl.TabIndex = 7;
@@ -140,8 +153,8 @@
             // CopySelectedCtl
             // 
             this.CopySelectedCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.CopySelectedCtl.Location = new System.Drawing.Point(712, 7);
-            this.CopySelectedCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.CopySelectedCtl.Location = new System.Drawing.Point(924, 7);
+            this.CopySelectedCtl.Margin = new System.Windows.Forms.Padding(4);
             this.CopySelectedCtl.Name = "CopySelectedCtl";
             this.CopySelectedCtl.Size = new System.Drawing.Size(127, 28);
             this.CopySelectedCtl.TabIndex = 7;
@@ -152,8 +165,8 @@
             // SelectFolderCtl
             // 
             this.SelectFolderCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.SelectFolderCtl.Location = new System.Drawing.Point(517, 7);
-            this.SelectFolderCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.SelectFolderCtl.Location = new System.Drawing.Point(729, 7);
+            this.SelectFolderCtl.Margin = new System.Windows.Forms.Padding(4);
             this.SelectFolderCtl.Name = "SelectFolderCtl";
             this.SelectFolderCtl.Size = new System.Drawing.Size(40, 28);
             this.SelectFolderCtl.TabIndex = 6;
@@ -174,12 +187,12 @@
             // OutputFolderCtl
             // 
             this.OutputFolderCtl.AcceptsReturn = true;
-            this.OutputFolderCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.OutputFolderCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.OutputFolderCtl.Location = new System.Drawing.Point(133, 10);
-            this.OutputFolderCtl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.OutputFolderCtl.Margin = new System.Windows.Forms.Padding(4);
             this.OutputFolderCtl.Name = "OutputFolderCtl";
-            this.OutputFolderCtl.Size = new System.Drawing.Size(375, 22);
+            this.OutputFolderCtl.Size = new System.Drawing.Size(587, 22);
             this.OutputFolderCtl.TabIndex = 1;
             // 
             // FileCopyPanel
@@ -187,10 +200,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel3);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FileCopyPanel";
             this.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
-            this.Size = new System.Drawing.Size(859, 91);
+            this.Size = new System.Drawing.Size(1071, 91);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.ResumeLayout(false);
@@ -211,5 +224,6 @@
         private System.Windows.Forms.TextBox prefixLeaderCtl;
         private System.Windows.Forms.Label prefixLeaderLabelCtl;
         private System.Windows.Forms.CheckBox OverwriteExistingCtl;
+        private System.Windows.Forms.CheckBox ResolveCacheInfoFilesCtl;
     }
 }
