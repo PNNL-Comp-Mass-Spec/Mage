@@ -36,7 +36,7 @@ namespace MageExtractor
         public string KeepAllResults
         {
             get { return (KeepResultsCtl.Checked) ? "Yes" : "No"; }
-            set { KeepResultsCtl.Checked = (value == "Yes") ? true : false; }
+            set { KeepResultsCtl.Checked = string.Equals(value, "Yes", StringComparison.InvariantCultureIgnoreCase); }
         }
 
         public string ResultFilterSetID

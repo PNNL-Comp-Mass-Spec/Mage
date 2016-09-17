@@ -417,12 +417,12 @@ FROM(
         private static void SetDefaultFileSearchFilterParameters(FileListFilter flf, string fileNameSelector, string recursiveSearch, string subfolderSearchName)
         {
             flf.OutputColumnList = @"Item|+|text, File|+|text, File_Size_KB|+|text, Folder, *";
-            flf.SourceFolderColumnName = "Folder"; // the name of the input column that contains the folder path to search for files
-            flf.FileSelectorMode = "FileSearch"; // how to use the file matching patterns ("" or "RegEx")
-            flf.IncludeFilesOrFolders = "File";// include files an/or folders in results ("", "Folder", "IncludeFilesOrFolders")
+            flf.SourceFolderColumnName = "Folder";          // the name of the input column that contains the folder path to search for files
+            flf.FileSelectorMode = "FileSearch";            // how to use the file matching patterns ("FileSearch" or "RegEx")
+            flf.IncludeFilesOrFolders = "File";             // include files an/or folders in results ("", "Folder", "IncludeFilesOrFolders")
             flf.RecursiveSearch = recursiveSearch;
-            flf.FileNameSelector = fileNameSelector; // semi-colon delimited list of file matching patterns
-            flf.SubfolderSearchName = subfolderSearchName; // folder name pattern used to restrict recursive search
+            flf.FileNameSelector = fileNameSelector;        // semi-colon delimited list of file matching patterns
+            flf.SubfolderSearchName = subfolderSearchName;  // folder name pattern used to restrict recursive search
         }
 
         /// <summary>

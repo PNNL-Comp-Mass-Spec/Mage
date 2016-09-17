@@ -8,8 +8,14 @@ namespace Mage
     public static class Globals
     {
 
+        /// <summary>
+        /// Default DMS server
+        /// </summary>
         public const string DEFAULT_DMS_SERVER = "gigasax";
 
+        /// <summary>
+        /// Default DMS database
+        /// </summary>
         public const string DEFAULT_DMS_DATABASE = "DMS5";
 
         /// <summary>
