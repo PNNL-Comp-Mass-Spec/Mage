@@ -16,6 +16,16 @@ namespace Mage
     public class FileListFilter : FileListInfoBase
     {
 
+        /// <summary>
+        /// Normal file search (glob-based)
+        /// </summary>
+        public const string FILE_SELECTOR_NORMAL = "FileSearch";
+
+        /// <summary>
+        /// Regex-based file search
+        /// </summary>
+        public const string FILE_SELECTOR_REGEX = "RegEx";        
+
         private enum FolderSearchMode
         {
             Files,
@@ -28,6 +38,9 @@ namespace Mage
         private bool mIncludeFolders;
         private bool mRecurseMyEMSL;
 
+        /// <summary>
+        /// List of subfolders to search when RecursiveSearch is enabled ("Search in subfolders")
+        /// </summary>
         private readonly List<string[]> mSearchSubfolders = new List<string[]>();
 
         private readonly SortedSet<string> mAccessDeniedSubfolders = new SortedSet<string>();
@@ -52,7 +65,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// semi-colon delimited list of file matching patterns
+        /// Semi-colon delimited list of file matching patterns
         /// </summary>
         public string FileNameSelector { get; set; }
 
@@ -103,7 +116,7 @@ namespace Mage
 
                     for (var colIndex = 0; colIndex < outputColumnDefs.Count; colIndex++)
                     {
-                        // break each column spec into fields
+                        // break each column spec into searchResult
                         var colSpecFlds = outputColumnDefs[colIndex].Trim().Split('|');
                         var outputColName = colSpecFlds[0].Trim();
 
@@ -214,9 +227,10 @@ namespace Mage
 
             var foundFiles = new List<FileSystemInfo>();
             var foundSubFolders = new List<FileSystemInfo>();
+
             try
             {
-                if (FileSelectorMode == "RegEx")
+                if (FileSelectorMode == FILE_SELECTOR_REGEX)
                 {
                     if (mIncludeFiles)
                     {
@@ -310,12 +324,12 @@ namespace Mage
         }
 
         /// <summary>
-        /// add subdirectories to search list (used in recursive search mode)
+        /// Add subdirectories to search list (used in recursive search mode)
         /// </summary>
-        /// <param name="fields"></param>
-        private void AddSearchSubfolders(string[] fields)
+        /// <param name="searchResult">Search result row. Column at index mFolderPathColIndx will have a folder path </param>
+        private void AddSearchSubfolders(string[] searchResult)
         {
-            var path = fields[mFolderPathColIndx];
+            var path = searchResult[mFolderPathColIndx];
             if (path.StartsWith(MYEMSL_PATH_FLAG))
                 return;
 
@@ -330,13 +344,16 @@ namespace Mage
                 }
 
                 if (!string.Equals(SubfolderSearchName, "*"))
-                    currentFolder = path + @"\" + SubfolderSearchName;
+                {
+                    // Update currentFolder so it can be used in the Catch block if the user encounters access denied
+                    currentFolder = Path.Combine(path, SubfolderSearchName);
+                }
 
                 foreach (var sfDi in di.GetDirectories(SubfolderSearchName))
                 {
                     currentFolder = string.Copy(sfDi.FullName);
 
-                    var subfolderRow = (string[])fields.Clone();
+                    var subfolderRow = (string[])searchResult.Clone();
                     var subfolderPath = Path.Combine(path, sfDi.Name);
                     subfolderRow[mFolderPathColIndx] = subfolderPath;
                     mSearchSubfolders.Add(subfolderRow);
@@ -435,6 +452,7 @@ namespace Mage
             return filteredFilesOrFolders.Values.ToList();
 
         }
+
         /// <summary>
         /// Get list of files from given directory using file selector list
         /// as RegEx patterns

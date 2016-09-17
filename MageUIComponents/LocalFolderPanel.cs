@@ -38,7 +38,7 @@ namespace MageUIComponents
             set
             {
                 mSelectionMode = value;
-                if (mSelectionMode != "RegEx")
+                if (mSelectionMode != FileListFilter.FILE_SELECTOR_REGEX)
                 {
                     FileSearchRadioBtn.Checked = true;
                 }
@@ -65,7 +65,7 @@ namespace MageUIComponents
             }
             set
             {
-                SearchInSubfoldersCtl.Checked = (value == "Yes");
+                SearchInSubfoldersCtl.Checked = string.Equals(value, "Yes", StringComparison.InvariantCultureIgnoreCase);
             }
         }
 
@@ -168,12 +168,12 @@ namespace MageUIComponents
 
         private void RegExRadioBtn_CheckedChanged(object sender, EventArgs e)
         {
-            mSelectionMode = "RegEx";
+            mSelectionMode = FileListFilter.FILE_SELECTOR_REGEX;
         }
 
         private void FileSearchRadioBtn_CheckedChanged(object sender, EventArgs e)
         {
-            mSelectionMode = "FileSearch";
+            mSelectionMode = FileListFilter.FILE_SELECTOR_NORMAL;
         }
 
     }

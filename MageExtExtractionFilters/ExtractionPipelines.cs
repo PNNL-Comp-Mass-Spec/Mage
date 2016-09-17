@@ -79,10 +79,11 @@ namespace MageExtExtractionFilters
             var fileFinder = new FileListFilter
             {
                 IncludeFilesOrFolders = "File",
-                FileSelectorMode = "RegEx",
+                FileSelectorMode = FileListFilter.FILE_SELECTOR_REGEX,
                 FileColumnName = "Name",
                 FileNameSelector = extractionParms.RType.ResultsFileNamePattern
             };
+
             fileFinder.OutputColumnList = string.Format(
                 "Job, {0}|+|text, Folder, {1}|+|text, {2}|+|text, {3}|+|text",
                 FileListInfoBase.COLUMN_NAME_FILE_TYPE,

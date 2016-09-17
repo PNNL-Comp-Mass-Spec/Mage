@@ -199,7 +199,7 @@ namespace MageUnitTestsForFileProcessor
                 { "FileColumnName", "File" },
                 { "IncludeFilesOrFolders", "Files" },
                 { "FileSelectors", "log.txt" },
-                { "FileSelectionMode", "RegEx" },
+                { "FileSelectionMode", FileListFilter.FILE_SELECTOR_NORMAL },
                 { "SearchInSubfolders", "No"},
                 { "SubfolderSearchName", "*"},
                 { "SourceFolderColumnName", "Folder" },
