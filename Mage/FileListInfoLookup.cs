@@ -120,8 +120,6 @@ namespace Mage
             }
         }
 
-
-
         private FileInfo GetFileInfoUNC(string path, string fileName)
         {
             var fi = new FileInfo(Path.Combine(path, fileName));

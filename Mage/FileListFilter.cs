@@ -171,27 +171,62 @@ namespace Mage
         /// </summary>
         protected override void SetupSearch()
         {
-
             mIncludeFiles = IncludeFilesOrFolders.Contains("File");
             mIncludeFolders = IncludeFilesOrFolders.Contains("Folder");
 
-            mRecurseMyEMSL = false;
+            var filterSpec = string.Empty;
+            var selectors = GetFileNameSelectors();
 
-            // add subfolders if we are doing a recursive search
-            if (RecursiveSearch == "Yes")
+            if (selectors.Count > 0)
             {
-                mRecurseMyEMSL = true;
-                if (string.IsNullOrEmpty(SubfolderSearchName))
-                {
-                    SubfolderSearchName = "*";
-                }
-                foreach (var fields in mOutputBuffer)
-                {
-                    AddSearchSubfolders(fields);
-                }
-                mOutputBuffer.AddRange(mSearchSubfolders);
+                filterSpec = selectors.First();
             }
 
+            // Update folder paths if the File Name Selector starts with ..\
+            foreach (var searchResult in mOutputBuffer)
+            {
+                var path = searchResult[mFolderPathColIndx];
+                if (path.StartsWith(MYEMSL_PATH_FLAG))
+                {
+                    // MyEMSL does not support relative file name filters
+                    continue;
+                }
+
+                var folderPathToSearch = HandleRelativePathFilter(path, filterSpec);
+
+                if (!string.Equals(folderPathToSearch, searchResult[mFolderPathColIndx]))
+                {
+                    // Update the stored path
+                    searchResult[mFolderPathColIndx] = folderPathToSearch;
+                }
+            }
+
+            mRecurseMyEMSL = false;
+
+            if (!OptionEnabled(RecursiveSearch))
+            {
+                return;
+            }
+
+            // Recursive search: add subfolders
+            mRecurseMyEMSL = true;
+            if (string.IsNullOrEmpty(SubfolderSearchName))
+            {
+                SubfolderSearchName = "*";
+            }
+
+            foreach (var searchResult in mOutputBuffer)
+            {
+                var path = searchResult[mFolderPathColIndx];
+                if (path.StartsWith(MYEMSL_PATH_FLAG))
+                {
+                    // Recursive searching is handled differently for MyEMSL
+                    continue;
+                }
+
+                AddSearchSubfolders(searchResult);
+            }
+            mOutputBuffer.AddRange(mSearchSubfolders);
         }
 
         /// <summary>
@@ -393,12 +428,26 @@ namespace Mage
                 selectors.Add("*");
             }
 
-            // get list of files for each selector
+            // Get list of files for each selector
             foreach (var selector in selectors)
             {
+                string updatedSelector;
+
+                if (FileSelectorMode == FILE_SELECTOR_REGEX)
+                {
+                    // Regex search mode; use the selector as-is since relative paths are not supported for RegEx mode
+                    updatedSelector = selector;
+                }
+                else
+                {
+                    // Remove any relative path specifiers from the selector
+                    // For example, update  ..\*.mzml  to be  *.mzml
+                    updatedSelector = ScrubRelativePathText(selector);
+                }
+
                 if (searchMode == FolderSearchMode.Files)
                 {
-                    foreach (var entry in di.GetFiles(selector))
+                    foreach (var entry in di.GetFiles(updatedSelector))
                     {
                         filteredFilesOrFolders[entry.Name] = entry;
                     }
@@ -406,7 +455,7 @@ namespace Mage
 
                 if (searchMode == FolderSearchMode.Folders)
                 {
-                    foreach (var entry in di.GetDirectories(selector))
+                    foreach (var entry in di.GetDirectories(updatedSelector))
                     {
                         filteredFilesOrFolders[entry.Name] = entry;
                     }
@@ -587,7 +636,7 @@ namespace Mage
         /// get list of individual file selectors from selector list
         /// </summary>
         /// <returns></returns>
-        private List<string> GetFileNameSelectors()
+        public List<string> GetFileNameSelectors()
         {
             var selectorList = new List<string>();
             foreach (var selector in FileNameSelector.Split(';'))
@@ -597,6 +646,53 @@ namespace Mage
             return selectorList;
         }
 
+        /// <summary>
+        /// Return the folder to search, depending on whether filterSpec starts with ..\
+        /// </summary>
+        /// <param name="folderToSearch">Folder path from the search results</param>
+        /// <param name="filterSpec">FileSelector</param>
+        /// <returns>Folder path to search</returns>
+        private string HandleRelativePathFilter(string folderToSearch, string filterSpec)
+        {
+            if (string.IsNullOrWhiteSpace(filterSpec) || !filterSpec.StartsWith(@"..\"))
+            {
+                return folderToSearch;
+            }
+
+            var di = new DirectoryInfo(folderToSearch);
+
+            while (filterSpec.StartsWith(@"..\"))
+            {
+                if (di?.Parent == null)
+                    break;
+
+                di = di.Parent;
+                filterSpec = filterSpec.Substring(3);
+            }
+
+            return di.FullName;
+        }
+
+        /// <summary>
+        /// Remove any relative path specs in front of the selector
+        /// Those should have been used already when determining which folders to search
+        /// </summary>
+        /// <param name="selector"></param>
+        /// <returns></returns>
+        private string ScrubRelativePathText(string selector)
+        {
+         
+            if (!selector.StartsWith(@"..\"))
+            {
+                return selector;
+            }
+
+            while (selector.StartsWith(@"..\"))
+            {
+                selector = selector.Substring(3);
+            }
+            return selector;
+        }
 
         #endregion
 

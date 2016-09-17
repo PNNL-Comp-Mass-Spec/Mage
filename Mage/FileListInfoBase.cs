@@ -385,6 +385,7 @@ namespace Mage
                     }
                 }
             }
+
             // inform our subscribers that all data has been sent
             OnDataRowAvailable(new MageDataEventArgs(null));
         }
