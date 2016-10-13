@@ -70,7 +70,7 @@ namespace MageConcatenator
                 var LogFileName = Path.Combine(SavedState.DataDirectory, "log.txt");
                 GlobalContext.Properties["LogName"] = LogFileName;
                 var traceLog = LogManager.GetLogger("TraceLog");
-                traceLog.Info("Starting");
+                traceLog.Info("Starting Mage Concatenator");
             }
             catch (Exception ex)
             {

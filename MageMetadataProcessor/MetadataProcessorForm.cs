@@ -24,9 +24,6 @@ namespace MageMetadataProcessor
         // object that sent the current command
         private object mCurrentCmdSender;
 
-        //private static readonly ILog traceLog = LogManager.GetLogger("TraceLog");
-        private ILog traceLog; //= LogManager.GetLogger("TraceLog");
-
         #endregion
 
         #region Initialization
@@ -64,9 +61,9 @@ namespace MageMetadataProcessor
             var LogFileName = Path.Combine(SavedState.DataDirectory, "log.txt");
             log4net.GlobalContext.Properties["LogName"] = LogFileName;
 
-            traceLog = LogManager.GetLogger("TraceLog");
+            var traceLog = LogManager.GetLogger("TraceLog");
             // kick the logger into action
-            traceLog.Info("Starting");
+            traceLog.Info("Starting Mage Metadata Processor");
 
 
             // setup UI component panels

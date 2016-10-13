@@ -55,7 +55,7 @@ namespace MageExtractor
             InitializeComponent();
 
             const bool isBetaVersion = false;
-            SetFormTitle("2016-09-16", isBetaVersion);
+            SetFormTitle("2016-10-13", isBetaVersion);
 
             SetTags();
 
@@ -87,7 +87,7 @@ namespace MageExtractor
                 var LogFileName = Path.Combine(SavedState.DataDirectory, "log.txt");
                 log4net.GlobalContext.Properties["LogName"] = LogFileName;
                 var traceLog = LogManager.GetLogger("TraceLog");
-                traceLog.Info("Starting");
+                traceLog.Info("Starting Mage Extractor");
             }
             catch (Exception ex)
             {

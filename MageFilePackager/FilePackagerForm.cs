@@ -40,9 +40,6 @@ namespace MageFilePackager
         // object that sent the current command
         object _mCurrentCmdSender;
 
-        //private static readonly ILog traceLog = LogManager.GetLogger("TraceLog");
-        private readonly ILog _traceLog; //= LogManager.GetLogger("TraceLog");
-
         #endregion
 
         #region Initialization
@@ -59,7 +56,7 @@ namespace MageFilePackager
             InitializeComponent();
 
             const bool isBetaVersion = true;
-            SetFormTitle("2016-09-16", isBetaVersion);
+            SetFormTitle("2016-10-13", isBetaVersion);
 
             SetTags();
 
@@ -99,8 +96,8 @@ namespace MageFilePackager
                 // Set log4net path and kick the logger into action
                 var logFileName = Path.Combine(SavedState.DataDirectory, "log.txt");
                 GlobalContext.Properties["LogName"] = logFileName;
-                _traceLog = LogManager.GetLogger("TraceLog");
-                _traceLog.Info("Starting");
+                var traceLog = LogManager.GetLogger("TraceLog");
+                traceLog.Info("Starting MageFilePackager");
             }
             catch (Exception ex)
             {

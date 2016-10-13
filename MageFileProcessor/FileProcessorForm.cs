@@ -61,7 +61,7 @@ namespace MageFileProcessor
             InitializeComponent();
 
             const bool isBetaVersion = false;
-            SetFormTitle("2016-09-16", isBetaVersion);
+            SetFormTitle("2016-10-13", isBetaVersion);
             
             SetTags();
 
@@ -94,7 +94,7 @@ namespace MageFileProcessor
                 var LogFileName = Path.Combine(SavedState.DataDirectory, "log.txt");
                 GlobalContext.Properties["LogName"] = LogFileName;
                 var traceLog = LogManager.GetLogger("TraceLog");
-                traceLog.Info("Starting");
+                traceLog.Info("Starting Mage File Processor");
             }
             catch (Exception ex)
             {
@@ -966,25 +966,6 @@ namespace MageFileProcessor
         {
             // Console.WriteLine("PipelineQueueCompletion: " + args.Message);
         }
-
-        /*
-		 * To be deleted
-		 * 
-        private void HandlePipelineCompletion(object sender, MageStatusEventArgs args) {
-			mCurrentPipeline.OnRunCompleted += statusPanel1.HandleCompletionMessageUpdate;
-			Console.WriteLine(args.Message);
-
-            CompletionStateUpdated csu = AdjusttPostCommndUIState;
-            Invoke(csu, new object[] { null });
-
-            if (args.Message.StartsWith(Mage.MSSQLReader.SQL_COMMAND_ERROR))
-                MessageBox.Show(args.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-
-			// Must use a delegate and Invoke to avoid "cross-thread operation not valid" exceptions
-			VoidFnDelegate et = EnableDisableOutputTabs;
-			Invoke(et);
-        }
-		*/
 
         private void lblAboutLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
