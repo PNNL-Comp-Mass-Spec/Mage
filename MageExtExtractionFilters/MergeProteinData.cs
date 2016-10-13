@@ -24,7 +24,8 @@ namespace MageExtExtractionFilters
 
         private readonly MergeModeConstants mMergeMode;
 
-        // Reference to row in protein buffer, keyed by result id
+        // Reference to row in protein buffer
+        // Keys are ResultID, values are SequenceId
         private Dictionary<string, int> mProtDataLookup;
 
         // indexes for the protein columns in the result
@@ -108,15 +109,15 @@ namespace MageExtExtractionFilters
             var resultID = outRow[IDX_Lookup_Col];
             int sequenceID;
 
-            outRow[ODX_Cleavage_State] = string.Empty;
-            outRow[ODX_Terminus_State] = string.Empty;
-            outRow[ODX_Protein_Name] = string.Empty;
-
             if (!mProtDataLookup.TryGetValue(resultID, out sequenceID))
             {
                 warningMessage = "resultID " + resultID + " not found in the result to protein lookup table";
                 return false;
             }
+
+            outRow[ODX_Cleavage_State] = string.Empty;
+            outRow[ODX_Terminus_State] = string.Empty;
+            outRow[ODX_Protein_Name] = string.Empty;
 
             int rowIdx;
 
