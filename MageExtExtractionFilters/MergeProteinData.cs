@@ -103,7 +103,7 @@ namespace MageExtExtractionFilters
         /// <param name="outRow"></param>
         /// <param name="warningMessage">Warning message (empty if this function returns true)</param>
         /// <returns>True if success, false if a match was not found in the cached protein data</returns>
-        public bool MergeFirstProtein(ref string[] outRow, out string warningMessage)
+        public bool MergeFirstProtein(string[] outRow, out string warningMessage)
         {
             var resultID = outRow[IDX_Lookup_Col];
             int sequenceID;
@@ -149,7 +149,7 @@ namespace MageExtExtractionFilters
         /// <param name="outRow"></param>
         /// <param name="matchFound">Output parameter: True if the ResultID and SequenceID are present in the cached data</param>
         /// <returns></returns>
-        public Collection<string[]> MergeAllProteins(ref string[] outRow, out bool matchFound)
+        public Collection<string[]> MergeAllProteins(string[] outRow, out bool matchFound)
         {
             Collection<string[]> outRows = null;
             var resultID = outRow[IDX_Lookup_Col];

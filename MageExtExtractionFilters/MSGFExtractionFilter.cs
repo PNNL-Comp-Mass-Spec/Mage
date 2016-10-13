@@ -87,7 +87,7 @@ namespace MageExtExtractionFilters
                 var outRow = MapDataRow(args.Fields);
                 if (mMSGFMerger != null)
                 {
-                    accepted = mMSGFMerger.MergeMSGFDataFields(ref outRow);
+                    accepted = mMSGFMerger.MergeMSGFDataFields(outRow);
                 }
 
                 if (accepted)
@@ -187,7 +187,7 @@ namespace MageExtExtractionFilters
             /// </summary>
             /// <param name="outRow"></param>
             /// <returns></returns>
-            public bool MergeMSGFDataFields(ref string[] outRow)
+            public bool MergeMSGFDataFields(string[] outRow)
             {
                 var accepted = true;
                 if (mMergeValueLookup == null)

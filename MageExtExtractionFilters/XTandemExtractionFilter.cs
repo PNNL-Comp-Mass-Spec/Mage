@@ -98,21 +98,21 @@ namespace MageExtExtractionFilters
                 if (!mOutputAllProteins)
                 {
                     string warningMessage;
-                    if (!mProteinMerger.MergeFirstProtein(ref outRow, out warningMessage))
+                    if (!mProteinMerger.MergeFirstProtein(outRow, out warningMessage))
                     {
                         OnWarningMessage(
                             new MageStatusEventArgs("ProteinMerger reports " + warningMessage + " for row " + mTotalRowsCounter));
                     }
 
-                    CheckFilter(ref outRow);
+                    CheckFilter(outRow);
                 }
                 else
                 {
                     bool matchFound;
-                    var rows = mProteinMerger.MergeAllProteins(ref outRow, out matchFound);
+                    var rows = mProteinMerger.MergeAllProteins(outRow, out matchFound);
                     if (rows == null)
                     {
-                        CheckFilter(ref outRow);
+                        CheckFilter(outRow);
                         if (!matchFound)
                             OnWarningMessage(new MageStatusEventArgs("ProteinMerger did not find a match for row " + mTotalRowsCounter));
                     }
@@ -121,7 +121,7 @@ namespace MageExtExtractionFilters
                         foreach (var rowItem in rows)
                         {
                             var row = rowItem;
-                            CheckFilter(ref row);
+                            CheckFilter(row);
                         }
                     }
                 }
@@ -143,7 +143,7 @@ namespace MageExtExtractionFilters
         /// </summary>
         /// <param name="vals"></param>
         /// <returns></returns>
-        protected bool CheckFilter(ref string[] vals)
+        protected bool CheckFilter(string[] vals)
         {
             var accept = true;
             if (mXTFilter == null)

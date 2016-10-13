@@ -132,14 +132,14 @@ namespace MageExtExtractionFilters
                     if (!mDataWrittenRowTags.Contains(sScanChargePeptide))
                     {
                         mDataWrittenRowTags.Add(sScanChargePeptide);
-                        CheckFilter(ref outRow);
+                        CheckFilter(outRow);
                     }
                 }
                 else
                 {
                     bool matchFound;
 
-                    var rows = mProteinMerger.MergeAllProteins(ref outRow, out matchFound);
+                    var rows = mProteinMerger.MergeAllProteins(outRow, out matchFound);
                     if (rows == null)
                     {
                         // Either the peptide only maps to one protein, or the ProteinMerger did not find a match for the row
@@ -147,7 +147,7 @@ namespace MageExtExtractionFilters
                         if (!mDataWrittenRowTags.Contains(sScanChargePeptideProtein))
                         {
                             mDataWrittenRowTags.Add(sScanChargePeptideProtein);
-                            CheckFilter(ref outRow);
+                            CheckFilter(outRow);
                             if (!matchFound)
                             {
                                 OnWarningMessage(
@@ -165,7 +165,7 @@ namespace MageExtExtractionFilters
                             if (!mDataWrittenRowTags.Contains(sScanChargePeptideProtein))
                             {
                                 mDataWrittenRowTags.Add(sScanChargePeptideProtein);
-                                CheckFilter(ref row);
+                                CheckFilter(row);
                             }
                         }
                     }
@@ -188,7 +188,7 @@ namespace MageExtExtractionFilters
         /// </summary>
         /// <param name="vals"></param>
         /// <returns></returns>
-        protected bool CheckFilter(ref string[] vals)
+        protected bool CheckFilter(string[] vals)
         {
             var accept = true;
             if (mMSGFDbFilter == null)

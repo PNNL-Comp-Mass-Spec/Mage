@@ -67,7 +67,7 @@ namespace MageExtExtractionFilters
             {
                 var outRow = MapDataRow(args.Fields);
 
-                var accepted = CheckFilter(ref outRow);
+                var accepted = CheckFilter(outRow);
 
                 if (accepted)
                 {
@@ -92,7 +92,7 @@ namespace MageExtExtractionFilters
         /// </summary>
         /// <param name="vals"></param>
         /// <returns></returns>
-		protected bool CheckFilter(ref string[] vals)
+        protected bool CheckFilter(string[] vals)
         {
             var accept = true;
             if (mSeqFilter == null)
