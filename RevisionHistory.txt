@@ -1,9 +1,12 @@
 Mage Revision History
 
+Version 1.5.6130; October 13, 2016
+	- Remove unnecessary protein merger lookup warning for MSGF+ results
+
 Version 1.5.6103; September 16, 2016
 	- Add support for using "..\" in the File Name Filter textbox to search for files in a folder one up from Job folders
 		- For example, search for jobs in a request, then use a file filter of "..\*.raw"
-		- Or, search for jobs for in a request, then use a file filter of "..\*CacheInfo.txt" and enable "Search in Subfolders"
+		- Or, search for jobs in a request, then use a file filter of "..\*CacheInfo.txt" and enable "Search in Subfolders"
 		- To limit the results to CacheInfo files in MZRefinery folders, use a subfolder filter of "MZ_Ref*"
 	- Add support for retrieving the target file defined in CacheInfo files found via a search
 		- Can be used to retrieve all the .mzML.gz files associated with a set of MSGFPlus_MzML jobs

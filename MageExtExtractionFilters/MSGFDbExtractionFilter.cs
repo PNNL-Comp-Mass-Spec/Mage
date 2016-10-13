@@ -122,15 +122,33 @@ namespace MageExtExtractionFilters
                 if (!mOutputAllProteins)
                 {
                     string warningMessage;
-                    if (!mProteinMerger.MergeFirstProtein(ref outRow, out warningMessage))
+                    var mergeSuccess = mProteinMerger.MergeFirstProtein(outRow, out warningMessage);
+                    if (!mergeSuccess)
                     {
-                        OnWarningMessage(
-                            new MageStatusEventArgs("ProteinMerger reports " + warningMessage + " for row " + mTotalRowsCounter));
+                        // mProteinMerger does not have a record of this row's ResultID
+                        // This is perfectly acceptable when processing a _syn.txt file
+                        // because, for each scan/charge combo in the _syn.txt file,
+                        // the syn_ResultToSeqMap.txt only contains an entry for the first
+                        // occurrence of each peptide (for a given scan/charge)
+                        //
+                        // We will log a warning below if the failure of the merge is actually an issue
                     }
 
                     var sScanChargePeptide = CreateRowTag(outRow, includeProtein: false, columnIndices: mColumnIndices);
                     if (!mDataWrittenRowTags.Contains(sScanChargePeptide))
                     {
+                        if (!mergeSuccess)
+                        {
+                            OnWarningMessage(
+                                new MageStatusEventArgs("ProteinMerger reports " + warningMessage + " for row " + mTotalRowsCounter));
+                        }
+
+                        if (string.IsNullOrWhiteSpace(outRow[mColumnIndices.Protein]))
+                        {
+                            OnWarningMessage(
+                                new MageStatusEventArgs("Empty protein name for row " + mTotalRowsCounter));
+                        }
+
                         mDataWrittenRowTags.Add(sScanChargePeptide);
                         CheckFilter(outRow);
                     }
