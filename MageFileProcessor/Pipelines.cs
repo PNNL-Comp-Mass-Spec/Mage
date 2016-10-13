@@ -266,41 +266,41 @@ namespace MageFileProcessor
         }
 
         /*
-		/// <summary>
-		/// Make a Mage pipeline to dump contents of job list 
-		/// as metadata file or db table
-		/// </summary>
-		/// <param name="jobList"></param>
-		/// <returns></returns>
-		public static ProcessingPipeline MakePipelineToExportJobMetadata(BaseModule jobList, string outputMode, string outputFolderPath)
-		{
-			if (outputMode == )
-			{
-				broker.DatabaseName = GetRuntimeParam(runtimeParms, "DatabaseName");
-				broker.TableName = GetRuntimeParam(runtimeParms, "TableName");
-				outputFolderPath = Path.GetDirectoryName(GetRuntimeParam(runtimeParms, "DatabaseName"));
-			}
+        /// <summary>
+        /// Make a Mage pipeline to dump contents of job list 
+        /// as metadata file or db table
+        /// </summary>
+        /// <param name="jobList"></param>
+        /// <returns></returns>
+        public static ProcessingPipeline MakePipelineToExportJobMetadata(BaseModule jobList, string outputMode, string outputFolderPath)
+        {
+            if (outputMode == )
+            {
+                broker.DatabaseName = GetRuntimeParam(runtimeParms, "DatabaseName");
+                broker.TableName = GetRuntimeParam(runtimeParms, "TableName");
+                outputFolderPath = Path.GetDirectoryName(GetRuntimeParam(runtimeParms, "DatabaseName"));
+            }
 
 
-			BaseModule writer = null;
-			switch (outputMode)
-			{
-				case "SQLite_Output"
-					SQLiteWriter sw = new SQLiteWriter();
-					sw.DbPath = destination.ContainerPath;
-					sw.TableName = destination.MetadataName;
-					writer = sw;
-					break;
-				case DestinationType.Types.File_Output:
-					DelimitedFileWriter dw = new DelimitedFileWriter();
-					dw.FilePath = Path.Combine(destination.ContainerPath, destination.MetadataName);
-					writer = dw;
-					break;
-			}
-			ProcessingPipeline filePipeline = ProcessingPipeline.Assemble("Job Metadata", jobList, writer);
-			return filePipeline;
-		}
-		 */
+            BaseModule writer = null;
+            switch (outputMode)
+            {
+                case "SQLite_Output"
+                    SQLiteWriter sw = new SQLiteWriter();
+                    sw.DbPath = destination.ContainerPath;
+                    sw.TableName = destination.MetadataName;
+                    writer = sw;
+                    break;
+                case DestinationType.Types.File_Output:
+                    DelimitedFileWriter dw = new DelimitedFileWriter();
+                    dw.FilePath = Path.Combine(destination.ContainerPath, destination.MetadataName);
+                    writer = dw;
+                    break;
+            }
+            ProcessingPipeline filePipeline = ProcessingPipeline.Assemble("Job Metadata", jobList, writer);
+            return filePipeline;
+        }
+         */
 
         /// <summary>
         /// Make a Mage pipeline to lookup file info for the source files

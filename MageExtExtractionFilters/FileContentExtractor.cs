@@ -13,7 +13,7 @@ namespace MageExtExtractionFilters
     /// Receives list of results files (and associated files) on standard tabular input
     /// and processes each one to individual or concatented results
     /// </summary>
-	public class FileContentExtractor : FileProcessingBase
+    public class FileContentExtractor : FileProcessingBase
     {
 
         #region Member Variables

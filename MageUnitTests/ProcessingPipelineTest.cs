@@ -260,25 +260,25 @@ namespace MageUnitTests
         string pipelineXML3 = @"
 <?xml version=1.0 encoding=UTF-8?><!-- to get filtered list of files in local directory -->
 <pipeline name='Test_Pipeline'>
-	<module type='FileListFilter'>
-		<param name='FolderPath'><![CDATA[C:\Data\syn2]]></param>
-		<param name='FileNameSelector'>_syn.txt</param>
-		<param name='FileTypeColumnName'>Item</param>
-		<param name='FileColumnName'>Name</param>
-		<param name='SourceFolderColumnName'>Folder</param>
-		<param name='OutputColumnList'>Item|+|text, Name|+|text, Folder|+|text</param>
-		<param name='IncludeFilesOrFolders'>File</param>
-	</module>
-	<module type='FileSubPipelineBroker'>
-		<param name='FileFilterModuleName'>NullFilter</param>
-		<param name='SourceFileColumnName'>Name</param>
-		<param name='SourceFolderColumnName'>Folder</param>
-		<param name='FileFilterParameters'>OutputColumnList:Name|+|text, *</param>
-		<param name='OutputFolderPath'><![CDATA[C:\Data\syn2\]]></param>
-		<param name='OutputFileName'>junk.txt</param>
-		<param name='DatabaseName'></param>
-		<param name='TableName'></param>
-	</module>
+    <module type='FileListFilter'>
+        <param name='FolderPath'><![CDATA[C:\Data\syn2]]></param>
+        <param name='FileNameSelector'>_syn.txt</param>
+        <param name='FileTypeColumnName'>Item</param>
+        <param name='FileColumnName'>Name</param>
+        <param name='SourceFolderColumnName'>Folder</param>
+        <param name='OutputColumnList'>Item|+|text, Name|+|text, Folder|+|text</param>
+        <param name='IncludeFilesOrFolders'>File</param>
+    </module>
+    <module type='FileSubPipelineBroker'>
+        <param name='FileFilterModuleName'>NullFilter</param>
+        <param name='SourceFileColumnName'>Name</param>
+        <param name='SourceFolderColumnName'>Folder</param>
+        <param name='FileFilterParameters'>OutputColumnList:Name|+|text, *</param>
+        <param name='OutputFolderPath'><![CDATA[C:\Data\syn2\]]></param>
+        <param name='OutputFileName'>junk.txt</param>
+        <param name='DatabaseName'></param>
+        <param name='TableName'></param>
+    </module>
 </pipeline>
 ";
 

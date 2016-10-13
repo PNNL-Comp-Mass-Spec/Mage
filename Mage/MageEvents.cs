@@ -110,7 +110,7 @@ namespace Mage
         /// <summary>
         /// data row
         /// </summary>
-		public string[] Fields
+        public string[] Fields
         {
             get { return fields; }
         }
@@ -119,7 +119,7 @@ namespace Mage
         /// construct new MageDataEventArgs object with given data row
         /// </summary>
         /// <param name="data"></param>
-		public MageDataEventArgs(string[] data)
+        public MageDataEventArgs(string[] data)
         {
             fields = data;
         }

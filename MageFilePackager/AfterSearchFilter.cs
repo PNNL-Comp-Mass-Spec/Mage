@@ -26,7 +26,7 @@ namespace MageFilePackager
         /// </summary>
         /// <param name="vals"></param>
         /// <returns></returns>
-		protected override bool CheckFilter(ref string[] vals)
+        protected override bool CheckFilter(ref string[] vals)
         {
 
             // reject any "file not found" rows

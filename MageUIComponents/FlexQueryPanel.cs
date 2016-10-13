@@ -111,10 +111,10 @@ namespace MageUIComponents {
             pnl.Value = flds[3];
         }
 
-		private void GetJobsCtl_Click(object sender, EventArgs e)
-		{
-		    OnAction?.Invoke(this, new MageCommandEventArgs("get_entities_from_flex_query", QueryName));
-		}
+        private void GetJobsCtl_Click(object sender, EventArgs e)
+        {
+            OnAction?.Invoke(this, new MageCommandEventArgs("get_entities_from_flex_query", QueryName));
+        }
 
         #endregion
 

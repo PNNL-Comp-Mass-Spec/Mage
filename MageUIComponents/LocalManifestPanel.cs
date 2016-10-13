@@ -55,9 +55,9 @@ namespace MageUIComponents {
             }
         }
 
-		private void GetFilesCtl_Click(object sender, EventArgs e)
-		{
-		    OnAction?.Invoke(this, new MageCommandEventArgs("get_files_from_local_manifest"));
-		}
+        private void GetFilesCtl_Click(object sender, EventArgs e)
+        {
+            OnAction?.Invoke(this, new MageCommandEventArgs("get_files_from_local_manifest"));
+        }
     }
 }

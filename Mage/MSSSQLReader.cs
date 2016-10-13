@@ -389,7 +389,7 @@ namespace Mage
         /// Deliver column definitions via standard tabular output
         /// </summary>
         /// <param name="myReader">DataReader object from which to get data rows</param>
-		/// <param name="columnDefs">Column definitions</param>
+        /// <param name="columnDefs">Column definitions</param>
         private void OutputColumnDefinitions(IDataReader myReader, out List<MageColumnDef> columnDefs)
         {
             // if anyone is registered as listening for ColumnDefAvailable events, make it happen for them

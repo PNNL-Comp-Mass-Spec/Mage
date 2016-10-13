@@ -107,7 +107,7 @@ namespace MageUIComponents
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-		private void ProcessAllFilesCtl_Click(object sender, EventArgs e)
+        private void ProcessAllFilesCtl_Click(object sender, EventArgs e)
         {
             OnAction?.Invoke(this, new MageCommandEventArgs("process_file_contents", "all"));
         }
@@ -154,7 +154,7 @@ namespace MageUIComponents
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-		private void FilterParametersCtl_Click(object sender, EventArgs e)
+        private void FilterParametersCtl_Click(object sender, EventArgs e)
         {
             GetFilterParams();
         }

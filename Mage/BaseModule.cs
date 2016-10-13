@@ -406,7 +406,7 @@ namespace Mage
         /// <param name="columnIndex">Index of the column to return</param>
         /// <param name="defaultValue">Value to return if columnIndex is less than 0 or if the entry is not numeric</param>
         /// <returns>Value (integer) if defined; otherwise, returns defaultValue</returns>
-		protected int GetColumnValue(string[] columnVals, int columnIndex, int defaultValue)
+        protected int GetColumnValue(string[] columnVals, int columnIndex, int defaultValue)
         {
             if (columnIndex > -1)
             {
@@ -426,7 +426,7 @@ namespace Mage
         /// <param name="columnIndex">Index of the column to return</param>
         /// <param name="defaultValue">Value to return if columnIndex is less than 0 or if the entry is not numeric</param>
         /// <returns>Value (double) if defined; otherwise, returns defaultValue</returns>
-		protected double GetColumnValue(string[] columnVals, int columnIndex, double defaultValue)
+        protected double GetColumnValue(string[] columnVals, int columnIndex, double defaultValue)
         {
             if (columnIndex > -1)
             {
@@ -446,7 +446,7 @@ namespace Mage
         /// <param name="columnIndex">Index of the column to return</param>
         /// <param name="defaultValue">Value to return if columnIndex is less than 0</param>
         /// <returns>Value (string) if defined; otherwise, returns defaultValue</returns>
-		protected string GetColumnValue(string[] columnVals, int columnIndex, string defaultValue)
+        protected string GetColumnValue(string[] columnVals, int columnIndex, string defaultValue)
         {
             if (columnIndex > -1)
             {
@@ -726,7 +726,7 @@ namespace Mage
         /// </summary>
         /// <param name="vals">An input data row with fields according to input column definitions</param>
         /// <returns></returns>
-		protected string[] MapDataRow(string[] vals)
+        protected string[] MapDataRow(string[] vals)
         {
             // remap results according to our output column definitions
             var outRow = new string[OutputColumnDefs.Count];

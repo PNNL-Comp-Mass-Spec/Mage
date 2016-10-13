@@ -5,37 +5,37 @@ using Mage;
 
 namespace MageExtractor {
     public partial class ResultsFilterSelector : Form , IModuleParameters {
-		       
+               
 
-		#region Member Variables
+        #region Member Variables
 
         readonly Dictionary<string, string> mParameters = new Dictionary<string, string>();
 
-		string mFilterSetIDToAutoSelect = string.Empty;
+        string mFilterSetIDToAutoSelect = string.Empty;
 
-		ProcessingPipeline mGetFilterSetsPipeline;
+        ProcessingPipeline mGetFilterSetsPipeline;
 
-		#endregion
+        #endregion
 
-		#region Properties
-		
-		public string FilterSetID {
+        #region Properties
+        
+        public string FilterSetID {
             get { return FilterSetIDCtl.Text; }
             set { FilterSetIDCtl.Text = value; }
         }
 
-		public string FilterSetIDToSelect {
-			set {
-				FilterSetIDCtl.Text = value;
-				mFilterSetIDToAutoSelect = FilterSetIDCtl.Text;
-			}
-		}
+        public string FilterSetIDToSelect {
+            set {
+                FilterSetIDCtl.Text = value;
+                mFilterSetIDToAutoSelect = FilterSetIDCtl.Text;
+            }
+        }
 
-		#endregion
+        #endregion
 
-		#region IModuleParameters Members
+        #region IModuleParameters Members
 
-		public Dictionary<string, string> GetParameters() {
+        public Dictionary<string, string> GetParameters() {
             mParameters["FilterSetID"] = FilterSetIDCtl.Text;
             return mParameters;
         }
@@ -74,8 +74,8 @@ namespace MageExtractor {
 
             // build pipeline and run it
             mGetFilterSetsPipeline = ProcessingPipeline.Assemble("GetFilters", reader, filters);
-			mGetFilterSetsPipeline.OnRunCompleted += HandlePipelineCompletion;
-			mGetFilterSetsPipeline.RunRoot(null);
+            mGetFilterSetsPipeline.OnRunCompleted += HandlePipelineCompletion;
+            mGetFilterSetsPipeline.RunRoot(null);
         }
 
         private void List_SelectionChanged(object sender, EventArgs e) {
@@ -89,38 +89,38 @@ namespace MageExtractor {
             // Instead, call InitializeFilterSetList once the program is running
         }
 
-		private void UpdateSelectedFilterSetID() {
-			if (!string.IsNullOrEmpty(mFilterSetIDToAutoSelect)) {
+        private void UpdateSelectedFilterSetID() {
+            if (!string.IsNullOrEmpty(mFilterSetIDToAutoSelect)) {
 
-				// Find the row with the given filter set ID
-				foreach (DataGridViewRow item in gridViewDisplayControl1.List.Rows) {
-					if (item.Cells[0].Value.ToString() == mFilterSetIDToAutoSelect) {
-						item.Selected = true;
-						FilterSetIDCtl.Text = mFilterSetIDToAutoSelect;
-						gridViewDisplayControl1.List.FirstDisplayedCell = item.Cells[0];
-						break;
-					}
-				}
-			}
-		}
+                // Find the row with the given filter set ID
+                foreach (DataGridViewRow item in gridViewDisplayControl1.List.Rows) {
+                    if (item.Cells[0].Value.ToString() == mFilterSetIDToAutoSelect) {
+                        item.Selected = true;
+                        FilterSetIDCtl.Text = mFilterSetIDToAutoSelect;
+                        gridViewDisplayControl1.List.FirstDisplayedCell = item.Cells[0];
+                        break;
+                    }
+                }
+            }
+        }
 
 
-		#region Functions for handling status updates
+        #region Functions for handling status updates
 
-		private delegate void VoidFnDelegate();
+        private delegate void VoidFnDelegate();
 
-		/// <summary>
-		/// Handle updating filter set id on completion of running pipeline
-		/// </summary>
-		/// <param name="sender">(ignored)</param>
-		/// <param name="args">Contains status information to be displayed</param>
-		private void HandlePipelineCompletion(object sender, MageStatusEventArgs args) {
-			// Must use a delegate and Invoke to avoid "cross-thread operation not valid" exceptions
-			VoidFnDelegate uf = UpdateSelectedFilterSetID;
-			Invoke(uf);
-		}
+        /// <summary>
+        /// Handle updating filter set id on completion of running pipeline
+        /// </summary>
+        /// <param name="sender">(ignored)</param>
+        /// <param name="args">Contains status information to be displayed</param>
+        private void HandlePipelineCompletion(object sender, MageStatusEventArgs args) {
+            // Must use a delegate and Invoke to avoid "cross-thread operation not valid" exceptions
+            VoidFnDelegate uf = UpdateSelectedFilterSetID;
+            Invoke(uf);
+        }
 
-		#endregion
+        #endregion
         
    }
 }

@@ -35,7 +35,7 @@ namespace MageDisplayLib
         /// <summary>
         /// internal buffer for cell contents from our associated GridViewDisplayControl
         /// </summary>
-		private readonly List<string[]> mRowBuffer = new List<string[]>();
+        private readonly List<string[]> mRowBuffer = new List<string[]>();
 
         #endregion
 
@@ -120,7 +120,7 @@ namespace MageDisplayLib
         /// </summary>
         /// <param name="row"></param>
         /// <returns></returns>
-		private static string[] GetOutputRowFromGridRow(DataGridViewRow row)
+        private static string[] GetOutputRowFromGridRow(DataGridViewRow row)
         {
             var n = row.Cells.Count;
             var vals = new string[n];

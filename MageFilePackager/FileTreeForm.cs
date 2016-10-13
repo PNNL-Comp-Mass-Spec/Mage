@@ -197,8 +197,8 @@ namespace MageFilePackager {
                 ColumnPos = InputColumnPos;
             }
 
-			protected override bool CheckFilter(ref string[] vals)
-			{
+            protected override bool CheckFilter(ref string[] vals)
+            {
                 var path = vals[_pathIdx];
                 var kb = vals[_kbIdx];
 
@@ -208,7 +208,7 @@ namespace MageFilePackager {
                 // find bottom folder in hierarchy 
                 // (and build out as necessary)
                 var curNodeList = FileTree.Nodes;
-			    foreach (var folder in folders) {
+                foreach (var folder in folders) {
                     if (string.IsNullOrEmpty(folder)) continue;
                     var n = curNodeList.IndexOfKey(folder);
                     TreeNode curNode;
@@ -255,13 +255,13 @@ namespace MageFilePackager {
             private void OutputCheckedItems(TreeNode node) {
                 // if this node is checked, and has an object stored in tag filed, output it
                 if (node.Tag != null && node.Checked) {
-					var tagData = (object[])node.Tag;
+                    var tagData = (object[])node.Tag;
 
-					var tagVals = new string[tagData.Length];
-					for (var i = 0; i < tagData.Length; i++)
-						tagVals[i] = tagData[i].ToString();
+                    var tagVals = new string[tagData.Length];
+                    for (var i = 0; i < tagData.Length; i++)
+                        tagVals[i] = tagData[i].ToString();
 
-					OnDataRowAvailable(new MageDataEventArgs(tagVals));
+                    OnDataRowAvailable(new MageDataEventArgs(tagVals));
                 }
                 // otherwise recursively call this method for all nodes in its nodes collection
                 foreach (TreeNode subNode in node.Nodes) {

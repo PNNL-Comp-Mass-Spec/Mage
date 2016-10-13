@@ -49,7 +49,7 @@ namespace Mage
         /// Set up column indexes
         /// </summary>
         /// <remarks>This code will be executed after the column definitions have been created</remarks>
-        override protected void ColumnDefsFinished()
+        protected override void ColumnDefsFinished()
         {
             if (!OutputColumnPos.TryGetValue(KeyColName, out _keyColIdx))
                 throw new Exception("Key column '" + KeyColName + "' not found in the output columns, " + string.Join(",", OutputColumnPos.Keys));

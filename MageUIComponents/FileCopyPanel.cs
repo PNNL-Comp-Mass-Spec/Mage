@@ -72,10 +72,10 @@ namespace MageUIComponents
         {
             return new Dictionary<string, string>() { 
                 { "OutputFolder",           OutputFolder},
-				{ "OverwriteExistingFiles", OverwriteExistingFiles},
-				{ "ApplyPrefixToFileName",  ApplyPrefixToFileName}, 
-				{ "PrefixLeader",           PrefixLeader}, 
-				{ "PrefixColumnName",       PrefixColumnName},
+                { "OverwriteExistingFiles", OverwriteExistingFiles},
+                { "ApplyPrefixToFileName",  ApplyPrefixToFileName}, 
+                { "PrefixLeader",           PrefixLeader}, 
+                { "PrefixColumnName",       PrefixColumnName},
                 { "ResolveCacheInfoFiles",  ResolveCacheInfoFiles}
             };
         }

@@ -325,7 +325,7 @@ namespace MageDisplayLib
         /// Add a block of rows to DataGridView control
         /// </summary>
         /// <param name="rows"></param>
-		private void HandleDisplayRowBlock(Collection<string[]> rows)
+        private void HandleDisplayRowBlock(Collection<string[]> rows)
         {
             if (rows != null)
             {
@@ -476,7 +476,7 @@ namespace MageDisplayLib
         /// <summary>
         /// internal buffer to accumulate data rows from standard tabular input
         /// </summary>
-		private readonly Collection<string[]> mRowBuffer = new Collection<string[]>();
+        private readonly Collection<string[]> mRowBuffer = new Collection<string[]>();
 
 
         #endregion

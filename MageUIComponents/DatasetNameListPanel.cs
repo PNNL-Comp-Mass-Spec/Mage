@@ -6,8 +6,8 @@ using MageDisplayLib;
 
 namespace MageUIComponents
 {
-	public partial class DatasetNameListPanel : UserControl, IModuleParameters
-	{
+    public partial class DatasetNameListPanel : UserControl, IModuleParameters
+    {
 
         public event EventHandler<MageCommandEventArgs> OnAction;
 
@@ -42,7 +42,7 @@ namespace MageUIComponents
             OnAction?.Invoke(this, new MageCommandEventArgs("get_entities_from_query", "Datasets"));
         }
 
-	    private void DatasetListCtl_Leave(object sender, EventArgs e) {
+        private void DatasetListCtl_Leave(object sender, EventArgs e) {
             DatasetListCtl.Text = PanelSupport.CleanUpDelimitedList(DatasetListCtl.Text);
         }
 
@@ -57,5 +57,5 @@ namespace MageUIComponents
             }
 
         }
-	}
+    }
 }

@@ -47,9 +47,9 @@ namespace MageUIComponents {
 
         #endregion
 
-		private void GetJobsCtl_Click(object sender, EventArgs e)
-		{
-		    OnAction?.Invoke(this, new MageCommandEventArgs("get_entities_from_query", "Jobs"));
-		}
+        private void GetJobsCtl_Click(object sender, EventArgs e)
+        {
+            OnAction?.Invoke(this, new MageCommandEventArgs("get_entities_from_query", "Jobs"));
+        }
     }
 }

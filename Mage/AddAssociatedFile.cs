@@ -11,7 +11,7 @@ namespace Mage
     /// looks for an associated file for each one and adds that file's
     /// name to standard ouput stream
     /// </summary>
-	public class AddAssociatedFile : FileProcessingBase
+    public class AddAssociatedFile : FileProcessingBase
     {
 
         #region Member Variables

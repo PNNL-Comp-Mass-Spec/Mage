@@ -29,7 +29,7 @@ namespace Mage
         /// <summary>
         /// An internal buffer for accumulating rows passed in via the standard tabular input handler
         /// </summary>
-		private readonly List<string[]> SavedRows = new List<string[]>();
+        private readonly List<string[]> SavedRows = new List<string[]>();
 
         #endregion
 
@@ -58,7 +58,7 @@ namespace Mage
         /// <summary>
         /// Get rows that were accumumlated in the internal row buffer
         /// </summary>
-		public Collection<string[]> Rows { get { return new Collection<string[]>(SavedRows); } }
+        public Collection<string[]> Rows { get { return new Collection<string[]>(SavedRows); } }
 
         #endregion
 

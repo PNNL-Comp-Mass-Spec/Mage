@@ -27,7 +27,7 @@ namespace Mage
     /// 
     /// this module outputs a record of each file processed on stardard tabular output
     /// </summary>
-	public class FileContentProcessor : FileProcessingBase
+    public class FileContentProcessor : FileProcessingBase
     {
 
         #region Member Variables
@@ -287,7 +287,7 @@ namespace Mage
         /// <param name="fieldPos"></param>
         /// <param name="fields"></param>
         /// <returns></returns>
-		protected string GetDefaultOutputFileName(string sourceFile, Dictionary<string, int> fieldPos, string[] fields)
+        protected string GetDefaultOutputFileName(string sourceFile, Dictionary<string, int> fieldPos, string[] fields)
         {
             return sourceFile;
         }

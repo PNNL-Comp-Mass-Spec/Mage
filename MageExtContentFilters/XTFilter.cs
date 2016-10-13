@@ -7,9 +7,9 @@ namespace MageExtContentFilters
     /// Filter X!Tandem results using the FilterSetID defined by the base class
     /// </summary>
     /// <remarks>
-	/// This class will be auto-discovered by the ModuleDiscovery class in Mage
-	/// The list of auto-discovered filters is then used to populate the gridview on form FilterSelectionForm.cs
-	/// </remarks>
+    /// This class will be auto-discovered by the ModuleDiscovery class in Mage
+    /// The list of auto-discovered filters is then used to populate the gridview on form FilterSelectionForm.cs
+    /// </remarks>
     [MageAttribute("Filter", "XTFilter", "XT filter", "Uses filter criteria defined in DMS")]
     class XTFilter : ContentFilter
     {
@@ -66,7 +66,7 @@ namespace MageExtContentFilters
         /// </summary>
         /// <param name="fields">Row, as array of fields</param>
         /// <returns>Whether or not row should be included in output</returns>
-		protected override bool CheckFilter(ref string[] fields)
+        protected override bool CheckFilter(ref string[] fields)
         {
             var accepted = false;
             var peptideSequence = GetColumnValue(fields, peptideSequenceIndex, string.Empty);
