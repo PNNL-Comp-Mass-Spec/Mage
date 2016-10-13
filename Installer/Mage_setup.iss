@@ -1,7 +1,7 @@
 ; This is an Inno Setup configuration file
 ; http://www.jrsoftware.org/isinfo.php
 
-#define ApplicationVersion GetFileVersion('..\DeployedFiles\MageConcatenator\Mage.dll')
+#define ApplicationVersion GetFileVersion('..\DeployedFiles\MageFileProcessor\Mage.dll')
 
 [CustomMessages]
 AppName=Mage
