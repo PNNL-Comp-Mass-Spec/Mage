@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Mage;
@@ -21,19 +21,19 @@ namespace Ranger {
                 MessageBox.Show("Error loading settings: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
 
-			try {
-				// restore settings to UI component panels
-				SavedState.RestoreSavedPanelParameters(PanelSupport.GetParameterPanelList(this));
-			} catch (Exception ex) {
-				MessageBox.Show("Error restoring saved settings; will auto-delete SavedState.xml.  Message details: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-				// Delete the SavedState.xml file
-				try {
-					System.IO.File.Delete(SavedState.FilePath);
-				} catch (Exception ex2) {
-					// Ignore errors here
-					Console.WriteLine("Error deleting SavedState file: " + ex2.Message);
-				}
-			}
+            try {
+                // restore settings to UI component panels
+                SavedState.RestoreSavedPanelParameters(PanelSupport.GetParameterPanelList(this));
+            } catch (Exception ex) {
+                MessageBox.Show("Error restoring saved settings; will auto-delete SavedState.xml.  Message details: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                // Delete the SavedState.xml file
+                try {
+                    System.IO.File.Delete(SavedState.FilePath);
+                } catch (Exception ex2) {
+                    // Ignore errors here
+                    Console.WriteLine("Error deleting SavedState file: " + ex2.Message);
+                }
+            }
 
             StatusCtl.Text = "";
         }

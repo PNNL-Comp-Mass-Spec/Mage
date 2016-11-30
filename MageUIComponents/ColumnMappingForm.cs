@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Mage;
@@ -638,7 +638,7 @@ namespace MageUIComponents
         /// Get a new column row to insert
         /// </summary>
         /// <returns></returns>
-		private static string[] GetDefaultNewColumn()
+        private static string[] GetDefaultNewColumn()
         {
             var newColData = new[] { "New_Column", "", "text", "" };
             return newColData;

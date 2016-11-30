@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -303,133 +303,133 @@ namespace MageFileProcessor
             statusPanel1.EnableCancel = enabled;
         }
 
-		/// <summary>
-		/// Adjust the labelling and status of various UI components
-		/// (called when a command pipeline completes via cross-thread invoke from HandleStatusMessageUpdated)
-		/// </summary>
-		/// <param name="status"></param>
-		private void AdjusttPostCommndUIState(object status)
-		{
-			if (mCurrentCmd == null) return;
+        /// <summary>
+        /// Adjust the labelling and status of various UI components
+        /// (called when a command pipeline completes via cross-thread invoke from HandleStatusMessageUpdated)
+        /// </summary>
+        /// <param name="status"></param>
+        private void AdjusttPostCommndUIState(object status)
+        {
+            if (mCurrentCmd == null) return;
 
-			EnableCancel(false);
+            EnableCancel(false);
 
-			AdjustFileListLabels();
-			AdjustFileProcessingPanels();
+            AdjustFileListLabels();
+            AdjustFileProcessingPanels();
 
-			SavedState.SaveParameters(PanelSupport.GetParameterPanelList(this));
-		}
+            SavedState.SaveParameters(PanelSupport.GetParameterPanelList(this));
+        }
 
-		/// <summary>
-		/// Processing files is only possible when file list contains files,
-		/// adjust the processing panels to inform user
-		/// </summary>
-		private void AdjustFileProcessingPanels()
-		{
-			int fileCount = FileListDisplayControl.ItemCount;
-			if (fileCount == 0)
-			{
-				FolderDestinationPanel1.Enabled = false;
-			}
-			else
-			{
-				FolderDestinationPanel1.Enabled = true;
-			}
-		}
-		/// <summary>
-		/// Since the list of files can be derived from different sources,
-		/// adjust the labelling to inform the user about which one was used
-		/// </summary>
-		private void AdjustFileListLabels()
-		{
-			switch (mCurrentCmd.Action)
-			{
-				case "get_files_from_local_folder":
-					FileListDisplayControl.PageTitle = mFileListLabelPrefix + "Local Folder";
-					break;
-			}
-		}
-	
-		private Dictionary<string, string> GetRuntimeParmsForLocalFolder()
-		{
-			var rp = new Dictionary<string, string>
-			{
-				{"FileNameFilter", LocalFolderPanel1.FileNameFilter},
+        /// <summary>
+        /// Processing files is only possible when file list contains files,
+        /// adjust the processing panels to inform user
+        /// </summary>
+        private void AdjustFileProcessingPanels()
+        {
+            int fileCount = FileListDisplayControl.ItemCount;
+            if (fileCount == 0)
+            {
+                FolderDestinationPanel1.Enabled = false;
+            }
+            else
+            {
+                FolderDestinationPanel1.Enabled = true;
+            }
+        }
+        /// <summary>
+        /// Since the list of files can be derived from different sources,
+        /// adjust the labelling to inform the user about which one was used
+        /// </summary>
+        private void AdjustFileListLabels()
+        {
+            switch (mCurrentCmd.Action)
+            {
+                case "get_files_from_local_folder":
+                    FileListDisplayControl.PageTitle = mFileListLabelPrefix + "Local Folder";
+                    break;
+            }
+        }
+    
+        private Dictionary<string, string> GetRuntimeParmsForLocalFolder()
+        {
+            var rp = new Dictionary<string, string>
+            {
+                {"FileNameFilter", LocalFolderPanel1.FileNameFilter},
                 {"FileSelectionMode", LocalFolderPanel1.FileSelectionMode},
-				{"Folder", LocalFolderPanel1.Folder},
-				{"SearchInSubfolders", LocalFolderPanel1.SearchInSubfolders},
-				{"SubfolderSearchName", LocalFolderPanel1.SubfolderSearchName}                
-			};
-			return rp;
-		}
-		private Dictionary<string, string> GetRuntimeParmsForFileProcessing()
-		{
-			var rp = new Dictionary<string, string>
-			{
-			    {"OutputFolder", FolderDestinationPanel1.OutputFolder},
-			    {"OutputFile", FolderDestinationPanel1.OutputFile},
-			    {"OutputMode", "File_Output"},
-			    {"ManifestFileName", string.Format("Manifest_{0:yyyy-MM-dd_hhmmss}.txt", DateTime.Now)},
-			    {"SourceFileColumnName", "File"}
-			};
+                {"Folder", LocalFolderPanel1.Folder},
+                {"SearchInSubfolders", LocalFolderPanel1.SearchInSubfolders},
+                {"SubfolderSearchName", LocalFolderPanel1.SubfolderSearchName}                
+            };
+            return rp;
+        }
+        private Dictionary<string, string> GetRuntimeParmsForFileProcessing()
+        {
+            var rp = new Dictionary<string, string>
+            {
+                {"OutputFolder", FolderDestinationPanel1.OutputFolder},
+                {"OutputFile", FolderDestinationPanel1.OutputFile},
+                {"OutputMode", "File_Output"},
+                {"ManifestFileName", string.Format("Manifest_{0:yyyy-MM-dd_hhmmss}.txt", DateTime.Now)},
+                {"SourceFileColumnName", "File"}
+            };
 
-		    return rp;
-		}
+            return rp;
+        }
         #endregion
 
-		#region Functions for handling status updates
+        #region Functions for handling status updates
 
-		private delegate void CompletionStateUpdated(object status);
-		private delegate void VoidFnDelegate();
+        private delegate void CompletionStateUpdated(object status);
+        private delegate void VoidFnDelegate();
 
-		private void HandlePipelineUpdate(object sender, MageStatusEventArgs args)
-		{
-			statusPanel1.HandleStatusMessageUpdated(this, new MageStatusEventArgs(args.Message));
-			Console.WriteLine(args.Message);
-		}
+        private void HandlePipelineUpdate(object sender, MageStatusEventArgs args)
+        {
+            statusPanel1.HandleStatusMessageUpdated(this, new MageStatusEventArgs(args.Message));
+            Console.WriteLine(args.Message);
+        }
 
-		private void HandlePipelineWarning(object sender, MageStatusEventArgs args)
-		{
-			statusPanel1.HandleWarningMessageUpdated(this, new MageStatusEventArgs(args.Message));
-			Console.WriteLine("Warning: " + args.Message);
-		}
+        private void HandlePipelineWarning(object sender, MageStatusEventArgs args)
+        {
+            statusPanel1.HandleWarningMessageUpdated(this, new MageStatusEventArgs(args.Message));
+            Console.WriteLine("Warning: " + args.Message);
+        }
 
-		/// <summary>
-		/// handle updating control enable status on completion of running pipeline
-		/// </summary>
-		/// <param name="sender">(ignored)</param>
-		/// <param name="args">Contains status information to be displayed</param>
-		private void HandlePipelineCompletion(object sender, MageStatusEventArgs args)
-		{
-			statusPanel1.HandleCompletionMessageUpdate(this, new MageStatusEventArgs(args.Message));
-			Console.WriteLine(args.Message);
+        /// <summary>
+        /// handle updating control enable status on completion of running pipeline
+        /// </summary>
+        /// <param name="sender">(ignored)</param>
+        /// <param name="args">Contains status information to be displayed</param>
+        private void HandlePipelineCompletion(object sender, MageStatusEventArgs args)
+        {
+            statusPanel1.HandleCompletionMessageUpdate(this, new MageStatusEventArgs(args.Message));
+            Console.WriteLine(args.Message);
 
-			var pipeline = sender as ProcessingPipeline;
-			if (pipeline != null)
-			{
-				if (pipeline.PipelineName == mFinalPipelineName)
-				{
+            var pipeline = sender as ProcessingPipeline;
+            if (pipeline != null)
+            {
+                if (pipeline.PipelineName == mFinalPipelineName)
+                {
 
-					CompletionStateUpdated csu = AdjusttPostCommndUIState;
-					Invoke(csu, new object[] { null });
-					
-				}
-			}
+                    CompletionStateUpdated csu = AdjusttPostCommndUIState;
+                    Invoke(csu, new object[] { null });
+                    
+                }
+            }
 
-			if (args.Message.StartsWith(MSSQLReader.SQL_COMMAND_ERROR))
-				MessageBox.Show(args.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            if (args.Message.StartsWith(MSSQLReader.SQL_COMMAND_ERROR))
+                MessageBox.Show(args.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
-		}
+        }
 
-		private void HandlePipelineQueueUpdate(object sender, MageStatusEventArgs args)
-		{
-			// Console.WriteLine("PipelineQueueUpdate: " + args.Message);
-		}
+        private void HandlePipelineQueueUpdate(object sender, MageStatusEventArgs args)
+        {
+            // Console.WriteLine("PipelineQueueUpdate: " + args.Message);
+        }
 
-		private void HandlePipelineQueueCompletion(object sender, MageStatusEventArgs args)
-		{
-			// Console.WriteLine("PipelineQueueCompletion: " + args.Message);
-		}
+        private void HandlePipelineQueueCompletion(object sender, MageStatusEventArgs args)
+        {
+            // Console.WriteLine("PipelineQueueCompletion: " + args.Message);
+        }
 
         #endregion
 

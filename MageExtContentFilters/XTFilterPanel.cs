@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,15 +13,15 @@ namespace MageExtContentFilters {
     [MageAttribute("FilterPanel", "XTFilter", "XT filter", "Uses filter criteria defined in DMS")]
     public partial class XTFilterPanel : Form, IModuleParameters {
 
-		#region Member Variables
+        #region Member Variables
 
         Dictionary<string, string> mParameters = new Dictionary<string, string>();
 
-		string mFilterSetIDToAutoSelect = string.Empty;
+        string mFilterSetIDToAutoSelect = string.Empty;
 
-		ProcessingPipeline mGetFiltersPipeline;
+        ProcessingPipeline mGetFiltersPipeline;
 
-		#endregion
+        #endregion
 
         #region IModuleParameters Members
 
@@ -32,7 +32,7 @@ namespace MageExtContentFilters {
 
         public void SetParameters(Dictionary<string, string> paramList) {
             FilterSetIDCtl.Text = paramList["FilterSetID"];
-			mFilterSetIDToAutoSelect = FilterSetIDCtl.Text;
+            mFilterSetIDToAutoSelect = FilterSetIDCtl.Text;
         }
 
         #endregion
@@ -40,8 +40,8 @@ namespace MageExtContentFilters {
         public XTFilterPanel() {
             InitializeComponent();
             gridViewDisplayControl1.List.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-			gridViewDisplayControl1.MultiSelect = false;
-			gridViewDisplayControl1.SelectionChanged += new System.EventHandler<System.EventArgs>(this.listDisplayControl1_SelectionChanged);
+            gridViewDisplayControl1.MultiSelect = false;
+            gridViewDisplayControl1.SelectionChanged += new System.EventHandler<System.EventArgs>(this.listDisplayControl1_SelectionChanged);
         }
 
         private void GetFilterSetList() {
@@ -57,10 +57,10 @@ namespace MageExtContentFilters {
             // create Mage module to receive query results
             var filters = gridViewDisplayControl1.MakeSink("Filter Sets", 20);
 
-			// build pipeline and run it
-			mGetFiltersPipeline = ProcessingPipeline.Assemble("GetFilters", reader, filters);
-			mGetFiltersPipeline.OnRunCompleted += HandlePipelineCompletion;
-			mGetFiltersPipeline.RunRoot(null);
+            // build pipeline and run it
+            mGetFiltersPipeline = ProcessingPipeline.Assemble("GetFilters", reader, filters);
+            mGetFiltersPipeline.OnRunCompleted += HandlePipelineCompletion;
+            mGetFiltersPipeline.RunRoot(null);
         }
 
         private void listDisplayControl1_SelectionChanged(object sender, EventArgs e) {
@@ -69,43 +69,43 @@ namespace MageExtContentFilters {
             }
         }
 
-		private void XTFilterPanel_Load(object sender, EventArgs e) {
-			GetFilterSetList();
-		}
+        private void XTFilterPanel_Load(object sender, EventArgs e) {
+            GetFilterSetList();
+        }
 
-		private void UpdateFilterSetID() {
-			if (!string.IsNullOrEmpty(mFilterSetIDToAutoSelect)) {
+        private void UpdateFilterSetID() {
+            if (!string.IsNullOrEmpty(mFilterSetIDToAutoSelect)) {
 
-				var toSelect = new List<DataGridViewRow>(1);
+                var toSelect = new List<DataGridViewRow>(1);
 
-				// Find the row with the given filter set ID
-				foreach (DataGridViewRow item in gridViewDisplayControl1.List.Rows) {
-					if (item.Cells[0].Value.ToString() == mFilterSetIDToAutoSelect) {
-						item.Selected = true;
-						FilterSetIDCtl.Text = mFilterSetIDToAutoSelect;
-						gridViewDisplayControl1.List.FirstDisplayedCell = item.Cells[0];
-						break;
-					}
-				}
-			}
-		}
+                // Find the row with the given filter set ID
+                foreach (DataGridViewRow item in gridViewDisplayControl1.List.Rows) {
+                    if (item.Cells[0].Value.ToString() == mFilterSetIDToAutoSelect) {
+                        item.Selected = true;
+                        FilterSetIDCtl.Text = mFilterSetIDToAutoSelect;
+                        gridViewDisplayControl1.List.FirstDisplayedCell = item.Cells[0];
+                        break;
+                    }
+                }
+            }
+        }
 
-		#region Functions for handling status updates
+        #region Functions for handling status updates
 
-		private delegate void VoidFnDelegate();
+        private delegate void VoidFnDelegate();
 
-		/// <summary>
-		/// Handle updating filter set id on completion of running pipeline
-		/// </summary>
-		/// <param name="sender">(ignored)</param>
-		/// <param name="args">Contains status information to be displayed</param>
-		private void HandlePipelineCompletion(object sender, MageStatusEventArgs args) {
-			// Must use a delegate and Invoke to avoid "cross-thread operation not valid" exceptions
-			VoidFnDelegate uf = UpdateFilterSetID;
-			Invoke(uf);
-		}
+        /// <summary>
+        /// Handle updating filter set id on completion of running pipeline
+        /// </summary>
+        /// <param name="sender">(ignored)</param>
+        /// <param name="args">Contains status information to be displayed</param>
+        private void HandlePipelineCompletion(object sender, MageStatusEventArgs args) {
+            // Must use a delegate and Invoke to avoid "cross-thread operation not valid" exceptions
+            VoidFnDelegate uf = UpdateFilterSetID;
+            Invoke(uf);
+        }
 
-		#endregion
+        #endregion
 
-	}
+    }
 }
