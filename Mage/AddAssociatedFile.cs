@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using MyEMSLReader;
@@ -53,7 +55,7 @@ namespace Mage
         public string ColumnToReceiveAssocFileName { get; set; }
 
         /// <summary>
-        /// associated file name replacement pattern
+        /// Associated file name replacement pattern
         /// </summary>
         public string AssocFileNameReplacementPattern
         {
@@ -75,6 +77,10 @@ namespace Mage
         private int mInputFileIdx;
         private int mAssocFileIdx;
 
+        /// <summary>
+        /// Source file name that we are matching
+        /// </summary>
+        /// <remarks>May have a series of suffixes, separated by semicolons</remarks>
         private string mSourceFileNameFragment = "";
         private string mAssociatedFileNameFragment = "";
 
@@ -105,7 +111,29 @@ namespace Mage
             {
                 var folderPathSpec = args.Fields[mInputFolderIdx];
                 var resultFileName = args.Fields[mInputFileIdx];
-                var assocFileName = base.ReplaceEx(resultFileName, mSourceFileNameFragment, mAssociatedFileNameFragment);
+
+                var assocFileName = string.Empty;
+                var sourceFileNameParts = mSourceFileNameFragment.Split(';');
+                foreach (var sourceFileNamePart in sourceFileNameParts)
+                {
+                    if (resultFileName.IndexOf(sourceFileNamePart, StringComparison.InvariantCultureIgnoreCase) > 0)
+                    {
+                        assocFileName = base.ReplaceEx(resultFileName, sourceFileNamePart, mAssociatedFileNameFragment);
+                        break;
+                    }
+                }
+
+                if (string.IsNullOrEmpty(assocFileName))
+                {
+                    // Match not found; this is unexpected
+                    assocFileName = base.ReplaceEx(resultFileName, mSourceFileNameFragment, mAssociatedFileNameFragment);
+                }
+
+                if (resultFileName.Contains("_msgfdb") && assocFileName.Contains("_msgfplus"))
+                {
+                    // Auto-switch from _msgfplus to _msgfdb
+                    assocFileName = assocFileName.Replace("_msgfplus", "_msgfdb");                    
+                }
 
                 if (assocFileName == kNoFilesFound)
                 {

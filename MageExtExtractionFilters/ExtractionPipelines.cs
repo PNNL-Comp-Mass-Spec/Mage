@@ -97,6 +97,7 @@ namespace MageExtExtractionFilters
             {
                 var assocFinder = new AddAssociatedFile
                 {
+                    // Note that .ResultsFileNamePattern may have a series of filename patterns separated by semicolons
                     AssocFileNameReplacementPattern = string.Format("{0}|{1}", extractionParms.RType.ResultsFileNamePattern, mf.FileNameTag),
                     ColumnToReceiveAssocFileName = mf.NameColumn
                 };

@@ -39,17 +39,17 @@ namespace MageExtExtractionFilters
         }
 
         private static readonly List<ResultType> Types = new List<ResultType>() {
-            //                 Name                         Tag        Filter          resultsFileTag       IDColumnName
-            new ResultType("Sequest Synopsis",              "syn",        "sequest",       "_syn.txt",         "HitNum"),
-            new ResultType("Sequest First Hits",            "fht",        "sequest",       "_fht.txt",         "HitNum"),
-            new ResultType("X!Tandem First Protein",        "xt",         "xtandem",       "_xt.txt",          "Result_ID"),
-            new ResultType(XTANDEM_ALL_PROTEINS,            "xt",         "xtandem",       "_xt.txt",          "Result_ID"),
-            new ResultType(INSPECT_SYN_ALL_PROTEINS,        "ins_syn",    "inspect",       "_inspect_syn.txt", "ResultID"),
-            new ResultType("MSGF+ First Hits",              "msg_fht",    "msgfplusFHT",   "_msgfdb_fht.txt",  "ResultID"),
-            new ResultType("MSGF+ Synopsis First Protein",  "msg_syn",    "msgfplus",      "_msgfdb_syn.txt",  "ResultID"),
-            new ResultType(MSGFDB_SYN_ALL_PROTEINS,         "msg_syn",    "msgfplus",      "_msgfdb_syn.txt",  "ResultID"),
-            new ResultType("MSPathFinder First Protein",    "mspath_syn", "mspathfinder",  "_mspath_syn.txt",  "ResultID"),
-            new ResultType(MSPATHFINDER_SYN_ALL_PROTEINS,   "mspath_syn", "mspathfinder",  "_mspath_syn.txt",  "ResultID")
+            //                 Name                         Tag           Filter           resultsFileTag                       IDColumnName
+            new ResultType("Sequest Synopsis",              "syn",        "sequest",       "_syn.txt",                          "HitNum"),
+            new ResultType("Sequest First Hits",            "fht",        "sequest",       "_fht.txt",                          "HitNum"),
+            new ResultType("X!Tandem First Protein",        "xt",         "xtandem",       "_xt.txt",                           "Result_ID"),
+            new ResultType(XTANDEM_ALL_PROTEINS,            "xt",         "xtandem",       "_xt.txt",                           "Result_ID"),
+            new ResultType(INSPECT_SYN_ALL_PROTEINS,        "ins_syn",    "inspect",       "_inspect_syn.txt",                  "ResultID"),
+            new ResultType("MSGF+ First Hits",              "msg_fht",    "msgfplusFHT",   "_msgfplus_fht.txt;_msgfdb_fht.txt", "ResultID"),
+            new ResultType("MSGF+ Synopsis First Protein",  "msg_syn",    "msgfplus",      "_msgfplus_syn.txt;_msgfdb_syn.txt", "ResultID"),
+            new ResultType(MSGFDB_SYN_ALL_PROTEINS,         "msg_syn",    "msgfplus",      "_msgfplus_syn.txt;_msgfdb_syn.txt", "ResultID"),
+            new ResultType("MSPathFinder First Protein",    "mspath_syn", "mspathfinder",  "_mspath_syn.txt",                   "ResultID"),
+            new ResultType(MSPATHFINDER_SYN_ALL_PROTEINS,   "mspath_syn", "mspathfinder",  "_mspath_syn.txt",                   "ResultID")
         };
 
         private static readonly List<MergeFile> mMergeTypes = new List<MergeFile>() {
@@ -69,15 +69,19 @@ namespace MageExtExtractionFilters
             new MergeFile(INSPECT_SYN_ALL_PROTEINS, "SeqToProteinMap", "Unique_Seq_ID", "_inspect_syn_SeqToProteinMap.txt"),
             new MergeFile(INSPECT_SYN_ALL_PROTEINS, "MSGF_Name",       "Result_ID",     "_inspect_syn_MSGF.txt"),
 
-            new MergeFile("MSGF+ First Hits",      "MSGF_Name",       "Result_ID",     "_msgfdb_fht_MSGF.txt"),
+            // Note: for MSGF+ results, when instantiating the MergeFile instances we use the text msgfplus
+            // That text will be auto-changed later on to msgfdb if necessary
 
-            new MergeFile("MSGF+ Synopsis First Protein",  "ResultToSeqMap",  "Result_ID",     "_msgfdb_syn_ResultToSeqMap.txt"),
-            new MergeFile("MSGF+ Synopsis First Protein",  "SeqToProteinMap", "Unique_Seq_ID", "_msgfdb_syn_SeqToProteinMap.txt"),
-            new MergeFile("MSGF+ Synopsis First Protein",  "MSGF_Name",       "Result_ID",     "_msgfdb_syn_MSGF.txt"),
+            //                 ResultName                  NameColumn          KeyCol           FileNameTag
+            new MergeFile("MSGF+ First Hits",              "MSGF_Name",       "Result_ID",     "_msgfplus_fht_MSGF.txt"),
 
-            new MergeFile(MSGFDB_SYN_ALL_PROTEINS,         "ResultToSeqMap",  "Result_ID",     "_msgfdb_syn_ResultToSeqMap.txt"),
-            new MergeFile(MSGFDB_SYN_ALL_PROTEINS,         "SeqToProteinMap", "Unique_Seq_ID", "_msgfdb_syn_SeqToProteinMap.txt"),
-            new MergeFile(MSGFDB_SYN_ALL_PROTEINS,         "MSGF_Name",       "Result_ID",     "_msgfdb_syn_MSGF.txt"),
+            new MergeFile("MSGF+ Synopsis First Protein",  "ResultToSeqMap",  "Result_ID",     "_msgfplus_syn_ResultToSeqMap.txt"),
+            new MergeFile("MSGF+ Synopsis First Protein",  "SeqToProteinMap", "Unique_Seq_ID", "_msgfplus_syn_SeqToProteinMap.txt"),
+            new MergeFile("MSGF+ Synopsis First Protein",  "MSGF_Name",       "Result_ID",     "_msgfplus_syn_MSGF.txt"),
+
+            new MergeFile(MSGFDB_SYN_ALL_PROTEINS,         "ResultToSeqMap",  "Result_ID",     "_msgfplus_syn_ResultToSeqMap.txt"),
+            new MergeFile(MSGFDB_SYN_ALL_PROTEINS,         "SeqToProteinMap", "Unique_Seq_ID", "_msgfplus_syn_SeqToProteinMap.txt"),
+            new MergeFile(MSGFDB_SYN_ALL_PROTEINS,         "MSGF_Name",       "Result_ID",     "_msgfplus_syn_MSGF.txt"),
 
             new MergeFile("MSPathFinder First Protein",    "ResultToSeqMap",  "Result_ID",     "_mspath_syn_ResultToSeqMap.txt"),
             new MergeFile("MSPathFinder First Protein",    "SeqToProteinMap", "Unique_Seq_ID", "_mspath_syn_SeqToProteinMap.txt"),
@@ -93,7 +97,13 @@ namespace MageExtExtractionFilters
 
         public string ResultName { get; set; }
         public string Tag { get; set; }
+
+        /// <summary>
+        /// File name suffix to find
+        /// </summary>
+        /// <remarks>Separate a list of alternative suffixes using semicolons</remarks>
         public string ResultsFileNamePattern { get; set; }
+
         public string Filter { get; set; }
         public string ResultIDColName { get; set; }
         public Collection<MergeFile> MergeFileTypes
@@ -140,6 +150,14 @@ namespace MageExtExtractionFilters
 
         #region Constructors
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="tag"></param>
+        /// <param name="filter"></param>
+        /// <param name="resultsFileTag">Filename suffix to match; separate a list of alternative suffixes using semicolons</param>
+        /// <param name="idColName"></param>
         public ResultType(string name, string tag, string filter, string resultsFileTag, string idColName)
         {
             ResultName = name;

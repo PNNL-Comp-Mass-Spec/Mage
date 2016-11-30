@@ -80,12 +80,16 @@ namespace MageExtExtractionFilters
 
             if (mMergeMode == MergeModeConstants.InspectOrMSGFDB)
             {
-                ODX_Protein_Name = colPos["Protein"];               // The Protein column is present in the original _msgfdb_syn.txt file; we are replacing the protein name listed with the name from the msgfdb_syn_SeqToProteinMap.txt file
+                // The Protein column is present in the original _msgfplus_syn.txt file
+                // we are replacing the protein name listed with the name from the _msgfplus_syn_SeqToProteinMap.txt file
+                ODX_Protein_Name = colPos["Protein"];
             }
 
             if (mMergeMode == MergeModeConstants.MSPathFinder)
             {
-                ODX_Protein_Name = colPos["ProteinName"];           // The Protein column is present in the original _msgfdb_syn.txt file; we are replacing the protein name listed with the name from the msgfdb_syn_SeqToProteinMap.txt file
+                // The Protein column is present in the original _msgfplus_syn.txt file; 
+                // we are replacing the protein name listed with the name from the _msgfplus_syn_SeqToProteinMap.txt file
+                ODX_Protein_Name = colPos["ProteinName"];
             }
 
         }
