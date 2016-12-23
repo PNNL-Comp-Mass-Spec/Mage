@@ -17,7 +17,8 @@ namespace Mage
         /// <summary>
         /// Constant used when no files are found
         /// </summary>
-        protected const string kNoFilesFound = "--No Files Found--";
+        // ReSharper disable once MemberCanBeProtected.Global (used by the Analysis Manager)
+        public const string kNoFilesFound = "--No Files Found--";
 
         #region Member Variables
 
