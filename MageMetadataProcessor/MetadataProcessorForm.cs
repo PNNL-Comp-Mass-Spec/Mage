@@ -58,8 +58,8 @@ namespace MageMetadataProcessor
             ModuleDiscovery.ExternalModuleFolder = fi.DirectoryName;
 
             //Set log4net path
-            var LogFileName = Path.Combine(SavedState.DataDirectory, "log.txt");
-            log4net.GlobalContext.Properties["LogName"] = LogFileName;
+            var logFileName = Path.Combine(SavedState.DataDirectory, "log.txt");
+            log4net.GlobalContext.Properties["LogName"] = logFileName;
 
             var traceLog = LogManager.GetLogger("TraceLog");
             // kick the logger into action
@@ -167,15 +167,14 @@ namespace MageMetadataProcessor
                         MessageBox.Show("Database file path cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         return;
                     }
-                    else if (string.IsNullOrEmpty(tableName))
+
+                    if (string.IsNullOrEmpty(tableName))
                     {
                         MessageBox.Show("Database table name cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         return;
                     }
 
                     mCurrentPipeline = MakeSaveToDBPipeline(source, filePath, tableName, outputColumnList);
-                    break;
-                default:
                     break;
             }
             try
@@ -245,9 +244,6 @@ namespace MageMetadataProcessor
         private void AdjusttPostCommndUIState(object status)
         {
             EnableCancel(false);
-
-            if (mCurrentCmd == null) return;
-
         }
 
         #endregion

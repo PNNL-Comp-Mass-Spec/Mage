@@ -17,21 +17,21 @@ namespace MageExtContentFilters
         #region Member Variables
 
         // working copy of SEQUEST filter object
-        private FilterSequestResults mSeqFilter = null;
+        private FilterSequestResults mSeqFilter;
 
         // indexes into the synopsis row field array
-        private int peptideSequenceIndex = 0;
-        private int xCorrValueIndex = 0;
-        private int delCNValueIndex = 0;
-        private int delCN2ValueIndex = 0;
-        private int chargeStateIndex = 0;
-        private int peptideMassIndex = 0;
+        private int peptideSequenceIndex;
+        private int xCorrValueIndex;
+        private int delCNValueIndex;
+        private int delCN2ValueIndex;
+        private int chargeStateIndex;
+        private int peptideMassIndex;
         ////private int spectrumCountIndex = 0;
         ////private int discriminantScoreIndex = 0;
         ////private int NETAbsoluteDifferenceIndex = 0;
-        private int cleavageStateIndex = 0;
-        private int msgfSpecProbIndex = 0;
-        private int rankXcIndex = 0;
+        private int cleavageStateIndex;
+        private int msgfSpecProbIndex;
+        private int rankXcIndex;
 
         #endregion
 
@@ -73,8 +73,6 @@ namespace MageExtContentFilters
         /// <returns>Whether or not row should be included in output</returns>
         protected override bool CheckFilter(ref string[] fields)
         {
-            var accepted = false;
-
             var peptideSequence = GetColumnValue(fields, peptideSequenceIndex, string.Empty);
             var xCorrValue = GetColumnValue(fields, xCorrValueIndex, -1d);
             var delCNValue = GetColumnValue(fields, delCNValueIndex, -1d);
@@ -89,7 +87,7 @@ namespace MageExtContentFilters
             double discriminantScore = -1;
             double NETAbsoluteDifference = -1;
 
-            accepted = mSeqFilter.EvaluateSequest(peptideSequence, xCorrValue, delCNValue, delCN2Value, chargeState, peptideMass, spectrumCount, discriminantScore, NETAbsoluteDifference, cleavageState, msgfSpecProb, rankXc);
+            var accepted = mSeqFilter.EvaluateSequest(peptideSequence, xCorrValue, delCNValue, delCN2Value, chargeState, peptideMass, spectrumCount, discriminantScore, NETAbsoluteDifference, cleavageState, msgfSpecProb, rankXc);
 
             if (accepted && OutputColumnDefs != null)
             {

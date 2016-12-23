@@ -125,7 +125,7 @@ namespace Mage
             }
 
             if (!bufferUpdated)
-                mOutputBuffer.Add(new string[] { "", "", "", "", path });  // Note: needs to have the same number of columns as OutputColumnList
+                mOutputBuffer.Add(new[] { "", "", "", "", path });  // Note: needs to have the same number of columns as OutputColumnList
 
         }
 

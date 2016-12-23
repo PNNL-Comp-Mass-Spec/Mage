@@ -291,11 +291,8 @@ namespace MageExtExtractionFilters
             {
                 mResultsChecker = ExtractionParms.RType.GetResultsChecker(ExtractionParms.ResultFilterSetID);
 
-                if (mResultsChecker != null)
-                {
-                    // Write out the filter criteria as a tab-delimited text file
-                    mResultsChecker.WriteCriteria(Path.Combine(Destination.ContainerPath, Destination.FilterCriteriaName));
-                }
+                // Write out the filter criteria as a tab-delimited text file
+                mResultsChecker?.WriteCriteria(Path.Combine(Destination.ContainerPath, Destination.FilterCriteriaName));
             }
         }
 
@@ -307,8 +304,7 @@ namespace MageExtExtractionFilters
         /// <returns></returns>
         private ExtractionFilter GetExtractionFilterModule(string resultsFolderPath, string job)
         {
-            ExtractionFilter resultsFilter = null;
-            resultsFilter = mExtractionType.RType.GetExtractionFilter(mResultsChecker);
+            var resultsFilter = ExtractionParms.RType.GetExtractionFilter(mResultsChecker);
             resultsFilter.Job = job;
             resultsFilter.ResultFolderPath = resultsFolderPath;
             resultsFilter.MergeFiles = mMergeFiles;

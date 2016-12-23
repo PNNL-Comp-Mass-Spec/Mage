@@ -26,7 +26,7 @@ namespace MageFileProcessor
 
             // convert XCorr from text to number
             // and accept it if it meets minimum value
-            double v = 0;
+            double v;
             if (xCorrIdx >= 0)
                 double.TryParse(fields[xCorrIdx], out v);
             else

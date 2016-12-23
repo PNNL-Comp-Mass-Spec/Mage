@@ -55,7 +55,7 @@ namespace MageExtractor
             InitializeComponent();
 
             const bool isBetaVersion = false;
-            SetFormTitle("2016-11-30", isBetaVersion);
+            SetFormTitle("2016-12-23", isBetaVersion);
 
             SetTags();
 
@@ -84,8 +84,8 @@ namespace MageExtractor
             try
             {
                 // Set log4net path and kick the logger into action
-                var LogFileName = Path.Combine(SavedState.DataDirectory, "log.txt");
-                log4net.GlobalContext.Properties["LogName"] = LogFileName;
+                var logFileName = Path.Combine(SavedState.DataDirectory, "log.txt");
+                log4net.GlobalContext.Properties["LogName"] = logFileName;
                 var traceLog = LogManager.GetLogger("TraceLog");
                 traceLog.Info("Starting Mage Extractor");
             }
@@ -692,7 +692,7 @@ namespace MageExtractor
                 else
                 {
                     var fiFileCheck = new FileInfo(folderPath);
-                    if (fiFileCheck.Exists)
+                    if (fiFileCheck.Exists && fiFileCheck.Directory != null)
                     {
                         ClearMageTempFiles(fiFileCheck.Directory.FullName);
                     }

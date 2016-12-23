@@ -51,8 +51,7 @@ namespace MageExtExtractionFilters
         public override void Cancel()
         {
             base.Cancel();
-            if (mMSGFMerger != null)
-                mMSGFMerger.Cancel();
+            mMSGFMerger?.Cancel();
         }
 
         public override void HandleColumnDef(object sender, MageColumnEventArgs args)
@@ -137,8 +136,7 @@ namespace MageExtExtractionFilters
             /// </summary>
             public void Cancel()
             {
-                if (mMSGFReaderPipeline != null)
-                    mMSGFReaderPipeline.Cancel();
+                mMSGFReaderPipeline?.Cancel();
             }
 
             /// <summary>

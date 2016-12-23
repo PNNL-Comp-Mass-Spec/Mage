@@ -1,5 +1,8 @@
 Mage Revision History
 
+Version 1.5.6201; December 23, 2016
+	- Make constant kNoFilesFound public
+
 Version 1.5.6178; November 30, 2016
 	- Use _msgfplus as the default filename tag for MSGF+ results
 		- Alternatively uses _msgfdb for older results

@@ -7,7 +7,7 @@ namespace Mage
 {
 
     /// <summary>
-    /// this class provides basic functions that are of use to most pipeline module classes.
+    /// This class provides basic functions that are of use to most pipeline module classes.
     /// </summary>
     public class BaseModule : IBaseModule
     {
@@ -108,7 +108,7 @@ namespace Mage
         /// Set the context parameters for the module (Optional)
         /// </summary>
         /// <param name="context">Set of parameters</param>
-        public virtual void SetContext(Dictionary<string, string> context)
+        public void SetContext(Dictionary<string, string> context)
         {
 
             if (Context == null)
@@ -164,7 +164,7 @@ namespace Mage
         /// The event-invoking method that derived classes can override.
         /// </summary>
         /// <param name="e"></param>
-        protected virtual void OnDataRowAvailable(MageDataEventArgs e)
+        protected void OnDataRowAvailable(MageDataEventArgs e)
         {
             // Make a temporary copy of the event to avoid possibility of a race condition
             var handler = DataRowAvailable;
@@ -178,7 +178,7 @@ namespace Mage
         /// The event-invoking method that derived classes can override.
         /// </summary>
         /// <param name="e"></param>
-        protected virtual void OnColumnDefAvailable(MageColumnEventArgs e)
+        protected void OnColumnDefAvailable(MageColumnEventArgs e)
         {
             // Make a temporary copy of the event to avoid possibility of a race condition
             var handler = ColumnDefAvailable;
@@ -189,7 +189,7 @@ namespace Mage
         /// Event-invoking method for status message updates
         /// </summary>
         /// <param name="e"></param>
-        protected virtual void OnStatusMessageUpdated(MageStatusEventArgs e)
+        protected void OnStatusMessageUpdated(MageStatusEventArgs e)
         {
             // Make a temporary copy of the event to avoid possibility of a race condition
             var handler = StatusMessageUpdated;
@@ -200,7 +200,7 @@ namespace Mage
         /// Event-invoking method for warning messages
         /// </summary>
         /// <param name="e"></param>
-        protected virtual void OnWarningMessage(MageStatusEventArgs e)
+        protected void OnWarningMessage(MageStatusEventArgs e)
         {
             // Make a temporary copy of the event to avoid possibility of a race condition
             var handler = WarningMessageUpdated;
@@ -345,7 +345,7 @@ namespace Mage
         /// Terminate the execution of the containing pipeline
         /// (if one exists)
         /// </summary>
-        protected virtual void CancelPipeline()
+        protected void CancelPipeline()
         {
             // terminate the pipeline when row count is reached
             Pipeline?.Cancel();
@@ -393,7 +393,6 @@ namespace Mage
         protected static int GetColumnIndex(Dictionary<string, int> columnPos, string columnName)
         {
             int value;
-
             if (columnPos.TryGetValue(columnName, out value))
                 return value;
             else
@@ -409,15 +408,14 @@ namespace Mage
         /// <returns>Value (integer) if defined; otherwise, returns defaultValue</returns>
         protected int GetColumnValue(string[] columnVals, int columnIndex, int defaultValue)
         {
-            if (columnIndex > -1)
-            {
-                int value;
-                if (columnVals[columnIndex] != null && int.TryParse(columnVals[columnIndex], out value))
-                    return value;
-                else
-                    return defaultValue;
-            }
-            return defaultValue;
+            if (columnIndex < 0)
+                return defaultValue;
+
+            int value;
+            if (columnVals[columnIndex] != null && int.TryParse(columnVals[columnIndex], out value))
+                return value;
+            else
+                return defaultValue;
         }
 
         /// <summary>
@@ -429,15 +427,14 @@ namespace Mage
         /// <returns>Value (double) if defined; otherwise, returns defaultValue</returns>
         protected double GetColumnValue(string[] columnVals, int columnIndex, double defaultValue)
         {
-            if (columnIndex > -1)
-            {
-                double value;
-                if (columnVals[columnIndex] != null && double.TryParse(columnVals[columnIndex], out value))
-                    return value;
-                else
-                    return defaultValue;
-            }
-            return defaultValue;
+            if (columnIndex < 0)
+                return defaultValue;
+
+            double value;
+            if (columnVals[columnIndex] != null && double.TryParse(columnVals[columnIndex], out value))
+                return value;
+            else
+                return defaultValue;
         }
 
         /// <summary>
@@ -449,14 +446,13 @@ namespace Mage
         /// <returns>Value (string) if defined; otherwise, returns defaultValue</returns>
         protected string GetColumnValue(string[] columnVals, int columnIndex, string defaultValue)
         {
-            if (columnIndex > -1)
-            {
-                if (columnVals[columnIndex] != null)
-                    return columnVals[columnIndex];
-                else
-                    return string.Empty;
-            }
-            return defaultValue;
+            if (columnIndex < 0)
+                return defaultValue;
+
+            if (columnVals[columnIndex] != null)
+                return columnVals[columnIndex];
+            else
+                return string.Empty;
         }
 
         /// <summary>

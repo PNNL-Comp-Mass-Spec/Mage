@@ -90,7 +90,15 @@ namespace MageExtExtractionFilters
 
         #region Properties
 
+        /// <summary>
+        /// User-friendly result name, for example "MSGF+ First Hits"
+        /// </summary>
         public string ResultName { get; set; }
+
+        /// <summary>
+        /// File type tag
+        /// </summary>
+        /// <remarks>Valid values are syn, fht, msg_syn, msg_fht, etc.</remarks>
         public string Tag { get; set; }
 
         /// <summary>
@@ -99,8 +107,17 @@ namespace MageExtExtractionFilters
         /// <remarks>Separate a list of alternative suffixes using semicolons</remarks>
         public string ResultsFileNamePattern { get; set; }
 
+        /// <summary>
+        /// Search tool in use
+        /// </summary>
+        /// <remarks>Valid values are sequest, xtandem, msgfplus, msgfplusFHT, etc.</remarks>
         public string Filter { get; set; }
+
+        /// <summary>
+        /// Result ID column name
+        /// </summary>
         public string ResultIDColName { get; set; }
+
         public Collection<MergeFile> MergeFileTypes
         {
             get
@@ -123,11 +140,11 @@ namespace MageExtExtractionFilters
 
         public class MergeFile
         {
-            public string ResultName { get; set; }
-            public string NameColumn { get; set; }
+            public string ResultName { get; private set; }
+            public string NameColumn { get; private set; }
             public int ColumnIndx { get; set; }
-            public string KeyCol { get; set; }
-            public string FileNameTag { get; set; }
+            public string KeyCol { get; private set; }
+            public string FileNameTag { get; private set; }
             public string MergeFileName { get; set; }
 
             public MergeFile(string resultName, string name, string keyCol, string tag)
@@ -174,33 +191,27 @@ namespace MageExtExtractionFilters
             switch (Filter)
             {
                 case "sequest":
-                    var sxf = new SequestExtractionFilter();
-                    sxf.ResultChecker = resultsChecker as FilterSequestResults;
+                    var sxf = new SequestExtractionFilter {ResultChecker = resultsChecker as FilterSequestResults};
                     exf = sxf;
                     break;
                 case "xtandem":
-                    var xxf = new XTandemExtractionFilter();
-                    xxf.ResultChecker = resultsChecker as FilterXTResults;
+                    var xxf = new XTandemExtractionFilter {ResultChecker = resultsChecker as FilterXTResults};
                     exf = xxf;
                     break;
                 case "inspect":
-                    var ixf = new InspectExtractionFilter();
-                    ixf.ResultChecker = resultsChecker as FilterInspectResults;
+                    var ixf = new InspectExtractionFilter {ResultChecker = resultsChecker as FilterInspectResults};
                     exf = ixf;
                     break;
                 case "msgfplusFHT":
-                    var mxf1 = new MSGFDbFHTExtractionFilter();
-                    mxf1.ResultChecker = resultsChecker as FilterMSGFDbResults;
+                    var mxf1 = new MSGFDbFHTExtractionFilter {ResultChecker = resultsChecker as FilterMSGFDbResults};
                     exf = mxf1;
                     break;
                 case "msgfplus":
-                    var mxf2 = new MSGFDbExtractionFilter();
-                    mxf2.ResultChecker = resultsChecker as FilterMSGFDbResults;
+                    var mxf2 = new MSGFDbExtractionFilter {ResultChecker = resultsChecker as FilterMSGFDbResults};
                     exf = mxf2;
                     break;
                 case "mspathfinder":
-                    var mspathxf = new MSPathFinderExtractionFilter();
-                    mspathxf.ResultChecker = resultsChecker as FilterMSPathFinderResults;
+                    var mspathxf = new MSPathFinderExtractionFilter {ResultChecker = resultsChecker as FilterMSPathFinderResults};
                     exf = mspathxf;
                     break;
                 default:

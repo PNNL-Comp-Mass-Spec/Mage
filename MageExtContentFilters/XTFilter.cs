@@ -17,15 +17,15 @@ namespace MageExtContentFilters
         #region Member Variables
 
         // working copy of SEQUEST filter object
-        private FilterXTResults mXTFilter = null;
+        private FilterXTResults mXTFilter;
 
         // indexes into the synopsis row field array
-        private int peptideSequenceIndex = 0;
-        private int delCN2ValueIndex = 0;
-        private int chargeStateIndex = 0;
-        private int peptideMassIndex = 0;
-        private int hyperScoreValueIndex = 0;
-        private int logEValueIndex = 0;
+        private int peptideSequenceIndex;
+        private int delCN2ValueIndex;
+        private int chargeStateIndex;
+        private int peptideMassIndex;
+        private int hyperScoreValueIndex;
+        private int logEValueIndex;
         private int msgfSpecProbIndex = -1;
 
         #endregion
@@ -68,7 +68,6 @@ namespace MageExtContentFilters
         /// <returns>Whether or not row should be included in output</returns>
         protected override bool CheckFilter(ref string[] fields)
         {
-            var accepted = false;
             var peptideSequence = GetColumnValue(fields, peptideSequenceIndex, string.Empty);
             var hyperScoreValue = GetColumnValue(fields, hyperScoreValueIndex, -1d);
             var logEValue = GetColumnValue(fields, logEValueIndex, -1d);
@@ -77,7 +76,7 @@ namespace MageExtContentFilters
             var peptideMass = GetColumnValue(fields, peptideMassIndex, -1d);
             var msgfSpecProb = GetColumnValue(fields, msgfSpecProbIndex, -1d);
 
-            accepted = mXTFilter.EvaluateXTandem(peptideSequence, hyperScoreValue, logEValue, delCN2Value, chargeState, peptideMass, msgfSpecProb);
+            var accepted = mXTFilter.EvaluateXTandem(peptideSequence, hyperScoreValue, logEValue, delCN2Value, chargeState, peptideMass, msgfSpecProb);
 
             if (accepted && OutputColumnDefs != null)
             {
