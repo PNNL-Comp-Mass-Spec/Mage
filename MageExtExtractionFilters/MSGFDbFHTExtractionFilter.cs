@@ -14,7 +14,6 @@ namespace MageExtExtractionFilters
         #region Member Variables
 
         // working copy of MSGFDB filter object
-        private FilterMSGFDbResults mMSGFDbFilter;
 
         // indexes into the synopsis row field array
         private int peptideSequenceIndex;
@@ -33,11 +32,7 @@ namespace MageExtExtractionFilters
 
         #region Properties
 
-        public FilterMSGFDbResults ResultChecker
-        {
-            get { return mMSGFDbFilter; }
-            set { mMSGFDbFilter = value; }
-        }
+        public FilterMSGFDbResults ResultChecker { get; set; }
 
         #endregion
 
@@ -98,7 +93,7 @@ namespace MageExtExtractionFilters
         protected bool CheckFilter(string[] vals)
         {
             var accept = true;
-            if (mMSGFDbFilter == null)
+            if (ResultChecker == null)
             {
                 if (mFilterResultsColIdx >= 0)
                 {
@@ -117,7 +112,7 @@ namespace MageExtExtractionFilters
                 var msgfSpecProb = GetColumnValue(vals, msgfSpecProbIndex, -1d);
                 var rankMSGFDbSpecProb = 1;
 
-                var pass = mMSGFDbFilter.EvaluateMSGFDB(peptideSequence, chargeState, peptideMass, SpecProb, PValue, FDR, PepFDR, msgfSpecProb, rankMSGFDbSpecProb);
+                var pass = ResultChecker.EvaluateMSGFDB(peptideSequence, chargeState, peptideMass, SpecProb, PValue, FDR, PepFDR, msgfSpecProb, rankMSGFDbSpecProb);
 
                 accept = pass || mKeepAllResults;
                 if (mFilterResultsColIdx >= 0)

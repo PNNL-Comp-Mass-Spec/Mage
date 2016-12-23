@@ -20,10 +20,6 @@ namespace MageExtExtractionFilters
 
         private int mCurrentFileCount;
 
-        private ExtractionType mExtractionType;
-
-        private DestinationType mDestination;
-
         private FilterResultsBase mResultsChecker;
 
         private string mCurrentProgressText = "";
@@ -36,20 +32,12 @@ namespace MageExtExtractionFilters
         /// Set of parameters specifying the user's choices for
         /// how the extraction should be performed
         /// </summary>
-        public ExtractionType ExtractionParms
-        {
-            get { return mExtractionType; }
-            set { mExtractionType = value; }
-        }
+        public ExtractionType ExtractionParms { get; set; }
 
         /// <summary>
         /// Destination to which processed results will be delivered
         /// </summary>
-        public DestinationType Destination
-        {
-            get { return mDestination; }
-            set { mDestination = value; }
-        }
+        public DestinationType Destination { get; set; }
 
         /// <summary>
         /// Name of the column in the standard tabular input
@@ -87,7 +75,7 @@ namespace MageExtExtractionFilters
         private void PrecalculateMergeFileColumnIndexes()
         {
             mMergeFiles = new Dictionary<string, ResultType.MergeFile>();
-            foreach (var mf in mExtractionType.RType.MergeFileTypes)
+            foreach (var mf in ExtractionParms.RType.MergeFileTypes)
             {
                 if (InputColumnPos.Keys.Contains(mf.NameColumn))
                 {
@@ -234,15 +222,15 @@ namespace MageExtExtractionFilters
                         msgfFilter.Job = job;
                         msgfFilter.ResultFolderPath = resultFolderPath;
                         msgfFilter.MergeFiles = mMergeFiles;
-                        msgfFilter.ExtractionType = mExtractionType;
+                        msgfFilter.ExtractionType = ExtractionParms;
 
-                        var resultsFilter = mExtractionType.RType.GetExtractionFilter(mResultsChecker);
+                        var resultsFilter = ExtractionParms.RType.GetExtractionFilter(mResultsChecker);
                         resultsFilter.Job = job;
                         resultsFilter.ResultFolderPath = resultFolderPath;
                         resultsFilter.MergeFiles = mMergeFiles;
-                        resultsFilter.ExtractionType = mExtractionType;
+                        resultsFilter.ExtractionType = ExtractionParms;
 
-                        var writer = mDestination.GetDestinationWriterModule(job, inputFilePath);
+                        var writer = Destination.GetDestinationWriterModule(job, inputFilePath);
                         var pipeline = ProcessingPipeline.Assemble("Extract File Contents", resultsFileReader, msgfFilter, resultsFilter, writer);
 
                         pipeline.OnWarningMessageUpdated += pipeline_OnWarningMessageUpdated;
@@ -250,7 +238,7 @@ namespace MageExtExtractionFilters
 
                         pipeline.RunRoot(null);
 
-                        SendResultsUpdate(mExtractionType.RType.ResultName, job, resultsFilter.ProcessedRows, resultsFilter.PassedRows);
+                        SendResultsUpdate(ExtractionParms.RType.ResultName, job, resultsFilter.ProcessedRows, resultsFilter.PassedRows);
                         SendResultsUpdate("MSGF", job, msgfFilter.ProcessedRows, msgfFilter.PassedRows);
                     }
                 }
@@ -299,9 +287,9 @@ namespace MageExtExtractionFilters
         /// </summary>
         private void SetupCurrentResultsChecker()
         {
-            if (!string.Equals(mExtractionType.ResultFilterSetID, ExtractionFilter.ALL_PASS_CUTOFF, StringComparison.CurrentCultureIgnoreCase))
+            if (!string.Equals(ExtractionParms.ResultFilterSetID, ExtractionFilter.ALL_PASS_CUTOFF, StringComparison.CurrentCultureIgnoreCase))
             {
-                mResultsChecker = mExtractionType.RType.GetResultsChecker(mExtractionType.ResultFilterSetID);
+                mResultsChecker = ExtractionParms.RType.GetResultsChecker(ExtractionParms.ResultFilterSetID);
 
                 if (mResultsChecker != null)
                 {
@@ -324,7 +312,7 @@ namespace MageExtExtractionFilters
             resultsFilter.Job = job;
             resultsFilter.ResultFolderPath = resultsFolderPath;
             resultsFilter.MergeFiles = mMergeFiles;
-            resultsFilter.ExtractionType = mExtractionType;
+            resultsFilter.ExtractionType = ExtractionParms;
 
             return resultsFilter;
         }

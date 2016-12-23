@@ -14,7 +14,6 @@ namespace MageExtExtractionFilters
         #region Member Variables
 
         // working copy of SEQUEST hit checker object
-        private FilterSequestResults mSeqFilter;
 
         // indexes into the synopsis row field array
         private int peptideSequenceIndex;
@@ -31,11 +30,7 @@ namespace MageExtExtractionFilters
 
         #region Properties
 
-        public FilterSequestResults ResultChecker
-        {
-            get { return mSeqFilter; }
-            set { mSeqFilter = value; }
-        }
+        public FilterSequestResults ResultChecker { get; set; }
 
         #endregion
 
@@ -95,7 +90,7 @@ namespace MageExtExtractionFilters
         protected bool CheckFilter(string[] vals)
         {
             var accept = true;
-            if (mSeqFilter == null)
+            if (ResultChecker == null)
             {
                 if (mFilterResultsColIdx >= 0)
                 {
@@ -119,7 +114,7 @@ namespace MageExtExtractionFilters
                 double discriminantScore = -1;
                 double NETAbsoluteDifference = -1;
 
-                var pass = mSeqFilter.EvaluateSequest(peptideSequence, xCorrValue, delCNValue, delCN2Value, chargeState, peptideMass, spectrumCount, discriminantScore, NETAbsoluteDifference, cleavageState, msgfSpecProb, rankXC);
+                var pass = ResultChecker.EvaluateSequest(peptideSequence, xCorrValue, delCNValue, delCN2Value, chargeState, peptideMass, spectrumCount, discriminantScore, NETAbsoluteDifference, cleavageState, msgfSpecProb, rankXC);
 
                 accept = pass || mKeepAllResults;
                 if (mFilterResultsColIdx >= 0)

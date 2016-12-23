@@ -23,20 +23,15 @@ namespace MageExtExtractionFilters
 
         #region static properties and initializtion
 
-        private static readonly Dictionary<string, ResultType> mTypeList = new Dictionary<string, ResultType>();
-
         static ResultType()
         {
             foreach (var rtype in Types)
             {
-                mTypeList[rtype.ResultName] = rtype;
+                TypeList[rtype.ResultName] = rtype;
             }
         }
 
-        public static Dictionary<string, ResultType> TypeList
-        {
-            get { return mTypeList; }
-        }
+        public static Dictionary<string, ResultType> TypeList { get; } = new Dictionary<string, ResultType>();
 
         private static readonly List<ResultType> Types = new List<ResultType>() {
             //                 Name                         Tag           Filter           resultsFileTag                       IDColumnName

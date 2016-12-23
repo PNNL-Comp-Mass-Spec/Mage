@@ -11,7 +11,6 @@ namespace MageExtExtractionFilters
         #region Member Variables
 
         // working copy of X!Tandem filter object
-        private FilterXTResults mXTFilter;
 
         // indexes into the synopsis row field array
         private int peptideSequenceIndex;
@@ -30,11 +29,7 @@ namespace MageExtExtractionFilters
 
         #region Properties
 
-        public FilterXTResults ResultChecker
-        {
-            get { return mXTFilter; }
-            set { mXTFilter = value; }
-        }
+        public FilterXTResults ResultChecker { get; set; }
 
         #endregion
 
@@ -146,7 +141,7 @@ namespace MageExtExtractionFilters
         protected bool CheckFilter(string[] vals)
         {
             var accept = true;
-            if (mXTFilter == null)
+            if (ResultChecker == null)
             {
                 if (mFilterResultsColIdx >= 0)
                 {
@@ -163,7 +158,7 @@ namespace MageExtExtractionFilters
                 var peptideMass = GetColumnValue(vals, peptideMassIndex, -1d);
                 var msgfSpecProb = GetColumnValue(vals, msgfSpecProbIndex, -1d);
 
-                var pass = mXTFilter.EvaluateXTandem(peptideSequence, hyperScoreValue, logEValue, delCN2Value, chargeState, peptideMass, msgfSpecProb);
+                var pass = ResultChecker.EvaluateXTandem(peptideSequence, hyperScoreValue, logEValue, delCN2Value, chargeState, peptideMass, msgfSpecProb);
 
                 accept = pass || mKeepAllResults;
                 if (mFilterResultsColIdx >= 0)

@@ -26,7 +26,6 @@ namespace MageExtExtractionFilters
         #region Member Variables
 
         // working copy of MSPathFinder filter object
-        private FilterMSPathFinderResults mMSPathFinderFilter;
 
         // indexes into the synopsis row field array
         private udtColumnIndices mColumnIndices;
@@ -44,11 +43,7 @@ namespace MageExtExtractionFilters
 
         #region Properties
 
-        public FilterMSPathFinderResults ResultChecker
-        {
-            get { return mMSPathFinderFilter; }
-            set { mMSPathFinderFilter = value; }
-        }
+        public FilterMSPathFinderResults ResultChecker { get; set; }
 
         #endregion
 
@@ -180,7 +175,7 @@ namespace MageExtExtractionFilters
         protected bool CheckFilter(string[] vals)
         {
             var accept = true;
-            if (mMSPathFinderFilter == null)
+            if (ResultChecker == null)
             {
                 if (mFilterResultsColIdx >= 0)
                 {
@@ -197,7 +192,7 @@ namespace MageExtExtractionFilters
                 var qValue = GetColumnValue(vals, qValueIndex, -1d);
                 var pepQValue = GetColumnValue(vals, pepqValueIndex, -1d);
 
-                var pass = mMSPathFinderFilter.EvaluateMSPathFinder(peptideSequence, chargeState, peptideMass, specEValue, eValue, qValue, pepQValue);
+                var pass = ResultChecker.EvaluateMSPathFinder(peptideSequence, chargeState, peptideMass, specEValue, eValue, qValue, pepQValue);
 
                 accept = pass || mKeepAllResults;
                 if (mFilterResultsColIdx >= 0)

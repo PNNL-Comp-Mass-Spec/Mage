@@ -43,8 +43,6 @@ namespace Mage
         /// </summary>
         private readonly List<string[]> mSearchSubfolders = new List<string[]>();
 
-        private readonly SortedSet<string> mAccessDeniedSubfolders = new SortedSet<string>();
-
         #endregion
 
         #region "Constants"
@@ -56,13 +54,7 @@ namespace Mage
         /// <summary>
         /// List of folder paths to which the user did not have access
         /// </summary>
-        public SortedSet<string> AccessDeniedSubfolders
-        {
-            get
-            {
-                return mAccessDeniedSubfolders;
-            }
-        }
+        public SortedSet<string> AccessDeniedSubfolders { get; } = new SortedSet<string>();
 
         /// <summary>
         /// Semi-colon delimited list of file matching patterns
@@ -335,9 +327,9 @@ namespace Mage
                     if (pathMatch.Success)
                     {
                         var currentFolder = pathMatch.Groups[1].Value;
-                        if (!mAccessDeniedSubfolders.Contains(currentFolder))
+                        if (!AccessDeniedSubfolders.Contains(currentFolder))
                         {
-                            mAccessDeniedSubfolders.Add(currentFolder);
+                            AccessDeniedSubfolders.Add(currentFolder);
                             OnWarningMessage(new MageStatusEventArgs(e.Message));
                         }
                     }
@@ -397,9 +389,9 @@ namespace Mage
             }
             catch (UnauthorizedAccessException)
             {
-                if (!mAccessDeniedSubfolders.Contains(currentFolder))
+                if (!AccessDeniedSubfolders.Contains(currentFolder))
                 {
-                    mAccessDeniedSubfolders.Add(currentFolder);
+                    AccessDeniedSubfolders.Add(currentFolder);
                     OnWarningMessage(new MageStatusEventArgs(@"Access to the path '" + currentFolder + "' is denied."));
                 }
             }

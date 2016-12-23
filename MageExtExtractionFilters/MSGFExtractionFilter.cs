@@ -122,24 +122,13 @@ namespace MageExtExtractionFilters
             private bool mCheckCutoff;
             private bool mAcceptMissingMerges = true;
 
-            private int mMatchColIdx;
-            private int mMergeColIdx;
-
             #endregion
 
             #region Properties
 
-            public int MatchColIdx
-            {
-                get { return mMatchColIdx; }
-                set { mMatchColIdx = value; }
-            }
+            public int MatchColIdx { get; set; }
 
-            public int MergeColIdx
-            {
-                get { return mMergeColIdx; }
-                set { mMergeColIdx = value; }
-            }
+            public int MergeColIdx { get; set; }
 
             #endregion
 
@@ -196,11 +185,11 @@ namespace MageExtExtractionFilters
                     return true;
                 }
 
-                var joinKey = outRow[mMatchColIdx];
+                var joinKey = outRow[MatchColIdx];
                 if (mMergeValueLookup.ContainsKey(joinKey))
                 {
                     var score = mMergeValueLookup[joinKey];
-                    outRow[mMergeColIdx] = score;
+                    outRow[MergeColIdx] = score;
                     if (!mCheckCutoff)
                     {
                         return true;

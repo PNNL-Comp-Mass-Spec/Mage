@@ -11,7 +11,6 @@ namespace MageExtExtractionFilters
         #region Member Variables
 
         // working copy of Inspect filter object
-        private FilterInspectResults mInspectFilter;
 
         // indexes into the synopsis row field array
         private int peptideSequenceIndex;
@@ -33,11 +32,7 @@ namespace MageExtExtractionFilters
 
         #region Properties
 
-        public FilterInspectResults ResultChecker
-        {
-            get { return mInspectFilter; }
-            set { mInspectFilter = value; }
-        }
+        public FilterInspectResults ResultChecker { get; set; }
 
         #endregion
 
@@ -148,7 +143,7 @@ namespace MageExtExtractionFilters
         protected bool CheckFilter(string[] vals)
         {
             var accept = true;
-            if (mInspectFilter == null)
+            if (ResultChecker == null)
             {
                 if (mFilterResultsColIdx >= 0)
                 {
@@ -169,7 +164,7 @@ namespace MageExtExtractionFilters
                 var msgfSpecProb = GetColumnValue(vals, msgfSpecProbIndex, -1d);
                 var rankTotalPRMScore = GetColumnValue(vals, rankTotalPRMScoreIndex, -1);
 
-                var pass = mInspectFilter.EvaluateInspect(peptideSequence, chargeState, peptideMass, MQScore, TotalPRMScore, FScore, PValue, msgfSpecProb, rankTotalPRMScore);
+                var pass = ResultChecker.EvaluateInspect(peptideSequence, chargeState, peptideMass, MQScore, TotalPRMScore, FScore, PValue, msgfSpecProb, rankTotalPRMScore);
 
                 accept = pass || mKeepAllResults;
                 if (mFilterResultsColIdx >= 0)

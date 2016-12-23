@@ -22,8 +22,6 @@ namespace MageExtExtractionFilters
 
         #region Member Variables
 
-        private readonly MergeModeConstants mMergeMode;
-
         // Reference to row in protein buffer
         // Keys are ResultID, values are SequenceId
         private Dictionary<string, int> mProtDataLookup;
@@ -37,31 +35,20 @@ namespace MageExtExtractionFilters
 
         // index for the result column that contains 
         // the key to use to look up the protein
-        private int IDX_Lookup_Col = -1;
-        public int LookupColumn
-        {
-            get { return IDX_Lookup_Col; }
-            set { IDX_Lookup_Col = value; }
-        }
+        public int LookupColumn { get; set; } = -1;
 
         #endregion
 
         #region Properties
 
-        public MergeModeConstants MergeMode
-        {
-            get
-            {
-                return mMergeMode;
-            }
-        }
+        public MergeModeConstants MergeMode { get; }
 
         #endregion
 
         // Constructor
         public MergeProteinData(MergeModeConstants eMergeMode)
         {
-            mMergeMode = eMergeMode;
+            MergeMode = eMergeMode;
         }
 
         // precalculate field indexes in protein buffer
@@ -71,21 +58,21 @@ namespace MageExtExtractionFilters
             ODX_Cleavage_State = colPos["Cleavage_State"];
             ODX_Terminus_State = colPos["Terminus_State"];
 
-            if (mMergeMode == MergeModeConstants.XTandem)
+            if (MergeMode == MergeModeConstants.XTandem)
             {
                 ODX_Protein_Name = colPos["Protein_Name"];
                 ODX_Protein_Expectation_Value_Log = colPos["Protein_Expectation_Value_Log(e)"];
                 ODX_Protein_Intensity_Log = colPos["Protein_Intensity_Log(I)"];
             }
 
-            if (mMergeMode == MergeModeConstants.InspectOrMSGFDB)
+            if (MergeMode == MergeModeConstants.InspectOrMSGFDB)
             {
                 // The Protein column is present in the original _msgfplus_syn.txt file
                 // we are replacing the protein name listed with the name from the _msgfplus_syn_SeqToProteinMap.txt file
                 ODX_Protein_Name = colPos["Protein"];
             }
 
-            if (mMergeMode == MergeModeConstants.MSPathFinder)
+            if (MergeMode == MergeModeConstants.MSPathFinder)
             {
                 // The Protein column is present in the original _msgfplus_syn.txt file; 
                 // we are replacing the protein name listed with the name from the _msgfplus_syn_SeqToProteinMap.txt file
@@ -110,7 +97,7 @@ namespace MageExtExtractionFilters
         /// <returns>True if success, false if a match was not found in the cached protein data</returns>
         public bool MergeFirstProtein(string[] outRow, out string warningMessage)
         {
-            var resultID = outRow[IDX_Lookup_Col];
+            var resultID = outRow[LookupColumn];
             int sequenceID;
 
             if (!mProtDataLookup.TryGetValue(resultID, out sequenceID))
@@ -157,7 +144,7 @@ namespace MageExtExtractionFilters
         public Collection<string[]> MergeAllProteins(string[] outRow, out bool matchFound)
         {
             Collection<string[]> outRows = null;
-            var resultID = outRow[IDX_Lookup_Col];
+            var resultID = outRow[LookupColumn];
             int sequenceID;
             int rowIdx;
             matchFound = false;
