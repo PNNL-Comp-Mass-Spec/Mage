@@ -164,13 +164,22 @@ namespace MageExtractor
                 FilterSetIDToSelect = ResultFilterSetID
             };
 
+            // Show, then quickly hide the form
+            // Required because HandlePipelineCompletion in ResultsFilterSelector will invoke UpdateSelectedFilterSetID
+            // and that raises an exception saying "Invoke or BeginInvoke cannot be called on a control until the window handle has been created"
+            // if we don't first .Show() the form
+
+            selectionForm.Show();
+            selectionForm.Hide();
             selectionForm.InitializeFilterSetList();
+            
 
             if (selectionForm.ShowDialog() == DialogResult.OK)
             {
                 var parms = selectionForm.GetParameters();
                 ResultFilterSetID = parms["FilterSetID"];
             }
+
 
         }
 
