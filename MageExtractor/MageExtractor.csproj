@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MageExtractor</RootNamespace>
     <AssemblyName>MageExtractor</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ApplicationIcon>Extractor.ico</ApplicationIcon>
     <FileUpgradeFlags>
@@ -107,8 +107,8 @@
     <Reference Include="Pacifica.Core">
       <HintPath>..\Mage\lib\Pacifica.Core.dll</HintPath>
     </Reference>
-    <Reference Include="PRISM">
-      <HintPath>..\Mage\lib\PRISM.dll</HintPath>
+    <Reference Include="ShFolderBrowser">
+      <HintPath>..\Mage\lib\ShFolderBrowser.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
