@@ -1,5 +1,9 @@
 Mage Revision History
 
+Version 1.5.6261; February 21, 2017
+	- Update PRISM.dll and add ShFolderBrowser.dll
+	- Update to .NET 4.5.2
+
 Version 1.5.6254; February 14, 2017
 	- Fix error when trying to select the Result Type filter in Mage Extractor
 		- Error was "Invoke or BeginInvoke cannot be called on a control until the window handle has been created"

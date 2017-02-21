@@ -21,6 +21,7 @@ Source: ..\DeployedFiles\MageConcatenator\MageUIComponents.dll          ; DestDi
 Source: ..\DeployedFiles\MageConcatenator\MyEMSLReader.dll              ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\Pacifica.Core.dll             ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\PRISM.dll                     ; DestDir: {app}\MageConcatenator
+Source: ..\DeployedFiles\MageConcatenator\ShFolderBrowser.dll           ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\System.Data.SQLite.dll        ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\MageConcatenator.exe          ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\ReadMe.txt                    ; DestDir: {app}\MageConcatenator
@@ -40,6 +41,7 @@ Source: ..\DeployedFiles\MageExtractor\MageUIComponents.dll             ; DestDi
 Source: ..\DeployedFiles\MageExtractor\MyEMSLReader.dll                 ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\Pacifica.Core.dll                ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\PRISM.dll                        ; DestDir: {app}\MageExtractor
+Source: ..\DeployedFiles\MageExtractor\ShFolderBrowser.dll              ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\System.Data.SQLite.dll           ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\MageExtractor.exe                ; DestDir: {app}\MageExtractor
 
@@ -58,6 +60,7 @@ Source: ..\DeployedFiles\MageFilePackager\MageUIComponents.dll          ; DestDi
 Source: ..\DeployedFiles\MageFilePackager\MyEMSLReader.dll              ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\Pacifica.Core.dll             ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\PRISM.dll                     ; DestDir: {app}\MageFilePackager
+Source: ..\DeployedFiles\MageFilePackager\ShFolderBrowser.dll           ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\System.Data.SQLite.dll        ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\MageFilePackager.exe          ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\ReadMe.txt                    ; DestDir: {app}\MageFilePackager
@@ -75,6 +78,7 @@ Source: ..\DeployedFiles\MageFileProcessor\MageUIComponents.dll         ; DestDi
 Source: ..\DeployedFiles\MageFileProcessor\MyEMSLReader.dll             ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\Pacifica.Core.dll            ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\PRISM.dll                    ; DestDir: {app}\MageFileProcessor
+Source: ..\DeployedFiles\MageFileProcessor\ShFolderBrowser.dll          ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\System.Data.SQLite.dll       ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\MageFileProcessor.exe        ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\ReadMe.txt                   ; DestDir: {app}\MageFileProcessor
@@ -93,6 +97,7 @@ Source: ..\DeployedFiles\MageMetaDataProcessor\MageUIComponents.dll     ; DestDi
 Source: ..\DeployedFiles\MageMetaDataProcessor\MyEMSLReader.dll         ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\Pacifica.Core.dll        ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\PRISM.dll                ; DestDir: {app}\MageMetaDataProcessor
+Source: ..\DeployedFiles\MageMetaDataProcessor\ShFolderBrowser.dll      ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\System.Data.SQLite.dll   ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\MageMetadataProcessor.exe; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\ReadMe.txt               ; DestDir: {app}\MageMetaDataProcessor
@@ -107,6 +112,7 @@ Source: ..\DeployedFiles\Ranger\MageUIComponents.dll                    ; DestDi
 Source: ..\DeployedFiles\Ranger\MyEMSLReader.dll                        ; DestDir: {app}\Ranger
 Source: ..\DeployedFiles\Ranger\Pacifica.Core.dll                       ; DestDir: {app}\Ranger
 Source: ..\DeployedFiles\Ranger\PRISM.dll                               ; DestDir: {app}\Ranger
+Source: ..\DeployedFiles\Ranger\ShFolderBrowser.dll                     ; DestDir: {app}\Ranger
 Source: ..\DeployedFiles\Ranger\RangerLib.dll                           ; DestDir: {app}\Ranger
 Source: ..\DeployedFiles\Ranger\System.Data.SQLite.dll                  ; DestDir: {app}\Ranger
 Source: ..\DeployedFiles\Ranger\Ranger.exe                              ; DestDir: {app}\Ranger
