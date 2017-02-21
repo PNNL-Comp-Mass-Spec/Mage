@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 using Mage;
-using PRISM.Files;
+using ShFolderBrowser.FolderBrowser;
 
 namespace MageUIComponents
 {

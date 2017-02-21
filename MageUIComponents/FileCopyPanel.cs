@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 using Mage;
+using ShFolderBrowser.FolderBrowser;
 
 namespace MageUIComponents
 {
@@ -141,7 +142,7 @@ namespace MageUIComponents
         private void SelectFolderCtl_Click(object sender, EventArgs e)
         {
 
-            var folderBrowser = new PRISM.Files.FolderBrowser();
+            var folderBrowser = new FolderBrowser();
 
             try
             {
