@@ -131,7 +131,7 @@ namespace Mage
                 if (resultFileName.Contains("_msgfdb") && assocFileName.Contains("_msgfplus"))
                 {
                     // Auto-switch from _msgfplus to _msgfdb
-                    assocFileName = assocFileName.Replace("_msgfplus", "_msgfdb");                    
+                    assocFileName = assocFileName.Replace("_msgfplus", "_msgfdb");
                 }
 
                 if (assocFileName == kNoFilesFound)

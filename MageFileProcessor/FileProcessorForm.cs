@@ -38,7 +38,7 @@ namespace MageFileProcessor
         private string mFinalPipelineName = string.Empty;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <remarks>Used to determine which field names to use for source files when copying files or processing files</remarks>
         private string mFileSourcePipelineName = string.Empty;
@@ -61,8 +61,8 @@ namespace MageFileProcessor
             InitializeComponent();
 
             const bool isBetaVersion = false;
-            SetFormTitle("2017-02-21", isBetaVersion);
-            
+            SetFormTitle("2017-03-13", isBetaVersion);
+
             SetTags();
 
             SetAboutText();
@@ -214,7 +214,7 @@ namespace MageFileProcessor
         }
 
         /// <summary>
-        /// execute a command by building and running 
+        /// execute a command by building and running
         /// the appropriate pipeline (or cancelling
         /// the current pipeline activity)
         /// </summary>
@@ -549,7 +549,7 @@ namespace MageFileProcessor
             JobDatasetIDList1.Legend = "(Dataset IDs)";
             JobDatasetIDList1.ListName = "Dataset_ID";
 
-            // disable certain UI component panels 
+            // disable certain UI component panels
             EntityFilePanel1.Enabled = false;
             FileProcessingPanel1.Enabled = false;
             FileCopyPanel1.Enabled = false;
@@ -613,7 +613,7 @@ namespace MageFileProcessor
         }
 
         /// <summary>
-        /// Finding files for entities is only possible 
+        /// Finding files for entities is only possible
         /// when there are entities in the entity list
         /// </summary>
         private void AdjustFileExtractionPanel()
@@ -669,7 +669,7 @@ namespace MageFileProcessor
         }
 
         /// <summary>
-        /// If the contents of a list display have been restored from file, 
+        /// If the contents of a list display have been restored from file,
         /// make a guess at the type of information it contains
         /// according to the combination of columns it has,
         /// and set its title accordingly
@@ -981,11 +981,11 @@ namespace MageFileProcessor
 
         private void LaunchMageFileProcessorHelpPage()
         {
-            // Change the color of the link text by setting LinkVisited 
+            // Change the color of the link text by setting LinkVisited
             // to true.
             lblAboutLink.LinkVisited = true;
 
-            //Call the Process.Start method to open the default browser 
+            //Call the Process.Start method to open the default browser
             //with a URL:
             Process.Start(lblAboutLink.Text);
         }

@@ -47,7 +47,7 @@ namespace MageUIComponents
 
         public Dictionary<string, string> GetParameters()
         {
-            return new Dictionary<string, string>() { 
+            return new Dictionary<string, string>() {
                 { "OutputFolder",   OutputFolder},
                 { "OutputFile",   OutputFile}
             };
@@ -102,7 +102,7 @@ namespace MageUIComponents
                 AddExtension = true,
                 CheckFileExists = false,
                 DefaultExt = "txt",
-                Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*"                
+                Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*"
             };
 
             try

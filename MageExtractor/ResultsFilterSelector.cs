@@ -5,7 +5,7 @@ using Mage;
 
 namespace MageExtractor {
     public partial class ResultsFilterSelector : Form , IModuleParameters {
-               
+
 
         #region Member Variables
 
@@ -18,7 +18,7 @@ namespace MageExtractor {
         #endregion
 
         #region Properties
-        
+
         public string FilterSetID {
             get { return FilterSetIDCtl.Text; }
             set { FilterSetIDCtl.Text = value; }
@@ -121,6 +121,6 @@ namespace MageExtractor {
         }
 
         #endregion
-        
+
    }
 }
