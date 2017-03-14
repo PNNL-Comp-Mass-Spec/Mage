@@ -91,12 +91,12 @@ namespace Mage
                 // However, I have found that if I only attach the Progress Event once, the GUI form does not display the progress messages (even though they are, in fact, being actively handled by this class)
                 m_MyEMSLEventsAttached = true;
                 m_MyEMSLDatasetInfoCache.ErrorEvent += m_MyEMSLDatasetInfoCache_ErrorEvent;
-                m_MyEMSLDatasetInfoCache.MessageEvent += m_MyEMSLDatasetInfoCache_MessageEvent;
+                m_MyEMSLDatasetInfoCache.StatusEvent += m_MyEMSLDatasetInfoCache_MessageEvent;
             }
 
             // As mentioned above, we need to attach this event every time the class is instantiated
             // This will result in duplicate calls to m_MyEMSLDatasetInfoCache_ProgressEvent by m_MyEMSLDatasetInfoCache.ProgressEvent but that doesn't hurt anything
-            m_MyEMSLDatasetInfoCache.ProgressEvent += m_MyEMSLDatasetInfoCache_ProgressEvent;
+            m_MyEMSLDatasetInfoCache.ProgressUpdate += m_MyEMSLDatasetInfoCache_ProgressEvent;
         }
 
         /// <summary>
@@ -417,28 +417,28 @@ namespace Mage
         #region "Event Handlers"
 
 
-        void m_MyEMSLDatasetInfoCache_ErrorEvent(object sender, MessageEventArgs e)
+        void m_MyEMSLDatasetInfoCache_ErrorEvent(string message, Exception ex)
         {
-            OnWarningMessage(new MageStatusEventArgs("MyEMSL downloader: " + e.Message));
+            OnWarningMessage(new MageStatusEventArgs("MyEMSL downloader: " + message));
         }
 
-        void m_MyEMSLDatasetInfoCache_MessageEvent(object sender, MessageEventArgs e)
+        void m_MyEMSLDatasetInfoCache_MessageEvent(string message)
         {
-            if (!e.Message.Contains("Downloading ") && !e.Message.Contains("Overwriting ") && !e.Message.Contains("Skipping "))
+            if (!message.Contains("Downloading ") && !message.Contains("Overwriting ") && !message.Contains("Skipping "))
             {
-                if (e.Message.Contains("Warning,") || e.Message.Contains("Error ") || e.Message.Contains("Failure downloading") || e.Message.Contains("Failed to"))
-                    OnWarningMessage(new MageStatusEventArgs("MyEMSL downloader: " + e.Message));
+                if (message.Contains("Warning,") || message.Contains("Error ") || message.Contains("Failure downloading") || message.Contains("Failed to"))
+                    OnWarningMessage(new MageStatusEventArgs("MyEMSL downloader: " + message));
                 else
-                    OnStatusMessageUpdated(new MageStatusEventArgs("MyEMSL downloader: " + e.Message));
+                    OnStatusMessageUpdated(new MageStatusEventArgs("MyEMSL downloader: " + message));
             }
         }
 
-        void m_MyEMSLDatasetInfoCache_ProgressEvent(object sender, ProgressEventArgs e)
+        void m_MyEMSLDatasetInfoCache_ProgressEvent(string progressMessage, float percentComplete)
         {
-            if (e.PercentComplete >= 100 - Single.Epsilon)
+            if (percentComplete >= 100 - Single.Epsilon)
                 OnStatusMessageUpdated(new MageStatusEventArgs("Downloading files from MyEMSL: 100% complete"));
             else
-                OnStatusMessageUpdated(new MageStatusEventArgs("Downloading files from MyEMSL: " + e.PercentComplete.ToString("0.00") + "% complete"));
+                OnStatusMessageUpdated(new MageStatusEventArgs("Downloading files from MyEMSL: " + percentComplete.ToString("0.00") + "% complete"));
         }
         #endregion
 
