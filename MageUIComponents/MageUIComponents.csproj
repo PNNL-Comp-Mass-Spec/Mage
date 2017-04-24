@@ -82,9 +82,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PRISM">
-      <HintPath>..\Mage\lib\PRISM.dll</HintPath>
-    </Reference>
     <Reference Include="ShFolderBrowser">
       <HintPath>..\Mage\lib\ShFolderBrowser.dll</HintPath>
     </Reference>
