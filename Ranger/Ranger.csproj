@@ -168,6 +168,8 @@
   <PropertyGroup>
     <PostBuildEvent>copy "$(TargetPath)" "$(ProjectDir)..\DeployedFiles\$(ProjectName)"
 copy "$(TargetDir)*.dll" "$(ProjectDir)..\DeployedFiles\$(ProjectName)"
+xcopy "$(TargetDir)x86\*.dll" "$(ProjectDir)..\DeployedFiles\$(ProjectName)\x86\" /D /y
+xcopy "$(TargetDir)x64\*.dll" "$(ProjectDir)..\DeployedFiles\$(ProjectName)\x64\" /D /y
 copy "$(TargetDir)QueryDefinitions.xml" "$(ProjectDir)..\DeployedFiles\$(ProjectName)"
 </PostBuildEvent>
   </PropertyGroup>
