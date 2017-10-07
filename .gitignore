@@ -10,3 +10,4 @@ TestResults/
 /Installer/Output/*
 /Installer/Mage on CBDMS.lnk
 /Installer/Mage on Floyd.lnk
+**/.vs/

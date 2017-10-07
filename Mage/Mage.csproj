@@ -88,10 +88,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="MyEMSLReader">
       <HintPath>lib\MyEMSLReader.dll</HintPath>
     </Reference>
@@ -157,7 +153,6 @@
     <Compile Include="Terminator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="lib\log4net.dll" />
     <Content Include="x64\SQLite.Interop.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -166,6 +161,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="log4net">
+      <Version>2.0.8</Version>
+    </PackageReference>
     <PackageReference Include="PRISM-Library">
       <Version>1.0.2</Version>
     </PackageReference>
