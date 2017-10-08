@@ -63,6 +63,23 @@ namespace Mage
             SetPropertiesFromBuilder(builder);
         }
 
+        /// <summary>
+        /// Construct a new Mage SQLite reader module
+        /// using an xml query template and runtime parameters to
+        /// define the SQLText property
+        /// </summary>
+        /// <param name="xml"></param>
+        /// <param name="args"></param>
+        /// <param name="databasePath">Path to the SQLite database</param>
+        public SQLiteReader(string xml, Dictionary<string, string> args, string databasePath)
+        {
+            var builder = new SQLBuilder(xml, ref args);
+            builder.SpecialArgs["Database"] = databasePath;
+
+            SetPropertiesFromBuilder(builder);
+        }
+
+
         #endregion
 
         #region IDisposable Members
