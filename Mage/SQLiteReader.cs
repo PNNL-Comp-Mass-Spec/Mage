@@ -182,7 +182,9 @@ namespace Mage
                         //builder.UseUTF16Encoding = True
             */
             var connstring = builder.ConnectionString;
-            mConnection = new SQLiteConnection(connstring);
+
+            // Note: providing true for parseViaFramework as a workaround for reading SqLite files located on UNC or in readonly folders
+            mConnection = new SQLiteConnection(connstring, true);
             mConnection.Open();
         }
 

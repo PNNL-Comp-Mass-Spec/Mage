@@ -249,7 +249,9 @@ namespace Mage
             if (mConnection == null)
             {
                 var sqliteConnString = CreateSQLiteConnectionString(DbPath, DbPassword);
-                mConnection = new SQLiteConnection(sqliteConnString);
+
+                // Note: providing true for parseViaFramework as a workaround for reading SqLite files located on UNC or in readonly folders
+                mConnection = new SQLiteConnection(sqliteConnString, true);
                 mConnection.Open();
             }
         }
