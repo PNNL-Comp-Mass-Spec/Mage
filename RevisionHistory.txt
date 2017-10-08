@@ -1,5 +1,9 @@
 Mage Revision History
 
+Version 1.5.6490; October 8, 2017
+	- Obtain libraries from NuGet
+	- Fix unit tests
+
 Version 1.5.6323; April 24, 2017
 	- Update to .NET 4.6.2
 	- Obtain PRISM.dll from NuGet

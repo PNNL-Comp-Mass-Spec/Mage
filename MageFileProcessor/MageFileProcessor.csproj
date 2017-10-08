@@ -214,13 +214,14 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetPath)" "$(ProjectDir)..\DeployedFiles\$(ProjectName)" /y
-copy "$(TargetDir)*.dll" "$(ProjectDir)..\DeployedFiles\$(ProjectName)" /y
-xcopy "$(TargetDir)x86\*.dll" "$(ProjectDir)..\DeployedFiles\$(ProjectName)\x86\" /D /y
-xcopy "$(TargetDir)x64\*.dll" "$(ProjectDir)..\DeployedFiles\$(ProjectName)\x64\" /D /y
-copy "$(TargetDir)QueryDefinitions.xml" "$(ProjectDir)..\DeployedFiles\$(ProjectName)"
-copy "$(TargetFileName).config" "$(ProjectDir)..\DeployedFiles\$(ProjectName)" /y
-copy "$(TargetDir)ColumnMapping.txt" "$(ProjectDir)..\DeployedFiles\$(ProjectName)" /y
+    <PostBuildEvent>copy "$(TargetPath)" "$(ProjectDir)..\DeployedFiles\$(ProjectName)" /Y
+copy "$(TargetDir)*.dll" "$(ProjectDir)..\DeployedFiles\$(ProjectName)" /Y
+xcopy "$(TargetDir)x86\*.dll" "$(ProjectDir)..\DeployedFiles\$(ProjectName)\x86\" /D /Y
+xcopy "$(TargetDir)x64\*.dll" "$(ProjectDir)..\DeployedFiles\$(ProjectName)\x64\" /D /Y
+xcopy "$(TargetDir)QueryDefinitions.xml" "$(ProjectDir)..\DeployedFiles\$(ProjectName)" /D /Y
+xcopy "$(TargetFileName).config" "$(ProjectDir)..\DeployedFiles\$(ProjectName)" /D /Y
+xcopy "$(TargetDir)ColumnMapping.txt" "$(ProjectDir)..\DeployedFiles\$(ProjectName)" /D /Y
+xcopy "$(TargetDir)Logging.config" "$(ProjectDir)..\DeployedFiles\$(ProjectName)" /D /Y
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
