@@ -212,10 +212,7 @@ namespace Mage
             }
 
             Running = false;
-            if (OnRunCompleted != null)
-            {
-                OnRunCompleted(this, new MageStatusEventArgs(CompletionCode));
-            }
+            OnRunCompleted?.Invoke(this, new MageStatusEventArgs(CompletionCode));
         }
 
 
@@ -436,10 +433,19 @@ namespace Mage
         /// <returns></returns>
         public IBaseModule AddModule(ModuleDef modDef)
         {
-            var module = modDef.ModuleObject as IBaseModule;
-            if (module == null)
+            if (modDef == null)
             {
-                throw new MageException("Null module sent to AddModule");
+                throw new MageException("Null module definition sent to AddModule (modDef is null)");
+            }
+
+            if (modDef.ModuleObject == null)
+            {
+                throw new MageException("Null module sent to AddModule (modDef.ModuleObject is null)");
+            }
+
+            if (!(modDef.ModuleObject is IBaseModule module))
+            {
+                throw new MageException("Module is not of type IBaseModule; cannot add " + modDef.ModuleObject);
             }
 
             mModuleList.Add(module);
@@ -489,10 +495,7 @@ namespace Mage
             {
                 mErrorMessages.Add(args.Message);
             }
-            if (OnStatusMessageUpdated != null)
-            {
-                OnStatusMessageUpdated(this, args);
-            }
+            OnStatusMessageUpdated?.Invoke(this, args);
         }
 
         /// <summary>
@@ -506,10 +509,7 @@ namespace Mage
             {
                 mErrorMessages.Add(args.Message);
             }
-            if (OnWarningMessageUpdated != null)
-            {
-                OnWarningMessageUpdated(this, args);
-            }
+            OnWarningMessageUpdated?.Invoke(this, args);
         }
 
         #endregion
@@ -600,14 +600,19 @@ namespace Mage
                 }
 
                 var moduleName = modNode.Attributes["name"].InnerText;
+
                 // build list of parameters for the module
                 var moduleParams = new Dictionary<string, string>();
                 foreach (XmlNode parmNode in modNode.ChildNodes)
                 {
-                    var paramName = parmNode.Attributes["name"].InnerText;
-                    var paramVal = parmNode.InnerText;
-                    moduleParams.Add(paramName, paramVal);
+                    if (parmNode.Attributes != null)
+                    {
+                        var paramName = parmNode.Attributes["name"].InnerText;
+                        var paramVal = parmNode.InnerText;
+                        moduleParams.Add(paramName, paramVal);
+                    }
                 }
+
                 // send list of parameters to module
                 SetModuleParameters(moduleName, moduleParams);
             }
@@ -721,6 +726,11 @@ namespace Mage
             var xnl = doc.SelectNodes(".//module");
 
             var p = doc.SelectSingleNode("/pipeline");
+            if (p?.Attributes == null)
+            {
+                throw new NullReferenceException("pipeline XML does not contain node 'pipeline'; cannot assemble");
+            }
+
             var pipelineName = p.Attributes["name"].InnerText;
 
             var namedModuleList = new Collection<ModuleDef>();
@@ -731,18 +741,30 @@ namespace Mage
 
             foreach (XmlNode n in xnl)
             {
+                if (n?.Attributes == null)
+                {
+                    throw new NullReferenceException("pipeline XML node does not contain attribute; cannot assemble");
+                }
+
                 // create the module
                 var nameAttr = n.Attributes["name"];
-                var moduleName = (nameAttr != null) ? nameAttr.InnerText : string.Format("Module{0}", namedModuleList.Count + 1);
+
+                var moduleName = nameAttr?.InnerText ?? string.Format("Module{0}", namedModuleList.Count + 1);
                 var moduleType = n.Attributes["type"].InnerText;
                 var mod = MakeModule(moduleType);
 
                 var pnl = n.SelectNodes(".//param");
-                foreach (XmlNode parmNode in pnl)
+                if (pnl != null)
                 {
-                    var paramName = parmNode.Attributes["name"].InnerText;
-                    var paramVal = parmNode.InnerText;
-                    mod.SetPropertyByName(paramName, paramVal);
+                    foreach (XmlNode parmNode in pnl)
+                    {
+                        if (parmNode.Attributes == null)
+                            continue;
+
+                        var paramName = parmNode.Attributes["name"].InnerText;
+                        var paramVal = parmNode.InnerText;
+                        mod.SetPropertyByName(paramName, paramVal);
+                    }
                 }
                 namedModuleList.Add(new ModuleDef(moduleName, mod));
             }

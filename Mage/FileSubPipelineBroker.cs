@@ -227,6 +227,10 @@ namespace Mage
             var filter = ProcessingPipeline.MakeModule(FileFilterModuleName) as BaseModule;
             var writer = new DelimitedFileWriter();
 
+            if (filter == null)
+                throw new NullReferenceException("Failed to create module " + FileFilterModuleName +
+                                                 " in MakeDefaultFileProcessingPipeline; filter is not of type BaseModule");
+
             filter.SetParameters(mFileFilterParameters);
             filter.SetContext(context);
 
@@ -243,6 +247,10 @@ namespace Mage
             var reader = new DelimitedFileReader();
             var filter = ProcessingPipeline.MakeModule(FileFilterModuleName) as BaseModule;
             var writer = new SQLiteWriter();
+
+            if (filter == null)
+                throw new NullReferenceException("Failed to create module " + FileFilterModuleName +
+                                                 " in MakeDefaultSQLiteProcessingPipeline; filter is not of type BaseModule");
 
             filter.SetParameters(mFileFilterParameters);
             filter.SetContext(context);
