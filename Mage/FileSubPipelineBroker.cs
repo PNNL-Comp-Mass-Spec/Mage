@@ -280,7 +280,8 @@ namespace Mage
             if (mi != null)
             {
                 var filterMod = (ContentFilter)bm;
-                SetOutputFileNamer(new OutputFileNamer(filterMod.RenameOutputFile));
+                var namer = new OutputFileNamer(filterMod.RenameOutputFile);
+                SetOutputFileNamer(namer);
             }
         }
     }
