@@ -6,7 +6,7 @@ namespace Mage
 {
 
     /// <summary>
-    /// delegate for a function that returns and output file name for a given input file name and parameters
+    /// delegate for a function that returns an output file name for a given input file name and parameters
     /// </summary>
     /// <param name="sourceFile">the original name of the file</param>
     /// <param name="fieldPos">index to the metadata field to be used in renaming</param>
@@ -15,16 +15,16 @@ namespace Mage
     public delegate string OutputFileNamer(string sourceFile, Dictionary<string, int> fieldPos, string[] fields);
 
     /// <summary>
-    /// module that provides base functions for processing one or more input files 
+    /// module that provides base functions for processing one or more input files
     ///
     /// it expects to receive path information for files via its standard tabular input
     ///
-    /// each row of standard tabular input will contain information for a single file 
+    /// each row of standard tabular input will contain information for a single file
     /// (parameters SourceFileColumnName and SourceFolderColumnName) define which
     /// columns in stardard input contain the folder and name of the input file.
     ///
     /// the OutputFolderPath parameter tells this module where to put results files
-    /// 
+    ///
     /// this module outputs a record of each file processed on stardard tabular output
     /// </summary>
     public class FileContentProcessor : FileProcessingBase
@@ -40,7 +40,7 @@ namespace Mage
         #region Functions Available to Clients
 
         /// <summary>
-        /// define a delegate function that will generate output file name 
+        /// define a delegate function that will generate output file name
         /// </summary>
         /// <param name="namer"></param>
         public void SetOutputFileNamer(OutputFileNamer namer)
@@ -53,9 +53,9 @@ namespace Mage
         #region Properties
 
         /// <summary>
-        /// path to the folder into which the 
+        /// path to the folder into which the
         /// processed input file contents will be saved as an output file
-        /// (required by subclasses that create result files) 
+        /// (required by subclasses that create result files)
         /// </summary>
         public string OutputFolderPath { get; set; }
 

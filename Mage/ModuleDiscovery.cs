@@ -19,8 +19,9 @@ namespace Mage
         private ModuleDiscovery()
         {
         }
-
-        // static constructor
+        /// <summary>
+        /// Static Constructor
+        /// </summary>
         static ModuleDiscovery()
         {
             LoadableModuleFileNamePrefix = "MageExt";
@@ -40,13 +41,13 @@ namespace Mage
         public static string ExternalModuleFolder { get; set; }
 
         /// <summary>
-        /// Prefix that this class will require file names of DLLs to 
+        /// Prefix that this class will require file names of DLLs to
         /// have in order to search them for loadable Mage modules
         /// </summary>
         public static string LoadableModuleFileNamePrefix { get; set; }
 
         /// <summary>
-        /// Name of predefined query file
+        /// Name (or full path) of predefined query file
         /// </summary>
         public static string QueryDefinitionFileName { get; set; }
 
@@ -75,10 +76,10 @@ namespace Mage
         /// <summary>
         /// Looks for a class with the given class name in the canonical
         /// assemblies already loaded for the parent application and
-        /// also searches assembly DLLs that are in the folder given 
+        /// also searches assembly DLLs that are in the folder given
         /// by the ExternalModuleFolder property and tagged with the
         /// file name prefix given by the LoadableModuleFileNamePrefix property.
-        /// 
+        ///
         /// Returns a .Net Type object suitable for further examination or
         /// instantiation by the caller.
         /// </summary>
@@ -132,7 +133,7 @@ namespace Mage
 
         /// <summary>
         /// Look in the given assembly object for a class with the given name.
-        /// 
+        ///
         /// We should have been able to use assembly.GetType("className")
         /// instead of doing this function, but it doesn't seem to work.  This is the work-around
         /// </summary>
@@ -167,7 +168,7 @@ namespace Mage
         private static Collection<MageAttribute> mFilterList = new Collection<MageAttribute>();
 
         /// <summary>
-        /// list of attributes for filters, and filter panels, indexed by ID 
+        /// list of attributes for filters, and filter panels, indexed by ID
         /// </summary>
         private static readonly Dictionary<string, MageAttribute> mFilters = new Dictionary<string, MageAttribute>();
         private static readonly Dictionary<string, MageAttribute> mPanels = new Dictionary<string, MageAttribute>();
@@ -317,7 +318,7 @@ namespace Mage
         /// Get XML definition for query with given name
         /// from external XML query definition file
         /// </summary>
-        /// <param name="queryName"></param>
+        /// <param name="queryName">Query Name</param>
         /// <returns></returns>
         public static string GetQueryXMLDef(string queryName)
         {

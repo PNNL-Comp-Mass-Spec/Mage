@@ -21,14 +21,14 @@ namespace Mage
         private const int mMinimumReportIntervalMsec = 500;
         private DateTime mLastReportTimeUTC = DateTime.UtcNow;
 
-        #endregion        
+        #endregion
 
         #region IBaseModule Members
 
         /// <summary>
         /// handler for Mage standard tablular column definition
         /// (override of base class)
-        /// 
+        ///
         /// let base class processess columns for us
         /// and pass the appropriate definitions to our listeners
         /// </summary>
@@ -47,7 +47,7 @@ namespace Mage
         /// <summary>
         /// handler for Mage standard tablular input data rows
         /// (override of base class)
-        ///    
+        ///
         /// check each input row against the filter and pass on the
         /// rows that are accepted
         /// <param name="sender"></param>

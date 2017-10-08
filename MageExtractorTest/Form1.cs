@@ -128,7 +128,7 @@ namespace MageExtractorTest {
         }
 
         private ProcessingPipeline ImportContentsOfFiles(string sourceFolderPath, string fileNameSelector, string columnMap, string containerPath, string name, string destinationType) {
-            // make source module in pipeline 
+            // make source module in pipeline
             // to get filtered list of files in local directory
             var reader = new FileListFilter
             {
@@ -141,7 +141,7 @@ namespace MageExtractorTest {
                 IncludeFilesOrFolders = "File"
             };
 
-            // make file sub-pipeline processing broker module 
+            // make file sub-pipeline processing broker module
             // to run a filter pipeline against files from list
             // and extract their contents
             var broker = new FileSubPipelineBroker

@@ -24,7 +24,7 @@ namespace Mage
         /// <summary>
         /// Regex-based file search
         /// </summary>
-        public const string FILE_SELECTOR_REGEX = "RegEx";        
+        public const string FILE_SELECTOR_REGEX = "RegEx";
 
         private enum FolderSearchMode
         {
@@ -62,7 +62,7 @@ namespace Mage
         public string FileNameSelector { get; set; }
 
         /// <summary>
-        /// how to use the file matching patterns ("FileSearch" or "RegEx")
+        /// File matching pattern type: "FileSearch" or "RegEx"
         /// </summary>
         public string FileSelectorMode { get; set; }
 
@@ -564,7 +564,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// search files in folder and return list of files 
+        /// search files in folder and return list of files
         /// whose names satisfy the selection criteria
         /// </summary>
         /// <param name="fileList"></param>
@@ -670,7 +670,7 @@ namespace Mage
         /// <returns></returns>
         private string ScrubRelativePathText(string selector)
         {
-         
+
             if (!selector.StartsWith(@"..\"))
             {
                 return selector;

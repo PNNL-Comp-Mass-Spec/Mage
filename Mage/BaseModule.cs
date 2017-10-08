@@ -41,7 +41,7 @@ namespace Mage
 
         /// <summary>
         /// master list of input column definitions
-        /// (default HandleColumnDef will build this) 
+        /// (default HandleColumnDef will build this)
         /// </summary>
         protected readonly List<MageColumnDef> InputColumnDefs = new List<MageColumnDef>();
 
@@ -58,17 +58,17 @@ namespace Mage
 
         /// <summary>
         /// master list of Output column definitions
-        /// (not all modules require this feature) 
+        /// (not all modules require this feature)
         /// </summary>
         protected List<MageColumnDef> OutputColumnDefs;
 
         /// <summary>
         /// master list of Output column position keyed to column name (for lookup of column index by column name)
-        /// (not all modules require this feature) 
+        /// (not all modules require this feature)
         /// </summary>
         protected Dictionary<string, int> OutputColumnPos;
 
-        /// <summary> 
+        /// <summary>
         /// master list of position map between output columns and input columns
         /// </summary>
         protected List<KeyValuePair<int, int>> OutputToInputColumnPosMap;
@@ -79,7 +79,7 @@ namespace Mage
         protected Dictionary<string, string> Context;
 
         /// <summary>
-        /// Position map list of new output columns 
+        /// Position map list of new output columns
         /// the have matching keys in the Context parameters
         /// </summary>
         protected Dictionary<string, int> ContextColPos;
@@ -231,7 +231,7 @@ namespace Mage
         /// <summary>
         /// Called by pipeline container after pipeline execution terminates
         /// (even for error terminations)
-        /// Modules that need to do clean up resources should override this function. 
+        /// Modules that need to do clean up resources should override this function.
         /// </summary>
         public virtual void Cleanup()
         {
@@ -256,7 +256,7 @@ namespace Mage
         /// <summary>
         /// this implements the canonical mechanism for setting module parameters
         /// first, parameters are captured in a master key/value list
-        /// next, the parameter list is traversed and any properties 
+        /// next, the parameter list is traversed and any properties
         /// whose name matches a parameter's key are set with the parameter's value
         /// </summary>
         /// <param name="parameters">List of key/value pairs for parameters (duplicate keys allowed)</param>
@@ -275,8 +275,8 @@ namespace Mage
         /// <summary>
         /// handler for Mage standard tablular input data rows
         /// (override of base class)
-        /// 
-        /// This event handler receives row events from upstream module, one event per row.  
+        ///
+        /// This event handler receives row events from upstream module, one event per row.
         /// on the module's standard tabular input, one event per row
         /// and a null vals object signalling the end of row events.
         /// </summary>
@@ -290,11 +290,11 @@ namespace Mage
         /// <summary>
         /// handler for Mage standard tablular column definition
         /// (override of base class)
-        /// 
+        ///
         /// This event handler receives a column definition event
         /// on the module's standard tabular input.
         /// Subclasses should override this for any specialized column def handling
-        /// that they need, but should be sure to also call the this base class function. 
+        /// that they need, but should be sure to also call the this base class function.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -325,7 +325,7 @@ namespace Mage
         /// <summary>
         /// Modules that can be root modules must override this
         /// </summary>
-        /// <param name="state">Provided so that this function has necessary signature 
+        /// <param name="state">Provided so that this function has necessary signature
         /// to be target of ThreadPool.QueueUserWorkItem</param>
         public virtual void Run(object state)
         {
@@ -535,7 +535,7 @@ namespace Mage
 
 
         /// <summary>
-        /// Setup position map list of new output columns 
+        /// Setup position map list of new output columns
         /// the have matching keys in the Context parameters
         /// </summary>
         protected void SetupOutputColumnToContextMapping()
@@ -627,7 +627,7 @@ namespace Mage
 
         /// <summary>
         /// A name/position map for "new" output columns (columns added to output that don't remap input columns)
-        /// (not all modules require this feature) 
+        /// (not all modules require this feature)
         /// </summary>
         protected Dictionary<string, int> NewOutputColumnPos;
 
@@ -638,7 +638,7 @@ namespace Mage
 
         /// <summary>
         /// Add output column definitions that are a pass-through of an input column
-        /// for any input columns not already mapped to output colums list                       
+        /// for any input columns not already mapped to output colums list
         /// </summary>
         private int MapOutputColumnsForUnmappedInputColumns(int outColIdx)
         {
@@ -655,7 +655,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Change one or more of the output column properties of the column definition 
+        /// Change one or more of the output column properties of the column definition
         /// at the index position
         /// </summary>
         /// <param name="outColIdx">Index position of column definition to change</param>
@@ -693,7 +693,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Add column definition to output column definition list and index lookup, 
+        /// Add column definition to output column definition list and index lookup,
         /// and to output-to-input column map
         /// </summary>
         private void AddOutputColumnDefinition(MageColumnDef colDef, int outColIdx, int inputColIdx)
@@ -703,7 +703,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Add column definition to output column definition list and index lookup, 
+        /// Add column definition to output column definition list and index lookup,
         /// </summary>
         private void AddOutputColumnDefinition(MageColumnDef colDef, int outColIdx)
         {

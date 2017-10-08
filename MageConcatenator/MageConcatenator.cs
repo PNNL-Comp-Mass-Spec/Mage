@@ -136,7 +136,7 @@ namespace MageConcatenator
         }
 
         /// <summary>
-        /// execute a command by building and running 
+        /// execute a command by building and running
         /// the appropriate pipeline (or cancelling
         /// the current pipeline activity)
         /// </summary>
@@ -482,7 +482,7 @@ namespace MageConcatenator
             FileListDisplayControl.PageTitle = "Files";
             FileListDisplayControl.AutoSizeColumnWidths = true;
 
-            // disable certain UI component panels 
+            // disable certain UI component panels
             FolderDestinationPanel1.Enabled = false;
 
             EnableCancel(false);

@@ -29,7 +29,7 @@ namespace Mage
         // description of table we will be inserting rows into
         private TableSchema mSchema;
 
-        // connection to SQLite database 
+        // connection to SQLite database
         private SQLiteConnection mConnection;
 
         private int mRowsAccumulated;
@@ -136,7 +136,7 @@ namespace Mage
         /// (override of base class)
         ///
         /// In addition to base module column definition
-        /// forms column description suitable for creating the SQL 
+        /// forms column description suitable for creating the SQL
         /// table definition and data insertion commands
         /// </summary>
         /// <param name="sender"></param>
@@ -154,7 +154,7 @@ namespace Mage
         /// <summary>
         /// handler for Mage standard tablular input data rows
         /// (override of base class)
-        /// 
+        ///
         /// receive data row, add to accumulator, write to SQLite when buffer is full, or reader finishes
         /// </summary>
         /// <param name="sender"></param>
@@ -375,7 +375,7 @@ namespace Mage
         #region "General SQLite Stuff"
 
 
-        // returns the CREATE TABLE DDL for creating the SQLite table 
+        // returns the CREATE TABLE DDL for creating the SQLite table
         // from the specified table schema object.
         private string BuildCreateTableQuery(TableSchema ts)
         {

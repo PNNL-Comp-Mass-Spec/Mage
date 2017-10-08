@@ -466,7 +466,7 @@ namespace MageUIComponents
         }
 
         /// <summary>
-        /// for each input column field that is blank (and not in a wildcard row), 
+        /// for each input column field that is blank (and not in a wildcard row),
         /// try to find a match in input column list and set it if found
         /// </summary>
         /// <param name="rows"></param>
@@ -549,7 +549,7 @@ namespace MageUIComponents
 
         /// <summary>
         /// roll up the column specs in the column spec editing panel
-        /// into a column mapping and replace the currently selected 
+        /// into a column mapping and replace the currently selected
         /// column mapping display list item with it
         /// </summary>
         /// <param name="sender"></param>
@@ -752,7 +752,7 @@ namespace MageUIComponents
         private string mPreviewSourceLabel = "";
 
         /// <summary>
-        /// return a Mage reader module that is set up 
+        /// return a Mage reader module that is set up
         /// to read preview of selected file processing output file/database
         /// </summary>
         /// <returns></returns>
@@ -786,10 +786,11 @@ namespace MageUIComponents
         }
 
         /// <summary>
-        /// return a Mage SimpleSink object that is populated 
+        /// return a Mage SimpleSink object that is populated
         /// with preview results by a Mage pipeline using the previously set up Mage reader module
         /// </summary>
         /// <param name="reader"></param>
+        /// <param name="numRows"></param>
         /// <returns></returns>
         private static SimpleSink GetPreviewFromSource(BaseModule reader, int numRows)
         {
@@ -802,7 +803,7 @@ namespace MageUIComponents
         }
 
         /// <summary>
-        /// return a Mage SimpleSink module populated with 
+        /// return a Mage SimpleSink module populated with
         /// preview from file processing input target
         /// </summary>
         /// <returns></returns>
@@ -852,7 +853,7 @@ namespace MageUIComponents
         }
 
         /// <summary>
-        /// return a Mage SimpleSink module populated with 
+        /// return a Mage SimpleSink module populated with
         /// preview from file processing output target
         /// </summary>
         /// <returns></returns>

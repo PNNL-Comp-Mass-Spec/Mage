@@ -81,14 +81,14 @@ namespace MageUIComponents
 
         public void SetParameters(Dictionary<string, string> paramList)
         {
-            ///mParameters[FilterSelectionCtl.Text] = paramList;
+            // mParameters[FilterSelectionCtl.Text] = paramList;
             // FUTURE: set individual controls from items in the list
         }
 
         #endregion
 
         /// <summary>
-        /// Issue command to process file contents 
+        /// Issue command to process file contents
         /// for selected items in list
         /// </summary>
         /// <param name="sender"></param>
@@ -99,7 +99,7 @@ namespace MageUIComponents
         }
 
         /// <summary>
-        /// Issue command to process file contents 
+        /// Issue command to process file contents
         /// for all items in list
         /// </summary>
         /// <param name="sender"></param>
@@ -157,7 +157,7 @@ namespace MageUIComponents
         }
 
         /// <summary>
-        /// enable and disable the button that brings up parameter panel 
+        /// enable and disable the button that brings up parameter panel
         /// that is associated with currently selected filter
         /// according to whether or not such a panel exists
         /// </summary>
@@ -216,7 +216,7 @@ namespace MageUIComponents
         }
 
         /// <summary>
-        /// Reset column mapping 
+        /// Reset column mapping
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

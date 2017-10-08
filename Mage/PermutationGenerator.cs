@@ -17,7 +17,7 @@ namespace Mage
 
         /// <summary>
         /// list of definitions for the parameters that will be permutated
-        /// and included in the standard tabular output as columns 
+        /// and included in the standard tabular output as columns
         /// </summary>
         private readonly List<ParameterDef> mParamColDefinitions = new List<ParameterDef>();
 
@@ -95,7 +95,7 @@ namespace Mage
         #region Client Accessible Functions
 
         /// <summary>
-        /// Add a parameter column definition.  The parameter will be incremented by the step 
+        /// Add a parameter column definition.  The parameter will be incremented by the step
         /// ammount withing the range set by the lower and upper bounds.
         /// </summary>
         /// <param name="name">Name of the parameter</param>
@@ -111,7 +111,7 @@ namespace Mage
 
         /// <summary>
         /// Add a parameter column definition.  The parameter will be
-        /// incremented according to parameters supplied as key/value pairs 
+        /// incremented according to parameters supplied as key/value pairs
         /// </summary>
         /// <param name="parms">parameters as key/value pairs</param>
         public void AddParamColumn(Dictionary<string, string> parms)
@@ -170,7 +170,7 @@ namespace Mage
             base.HandleColumnDef(this, new MageColumnEventArgs(colDefs.ToArray()));
         }
 
-        // set the row cycle count for each parameter def object 
+        // set the row cycle count for each parameter def object
         // and get total row count that will be produced
         private void SetCycleCountsForParamterColDefList()
         {
@@ -262,7 +262,7 @@ namespace Mage
 
         #region Private classes
 
-        // Class that provides permutation behavior 
+        // Class that provides permutation behavior
         // for a single parameter
         private class ParameterDef
         {
@@ -292,7 +292,7 @@ namespace Mage
             // index to current increment
             private int incrementIndex;
 
-            // get the current parameter increment value for 
+            // get the current parameter increment value for
             // parameter represented by this object, based on
             // the rowNum and cycle (which must be set externally)
             public string CurrentIncrement(int rowNum)
@@ -376,7 +376,7 @@ namespace Mage
             }
 
 
-            // set up list of increment values 
+            // set up list of increment values
             // based on increment range parameters
             // or list of increment values
             private void CalculateIncrements()

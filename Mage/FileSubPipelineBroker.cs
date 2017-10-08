@@ -15,26 +15,26 @@ namespace Mage
     public delegate ProcessingPipeline FileProcessingPipelineGenerator(string inputFilePath, string outputFilePath, Dictionary<string, string> context);
 
     /// <summary>
-    /// module that creates and runs a Mage pipeline for one or more input files 
+    /// module that creates and runs a Mage pipeline for one or more input files
     ///
     /// it expects to receive path information for files via its standard tabular input
     /// (its FileContentProcessor base class provides the basic functionality)
     ///
-    /// this module builds a filtering sub-pipeline to process each file 
+    /// this module builds a filtering sub-pipeline to process each file
     /// and runs that in the the same thread the module is currently running in
     ///
     /// there are two internally-defined file processing sub-pipelines, that have a delimited file
     /// reader module that reads rows from a file and passed them to a filter module, which passes
     /// its rows to a writer module.
     ///
-    /// one of the internally-defined sub-pipelines uses a delimited file writer module, 
+    /// one of the internally-defined sub-pipelines uses a delimited file writer module,
     /// and the other uses a SQLite writer.
     ///
-    /// to use either of these internally-defined sub-pipelines, the client need only 
+    /// to use either of these internally-defined sub-pipelines, the client need only
     /// supply the name of the filter module to be used (by setting the FileFilterModuleName property)
     /// if the DatabaseName property is set, the SQLite database sub-pipeline will be used
     /// otherwise the delimited file writer sub-pipeline is used
-    /// 
+    ///
     /// If the DatabaseName property is set, and the TableName property is set, all results go into
     /// that table.  If the TableName property is blank, results for each source file go into
     /// a separate table.  Table names will be equivalent to what the output file name would have been
@@ -66,8 +66,8 @@ namespace Mage
         #region Functions Available to Clients
 
         /// <summary>
-        /// define a delegate function that will be called by this module 
-        /// to construct and run a file processing pipeline 
+        /// define a delegate function that will be called by this module
+        /// to construct and run a file processing pipeline
         /// for each file handled by this broker module
         /// </summary>
         /// <param name="maker"></param>
@@ -85,7 +85,6 @@ namespace Mage
         /// </summary>
         public string FileFilterModuleName { get; set; }
 
-        // 
         /// <summary>
         /// path to SQLite database file
         /// (parameter for SQLite database writer for internally defined sub-pipelines using SQLite Writer)
@@ -104,7 +103,7 @@ namespace Mage
 
         /// <summary>
         /// Deal with file filter parameters as delimited string
-        /// "key:value; key:value; 
+        /// "key:value; key:value;
         /// </summary>
         public string FileFilterParameters
         {
@@ -157,7 +156,7 @@ namespace Mage
         /// </summary>
         public FileSubPipelineBroker()
         {
-            // set up to use our own default sub-pipeline maker 
+            // set up to use our own default sub-pipeline maker
             //in case the client doesn't give us another one
             FileFilterModuleName = ""; // client must set this property to use internally defined sub-pipelines
             DatabaseName = ""; // client must set these properties to user internally-defined SQLiteWriter sub-pipeline

@@ -174,7 +174,7 @@ namespace MageExtExtractionFilters
             // See if strSequenceIn contains two periods
             if (periodIndex1 > -1 && periodIndex2 > -1 && periodIndex2 > periodIndex1 + 1)
             {
-                // Sequence contains two periods with letters between the periods, 
+                // Sequence contains two periods with letters between the periods,
                 // For example, A.BCDEFGHIJK.L or ABCD.BCDEFGHIJK.L
                 // Extract out the text between the periods
                 peptide = peptide.Substring(periodIndex1 + 1, periodIndex2 - periodIndex1 - 1);

@@ -8,7 +8,7 @@ namespace Mage
 {
 
     /// <summary>
-    /// Module which can query a SQLite database and deliver 
+    /// Module that can query a SQLite database and deliver
     /// results of query via its standard tabular output events
     /// </summary>
     public sealed class SQLiteReader : BaseModule, IDisposable
@@ -30,7 +30,7 @@ namespace Mage
         #region Properties
 
         /// <summary>
-        /// full path to SQLite database file
+        /// Full path to SQLite database file
         /// </summary>
         public string Database { get; set; }
 
@@ -51,8 +51,8 @@ namespace Mage
         }
 
         /// <summary>
-        /// construct a new Mage SQLIte reader module
-        /// using an xml query templay and runtime parameters to
+        /// Construct a new Mage SQLite reader module
+        /// using an xml query template and runtime parameters to
         /// define the SQLText property
         /// </summary>
         /// <param name="xml"></param>

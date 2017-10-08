@@ -247,7 +247,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Set a single parameter for a given module 
+        /// Set a single parameter for a given module
         /// </summary>
         /// <param name="moduleName">The name of the module to set parameters for</param>
         /// <param name="paramName">Key</param>
@@ -372,7 +372,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Create a new module of class named by moduleType 
+        /// Create a new module of class named by moduleType
         /// and set its name as given by moduleName, and add it to pipeline
         /// </summary>
         /// <param name="moduleName">Arbitrary name to set for new moudle</param>
@@ -559,7 +559,7 @@ namespace Mage
                 }
                 else
                 {
-                    // module with no upstream module 
+                    // module with no upstream module
                     // is assumed to be the root of the pipeline
                     // (we play by Highlander rules - there can be only one)
                     RootModule = mod;
@@ -777,7 +777,7 @@ namespace Mage
     /// <summary>
     /// Class that encapsulates a minimum definition of a pipeline
     /// module for pipeline creation.
-    /// 
+    ///
     /// It contains a reference to a pipeline module and the
     /// name that the module will have in the pipeline
     /// </summary>

@@ -8,7 +8,7 @@ namespace MageFileProcessor
 {
 
     /// <summary>
-    /// This class contains several functions that build Mage pipelines 
+    /// This class contains several functions that build Mage pipelines
     /// that supply data to the UI in response to user commands
     /// </summary>
     public static class Pipelines
@@ -29,7 +29,7 @@ namespace MageFileProcessor
         public static ProcessingPipeline MakeJobQueryPipeline(ISinkModule sinkObject, string queryDefXML, Dictionary<string, string> runtimeParms)
         {
 
-            // make source module and initialize from query def XML and runtime parameters 
+            // make source module and initialize from query def XML and runtime parameters
             var rdr = new MSSQLReader(queryDefXML, runtimeParms);
 
             // build and wire pipeline
@@ -192,7 +192,7 @@ namespace MageFileProcessor
 
             var reportFileName = string.Format("Runlog_{0}_{1:yyyy-MM-dd_hhmmss}.txt", filterName.Replace(" ", "_"), System.DateTime.Now);
 
-            // make file sub-pipeline processing broker module 
+            // make file sub-pipeline processing broker module
             // to run a filter pipeline against files from list
             var broker = new FileSubPipelineBroker
             {
@@ -229,7 +229,7 @@ namespace MageFileProcessor
 
         /// <summary>
         /// Build and return Mage pipeline queue to extract contents of results files
-        /// for jobs given in jobList according to parameters defined in mExtractionParms 
+        /// for jobs given in jobList according to parameters defined in mExtractionParms
         /// and deliver output according to mDestination.  Also create metadata file for jobList.
         /// </summary>
         public static PipelineQueue MakePipelineQueueToPreProcessThenFilterFiles(
@@ -267,7 +267,7 @@ namespace MageFileProcessor
 
         /*
         /// <summary>
-        /// Make a Mage pipeline to dump contents of job list 
+        /// Make a Mage pipeline to dump contents of job list
         /// as metadata file or db table
         /// </summary>
         /// <param name="jobList"></param>

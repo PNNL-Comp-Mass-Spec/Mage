@@ -9,7 +9,7 @@ namespace Mage
 {
     /// <summary>
     /// This module serves as the base class for either FileListFilter or FileListInfoLookup
-    /// 
+    ///
     /// If using FileListFilter, then pass in a list of folder paths to be searched
     /// If using FileListInfoLookup, then pass in a list of file paths whose file information should be determined
     ///
@@ -19,7 +19,7 @@ namespace Mage
     /// setting the "FolderPath" property/parameter
     ///
     /// This module uses output column definitions
-    /// the internal defaults will provide a functional minimum even if the 
+    /// the internal defaults will provide a functional minimum even if the
     /// "OutputColumnList" property is not set by the client, but if it is
     /// it must include a new column definition for the column specified by the "FileColumnName" property
     /// </summary>
@@ -36,7 +36,7 @@ namespace Mage
         /// Buffer that accumulates a row of output fields for each input row
         /// received via standard tabular input or via the "FolderPath" property
         /// It includes the folder path column to be searched for files
-        /// so it also functions as an internal file path buffer 
+        /// so it also functions as an internal file path buffer
         /// </summary>
         protected readonly List<string[]> mOutputBuffer = new List<string[]>();
 
@@ -147,8 +147,8 @@ namespace Mage
         /// <summary>
         /// handler for Mage standard tablular input data rows
         /// (override of base class)
-        /// 
-        /// receive storage folder path as column in data row, 
+        ///
+        /// receive storage folder path as column in data row,
         /// and save it and the ID column value to our local folder path buffer
         /// </summary>
         /// <param name="sender"></param>

@@ -166,7 +166,7 @@ namespace Mage
         #region Initialization
 
         /// <summary>
-        /// Populate this object from query in xml specification 
+        /// Populate this object from query in xml specification
         /// and any parameters passed in via args
         /// </summary>
         /// <param name="xml">Specifications for query</param>
@@ -331,7 +331,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Add an item for building the query predicate 
+        /// Add an item for building the query predicate
         /// default predicate items for column
         /// </summary>
         /// <param name="col">Column name</param>
