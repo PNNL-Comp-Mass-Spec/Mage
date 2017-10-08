@@ -135,6 +135,7 @@ Global
 		{2AC22986-CA22-49A5-92F4-E0DB9F78180B}.Release|x86.ActiveCfg = Release|x86
 		{2AC22986-CA22-49A5-92F4-E0DB9F78180B}.Release|x86.Build.0 = Release|x86
 		{0B65E7F8-1121-4943-ACEC-2C140A4AB337}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{0B65E7F8-1121-4943-ACEC-2C140A4AB337}.Debug|Any CPU.Build.0 = Debug|x86
 		{0B65E7F8-1121-4943-ACEC-2C140A4AB337}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{0B65E7F8-1121-4943-ACEC-2C140A4AB337}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{0B65E7F8-1121-4943-ACEC-2C140A4AB337}.Debug|x64.ActiveCfg = Debug|x64
@@ -148,6 +149,7 @@ Global
 		{0B65E7F8-1121-4943-ACEC-2C140A4AB337}.Release|x86.ActiveCfg = Release|x86
 		{0B65E7F8-1121-4943-ACEC-2C140A4AB337}.Release|x86.Build.0 = Release|x86
 		{BC518677-B610-44A2-A795-DFAC487B271B}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{BC518677-B610-44A2-A795-DFAC487B271B}.Debug|Any CPU.Build.0 = Debug|x86
 		{BC518677-B610-44A2-A795-DFAC487B271B}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{BC518677-B610-44A2-A795-DFAC487B271B}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{BC518677-B610-44A2-A795-DFAC487B271B}.Debug|x64.ActiveCfg = Debug|x64
@@ -175,6 +177,7 @@ Global
 		{DB6409E4-2294-4136-94A9-F4F881DC19C2}.Release|x86.ActiveCfg = Release|x86
 		{DB6409E4-2294-4136-94A9-F4F881DC19C2}.Release|x86.Build.0 = Release|x86
 		{29B0AEBC-47F6-48ED-A152-B508E9B0DC25}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{29B0AEBC-47F6-48ED-A152-B508E9B0DC25}.Debug|Any CPU.Build.0 = Debug|x86
 		{29B0AEBC-47F6-48ED-A152-B508E9B0DC25}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{29B0AEBC-47F6-48ED-A152-B508E9B0DC25}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{29B0AEBC-47F6-48ED-A152-B508E9B0DC25}.Debug|x64.ActiveCfg = Debug|x64
@@ -234,6 +237,7 @@ Global
 		{A57489F0-ECB0-40B2-8947-4203E7E42AC0}.Release|x64.ActiveCfg = Release|x64
 		{A57489F0-ECB0-40B2-8947-4203E7E42AC0}.Release|x86.ActiveCfg = Release|x86
 		{744D0B8A-6A3A-48A1-A492-5AAD205ED419}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{744D0B8A-6A3A-48A1-A492-5AAD205ED419}.Debug|Any CPU.Build.0 = Debug|x86
 		{744D0B8A-6A3A-48A1-A492-5AAD205ED419}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{744D0B8A-6A3A-48A1-A492-5AAD205ED419}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{744D0B8A-6A3A-48A1-A492-5AAD205ED419}.Debug|x64.ActiveCfg = Debug|x64
@@ -281,6 +285,7 @@ Global
 		{4F7F8260-6369-4968-B076-F4C98834181B}.Release|x86.ActiveCfg = Release|x86
 		{4F7F8260-6369-4968-B076-F4C98834181B}.Release|x86.Build.0 = Release|x86
 		{C6518410-ED5F-4F61-AD92-BE1DE3C88294}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{C6518410-ED5F-4F61-AD92-BE1DE3C88294}.Debug|Any CPU.Build.0 = Debug|x86
 		{C6518410-ED5F-4F61-AD92-BE1DE3C88294}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{C6518410-ED5F-4F61-AD92-BE1DE3C88294}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{C6518410-ED5F-4F61-AD92-BE1DE3C88294}.Debug|x64.ActiveCfg = Debug|x86
@@ -296,6 +301,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8785CE3B-5CF1-4037-9E81-2D2BFED0F4B0}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = Mage.vsmdi
