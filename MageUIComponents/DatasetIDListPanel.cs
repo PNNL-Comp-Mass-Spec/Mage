@@ -30,8 +30,6 @@ namespace MageUIComponents
                     case "Dataset_ID":
                         DatasetListCtl.Text = paramDef.Value;
                         break;
-                    default:
-                        break;
                 }
             }
         }

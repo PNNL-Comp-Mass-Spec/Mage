@@ -32,8 +32,6 @@ namespace MageUIComponents {
                     case "IncrementList":
                         IncrementListCtl.Text = paramDef.Value;
                         break;
-                    default:
-                        break;
                 }
             }
         }

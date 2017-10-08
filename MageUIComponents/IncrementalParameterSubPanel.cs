@@ -40,8 +40,6 @@ namespace MageUIComponents {
                     case "Active":
                         ActiveCtl.Checked = (paramDef.Value == "On");
                         break;
-                    default:
-                        break;
                 }
             }
         }

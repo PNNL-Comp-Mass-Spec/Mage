@@ -46,8 +46,6 @@ namespace MageUIComponents
                     case "Dataset Type":
                         TypeCtl.Text = paramDef.Value;
                         break;
-                    default:
-                        break;
                 }
             }
         }

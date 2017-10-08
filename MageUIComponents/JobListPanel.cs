@@ -39,8 +39,6 @@ namespace MageUIComponents {
                     case "Parameter_File":
                         ParameterFileCtl.Text = paramDef.Value;
                         break;
-                    default:
-                        break;
                 }
             }
         }

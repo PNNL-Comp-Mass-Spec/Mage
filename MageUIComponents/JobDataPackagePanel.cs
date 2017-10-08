@@ -71,8 +71,6 @@ namespace MageUIComponents
                     case "Data_Package_ID":
                         DataPackageIDCtl.Text = paramDef.Value;
                         break;
-                    default:
-                        break;
                 }
             }
         }

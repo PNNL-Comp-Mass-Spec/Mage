@@ -22,10 +22,9 @@ namespace MageUIComponents
         public void SetParameters(Dictionary<string, string> paramList) {
             foreach (var paramDef in paramList) {
                 switch (paramDef.Key) {
+                {
                     case "Dataset_ID":
                         DatasetListCtl.Text = paramDef.Value;
-                        break;
-                    default:
                         break;
                 }
             }

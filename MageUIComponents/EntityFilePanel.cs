@@ -113,8 +113,6 @@ namespace MageUIComponents
                     case "SubfolderSearchName":
                         SubfolderSearchName = paramDef.Value;
                         break;
-                    default:
-                        break;
                 }
             }
         }
