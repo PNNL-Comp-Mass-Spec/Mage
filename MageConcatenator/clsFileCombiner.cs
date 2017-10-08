@@ -159,12 +159,9 @@ namespace MageConcatenator
                     ReportProcessingComplete(cancelMessage);
                     return false;
                 }
-                else
-                {
-                    ReportProcessingComplete("Combined " + filesProcessed + " files to create " + fiTargetFile.FullName);
-                    return true;
-                }
 
+                ReportProcessingComplete("Combined " + filesProcessed + " files to create " + fiTargetFile.FullName);
+                return true;
             }
             catch (Exception ex)
             {
@@ -231,7 +228,7 @@ namespace MageConcatenator
             }
         }
 
-        private bool UpdateColCounts(clsFileInfo item)
+        private void UpdateColCounts(clsFileInfo item)
         {
             try
             {
@@ -239,7 +236,7 @@ namespace MageConcatenator
                 if (!fiFile.Exists)
                 {
                     ReportError("File not found: " + item.FullPath);
-                    return false;
+                    return;
                 }
 
                 var delimiter = GetDelimiter(fiFile);
@@ -277,13 +274,10 @@ namespace MageConcatenator
                     item.Columns = colCount;
                     item.Rows = rowCount;
                 }
-
-                return true;
             }
             catch (Exception ex)
             {
                 ReportError("Error in UpdateColCounts for " + item.FullPath + ": " + ex.Message);
-                return false;
             }
         }
 

@@ -274,7 +274,7 @@ namespace MageFilePackager
                         break;
 
                     case "get_files_from_entities":
-                        entityType = JobListDisplayControl.PageTitle;
+                        var entityType = JobListDisplayControl.PageTitle;
                         var runtimeParms = GetRuntimeParmsForEntityFileType(entityType);
                         var source = new GVPipelineSource(JobListDisplayControl, mode);
                         sink = FileListDisplayControl.MakeSink("Files", 15);
@@ -502,9 +502,8 @@ namespace MageFilePackager
         {
             if (_mCurrentCmd.Action == "reload_list_display" || _mCurrentCmd.Action == "display_reloaded")
             {
-                if (_mCurrentCmdSender is IMageDisplayControl)
+                if (_mCurrentCmdSender is IMageDisplayControl ldc)
                 {
-                    var ldc = _mCurrentCmdSender as IMageDisplayControl;
                     var type = ldc.PageTitle;
                     var colNames = ldc.ColumnNames;
                     if (colNames.Contains("Item"))
@@ -567,7 +566,7 @@ namespace MageFilePackager
             // find query node by name
             var xpath = string.Format(".//query[@name='{0}']", queryName);
             var queryNode = doc.SelectSingleNode(xpath);
-            return (queryNode != null) ? queryNode.OuterXml : "";
+            return queryNode?.OuterXml ?? "";
             //--            return ModuleDiscovery.GetQueryXMLDef(queryName);
         }
 
@@ -592,13 +591,13 @@ namespace MageFilePackager
             switch (entityType)
             {
                 case "Jobs":
-                    rp.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListFilter.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListFilter.COLUMN_NAME_FILE_DATE + "|+|text, Folder, Job, Dataset, Dataset_ID, Tool, Settings_File, Parameter_File, Instrument, Storage_Path, Purged, Archive_Path");
+                    rp.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_DATE + "|+|text, Folder, Job, Dataset, Dataset_ID, Tool, Settings_File, Parameter_File, Instrument, Storage_Path, Purged, Archive_Path");
                     break;
                 case "Datasets":
-                    rp.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListFilter.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListFilter.COLUMN_NAME_FILE_DATE + "|+|text, Folder, Dataset, Dataset_ID, State, Instrument, Type, Storage_Path, Purged, Archive_Path");
+                    rp.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_DATE + "|+|text, Folder, Dataset, Dataset_ID, State, Instrument, Type, Storage_Path, Purged, Archive_Path");
                     break;
                 default:
-                    rp.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListFilter.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListFilter.COLUMN_NAME_FILE_DATE + "|+|text, Folder, *");
+                    rp.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_DATE + "|+|text, Folder, *");
                     break;
             }
             return rp;
