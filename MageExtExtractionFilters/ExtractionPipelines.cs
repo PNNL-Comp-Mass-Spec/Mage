@@ -23,7 +23,7 @@ namespace MageExtExtractionFilters
             var pxfl = MakePipelineToExportFileList(new MyEMSLSinkWrapper(fileList), destination);
             pipelineQueue.Add(pxfl);
 
-            // extract contents of list of files 
+            // extract contents of list of files
             var pefc = MakePipelineToExtractFileContents(new SinkWrapper(fileList), extractionParms, destination);
             pipelineQueue.Add(pefc);
 
@@ -32,7 +32,7 @@ namespace MageExtExtractionFilters
 
         /// <summary>
         /// Build and return Mage pipeline queue to extract contents of results files
-        /// for jobs given in jobList according to parameters defined in mExtractionParms 
+        /// for jobs given in jobList according to parameters defined in mExtractionParms
         /// and deliver output according to mDestination.  Also create metadata file for jobList.
         /// </summary>
         public static PipelineQueue MakePipelineQueueToExtractFromJobList(BaseModule jobList, ExtractionType extractionParms, DestinationType destination)
@@ -53,7 +53,7 @@ namespace MageExtExtractionFilters
             var pxfl = MakePipelineToExportFileList(new MyEMSLSinkWrapper(fileList), destination);
             pipelineQueue.Add(pxfl);
 
-            // extract contents of list of files 
+            // extract contents of list of files
             var pefc = MakePipelineToExtractFileContents(new SinkWrapper(fileList), extractionParms, destination);
             pipelineQueue.Add(pefc);
 
@@ -61,7 +61,7 @@ namespace MageExtExtractionFilters
         }
 
         /// <summary>
-        /// Make a Mage pipeline to get list of files for list of jobs 
+        /// Make a Mage pipeline to get list of files for list of jobs
         /// containted in given source module and accumulate
         /// into given sink module
         /// </summary>
@@ -187,7 +187,7 @@ namespace MageExtExtractionFilters
 
         /// <summary>
         /// Get base tool name from raw tool name.
-        /// Uses hueristic that all common tools begin 
+        /// Uses hueristic that all common tools begin
         /// with the same prefix set off by underscore character.
         /// </summary>
         /// <param name="rawTool"></param>
@@ -218,7 +218,7 @@ namespace MageExtExtractionFilters
         }
 
         /// <summary>
-        /// Make a Mage pipeline to dump contents of job list 
+        /// Make a Mage pipeline to dump contents of job list
         /// as metadata file or db table
         /// </summary>
         /// <param name="jobList"></param>
@@ -250,7 +250,7 @@ namespace MageExtExtractionFilters
         }
 
         /// <summary>
-        /// Make a Mage pipeline to dump contents of file list 
+        /// Make a Mage pipeline to dump contents of file list
         /// as file or db table
         /// </summary>
         /// <param name="fileList"></param>

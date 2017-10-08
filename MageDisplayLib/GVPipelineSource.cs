@@ -6,9 +6,9 @@ namespace MageDisplayLib
 {
 
     /// <summary>
-    /// this is a pipeline module 
+    /// This is a pipeline module
     /// that can serve the contents of a GridViewDisplayControl to standard tabular output
-    /// 
+    ///
     /// It is an adapter for making rows in a GridViewDisplayControl object
     /// available via Mage pipeline data source module connections
     /// </summary>
@@ -101,7 +101,7 @@ namespace MageDisplayLib
         #region IBaseModule Members
 
         /// <summary>
-        /// output each row in associated GridViewDisplayList object 
+        /// output each row in associated GridViewDisplayList object
         /// to Mage standard tabular output, one row at a time.
         /// (override of base class)
         /// </summary>

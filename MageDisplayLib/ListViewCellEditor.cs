@@ -25,7 +25,7 @@ namespace MageDisplayLib
         private readonly ListViewEx mListView;
 
         /// <summary>
-        /// The ListViewItem representing the row 
+        /// The ListViewItem representing the row
         /// containing the cell currently being edited
         /// </summary>
         private ListViewItem mListViewItemUnderEdit;
@@ -90,7 +90,7 @@ namespace MageDisplayLib
         #region Initialization
 
         /// <summary>
-        /// Create default cell editor (TextBox) 
+        /// Create default cell editor (TextBox)
         /// and wire up our ListView to the necessary handlers
         /// </summary>
         private void SetupCellEditing()
@@ -284,7 +284,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// Place the cell editor over the cell being edited, 
+        /// Place the cell editor over the cell being edited,
         /// inialize it with the current value of the cell,
         /// and make it visible
         /// </summary>

@@ -34,7 +34,7 @@ namespace MageFileProcessor
         private readonly List<string> mAllMenuItems = new List<string>();
 
         /// <summary>
-        /// Lists of names of menu items 
+        /// Lists of names of menu items
         /// that are sensitive to presence of certain columns in list display
         /// </summary>
         private readonly List<string> mFolderSensitiveMenuItems = new List<string>();
@@ -63,12 +63,12 @@ namespace MageFileProcessor
         #region Setup
 
         /// <summary>
-        /// Create the context menu for the display list 
+        /// Create the context menu for the display list
         /// </summary>
         private void SetupContextMenus()
         {
 
-            var mMyMenuItems = new List<ToolStripItem> {new ToolStripSeparator()};
+            var mMyMenuItems = new List<ToolStripItem> { new ToolStripSeparator() };
             mMyMenuItems.AddRange(GetFolderMenuItems().ToArray());
             mMyMenuItems.AddRange(GetWebActionMenuItems().ToArray());
 
@@ -126,7 +126,7 @@ namespace MageFileProcessor
         private ToolStripItem[] GetWebActionMenuItems()
         {
             var tsmil = new List<ToolStripItem>();
-            var webmi = new ToolStripMenuItem("Open DMS web page") {Name = "WebPageSubmenu"};
+            var webmi = new ToolStripMenuItem("Open DMS web page") { Name = "WebPageSubmenu" };
             tsmil.Add(webmi);
 
             var tsmi = new ToolStripMenuItem("Job detail", null, HandleJobWebAction, "JobDetailWebPage");
@@ -229,7 +229,7 @@ namespace MageFileProcessor
 
         /// <summary>
         /// Will be wired up to receive "SelectionChanged" events
-        /// from associated ListDisplay so that display state 
+        /// from associated ListDisplay so that display state
         /// of menu items may be adjusted
         /// </summary>
         /// <param name="sender"></param>

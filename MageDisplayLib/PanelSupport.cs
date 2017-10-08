@@ -37,7 +37,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// Walk down the control hierarchy of the subjectControl and look for 
+        /// Walk down the control hierarchy of the subjectControl and look for
         /// UserControl controls that have "OnAction" event, and wire it up
         /// to the method contained in methodInfo.
         /// </summary>
@@ -61,8 +61,8 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// Build list of controls of the specified type 
-        /// that are contained in the given control or its children 
+        /// Build list of controls of the specified type
+        /// that are contained in the given control or its children
         /// (uses recursion to walk down the descendant hierarchy)
         /// </summary>
         /// <param name="subjectControl">given control to examine</param>

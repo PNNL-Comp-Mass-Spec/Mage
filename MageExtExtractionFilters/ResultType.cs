@@ -6,7 +6,7 @@ namespace MageExtExtractionFilters
 {
 
     /// <summary>
-    /// Describes key parameters for result files (and their associated files) 
+    /// Describes key parameters for result files (and their associated files)
     /// that extractor can handle
     /// </summary>
     public class ResultType
@@ -191,27 +191,27 @@ namespace MageExtExtractionFilters
             switch (Filter)
             {
                 case "sequest":
-                    var sxf = new SequestExtractionFilter {ResultChecker = resultsChecker as FilterSequestResults};
+                    var sxf = new SequestExtractionFilter { ResultChecker = resultsChecker as FilterSequestResults };
                     exf = sxf;
                     break;
                 case "xtandem":
-                    var xxf = new XTandemExtractionFilter {ResultChecker = resultsChecker as FilterXTResults};
+                    var xxf = new XTandemExtractionFilter { ResultChecker = resultsChecker as FilterXTResults };
                     exf = xxf;
                     break;
                 case "inspect":
-                    var ixf = new InspectExtractionFilter {ResultChecker = resultsChecker as FilterInspectResults};
+                    var ixf = new InspectExtractionFilter { ResultChecker = resultsChecker as FilterInspectResults };
                     exf = ixf;
                     break;
                 case "msgfplusFHT":
-                    var mxf1 = new MSGFDbFHTExtractionFilter {ResultChecker = resultsChecker as FilterMSGFDbResults};
+                    var mxf1 = new MSGFDbFHTExtractionFilter { ResultChecker = resultsChecker as FilterMSGFDbResults };
                     exf = mxf1;
                     break;
                 case "msgfplus":
-                    var mxf2 = new MSGFDbExtractionFilter {ResultChecker = resultsChecker as FilterMSGFDbResults};
+                    var mxf2 = new MSGFDbExtractionFilter { ResultChecker = resultsChecker as FilterMSGFDbResults };
                     exf = mxf2;
                     break;
                 case "mspathfinder":
-                    var mspathxf = new MSPathFinderExtractionFilter {ResultChecker = resultsChecker as FilterMSPathFinderResults};
+                    var mspathxf = new MSPathFinderExtractionFilter { ResultChecker = resultsChecker as FilterMSPathFinderResults };
                     exf = mspathxf;
                     break;
                 default:

@@ -16,7 +16,7 @@ namespace MageFilePackager
         }
 
         /// <summary>
-        /// Post web service request and receive response 
+        /// Post web service request and receive response
         /// </summary>
         /// <param name="url"></param>
         /// <param name="postDataList"></param>

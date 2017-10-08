@@ -5,7 +5,7 @@ namespace MageDisplayLib
 {
 
     /// <summary>
-    /// this is a pipeline module 
+    /// This is a pipeline module
     /// that can serve the contents of a TextDisplayControl to standard tabular output
     /// </summary>
     public class TDPipelineSource : BaseModule
@@ -26,7 +26,7 @@ namespace MageDisplayLib
         #region Constructors
 
         /// <summary>
-        /// construct new Mage TDPipelineSource object 
+        /// construct new Mage TDPipelineSource object
         /// that can serve data from given TextDisplayControl object
         /// via Mage standard tabular output stream
         /// </summary>
@@ -60,7 +60,7 @@ namespace MageDisplayLib
 
         #region IBaseModule Members
 
-        /// output each row in associated TextDisplayList object 
+        /// output each row in associated TextDisplayList object
         /// to Mage standard tabular output, one row at a time.
         /// (override of base class)
         public override void Run(object state)

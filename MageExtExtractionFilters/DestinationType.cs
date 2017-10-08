@@ -9,7 +9,6 @@ namespace MageExtExtractionFilters
 
     /// <summary>
     /// Provides information about where processed results are to be delivered
-    /// and 
     /// </summary>
     public class DestinationType
     {

@@ -175,6 +175,6 @@ namespace MageDisplayLib
 
             return comparisonResult;
         }
-        
+
     }
 }

@@ -22,7 +22,7 @@ namespace Mage
         #region Properties
 
         /// <summary>
-        /// Key-value lookup for merged value 
+        /// Key-value lookup for merged value
         /// </summary>
         public Dictionary<string, string> LookupKV { get; set; }
 
@@ -37,7 +37,7 @@ namespace Mage
         public string KeyColName { get; set; }
 
         /// <summary>
-        /// Set this to True if you want an exception to be thrown 
+        /// Set this to True if you want an exception to be thrown
         /// if the LookupKV dictionary does not contain the key for a given data row
         /// </summary>
         /// <remarks>Default is False</remarks>

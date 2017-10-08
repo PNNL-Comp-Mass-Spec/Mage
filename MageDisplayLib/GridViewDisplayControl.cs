@@ -337,7 +337,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// Called as target of invoke operation to 
+        /// Called as target of invoke operation to
         /// actually update the notice filed
         /// </summary>
         /// <param name="text"></param>
@@ -671,7 +671,7 @@ namespace MageDisplayLib
             /// <summary>
             /// Remove the items from the display list that are currently not selected
             /// </summary>
-            /// 
+            ///
             public void DeleteNotSelectedItems()
             {
                 if (AllowDelete)
@@ -702,7 +702,7 @@ namespace MageDisplayLib
 
             /// <summary>
             /// Remove the currently selected items from the display list
-            /// </summary>           
+            /// </summary>
             public void DeleteSelectedItems()
             {
 

@@ -158,7 +158,7 @@ namespace MageDisplayLib
                     foreach (XmlNode parm in parms)
                     {
                         if (parm.Attributes == null) continue;
-                        
+
                         var paramPanel = parm.Attributes["panel"].InnerText;
                         var paramName = parm.Attributes["name"].InnerText;
                         var paramValue = parm.Attributes["value"].InnerText;

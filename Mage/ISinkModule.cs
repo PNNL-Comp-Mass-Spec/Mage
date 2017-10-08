@@ -3,7 +3,7 @@ namespace Mage
 {
 
     /// <summary>
-    /// Interface for object that provides handlers for 
+    /// Interface for object that provides handlers for Sinks
     /// </summary>
     public interface ISinkModule
     {

@@ -17,7 +17,7 @@ namespace MageFilePackager
         public static ProcessingPipeline MakeJobQueryPipeline(ISinkModule sinkObject, string queryDefXML, Dictionary<string, string> runtimeParms)
         {
 
-            // make source module and initialize from query def XML and runtime parameters 
+            // make source module and initialize from query def XML and runtime parameters
             var rdr = new MSSQLReader(queryDefXML, runtimeParms);
 
             // build and wire pipeline

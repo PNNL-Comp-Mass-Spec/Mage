@@ -249,7 +249,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Copy folder given by source to target 
+        /// Copy folder given by source to target
         /// </summary>
         /// <param name="source">Path to folder to be copied</param>
         /// <param name="target">Path that folder will be copied to</param>
@@ -335,7 +335,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Copy MyEMSL folder given by source to target 
+        /// Copy MyEMSL folder given by source to target
         /// </summary>
         /// <param name="sourceFolder">Path to folder to be copied</param>
         /// <param name="target">Path that folder will be copied to</param>
@@ -343,7 +343,7 @@ namespace Mage
         {
             if (target == null)
                 throw new ArgumentNullException(nameof(target));
-            
+
             try
             {
                 // Check if the target directory exists, if not, create it.
@@ -362,7 +362,7 @@ namespace Mage
 
             try
             {
-                // Download the files 
+                // Download the files
                 string subDir;
                 string parentFolders;
                 var datasetName = DetermineDatasetName(sourceFolder.FullName);
@@ -387,7 +387,7 @@ namespace Mage
                         // The downloader will append the subfolder name, thus use target.Parent
                         target = target.Parent;
                     }
-                    
+
                     var success = ProcessMyEMSLDownloadQueue(target.FullName, Downloader.DownloadFolderLayout.SingleDataset);
 
                     if (success) return;
@@ -482,7 +482,7 @@ namespace Mage
                         }
                         UpdateStatus(this, new MageStatusEventArgs("Start Copy->" + remoteFile.Name));
                         File.Copy(remoteFile.FullName, destPath, true);
-                        
+
                     }
                     else
                     {

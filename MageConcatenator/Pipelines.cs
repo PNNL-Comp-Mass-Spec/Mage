@@ -5,7 +5,7 @@ namespace MageConcatenator
 {
 
     /// <summary>
-    /// This class contains several functions that build Mage pipelines 
+    /// This class contains several functions that build Mage pipelines
     /// that supply data to the UI in response to user commands
     /// </summary>
     public class Pipelines

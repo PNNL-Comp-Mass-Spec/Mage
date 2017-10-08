@@ -11,7 +11,7 @@ namespace MageDisplayLib
     /// <summary>
     /// Provides column definition and data row event handlers
     /// that can be wired into a Mage pipeline to receive data.
-    /// 
+    ///
     /// It converts data rows into ListView item lists suitable
     /// for populating a ListDisplayControl and accumlates them
     /// into a buffer.  When the buffer is full, it is emptied
@@ -90,11 +90,11 @@ namespace MageDisplayLib
 
         /// <summary>
         /// Receive data row, convert to ListView item, and add to accumulator.
-        /// 
-        /// This event handler receives row events from upstream module, one event per row.  
+        ///
+        /// This event handler receives row events from upstream module, one event per row.
         /// on the module's standard tabular input, one event per row
         /// and a null vals object signalling the end of row events.
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -133,12 +133,12 @@ namespace MageDisplayLib
 
         /// <summary>
         /// Build up list of ColumnHeader for list view.
-        /// 
-        /// This event handler receives column definition events 
+        ///
+        /// This event handler receives column definition events
         /// on the module's standard tabular input, one event per column
         /// and a null columnDef object signalling the end of column definition events.
         /// Subclasses should override this for any specialized column def handling
-        /// that they need, but should be sure to also call the base class function. 
+        /// that they need, but should be sure to also call the base class function.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>

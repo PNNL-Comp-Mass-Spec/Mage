@@ -24,15 +24,15 @@ namespace MageDisplayLib
     /// <summary>
     /// Encapsulates a Windows.Forms.ListView and provides supplementary
     /// functions to handle column definition and sorting.
-    /// 
+    ///
     /// When combined with an LVAccumulator object, it can be populated
     /// from a Mage pipeline.
-    /// 
+    ///
     /// When combined with a LVPipelineSource object, it can supply
     /// data rows to a Mage pipeline.
-    /// 
+    ///
     /// an external module (usually an LVAccumulator objet) provides
-    /// a block of column definitions and blocks of row items for the 
+    /// a block of column definitions and blocks of row items for the
     /// list view at the heart of this user control.
     /// These blocks are delivered by the external module via events
     /// that are connected to the HandleLVItemBlock and HandleColumnBlock
@@ -40,7 +40,7 @@ namespace MageDisplayLib
     /// own thread, there are appropriate helper functions to handle the
     /// transfer of received objects to the actual list view control
     /// running in the UI thread.
-    /// 
+    ///
     /// </summary>
     public partial class ListDisplayControl : UserControl
     {
@@ -71,23 +71,23 @@ namespace MageDisplayLib
         protected enum eSqlDataColType
         {
             /// <summary>
-            /// 
+            ///
             /// </summary>
             text,
             /// <summary>
-            /// 
+            ///
             /// </summary>
             numInt,
             /// <summary>
-            /// 
+            ///
             /// </summary>
             numFloat,
             /// <summary>
-            /// 
+            ///
             /// </summary>
             date,
             /// <summary>
-            /// 
+            ///
             /// </summary>
             binary
         }
@@ -293,7 +293,7 @@ namespace MageDisplayLib
         #region "LVAccumulator Functions"
 
         /// <summary>
-        /// create a new LVAccumulator for this user control 
+        /// create a new LVAccumulator for this user control
         /// and wire up its events to this user control's event handlers
         /// </summary>
         /// <returns></returns>
@@ -355,7 +355,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// Called as target of invoke operation to 
+        /// Called as target of invoke operation to
         /// actually update the ListView control
         /// </summary>
         /// <param name="columnBlock"></param>
@@ -439,7 +439,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// Called as target of invoke operation to 
+        /// Called as target of invoke operation to
         /// actually update the ListView control
         /// </summary>
         /// <param name="itemBlock"></param>
@@ -452,7 +452,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// Called as target of invoke operation to 
+        /// Called as target of invoke operation to
         /// actually update the notice filed
         /// </summary>
         /// <param name="text"></param>
@@ -558,7 +558,7 @@ namespace MageDisplayLib
         #region Pipeline Helper Functions
 
         /// <summary>
-        /// Connect given object to the standard tabular output 
+        /// Connect given object to the standard tabular output
         /// of the given module in the given Mage pipeline
         /// </summary>
         /// <param name="title"></param>
@@ -573,7 +573,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// Connect given object to the standard tabular output 
+        /// Connect given object to the standard tabular output
         /// of the given module in the given Mage pipeline
         /// </summary>
         /// <param name="pipeline">Mage pipeline object containing target module</param>
@@ -591,7 +591,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// return an ISinkModule reference that 
+        /// return an ISinkModule reference that
         /// Mage pipeline can use to populate this control
         /// </summary>
         /// <returns></returns>
@@ -602,7 +602,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// return an ISinkModule reference that 
+        /// return an ISinkModule reference that
         /// Mage pipeline can use to populate this control
         /// </summary>
         /// <param name="title"></param>
@@ -615,7 +615,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// return an ISinkModule reference that 
+        /// return an ISinkModule reference that
         /// Mage pipeline can use to populate this control
         /// </summary>
         /// <param name="blkSz"></param>

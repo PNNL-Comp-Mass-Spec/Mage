@@ -202,7 +202,7 @@ namespace MageDisplayLib
         #endregion
 
         /// <summary>
-        /// Make reasonable guess at who my owner form is 
+        /// Make reasonable guess at who my owner form is
         /// by walking up my parentage chain
         /// </summary>
         /// <param name="sender"></param>

@@ -6,7 +6,7 @@ namespace Mage
 {
 
     /// <summary>
-    /// Mage module that writes that data that it receives via its 
+    /// Mage module that writes that data that it receives via its
     /// Mage standard tabular input to a delimited text file
     /// </summary>
     public class DelimitedFileWriter : BaseModule, IDisposable
@@ -37,7 +37,7 @@ namespace Mage
         public string Header { get; set; }
 
         /// <summary>
-        /// whether or not output file should be overwritten or appended to 
+        /// whether or not output file should be overwritten or appended to
         /// if it exists ("Yes" or "No")
         /// </summary>
         public string Append { get; set; }
@@ -48,7 +48,7 @@ namespace Mage
 
         /// <summary>
         /// construct new Mage delimited file writer module
-        /// with propery defaults: 
+        /// with propery defaults:
         /// Delimiter = "\t";
         /// Header = "Yes";
         /// Append = "No";

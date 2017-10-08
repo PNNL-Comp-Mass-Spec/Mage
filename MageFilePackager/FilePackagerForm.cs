@@ -190,7 +190,7 @@ namespace MageFilePackager
         #region Command Processing
 
         /// <summary>
-        /// execute a command by building and running 
+        /// execute a command by building and running
         /// the appropriate pipeline (or cancelling
         /// the current pipeline activity)
         /// </summary>
@@ -400,7 +400,7 @@ namespace MageFilePackager
             JobDatasetIDList1.Legend = "(Dataset IDs)";
             JobDatasetIDList1.ListName = "Dataset_ID";
 
-            // disable certain UI component panels 
+            // disable certain UI component panels
             EntityFilePanel1.Enabled = false;
             EnableCancel(false);
         }
@@ -446,7 +446,7 @@ namespace MageFilePackager
         }
 
         /// <summary>
-        /// Finding files for entities is only possible 
+        /// Finding files for entities is only possible
         /// when there are entities in the entity list
         /// </summary>
         private void AdjustFileExtractionPanel()
@@ -493,7 +493,7 @@ namespace MageFilePackager
         }
 
         /// <summary>
-        /// If the contents of a list display have been restored from file, 
+        /// If the contents of a list display have been restored from file,
         /// make a guess at the type of information it contains
         /// according to the combination of columns it has,
         /// and set its title accordingly
@@ -642,11 +642,11 @@ namespace MageFilePackager
 
         private void LaunchMageFileProcessorHelpPage()
         {
-            // Change the color of the link text by setting LinkVisited 
+            // Change the color of the link text by setting LinkVisited
             // to true.
             lblAboutLink.LinkVisited = true;
 
-            //Call the Process.Start method to open the default browser 
+            //Call the Process.Start method to open the default browser
             //with a URL:
             System.Diagnostics.Process.Start(lblAboutLink.Text);
         }

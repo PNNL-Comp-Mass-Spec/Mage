@@ -6,9 +6,9 @@ namespace MageDisplayLib
 {
 
     /// <summary>
-    /// this is a pipeline module 
+    /// this is a pipeline module
     /// that can serve the contents of a ListDisplayControl to standard tabular output
-    /// 
+    ///
     /// It is an adapter for making rows in a ListDisplayControl object
     /// available via Mage pipeline data source module connections
     /// </summary>
@@ -29,7 +29,7 @@ namespace MageDisplayLib
         #region Constructors
 
         /// <summary>
-        /// construct a LVPipelineSource object 
+        /// construct a LVPipelineSource object
         /// that can serve data rows from associated ListDisplayControl
         /// according to mode
         /// </summary>
@@ -69,7 +69,7 @@ namespace MageDisplayLib
         #region IBaseModule Members
 
         /// <summary>
-        /// output each row in associated ListViewDisplayList object 
+        /// output each row in associated ListViewDisplayList object
         /// to Mage standard tabular output, one row at a time.
         /// (override of base class)
         /// </summary>
