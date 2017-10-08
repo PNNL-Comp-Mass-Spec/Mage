@@ -124,7 +124,7 @@ namespace Mage
 
                     }
 
-                    if (ResolveCacheInfoFiles && destPathClean.EndsWith("cacheinfo.txt", StringComparison.InvariantCultureIgnoreCase))
+                    if (ResolveCacheInfoFiles && destPathClean.EndsWith("cacheinfo.txt", StringComparison.OrdinalIgnoreCase))
                     {
                         var fileCopied = ProcessCacheInfoFile(destPathClean, OverwriteExistingFiles);
                         if (!fileCopied)
@@ -160,7 +160,7 @@ namespace Mage
                         }
                     }
 
-                    if (ResolveCacheInfoFiles && destPath.EndsWith("cacheinfo.txt", StringComparison.InvariantCultureIgnoreCase))
+                    if (ResolveCacheInfoFiles && destPath.EndsWith("cacheinfo.txt", StringComparison.OrdinalIgnoreCase))
                     {
                         var fileCopied = ProcessCacheInfoFile(destPath, OverwriteExistingFiles);
                         if (!fileCopied)

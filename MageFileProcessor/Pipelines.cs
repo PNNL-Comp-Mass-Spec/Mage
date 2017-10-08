@@ -146,12 +146,12 @@ namespace MageFileProcessor
                 ColumnToUseForPrefix = GetRuntimeParam(runtimeParms, "ColumnToUseForPrefix")
             };
 
-            if (string.Equals(GetRuntimeParam(runtimeParms, "OverwriteExistingFiles"), "Yes", StringComparison.InvariantCultureIgnoreCase))
+            if (string.Equals(GetRuntimeParam(runtimeParms, "OverwriteExistingFiles"), "Yes", StringComparison.OrdinalIgnoreCase))
                 copier.OverwriteExistingFiles = true;
             else
                 copier.OverwriteExistingFiles = false;
 
-            if (string.Equals(GetRuntimeParam(runtimeParms, "ResolveCacheInfoFiles"), "Yes", StringComparison.InvariantCultureIgnoreCase))
+            if (string.Equals(GetRuntimeParam(runtimeParms, "ResolveCacheInfoFiles"), "Yes", StringComparison.OrdinalIgnoreCase))
                 copier.ResolveCacheInfoFiles = true;
             else
                 copier.ResolveCacheInfoFiles = false;

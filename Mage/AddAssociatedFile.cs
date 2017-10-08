@@ -112,7 +112,7 @@ namespace Mage
                 var sourceFileNameParts = mSourceFileNameFragment.Split(';');
                 foreach (var sourceFileNamePart in sourceFileNameParts)
                 {
-                    if (resultFileName.IndexOf(sourceFileNamePart, StringComparison.InvariantCultureIgnoreCase) > 0)
+                    if (resultFileName.IndexOf(sourceFileNamePart, StringComparison.OrdinalIgnoreCase) > 0)
                     {
                         assocFileName = base.ReplaceEx(resultFileName, sourceFileNamePart, mAssociatedFileNameFragment);
                         break;

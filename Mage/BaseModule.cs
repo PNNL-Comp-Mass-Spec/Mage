@@ -462,13 +462,13 @@ namespace Mage
         /// <returns></returns>
         protected bool OptionEnabled(string optionValue)
         {
-            return string.Equals(optionValue, "Yes", StringComparison.InvariantCultureIgnoreCase) ||
-                   string.Equals(optionValue, "True", StringComparison.InvariantCultureIgnoreCase) ||
-                   string.Equals(optionValue, "1", StringComparison.InvariantCultureIgnoreCase);
+            return string.Equals(optionValue, "Yes", StringComparison.OrdinalIgnoreCase) ||
+                   string.Equals(optionValue, "True", StringComparison.OrdinalIgnoreCase) ||
+                   string.Equals(optionValue, "1", StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>
-        /// Perform case insenstive replacement string replace
+        /// Perform case insensitive replacement string replace
         /// </summary>
         /// <param name="original">Text to search</param>
         /// <param name="pattern">Text to find</param>
