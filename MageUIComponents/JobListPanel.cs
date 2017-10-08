@@ -3,20 +3,25 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using Mage;
 
-namespace MageUIComponents {
+namespace MageUIComponents
+{
 
-    public partial class JobListPanel : UserControl, IModuleParameters {
+    public partial class JobListPanel : UserControl, IModuleParameters
+    {
 
         public event EventHandler<MageCommandEventArgs> OnAction;
 
-        public JobListPanel() {
+        public JobListPanel()
+        {
             InitializeComponent();
         }
 
         #region IModuleParameters Members
 
-        public Dictionary<string, string> GetParameters() {
-            return new Dictionary<string, string>() { 
+        public Dictionary<string, string> GetParameters()
+        {
+            return new Dictionary<string, string>
+            {
                 { "Dataset", DatasetCtl.Text },
                 { "Tool", ToolCtl.Text },
                 { "Settings_File", SettingsFileCtl.Text },
@@ -24,9 +29,12 @@ namespace MageUIComponents {
             };
         }
 
-        public void SetParameters(Dictionary<string, string> paramList) {
-            foreach (var paramDef in paramList) {
-                switch (paramDef.Key) {
+        public void SetParameters(Dictionary<string, string> paramList)
+        {
+            foreach (var paramDef in paramList)
+            {
+                switch (paramDef.Key)
+                {
                     case "Dataset":
                         DatasetCtl.Text = paramDef.Value;
                         break;

@@ -302,7 +302,7 @@ namespace MageUIComponents
         /// </summary>
         /// <param name="colItems"></param>
         /// <returns></returns>
-        private static string GetColumnListFromColumnSpecItems(Collection<string[]> colItems)
+        private static string GetColumnListFromColumnSpecItems(IEnumerable<string[]> colItems)
         {
             var specs = new List<string>();
             foreach (var colFlds in colItems)

@@ -2,14 +2,18 @@
 using System.Windows.Forms;
 using Mage;
 
-namespace MageUIComponents {
+namespace MageUIComponents
+{
 
-    public partial class IncrementalParameterSubPanel : UserControl, IModuleParameters {
+    public partial class IncrementalParameterSubPanel : UserControl, IModuleParameters
+    {
 
         #region IModuleParameters Members
 
-        public Dictionary<string, string> GetParameters() {
-            return new Dictionary<string, string>() { 
+        public Dictionary<string, string> GetParameters()
+        {
+            return new Dictionary<string, string>
+            {
                 { "ParamName", ParamNameCtl.Text },
                 { "Lower", ParamLowerCtl.Text },
                 { "Upper", ParamUpperCtl.Text },
@@ -19,9 +23,12 @@ namespace MageUIComponents {
             };
         }
 
-        public void SetParameters(Dictionary<string, string> paramList) {
-            foreach (var paramDef in paramList) {
-                switch (paramDef.Key) {
+        public void SetParameters(Dictionary<string, string> paramList)
+        {
+            foreach (var paramDef in paramList)
+            {
+                switch (paramDef.Key)
+                {
                     case "ParamName":
                         ParamNameCtl.Text = paramDef.Value;
                         break;
@@ -78,7 +85,8 @@ namespace MageUIComponents {
             set => OperationCtl.Text = value;
         }
 
-        public void SetValues(string name, string lower, string upper, string increment, bool active) {
+        public void SetValues(string name, string lower, string upper, string increment, bool active)
+        {
             ParamName = name;
             Lower = lower;
             Upper = upper;
@@ -86,7 +94,8 @@ namespace MageUIComponents {
             Active = active;
         }
 
-        public IncrementalParameterSubPanel() {
+        public IncrementalParameterSubPanel()
+        {
             InitializeComponent();
         }
     }

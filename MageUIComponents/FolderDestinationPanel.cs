@@ -47,7 +47,8 @@ namespace MageUIComponents
 
         public Dictionary<string, string> GetParameters()
         {
-            return new Dictionary<string, string>() {
+            return new Dictionary<string, string>
+            {
                 { "OutputFolder",   OutputFolder},
                 { "OutputFile",   OutputFile}
             };
@@ -95,7 +96,8 @@ namespace MageUIComponents
 
         }
 
-        private void DefineDestinationFileCtl_Click(object sender, EventArgs e) {
+        private void DefineDestinationFileCtl_Click(object sender, EventArgs e)
+        {
             var fileDialog = new OpenFileDialog
             {
                 RestoreDirectory = true,
@@ -117,7 +119,8 @@ namespace MageUIComponents
                 // Ignore errors here
             }
 
-            if (fileDialog.ShowDialog() == DialogResult.OK) {
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
                 var filePath = fileDialog.FileName;
                 OutputFileCtl.Text = Path.GetFileName(filePath);
                 OutputFolderCtl.Text = Path.GetDirectoryName(filePath);

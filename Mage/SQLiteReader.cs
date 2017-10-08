@@ -108,6 +108,7 @@ namespace Mage
 
             // we are doing straight SQL query, build the SQL
             var sql = builder.BuildQuerySQL();
+
             // change MSSQL quote characters to SQLite quote characters
             sql = sql.Replace('[', '"').Replace(']', '"');
             SQLText = sql;
@@ -263,7 +264,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// return a MageColumnDef object constructed from information 
+        /// return a MageColumnDef object constructed from information
         /// from given DataRow object
         /// </summary>
         /// <param name="drField"></param>
@@ -307,15 +308,15 @@ namespace Mage
 AllowDBNull = False
 BaseCatalogName = main
 BaseColumnName = ID
-BaseSchemaName = 
-BaseServerName = 
+BaseSchemaName =
+BaseServerName =
 BaseTableName = T_Data_Package
 ColumnName = ID
 ColumnOrdinal = 0
 ColumnSize = 8
 DataType = System.Int64
 DataTypeName = integer
-DefaultValue = 
+DefaultValue =
 IsAliased = False
 IsAutoIncrement = False
 IsExpression = False
@@ -327,7 +328,7 @@ IsRowVersion = False
 IsUnique = False
 NumericPrecision = 19
 NumericScale = 0
-ProviderSpecificDataType = 
+ProviderSpecificDataType =
 ProviderType = 12
 --
 CollationType = BINARY

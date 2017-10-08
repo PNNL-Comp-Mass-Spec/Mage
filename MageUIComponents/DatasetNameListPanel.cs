@@ -13,15 +13,19 @@ namespace MageUIComponents
 
         #region IModuleParameters Members
 
-        public Dictionary<string, string> GetParameters() {
-            return new Dictionary<string, string>() { 
-                { "Dataset", DatasetListCtl.Text } 
+        public Dictionary<string, string> GetParameters()
+        {
+            return new Dictionary<string, string>
+            {
+                { "Dataset", DatasetListCtl.Text }
             };
         }
 
-        public void SetParameters(Dictionary<string, string> paramList) {
-            foreach (var paramDef in paramList) {
-                switch (paramDef.Key) {
+        public void SetParameters(Dictionary<string, string> paramList)
+        {
+            foreach (var paramDef in paramList)
+            {
+                switch (paramDef.Key)
                 {
                     case "Dataset_ID":
                         DatasetListCtl.Text = paramDef.Value;
@@ -32,7 +36,8 @@ namespace MageUIComponents
 
         #endregion
 
-        public DatasetNameListPanel() {
+        public DatasetNameListPanel()
+        {
             InitializeComponent();
         }
 
@@ -41,15 +46,18 @@ namespace MageUIComponents
             OnAction?.Invoke(this, new MageCommandEventArgs("get_entities_from_query", "Datasets"));
         }
 
-        private void DatasetListCtl_Leave(object sender, EventArgs e) {
+        private void DatasetListCtl_Leave(object sender, EventArgs e)
+        {
             DatasetListCtl.Text = PanelSupport.CleanUpDelimitedList(DatasetListCtl.Text);
         }
 
 
-        private void DatasetListCtl_KeyDown(object sender, EventArgs e) {
+        private void DatasetListCtl_KeyDown(object sender, EventArgs e)
+        {
             var args = (KeyEventArgs)e;
 
-            if (args.Control && args.KeyCode == Keys.A) {
+            if (args.Control && args.KeyCode == Keys.A)
+            {
                 // Ctrl+A pressed
                 DatasetListCtl.SelectAll();
 

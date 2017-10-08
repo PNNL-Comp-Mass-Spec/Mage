@@ -29,7 +29,8 @@ namespace MageUIComponents {
         #region IModuleParameters Members
 
         public Dictionary<string, string> GetParameters() {
-            return new Dictionary<string, string>() { 
+            return new Dictionary<string, string>
+            {
                 { "ManifestFilePath",  ManifestFilePath }
             };
         }
@@ -47,8 +48,10 @@ namespace MageUIComponents {
         #endregion
 
         private void DefineManifestFileCtl_Click(object sender, EventArgs e) {
-            var openFileDialog1 = new OpenFileDialog();
-            openFileDialog1.RestoreDirectory = true;
+            var openFileDialog1 = new OpenFileDialog {
+                RestoreDirectory = true
+            };
+
             if (openFileDialog1.ShowDialog() == DialogResult.OK) {
                 LocalManifestFileCtl.Text = openFileDialog1.FileName;
                 //string dirName = Path.GetDirectoryName(openFileDialog1.FileName);

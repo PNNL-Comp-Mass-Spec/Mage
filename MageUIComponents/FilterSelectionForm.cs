@@ -97,21 +97,18 @@ namespace MageUIComponents
 
         private void UpdateSelectedFilter()
         {
-            if (!string.IsNullOrEmpty(mFilterNameToAutoSelect))
+            if (string.IsNullOrEmpty(mFilterNameToAutoSelect))
+                return;
+
+            // Find the row with the given filter set ID
+            foreach (DataGridViewRow item in gridViewDisplayControl1.List.Rows)
             {
-
-                var toSelect = new List<DataGridViewRow>(1);
-
-                // Find the row with the given filter set ID
-                foreach (DataGridViewRow item in gridViewDisplayControl1.List.Rows)
+                if (item.Cells[0].Value.ToString() == mFilterNameToAutoSelect)
                 {
-                    if (item.Cells[0].Value.ToString() == mFilterNameToAutoSelect)
-                    {
-                        item.Selected = true;
-                        FilterNameCtl.Text = mFilterNameToAutoSelect;
-                        gridViewDisplayControl1.List.FirstDisplayedCell = item.Cells[0];
-                        break;
-                    }
+                    item.Selected = true;
+                    FilterNameCtl.Text = mFilterNameToAutoSelect;
+                    gridViewDisplayControl1.List.FirstDisplayedCell = item.Cells[0];
+                    break;
                 }
             }
         }

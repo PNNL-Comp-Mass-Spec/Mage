@@ -5,9 +5,11 @@ using System.Windows.Forms;
 using System.Collections.ObjectModel;
 using Mage;
 
-namespace MageUIComponents {
+namespace MageUIComponents
+{
 
-    public partial class FlexQueryPanel : UserControl, IModuleParameters {
+    public partial class FlexQueryPanel : UserControl, IModuleParameters
+    {
 
         public event EventHandler<MageCommandEventArgs> OnAction;
 
@@ -19,7 +21,8 @@ namespace MageUIComponents {
 
         #region Constructiors
 
-        public FlexQueryPanel() {
+        public FlexQueryPanel()
+        {
             InitializeComponent();
             QueryItemPanels.Add(flexQueryItemPanel1);
             QueryItemPanels.Add(flexQueryItemPanel2);
@@ -32,8 +35,10 @@ namespace MageUIComponents {
 
         #region IModuleParameters Members
 
-        public Dictionary<string, string> GetParameters() {
-            return new Dictionary<string, string>() { 
+        public Dictionary<string, string> GetParameters()
+        {
+            return new Dictionary<string, string>
+            {
                 { "QueryItem0",   EncodeQueryItem(QueryItemPanels[0])},
                 { "QueryItem1",   EncodeQueryItem(QueryItemPanels[1])},
                 { "QueryItem2",   EncodeQueryItem(QueryItemPanels[2])},
@@ -41,9 +46,12 @@ namespace MageUIComponents {
             };
         }
 
-        public void SetParameters(Dictionary<string, string> paramList) {
-            foreach (var paramDef in paramList) {
-                switch (paramDef.Key) {
+        public void SetParameters(Dictionary<string, string> paramList)
+        {
+            foreach (var paramDef in paramList)
+            {
+                switch (paramDef.Key)
+                {
                     case "QueryItem0":
                         DecodeQueryItem(paramDef.Value, QueryItemPanels[0]);
                         break;
@@ -66,11 +74,15 @@ namespace MageUIComponents {
 
         public string QueryName { get; set; }
 
-        public Collection<string> QueryItems {
-            get {
+        public Collection<string> QueryItems
+        {
+            get
+            {
                 var items = new Collection<string>();
-                foreach (var pnl in QueryItemPanels) {
-                    if (pnl.Value != "") {
+                foreach (var pnl in QueryItemPanels)
+                {
+                    if (pnl.Value != "")
+                    {
                         var item = EncodeQueryItem(pnl);
                         items.Add(item);
                     }
@@ -83,14 +95,18 @@ namespace MageUIComponents {
 
         #region Initialize Query Item Picklists
 
-        public void SetComparisionPickList(string[] items) {
-            foreach (var pnl in QueryItemPanels) {
+        public void SetComparisionPickList(string[] items)
+        {
+            foreach (var pnl in QueryItemPanels)
+            {
                 pnl.SetComparisionPickList(items);
             }
         }
 
-        public void SetColumnPickList(string[] items) {
-            foreach (var pnl in QueryItemPanels) {
+        public void SetColumnPickList(string[] items)
+        {
+            foreach (var pnl in QueryItemPanels)
+            {
                 pnl.SetColumnPickList(items);
             }
         }
@@ -99,11 +115,13 @@ namespace MageUIComponents {
 
         #region Utility Functions
 
-        private static string EncodeQueryItem(FlexQueryItemPanel pnl) {
+        private static string EncodeQueryItem(FlexQueryItemPanel pnl)
+        {
             return string.Format("{0}|{1}|{2}|{3}", pnl.Relation, pnl.Column, pnl.Comparision, pnl.Value);
         }
 
-        private static void DecodeQueryItem(string item, FlexQueryItemPanel pnl) {
+        private static void DecodeQueryItem(string item, FlexQueryItemPanel pnl)
+        {
             var flds = item.Split('|');
             pnl.Relation = flds[0];
             pnl.Column = flds[1];
@@ -118,39 +136,42 @@ namespace MageUIComponents {
 
         #endregion
 
-        public SQLBuilder GetSQLBuilder(string queryTemplate) {
+        public SQLBuilder GetSQLBuilder(string queryTemplate)
+        {
             var args = new Dictionary<string, string>();
             var builder = new SQLBuilder(queryTemplate, ref args);
-            foreach (var item in QueryItems.ToArray()) {
+            foreach (var item in QueryItems.ToArray())
+            {
                 var flds = item.Split('|');
-                if (!string.IsNullOrEmpty(flds[0]) && !string.IsNullOrEmpty(flds[1]) && !string.IsNullOrEmpty(flds[2]) && !string.IsNullOrEmpty(flds[3])) {
+                if (!string.IsNullOrEmpty(flds[0]) && !string.IsNullOrEmpty(flds[1]) && !string.IsNullOrEmpty(flds[2]) && !string.IsNullOrEmpty(flds[3]))
+                {
                     builder.AddPredicateItem(flds[0], flds[1], flds[2], flds[3]);
                 }
             }
             return builder;
         }
-/*
-        /// <summary>
-        /// Build and setup an MSSQL reader from flex query panel
-        /// </summary>
-        /// <param name="queryTemplate"></param>
-        /// <param name="queryItems"></param>
-        /// <returns></returns>
-        public static MSSQLReader GetMSSQLReaderFromFlexQuery(string queryTemplate, string[] queryItems) {
-            Dictionary<string, string> args = new Dictionary<string, string>();
-            SQLBuilder builder = new SQLBuilder(queryTemplate, ref args);
-            foreach (string item in queryItems) {
-                string[] flds = item.Split('|');
-                if (!string.IsNullOrEmpty(flds[0]) && !string.IsNullOrEmpty(flds[1]) && !string.IsNullOrEmpty(flds[2]) && !string.IsNullOrEmpty(flds[3])) {
-                    builder.AddPredicateItem(flds[0], flds[1], flds[2], flds[3]);
+        /*
+                /// <summary>
+                /// Build and setup an MSSQL reader from flex query panel
+                /// </summary>
+                /// <param name="queryTemplate"></param>
+                /// <param name="queryItems"></param>
+                /// <returns></returns>
+                public static MSSQLReader GetMSSQLReaderFromFlexQuery(string queryTemplate, string[] queryItems) {
+                    Dictionary<string, string> args = new Dictionary<string, string>();
+                    SQLBuilder builder = new SQLBuilder(queryTemplate, ref args);
+                    foreach (string item in queryItems) {
+                        string[] flds = item.Split('|');
+                        if (!string.IsNullOrEmpty(flds[0]) && !string.IsNullOrEmpty(flds[1]) && !string.IsNullOrEmpty(flds[2]) && !string.IsNullOrEmpty(flds[3])) {
+                            builder.AddPredicateItem(flds[0], flds[1], flds[2], flds[3]);
+                        }
+                    }
+                    MSSQLReader reader = new MSSQLReader();
+                    reader.Server = builder.SpecialArgs[SQLBuilder.SERVER_NAME_KEY];
+                    reader.Database = builder.SpecialArgs[SQLBuilder.DATABASE_NAME_KEY];
+                    reader.SQLText = builder.BuildQuerySQL();
+                    return reader;
                 }
-            }
-            MSSQLReader reader = new MSSQLReader();
-            reader.Server = builder.SpecialArgs["Server"];
-            reader.Database = builder.SpecialArgs["Database"];
-            reader.SQLText = builder.BuildQuerySQL();
-            return reader;
-        }
-*/
+        */
     }
 }

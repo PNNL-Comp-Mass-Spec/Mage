@@ -65,11 +65,12 @@ namespace MageUIComponents
 
         public Dictionary<string, string> GetParameters()
         {
-            return new Dictionary<string, string>() { 
+            return new Dictionary<string, string>
+            {
                 { "OutputFolder",           OutputFolder},
                 { "OverwriteExistingFiles", OverwriteExistingFiles},
-                { "ApplyPrefixToFileName",  ApplyPrefixToFileName}, 
-                { "PrefixLeader",           PrefixLeader}, 
+                { "ApplyPrefixToFileName",  ApplyPrefixToFileName},
+                { "PrefixLeader",           PrefixLeader},
                 { "PrefixColumnName",       PrefixColumnName},
                 { "ResolveCacheInfoFiles",  ResolveCacheInfoFiles}
             };

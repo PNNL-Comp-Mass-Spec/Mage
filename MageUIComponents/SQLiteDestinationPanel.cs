@@ -23,7 +23,7 @@ namespace MageUIComponents {
 
                     DatabaseNameCtl.Text += ".db3";
                 }
-                return DatabaseNameCtl.Text; 
+                return DatabaseNameCtl.Text;
             }
             set => DatabaseNameCtl.Text = value;
         }
@@ -38,7 +38,8 @@ namespace MageUIComponents {
         #region IModuleParameters Members
 
         public Dictionary<string, string> GetParameters() {
-            return new Dictionary<string, string>() { 
+            return new Dictionary<string, string>
+            {
                 { "DatabaseName",   DatabaseName},
                 { "TableName",   TableName}
             };
@@ -83,7 +84,7 @@ namespace MageUIComponents {
         private string ValidateFileExtension(string filePath)
         {
             var fiFile = new FileInfo(filePath);
-            var extension = fiFile.Extension.ToLower();			
+            var extension = fiFile.Extension.ToLower();
 
             if (extension != ".db3" && extension != ".db" && extension != ".sqlite3" && extension != ".sqlite")
             {

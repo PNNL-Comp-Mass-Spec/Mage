@@ -2,14 +2,18 @@
 using System.Windows.Forms;
 using Mage;
 
-namespace MageUIComponents {
+namespace MageUIComponents
+{
 
-    public partial class IncrementalParameterLitSubPanel : UserControl, IModuleParameters {
+    public partial class IncrementalParameterLitSubPanel : UserControl, IModuleParameters
+    {
 
         #region IModuleParameters Members
 
-        public Dictionary<string, string> GetParameters() {
-            return new Dictionary<string, string>() { 
+        public Dictionary<string, string> GetParameters()
+        {
+            return new Dictionary<string, string>
+            {
                 { "ParamName", ParamNameCtl.Text },
                 { "Operator", OperationCtl.Text },
                 { "Active", (ActiveCtl.Checked)?"On":"Off" },
@@ -17,9 +21,12 @@ namespace MageUIComponents {
             };
         }
 
-        public void SetParameters(Dictionary<string, string> paramList) {
-            foreach (var paramDef in paramList) {
-                switch (paramDef.Key) {
+        public void SetParameters(Dictionary<string, string> paramList)
+        {
+            foreach (var paramDef in paramList)
+            {
+                switch (paramDef.Key)
+                {
                     case "ParamName":
                         ParamNameCtl.Text = paramDef.Value;
                         break;
@@ -38,7 +45,8 @@ namespace MageUIComponents {
 
         #endregion
 
-        public IncrementalParameterLitSubPanel() {
+        public IncrementalParameterLitSubPanel()
+        {
             InitializeComponent();
         }
 

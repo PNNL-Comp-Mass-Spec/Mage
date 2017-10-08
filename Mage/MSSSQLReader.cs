@@ -586,23 +586,23 @@ namespace Mage
 /*
 ---column def object ---
 AllowDBNull = False
-BaseCatalogName = 
+BaseCatalogName =
 BaseColumnName = Job
-BaseSchemaName = 
-BaseServerName = 
-BaseTableName = 
+BaseSchemaName =
+BaseServerName =
+BaseTableName =
 ColumnName = Job
 ColumnOrdinal = 0
 ColumnSize = 4
 DataType = System.Int32
 DataTypeName = int
-IsAliased = 
+IsAliased =
 IsAutoIncrement = False
 IsColumnSet = False
-IsExpression = 
-IsHidden = 
+IsExpression =
+IsHidden =
 IsIdentity = False
-IsKey = 
+IsKey =
 IsLong = False
 IsReadOnly = False
 IsRowVersion = False
@@ -613,8 +613,8 @@ NumericScale = 255
 ProviderSpecificDataType = System.Data.SqlTypes.SqlInt32
 ProviderType = 8
 --
-UdtAssemblyQualifiedName = 
-XmlSchemaCollectionDatabase = 
-XmlSchemaCollectionName = 
-XmlSchemaCollectionOwningSchema = 
+UdtAssemblyQualifiedName =
+XmlSchemaCollectionDatabase =
+XmlSchemaCollectionName =
+XmlSchemaCollectionOwningSchema =
  */

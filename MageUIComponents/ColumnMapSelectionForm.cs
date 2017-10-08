@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using Mage;
 
@@ -101,21 +100,18 @@ namespace MageUIComponents
 
         private void UpdateSelectedColumnMapping()
         {
-            if (!string.IsNullOrEmpty(mColumnMapToAutoSelect))
+            if (string.IsNullOrEmpty(mColumnMapToAutoSelect))
+                return;
+
+            // Find the row with the given filter set ID
+            foreach (DataGridViewRow item in gridViewDisplayControl1.List.Rows)
             {
-
-                var toSelect = new List<DataGridViewRow>(1);
-
-                // Find the row with the given filter set ID
-                foreach (DataGridViewRow item in gridViewDisplayControl1.List.Rows)
+                if (item.Cells[0].Value.ToString() == mColumnMapToAutoSelect)
                 {
-                    if (item.Cells[0].Value.ToString() == mColumnMapToAutoSelect)
-                    {
-                        item.Selected = true;
-                        ColumnMappingCtl.Text = mColumnMapToAutoSelect;
-                        gridViewDisplayControl1.List.FirstDisplayedCell = item.Cells[0];
-                        break;
-                    }
+                    item.Selected = true;
+                    ColumnMappingCtl.Text = mColumnMapToAutoSelect;
+                    gridViewDisplayControl1.List.FirstDisplayedCell = item.Cells[0];
+                    break;
                 }
             }
         }

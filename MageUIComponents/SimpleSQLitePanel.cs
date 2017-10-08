@@ -14,8 +14,9 @@ namespace MageUIComponents {
         }
 
         private void BrowseForFileBtn_Click(object sender, EventArgs e) {
-            var saveFileDialog1 = new SaveFileDialog();
-            saveFileDialog1.Title = "Save to file";
+            var saveFileDialog1 = new SaveFileDialog {
+                Title = "Save to file"
+            };
             saveFileDialog1.ShowDialog();
 
             if (!string.IsNullOrEmpty(saveFileDialog1.FileName)) {

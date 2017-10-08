@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace MageUIComponents {
+namespace MageUIComponents
+{
 
-    public partial class FlexQueryItemPanel : UserControl {
+    public partial class FlexQueryItemPanel : UserControl
+    {
 
-        public FlexQueryItemPanel() {
+        public FlexQueryItemPanel()
+        {
             InitializeComponent();
             RelationCtl.Items.Add("AND");
             RelationCtl.Items.Add("OR");
@@ -37,23 +40,28 @@ namespace MageUIComponents {
         }
 
 
-        public void SetColumnPickList(string[] items) {
+        public void SetColumnPickList(string[] items)
+        {
             // ColumnCtl.Items.Add("");
             ColumnCtl.Items.AddRange(items);
         }
 
-        public void SetComparisionPickList(string[] items) {
+        public void SetComparisionPickList(string[] items)
+        {
             // ComparisonCtl.Items.Add("");
             ComparisonCtl.Items.AddRange(items);
         }
 
-        private void ColumnCtl_SelectedIndexChanged(object sender, EventArgs e) {
-            if (string.IsNullOrEmpty(ComparisonCtl.Text)) {
+        private void ColumnCtl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(ComparisonCtl.Text))
+            {
                 ComparisonCtl.Text = "ContainsText";
             }
         }
 
-        private void RelationCtl_SelectedIndexChanged(object sender, EventArgs e) {
+        private void RelationCtl_SelectedIndexChanged(object sender, EventArgs e)
+        {
             // do nothing for now
         }
     }

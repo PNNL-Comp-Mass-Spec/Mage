@@ -73,7 +73,8 @@ namespace MageUIComponents
 
         public Dictionary<string, string> GetParameters()
         {
-            return new Dictionary<string, string>() { 
+            return new Dictionary<string, string>
+            {
                 { "FileNameFilter",  FileNameFilter },
                 { "FileSelectionMode", FileSelectionMode },
                 { "Folder",  Folder },
@@ -117,10 +118,7 @@ namespace MageUIComponents
 
         private void GetFilesCtl_Click(object sender, EventArgs e)
         {
-            if (OnAction != null)
-            {
-                OnAction(this, new MageCommandEventArgs("get_files_from_local_folder"));
-            }
+            OnAction?.Invoke(this, new MageCommandEventArgs("get_files_from_local_folder"));
         }
 
         private void SelectFolderCtl_Click(object sender, EventArgs e)
