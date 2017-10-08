@@ -68,10 +68,7 @@ namespace MageDisplayLib
         /// </summary>
         public bool AllowDisableShiftClickMode
         {
-            get
-            {
-                return mAllowDisableShiftClickMode;
-            }
+            get => mAllowDisableShiftClickMode;
             set
             {
                 mAllowDisableShiftClickMode = value;
@@ -94,14 +91,11 @@ namespace MageDisplayLib
 
 
         /// <summary>
-        /// Defines whether or not multiple items can be selected in the data grid view 
+        /// Defines whether or not multiple items can be selected in the data grid view
         /// </summary>
         public bool MultiSelect
         {
-            get
-            {
-                return gvQueryResults.MultiSelect;
-            }
+            get => gvQueryResults.MultiSelect;
             set
             {
                 gvQueryResults.MultiSelect = value;
@@ -121,8 +115,8 @@ namespace MageDisplayLib
         /// </summary>
         public string Notice
         {
-            get { return lblNotice.Text; }
-            set { lblNotice.Text = value; }
+            get => lblNotice.Text;
+            set => lblNotice.Text = value;
         }
 
         /// <summary>
@@ -130,41 +124,33 @@ namespace MageDisplayLib
         /// </summary>
         public string PageTitle
         {
-            get { return lblPageTitle.Text; }
-            set { lblPageTitle.Text = value; }
+            get => lblPageTitle.Text;
+            set => lblPageTitle.Text = value;
         }
 
         /// <summary>
         /// Show or hide the header panel
         /// </summary>
-        public bool HeaderVisible { get { return panel1.Visible; } set { panel1.Visible = value; } }
+        public bool HeaderVisible
+        {
+            get => panel1.Visible;
+            set => panel1.Visible = value;
+        }
 
         /// <summary>
         /// get reference to internal DataGridView control
         /// </summary>
-        public MyDataGridView List { get { return gvQueryResults; } }
+        public MyDataGridView List => gvQueryResults;
 
         /// <summary>
         /// Number of items currently in display
         /// </summary>
-        public int ItemCount
-        {
-            get
-            {
-                return gvQueryResults.Rows.Count;
-            }
-        }
+        public int ItemCount => gvQueryResults.Rows.Count;
 
         /// <summary>
         /// Number of selected items currently in display
         /// </summary>
-        public int SelectedItemCount
-        {
-            get
-            {
-                return gvQueryResults.SelectedRows.Count;
-            }
-        }
+        public int SelectedItemCount => gvQueryResults.SelectedRows.Count;
 
         /// <summary>
         /// Get the complete list of the selected rows
@@ -291,10 +277,10 @@ namespace MageDisplayLib
             gvQueryResults.ShiftClickSelect = true;
             MultiSelect = true;
 
-            //Get and Set the Current Cell 
-            ////gvQueryResults.CurrentCell.RowIndex;
-            ////gvQueryResults.CurrentCell.ColumnIndex;
-            ////gvQueryResults.CurrentCell = this.gvQueryResults[1,0]; // column 1, Row 0. 
+            //Get and Set the Current Cell
+            //gvQueryResults.CurrentCell.RowIndex;
+            //gvQueryResults.CurrentCell.ColumnIndex;
+            //gvQueryResults.CurrentCell = this.gvQueryResults[1,0]; // column 1, Row 0.
 
         }
 
@@ -495,7 +481,7 @@ namespace MageDisplayLib
         /// <summary>
         /// Get Mage column definitions
         /// </summary>
-        public Collection<MageColumnDef> ColumnDefs { get { return mColumnDefs; } }
+        public Collection<MageColumnDef> ColumnDefs => mColumnDefs;
 
         /// <summary>
         /// Handle a column definition event on standard tabular input stream
@@ -655,7 +641,11 @@ namespace MageDisplayLib
             /// <summary>
             /// Defines whether or not user can delete rows using the right-click menu
             /// </summary>
-            public bool AllowDelete { get { return mAllowDelete; } set { mAllowDelete = value; } }
+            public bool AllowDelete
+            {
+                get => mAllowDelete;
+                set => mAllowDelete = value;
+            }
 
             /// <summary>
             /// Toggles whether or not Shift+Click is supported
@@ -666,10 +656,7 @@ namespace MageDisplayLib
             /// <summary>
             /// True when SuspendLayout() is en effect for this data grid
             /// </summary>
-            public bool LayoutSuspended
-            {
-                get { return mLayoutSuspended; }
-            }
+            public bool LayoutSuspended => mLayoutSuspended;
 
             /// <summary>
             /// Clears the current selection by unselecting all selected cells.

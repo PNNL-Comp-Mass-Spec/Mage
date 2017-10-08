@@ -24,8 +24,8 @@ namespace MageUIComponents
 
         public string OutputFolder
         {
-            get { return OutputFolderCtl.Text; }
-            set { OutputFolderCtl.Text = value; }
+            get => OutputFolderCtl.Text;
+            set => OutputFolderCtl.Text = value;
         }
 
         public string OutputFile
@@ -38,7 +38,7 @@ namespace MageUIComponents
                 }
                 return OutputFileCtl.Text;
             }
-            set { OutputFileCtl.Text = value; }
+            set => OutputFileCtl.Text = value;
         }
 
         #endregion

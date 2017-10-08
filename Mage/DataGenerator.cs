@@ -22,12 +22,12 @@ namespace Mage
         /// <summary>
         /// Add a data row to the internal row buffer
         /// </summary>
-        public string[] AddAdHocRow { set { mAdHocRows.Add(value); } }
+        public string[] AddAdHocRow { set => mAdHocRows.Add(value); }
 
         /// <summary>
         /// Get the contents of the internal row buffer
         /// </summary>
-        public Collection<string[]> AdHocRows { get { return new Collection<string[]>(mAdHocRows); } }
+        public Collection<string[]> AdHocRows => new Collection<string[]>(mAdHocRows);
 
         /// <summary>
         /// Include header row in generated data

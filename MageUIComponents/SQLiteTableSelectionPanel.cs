@@ -9,13 +9,13 @@ namespace MageUIComponents {
         #region Properties
 
         public string DatabasePath {
-            get { return DatabasePathCtl.Text; }
-            set { DatabasePathCtl.Text = value; }
+            get => DatabasePathCtl.Text;
+            set => DatabasePathCtl.Text = value;
         }
 
         public string TableName {
-            get { return TableNameCtl.Text;  }
-            set { TableNameCtl.Text = value; }
+            get => TableNameCtl.Text;
+            set => TableNameCtl.Text = value;
         }
 
 

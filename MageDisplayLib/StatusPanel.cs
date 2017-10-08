@@ -49,8 +49,8 @@ namespace MageDisplayLib
         /// </summary>
         public bool EnableCancel
         {
-            get { return CancelCtl.Enabled; }
-            set { CancelCtl.Enabled = value; }
+            get => CancelCtl.Enabled;
+            set => CancelCtl.Enabled = value;
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace MageDisplayLib
         /// </summary>
         public bool ShowCancel
         {
-            get { return CancelCtl.Visible; }
-            set { CancelCtl.Visible = value; }
+            get => CancelCtl.Visible;
+            set => CancelCtl.Visible = value;
         }
 
         #endregion

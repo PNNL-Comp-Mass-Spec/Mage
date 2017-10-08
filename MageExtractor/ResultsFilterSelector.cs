@@ -20,8 +20,8 @@ namespace MageExtractor {
         #region Properties
 
         public string FilterSetID {
-            get { return FilterSetIDCtl.Text; }
-            set { FilterSetIDCtl.Text = value; }
+            get => FilterSetIDCtl.Text;
+            set => FilterSetIDCtl.Text = value;
         }
 
         public string FilterSetIDToSelect {

@@ -47,10 +47,7 @@ namespace MageUIComponents
         /// <summary>
         /// return class name for selected filter
         /// </summary>
-        public string SelectedFilterClassName
-        {
-            get { return ModuleDiscovery.SelectedFilterClassName(FilterSelectionCtl.Text); }
-        }
+        public string SelectedFilterClassName => ModuleDiscovery.SelectedFilterClassName(FilterSelectionCtl.Text);
 
         #endregion
 

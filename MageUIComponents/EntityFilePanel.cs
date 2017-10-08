@@ -22,10 +22,7 @@ namespace MageUIComponents
 
         public string FileSelectionMode
         {
-            get
-            {
-                return mSelectionMode;
-            }
+            get => mSelectionMode;
             set
             {
                 mSelectionMode = value;
@@ -72,26 +69,14 @@ namespace MageUIComponents
 
         public string SearchInSubfolders
         {
-            get
-            {
-                return (SearchInSubfoldersCtl.Checked) ? "Yes" : "No";
-            }
-            set
-            {
-                SearchInSubfoldersCtl.Checked = string.Equals(value, "Yes", StringComparison.InvariantCultureIgnoreCase);
-            }
+            get => (SearchInSubfoldersCtl.Checked) ? "Yes" : "No";
+            set => SearchInSubfoldersCtl.Checked = string.Equals(value, "Yes", StringComparison.OrdinalIgnoreCase);
         }
 
         public string SubfolderSearchName
         {
-            get
-            {
-                return SubfolderSearchNameCtl.Text;
-            }
-            set
-            {
-                SubfolderSearchNameCtl.Text = value;
-            }
+            get => SubfolderSearchNameCtl.Text;
+            set => SubfolderSearchNameCtl.Text = value;
         }
 
         #region IModuleParameters Members
@@ -138,8 +123,8 @@ namespace MageUIComponents
 
         public string FileSelectors
         {
-            get { return FileSelectorsCtl.Text; }
-            set { FileSelectorsCtl.Text = value; }
+            get => FileSelectorsCtl.Text;
+            set => FileSelectorsCtl.Text = value;
         }
 
         #endregion

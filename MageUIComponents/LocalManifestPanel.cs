@@ -20,8 +20,8 @@ namespace MageUIComponents {
         #region Properties
 
         public string ManifestFilePath {
-            get { return LocalManifestFileCtl.Text; }
-            set { LocalManifestFileCtl.Text = value; }
+            get => LocalManifestFileCtl.Text;
+            set => LocalManifestFileCtl.Text = value;
         }
 
         #endregion

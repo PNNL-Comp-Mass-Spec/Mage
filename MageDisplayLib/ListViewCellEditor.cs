@@ -61,13 +61,13 @@ namespace MageDisplayLib
         #region Properties
 
         /// <summary>
-        /// defines whether or not the cell editor 
+        /// defines whether or not the cell editor
         /// can make changes to underlying cell
         /// </summary>
         public bool Editable
         {
-            get { return mDefaultCellEditor.ReadOnly; }
-            set { mDefaultCellEditor.ReadOnly = !value; }
+            get => mDefaultCellEditor.ReadOnly;
+            set => mDefaultCellEditor.ReadOnly = !value;
         }
 
         #endregion

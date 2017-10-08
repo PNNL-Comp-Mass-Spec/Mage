@@ -54,25 +54,19 @@ namespace Mage
         public string SprocName { get; set; }
 
         /// <summary>
-        /// SpecialArgs are used to pass module properites in the collection of query parameters
+        /// SpecialArgs are used to pass module properties in the collection of query parameters
         /// </summary>
-        public Dictionary<string, string> SpecialArgs { get { return mSpecialArgs; } }
+        public Dictionary<string, string> SpecialArgs => mSpecialArgs;
 
         /// <summary>
         /// get list of stored procedure arguments
         /// </summary>
-        public Dictionary<string, string> SprocParameters { get { return mSprocParameters; } }
+        public Dictionary<string, string> SprocParameters => mSprocParameters;
 
         /// <summary>
         /// are there any predicate clauses?
         /// </summary>
-        public bool HasPredicate
-        {
-            get
-            {
-                return (mPredicates.Count > 0);
-            }
-        }
+        public bool HasPredicate => (mPredicates.Count > 0);
 
         #endregion
 

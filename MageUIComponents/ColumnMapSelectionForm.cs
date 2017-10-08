@@ -26,8 +26,8 @@ namespace MageUIComponents
         /// </summary>
         public string ColumnMapping
         {
-            get { return ColumnMappingCtl.Text; }
-            set { ColumnMappingCtl.Text = value; }
+            get => ColumnMappingCtl.Text;
+            set => ColumnMappingCtl.Text = value;
         }
 
         /// <summary>

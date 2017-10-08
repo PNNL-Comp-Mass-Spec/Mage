@@ -26,16 +26,13 @@ namespace MageUIComponents
 
         public string FileNameFilter
         {
-            get { return LocalFileNameFilterCtl.Text; }
-            set { LocalFileNameFilterCtl.Text = value; }
+            get => LocalFileNameFilterCtl.Text;
+            set => LocalFileNameFilterCtl.Text = value;
         }
 
         public string FileSelectionMode
         {
-            get
-            {
-                return mSelectionMode;
-            }
+            get => mSelectionMode;
             set
             {
                 mSelectionMode = value;
@@ -52,34 +49,22 @@ namespace MageUIComponents
 
         public string Folder
         {
-            get { return LocalDirectoryCtl.Text; }
-            set { LocalDirectoryCtl.Text = value; }
+            get => LocalDirectoryCtl.Text;
+            set => LocalDirectoryCtl.Text = value;
         }
 
         public string MostRecentFolder { get; set; }
 
         public string SearchInSubfolders
         {
-            get
-            {
-                return (SearchInSubfoldersCtl.Checked) ? "Yes" : "No";
-            }
-            set
-            {
-                SearchInSubfoldersCtl.Checked = string.Equals(value, "Yes", StringComparison.InvariantCultureIgnoreCase);
-            }
+            get => (SearchInSubfoldersCtl.Checked) ? "Yes" : "No";
+            set => SearchInSubfoldersCtl.Checked = string.Equals(value, "Yes", StringComparison.OrdinalIgnoreCase);
         }
 
         public string SubfolderSearchName
         {
-            get
-            {
-                return SubfolderSearchNameCtl.Text;
-            }
-            set
-            {
-                SubfolderSearchNameCtl.Text = value;
-            }
+            get => SubfolderSearchNameCtl.Text;
+            set => SubfolderSearchNameCtl.Text = value;
         }
 
         #endregion

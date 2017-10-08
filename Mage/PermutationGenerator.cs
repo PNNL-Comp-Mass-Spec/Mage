@@ -37,12 +37,12 @@ namespace Mage
         /// <summary>
         /// number of active parameters
         /// </summary>
-        public int ParamCount { get { return mParamColDefinitions.Count; } }
+        public int ParamCount => mParamColDefinitions.Count;
 
         /// <summary>
         /// number of permutation rows that will be generated
         /// </summary>
-        public int PredictedOutputRowCount { get { return mTotalRows; } }
+        public int PredictedOutputRowCount => mTotalRows;
 
         /// <summary>
         /// name of identifier column
@@ -279,10 +279,10 @@ namespace Mage
             private string IncrementList { get; set; }
 
             // list of increment values that this parameter object
-            // will cycle through.  Increment values are either calculated 
+            // will cycle through.  Increment values are either calculated
             // from increment range parameters or supplied as an explicit list
             private readonly List<string> increments = new List<string>();
-            public int NumberOfIncrements { get { return increments.Count; } }
+            public int NumberOfIncrements => increments.Count;
 
             // number of output rows that must pass
             // before this object's parameter increment values

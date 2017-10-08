@@ -43,8 +43,8 @@ namespace Mage
         /// </summary>
         public string ConnectionString
         {
-            get { return mConnectionString; }
-            set { mConnectionString = value; }
+            get => mConnectionString;
+            set => mConnectionString = value;
         }
 
         /// <summary>

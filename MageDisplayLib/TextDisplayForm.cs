@@ -15,8 +15,8 @@ namespace MageDisplayLib
         /// </summary>
         public string Contents
         {
-            get { return textDisplayControl1.Text; }
-            set { textDisplayControl1.Text = value; }
+            get => textDisplayControl1.Text;
+            set => textDisplayControl1.Text = value;
         }
 
         /// <summary>
@@ -24,8 +24,8 @@ namespace MageDisplayLib
         /// </summary>
         public bool ReadOnly
         {
-            get { return textDisplayControl1.ReadOnly; }
-            set { textDisplayControl1.ReadOnly = value; }
+            get => textDisplayControl1.ReadOnly;
+            set => textDisplayControl1.ReadOnly = value;
         }
 
         /// <summary>
@@ -42,8 +42,8 @@ namespace MageDisplayLib
         /// </summary>
         public ScrollBars ScrollBars
         {
-            get { return textDisplayControl1.ScrollBars; }
-            set { textDisplayControl1.ScrollBars = value; }
+            get => textDisplayControl1.ScrollBars;
+            set => textDisplayControl1.ScrollBars = value;
         }
 
         /// <summary>

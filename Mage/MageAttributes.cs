@@ -40,22 +40,22 @@ namespace Mage
         /// <summary>
         /// get current module type
         /// </summary>
-        public string type { get { return ModType; } }
+        public string type => ModType;
 
         /// <summary>
         /// get current module ID
         /// </summary>
-        public string ID { get { return ModID; } }
+        public string ID => ModID;
 
         /// <summary>
         /// get current short label
         /// </summary>
-        public string label { get { return ModLabel; } }
+        public string label => ModLabel;
 
         /// <summary>
         /// get current decriptions
         /// </summary>
-        public string description { get { return ModDescription; } }
+        public string description => ModDescription;
 
         /// <summary>
         /// construct new MageAttribute object

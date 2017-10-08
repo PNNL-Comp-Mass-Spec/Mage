@@ -78,10 +78,7 @@ namespace Mage
         /// </summary>
         public string FolderPath
         {
-            get
-            {
-                return (mOutputBuffer.Count > 0) ? mOutputBuffer[0][2] : "";
-            }
+            get => (mOutputBuffer.Count > 0) ? mOutputBuffer[0][2] : "";
             set
             {
                 mOutputBuffer.Clear();

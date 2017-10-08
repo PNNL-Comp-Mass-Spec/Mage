@@ -28,14 +28,8 @@ namespace Mage
         /// </summary>
         public static string DMSServer
         {
-            get
-            {
-                return mDmsServer ?? DEFAULT_DMS_SERVER;
-            }
-            set
-            {
-                mDmsServer = value;
-            }
+            get => mDmsServer ?? DEFAULT_DMS_SERVER;
+            set => mDmsServer = value;
         }
 
         /// <summary>
@@ -43,14 +37,8 @@ namespace Mage
         /// </summary>
         public static string DMSDatabase
         {
-            get
-            {
-                return mDmsDatabase ?? DEFAULT_DMS_DATABASE;
-            }
-            set
-            {
-                mDmsDatabase = value;
-            }
+            get => mDmsDatabase ?? DEFAULT_DMS_DATABASE;
+            set => mDmsDatabase = value;
         }
 
         #region "Member Variables"

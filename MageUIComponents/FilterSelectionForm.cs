@@ -24,14 +24,8 @@ namespace MageUIComponents
         /// </summary>
         public string FilterName
         {
-            get
-            {
-                return FilterNameCtl.Text;
-            }
-            set
-            {
-                FilterNameCtl.Text = value;
-            }
+            get => FilterNameCtl.Text;
+            set => FilterNameCtl.Text = value;
         }
 
         /// <summary>

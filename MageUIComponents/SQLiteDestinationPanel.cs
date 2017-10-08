@@ -25,12 +25,12 @@ namespace MageUIComponents {
                 }
                 return DatabaseNameCtl.Text; 
             }
-            set { DatabaseNameCtl.Text = value; }
+            set => DatabaseNameCtl.Text = value;
         }
 
         public string TableName {
-            get { return TableNameCtl.Text; }
-            set { TableNameCtl.Text = value; }
+            get => TableNameCtl.Text;
+            set => TableNameCtl.Text = value;
         }
 
         #endregion

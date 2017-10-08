@@ -62,15 +62,14 @@ namespace Mage
         public string DbPassword { get; set; }
 
         /// <summary>
-        /// number of input rows that are grouped into SQLite transaction blocks 
+        /// number of input rows that are grouped into SQLite transaction blocks
         /// </summary>
         public string BlockSize
         {
-            get { return mBlockSize.ToString(CultureInfo.InvariantCulture); }
+            get => mBlockSize.ToString(CultureInfo.InvariantCulture);
             set
             {
-                int val;
-                if (int.TryParse(value, out val))
+                if (int.TryParse(value, out var val))
                 {
                     mBlockSize = val;
                 }

@@ -52,18 +52,12 @@ namespace MageDisplayLib
         /// <summary>
         /// definition of columns
         /// </summary>
-        public Collection<MageColumnDef> ColumnDefs
-        {
-            get
-            {
-                return new Collection<MageColumnDef>(mColumnDefs);
-            }
-        }
+        public Collection<MageColumnDef> ColumnDefs => new Collection<MageColumnDef>(mColumnDefs);
 
         /// <summary>
         /// Get the column definitions
         /// </summary>
-        public Collection<MageColumnDef> Columns { get { return new Collection<MageColumnDef>(mColumnDefs); } }
+        public Collection<MageColumnDef> Columns => new Collection<MageColumnDef>(mColumnDefs);
 
         #endregion
 

@@ -18,10 +18,7 @@ namespace MageUIComponents
 
         public bool ShowGetDatasets
         {
-            get
-            {
-                return mShowGetDatasets;
-            }
+            get => mShowGetDatasets;
             set
             {
                 mShowGetDatasets = value;
@@ -40,10 +37,7 @@ namespace MageUIComponents
 
         public bool ShowGetJobs
         {
-            get
-            {
-                return mShowGetJobs;
-            }
+            get => mShowGetJobs;
             set
             {
                 mShowGetJobs = value;

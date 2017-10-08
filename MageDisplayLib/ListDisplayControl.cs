@@ -122,8 +122,8 @@ namespace MageDisplayLib
         /// </summary>
         public string Notice
         {
-            get { return lblNotice.Text; }
-            set { lblNotice.Text = value; }
+            get => lblNotice.Text;
+            set => lblNotice.Text = value;
         }
 
         /// <summary>
@@ -131,8 +131,8 @@ namespace MageDisplayLib
         /// </summary>
         public string PageTitle
         {
-            get { return lblPageTitle.Text; }
-            set { lblPageTitle.Text = value; }
+            get => lblPageTitle.Text;
+            set => lblPageTitle.Text = value;
         }
 
         /// <summary>
@@ -143,10 +143,7 @@ namespace MageDisplayLib
         /// <summary>
         /// Get collection of definitions of columns
         /// </summary>
-        public Collection<MageColumnDef> ColumnDefs
-        {
-            get { return new Collection<MageColumnDef>(Accumulator.ColumnDefs); }
-        }
+        public Collection<MageColumnDef> ColumnDefs => new Collection<MageColumnDef>(Accumulator.ColumnDefs);
 
         /// <summary>
         /// Get collection of columnn names
@@ -167,41 +164,23 @@ namespace MageDisplayLib
         /// <summary>
         /// get the current cell editor for the ListView of this object
         /// </summary>
-        public ListViewCellEditor CellEditor { get { return mCellEditor; } }
+        public ListViewCellEditor CellEditor => mCellEditor;
 
 
         /// <summary>
         /// The list view control used by this object
         /// </summary>
-        public ListView List
-        {
-            get
-            {
-                return lvQueryResults;
-            }
-        }
+        public ListView List => lvQueryResults;
 
         /// <summary>
         /// Number of items currently in display
         /// </summary>
-        public int ItemCount
-        {
-            get
-            {
-                return lvQueryResults.Items.Count;
-            }
-        }
+        public int ItemCount => lvQueryResults.Items.Count;
 
         /// <summary>
         /// Number of selected items currently in display
         /// </summary>
-        public int SelectedItemCount
-        {
-            get
-            {
-                return lvQueryResults.SelectedItems.Count;
-            }
-        }
+        public int SelectedItemCount => lvQueryResults.SelectedItems.Count;
 
         /// <summary>
         /// Get contents of first selected row as key/value pairs
@@ -231,8 +210,8 @@ namespace MageDisplayLib
         /// </summary>
         public bool HeaderVisible
         {
-            get { return panel1.Visible; }
-            set { panel1.Visible = value; }
+            get => panel1.Visible;
+            set => panel1.Visible = value;
         }
 
         #endregion

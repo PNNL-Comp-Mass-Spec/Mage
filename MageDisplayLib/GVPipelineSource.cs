@@ -92,8 +92,8 @@ namespace MageDisplayLib
         /// </summary>
         public bool Stop
         {
-            get { return Abort; }
-            set { Abort = value; }
+            get => Abort;
+            set => Abort = value;
         }
 
         #endregion

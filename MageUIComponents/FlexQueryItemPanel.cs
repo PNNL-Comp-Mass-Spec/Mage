@@ -12,24 +12,28 @@ namespace MageUIComponents {
             RelationCtl.Items.Add("(off)");
         }
 
-        public string Value {
-            get { return ValueCtl.Text; }
-            set { ValueCtl.Text = value; }
+        public string Value
+        {
+            get => ValueCtl.Text;
+            set => ValueCtl.Text = value;
         }
 
-        public string Comparision {
-            get { return ComparisonCtl.Text; }
-            set { ComparisonCtl.Text = value; }
+        public string Comparision
+        {
+            get => ComparisonCtl.Text;
+            set => ComparisonCtl.Text = value;
         }
 
-        public string Column {
-            get { return ColumnCtl.Text; }
-            set { ColumnCtl.Text = value; }
+        public string Column
+        {
+            get => ColumnCtl.Text;
+            set => ColumnCtl.Text = value;
         }
 
-        public string Relation {
-            get { return (RelationCtl.Text != "(off)") ? RelationCtl.Text : ""; }
-            set { RelationCtl.Text = value; }
+        public string Relation
+        {
+            get => (RelationCtl.Text != "(off)") ? RelationCtl.Text : "";
+            set => RelationCtl.Text = value;
         }
 
 

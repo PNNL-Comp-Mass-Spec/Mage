@@ -29,7 +29,7 @@ namespace Mage
         /// </summary>
         protected bool Abort
         {
-            get { return Globals.AbortRequested; }
+            get => Globals.AbortRequested;
             set
             {
                 if (value)

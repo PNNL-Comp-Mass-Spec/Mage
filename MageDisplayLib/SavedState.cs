@@ -27,8 +27,8 @@ namespace MageDisplayLib
         /// </summary>
         public static string AppDataFolderName
         {
-            get { return mAppDataFolderName; }
-            set { mAppDataFolderName = value; }
+            get => mAppDataFolderName;
+            set => mAppDataFolderName = value;
         }
 
         /// <summary>
@@ -36,8 +36,8 @@ namespace MageDisplayLib
         /// </summary>
         public static string DataDirectory
         {
-            get { return mDataDirectory; }
-            set { mDataDirectory = value; }
+            get => mDataDirectory;
+            set => mDataDirectory = value;
         }
 
         /// <summary>

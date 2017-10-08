@@ -28,7 +28,7 @@ namespace Mage
         /// <summary>
         /// Get the column definitions
         /// </summary>
-        public Collection<MageColumnDef> Columns { get { return new Collection<MageColumnDef>(InputColumnDefs); } }
+        public Collection<MageColumnDef> Columns => new Collection<MageColumnDef>(InputColumnDefs);
 
         #endregion
 

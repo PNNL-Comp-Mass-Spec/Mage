@@ -9,17 +9,17 @@ namespace Mage
     /// This Mage module can receive data over its standard tabular input
     /// and perfrom several actions useful for testing other Mage modules
     /// or as a simple end terminus for a pipeline
-    /// 
+    ///
     /// By default, it outputs desriptions of column definition events and data rows that it
     /// receives to the console (this behavior can be disabled via the WriteToConsole property)
-    /// 
+    ///
     /// By default, it retains column definitions (via BaseModule behavior)
-    /// 
+    ///
     /// It also can accumulate data rows in an internal buffer.  The maximum number of rows
     /// that it will accumulate is set by the RowsToSave property (defaults to a few rows)
-    /// 
+    ///
     /// Both the column definitions and any accumulated data rows can be retreived by client
-    /// 
+    ///
     /// </summary>
     public class SimpleSink : BaseModule
     {
@@ -48,17 +48,17 @@ namespace Mage
         /// <summary>
         /// Get the column definitions
         /// </summary>
-        public Collection<MageColumnDef> Columns { get { return new Collection<MageColumnDef>(InputColumnDefs); } }
+        public Collection<MageColumnDef> Columns => new Collection<MageColumnDef>(InputColumnDefs);
 
         /// <summary>
         /// assocation of name of input column with its column position index
         /// </summary>
-        public Dictionary<string, int> ColumnIndex { get { return InputColumnPos; } }
+        public Dictionary<string, int> ColumnIndex => InputColumnPos;
 
         /// <summary>
         /// Get rows that were accumumlated in the internal row buffer
         /// </summary>
-        public Collection<string[]> Rows { get { return new Collection<string[]>(SavedRows); } }
+        public Collection<string[]> Rows => new Collection<string[]>(SavedRows);
 
         #endregion
 

@@ -36,7 +36,7 @@ namespace Mage
         /// <summary>
         /// Get accumulated key/value store
         /// </summary>
-        public Dictionary<string, string> Values { get { return mKV; } }
+        public Dictionary<string, string> Values => mKV;
 
         #endregion
 

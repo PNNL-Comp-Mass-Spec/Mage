@@ -98,8 +98,8 @@ namespace Mage
         /// </summary>
         public string TableName
         {
-            get { return mTableName; }
-            set { mTableName = value.Trim(); }
+            get => mTableName;
+            set => mTableName = value.Trim();
         }
 
         /// <summary>

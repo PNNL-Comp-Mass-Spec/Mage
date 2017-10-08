@@ -19,36 +19,30 @@ namespace MageExtractor
 
         #region Properties
 
-        public ResultType ResultTypeDescription
-        {
-            get
-            {
-                return mResultTypes[ResultTypeName];
-            }
-        }
+        public ResultType ResultTypeDescription => mResultTypes[ResultTypeName];
 
         public string ResultTypeName
         {
-            get { return ResultTypeNameCtl.Text; }
-            set { ResultTypeNameCtl.Text = value; }
+            get => ResultTypeNameCtl.Text;
+            set => ResultTypeNameCtl.Text = value;
         }
 
         public string KeepAllResults
         {
-            get { return (KeepResultsCtl.Checked) ? "Yes" : "No"; }
-            set { KeepResultsCtl.Checked = string.Equals(value, "Yes", StringComparison.InvariantCultureIgnoreCase); }
+            get => (KeepResultsCtl.Checked) ? "Yes" : "No";
+            set => KeepResultsCtl.Checked = string.Equals(value, "Yes", StringComparison.OrdinalIgnoreCase);
         }
 
         public string ResultFilterSetID
         {
-            get { return FilterSetIDCtl.Text; }
-            set { FilterSetIDCtl.Text = value; }
+            get => FilterSetIDCtl.Text;
+            set => FilterSetIDCtl.Text = value;
         }
 
         public string MSGFCutoff
         {
-            get { return MSGFCutoffCtl.Text; }
-            set { MSGFCutoffCtl.Text = value; }
+            get => MSGFCutoffCtl.Text;
+            set => MSGFCutoffCtl.Text = value;
         }
 
         #endregion
@@ -57,7 +51,7 @@ namespace MageExtractor
 
         public Dictionary<string, string> GetParameters()
         {
-            return new Dictionary<string, string>() { 
+            return new Dictionary<string, string>() {
                 { "ResultType",   ResultTypeName},
                 { "KeepAllResults",   KeepAllResults},
                 { "ResultFilter",   ResultFilterSetID},
@@ -98,7 +92,7 @@ namespace MageExtractor
         }
 
         #endregion
-        
+
         public ExtractionSettingsPanel()
         {
             InitializeComponent();
@@ -172,7 +166,7 @@ namespace MageExtractor
             selectionForm.Show();
             selectionForm.Hide();
             selectionForm.InitializeFilterSetList();
-            
+
 
             if (selectionForm.ShowDialog() == DialogResult.OK)
             {

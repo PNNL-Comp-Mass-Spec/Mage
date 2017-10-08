@@ -22,8 +22,8 @@ namespace MageUIComponents
 
         public string Legend
         {
-            get { return LegendCtl.Text; }
-            set { LegendCtl.Text = value; }
+            get => LegendCtl.Text;
+            set => LegendCtl.Text = value;
         }
 
         #endregion

@@ -60,20 +60,20 @@ namespace MageExtExtractionFilters
         /// <summary>
         /// How many results were processed?
         /// </summary>
-        public int ProcessedRows { get { return mTotalRowsCounter; } }
+        public int ProcessedRows => mTotalRowsCounter;
 
         /// <summary>
         /// How many results passed?
         /// </summary>
-        public int PassedRows { get { return mPassedRowsCounter; } }
+        public int PassedRows => mPassedRowsCounter;
 
         /// <summary>
         /// Set extraction type parameters
         /// </summary>
         public ExtractionType ExtractionType
         {
-            get { return mExtractionType; }
-            set { mExtractionType = value; }
+            get => mExtractionType;
+            set => mExtractionType = value;
         }
 
         /// <summary>
@@ -81,8 +81,8 @@ namespace MageExtExtractionFilters
         /// </summary>
         public string ResultFolderPath
         {
-            get { return mResultFolderPath; }
-            set { mResultFolderPath = value; }
+            get => mResultFolderPath;
+            set => mResultFolderPath = value;
         }
 
         /// <summary>
@@ -95,8 +95,8 @@ namespace MageExtExtractionFilters
         /// </summary>
         public Dictionary<string, ResultType.MergeFile> MergeFiles
         {
-            get { return mMergeFiles; }
-            set { mMergeFiles = value; }
+            get => mMergeFiles;
+            set => mMergeFiles = value;
         }
 
         #endregion

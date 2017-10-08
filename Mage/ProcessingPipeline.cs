@@ -83,7 +83,7 @@ namespace Mage
         /// <summary>
         /// Return list of module in pipeline
         /// </summary>
-        public Collection<IBaseModule> ModuleList { get { return new Collection<IBaseModule>(mModuleList); } }
+        public Collection<IBaseModule> ModuleList => new Collection<IBaseModule>(mModuleList);
 
         #endregion
 
@@ -472,13 +472,7 @@ namespace Mage
         /// <summary>
         /// Get error messages
         /// </summary>
-        public Collection<string> ErrorMessages
-        {
-            get
-            {
-                return new Collection<string>(mErrorMessages);
-            }
-        }
+        public Collection<string> ErrorMessages => new Collection<string>(mErrorMessages);
 
         #endregion
 

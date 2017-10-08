@@ -18,19 +18,6 @@ namespace MageUIComponents
         #region Member Variables
 
         /// <summary>
-        /// Information from selected row in file list.
-        /// Contains file and folder fields that point 
-        /// to file that supplies input column information.
-        /// </summary>
-        private Dictionary<string, string> mInputFileInfo = new Dictionary<string, string>();
-
-        /// <summary>
-        /// information about output file or database
-        /// </summary>
-        private Dictionary<string, string> mOutputInfo = new Dictionary<string, string>();
-
-
-        /// <summary>
         /// definition of columns that was read from input file
         /// </summary>
         private Collection<MageColumnDef> mInputColumnDefs = new Collection<MageColumnDef>();
@@ -48,43 +35,41 @@ namespace MageUIComponents
         public static string MappingConfigFilePath { get; set; }
 
         /// <summary>
-        /// set of key/value parameters that contain the
-        /// file path and folder path to the file that
-        /// will provide input column list
+        /// Information from selected row in file list.
+        /// Contains file and folder fields that point
+        /// to file that supplies input column information.
         /// </summary>
-        public Dictionary<string, string> InputFileInfo
-        {
-            get { return mInputFileInfo; }
-            set { mInputFileInfo = value; }
-        }
-        /// <summary>
-        /// set of key/value parameters that contain the
-        /// output file or database info
-        /// </summary>
-        public Dictionary<string, string> OutputInfo
-        {
-            get { return mOutputInfo; }
-            set { mOutputInfo = value; }
-        }
+        /// <remarks>
+        /// Set of key/value parameters
+        /// </remarks>
+        public Dictionary<string, string> InputFileInfo { get; set; } = new Dictionary<string, string>();
 
         /// <summary>
-        /// editing field for the column mapping name 
+        /// Information about output file or database
+        /// </summary>
+        /// <remarks>
+        /// Set of key/value parameters
+        /// </remarks>
+        public Dictionary<string, string> OutputInfo { get; set; } = new Dictionary<string, string>();
+
+        /// <summary>
+        /// editing field for the column mapping name
         /// in the col spec editing panel
         /// </summary>
         public string MappingName
         {
-            get { return MappingNameCtl.Text; }
-            set { MappingNameCtl.Text = value; }
+            get => MappingNameCtl.Text;
+            set => MappingNameCtl.Text = value;
         }
 
         /// <summary>
-        /// editing field for the column mapping description 
+        /// editing field for the column mapping description
         /// in the col spec editing panel
         /// </summary>
         public string MappingDescription
         {
-            get { return MappingDescriptionCtl.Text; }
-            set { MappingDescriptionCtl.Text = value; }
+            get => MappingDescriptionCtl.Text;
+            set => MappingDescriptionCtl.Text = value;
         }
 
         /// <summary>

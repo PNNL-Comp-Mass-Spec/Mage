@@ -21,48 +21,42 @@ namespace MageUIComponents
 
         public string OverwriteExistingFiles
         {
-            get { return (OverwriteExistingCtl.Checked) ? "Yes" : "No"; }
-            set
-            {
-                OverwriteExistingCtl.Checked = string.Equals(value, "Yes", StringComparison.InvariantCultureIgnoreCase);
-            }
+            get => (OverwriteExistingCtl.Checked) ? "Yes" : "No";
+            set => OverwriteExistingCtl.Checked = string.Equals(value, "Yes", StringComparison.OrdinalIgnoreCase);
         }
 
         public string OutputFolder
         {
-            get { return OutputFolderCtl.Text; }
-            set { OutputFolderCtl.Text = value; }
+            get => OutputFolderCtl.Text;
+            set => OutputFolderCtl.Text = value;
         }
 
         public string ApplyPrefixToFileName
         {
-            get { return (usePrefixCtl.Checked) ? "Yes" : "No"; }
+            get => (usePrefixCtl.Checked) ? "Yes" : "No";
             set
             {
-                usePrefixCtl.Checked = string.Equals(value, "Yes", StringComparison.InvariantCultureIgnoreCase);
+                usePrefixCtl.Checked = string.Equals(value, "Yes", StringComparison.OrdinalIgnoreCase);
                 AdjustPrefixNameFields();
             }
         }
 
         public string PrefixLeader
         {
-            get { return prefixLeaderCtl.Text; }
-            set { prefixLeaderCtl.Text = value; }
+            get => prefixLeaderCtl.Text;
+            set => prefixLeaderCtl.Text = value;
         }
 
         public string PrefixColumnName
         {
-            get { return prefixColNameCtl.Text; }
-            set { prefixColNameCtl.Text = value; }
+            get => prefixColNameCtl.Text;
+            set => prefixColNameCtl.Text = value;
         }
 
         public string ResolveCacheInfoFiles
         {
-            get { return (ResolveCacheInfoFilesCtl.Checked) ? "Yes" : "No"; }
-            set
-            {
-                ResolveCacheInfoFilesCtl.Checked = string.Equals(value, "Yes", StringComparison.InvariantCultureIgnoreCase);
-            }
+            get => (ResolveCacheInfoFilesCtl.Checked) ? "Yes" : "No";
+            set => ResolveCacheInfoFilesCtl.Checked = string.Equals(value, "Yes", StringComparison.OrdinalIgnoreCase);
         }
 
         #endregion

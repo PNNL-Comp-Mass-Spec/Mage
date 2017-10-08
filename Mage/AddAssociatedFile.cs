@@ -58,10 +58,7 @@ namespace Mage
         /// </summary>
         public string AssocFileNameReplacementPattern
         {
-            get
-            {
-                return string.Format("{0}|{1}", mSourceFileNameFragment, mAssociatedFileNameFragment);
-            }
+            get => string.Format("{0}|{1}", mSourceFileNameFragment, mAssociatedFileNameFragment);
             set
             {
                 var flds = value.Split('|');

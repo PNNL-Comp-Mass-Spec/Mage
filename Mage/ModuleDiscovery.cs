@@ -196,13 +196,7 @@ namespace Mage
         /// <summary>
         /// Get list of filters
         /// </summary>
-        public static IEnumerable<MageAttribute> Filters
-        {
-            get
-            {
-                return new Collection<MageAttribute>(mFilters.Values.ToArray());
-            }
-        }
+        public static IEnumerable<MageAttribute> Filters => new Collection<MageAttribute>(mFilters.Values.ToArray());
 
         /// <summary>
         /// Get Mage attributes for filters

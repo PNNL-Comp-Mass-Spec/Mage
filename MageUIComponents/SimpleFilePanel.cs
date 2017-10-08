@@ -5,9 +5,9 @@ namespace MageUIComponents {
 
     public partial class SimpleFilePanel : UserControl {
 
-        public string FilePath { 
-            get { return outputfilePathCtl.Text; }
-            set { outputfilePathCtl.Text = value;  }
+        public string FilePath {
+            get => outputfilePathCtl.Text;
+            set => outputfilePathCtl.Text = value;
         }
 
         public SimpleFilePanel() {

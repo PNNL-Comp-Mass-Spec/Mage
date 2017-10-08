@@ -49,12 +49,36 @@ namespace MageUIComponents {
         #endregion
 
 
-        public bool Active { get { return ActiveCtl.Checked; } set { ActiveCtl.Checked = value; } }
-        public string ParamName { get { return ParamNameCtl.Text; } set { ParamNameCtl.Text = value; } }
-        public string Lower { get { return ParamLowerCtl.Text; } set { ParamLowerCtl.Text = value; } }
-        public string Upper { get { return ParamUpperCtl.Text; } set { ParamUpperCtl.Text = value; } }
-        public string Increment { get { return ParamIncrementCtl.Text; } set { ParamIncrementCtl.Text = value; } }
-        public string Operator { get { return OperationCtl.Text; } set { OperationCtl.Text = value; } }
+        public bool Active
+        {
+            get => ActiveCtl.Checked;
+            set => ActiveCtl.Checked = value;
+        }
+        public string ParamName
+        {
+            get => ParamNameCtl.Text;
+            set => ParamNameCtl.Text = value;
+        }
+        public string Lower
+        {
+            get => ParamLowerCtl.Text;
+            set => ParamLowerCtl.Text = value;
+        }
+        public string Upper
+        {
+            get => ParamUpperCtl.Text;
+            set => ParamUpperCtl.Text = value;
+        }
+        public string Increment
+        {
+            get => ParamIncrementCtl.Text;
+            set => ParamIncrementCtl.Text = value;
+        }
+        public string Operator
+        {
+            get => OperationCtl.Text;
+            set => OperationCtl.Text = value;
+        }
 
         public void SetValues(string name, string lower, string upper, string increment, bool active) {
             ParamName = name;

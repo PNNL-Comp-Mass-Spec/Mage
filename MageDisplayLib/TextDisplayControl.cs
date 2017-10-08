@@ -18,25 +18,22 @@ namespace MageDisplayLib
         /// </summary>
         public string Contents
         {
-            get { return MainTextCtl.Text; }
-            set { MainTextCtl.Text = value; }
+            get => MainTextCtl.Text;
+            set => MainTextCtl.Text = value;
         }
 
         /// <summary>
         /// get contents of text display as list of lines
         /// </summary>
-        public Collection<string> Lines
-        {
-            get { return new Collection<string>(MainTextCtl.Lines); }
-        }
+        public Collection<string> Lines => new Collection<string>(MainTextCtl.Lines);
 
         /// <summary>
         /// Control whether text can be edited
         /// </summary>
         public bool ReadOnly
         {
-            get { return MainTextCtl.ReadOnly; }
-            set { MainTextCtl.ReadOnly = value; }
+            get => MainTextCtl.ReadOnly;
+            set => MainTextCtl.ReadOnly = value;
         }
 
         /// <summary>
@@ -44,8 +41,8 @@ namespace MageDisplayLib
         /// </summary>
         public ScrollBars ScrollBars
         {
-            get { return MainTextCtl.ScrollBars; }
-            set { MainTextCtl.ScrollBars = value; }
+            get => MainTextCtl.ScrollBars;
+            set => MainTextCtl.ScrollBars = value;
         }
 
         #endregion

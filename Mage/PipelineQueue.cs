@@ -42,27 +42,21 @@ namespace Mage
         /// <summary>
         /// Get currently running pipeline
         /// </summary>
-        public ProcessingPipeline CurrentPipeline
-        {
-            get { return mCurrentPipeline; }
-        }
+        public ProcessingPipeline CurrentPipeline => mCurrentPipeline;
 
         /// <summary>
         /// Is queue currently running
         /// </summary>
-        public bool IsRunning
-        {
-            get { return mQueueRunning; }
-        }
+        public bool IsRunning => mQueueRunning;
 
         /// <summary>
         /// Have a look at the internal queue of pipelines
         /// </summary>
-        public Queue<ProcessingPipeline> Pipelines { get { return mPipelineQueue; } }
+        public Queue<ProcessingPipeline> Pipelines => mPipelineQueue;
 
         #endregion
 
-        #region Client Functions 
+        #region Client Functions
 
         /// <summary>
         /// Internal queue of pipelines to be run

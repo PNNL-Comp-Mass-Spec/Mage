@@ -46,8 +46,8 @@ namespace MageDisplayLib
         /// </summary>
         public string Delimiter
         {
-            get { return mDelimiter.ToString(); }
-            set { mDelimiter = value.ToCharArray(); }
+            get => mDelimiter.ToString();
+            set => mDelimiter = value.ToCharArray();
         }
 
         /// <summary>

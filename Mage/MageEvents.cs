@@ -75,10 +75,7 @@ namespace Mage
         /// <summary>
         /// list of column definitions
         /// </summary>
-        public Collection<MageColumnDef> ColumnDefs
-        {
-            get { return new Collection<MageColumnDef>(columDefs); }
-        }
+        public Collection<MageColumnDef> ColumnDefs => new Collection<MageColumnDef>(columDefs);
 
         /// <summary>
         /// construct new MageColumnEventArgs object
@@ -102,18 +99,12 @@ namespace Mage
         /// the event contains a data row to process
         /// (false signals end of input data stream)
         /// </summary>
-        public bool DataAvailable
-        {
-            get { return fields != null; }
-        }
+        public bool DataAvailable => fields != null;
 
         /// <summary>
         /// data row
         /// </summary>
-        public string[] Fields
-        {
-            get { return fields; }
-        }
+        public string[] Fields => fields;
 
         /// <summary>
         /// construct new MageDataEventArgs object with given data row
@@ -193,7 +184,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="info"></param>
         /// <param name="context"></param>

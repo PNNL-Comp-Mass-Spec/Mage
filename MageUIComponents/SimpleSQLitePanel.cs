@@ -5,13 +5,9 @@ namespace MageUIComponents {
 
     public partial class SimpleSQLitePanel : UserControl {
 
-        public string FilePath {
-            get { return DBFilePathCtl.Text; }
-        }
+        public string FilePath => DBFilePathCtl.Text;
 
-        public string TableName {
-            get { return TableNameCtl.Text; }
-        }
+        public string TableName => TableNameCtl.Text;
 
         public SimpleSQLitePanel() {
             InitializeComponent();
