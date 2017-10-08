@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -11,6 +10,16 @@ namespace Mage
     /// </summary>
     public class SQLBuilder
     {
+
+        /// <summary>
+        /// Name in mPredicates of the key that specifies the server
+        /// </summary>
+        public const string SERVER_NAME_KEY = "Server";
+
+        /// <summary>
+        /// Name in mPredicates of the key that specifies the database
+        /// </summary>
+        public const string DATABASE_NAME_KEY = "Database";
 
         #region Member Variables
 
@@ -194,8 +203,8 @@ namespace Mage
                 switch (itemNode.Name)
                 {
                     case "connection":
-                        mSpecialArgs["Server"] = itemNode.Attributes["server"].InnerText;
-                        mSpecialArgs["Database"] = itemNode.Attributes["database"].InnerText;
+                        mSpecialArgs[SERVER_NAME_KEY] = itemNode.Attributes["server"].InnerText;
+                        mSpecialArgs[DATABASE_NAME_KEY] = itemNode.Attributes["database"].InnerText;
                         break;
                     case "table":
                         Table = itemNode.Attributes["name"].InnerText;
