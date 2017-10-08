@@ -112,7 +112,11 @@ namespace MageFilePackager
             filePackageMgmtPanel1.FileListLabelPrefix = FileListLabelPrefix;
 
             // setup context menus for list displays
+
+            // ReSharper disable once ObjectCreationAsStatement
             new GridViewDisplayActions(JobListDisplayControl);
+
+            // ReSharper disable once ObjectCreationAsStatement
             new GridViewDisplayActions(FileListDisplayControl);
 
             // Connect click events
