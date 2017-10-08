@@ -733,14 +733,14 @@ namespace MageUIComponents
         private BaseModule GetReaderForInputPreview()
         {
             BaseModule rdr = null;
-            if (mInputFileInfo.ContainsKey("Name") && mInputFileInfo.ContainsKey("Folder"))
+            if (InputFileInfo.ContainsKey("Name") && InputFileInfo.ContainsKey("Folder"))
             {
                 var reader = new DelimitedFileReader
                 {
-                    FilePath = Path.Combine(mInputFileInfo["Folder"], mInputFileInfo["Name"])
+                    FilePath = Path.Combine(InputFileInfo["Folder"], InputFileInfo["Name"])
                 };
                 rdr = reader;
-                mPreviewSourceLabel = Path.GetFileName(mInputFileInfo["Name"]);
+                mPreviewSourceLabel = Path.GetFileName(InputFileInfo["Name"]);
             }
             if (rdr == null)
             {
@@ -759,24 +759,24 @@ namespace MageUIComponents
         private BaseModule GetReaderForOutputPreview()
         {
             BaseModule rdr = null;
-            if (mOutputInfo.ContainsKey("OutputFolder") && mOutputInfo.ContainsKey("OutputFile"))
+            if (OutputInfo.ContainsKey("OutputFolder") && OutputInfo.ContainsKey("OutputFile"))
             {
                 var reader = new DelimitedFileReader
                 {
-                    FilePath = Path.Combine(mOutputInfo["OutputFolder"], mOutputInfo["OutputFile"])
+                    FilePath = Path.Combine(OutputInfo["OutputFolder"], OutputInfo["OutputFile"])
                 };
                 rdr = reader;
-                mPreviewSourceLabel = Path.GetFileName(mOutputInfo["OutputFile"]);
+                mPreviewSourceLabel = Path.GetFileName(OutputInfo["OutputFile"]);
             }
-            if (mOutputInfo.ContainsKey("DatabaseName"))
+            if (OutputInfo.ContainsKey("DatabaseName"))
             {
                 var reader = new SQLiteReader
                 {
-                    Database = mOutputInfo["DatabaseName"],
-                    SQLText = string.Format("SELECT * FROM \"{0}\";", mOutputInfo["TableName"])
+                    Database = OutputInfo["DatabaseName"],
+                    SQLText = string.Format("SELECT * FROM \"{0}\";", OutputInfo["TableName"])
                 };
                 rdr = reader;
-                mPreviewSourceLabel = Path.GetFileName(mOutputInfo["DatabaseName"]) + "/" + mOutputInfo["TableName"];
+                mPreviewSourceLabel = Path.GetFileName(OutputInfo["DatabaseName"]) + "/" + OutputInfo["TableName"];
             }
             if (rdr == null)
             {
