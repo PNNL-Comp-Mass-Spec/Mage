@@ -826,13 +826,11 @@ namespace MageUIComponents
                 var floatType = true;
                 foreach (var row in sink.Rows)
                 {
-                    var intVal = 0;
-                    if (!int.TryParse(row[i], out intVal))
+                    if (!int.TryParse(row[i], out _))
                     {
                         intType = false;
                     }
-                    float floatVal = 0;
-                    if (!float.TryParse(row[i], out floatVal))
+                    if (!float.TryParse(row[i], out _))
                     {
                         floatType = false;
                     }

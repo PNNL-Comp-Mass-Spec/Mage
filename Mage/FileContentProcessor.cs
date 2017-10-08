@@ -224,8 +224,7 @@ namespace Mage
                 outRow[fileNameOutColIndx] = (concatenateOutput) ? sourceFile : destFile;
 
                 // Strip off the MyEMSLID from the filename
-                string newFilePath;
-                var myEMSLFileID = MyEMSLReader.DatasetInfoBase.ExtractMyEMSLFileID(outRow[fileNameOutColIndx], out newFilePath);
+                var myEMSLFileID = MyEMSLReader.DatasetInfoBase.ExtractMyEMSLFileID(outRow[fileNameOutColIndx], out var newFilePath);
                 if (myEMSLFileID > 0)
                     outRow[fileNameOutColIndx] = newFilePath;
 

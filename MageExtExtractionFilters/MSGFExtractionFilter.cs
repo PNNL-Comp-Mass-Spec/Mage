@@ -65,8 +65,7 @@ namespace MageExtExtractionFilters
 
             if (mMSGFMerger != null && !Abort)
             {
-                ResultType.MergeFile msgfFile;
-                if (!mMergeFiles.TryGetValue("MSGF_Name", out msgfFile))
+                if (!mMergeFiles.TryGetValue("MSGF_Name", out var msgfFile))
                 {
                     msgfFile = new ResultType.MergeFile(string.Empty, string.Empty, String.Empty, string.Empty);
                 }
@@ -193,8 +192,7 @@ namespace MageExtExtractionFilters
                         return true;
                     }
 
-                    double msgf;
-                    if (double.TryParse(score, out msgf))
+                    if (double.TryParse(score, out var msgf))
                     {
                         accepted = (msgf <= mCutoffThreshold);
                     }

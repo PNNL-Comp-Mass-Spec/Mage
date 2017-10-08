@@ -326,8 +326,7 @@ namespace MageFileProcessor
                 FileColumnName = "Name"
             };
 
-            string valueOverride;
-            if (runtimeParms.TryGetValue("SourceFileColumnName", out valueOverride))
+            if (runtimeParms.TryGetValue("SourceFileColumnName", out var valueOverride))
             {
                 fileFinder.SourceFileColumnName = valueOverride;
                 fileFinder.FileColumnName = valueOverride;

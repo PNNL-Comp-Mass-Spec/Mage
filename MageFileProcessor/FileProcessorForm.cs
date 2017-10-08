@@ -274,8 +274,7 @@ namespace MageFileProcessor
                 switch (command.Action)
                 {
                     case "get_entities_from_query":
-                        string queryName;
-                        queryDefXML = GetQueryDefinition(out queryName);
+                        queryDefXML = GetQueryDefinition(out var queryName);
                         if (string.IsNullOrEmpty(queryDefXML))
                         {
                             MessageBox.Show("Unknown query type '" + queryName + "'.  Your QueryDefinitions.xml file is out-of-date", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -510,8 +509,7 @@ namespace MageFileProcessor
 
                     foreach (var datasetID in values)
                     {
-                        int iValue;
-                        if (!int.TryParse(datasetID, out iValue))
+                        if (!int.TryParse(datasetID, out _))
                         {
                             msg = sWarning + datasetID + "' is not numeric";
                             break;

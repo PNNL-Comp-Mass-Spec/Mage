@@ -367,15 +367,11 @@ namespace MageConcatenator
 
             foreach (var selectedFileRow in FileListDisplayControl.SelectedItemRowsDictionaryList)
             {
-                string folderPath;
-                string filename;
-                string dateModified;
-                string fileSizeKB;
 
-                selectedFileRow.TryGetValue("Folder", out folderPath);
-                selectedFileRow.TryGetValue("File", out filename);
-                selectedFileRow.TryGetValue("File_Size_KB", out fileSizeKB);
-                selectedFileRow.TryGetValue("File_Date", out dateModified);
+                selectedFileRow.TryGetValue("Folder", out var folderPath);
+                selectedFileRow.TryGetValue("File", out var filename);
+                selectedFileRow.TryGetValue("File_Size_KB", out var fileSizeKB);
+                selectedFileRow.TryGetValue("File_Date", out var dateModified);
 
                 if (string.IsNullOrWhiteSpace(folderPath))
                     folderPath = string.Empty;

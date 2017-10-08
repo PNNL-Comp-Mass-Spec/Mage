@@ -302,9 +302,8 @@ namespace Mage
                 UpdateStatusMessage("Error: SqlDataReader object is null");
                 return;
             }
-            List<MageColumnDef> columnDefs;
 
-            OutputColumnDefinitions(myReader, out columnDefs);
+            OutputColumnDefinitions(myReader, out var columnDefs);
 
             var totalRows = 0;
             OutputDataRows(myReader, columnDefs, ref totalRows);
@@ -341,18 +340,16 @@ namespace Mage
 
                     if (i < columnDefs.Count)
                     {
-                        DateTime dateValue;
                         if ((columnDefs[i].DataType.StartsWith("date") ||
                              columnDefs[i].DataType.StartsWith("smalldate")
-                            ) && DateTime.TryParse(a[i].ToString(), out dateValue))
+                            ) && DateTime.TryParse(a[i].ToString(), out var dateValue))
                         {
                             dataVals[i] = dateValue.ToString("yyyy-MM-dd hh:mm:ss tt");
                             valProcessed = true;
                         }
                         else
                         {
-                            DateTime timeValue;
-                            if (columnDefs[i].DataType == "time" && DateTime.TryParse(a[i].ToString(), out timeValue))
+                            if (columnDefs[i].DataType == "time" && DateTime.TryParse(a[i].ToString(), out var timeValue))
                             {
                                 dataVals[i] = timeValue.ToString("hh:mm:ss tt");
                                 valProcessed = true;

@@ -553,7 +553,6 @@ namespace Mage
             var val = predicate.val;
 
             var str = "";
-            double ignore;
             switch (cmp)
             {
                 case "wildcards":
@@ -584,7 +583,7 @@ namespace Mage
                     break;
                 case "Equals":
                 case "EQn":
-                    if (Double.TryParse(val, out ignore))
+                    if (double.TryParse(val, out _))
                     {
                         str += string.Format("[{0}] = {1}", col, val);
                     }
@@ -595,7 +594,7 @@ namespace Mage
                     break;
                 case "NotEqual":
                 case "NEn":
-                    if (Double.TryParse(val, out ignore))
+                    if (double.TryParse(val, out _))
                     {
                         str += string.Format("NOT [{0}] = {1}", col, val);
                     }
@@ -606,28 +605,28 @@ namespace Mage
                     break;
                 case "GreaterThan":
                 case "GTn":
-                    if (Double.TryParse(val, out ignore))
+                    if (double.TryParse(val, out _))
                     {
                         str += string.Format("[{0}] > {1}", col, val);
                     }
                     break;
                 case "LessThan":
                 case "LTn":
-                    if (Double.TryParse(val, out ignore))
+                    if (double.TryParse(val, out _))
                     {
                         str += string.Format("[{0}] < {1}", col, val);
                     }
                     break;
                 case "LessThanOrEqualTo":
                 case "LTOEn":
-                    if (Double.TryParse(val, out ignore))
+                    if (double.TryParse(val, out _))
                     {
                         str += string.Format("[{0}] <= {1}", col, val);
                     }
                     break;
                 case "GreaterThanOrEqualTo":
                 case "GTOEn":
-                    if (Double.TryParse(val, out ignore))
+                    if (double.TryParse(val, out _))
                     {
                         str += string.Format("[{0}] >= {1}", col, val);
                     }

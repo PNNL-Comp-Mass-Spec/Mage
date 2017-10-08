@@ -355,9 +355,7 @@ namespace Mage
                             if (myEMSLFileID == 0)
                                 throw new MageException("Encoded MyEMSL File ID not found in " + entry.Value.FullName);
 
-                            ArchivedFileInfo archiveFileInfo;
-
-                            if (!GetCachedArchivedFileInfo(myEMSLFileID, out archiveFileInfo))
+                            if (!GetCachedArchivedFileInfo(myEMSLFileID, out var archiveFileInfo))
                                 throw new MageException("Cached ArchiveFileInfo does not contain MyEMSL File ID " + myEMSLFileID);
 
                             fileName = DatasetInfoBase.AppendMyEMSLFileID(archiveFileInfo.Filename, myEMSLFileID);

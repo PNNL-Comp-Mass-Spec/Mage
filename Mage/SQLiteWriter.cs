@@ -302,9 +302,7 @@ namespace Mage
             // traceLog.Debug("Starting to insert block of rows for table [" + mSchema.TableName + "]");
             try
             {
-                List<DbType> columnDataTypes;
-
-                var insert = BuildSQLiteInsert(mSchema, out columnDataTypes);
+                var insert = BuildSQLiteInsert(mSchema, out var columnDataTypes);
 
                 foreach (var row in mRows)
                 {
@@ -321,8 +319,7 @@ namespace Mage
 
                         if (columnDataTypes[j] == DbType.DateTime)
                         {
-                            DateTime dtDate;
-                            if (DateTime.TryParse(row[j], out dtDate))
+                            if (DateTime.TryParse(row[j], out var dtDate))
                             {
                                 insert.Parameters[pname].Value = dtDate.ToString("yyyy-MM-dd HH:mm:ss");
                             }
@@ -764,8 +761,7 @@ namespace Mage
                 return true;
             }
 
-            double testnum;
-            if (!double.TryParse(value, out testnum))
+            if (!double.TryParse(value, out _))
             {
                 return false;
             }

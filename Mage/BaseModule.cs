@@ -120,8 +120,7 @@ namespace Mage
                 // Update existing values
                 foreach (var setting in Context)
                 {
-                    string newValue;
-                    if (context.TryGetValue(setting.Key, out newValue))
+                    if (context.TryGetValue(setting.Key, out var newValue))
                         mergedContext.Add(setting.Key, newValue);
                     else
                         mergedContext.Add(setting.Key, setting.Value);
@@ -392,11 +391,10 @@ namespace Mage
         /// <returns>Index if defined; otherwise, returns -1</returns>
         protected static int GetColumnIndex(Dictionary<string, int> columnPos, string columnName)
         {
-            int value;
-            if (columnPos.TryGetValue(columnName, out value))
+            if (columnPos.TryGetValue(columnName, out var value))
                 return value;
-            else
-                return -1;
+
+            return -1;
         }
 
         /// <summary>
@@ -411,11 +409,10 @@ namespace Mage
             if (columnIndex < 0)
                 return defaultValue;
 
-            int value;
-            if (columnVals[columnIndex] != null && int.TryParse(columnVals[columnIndex], out value))
+            if (columnVals[columnIndex] != null && int.TryParse(columnVals[columnIndex], out var value))
                 return value;
-            else
-                return defaultValue;
+
+            return defaultValue;
         }
 
         /// <summary>
@@ -430,11 +427,10 @@ namespace Mage
             if (columnIndex < 0)
                 return defaultValue;
 
-            double value;
-            if (columnVals[columnIndex] != null && double.TryParse(columnVals[columnIndex], out value))
+            if (columnVals[columnIndex] != null && double.TryParse(columnVals[columnIndex], out var value))
                 return value;
-            else
-                return defaultValue;
+
+            return defaultValue;
         }
 
         /// <summary>
@@ -451,8 +447,8 @@ namespace Mage
 
             if (columnVals[columnIndex] != null)
                 return columnVals[columnIndex];
-            else
-                return string.Empty;
+
+            return string.Empty;
         }
 
         /// <summary>
