@@ -64,10 +64,10 @@ namespace MageFilePackager
 
             // These settings are loaded from file MagerConcatenator.exe.config
             // Typically gigasax and DMS5
-            Mage.Globals.DMSServer = Settings.Default.DMSServer;
-            Mage.Globals.DMSDatabase = Settings.Default.DMSDatabase;
+            Globals.DMSServer = Settings.Default.DMSServer;
+            Globals.DMSDatabase = Settings.Default.DMSDatabase;
 
-            txtServer.Text = "DMS Server: " + Mage.Globals.DMSServer;
+            txtServer.Text = "DMS Server: " + Globals.DMSServer;
 
             ModuleDiscovery.DMSServerOverride = Globals.DMSServer;
             ModuleDiscovery.DMSDatabaseOverride = Globals.DMSDatabase;
@@ -682,8 +682,8 @@ namespace MageFilePackager
         private void SetupFlexQueryPanels()
         {
             JobFlexQueryPanel.QueryName = "Job_Flex_Query";
-            JobFlexQueryPanel.SetColumnPickList(new string[] { "Job", "State", "Dataset", "Dataset_ID", "Tool", "Parameter_File", "Settings_File", "Instrument", "Experiment", "Campaign", "Organism", "Organism DB", "Protein Collection List", "Protein Options", "Comment", "Results Folder", "Folder", "Dataset_Created", "Job_Finish", "Request_ID" });
-            JobFlexQueryPanel.SetComparisionPickList(new string[] { "ContainsText", "DoesNotContainText", "StartsWithText", "MatchesText", "MatchesTextOrBlank", "Equals", "NotEqual", "GreaterThan", "GreaterThanOrEqualTo", "LessThan", "LessThanOrEqualTo", "MostRecentWeeks", "LaterThan", "EarlierThan", "InList" });
+            JobFlexQueryPanel.SetColumnPickList(new[] { "Job", "State", "Dataset", "Dataset_ID", "Tool", "Parameter_File", "Settings_File", "Instrument", "Experiment", "Campaign", "Organism", "Organism DB", "Protein Collection List", "Protein Options", "Comment", "Results Folder", "Folder", "Dataset_Created", "Job_Finish", "Request_ID" });
+            JobFlexQueryPanel.SetComparisionPickList(new[] { "ContainsText", "DoesNotContainText", "StartsWithText", "MatchesText", "MatchesTextOrBlank", "Equals", "NotEqual", "GreaterThan", "GreaterThanOrEqualTo", "LessThan", "LessThanOrEqualTo", "MostRecentWeeks", "LaterThan", "EarlierThan", "InList" });
         }
 
         #endregion
