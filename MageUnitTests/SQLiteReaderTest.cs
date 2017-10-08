@@ -1,5 +1,5 @@
 ﻿using Mage;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System.Collections.Generic;
 
 namespace MageUnitTests
@@ -10,24 +10,26 @@ namespace MageUnitTests
     ///This is a test class for SQLiteReaderTest and is intended
     ///to contain all SQLiteReaderTest Unit Tests
     ///</summary>
-    [TestClass()]
+    [TestFixture]
     public class SQLiteReaderTest
     {
+        public const string SQLITE_QUERY_DEF_FILE_PATH_KEY = "SQLiteQueryDefinitionsFilePath";
 
         /// <summary>
         ///A test for Run
         ///</summary>
-        [TestMethod()]
-        [DeploymentItem(@"..\..\..\TestItems\Metadata.db")]
-        public void QueryTest()
+        [Test]
+        [TestCase(@"..\..\..\TestItems\Metadata.db")]
+        public void QueryTest(string filePath)
         {
+            var dataFile = General.GetTestFile(filePath);
+
             var maxRows = 7;
             var colList = new[] { "Dataset", "Dataset_ID", "Factor", "Value" };
             var colNames = string.Join(", ", colList);
             var sql = string.Format("SELECT {0} FROM factors", colNames);
-            var filePath = @"Metadata.db";
 
-            var sink = ReadSQLiteDB(maxRows, sql, filePath);
+            var sink = ReadSQLiteDB(maxRows, sql, dataFile.FullName);
 
             // did the test sink object get the expected row definitions
             var cols = sink.Columns;
@@ -64,16 +66,22 @@ namespace MageUnitTests
             return result;
         }
 
-        [TestMethod()]
-        [DeploymentItem(@"..\..\..\TestItems\Metadata.db")]
-        [DeploymentItem(@"..\..\..\TestItems\SQLiteQueryDefinitions.xml")]
-        public void QueryFromConfigTest()
+        [Test]
+        [TestCase(@"..\..\..\TestItems\Metadata.db", @"..\..\..\TestItems\SQLiteQueryDefinitions.xml")]
+        public void QueryFromConfigTest(string filePath, string queryDefinitionsPath)
         {
+            var dbFile = General.GetTestFile(filePath);
+            var queryDefsFile = General.GetTestFile(queryDefinitionsPath);
+
             var maxRows = 5;
 
-            // runtime parameters for query 
-            var runtimeParameters = new Dictionary<string, string> {["Factor"] = "Group"};
-            // runtimeParameters[":Database"] = "SomeOtherDatabase.db"; // if you wanted to override the database file definition in the query definition file
+            // runtime parameters for query
+            var runtimeParameters = new Dictionary<string, string>
+            {
+                ["Factor"] = "Group",
+                [General.DATABASE_PATH_KEY] = dbFile.FullName,
+                [SQLITE_QUERY_DEF_FILE_PATH_KEY] = queryDefsFile.FullName
+            };
 
             // get data from database
             var result = GetDataFromSQLite("Factors", runtimeParameters, maxRows);
@@ -98,7 +106,9 @@ namespace MageUnitTests
             var valIndex = result.ColumnIndex["Value"];
             foreach (var row in result.Rows)
             {
+                // ReSharper disable once UnusedVariable
                 var name = row[nameIndex];
+                // ReSharper disable once UnusedVariable
                 var value = row[valIndex];
             }
         }
@@ -109,13 +119,30 @@ namespace MageUnitTests
         /// <returns></returns>
         public SimpleSink GetDataFromSQLite(string queryDefName, Dictionary<string, string> runtimeParameters, int maxRows)
         {
+            if (runtimeParameters.TryGetValue(SQLITE_QUERY_DEF_FILE_PATH_KEY, out var queryDefFilePath))
+            {
+                runtimeParameters.Remove(SQLITE_QUERY_DEF_FILE_PATH_KEY);
+            }
+            else
+            {
+                queryDefFilePath = "SQLiteQueryDefinitions.xml";
+            }
 
-            // get XML query definition by name 
-            ModuleDiscovery.QueryDefinitionFileName = "SQLiteQueryDefinitions.xml";  // omit if using default query def file
+            if (runtimeParameters.TryGetValue(General.DATABASE_PATH_KEY, out var databaseFilePath))
+            {
+                runtimeParameters.Remove(General.DATABASE_PATH_KEY);
+            }
+            else
+            {
+                databaseFilePath = "Metadata.db";
+            }
+
+            // get XML query definition by name
+            ModuleDiscovery.QueryDefinitionFileName = queryDefFilePath;  // omit if using default query def file
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef(queryDefName);
 
             // create database reader module initialized from XML definition
-            var reader = new SQLiteReader(queryDefXML, runtimeParameters);
+            var reader = new SQLiteReader(queryDefXML, runtimeParameters, databaseFilePath);
 
             // create sink module to accumulate columns and rows
             var result = new SimpleSink(maxRows);
@@ -170,7 +197,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for database
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void DatabasePropertyTest()
         {
             var target = new SQLiteReader();
@@ -183,7 +210,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for sqlText
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void SQLTextPropertyTest()
         {
             var target = new SQLiteReader();

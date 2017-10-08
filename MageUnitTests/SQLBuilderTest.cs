@@ -1,5 +1,5 @@
 ﻿using Mage;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System.Collections.Generic;
 
 namespace MageUnitTests
@@ -10,14 +10,14 @@ namespace MageUnitTests
     ///This is a test class for SQLBuilderTest and is intended
     ///to contain all SQLBuilderTest Unit Tests
     ///</summary>
-    [TestClass()]
+    [TestFixture]
     public class SQLBuilderTest
     {
 
         /// <summary>
         /// Demonstrates use of column default predicate settings
         /// </summary>
-        [TestMethod()]
+        [Test]
         public void DefaultPredicateTest()
         {
             var target = new SQLBuilder {Table = "T_X"};
@@ -41,7 +41,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for Table
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void TableTest()
         {
             var target = new SQLBuilder {Table = "T_X"};
@@ -53,7 +53,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for Columns
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void ColumnsTest()
         {
             var target = new SQLBuilder();
@@ -69,7 +69,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for AddSortingItem
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void AddSortingItemTest()
         {
             var target = new SQLBuilder();
@@ -86,7 +86,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for AddPredicateItem
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void AddPredicateItemTest()
         {
             var target = new SQLBuilder {Table = "T_X"};
@@ -110,10 +110,12 @@ namespace MageUnitTests
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod()]
-        [DeploymentItem(@"..\..\..\TestItems\QueryDefinitions.xml")]
-        public void XMLInitiationTest()
+        [Test]
+        [TestCase(@"..\..\..\TestItems\QueryDefinitions.xml")]
+        public void XMLInitiationTest(string queryDefinitionsPath)
         {
+            var queryDefsFile = General.GetTestFile(queryDefinitionsPath);
+
             // runtime parameters for query
             var runtimeParameters = new Dictionary<string, string>();
             var testDB = "DMS5_T3";
@@ -121,6 +123,7 @@ namespace MageUnitTests
             runtimeParameters["Dataset"] = "sarc";
 
             // get XML query definition by name
+            ModuleDiscovery.QueryDefinitionFileName = queryDefsFile.FullName;
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("Factors_List_Report");
             Assert.AreNotEqual("", queryDefXML);
 
@@ -129,8 +132,8 @@ namespace MageUnitTests
             //           target.InitializeFromXML(queryDefXML, ref runtimeParameters);
             var specialArgs = target.SpecialArgs;
 
-            Assert.AreEqual(Globals.DMSServer.ToLower(), specialArgs["Server"].ToLower());
-            Assert.AreEqual(testDB, specialArgs["Database"]);
+            Assert.AreEqual(Globals.DMSServer.ToLower(), specialArgs[SQLBuilder.SERVER_NAME_KEY].ToLower());
+            Assert.AreEqual(testDB, specialArgs[SQLBuilder.DATABASE_NAME_KEY]);
             Assert.AreEqual("", target.SprocName);
 
 
@@ -139,14 +142,15 @@ namespace MageUnitTests
             Assert.AreEqual(expected, actual);
         }
 
-        [TestMethod()]
-        [DeploymentItem(@"..\..\..\TestItems\QueryDefinitions.xml")]
-        public void XMLSprocInitiationTest()
+        [Test]
+        [TestCase(@"..\..\..\TestItems\QueryDefinitions.xml")]
+        public void XMLSprocInitiationTest(string queryDefinitionsPath)
         {
+            var queryDefsFile = General.GetTestFile(queryDefinitionsPath);
 
             // expected predefined parameter
             var defParam = "@MinimumPMTQualityScore";
-            var defValue = "9";
+            var defValue = "4";
 
             // runtime parameters for query
             var testParam = "@ExperimentFilter";
@@ -154,6 +158,7 @@ namespace MageUnitTests
             var runtimeParameters = new Dictionary<string, string> {[testParam] = testValue};
 
             // get XML query definition by name
+            ModuleDiscovery.QueryDefinitionFileName = queryDefsFile.FullName;
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("GetMassTagsPlusPepProphetStats");
             Assert.AreNotEqual("", queryDefXML);
 
@@ -165,12 +170,14 @@ namespace MageUnitTests
             Assert.AreEqual(defValue, sprocParams[defParam]);
         }
 
-        [TestMethod()]
-        [DeploymentItem(@"..\..\..\TestItems\QueryDefinitions.xml")]
-        public void XMLPredefineDescriptionsTest()
+        [Test]
+        [TestCase(@"..\..\..\TestItems\QueryDefinitions.xml")]
+        public void XMLPredefineDescriptionsTest(string queryDefinitionsPath)
         {
+            var queryDefsFile = General.GetTestFile(queryDefinitionsPath);
 
             // get XML query definition by name
+            ModuleDiscovery.QueryDefinitionFileName = queryDefsFile.FullName;
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("GetMassTagsPlusPepProphetStats");
             Assert.AreNotEqual("", queryDefXML);
 

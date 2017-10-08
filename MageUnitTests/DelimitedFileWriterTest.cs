@@ -1,5 +1,6 @@
 ﻿using Mage;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
+
 namespace MageUnitTests
 {
 
@@ -8,11 +9,11 @@ namespace MageUnitTests
     ///This is a test class for DelimitedFileWriterTest and is intended
     ///to contain all DelimitedFileWriterTest Unit Tests
     ///</summary>
-    [TestClass()]
+    [TestFixture]
     public class DelimitedFileWriterTest
     {
 
-        [TestMethod()]
+        [Test]
         public void WriteTest()
         {
             var cols = 5;
@@ -60,7 +61,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for Header
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void HeaderTest()
         {
             var target = new DelimitedFileWriter();
@@ -73,7 +74,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for FilePath
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void FilePathTest()
         {
             var target = new DelimitedFileWriter();
@@ -86,7 +87,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for Delimiter
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void DelimiterTest()
         {
             var target = new DelimitedFileWriter();

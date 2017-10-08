@@ -123,11 +123,11 @@
     <Content Include="AuthoringTests.txt" />
     <Content Include="TestItems\factors_test.txt" />
     <Content Include="TestItems\SQLiteQueryDefinitions.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestItems\tab_delim.txt" />
     <Content Include="TestItems\QueryDefinitions.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TestItems\TargetFolder\TargetFile3.txt" />
     <Content Include="TestItems\TargetFolder\TargetFile2.txt" />
@@ -163,11 +163,24 @@
     <PackageReference Include="log4net">
       <Version>2.0.8</Version>
     </PackageReference>
+    <PackageReference Include="NUnit">
+      <Version>3.8.1</Version>
+    </PackageReference>
     <PackageReference Include="System.Data.SQLite.Core">
       <Version>1.0.97</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>if not exist "$(TargetDir)TestItems" (mkdir "$(TargetDir)TestItems")
+
+xcopy "$(ProjectDir)TestItems\QueryDefinitions.xml" "$(TargetDir)" /D /y
+xcopy "$(ProjectDir)TestItems\QueryDefinitions.xml" "$(TargetDir)TestItems\" /D /y
+
+xcopy "$(ProjectDir)TestItems\SQLiteQueryDefinitions.xml" "$(TargetDir)" /D /y
+xcopy "$(ProjectDir)TestItems\SQLiteQueryDefinitions.xml" "$(TargetDir)TestItems\" /D /y
+</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -1,5 +1,5 @@
 ﻿using Mage;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 namespace MageUnitTests
 {
 
@@ -8,14 +8,14 @@ namespace MageUnitTests
     ///This is a test class for PermutationGeneratorTest and is intended
     ///to contain all PermutationGeneratorTest Unit Tests
     ///</summary>
-    [TestClass()]
+    [TestFixture]
     public class PermutationGeneratorTest
     {
 
         /// <summary>
         ///A test for AddParamColumn
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void AddParamColumnTest()
         {
             var target = new PermutationGenerator();
@@ -30,7 +30,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for PredictedOutputRowCount
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void PredictedOutputRowCountTest()
         {
             var target = new PermutationGenerator();
@@ -49,7 +49,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for IncludeHeaderInOutput
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void IncludeHeaderInOutputTest()
         {
             var target = new PermutationGenerator();
@@ -67,7 +67,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for Run
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void BasicPermutationGenerator()
         {
             var target = new PermutationGenerator();
@@ -93,7 +93,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for Run
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void PermutationGeneratorWithMappedColumns()
         {
             var target = new PermutationGenerator();
@@ -119,7 +119,7 @@ namespace MageUnitTests
             Assert.AreEqual(15, actual, "Number of rows did not match");
         }
 
-        [TestMethod()]
+        [Test]
         public void PermutationGeneratorWriteSQLite()
         {
 
@@ -149,7 +149,7 @@ namespace MageUnitTests
             Assert.AreEqual("", pipeline.CompletionCode, "Completion code did not match");
         }
 
-        [TestMethod()]
+        [Test]
         public void PermutationGeneratorWriteFile()
         {
 

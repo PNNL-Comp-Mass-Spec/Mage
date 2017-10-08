@@ -1,5 +1,5 @@
 ﻿using Mage;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System.Collections.Generic;
 using System;
 
@@ -10,14 +10,14 @@ namespace MageUnitTests
     ///This is a test class for BaseModuleTest and is intended
     ///to contain all BaseModuleTest Unit Tests
     ///</summary>
-    [TestClass()]
+    [TestFixture]
     public class BaseModuleTest
     {
 
         /// <summary>
         ///A test for OutputColumnList
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void OutputColumnListTest()
         {
             var target = new BaseModule(); // TODO: Initialize to an appropriate value
@@ -30,7 +30,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for ModuleName
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void ModuleNameTest()
         {
             var target = new BaseModule(); // TODO: Initialize to an appropriate value
@@ -43,13 +43,13 @@ namespace MageUnitTests
         /// <summary>
         ///A test for SetParameters
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void SetParametersTest()
         {
             var target = new BaseModule(); // TODO: Initialize to an appropriate value
             var key = "OutputColumnList";
             var val = "Test Value";
-            var parameters = new Dictionary<string, string>() { { key, val } };
+            var parameters = new Dictionary<string, string> { { key, val } };
             target.SetParameters(parameters);
             Assert.AreEqual(val, target.OutputColumnList);
         }
@@ -57,7 +57,7 @@ namespace MageUnitTests
         /// <summary>
         /// Test the column mapping feature
         /// </summary>
-        [TestMethod()]
+        [Test]
         public void MappedOutputColumnsOverrideColTypeTest()
         {
 
@@ -92,7 +92,7 @@ namespace MageUnitTests
         /// <summary>
         /// Test the column mapping feature
         /// </summary>
-        [TestMethod()]
+        [Test]
         public void MappedOutputColumnsWildcardTest()
         {
             var rows = 11;
@@ -110,7 +110,7 @@ namespace MageUnitTests
             // generate shuffled list of input column names as output column names
             var outColNames = new List<string> {
                 inColNames[0],
-                string.Format("{0}|+|text", 
+                string.Format("{0}|+|text",
                 insertedColumnName), "*"};
 
             // insert new column and use wildcard for remainder of input columns
@@ -120,7 +120,7 @@ namespace MageUnitTests
 
             dGen.Run(null);
 
-            // compare output column definitions from target module 
+            // compare output column definitions from target module
             // against expected output column list
             outColNames.Clear(); // make list of expected column names
             for (var i = 0; i < inColNames.Count; i++)
@@ -154,7 +154,7 @@ namespace MageUnitTests
         /// <summary>
         /// Test the basic column mapping feature
         /// </summary>
-        [TestMethod()]
+        [Test]
         public void MappedOutputColumnsTest()
         {
             var rows = 11;
@@ -181,7 +181,7 @@ namespace MageUnitTests
 
             dGen.Run(null);
 
-            // compare output column definitions from target module 
+            // compare output column definitions from target module
             // against expected output column list
             var actual = target.OutColDefs;
             Assert.AreEqual(inColNames.Count, actual.Count, "Number of output columns does not match.");
@@ -213,7 +213,7 @@ namespace MageUnitTests
         }
 
         // rearrange the order of items in the List
-        private static void Shuffle(List<string> list)
+        private static void Shuffle(IList<string> list)
         {
             var rng = new Random();
             var n = list.Count;

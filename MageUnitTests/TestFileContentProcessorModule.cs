@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Mage;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace MageUnitTests
 {

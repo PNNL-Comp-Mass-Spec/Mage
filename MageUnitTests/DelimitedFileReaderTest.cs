@@ -1,22 +1,21 @@
 ﻿using Mage;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace MageUnitTests
 {
-
 
     /// <summary>
     ///This is a test class for DelimitedFileReaderTest and is intended
     ///to contain all DelimitedFileReaderTest Unit Tests
     ///</summary>
-    [TestClass()]
+    [TestFixture]
     public class DelimitedFileReaderTest
     {
 
         /// <summary>
         ///A test for Header
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void HeaderTest()
         {
             var target = new DelimitedFileReader();
@@ -29,7 +28,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for FilePath
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void FilePathTest()
         {
             var target = new DelimitedFileReader();
@@ -42,7 +41,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for Delimiter
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void DelimiterTest()
         {
             var target = new DelimitedFileReader();
@@ -56,11 +55,13 @@ namespace MageUnitTests
         /// <summary>
         ///A test for Run
         ///</summary>
-        [TestMethod()]
-        [DeploymentItem(@"..\..\..\MageUnitTests\TestItems\Sarc_MS_Filtered_isos.csv")]
-        public void ReadCommaDelimitedFileTest()
+        [Test]
+        [TestCase(@"..\..\..\MageUnitTests\TestItems\Sarc_MS_Filtered_isos.csv")]
+        public void ReadCommaDelimitedFileTest(string isosFilePath)
         {
-            // create DelimitedFileReader object and test sink object 
+            var dataFile = General.GetTestFile(isosFilePath);
+
+            // create DelimitedFileReader object and test sink object
             // and connect together
             var target = new DelimitedFileReader();
             var maxRows = 7;
@@ -68,7 +69,7 @@ namespace MageUnitTests
             target.ColumnDefAvailable += sink.HandleColumnDef;
             target.DataRowAvailable += sink.HandleDataRow;
 
-            target.FilePath = @"Sarc_MS_Filtered_isos.csv";
+            target.FilePath = dataFile.FullName;
             target.Delimiter = ","; // "CSV"
             target.Run(null);
 
@@ -93,11 +94,13 @@ namespace MageUnitTests
             Assert.AreEqual(colList.Length, rows[0].Length);
         }
 
-        [TestMethod()]
-        [DeploymentItem(@"..\..\..\MageUnitTests\TestItems\tab_delim.txt")]
-        public void ReadTabDelimitedFileTest()
+        [Test]
+        [TestCase(@"..\..\..\MageUnitTests\TestItems\tab_delim.txt")]
+        public void ReadTabDelimitedFileTest(string delimitedFilePath)
         {
-            var result = ReadDelimitedFile(@"tab_delim.txt");
+            var dataFile = General.GetTestFile(delimitedFilePath);
+
+            var result = ReadDelimitedFile(dataFile.FullName);
             Assert.AreEqual(4, result.Columns.Count);
             Assert.AreEqual(17, result.Rows.Count);
         }

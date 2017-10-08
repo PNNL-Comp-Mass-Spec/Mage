@@ -1,5 +1,5 @@
 ﻿using Mage;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
 
@@ -11,7 +11,7 @@ namespace MageUnitTests
     ///This is a test class for FileSubPipelineBrokerTest and is intended
     ///to contain all FileSubPipelineBrokerTest Unit Tests
     ///</summary>
-    [TestClass()]
+    [TestFixture]
     public class FileSubPipelineBrokerTest
     {
 
@@ -24,26 +24,34 @@ namespace MageUnitTests
 
         #endregion
 
-        [TestMethod()]
+        [Test]
         public void FileSubPipelineBrokerBasicTest()
         {
 
             // set up test parameters
-            var IDColumnName = "Padding";
-            var IDColContents = "Borked";
+            var idColumnName = "Padding";
+            var idColContents = "Borked";
             var folderColName = "Folder_Col";
             var fileColName = "File_Col";
-            var TestFolderPath = System.Environment.CurrentDirectory;
-            var TestInputFileName = "victim.txt";
+            var testFolderPath = System.Environment.CurrentDirectory;
+            var testInputFileName = "victim.txt";
             var destFolder = System.Environment.CurrentDirectory;
 
             // set up data generator
             var dGen = new DataGenerator(2, 4)
             {
-                AddAdHocRow = new[] { folderColName, fileColName, IDColumnName }
+                AddAdHocRow = new[] { folderColName, fileColName, idColumnName }
             };
 
-            dGen.AddAdHocRow = new[] { TestFolderPath, TestInputFileName, IDColContents };
+            dGen.AddAdHocRow = new[] { testFolderPath, testInputFileName, idColContents };
+
+            // Create the test input file
+            var testFile = new FileInfo(Path.Combine(testFolderPath, testInputFileName));
+            using (var writer = new StreamWriter(new FileStream(testFile.FullName, FileMode.Create, FileAccess.Write)))
+            {
+                writer.WriteLine(idColumnName + '\t' + folderColName + '\t' + fileColName);
+                writer.WriteLine(idColContents + '\t' + testFolderPath + '\t' + testInputFileName);
+            }
 
             // set up test class
             var target = new FileSubPipelineBroker
@@ -57,7 +65,6 @@ namespace MageUnitTests
             target.SetPipelineMaker(MakeTestSubpipeline);
             target.SetOutputFileNamer(RenameOutputFile);
 
-
             // build and run pipeline
             var pipeline = new ProcessingPipeline("FileColumnProcessorTest");
             pipeline.RootModule = pipeline.AddModule("Gen", dGen);
@@ -66,12 +73,12 @@ namespace MageUnitTests
             pipeline.RunRoot(null);
 
             Assert.AreEqual("Kilroy was here", mPipelineResults, "Subpipeline creation.");
-            Assert.AreEqual(Path.Combine(TestFolderPath, TestInputFileName), mPipelineInputFilePath, "Subpipeline input file path");
-            Assert.AreEqual(Path.Combine(destFolder, RenameOutputFile(TestInputFileName, null, null)), mPipelineOutputFilePath, "Subpipeline output file path");
+            Assert.AreEqual(Path.Combine(testFolderPath, testInputFileName), mPipelineInputFilePath, "Subpipeline input file path");
+            Assert.AreEqual(Path.Combine(destFolder, RenameOutputFile(testInputFileName, null, null)), mPipelineOutputFilePath, "Subpipeline output file path");
             Assert.AreEqual("Kilroy was here too", mPipelineDummyModuleResults, "Dummy module results");
         }
 
-        // this function builds the a file processing pipeline 
+        // this function builds the a file processing pipeline
         // which is a simple file filtering process that has a file reader module, file filter module, and file writer module,
         // using a filter module specified by the FilterModuleClasssName, which must be set by the client
         private ProcessingPipeline MakeTestSubpipeline(string inputFilePath, string outputFilePath, Dictionary<string, string> context)
@@ -86,7 +93,7 @@ namespace MageUnitTests
             return pipeline;
         }
 
-        // delegate that handles renaming of source file to output file 
+        // delegate that handles renaming of source file to output file
         public string RenameOutputFile(string sourceFile, Dictionary<string, int> fieldPos, string[] fields)
         {
             return "out_" + sourceFile;
@@ -95,7 +102,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for SetPipelineMaker
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void SetPipelineMakerTest()
         {
             var target = new FileSubPipelineBroker();
@@ -105,7 +112,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for DatabaseName
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void DatabaseNameTest()
         {
             var target = new FileSubPipelineBroker(); // TODO: Initialize to an appropriate value
@@ -118,7 +125,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for FileFilterModuleName
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void FileFilterModuleNameTest()
         {
             var target = new FileSubPipelineBroker(); // TODO: Initialize to an appropriate value
@@ -131,7 +138,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for FileFilterParameters
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void FileFilterParametersTest()
         {
             var target = new FileSubPipelineBroker(); // TODO: Initialize to an appropriate value
@@ -144,7 +151,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for TableName
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void TableNameTest()
         {
             var target = new FileSubPipelineBroker(); // TODO: Initialize to an appropriate value
@@ -167,7 +174,7 @@ namespace MageUnitTests
             /// <param name="state"></param>
             public override void Run(object state)
             {
-                FileSubPipelineBrokerTest.mPipelineDummyModuleResults = "Kilroy was here too";
+                mPipelineDummyModuleResults = "Kilroy was here too";
             }
         }
 

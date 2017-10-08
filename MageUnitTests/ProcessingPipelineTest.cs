@@ -1,5 +1,5 @@
 ﻿using Mage;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System.Collections.ObjectModel;
 namespace MageUnitTests
 {
@@ -9,14 +9,14 @@ namespace MageUnitTests
     ///This is a test class for ProcessingPipelineTest and is intended
     ///to contain all ProcessingPipelineTest Unit Tests
     ///</summary>
-    [TestClass()]
+    [TestFixture]
     public class ProcessingPipelineTest
     {
 
         /// <summary>
         ///A test for SetModuleParameter
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void SetModuleParameterTest()
         {
             var target = new ProcessingPipeline("TestPipeline");
@@ -35,9 +35,10 @@ namespace MageUnitTests
         /// <summary>
         /// Tests ability to make Mage basic modules by class name
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void MakeModuleTest()
         {
+            // ReSharper disable once JoinDeclarationAndInitializer
             IBaseModule mod;
 
             mod = ProcessingPipeline.MakeModule("NullFilter");
@@ -73,7 +74,7 @@ namespace MageUnitTests
         /// <summary>
         /// Tests assembling pipeline from list of module objects
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void PipelineFromModuleListTest()
         {
             var pipelineName = "Test Pipeline";
@@ -82,12 +83,13 @@ namespace MageUnitTests
             var filter = new NullFilter();
             var writer = new SQLiteWriter();
 
-            var moduleList = new Collection<object>() { reader, filter, writer };
+            var moduleList = new Collection<object> { reader, filter, writer };
             var pipeline = ProcessingPipeline.Assemble(pipelineName, moduleList);
 
             Assert.AreNotEqual(null, pipeline, "Pipeline not created");
             Assert.AreEqual(pipelineName, pipeline.PipelineName, "Pipeline name does not match");
 
+            // ReSharper disable once JoinDeclarationAndInitializer
             IBaseModule mod;
 
             mod = pipeline.GetModule("DelimitedFileReader1");
@@ -101,19 +103,19 @@ namespace MageUnitTests
         /// <summary>
         /// Tests assembling pipeline from list of module class names as strings
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void PipelineFromNamesListTest()
         {
             var pipelineName = "Test Pipeline";
 
-            Collection<object> moduleList;
-            moduleList = new Collection<object>() { "DelimitedFileReader", "NullFilter", "SimpleSink" };
+            var moduleList = new Collection<object> { "DelimitedFileReader", "NullFilter", "SimpleSink" };
             var pipeline = ProcessingPipeline.Assemble(pipelineName, moduleList);
 
             Assert.AreNotEqual(null, pipeline, "Pipeline not created");
             Assert.AreEqual(pipelineName, pipeline.PipelineName, "Pipeline name does not match");
 
-            IBaseModule mod = null;
+            // ReSharper disable once JoinDeclarationAndInitializer
+            IBaseModule mod;
 
             mod = pipeline.GetModule("DelimitedFileReader1");
             Assert.AreNotEqual(null, mod);
@@ -127,24 +129,24 @@ namespace MageUnitTests
         /// Tests making pipeline from list of ModuleDef objects
         /// where modules are defined by class name
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void PipelineFromNamedModuleListTest1()
         {
             var pipelineName = "Test Pipeline";
-            ProcessingPipeline pipeline = null;
 
-            Collection<ModuleDef> namedModuleList = null;
-            namedModuleList = new Collection<ModuleDef>() {
+            var namedModuleList = new Collection<ModuleDef>
+            {
                 new ModuleDef("Larry", "DelimitedFileReader"),
                 new ModuleDef("Moe", "NullFilter"),
                 new ModuleDef("Curly", "SimpleSink")
             };
-            pipeline = ProcessingPipeline.Assemble(pipelineName, namedModuleList);
+            var pipeline = ProcessingPipeline.Assemble(pipelineName, namedModuleList);
 
             Assert.AreNotEqual(null, pipeline, "Pipeline not created");
             Assert.AreEqual(pipelineName, pipeline.PipelineName, "Pipeline name does not match");
 
-            IBaseModule mod = null;
+            // ReSharper disable once JoinDeclarationAndInitializer
+            IBaseModule mod;
 
             mod = pipeline.GetModule("Larry");
             Assert.AreNotEqual(null, mod);
@@ -159,27 +161,27 @@ namespace MageUnitTests
         /// where some modules are directly referenced and
         /// some modules are defined by class name
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void PipelineFromNamedModuleListTest2()
         {
             var pipelineName = "Test Pipeline";
-            ProcessingPipeline pipeline = null;
 
             var reader = new DelimitedFileReader();
             var writer = new SQLiteWriter();
 
-            Collection<ModuleDef> namedModuleList = null;
-            namedModuleList = new Collection<ModuleDef>() {
+            var namedModuleList = new Collection<ModuleDef>
+            {
                 new ModuleDef("Larry", reader),
                 new ModuleDef("Moe", "NullFilter"),
                 new ModuleDef("Curly", writer)
             };
-            pipeline = ProcessingPipeline.Assemble(pipelineName, namedModuleList);
+            var pipeline = ProcessingPipeline.Assemble(pipelineName, namedModuleList);
 
             Assert.AreNotEqual(null, pipeline, "Pipeline not created");
             Assert.AreEqual(pipelineName, pipeline.PipelineName, "Pipeline name does not match");
 
-            IBaseModule mod = null;
+            // ReSharper disable once JoinDeclarationAndInitializer
+            IBaseModule mod;
 
             mod = pipeline.GetModule("Larry");
             Assert.AreNotEqual(null, mod);
@@ -206,8 +208,8 @@ namespace MageUnitTests
         /// <summary>
         ///A test for Build
         ///</summary>
-        [TestMethod()]
-        public void AsembleXML()
+        [Test]
+        public void AssembleXML()
         {
             var pipeline = ProcessingPipeline.Assemble(pipelineXML);
 
@@ -218,10 +220,10 @@ namespace MageUnitTests
             Assert.AreEqual(pipeline.PipelineName, "Test_Pipeline");
         }
 
-        string pipelineXML2 = @"
+        readonly string pipelineXML2 = @"
 <pipeline name='Test_Pipeline' >
     <module type='DelimitedFileReader'>
-        <param name='FilePath' >Sarc_MS_Filtered_isos.csv</param>
+        <param name='FilePath'>Sarc_MS_Filtered_isos.csv</param>
     </module>
     <module type='NullFilter' />
 </pipeline>
@@ -230,13 +232,17 @@ namespace MageUnitTests
         /// <summary>
         ///A test for Build
         ///</summary>
-        [TestMethod()]
-        [DeploymentItem(@"..\..\TestItems\Sarc_MS_Filtered_isos.csv")]
+        [Test]
         public void AssembleXMLAndRun()
         {
+            const string dataFileName = "Sarc_MS_Filtered_isos.csv";
+
             var maxRows = 7;
 
-            var pipeline = ProcessingPipeline.Assemble(pipelineXML2);
+            var dataFile = General.GetTestFile(dataFileName);
+
+
+            var pipeline = ProcessingPipeline.Assemble(pipelineXML2.Replace(dataFileName, dataFile.FullName));
 
             var sink = new SimpleSink(maxRows);
             //            pipeline.ConnectExternalModule(sink);
@@ -246,7 +252,7 @@ namespace MageUnitTests
             var mod = pipeline.GetModule("Module1");
             var target = mod as DelimitedFileReader;
             Assert.IsTrue(target != null);
-            Assert.AreEqual(target.FilePath, "Sarc_MS_Filtered_isos.csv");
+            Assert.AreEqual(target.FilePath, dataFile.FullName);
 
             pipeline.RunRoot(null);
 
@@ -257,11 +263,10 @@ namespace MageUnitTests
 
         }
 
-        string pipelineXML3 = @"
-<?xml version=1.0 encoding=UTF-8?><!-- to get filtered list of files in local directory -->
+        readonly string pipelineXML3 = @"<?xml version='1.0' encoding='UTF-8'?><!-- to get filtered list of files in local directory -->
 <pipeline name='Test_Pipeline'>
     <module type='FileListFilter'>
-        <param name='FolderPath'><![CDATA[C:\Data\syn2]]></param>
+        <param name='FolderPath'><![CDATA[\\proto-2\unitTest_Files\Mage\SynopsisFiles]]></param>
         <param name='FileNameSelector'>_syn.txt</param>
         <param name='FileTypeColumnName'>Item</param>
         <param name='FileColumnName'>Name</param>
@@ -274,7 +279,7 @@ namespace MageUnitTests
         <param name='SourceFileColumnName'>Name</param>
         <param name='SourceFolderColumnName'>Folder</param>
         <param name='FileFilterParameters'>OutputColumnList:Name|+|text, *</param>
-        <param name='OutputFolderPath'><![CDATA[C:\Data\syn2\]]></param>
+        <param name='OutputFolderPath'><![CDATA[\\proto-2\unitTest_Files\Mage\TargetFolder]]></param>
         <param name='OutputFileName'>junk.txt</param>
         <param name='DatabaseName'></param>
         <param name='TableName'></param>
@@ -282,7 +287,7 @@ namespace MageUnitTests
 </pipeline>
 ";
 
-        [TestMethod()]
+        [Test]
         public void AssembleComplexXML()
         {
             var pipeline = ProcessingPipeline.Assemble(pipelineXML3);

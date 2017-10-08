@@ -22,28 +22,20 @@ namespace MageUnitTests
         public string Dummy { get; set; }
 
         // Get the column definitions
-        public List<MageColumnDef> Columns { get { return InputColumnDefs; } }
+        public List<MageColumnDef> Columns => InputColumnDefs;
 
         // Get rows that were accumumlated in the internal row buffer
-        public List<string[]> Rows { get { return SavedRows; } }
-        public List<string[]> MappedRows { get { return SavedMappedRows; } }
+        public List<string[]> Rows => SavedRows;
 
-        public List<MageColumnDef> OutColDefs { get { return base.OutputColumnDefs; } }
+        public List<string[]> MappedRows => SavedMappedRows;
 
-        public Dictionary<string, int> OutColPos { get { return base.OutputColumnPos; } }
+        public List<MageColumnDef> OutColDefs => OutputColumnDefs;
 
-        public List<KeyValuePair<int, int>> OutToInPosMap { get { return OutputToInputColumnPosMap; } }
+        public Dictionary<string, int> OutColPos => OutputColumnPos;
+
+        public List<KeyValuePair<int, int>> OutToInPosMap => OutputToInputColumnPosMap;
 
         //        public List<KeyValuePair<string, string>> InternalParameterList { get { return parameters; } }
-
-        #endregion
-
-        #region Constructors
-
-        public TestModule()
-        {
-        }
-
 
         #endregion
 

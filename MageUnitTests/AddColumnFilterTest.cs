@@ -1,6 +1,7 @@
 ﻿using Mage;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System.Collections.Generic;
+
 namespace MageUnitTests
 {
 
@@ -9,14 +10,14 @@ namespace MageUnitTests
     ///This is a test class for AddColumnFilterTest and is intended
     ///to contain all AddColumnFilterTest Unit Tests
     ///</summary>
-    [TestClass()]
+    [TestFixture]
     public class AddColumnFilterTest
     {
 
         /// <summary>
-        ///A test for AddColumnFilter 
+        ///A test for AddColumnFilter
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void AddColumnFilterConstructorTest()
         {
 
@@ -35,7 +36,7 @@ namespace MageUnitTests
             {
                 OutputColumnList = string.Join(", ", expectedColumns)
             };
-            target.SetContext(new Dictionary<string, string>() { { "Added1", "Overwrite1" }, { "Added2", "Overwrite2" } });
+            target.SetContext(new Dictionary<string, string> { { "Added1", "Overwrite1" }, { "Added2", "Overwrite2" } });
 
             var sink = new SimpleSink();
 

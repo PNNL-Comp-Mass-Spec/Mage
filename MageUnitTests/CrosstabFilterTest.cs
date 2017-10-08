@@ -1,5 +1,6 @@
 ﻿using Mage;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
+
 namespace MageUnitTests
 {
 
@@ -8,22 +9,24 @@ namespace MageUnitTests
     ///This is a test class for CrosstabFilterTest and is intended
     ///to contain all CrosstabFilterTest Unit Tests
     ///</summary>
-    [TestClass()]
+    [TestFixture]
     public class CrosstabFilterTest
     {
 
         /// <summary>
         ///A test for FactorValueCol
         ///</summary>
-        [TestMethod()]
-        [DeploymentItem(@"..\..\..\TestItems\factors_test.txt")]
-        public void CrosstabFilterMainTest()
+        [Test]
+        [TestCase(@"..\..\..\TestItems\factors_test.txt")]
+        public void CrosstabFilterMainTest(string filePath)
         {
             //  "SELECT Dataset, Dataset_ID, Factor, Value FROM V_Custom_Factors_List_Report"
 
+            var dataFile = General.GetTestFile(filePath);
+
             // create Delimited file reader module
             // and connect together
-            var reader = new DelimitedFileReader {FilePath = "factors_test.txt"};
+            var reader = new DelimitedFileReader {FilePath = dataFile.FullName};
 
             var target = new CrosstabFilter
             {
@@ -52,7 +55,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for FactorValueCol
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void FactorValueColTest()
         {
             var target = new CrosstabFilter();
@@ -65,7 +68,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for FactorNameCol
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void FactorNameColTest()
         {
             var target = new CrosstabFilter();
@@ -78,7 +81,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for EntityNameCol
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void EntityNameColTest()
         {
             var target = new CrosstabFilter();
@@ -91,7 +94,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for EntityIDCol
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void EntityIDColTest()
         {
             var target = new CrosstabFilter();

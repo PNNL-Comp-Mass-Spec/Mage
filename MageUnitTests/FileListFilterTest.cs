@@ -1,7 +1,6 @@
 ﻿using Mage;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using System.IO;
+using NUnit.Framework;
 
 namespace MageUnitTests
 {
@@ -11,29 +10,31 @@ namespace MageUnitTests
     ///This is a test class for FileListFilterTest and is intended
     ///to contain all FileListFilterTest Unit Tests
     ///</summary>
-    [TestClass()]
+    [TestFixture]
     public class FileListFilterTest
     {
 
         /// <summary>
         ///A test for FileListFilter run as source using RegEx file selector mode
         ///</summary>
-        [TestMethod()]
-        [DeploymentItem(@"..\..\..\TestItems\TargetFolder")]
-        public void RunFileListFilterAsSourceRegEx()
+        [Test]
+        [TestCase(@"..\..\..\TestItems\TargetFolder")]
+        public void RunFileListFilterAsSourceRegEx(string testFolderPath)
         {
+            var testFolder = General.GetTestFolder(testFolderPath);
 
-            var testFolderPath = Path.GetFullPath(".");
-
-            var target = new FileListFilter();
-            target.AddFolderPath(testFolderPath);
-            target.FileNameSelector = "2.txt;3.txt";
-
-            target.FileColumnName = "File";
-            target.SourceFolderColumnName = "Folder";
-            target.FileTypeColumnName = "Item";
+            var target = new FileListFilter
+            {
+                FileColumnName = "File",
+                SourceFolderColumnName = "Folder",
+                FileTypeColumnName = "Item"
+            };
             target.OutputColumnList = string.Format("{0}|+|text, {1}|+|text, {2}|+|text", target.FileTypeColumnName, target.FileColumnName, target.SourceFolderColumnName);
             target.IncludeFilesOrFolders = "File";
+
+            target.AddFolderPath(testFolder.FullName);
+            target.FileNameSelector = @"2.txt;3\.txt";
+            target.FileSelectorMode = "RegEx";
 
             var sink = new SimpleSink();
 
@@ -65,23 +66,25 @@ namespace MageUnitTests
         /// <summary>
         ///A test for FileListFilter run as source using file search selector mode
         ///</summary>
-        [TestMethod()]
-        [DeploymentItem(@"..\..\..\TestItems\TargetFolder")]
-        public void RunFileListFilterAsSourceFileSearch()
+        [Test]
+        [TestCase(@"..\..\..\TestItems\TargetFolder")]
+        public void RunFileListFilterAsSourceFileSearch(string testFolderPath)
         {
 
-            var testFolderPath = Path.GetFullPath(".");
+            var testFolder = General.GetTestFolder(testFolderPath);
 
-            var target = new FileListFilter();
-            target.AddFolderPath(testFolderPath);
-            target.FileNameSelector = "*2.txt;*3.txt";
-            target.FileSelectorMode = "FileSearch";
-
-            target.FileColumnName = "File";
-            target.SourceFolderColumnName = "Folder";
-            target.FileTypeColumnName = "Item";
+            var target = new FileListFilter
+            {
+                FileColumnName = "File",
+                SourceFolderColumnName = "Folder",
+                FileTypeColumnName = "Item"
+            };
             target.OutputColumnList = string.Format("{0}|+|text, {1}|+|text, {2}|+|text", target.FileTypeColumnName, target.FileColumnName, target.SourceFolderColumnName);
             target.IncludeFilesOrFolders = "File";
+
+            target.AddFolderPath(testFolder.FullName);
+            target.FileNameSelector = "*2.txt;*3.txt";
+            target.FileSelectorMode = "FileSearch";
 
             var sink = new SimpleSink();
 
@@ -113,27 +116,18 @@ namespace MageUnitTests
         /// <summary>
         /// A class to provide access to private member variables of FileListFilter.
         /// Original method was using private accessors, deprecated starting in 2010
-        /// Another option was using PrivateObject, which requires 
+        /// Another option was using PrivateObject, which requires
         ///    Microsoft.VisualStudio.TestTools.UnitTesting and performs operations using reflection.
         /// </summary>
         private class FileListFilterExtracter : FileListFilter
         {
-            public List<string[]> OutputBuffer
-            {
-                get { return mOutputBuffer; }
-                set
-                {
-                    mOutputBuffer.Clear();
-                    mOutputBuffer.AddRange(value);
-                }
-            }
+            public List<string[]> OutputBuffer => mOutputBuffer;
         }
 
         /// <summary>
         ///A test for GetFileNamesFromSourceFolder
         ///</summary>
-        [TestMethod()]
-        [DeploymentItem("Mage.dll")]
+        [Test]
         public void GetFileNamesFromSourceFolderTest()
         {
 
@@ -151,7 +145,7 @@ namespace MageUnitTests
             Assert.AreEqual(1, outputBuffer.Count);
         }
 
-        [TestMethod()]
+        [Test]
         public void PropertiesSetTest()
         {
             var parms = new Dictionary<string, string>();
@@ -177,7 +171,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for FileColumnName
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void FileColumnNameTest()
         {
             var target = new FileListFilter();
@@ -190,7 +184,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for SourceFolderColumnName
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void SourceFolderColumnNameTest()
         {
             var target = new FileListFilter();

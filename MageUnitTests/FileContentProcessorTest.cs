@@ -1,6 +1,7 @@
 ﻿using Mage;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System.IO;
+
 namespace MageUnitTests
 {
 
@@ -9,11 +10,11 @@ namespace MageUnitTests
     ///This is a test class for FileContentProcessorTest and is intended
     ///to contain all FileContentProcessorTest Unit Tests
     ///</summary>
-    [TestClass()]
+    [TestFixture]
     public class FileContentProcessorTest
     {
 
-        [TestMethod()]
+        [Test]
         public void FileColumnProcessorTest()
         {
 
@@ -58,7 +59,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for FileColumnName
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void OutputFileColumnNameTest()
         {
             var target = new FileContentProcessor();
@@ -71,7 +72,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for OutputFolderPath
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void OutputFolderPathTest()
         {
             var target = new FileContentProcessor();
@@ -84,7 +85,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for SourceFileColumnName
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void SourceFileColumnNameTest()
         {
             var target = new FileContentProcessor();
@@ -97,7 +98,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for SourceFolderColumnName
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void SourceFolderColumnNameTest()
         {
             var target = new FileContentProcessor();

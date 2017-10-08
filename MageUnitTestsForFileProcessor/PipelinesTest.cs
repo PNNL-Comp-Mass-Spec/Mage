@@ -1,7 +1,7 @@
 ﻿using MageFileProcessor;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Mage;
 using System.Collections.Generic;
+using NUnit.Framework;
 
 namespace MageUnitTestsForFileProcessor
 {
@@ -10,7 +10,7 @@ namespace MageUnitTestsForFileProcessor
     ///This is a test class for PipelinesTest and is intended
     ///to contain all PipelinesTest Unit Tests
     ///</summary>
-    [TestClass()]
+    [TestFixture]
     public class PipelinesTest
     {
 
@@ -23,8 +23,7 @@ namespace MageUnitTestsForFileProcessor
         /// <summary>
         ///A test for MakeJobQueryPipeline
         ///</summary>
-        [TestMethod()]
-        [DeploymentItem("MageFileProcessor.exe")]
+        [Test]
         public void MakeJobQueryPipelineTest()
         {
 
@@ -49,7 +48,7 @@ namespace MageUnitTestsForFileProcessor
 
             var source = pipeline.GetModule("MSSQLReader1");
             Assert.AreNotEqual(null, source);
-            Assert.IsInstanceOfType(source, typeof(MSSQLReader));
+            Assert.IsInstanceOf(typeof(MSSQLReader), source);
 
             var target = (MSSQLReader)source;
             Assert.AreEqual(Globals.DMSDatabase.ToLower(), target.Database.ToLower());
@@ -60,8 +59,7 @@ namespace MageUnitTestsForFileProcessor
         /// <summary>
         ///A test for MakePipelineToGetLocalFileList
         ///</summary>
-        [TestMethod()]
-        [DeploymentItem("MageFileProcessor.exe")]
+        [Test]
         public void MakePipelineToGetLocalFileListTest()
         {
 
@@ -77,7 +75,7 @@ namespace MageUnitTestsForFileProcessor
 
             var source = pipeline.GetModule("FileListFilter1");
             Assert.AreNotEqual(null, source);
-            Assert.IsInstanceOfType(source, typeof(FileListFilter));
+            Assert.IsInstanceOf(typeof(FileListFilter), source);
 
             var target = (FileListFilter)source;
             Assert.AreEqual("TestVal", target.FileNameSelector);
@@ -86,8 +84,7 @@ namespace MageUnitTestsForFileProcessor
         /// <summary>
         ///A test for MakePipelineToGetFilesFromManifest
         ///</summary>
-        [TestMethod()]
-        [DeploymentItem("MageFileProcessor.exe")]
+        [Test]
         public void MakePipelineToGetFilesFromManifestTest()
         {
 
@@ -102,21 +99,20 @@ namespace MageUnitTestsForFileProcessor
 
             var source = pipeline.GetModule("DelimitedFileReader1");
             Assert.AreNotEqual(null, source);
-            Assert.IsInstanceOfType(source, typeof(DelimitedFileReader));
+            Assert.IsInstanceOf(typeof(DelimitedFileReader), source);
 
             var target = (DelimitedFileReader)source;
             Assert.AreEqual("TestVal", target.FilePath);
 
             source = pipeline.GetModule("NullFilter2");
             Assert.AreNotEqual(null, source);
-            Assert.IsInstanceOfType(source, typeof(NullFilter));
+            Assert.IsInstanceOf(typeof(NullFilter), source);
         }
 
         /// <summary>
         ///A test for MakePipelineToFilterSelectedfiles
         ///</summary>
-        [TestMethod()]
-        [DeploymentItem("MageFileProcessor.exe")]
+        [Test]
         public void MakePipelineToFilterSelectedfilesTest()
         {
 
@@ -140,12 +136,12 @@ namespace MageUnitTestsForFileProcessor
 
             var module = pipeline.GetModule("DataGenerator1");
             Assert.AreNotEqual(null, module);
-            Assert.IsInstanceOfType(module, typeof(DataGenerator));
+            Assert.IsInstanceOf(typeof(DataGenerator), module);
             var target = (DataGenerator)module;
 
             module = pipeline.GetModule("FileSubPipelineBroker2");
             Assert.AreNotEqual(null, module);
-            Assert.IsInstanceOfType(module, typeof(FileSubPipelineBroker));
+            Assert.IsInstanceOf(typeof(FileSubPipelineBroker), module);
             var broker = (FileSubPipelineBroker)module;
             Assert.AreEqual("Bogus", broker.FileFilterModuleName);
             Assert.AreEqual("", broker.DatabaseName);
@@ -153,7 +149,7 @@ namespace MageUnitTestsForFileProcessor
 
             module = pipeline.GetModule("DelimitedFileWriter3");
             Assert.AreNotEqual(null, module);
-            Assert.IsInstanceOfType(module, typeof(DelimitedFileWriter));
+            Assert.IsInstanceOf(typeof(DelimitedFileWriter), module);
             var writer = (DelimitedFileWriter)module;
             Assert.IsTrue(writer.FilePath.Contains("Runlog_Bogus_"));
 
@@ -177,7 +173,7 @@ namespace MageUnitTestsForFileProcessor
 
             module = pipeline.GetModule("FileSubPipelineBroker2");
             Assert.AreNotEqual(null, module);
-            Assert.IsInstanceOfType(module, typeof(FileSubPipelineBroker));
+            Assert.IsInstanceOf(typeof(FileSubPipelineBroker), module);
             broker = (FileSubPipelineBroker)module;
             Assert.AreEqual("--", broker.DatabaseName);
             Assert.AreEqual("--", broker.TableName);
@@ -186,8 +182,7 @@ namespace MageUnitTestsForFileProcessor
         /// <summary>
         ///A test for MakeFileListPipeline
         ///</summary>
-        [TestMethod()]
-        [DeploymentItem("MageFileProcessor.exe")]
+        [Test]
         public void MakeFileListPipelineTest()
         {
 
@@ -203,6 +198,7 @@ namespace MageUnitTestsForFileProcessor
                 { "SearchInSubfolders", "No"},
                 { "SubfolderSearchName", "*"},
                 { "SourceFolderColumnName", "Folder" },
+                { "ResolveCacheInfoFiles", "True"},
                 { "OutputColumnList", "File|+|text, Folder, Job, Dataset, Dataset_ID, Tool, Settings_File, Parameter_File, Instrument" }
             };
 
@@ -213,8 +209,7 @@ namespace MageUnitTestsForFileProcessor
         /// <summary>
         ///A test for MakeFileCopyPipeline
         ///</summary>
-        [TestMethod()]
-        [DeploymentItem("MageFileProcessor.exe")]
+        [Test]
         public void MakeFileCopyPipelineTest()
         {
 
@@ -230,6 +225,7 @@ namespace MageUnitTestsForFileProcessor
                 { "PrefixLeader", "Blue" },
                 { "ColumnToUseForPrefix", "Job" },
                 { "OverwriteExistingFiles", "No"},
+                { "ResolveCacheInfoFiles", "True"},
                 { "ManifestFileName", string.Format("Manifest_{0:yyMMddhhmmss}.txt", System.DateTime.Now) }
             };
 

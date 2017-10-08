@@ -1,5 +1,5 @@
 ﻿using Mage;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using System.Collections.Generic;
 
 namespace MageUnitTests
@@ -10,22 +10,22 @@ namespace MageUnitTests
     ///This is a test class for FileCopyTest and is intended
     ///to contain all FileCopyTest Unit Tests
     ///</summary>
-    [TestClass()]
+    [TestFixture]
     public class FileCopyTest
     {
 
         /// <summary>
         /// A class to provide access to private member variables of FileCopy.
         /// Original method was using private accessors, deprecated starting in 2010
-        /// Another option was using PrivateObject, which requires 
+        /// Another option was using PrivateObject, which requires
         ///    Microsoft.VisualStudio.TestTools.UnitTesting and performs operations using reflection.
         /// </summary>
         private class FileCopyExtracter : FileCopy
         {
             public Dictionary<string, int> InputColumnPosAccessor
             {
-                get { return InputColumnPos; }
-                set { InputColumnPos = value; }
+                get => InputColumnPos;
+                set => InputColumnPos = value;
             }
 
             public string GetDestFileAccessor(string sourceFile, Dictionary<string, int> fieldPos, string[] fields)
@@ -37,8 +37,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for GetDestFile
         ///</summary>
-        [TestMethod()]
-        [DeploymentItem("Mage.dll")]
+        [Test]
         public void GetDestFileTest()
         {
             var target = new FileCopyExtracter();
@@ -46,7 +45,7 @@ namespace MageUnitTests
 
             // typical usage - ID column in column list and ApplyPrefixToFileName set to "Yes"
             var IDColName = "Tres";
-            target.InputColumnPosAccessor = new Dictionary<string, int>() { { "Uno", 0 }, { "Dos", 1 }, { IDColName, 2 } };
+            target.InputColumnPosAccessor = new Dictionary<string, int> { { "Uno", 0 }, { "Dos", 1 }, { IDColName, 2 } };
             target.ColumnToUseForPrefix = IDColName;
             target.ApplyPrefixToFileName = "Yes";
             target.PrefixLeader = IDColName;
@@ -58,7 +57,7 @@ namespace MageUnitTests
 
             // typical usage - ID column in column list and ApplyPrefixToFileName set to "No"
             IDColName = "Tres";
-            target.InputColumnPosAccessor = new Dictionary<string, int>() { { "Uno", 0 }, { "Dos", 1 }, { IDColName, 2 } };
+            target.InputColumnPosAccessor = new Dictionary<string, int> { { "Uno", 0 }, { "Dos", 1 }, { IDColName, 2 } };
             target.ColumnToUseForPrefix = IDColName;
             target.ApplyPrefixToFileName = "No";
             fieldPos = target.InputColumnPosAccessor;
@@ -69,7 +68,7 @@ namespace MageUnitTests
 
             // ID column NOT in column list and ApplyPrefixToFileName set to "Yes"
             IDColName = "Tres";
-            target.InputColumnPosAccessor = new Dictionary<string, int>() { { "Uno", 0 }, { "Dos", 1 }, { "ChoppedLiver", 2 } };
+            target.InputColumnPosAccessor = new Dictionary<string, int> { { "Uno", 0 }, { "Dos", 1 }, { "ChoppedLiver", 2 } };
             target.ColumnToUseForPrefix = IDColName;
             target.ApplyPrefixToFileName = "Yes";
             fieldPos = target.InputColumnPosAccessor;
@@ -82,7 +81,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for IDColumnName
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void ColumnToUseForPrefixText()
         {
             var target = new FileCopy();
@@ -95,7 +94,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for OutputMode
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void OutputModeTest()
         {
             var target = new FileCopy();

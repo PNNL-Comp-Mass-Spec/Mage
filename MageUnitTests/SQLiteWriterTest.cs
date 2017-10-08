@@ -1,5 +1,6 @@
 ﻿using Mage;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
+
 namespace MageUnitTests
 {
 
@@ -8,11 +9,11 @@ namespace MageUnitTests
     ///This is a test class for SQLiteWriterTest and is intended
     ///to contain all SQLiteWriterTest Unit Tests
     ///</summary>
-    [TestClass()]
+    [TestFixture]
     public class SQLiteWriterTest
     {
 
-        [TestMethod()]
+        [Test]
         public void DoubleTap()
         {
             var cols = 5;
@@ -53,7 +54,7 @@ namespace MageUnitTests
         }
 
 
-        [TestMethod()]
+        [Test]
         public void WriteTest()
         {
             var cols = 5;
@@ -105,7 +106,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for BlockSize
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void BlockSizeTest()
         {
             var target = new SQLiteWriter();
@@ -118,7 +119,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for DbPassword
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void DbPasswordTest()
         {
             var target = new SQLiteWriter();
@@ -131,7 +132,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for DbPath
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void DbPathTest()
         {
             var target = new SQLiteWriter();
@@ -144,7 +145,7 @@ namespace MageUnitTests
         /// <summary>
         ///A test for TableName
         ///</summary>
-        [TestMethod()]
+        [Test]
         public void TableNameTest()
         {
             var target = new SQLiteWriter();
