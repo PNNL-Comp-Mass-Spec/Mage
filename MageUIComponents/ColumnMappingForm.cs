@@ -410,7 +410,7 @@ namespace MageUIComponents
                 if (row.Length > 3 && row[2].ToLower() == "int")
                     row[2] = "integer";
 
-                ColumnSpecEditingDisplayList.List.Rows.Add(row);
+                ColumnSpecEditingDisplayList.List.Rows.Add((object)row);
 
             }
 
@@ -600,7 +600,7 @@ namespace MageUIComponents
         private void NewColumnBtn_Click(object sender, EventArgs e)
         {
             var lvi = GetDefaultNewColumn();
-            ColumnSpecEditingDisplayList.List.Rows.Add(lvi);
+            ColumnSpecEditingDisplayList.List.Rows.Add((object)lvi);
         }
 
         /// <summary>
@@ -616,7 +616,7 @@ namespace MageUIComponents
             {
                 idx = ColumnSpecEditingDisplayList.List.SelectedRows[0].Index;
             }
-            ColumnSpecEditingDisplayList.List.Rows.Insert(idx, lvi);
+            ColumnSpecEditingDisplayList.List.Rows.Insert(idx, (object)lvi);
         }
 
         /// <summary>
