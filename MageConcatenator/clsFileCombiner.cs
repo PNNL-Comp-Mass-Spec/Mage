@@ -174,7 +174,7 @@ namespace MageConcatenator
         }
 
 
-        private char GetDelimiter(FileInfo fiFile)
+        private char GetDelimiter(FileSystemInfo fiFile)
         {
             var delimiter = '\t';
             if (fiFile.Extension.ToLower() == ".csv")
@@ -183,7 +183,7 @@ namespace MageConcatenator
             return delimiter;
         }
 
-        private void ParseHeaderLine(string currentRow, StreamWriter writer, string filePath,
+        private void ParseHeaderLine(string currentRow, TextWriter writer, string filePath,
                                      ref bool headerWritten, ref string headerLine, ref char headerDelimiter)
         {
 

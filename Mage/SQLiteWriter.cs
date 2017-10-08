@@ -512,7 +512,7 @@ namespace Mage
         // Used in order to avoid breaking naming rules (e.g., when a table has
         // a name in SQL Server that cannot be used as a basis for a matching index
         // name in SQLite).
-        private string GetNormalizedName(string str, List<string> names)
+        private string GetNormalizedName(string str, ICollection<string> names)
         {
             var sb = new StringBuilder();
             for (var i = 0; i <= str.Length - 1; i++)
@@ -526,7 +526,7 @@ namespace Mage
                     sb.Append("_");
                 }
             }
-            
+
             // Avoid returning duplicate name
             if (names.Contains(sb.ToString()))
             {

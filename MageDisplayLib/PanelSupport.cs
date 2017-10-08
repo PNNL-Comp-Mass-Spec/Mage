@@ -68,7 +68,7 @@ namespace MageDisplayLib
         /// <param name="subjectControl">given control to examine</param>
         /// <param name="controlType">specified type of control to collect into list</param>
         /// <param name="controlList">list to which to add controls of specified type</param>
-        private static void AddControlsToList(Control subjectControl, Type controlType, List<Control> controlList)
+        private static void AddControlsToList(Control subjectControl, Type controlType, ICollection<Control> controlList)
         {
             foreach (Control ctrl in subjectControl.Controls)
             {
