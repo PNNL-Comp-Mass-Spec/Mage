@@ -78,17 +78,6 @@ namespace Mage
 
         #endregion
 
-        #region Constructors
-
-        /// <summary>
-        /// construct a new Mage SQLite writer module
-        /// </summary>
-        public SQLiteWriter()
-        {
-        }
-
-        #endregion
-
         #region IDisposable Members
 
         /// <summary>

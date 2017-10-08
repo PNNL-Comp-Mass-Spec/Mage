@@ -16,9 +16,6 @@ namespace Mage
     public sealed class ModuleDiscovery
     {
 
-        private ModuleDiscovery()
-        {
-        }
         /// <summary>
         /// Static Constructor
         /// </summary>
