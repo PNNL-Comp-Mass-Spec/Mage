@@ -67,7 +67,7 @@ namespace MageExtExtractionFilters
             {
                 if (!mMergeFiles.TryGetValue("MSGF_Name", out var msgfFile))
                 {
-                    msgfFile = new ResultType.MergeFile(string.Empty, string.Empty, String.Empty, string.Empty);
+                    msgfFile = new ResultType.MergeFile(string.Empty, string.Empty, string.Empty, string.Empty);
                 }
 
                 mMSGFMerger.GetMSGFLookupData(msgfFile, mResultFolderPath);

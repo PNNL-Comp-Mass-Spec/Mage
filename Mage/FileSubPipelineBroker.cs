@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 
@@ -181,11 +182,11 @@ namespace Mage
                 // an internally-defined sub-pipeline, according to module settings
                 if (!string.IsNullOrEmpty(DatabaseName))
                 {
-                    ProcessingPipelineMaker = new FileProcessingPipelineGenerator(MakeDefaultSQLiteProcessingPipeline);
+                    ProcessingPipelineMaker = MakeDefaultSQLiteProcessingPipeline;
                 }
                 else
                 {
-                    ProcessingPipelineMaker = new FileProcessingPipelineGenerator(MakeDefaultFileProcessingPipeline);
+                    ProcessingPipelineMaker = MakeDefaultFileProcessingPipeline;
                 }
                 // set up to use the file renaming function provided by the filter module
                 SetupFileRenamer(FileFilterModuleName);

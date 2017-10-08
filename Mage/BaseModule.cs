@@ -507,11 +507,10 @@ namespace Mage
                 return null;
             }
 
-            if (String.IsNullOrEmpty(pattern))
+            if (string.IsNullOrEmpty(pattern))
             {
                 return original;
             }
-
 
             var posCurrent = 0;
             var lenPattern = pattern.Length;

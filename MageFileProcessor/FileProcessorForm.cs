@@ -69,10 +69,10 @@ namespace MageFileProcessor
 
             // These settings are loaded from file MageFileProcessor.exe.config
             // Typically gigasax and DMS5
-            Mage.Globals.DMSServer = Settings.Default.DMSServer;
-            Mage.Globals.DMSDatabase = Settings.Default.DMSDatabase;
+            Globals.DMSServer = Settings.Default.DMSServer;
+            Globals.DMSDatabase = Settings.Default.DMSDatabase;
 
-            txtServer.Text = "DMS Server: " + Mage.Globals.DMSServer;
+            txtServer.Text = "DMS Server: " + Globals.DMSServer;
 
             ModuleDiscovery.DMSServerOverride = Globals.DMSServer;
             ModuleDiscovery.DMSDatabaseOverride = Globals.DMSDatabase;
@@ -173,19 +173,19 @@ namespace MageFileProcessor
             }
 
             if (beta)
-                this.Text += " (beta)";
+                Text += " (beta)";
 
         }
 
         private void SetTags()
         {
-            this.JobListTabPage.Tag = TAG_JOB_IDs;
-            this.JobsFromDatasetIDTabPage.Tag = TAG_JOB_IDs_FROM_DATASETS;
-            this.DatasetTabPage.Tag = TAG_DATASET_LIST;
-            this.DatasetIDTabPage.Tag = TAG_DATASET_ID_LIST;
-            this.DatasetNameTabPage.Tag = TAG_DATASET_NAME_LIST;
-            this.DataPackageJobsTabPage.Tag = TAG_DATA_PACKAGE_ID;
-            this.DataPackageDatasetsTabPage.Tag = TAG_DATA_PACKAGE_DS_IDs;
+            JobListTabPage.Tag = TAG_JOB_IDs;
+            JobsFromDatasetIDTabPage.Tag = TAG_JOB_IDs_FROM_DATASETS;
+            DatasetTabPage.Tag = TAG_DATASET_LIST;
+            DatasetIDTabPage.Tag = TAG_DATASET_ID_LIST;
+            DatasetNameTabPage.Tag = TAG_DATASET_NAME_LIST;
+            DataPackageJobsTabPage.Tag = TAG_DATA_PACKAGE_ID;
+            DataPackageDatasetsTabPage.Tag = TAG_DATA_PACKAGE_DS_IDs;
         }
 
 
@@ -713,7 +713,7 @@ namespace MageFileProcessor
         /// </summary>
         private void EnableDisableOutputTabs()
         {
-            var mode = this.FilterOutputTabs.SelectedTab.Tag.ToString();
+            var mode = FilterOutputTabs.SelectedTab.Tag.ToString();
             if (mode == "Copy_Files")
             {
                 FileProcessingPanel1.Enabled = false;
@@ -1007,7 +1007,7 @@ namespace MageFileProcessor
         private void SetupCommandHandler()
         {
             // get reference to the method that handles command events
-            var methodInfo = this.GetType().GetMethod("DoCommand");
+            var methodInfo = GetType().GetMethod("DoCommand");
             Control subjectControl = this;
 
             PanelSupport.DiscoverAndConnectCommandHandlers(subjectControl, methodInfo);

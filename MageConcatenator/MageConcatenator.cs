@@ -303,7 +303,7 @@ namespace MageConcatenator
                     var sourceFilePath = Path.Combine(selectedFileRow["Folder"], selectedFileRow["File"]);
 
                     // Make sure the target file is not in the source file list
-                    if (String.Compare(sourceFilePath, mCombineFilesTargetFilePath, StringComparison.OrdinalIgnoreCase) == 0)
+                    if (string.Compare(sourceFilePath, mCombineFilesTargetFilePath, StringComparison.OrdinalIgnoreCase) == 0)
                     {
                         // Auto-rename the target file
                         var fiTargetFile = new FileInfo(mCombineFilesTargetFilePath);

@@ -461,7 +461,7 @@ namespace Mage
             foreach (var predicate in mPredicates)
             {
                 var sWhereItem = MakeWhereItem(predicate);
-                if (!String.IsNullOrEmpty(sWhereItem))
+                if (!string.IsNullOrEmpty(sWhereItem))
                 {
                     switch (predicate.rel.ToLower())
                     {

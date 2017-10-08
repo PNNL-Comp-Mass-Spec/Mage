@@ -212,13 +212,13 @@ namespace Mage
                 }
                 catch (Exception ex)
                 {
-                    base.OnWarningMessage(new MageStatusEventArgs("Error retrieving data from database: " + ex.Message));
+                    OnWarningMessage(new MageStatusEventArgs("Error retrieving data from database: " + ex.Message));
                 }
 
             }
             catch (Exception ex)
             {
-                base.OnWarningMessage(new MageStatusEventArgs("Error connecting to database: " + ex.Message));
+                OnWarningMessage(new MageStatusEventArgs("Error connecting to database: " + ex.Message));
             }
             finally
             {

@@ -132,8 +132,8 @@ namespace MageExtExtractionFilters
         {
             var scanNumber = GetColumnValue(vals, columnIndices.ScanNumber, -1);
             var chargeState = GetColumnValue(vals, columnIndices.ChargeState, 0);
-            var peptideSequence = GetColumnValue(vals, columnIndices.PeptideSequence, String.Empty);
-            var proteinName = GetColumnValue(vals, columnIndices.Protein, String.Empty);
+            var peptideSequence = GetColumnValue(vals, columnIndices.PeptideSequence, string.Empty);
+            var proteinName = GetColumnValue(vals, columnIndices.Protein, string.Empty);
 
             if (includeProtein)
             {

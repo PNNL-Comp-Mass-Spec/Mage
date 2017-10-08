@@ -203,7 +203,7 @@ namespace MageConcatenator
             }
 
             // Compare this file's header to the first file's header
-            if (String.Compare(headerLine, currentRow, StringComparison.OrdinalIgnoreCase) != 0)
+            if (string.Compare(headerLine, currentRow, StringComparison.OrdinalIgnoreCase) != 0)
             {
                 ReportWarning("The header line for file " + Path.GetFileName(filePath) +
                           " does not match the header line of the first file");

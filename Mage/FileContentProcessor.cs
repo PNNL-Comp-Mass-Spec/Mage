@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 
 namespace Mage
@@ -175,7 +174,7 @@ namespace Mage
                 var destFolder = OutputFolderPath;
                 string destFile;
 
-                if (sourceFile == BaseModule.kNoFilesFound)
+                if (sourceFile == kNoFilesFound)
                 {
                     destFile = kNoFilesFound;
                 }
@@ -193,11 +192,11 @@ namespace Mage
                 var context = new Dictionary<string, string>();
                 foreach (var colPos in InputColumnPos)
                 {
-                    context.Add(colPos.Key, args.Fields[colPos.Value] ?? String.Empty);
+                    context.Add(colPos.Key, args.Fields[colPos.Value] ?? string.Empty);
                 }
 
                 // process file
-                if (sourceFile == BaseModule.kNoFilesFound)
+                if (sourceFile == kNoFilesFound)
                 {
                     // skip
                 }

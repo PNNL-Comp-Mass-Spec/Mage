@@ -474,7 +474,7 @@ namespace Mage
                 mOutputBuffer[outputBufferRowIdx][mFileTypeOutColIndex] = "";
             }
             // output record that says we didn't find any files
-            mOutputBuffer[outputBufferRowIdx][mFileNameOutColIndx] = BaseModule.kNoFilesFound;
+            mOutputBuffer[outputBufferRowIdx][mFileNameOutColIndx] = kNoFilesFound;
             OnDataRowAvailable(new MageDataEventArgs(mOutputBuffer[outputBufferRowIdx]));
         }
 
