@@ -935,8 +935,7 @@ namespace MageFileProcessor
             statusPanel1.HandleCompletionMessageUpdate(this, new MageStatusEventArgs(args.Message));
             Console.WriteLine(args.Message);
 
-            var pipeline = sender as ProcessingPipeline;
-            if (pipeline != null)
+            if (sender is ProcessingPipeline pipeline)
             {
                 if (pipeline.PipelineName == mFinalPipelineName)
                 {

@@ -27,8 +27,7 @@ namespace MageDisplayLib
 
             foreach (var userControl in userControlList)
             {
-                var control = userControl as IModuleParameters;
-                if (control != null)
+                if (userControl is IModuleParameters control)
                 {
                     return control;
                 }

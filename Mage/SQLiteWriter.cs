@@ -549,7 +549,7 @@ namespace Mage
             switch (dt)
             {
                 case DbType.Int32:
-                    if (val is string && string.IsNullOrEmpty((string)val))
+                    if (val is string s && string.IsNullOrEmpty(s))
                     {
                         return null;
                     }
@@ -636,9 +636,9 @@ namespace Mage
                     break;
 
                 case DbType.String:
-                    if (val is Guid)
+                    if (val is Guid guid)
                     {
-                        return ((Guid)val).ToString();
+                        return guid.ToString();
                     }
                     break;
 
