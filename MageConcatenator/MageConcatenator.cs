@@ -30,9 +30,6 @@ namespace MageConcatenator
         // current command that is being executed or has most recently been executed
         MageCommandEventArgs mCurrentCmd;
 
-        // object that sent the current command
-        object mCurrentCmdSender;
-
         private clsFileCombiner mFileCombiner;
         private List<string> mCombineFilesPaths;
         private string mCombineFilesTargetFilePath;
@@ -145,9 +142,6 @@ namespace MageConcatenator
         public void DoCommand(object sender, MageCommandEventArgs command)
         {
 
-            // remember who sent us the command
-            mCurrentCmdSender = sender;
-
             if (command.Action == "display_reloaded")
             {
                 mCurrentCmd = command;
@@ -180,8 +174,6 @@ namespace MageConcatenator
         /// <param name="command"></param>
         private void BuildAndRunPipeline(MageCommandEventArgs command)
         {
-            var mode = (command.Mode == "selected") ? DisplaySourceMode.Selected : DisplaySourceMode.All;
-
             mPipelineQueue.Pipelines.Clear();
 
             try
@@ -584,7 +576,6 @@ namespace MageConcatenator
 
         private delegate void CompletionStateUpdated(object status);
         private delegate void BoolFnDelegate(bool value);
-        private delegate void VoidFnDelegate();
 
         private void HandlePipelineUpdate(object sender, MageStatusEventArgs args)
         {
@@ -608,8 +599,7 @@ namespace MageConcatenator
             statusPanel1.HandleCompletionMessageUpdate(this, new MageStatusEventArgs(args.Message));
             Console.WriteLine(args.Message);
 
-            var pipeline = sender as ProcessingPipeline;
-            if (pipeline != null)
+            if (sender is ProcessingPipeline pipeline)
             {
                 if (pipeline.PipelineName == mFinalPipelineName)
                 {
