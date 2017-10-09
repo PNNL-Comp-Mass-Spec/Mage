@@ -1,5 +1,8 @@
 Mage Revision History
 
+Version 1.5.6491; October 9, 2017
+	- Compile as AnyCPU when using the "Any CPU" debug configuration
+
 Version 1.5.6490; October 8, 2017
 	- Obtain libraries from NuGet
 	- Fix unit tests
