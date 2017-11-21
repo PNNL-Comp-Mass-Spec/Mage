@@ -133,7 +133,7 @@ Source: ..\MageFileProcessor\wand.ico                                   ; DestDi
 
 Source: Images\textdoc.ico                   ; DestDir: {app}
 Source: Images\delete_16x.ico                ; DestDir: {app}
-Source: ..\Readme.txt                        ; DestDir: {app}
+Source: ..\README.md                         ; DestDir: {app}
 Source: ..\RevisionHistory.txt               ; DestDir: {app}
 
 [Dirs]
@@ -149,7 +149,7 @@ Name: {group}\Mage File Processor; Filename: {app}\MageFileProcessor\MageFilePro
 Name: {group}\Mage Concatenator; Filename: {app}\MageConcatenator\MageConcatenator.exe; Comment: Mage Concatenator
 Name: {group}\Mage Metadata Processor; Filename: {app}\MageMetadataProcessor\MageMetadataProcessor.exe; Comment: Mage Metadata Processor
 Name: {group}\Ranger; Filename: {app}\Ranger\Ranger.exe; Comment: Ranger
-Name: {group}\ReadMe File; Filename: {app}\readme.txt; IconFilename: {app}\textdoc.ico; IconIndex: 0; Comment: Mage ReadMe
+Name: {group}\ReadMe File; Filename: {app}\README.md; IconFilename: {app}\textdoc.ico; IconIndex: 0; Comment: Mage ReadMe
 Name: {group}\Uninstall Mage; Filename: {uninstallexe}; IconFilename: {app}\delete_16x.ico; IconIndex: 0
 
 Name: {commondesktop}\Mage Extractor; Filename: {app}\MageExtractor\MageExtractor.exe; Tasks: desktopicon; IconFilename: {app}\MageExtractor\Extractor.ico; IconIndex: 0; Comment: Mage Extractor
