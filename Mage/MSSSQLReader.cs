@@ -38,21 +38,23 @@ namespace Mage
         #region Properties
 
         /// <summary>
-        /// Full connection string for database
+        /// Full connection string to database
         /// </summary>
-        public string ConnectionString { get; private set; }
+        /// <remarks>
+        /// Auto-defined using Server and Database, plus optionally Username and Password
+        /// Alternatively, use the MSSQLReader constructor that takes a connection string
+        /// </remarks>
+        public string ConnectionString { get; private set; } = string.Empty;
 
         /// <summary>
         /// MS SQL Server instance to connect to
         /// </summary>
-        /// <remarks>Requires that ConnectionString include @server@ and @database@ placholders</remarks>
-        public string Server { get; set; }
+        public string Server { get; set; } = string.Empty;
 
         /// <summary>
         /// Database to connect to
         /// </summary>
-        /// <remarks>Requires that ConnectionString include @server@ and @database@ placholders</remarks>
-        public string Database { get; set; }
+        public string Database { get; set; } = string.Empty;
 
         /// <summary>
         /// Specific user to use when connecting to the database
@@ -68,13 +70,13 @@ namespace Mage
         /// <summary>
         /// SQL statement to run to get rowset
         /// </summary>
-        public string SQLText { get; set; }
+        public string SQLText { get; set; } = string.Empty;
 
         /// <summary>
         /// Name of stored procedure to call to get rowset
         /// (must be blank of straight SQL query is being used instead)
         /// </summary>
-        public string SprocName { get; set; }
+        public string SprocName { get; set; } = string.Empty;
 
         /// <summary>
         /// If stored procedure is being used for query,
@@ -99,6 +101,7 @@ namespace Mage
             SprocName = string.Empty;
             Username = string.Empty;
             Password = string.Empty;
+            ConnectionString = string.Empty;
         }
 
         /// <summary>
@@ -111,10 +114,11 @@ namespace Mage
             SprocName = string.Empty;
             Username = username;
             Password = password;
+            ConnectionString = string.Empty;
         }
 
         /// <summary>
-        /// Create new object and initialize values from xml specs and args
+        /// Constructor that initialize values from xml specs and args
         /// </summary>
         /// <param name="xml"></param>
         /// <param name="args"></param>
@@ -128,6 +132,7 @@ namespace Mage
         }
 
         /// <summary>
+        /// Constructor that accepts a SQLBuilder, plus optionally a SQL Server username and password
         /// </summary>
         /// <param name="builder"></param>
         /// <param name="username">SQL Server Username; leave blank (or null) to use integrated authentication</param>
@@ -138,7 +143,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Create new object and initialize from arguments
+        /// Constructor that accepts a server name, database name, and SQL query
         /// </summary>
         /// <param name="server"></param>
         /// <param name="database"></param>
@@ -148,8 +153,21 @@ namespace Mage
             Server = server;
             Database = database;
             SQLText = sql;
+            ConnectionString = string.Empty;
         }
 
+        /// <summary>
+        /// Constructor that accepts a connection string
+        /// </summary>
+        /// <param name="connectionString">SQL Server connection string</param>
+        /// <remarks>Use property SQLText to define the query to use</remarks>
+        public MSSQLReader(string connectionString)
+        {
+            SprocName = string.Empty;
+            Username = string.Empty;
+            Password = string.Empty;
+            ConnectionString = connectionString;
+        }
         #endregion
 
         #region IDisposable Members
@@ -194,8 +212,10 @@ namespace Mage
 
             Username = username;
             Password = password;
+            ConnectionString = string.Empty;
 
             // Set this module's properties from builder's special arguments list
+            // This should update Server and Database
             SetParameters(builder.SpecialArgs);
 
             if (!string.IsNullOrEmpty(builder.SprocName))
@@ -282,13 +302,40 @@ namespace Mage
             mConnection.Close();
         }
 
-        private static string GetConnectionString(string server, string database, string username, string password)
+        private string GetConnectionString(string server, string database, string username, string password)
         {
 
-            if (string.IsNullOrWhiteSpace(username))
-                return string.Format("Data Source={0};Initial Catalog={1};Integrated Security=SSPI;", server, database);
+            if (string.IsNullOrWhiteSpace(server) && string.IsNullOrWhiteSpace(database))
+            {
+                if (!string.IsNullOrWhiteSpace(ConnectionString))
+                    return ConnectionString;
 
-            return string.Format("Data Source={0};Initial Catalog={1};User={2};Password={3};", server, database, username, password);
+                throw new Exception(
+                    "ConnectionString not defined in MSSQLReader. " +
+                    "Either set it via the ConnectionString property or " +
+                    "instantiate this class with a specific server name and database name");
+            }
+
+            if (!string.IsNullOrWhiteSpace(server) && string.IsNullOrWhiteSpace(database))
+            {
+                throw new Exception(
+                    "Server name is defined, but database name is not defined; cannot construct the connection string in MSSQLReader");
+            }
+
+            if (string.IsNullOrWhiteSpace(server) && !string.IsNullOrWhiteSpace(database))
+            {
+                throw new Exception(
+                    "Database name is defined, but server name is not defined; cannot construct the connection string in MSSQLReader");
+            }
+
+            if (string.IsNullOrWhiteSpace(username))
+                ConnectionString = string.Format("Data Source={0};Initial Catalog={1};Integrated Security=SSPI;", server, database);
+            else if (string.IsNullOrWhiteSpace(password))
+                ConnectionString = string.Format("Data Source={0};Initial Catalog={1};User={2};", server, database, username);
+            else
+                ConnectionString = string.Format("Data Source={0};Initial Catalog={1};User={2};Password={3};", server, database, username, password);
+
+            return ConnectionString;
         }
 
         /// <summary>
