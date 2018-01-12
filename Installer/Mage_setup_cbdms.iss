@@ -14,7 +14,6 @@ WelcomeLabel2=This will install [name/ver] on your computer.
 Source: ..\DeployedFiles\CBDMS\MageConcatenator.exe.config              ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\ICSharpCode.SharpZipLib.dll   ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\Jayrock.Json.dll              ; DestDir: {app}\MageConcatenator
-Source: ..\DeployedFiles\MageConcatenator\log4net.dll                   ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\Mage.dll                      ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\MageDisplayLib.dll            ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\MageUIComponents.dll          ; DestDir: {app}\MageConcatenator
@@ -34,7 +33,6 @@ Source: ..\DeployedFiles\MageConcatenator\x86\SQLite.Interop.dll        ; DestDi
 Source: ..\DeployedFiles\CBDMS\MageExtractor.exe.config                 ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\ICSharpCode.SharpZipLib.dll      ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\Jayrock.Json.dll                 ; DestDir: {app}\MageExtractor
-Source: ..\DeployedFiles\MageExtractor\log4net.dll                      ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\Mage.dll                         ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\MageDisplayLib.dll               ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\MageExtContentFilters.dll        ; DestDir: {app}\MageExtractor
@@ -56,7 +54,6 @@ Source: ..\DeployedFiles\MageExtractor\x86\SQLite.Interop.dll           ; DestDi
 Source: ..\DeployedFiles\CBDMS\MageFilePackager.exe.config              ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\ICSharpCode.SharpZipLib.dll   ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\Jayrock.Json.dll              ; DestDir: {app}\MageFilePackager
-Source: ..\DeployedFiles\MageFilePackager\log4net.dll                   ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\Mage.dll                      ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\MageDisplayLib.dll            ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\MageUIComponents.dll          ; DestDir: {app}\MageFilePackager
@@ -76,7 +73,6 @@ Source: ..\DeployedFiles\MageFilePackager\x86\SQLite.Interop.dll        ; DestDi
 Source: ..\DeployedFiles\CBDMS\MageFileProcessor.exe.config             ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\ICSharpCode.SharpZipLib.dll  ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\Jayrock.Json.dll             ; DestDir: {app}\MageFileProcessor
-Source: ..\DeployedFiles\MageFileProcessor\log4net.dll                  ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\Mage.dll                     ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\MageDisplayLib.dll           ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\MageExtContentFilters.dll    ; DestDir: {app}\MageFileProcessor
@@ -99,7 +95,6 @@ Source: ..\DeployedFiles\MageFileProcessor\x86\SQLite.Interop.dll       ; DestDi
 Source: ..\DeployedFiles\CBDMS\MageMetadataProcessor.exe.config         ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\ICSharpCode.SharpZipLib.dll          ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\Jayrock.Json.dll         ; DestDir: {app}\MageMetaDataProcessor
-Source: ..\DeployedFiles\MageMetaDataProcessor\log4net.dll              ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\Mage.dll                 ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\MageDisplayLib.dll       ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\MageUIComponents.dll     ; DestDir: {app}\MageMetaDataProcessor
@@ -114,7 +109,6 @@ Source: ..\DeployedFiles\MageMetaDataProcessor\QueryDefinitions.xml     ; DestDi
 
 Source: ..\DeployedFiles\Ranger\ICSharpCode.SharpZipLib.dll             ; DestDir: {app}\Ranger
 Source: ..\DeployedFiles\Ranger\Jayrock.Json.dll                        ; DestDir: {app}\Ranger
-Source: ..\DeployedFiles\Ranger\log4net.dll                             ; DestDir: {app}\Ranger
 Source: ..\DeployedFiles\Ranger\Mage.dll                                ; DestDir: {app}\Ranger
 Source: ..\DeployedFiles\Ranger\MageDisplayLib.dll                      ; DestDir: {app}\Ranger
 Source: ..\DeployedFiles\Ranger\MageUIComponents.dll                    ; DestDir: {app}\Ranger

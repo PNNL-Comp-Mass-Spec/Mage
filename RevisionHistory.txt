@@ -1,5 +1,9 @@
 Mage Revision History
 
+Version 1.5.6586; January 12, 2018
+	- Replace log4net with the FileLogger in PRISM.dll
+	- Allow connecting to SQL server using a specific SQL Server username
+
 Version 1.5.6491; October 9, 2017
 	- Compile as AnyCPU when using the "Any CPU" debug configuration
 
