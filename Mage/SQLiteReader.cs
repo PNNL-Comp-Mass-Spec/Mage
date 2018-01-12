@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
-using log4net;
 using System.Data;
+using PRISM.Logging;
 
 namespace Mage
 {
@@ -13,7 +13,7 @@ namespace Mage
     /// </summary>
     public sealed class SQLiteReader : BaseModule, IDisposable
     {
-        private static readonly ILog traceLog = LogManager.GetLogger("TraceLog");
+        private static readonly FileLogger traceLogReader = new FileLogger("log.txt", BaseLogger.LogLevels.INFO, false);
 
         #region Member Variables
 
@@ -212,7 +212,7 @@ namespace Mage
 
             stopTime = DateTime.UtcNow;
             duration = stopTime - startTime;
-            traceLog.Info("SQLiteReader.GetData --> Get data finish (" + duration + ") [" + totalRows + "]:" + SQLText);
+            traceLogReader.Info("SQLiteReader.GetData --> Get data finish (" + duration + ") [" + totalRows + "]:" + SQLText);
 
             //Always close the DataReader
             myReader.Close();
@@ -222,7 +222,7 @@ namespace Mage
         private void OutputDataRows(IDataReader myReader, ref int totalRows)
         {
             startTime = DateTime.UtcNow;
-            traceLog.Debug("SQLiteReader.GetData --> Get data start:" + SQLText);
+            traceLogReader.Debug("SQLiteReader.GetData --> Get data start:" + SQLText);
             while (myReader.Read())
             {
                 var a = new object[myReader.FieldCount];
@@ -251,7 +251,8 @@ namespace Mage
         {
             // if anyone is registered as listening for ColumnDefAvailable events, make it happen for them
             startTime = DateTime.UtcNow;
-            traceLog.Debug("SQLiteReader.GetData --> Get column info start:" + SQLText);
+            traceLogReader.Debug("SQLiteReader.GetData --> Get column info start:" + SQLText);
+
             // Determine the column names and column data types (
 
             // Get list of fields in result set and process each field
@@ -279,7 +280,7 @@ namespace Mage
             OnColumnDefAvailable(new MageColumnEventArgs(columnDefs.ToArray()));
             stopTime = DateTime.UtcNow;
             duration = stopTime - startTime;
-            traceLog.Info("SQLiteReader.GetData --> Get column info finish (" + duration + "):" + SQLText);
+            traceLogReader.Info("SQLiteReader.GetData --> Get column info finish (" + duration + "):" + SQLText);
         }
 
         /// <summary>

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using log4net;
 using System.Data;
+using PRISM.Logging;
 
 namespace Mage
 {
@@ -19,7 +19,7 @@ namespace Mage
         /// </summary>
         public const string SQL_COMMAND_ERROR = "Problem forming SQL command";
 
-        private static readonly ILog traceLog = LogManager.GetLogger("TraceLog");
+        private static readonly FileLogger traceLogReader = new FileLogger("log.txt", BaseLogger.LogLevels.INFO, false);
 
         #region member variables
 
@@ -310,7 +310,7 @@ namespace Mage
 
             stopTime = DateTime.UtcNow;
             duration = stopTime - startTime;
-            traceLog.Info("MSSQLReader.GetData --> Get data finish (" + duration + ") [" + totalRows + "]:" + SQLText);
+            traceLogReader.Info("MSSQLReader.GetData --> Get data finish (" + duration + ") [" + totalRows + "]:" + SQLText);
 
             //Always close the DataReader
             myReader.Close();
@@ -326,7 +326,7 @@ namespace Mage
         {
             // now do all the rows - if anyone is registered as wanting them
             startTime = DateTime.UtcNow;
-            traceLog.Debug("MSSQLReader.GetData --> Get data start:" + SQLText);
+            traceLogReader.Debug("MSSQLReader.GetData --> Get data start:" + SQLText);
             while (myReader.Read())
             {
                 var a = new object[myReader.FieldCount];
@@ -391,7 +391,8 @@ namespace Mage
         {
             // if anyone is registered as listening for ColumnDefAvailable events, make it happen for them
             startTime = DateTime.UtcNow;
-            traceLog.Debug("MSSQLReader.GetData --> Get column info start:" + SQLText);
+            traceLogReader.Debug("MSSQLReader.GetData --> Get column info start:" + SQLText);
+
             // Determine the column names and column data types (
 
             // Get list of fields in result set and process each field
@@ -421,7 +422,7 @@ namespace Mage
             OnColumnDefAvailable(new MageColumnEventArgs(columnDefs.ToArray()));
             stopTime = DateTime.UtcNow;
             duration = stopTime - startTime;
-            traceLog.Info("MSSQLReader.GetData --> Get column info finish (" + duration + "):" + SQLText);
+            traceLogReader.Info("MSSQLReader.GetData --> Get column info finish (" + duration + "):" + SQLText);
         }
 
         /// <summary>

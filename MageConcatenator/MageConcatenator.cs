@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
-using log4net;
 using Mage;
 using MageConcatenator.Properties;
 using MageDisplayLib;
+using PRISM.Logging;
 using Timer = System.Windows.Forms.Timer;
 
 namespace MageConcatenator
@@ -62,12 +62,14 @@ namespace MageConcatenator
 
             try
             {
-                // set up configuration folder and files
-                // Set log4net path and kick the logger into action
-                var LogFileName = Path.Combine(SavedState.DataDirectory, "log.txt");
-                GlobalContext.Properties["LogName"] = LogFileName;
-                var traceLog = LogManager.GetLogger("TraceLog");
-                traceLog.Info("Starting Mage Concatenator");
+                // Configure logging
+                var logFilePath = Path.Combine(SavedState.DataDirectory, "log.txt");
+                FileLogger.AppendDateToBaseFileName = false;
+                FileLogger.ChangeLogFileBaseName(logFilePath);
+                FileLogger.WriteLog(BaseLogger.LogLevels.INFO, "Starting Mage Concatenator");
+
+                ProcessingPipeline.AppendDateToLogFileName = FileLogger.AppendDateToBaseFileName;
+                ProcessingPipeline.LogFilePath = logFilePath;
             }
             catch (Exception ex)
             {

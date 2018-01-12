@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
-using log4net;
 using MyEMSLReader;
+using PRISM.Logging;
 
 namespace Mage
 {
@@ -28,7 +28,7 @@ namespace Mage
         /// <summary>
         /// Trace logger
         /// </summary>
-        protected static readonly ILog traceLog = LogManager.GetLogger("TraceLog");
+        protected static readonly FileLogger traceLogFileList = new FileLogger("log.txt", BaseLogger.LogLevels.INFO, false);
 
         #region Member Variables
 
@@ -309,7 +309,7 @@ namespace Mage
                         break;
                     }
 
-                    traceLog.Debug("FileListFilter: Searching folder " + folderPath);
+                    traceLogFileList.Debug("FileListFilter: Searching folder " + folderPath);
                     UpdateStatus("FileListFilter: Searching folder " + folderPath);
 
                     SearchOneFolder(outputBufferRowIdx, fileInfo, subfolderInfo, folderPath, datasetName);
@@ -486,7 +486,7 @@ namespace Mage
         protected void ReportSearchErrorToOutput(int outputBufferRowIdx, string msg)
         {
             mOutputBuffer[outputBufferRowIdx][mFileNameOutColIndx] = "--Error: " + msg;
-            traceLog.Error(msg);
+            traceLogFileList.Error(msg);
             OnDataRowAvailable(new MageDataEventArgs(mOutputBuffer[outputBufferRowIdx]));
         }
 

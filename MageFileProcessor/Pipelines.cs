@@ -370,5 +370,6 @@ namespace MageFileProcessor
 
             return runtimeParams[keyName];
         }
+
     }
 }

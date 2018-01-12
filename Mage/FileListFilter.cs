@@ -614,7 +614,7 @@ namespace Mage
                 }
                 catch (Exception e)
                 {
-                    traceLog.Error(e.Message);
+                    traceLogFileList.Error(e.Message);
                     throw new MageException("Problem with file selector:" + e.Message);
                 }
             }

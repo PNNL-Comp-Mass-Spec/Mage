@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
-using log4net;
 using Mage;
 using MageDisplayLib;
 using MageMetadataProcessor.Properties;
 using MageUIComponents;
+using PRISM.Logging;
 
 namespace MageMetadataProcessor
 {
@@ -57,14 +57,14 @@ namespace MageMetadataProcessor
             var fi = new FileInfo(Application.ExecutablePath);
             ModuleDiscovery.ExternalModuleFolder = fi.DirectoryName;
 
-            //Set log4net path
-            var logFileName = Path.Combine(SavedState.DataDirectory, "log.txt");
-            log4net.GlobalContext.Properties["LogName"] = logFileName;
+            // Configure logging
+            var logFilePath = Path.Combine(SavedState.DataDirectory, "log.txt");
+            FileLogger.AppendDateToBaseFileName = false;
+            FileLogger.ChangeLogFileBaseName(logFilePath);
+            FileLogger.WriteLog(BaseLogger.LogLevels.INFO, "Starting Mage Metadata Processor");
 
-            var traceLog = LogManager.GetLogger("TraceLog");
-            // kick the logger into action
-            traceLog.Info("Starting Mage Metadata Processor");
-
+            ProcessingPipeline.AppendDateToLogFileName = FileLogger.AppendDateToBaseFileName;
+            ProcessingPipeline.LogFilePath = logFilePath;
 
             // setup UI component panels
             SetupCommandHandler();

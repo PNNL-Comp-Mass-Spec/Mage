@@ -4,10 +4,10 @@ using System.IO;
 using System.Windows.Forms;
 using System.Xml;
 using Mage;
-using log4net;
 using MageDisplayLib;
 using System.Reflection;
 using MageFilePackager.Properties;
+using PRISM.Logging;
 
 namespace MageFilePackager
 {
@@ -56,7 +56,7 @@ namespace MageFilePackager
             InitializeComponent();
 
             const bool isBetaVersion = true;
-            SetFormTitle("2017-10-09", isBetaVersion);
+            SetFormTitle("2018-01-11", isBetaVersion);
 
             SetTags();
 
@@ -92,12 +92,14 @@ namespace MageFilePackager
 
             try
             {
-                // set up configuration folder and files
-                // Set log4net path and kick the logger into action
-                var logFileName = Path.Combine(SavedState.DataDirectory, "log.txt");
-                GlobalContext.Properties["LogName"] = logFileName;
-                var traceLog = LogManager.GetLogger("TraceLog");
-                traceLog.Info("Starting MageFilePackager");
+                // Configure logging
+                var logFilePath = Path.Combine(SavedState.DataDirectory, "log.txt");
+                FileLogger.AppendDateToBaseFileName = false;
+                FileLogger.ChangeLogFileBaseName(logFilePath);
+                FileLogger.WriteLog(BaseLogger.LogLevels.INFO, "Starting MageFilePackager");
+
+                ProcessingPipeline.AppendDateToLogFileName = FileLogger.AppendDateToBaseFileName;
+                ProcessingPipeline.LogFilePath = logFilePath;
             }
             catch (Exception ex)
             {

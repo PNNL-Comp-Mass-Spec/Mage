@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using Mage;
 using System.IO;
-using log4net;
 using MageDisplayLib;
 using MageExtExtractionFilters;
 using MageExtractor.Properties;
+using PRISM.Logging;
 
 namespace MageExtractor
 {
@@ -55,7 +55,7 @@ namespace MageExtractor
             InitializeComponent();
 
             const bool isBetaVersion = false;
-            SetFormTitle("2017-10-09", isBetaVersion);
+            SetFormTitle("2018-01-11", isBetaVersion);
 
             SetTags();
 
@@ -83,11 +83,14 @@ namespace MageExtractor
 
             try
             {
-                // Set log4net path and kick the logger into action
-                var logFileName = Path.Combine(SavedState.DataDirectory, "log.txt");
-                log4net.GlobalContext.Properties["LogName"] = logFileName;
-                var traceLog = LogManager.GetLogger("TraceLog");
-                traceLog.Info("Starting Mage Extractor");
+                // Configure logging
+                var logFilePath = Path.Combine(SavedState.DataDirectory, "log.txt");
+                FileLogger.AppendDateToBaseFileName = false;
+                FileLogger.ChangeLogFileBaseName(logFilePath);
+                FileLogger.WriteLog(BaseLogger.LogLevels.INFO, "Starting Mage Extractor");
+
+                ProcessingPipeline.AppendDateToLogFileName = FileLogger.AppendDateToBaseFileName;
+                ProcessingPipeline.LogFilePath = logFilePath;
             }
             catch (Exception ex)
             {
@@ -124,7 +127,7 @@ namespace MageExtractor
                     Console.WriteLine("Error deleting SavedState file: " + ex2.Message);
                 }
             }
-        }      
+        }
 
         private void SetAboutText()
         {
@@ -255,7 +258,7 @@ namespace MageExtractor
 
                 if (!DestinationType.VerifyDestinationOptionsWithUser(mDestination)) return;
 
-                // Validate the MSGF and FDR cutoffs 
+                // Validate the MSGF and FDR cutoffs
                 if (!ValidateThreshold(mExtractionParms.MSGFCutoff, "MSGF SpecProb Cutoff"))
                     return;
 
@@ -459,11 +462,11 @@ namespace MageExtractor
 
         private void LaunchMageExtractorHelpPage()
         {
-            // Change the color of the link text by setting LinkVisited 
+            // Change the color of the link text by setting LinkVisited
             // to true.
             lblAboutLink.LinkVisited = true;
 
-            //Call the Process.Start method to open the default browser 
+            //Call the Process.Start method to open the default browser
             //with a URL:
             System.Diagnostics.Process.Start(lblAboutLink.Text);
         }
@@ -494,7 +497,7 @@ namespace MageExtractor
 
         /// <summary>
         /// Build and run Mage pipeline queue to extract contents of results files
-        /// for jobs given in jobList according to parameters defined in mExtractionParms 
+        /// for jobs given in jobList according to parameters defined in mExtractionParms
         /// and deliver output according to mDestination.  Also create metadata file for jobList.
         /// </summary>
         /// <param name="jobList"></param>
@@ -610,7 +613,7 @@ namespace MageExtractor
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         private ExtractionType GetExtractionParameters()
@@ -627,34 +630,34 @@ namespace MageExtractor
 
         //private bool LoadDataIntoAccess(PipelineQueue oPipelineQueue, DestinationType oDestination) {
 
-        //    try 
-        //    {  
+        //    try
+        //    {
 
         //        using (System.Data.OleDb.OleDbConnection conn =
-        //            new System.Data.OleDb.OleDbConnection(@"provider=microsoft.jet.oledb.4.0;data source=F:\temp\Database1.mdb"))  
-        //        {  
-        //            conn.Open();  
-        //            using (System.Data.OleDb.OleDbCommand cmd = conn.CreateCommand())  
-        //            {  
-        //                try 
-        //                {  
-        //                    cmd.CommandText = "drop table MyLocalTable";  
-        //                    cmd.ExecuteNonQuery();  
-        //                }  
-        //                catch (Exception)   
-        //                {   
-        //                    // Don't care if target table exists, going to copy into it.  
+        //            new System.Data.OleDb.OleDbConnection(@"provider=microsoft.jet.oledb.4.0;data source=F:\temp\Database1.mdb"))
+        //        {
+        //            conn.Open();
+        //            using (System.Data.OleDb.OleDbCommand cmd = conn.CreateCommand())
+        //            {
+        //                try
+        //                {
+        //                    cmd.CommandText = "drop table MyLocalTable";
+        //                    cmd.ExecuteNonQuery();
+        //                }
+        //                catch (Exception)
+        //                {
+        //                    // Don't care if target table exists, going to copy into it.
         //                }
 
-        //                cmd.CommandText = @"SELECT * INTO MyLocalTable FROM [Text;FMT=Delimited(,);HDR=YES;IMEX=2;DATABASE=F:\Temp].[QC_Shew_XTandem.txt]";  
-        //                cmd.CommandType = CommandType.Text;  
-        //                cmd.ExecuteNonQuery();  
-        //            }  
-        //        }  
-        //    }  
-        //    catch (Exception ex)  
-        //    {  
-        //        MessageBox.Show(ex.Message);  
+        //                cmd.CommandText = @"SELECT * INTO MyLocalTable FROM [Text;FMT=Delimited(,);HDR=YES;IMEX=2;DATABASE=F:\Temp].[QC_Shew_XTandem.txt]";
+        //                cmd.CommandType = CommandType.Text;
+        //                cmd.ExecuteNonQuery();
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message);
         //    }
 
 

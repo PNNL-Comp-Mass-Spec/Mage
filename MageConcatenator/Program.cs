@@ -16,9 +16,6 @@ using System.Windows.Forms;
 // Licensed under the Apache License, Version 2.0; you may not use this file except
 // in compliance with the License.  You may obtain a copy of the License at
 // http://www.apache.org/licenses/LICENSE-2.0
-// Configure log4net using the .log4net file
-
-[assembly: log4net.Config.XmlConfigurator(ConfigFile = "Logging.config", Watch = true)]
 
 namespace MageConcatenator
 {
@@ -30,6 +27,8 @@ namespace MageConcatenator
         [STAThread]
         static void Main()
         {
+            PRISM.Logging.FileLogger.AppendDateToBaseFileName = false;
+
             try
             {
                 Application.EnableVisualStyles();

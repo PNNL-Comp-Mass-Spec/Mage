@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
-using log4net;
+using PRISM.Logging;
 
 namespace Mage
 {
@@ -12,7 +13,7 @@ namespace Mage
     public class BaseModule : IBaseModule
     {
 
-        private static readonly ILog traceLog = LogManager.GetLogger("TraceLog");
+        private static readonly FileLogger traceLogBase = new FileLogger("log.txt", BaseLogger.LogLevels.INFO, false);
 
         /// <summary>
         /// Constant used when no files are found
@@ -314,7 +315,7 @@ namespace Mage
                 }
                 catch (Exception e)
                 {
-                    traceLog.Error("HandleColumnDef:" + e.Message);
+                    traceLogBase.Error("HandleColumnDef:" + e.Message);
                     throw new MageException("HandleColumnDef:" + e.Message);
                 }
             }
@@ -619,7 +620,7 @@ namespace Mage
             }
             catch (Exception e)
             {
-                traceLog.Error(e.Message);
+                traceLogBase.Error(e.Message);
                 throw new MageException("Problem with defining output columns:" + e.Message);
             }
         }

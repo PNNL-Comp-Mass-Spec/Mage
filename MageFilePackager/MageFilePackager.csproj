@@ -181,11 +181,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="log4net">
-      <Version>2.0.8</Version>
-    </PackageReference>
     <PackageReference Include="PRISM-Library">
-      <Version>2.4.32</Version>
+      <Version>2.4.52</Version>
     </PackageReference>
     <PackageReference Include="System.Data.SQLite.Core">
       <Version>1.0.97</Version>

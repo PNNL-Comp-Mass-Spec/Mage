@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 
-// Configure log4net using the .log4net file
-[assembly: log4net.Config.XmlConfigurator(ConfigFile = "Logging.config", Watch = true)]
-
 namespace MageFileProcessor
 {
     static class Program
@@ -14,6 +11,8 @@ namespace MageFileProcessor
         [STAThread]
         static void Main()
         {
+            PRISM.Logging.FileLogger.AppendDateToBaseFileName = false;
+
             try
             {
                 Application.EnableVisualStyles();

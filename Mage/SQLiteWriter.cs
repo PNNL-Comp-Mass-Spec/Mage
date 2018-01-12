@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
-using log4net;
 using System.Data.SQLite;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Data;
+using PRISM.Logging;
 
 namespace Mage
 {
@@ -19,7 +19,7 @@ namespace Mage
     public sealed class SQLiteWriter : BaseModule, IDisposable
     {
 
-        private static readonly ILog traceLog = LogManager.GetLogger("TraceLog"); // traceLog.Debug
+        private static readonly FileLogger traceLogWriter = new FileLogger("log.txt", BaseLogger.LogLevels.INFO, false);
 
         #region Member Variables
 
@@ -267,7 +267,7 @@ namespace Mage
 
             // Prepare a CREATE TABLE DDL statement
             var stmt = BuildCreateTableQuery(mSchema);
-            traceLog.Info(Environment.NewLine + Environment.NewLine + stmt + Environment.NewLine + Environment.NewLine);
+            traceLogWriter.Info(Environment.NewLine + Environment.NewLine + stmt + Environment.NewLine + Environment.NewLine);
 
             try
             {
@@ -278,19 +278,19 @@ namespace Mage
             }
             catch (SQLiteException ex)
             {
-                traceLog.Debug("CreateTableInDatabase failed: " + ex.Message);
+                traceLogWriter.Error("CreateTableInDatabase failed: " + ex.Message);
             }
-            traceLog.Debug("added schema for SQLite table [" + mSchema.TableName + "]");
+            traceLogWriter.Debug("added schema for SQLite table [" + mSchema.TableName + "]");
         }
 
 
         private void CopyTabularDataRowsToSQLiteDB()
         {
-            // traceLog.Debug("preparing to insert tablular data ...");
+            // traceLogWriter.Debug("preparing to insert tablular data ...");
 
             AssureDBConnection();
             var tx = mConnection.BeginTransaction();
-            // traceLog.Debug("Starting to insert block of rows for table [" + mSchema.TableName + "]");
+            // traceLogWriter.Debug("Starting to insert block of rows for table [" + mSchema.TableName + "]");
             try
             {
                 var insert = BuildSQLiteInsert(mSchema, out var columnDataTypes);
@@ -331,12 +331,12 @@ namespace Mage
 
                 tx.Commit();
 
-                // traceLog.Debug("finished inserting block of rows for table [" + mSchema.TableName + "]");
+                // traceLogWriter.Debug("finished inserting block of rows for table [" + mSchema.TableName + "]");
             }
             catch (SQLiteException ex)
             {
                 tx.Rollback();
-                traceLog.Debug("unexpected exception: " + ex.Message);
+                traceLogWriter.Error("unexpected exception: " + ex.Message);
                 UpdateStatus("unexpected exception: " + ex.Message);
             }
         }
@@ -345,7 +345,7 @@ namespace Mage
         {
             AssureDBExists();
 
-            traceLog.Info(Environment.NewLine + Environment.NewLine + stmt + Environment.NewLine + Environment.NewLine);
+            traceLogWriter.Info(Environment.NewLine + Environment.NewLine + stmt + Environment.NewLine + Environment.NewLine);
 
             try
             {
@@ -355,9 +355,9 @@ namespace Mage
             }
             catch (SQLiteException ex)
             {
-                traceLog.Debug("ExecuteSQLInDatabase failed: " + ex.Message);
+                traceLogWriter.Error("ExecuteSQLInDatabase failed: " + ex.Message);
             }
-            traceLog.Debug("Executed raw SQL");
+            traceLogWriter.Debug("Executed raw SQL");
         }
 
 
@@ -414,10 +414,10 @@ namespace Mage
 
             var defval = StripParens(col.DefaultValue);
             defval = DiscardNational(defval);
-            //traceLog.Debug(("DEFAULT VALUE BEFORE [" & col.DefaultValue & "] AFTER [") + defval & "]")
+            //traceLogWriter.Debug(("DEFAULT VALUE BEFORE [" & col.DefaultValue & "] AFTER [") + defval & "]")
             if (!string.IsNullOrEmpty(defval) && defval.ToUpper().Contains("GETDATE"))
             {
-                traceLog.Debug("converted SQL Server GETDATE() to CURRENT_TIMESTAMP for column [" + col.ColumnName + "]");
+                traceLogWriter.Debug("converted SQL Server GETDATE() to CURRENT_TIMESTAMP for column [" + col.ColumnName + "]");
                 sb.Append(" DEFAULT (CURRENT_TIMESTAMP)");
             }
             else if (string.IsNullOrEmpty(defval) && IsValidDefaultValue(defval))
@@ -450,7 +450,7 @@ namespace Mage
         // Creates the SQLite database from the schema read from the SQL Server.
         private static void CreateSQLiteDatabaseOnly(string sqlitePath)
         {
-            traceLog.Debug("Creating SQLite database...");
+            traceLogWriter.Debug("Creating SQLite database...");
 
             // Create the SQLite database file
             var dirPath = Path.GetDirectoryName(sqlitePath);
@@ -460,7 +460,7 @@ namespace Mage
             }
             SQLiteConnection.CreateFile(sqlitePath);
 
-            traceLog.Debug("SQLite file was created successfully at [" + sqlitePath + "]");
+            traceLogWriter.Debug("SQLite file was created successfully at [" + sqlitePath + "]");
         }
 
         // Creates a command object needed to insert values into a specific SQLite table.
@@ -646,9 +646,9 @@ namespace Mage
                 case DbType.Boolean:
                 case DbType.DateTime:
                     break;
-                default:
 
-                    traceLog.Error("argument exception - illegal database type");
+                default:
+                    traceLogWriter.Error("argument exception - illegal database type");
                     throw new ArgumentException("Illegal database type [" + Enum.GetName(typeof(DbType), dt) + "]");
             }
             // switch
@@ -727,7 +727,7 @@ namespace Mage
                 return DbType.Double;
             }
 
-            traceLog.Error("GetDbTypeOfColumn: illegal db type found");
+            traceLogWriter.Error("GetDbTypeOfColumn: illegal db type found");
             throw new MageException("GetDbTypeOfColumn: Illegal DB type found (" + cs.ColumnType + ")");
         }
 

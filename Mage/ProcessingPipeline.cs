@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Xml;
-using log4net;
 using System.Collections.ObjectModel;
+using PRISM.Logging;
 
 
 namespace Mage
@@ -24,8 +24,9 @@ namespace Mage
     /// </summary>
     public class ProcessingPipeline
     {
+        private static string DEFAULT_LOG_FILE_NAME = "log.txt";
 
-        private static readonly ILog traceLog = LogManager.GetLogger("TraceLog");
+        private static readonly FileLogger traceLogPipeline = new FileLogger(DEFAULT_LOG_FILE_NAME, BaseLogger.LogLevels.INFO, false);
 
         /// <summary>
         /// event that is fired during execution of pipeline
@@ -61,6 +62,16 @@ namespace Mage
         #region Properties
 
         /// <summary>
+        /// When true, append today's date to the log file name
+        /// </summary>
+        public static bool AppendDateToLogFileName { get; set; } = false;
+
+        /// <summary>
+        /// Log file path
+        /// </summary>
+        public static string LogFilePath { get; set; } = DEFAULT_LOG_FILE_NAME;
+
+        /// <summary>
         /// Message available to client after pipeline execution completes.
         /// </summary>
         public string CompletionCode { get; set; }
@@ -90,13 +101,30 @@ namespace Mage
         #region Constructors
 
         /// <summary>
-        /// construct a new Mage pipeline object
+        /// Construct a new Mage pipeline object
+        /// </summary>
+        /// <param name="name"></param>
+        public ProcessingPipeline(string name) : this(name, LogFilePath, AppendDateToLogFileName)
+        {
+        }
+
+        /// <summary>
+        /// Construct a new Mage pipeline object
         /// </summary>
         /// <param name="name">Name of the pipeline (appears in log messages)</param>
-        public ProcessingPipeline(string name)
+        /// <param name="logFilePath">Use to change from the default 'log.txt' file in the executable folder</param>
+        /// <param name="appendDateToLogFileName"></param>
+        public ProcessingPipeline(string name, string logFilePath, bool appendDateToLogFileName)
         {
             PipelineName = name;
-            traceLog.Debug(string.Format("Building pipeline '{0}'", PipelineName));
+            if (appendDateToLogFileName != AppendDateToLogFileName ||
+                !string.IsNullOrWhiteSpace(logFilePath) && !string.Equals(logFilePath, LogFilePath))
+            {
+                FileLogger.AppendDateToBaseFileName = appendDateToLogFileName;
+                FileLogger.ChangeLogFileBaseName(logFilePath);
+            }
+
+            traceLogPipeline.Debug(string.Format("Building pipeline '{0}'", PipelineName));
         }
 
         #endregion
@@ -125,10 +153,16 @@ namespace Mage
         {
             var bError = false;
 
+            if (!string.IsNullOrWhiteSpace(LogFilePath) && !string.Equals(LogFilePath, FileLogger.LogFilePath))
+            {
+                FileLogger.AppendDateToBaseFileName = AppendDateToLogFileName;
+                FileLogger.ChangeLogFileBaseName(LogFilePath);
+            }
+
             Running = true;
             CompletionCode = "";
             HandleStatusMessageUpdated(this, new MageStatusEventArgs("Running..."));
-            traceLog.Info(string.Format("Pipeline {0} started...", PipelineName));
+            traceLogPipeline.Info(string.Format("Pipeline {0} started...", PipelineName));
 
             // give all modules in pipeline a chance to prepare themselves
             foreach (var modDef in mModuleIndex)
@@ -142,7 +176,7 @@ namespace Mage
                     CompletionCode = e.Message;
                     HandleStatusMessageUpdated(this, new MageStatusEventArgs(e.Message, 2));
                     var msg = string.Format("Pipeline {0} failed: {1}", PipelineName, e.Message);
-                    traceLog.Error(msg);
+                    traceLogPipeline.Error(msg);
                     HandleWarningMessageUpdated(this, new MageStatusEventArgs(msg));
                     bError = true;
                 }
@@ -176,18 +210,18 @@ namespace Mage
                         if (Globals.AbortRequested)
                         {
                             HandleStatusMessageUpdated(this, new MageStatusEventArgs("Processing Aborted"));
-                            traceLog.Info(string.Format("Pipeline {0} aborted...", PipelineName));
+                            traceLogPipeline.Info(string.Format("Pipeline {0} aborted...", PipelineName));
                         }
                         else
                         {
                             HandleStatusMessageUpdated(this, new MageStatusEventArgs("Process Complete"));
-                            traceLog.Info(string.Format("Pipeline {0} completed...", PipelineName));
+                            traceLogPipeline.Info(string.Format("Pipeline {0} completed...", PipelineName));
                         }
                     }
                     else
                     {
                         HandleStatusMessageUpdated(this, new MageStatusEventArgs(CompletionCode, 1));
-                        traceLog.Info(string.Format("Pipeline {0} completed... " + CompletionCode, PipelineName));
+                        traceLogPipeline.Info(string.Format("Pipeline {0} completed... " + CompletionCode, PipelineName));
                     }
 
                 }
@@ -195,13 +229,13 @@ namespace Mage
                 {
                     CompletionCode = e.Message;
                     HandleStatusMessageUpdated(this, new MageStatusEventArgs(e.Message, 2));
-                    traceLog.Error(string.Format("Pipeline {0} failed: {1}", PipelineName, e.Message));
+                    traceLogPipeline.Error(string.Format("Pipeline {0} failed: {1}", PipelineName, e.Message));
                 }
                 catch (NotImplementedException e)
                 {
                     CompletionCode = e.Message;
                     HandleStatusMessageUpdated(this, new MageStatusEventArgs(e.Message, 2));
-                    traceLog.Error(string.Format("Pipeline {0} failed: {1}", PipelineName, e.Message));
+                    traceLogPipeline.Error(string.Format("Pipeline {0} failed: {1}", PipelineName, e.Message));
                 }
             }
 
@@ -242,7 +276,7 @@ namespace Mage
             }
             else
             {
-                traceLog.Error(string.Format("Could not find module '{0}' to set parameters ({1})", moduleName, PipelineName));
+                traceLogPipeline.Error(string.Format("Could not find module '{0}' to set parameters ({1})", moduleName, PipelineName));
             }
         }
 
@@ -262,7 +296,7 @@ namespace Mage
             }
             else
             {
-                traceLog.Error(string.Format("Could not find module '{0}' to set parameter '{1}'.", moduleName, paramName));
+                traceLogPipeline.Error(string.Format("Could not find module '{0}' to set parameter '{1}'.", moduleName, paramName));
             }
         }
 
@@ -285,7 +319,7 @@ namespace Mage
             catch (Exception e)
             {
                 var msg = string.Format("Failed to connect module '{0}' to module '{1} ({2}): {3}", downstreamModule, upstreamModule, PipelineName, e.Message);
-                traceLog.Error(msg);
+                traceLogPipeline.Error(msg);
                 throw new MageException(msg);
             }
         }
@@ -300,7 +334,7 @@ namespace Mage
         {
             modUp.ColumnDefAvailable += modDn.HandleColumnDef;
             modUp.DataRowAvailable += modDn.HandleDataRow;
-            traceLog.Debug(string.Format("Connected input of module '{0}' to output of module '{1} ({2})", modDn.ModuleName, modUp.ModuleName, PipelineName));
+            traceLogPipeline.Debug(string.Format("Connected input of module '{0}' to output of module '{1} ({2})", modDn.ModuleName, modUp.ModuleName, PipelineName));
         }
 
         /// <summary>
@@ -329,11 +363,11 @@ namespace Mage
             {
                 mod.ColumnDefAvailable += colHandler;
                 mod.DataRowAvailable += rowHandler;
-                traceLog.Debug(string.Format("Connected external handler to module '{0}' ({1})", mod.ModuleName, PipelineName));
+                traceLogPipeline.Debug(string.Format("Connected external handler to module '{0}' ({1})", mod.ModuleName, PipelineName));
             }
             else
             {
-                traceLog.Error(string.Format("Could not connect handler module to module '{0}' ({1})", "Null module", PipelineName));
+                traceLogPipeline.Error(string.Format("Could not connect handler module to module '{0}' ({1})", "Null module", PipelineName));
             }
         }
 
@@ -393,7 +427,7 @@ namespace Mage
             catch (Exception e)
             {
                 var msg = "Module '" + moduleName + ":" + moduleType + "' could not be created - " + e.Message;
-                traceLog.Error(msg);
+                traceLogPipeline.Error(msg);
                 throw new MageException(msg);
             }
         }
@@ -452,7 +486,7 @@ namespace Mage
             mModuleIndex.Add(modDef.ModuleName, module);
             module.StatusMessageUpdated += HandleStatusMessageUpdated;
             module.WarningMessageUpdated += HandleWarningMessageUpdated;
-            traceLog.Debug(string.Format("Added module '{0}' ({1})", modDef.ModuleName, PipelineName));
+            traceLogPipeline.Debug(string.Format("Added module '{0}' ({1})", modDef.ModuleName, PipelineName));
             return module;
         }
 
@@ -663,7 +697,8 @@ namespace Mage
         /// <returns>Pipeline</returns>
         public static ProcessingPipeline Assemble(string name, IEnumerable<ModuleDef> namedModuleList)
         {
-            var pipeline = new ProcessingPipeline(name);
+            var pipeline = new ProcessingPipeline(name, LogFilePath, AppendDateToLogFileName);
+
             var currentModName = "";
             foreach (var mod in namedModuleList)
             {
