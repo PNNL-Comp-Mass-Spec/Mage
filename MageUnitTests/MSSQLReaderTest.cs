@@ -12,6 +12,11 @@ namespace MageUnitTests
     [TestFixture]
     public class MSSQLReaderTest
     {
+        private const string DMS_READER = "dmsreader";
+        private const string DMS_READER_PASSWORD = "dms4fun";
+
+        private const string MTS_READER = "mtuser";
+        private const string MTS_READER_PASSWORD = "mt4fun";
 
         /// <summary>
         /// A test for sqlText
@@ -67,7 +72,21 @@ namespace MageUnitTests
 
         [Test]
         [TestCase(@"..\..\..\TestItems\QueryDefinitions.xml")]
-        public void XMLQueryDatasetFactors(string queryDefinitionsPath)
+        [Category("DatabaseIntegrated")]
+        public void XMLQueryDatasetFactorsIntegrated(string queryDefinitionsPath)
+        {
+            XMLQueryDatasetFactors(queryDefinitionsPath, "", "");
+        }
+
+        [Test]
+        [TestCase(@"..\..\..\TestItems\QueryDefinitions.xml")]
+        [Category("DatabaseNamedUser")]
+        public void XMLQueryDatasetFactorsNamedUser(string queryDefinitionsPath)
+        {
+            XMLQueryDatasetFactors(queryDefinitionsPath, DMS_READER, DMS_READER_PASSWORD);
+        }
+
+        public void XMLQueryDatasetFactors(string queryDefinitionsPath, string username, string password)
         {
             var queryDefsFile = General.GetTestFile(queryDefinitionsPath);
 
@@ -84,11 +103,11 @@ namespace MageUnitTests
             Assert.AreNotEqual("", queryDefXML);
 
             // Create MSSQLReader module initialized from XML definition
-            var target = new MSSQLReader(queryDefXML, runtimeParameters);
+            var target = new MSSQLReader(queryDefXML, runtimeParameters, username, password);
             Assert.AreNotEqual(null, target);
 
-            var expected = "SELECT Dataset, Dataset_ID, Factor, Value FROM V_Custom_Factors_List_Report WHERE [Dataset] LIKE '%sarc%'";
-            Assert.AreEqual(expected, target.SQLText);
+            var expectedSql = "SELECT Dataset, Dataset_ID, Factor, Value FROM V_Custom_Factors_List_Report WHERE [Dataset] LIKE '%sarc%'";
+            Assert.AreEqual(expectedSql, target.SQLText);
 
             // Create test sink module and connect to MSSQLReader module
             var maxRows = 7;
@@ -99,18 +118,34 @@ namespace MageUnitTests
             target.Run(null);
 
             var colList = new[] { "Dataset", "Dataset_ID", "Factor", "Value" };
-            CheckRowsetResults(sink, maxRows, colList);
+            CheckRowsetResults(sink, maxRows, colList, username, expectedSql);
         }
 
         /// <summary>
         /// Test to get factors for dataset name
         /// </summary>
         [Test]
-        public void QueryDatasetFactors()
+        [Category("DatabaseIntegrated")]
+        public void QueryDatasetFactorsIntegrated()
+        {
+            QueryDatasetFactors("", "");
+        }
+
+        /// <summary>
+        /// Test to get factors for dataset name
+        /// </summary>
+        [Test]
+        [Category("DatabaseNamedUser")]
+        public void QueryDatasetFactorsNamedUser()
+        {
+            QueryDatasetFactors(DMS_READER, DMS_READER_PASSWORD);
+        }
+
+        private void QueryDatasetFactors(string username, string password)
         {
             // Create MSSQLReader module and test sink module
             // and connect together
-            var target = new MSSQLReader();
+            var target = new MSSQLReader(username, password);
             var maxRows = 7;
             var sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
@@ -135,19 +170,36 @@ namespace MageUnitTests
 
             target.Run(null);
 
-            CheckRowsetResults(sink, maxRows, colList);
+            CheckRowsetResults(sink, maxRows, colList, username, target.SQLText);
         }
 
         /// <summary>
         /// A test for straight SQL query against DMS
         /// using SQLBuilder to make the SQL
-        ///</summary>
+        /// </summary>
         [Test]
-        public void QueryWithSQLBuilderTest()
+        [Category("DatabaseIntegrated")]
+        public void QueryWithSQLBuilderTestIntegrated()
+        {
+            QueryWithSQLBuilderTest("", "");
+        }
+
+        /// <summary>
+        /// A test for straight SQL query against DMS
+        /// using SQLBuilder to make the SQL
+        /// </summary>
+        [Test]
+        [Category("DatabaseNamedUser")]
+        public void QueryWithSQLBuilderTestNamedUser()
+        {
+            QueryWithSQLBuilderTest(DMS_READER, DMS_READER_PASSWORD);
+        }
+
+        private void QueryWithSQLBuilderTest(string username, string password)
         {
             // Create MSSQLReader module and test sink module
             // and connect together (no pipeline object used)
-            var target = new MSSQLReader();
+            var target = new MSSQLReader(username, password);
             var maxRows = 7;
             var sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
@@ -178,19 +230,36 @@ namespace MageUnitTests
 
             target.Run(null);
 
-            CheckRowsetResults(sink, maxRows, colList);
+            CheckRowsetResults(sink, maxRows, colList, username, target.SQLText);
         }
 
         /// <summary>
         /// A test for straight SQL query against DMS
         /// using SQLBuilder to make the SQL
-        ///</summary>
+        /// </summary>
         [Test]
-        public void QueryAllMTDBs()
+        [Category("DatabaseIntegrated")]
+        public void QueryAllMTDBsIntegrated()
+        {
+            QueryAllMTDBs("", "");
+        }
+
+        /// <summary>
+        /// A test for straight SQL query against DMS
+        /// using SQLBuilder to make the SQL
+        /// </summary>
+        [Test]
+        [Category("DatabaseNamedUser")]
+        public void QueryAllMTDBsNamedUser()
+        {
+            QueryAllMTDBs(MTS_READER, MTS_READER_PASSWORD);
+        }
+
+        private void QueryAllMTDBs(string username, string password)
         {
             // Create MSSQLReader module and test sink module
             // and connect together (no pipeline object used)
-            var target = new MSSQLReader();
+            var target = new MSSQLReader(username, password);
             var maxRows = 5;
             var sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
@@ -214,18 +283,37 @@ namespace MageUnitTests
 
             target.Run(null);
 
-            CheckRowsetResults(sink, maxRows, colList);
+            CheckRowsetResults(sink, maxRows, colList, username, target.SQLText);
         }
 
         /// <summary>
-        ///A test for straight SQL query against DMS
-        ///</summary>
+        /// A test for straight SQL query against DMS
+        /// </summary>
         [Test]
-        public void QueryTest()
+        [Category("DatabaseIntegrated")]
+        public void QueryTestIntegrated()
+        {
+            QueryTest("", "");
+        }
+
+        /// <summary>
+        /// A test for straight SQL query against DMS
+        /// </summary>
+        [Test]
+        [Category("DatabaseNamedUser")]
+        public void QueryTestNamedUser()
+        {
+            QueryTest(DMS_READER, DMS_READER_PASSWORD);
+        }
+
+        /// <summary>
+        /// A test for straight SQL query against DMS
+        /// </summary>
+        private void QueryTest(string username, string password)
         {
             // Create MSSQLReader module and test sink module
             // and connect together (no pipeline object used)
-            var target = new MSSQLReader();
+            var target = new MSSQLReader(username, password);
             var maxRows = 7;
             var sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
@@ -243,20 +331,32 @@ namespace MageUnitTests
 
             target.Run(null);
 
-            CheckRowsetResults(sink, maxRows, colList);
+            CheckRowsetResults(sink, maxRows, colList, username, target.SQLText);
         }
 
         [Test]
-        public void DMSSprocReadTest()
+        [Category("DatabaseIntegrated")]
+        public void DMSSprocTestIntegrated()
+        {
+            DMSSprocReadTest("", "");
+        }
+
+        [Test]
+        [Category("DatabaseNamedUser")]
+        public void DMSSprocTestNamedUser()
+        {
+            DMSSprocReadTest(DMS_READER, DMS_READER_PASSWORD);
+        }
+
+        private void DMSSprocReadTest(string username, string password)
         {
             // Create MSSQLReader module and test sink module
             // and connect together (no pipeline object used)
-            var target = new MSSQLReader();
+            var target = new MSSQLReader(username, password);
             var maxRows = 4;
             var sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
             target.DataRowAvailable += sink.HandleDataRow;
-
 
             // Define and run a database sproc query
             // Defaults are gigasax and DMS5
@@ -265,7 +365,6 @@ namespace MageUnitTests
             target.SprocName = "FindExistingJobsForRequest";
             target.SetSprocParam("@requestID", "8142");
 
-
             target.Run(null);
 
             // Define columns (noramlly not needed for production code, but necessary for unit test)
@@ -273,12 +372,27 @@ namespace MageUnitTests
                 "Job", "State", "Priority", "Request", "Created", "Start", "Finish", "Processor",
                 "Dataset" };
 
-            CheckRowsetResults(sink, maxRows, colList);
+            var sprocInfo = "procedure " + target.SprocName + " in " + target.Database;
+            CheckRowsetResults(sink, maxRows, colList, username, sprocInfo);
         }
 
         [Test]
         [TestCase(@"..\..\..\TestItems\QueryDefinitions.xml")]
-        public void XMLMTSSprocReadTest(string queryDefinitionsPath)
+        [Category("DatabaseIntegrated")]
+        public void XMLMTSSprocReadTestIntegrated(string queryDefinitionsPath)
+        {
+            XMLMTSSprocReadTest(queryDefinitionsPath, "", "");
+        }
+
+        [Test]
+        [TestCase(@"..\..\..\TestItems\QueryDefinitions.xml")]
+        [Category("DatabaseNamedUser")]
+        public void XMLMTSSprocReadTestNamedUser(string queryDefinitionsPath)
+        {
+            XMLMTSSprocReadTest(queryDefinitionsPath, MTS_READER, MTS_READER_PASSWORD);
+        }
+
+        private void XMLMTSSprocReadTest(string queryDefinitionsPath, string username, string password)
         {
             var queryDefsFile = General.GetTestFile(queryDefinitionsPath);
 
@@ -292,7 +406,7 @@ namespace MageUnitTests
             Assert.AreNotEqual("", queryDefXML);
 
             // Create MSSQLReader module initialized from XML definition
-            var target = new MSSQLReader(queryDefXML, runtimeParameters);
+            var target = new MSSQLReader(queryDefXML, runtimeParameters, username, password);
             Assert.AreNotEqual(null, target);
 
             var expected = "GetMassTagsPlusPepProphetStats";
@@ -315,15 +429,29 @@ namespace MageUnitTests
                 "PepProphet_Probability_Max_CS1", "PepProphet_Probability_Max_CS2", "PepProphet_Probability_Max_CS3",
                 "PepProphet_FScore_Avg_CS1", "PepProphet_FScore_Avg_CS2", "PepProphet_FScore_Avg_CS3", "Cleavage_State" };
 
-            CheckRowsetResults(sink, maxRows, colList);
+            var sprocInfo = "procedure " + target.SprocName + " in " + target.Database;
+            CheckRowsetResults(sink, maxRows, colList, username, sprocInfo);
         }
 
         [Test]
-        public void MTSSprocReadTest()
+        [Category("DatabaseIntegrated")]
+        public void MTSSprocReadTestIntegrated()
+        {
+            MTSSprocReadTest("", "");
+        }
+
+        [Test]
+        [Category("DatabaseNamedUser")]
+        public void MTSSprocReadTestNamedUser()
+        {
+            MTSSprocReadTest(MTS_READER, MTS_READER_PASSWORD);
+        }
+
+        private void MTSSprocReadTest(string username, string password)
         {
             // Create MSSQLReader module and test sink module
             // and connect together (no pipeline object used)
-            var target = new MSSQLReader();
+            var target = new MSSQLReader(username, password);
             var maxRows = 4;
             var sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
@@ -357,14 +485,28 @@ namespace MageUnitTests
                 "PepProphet_Probability_Max_CS1", "PepProphet_Probability_Max_CS2", "PepProphet_Probability_Max_CS3",
                 "PepProphet_FScore_Avg_CS1", "PepProphet_FScore_Avg_CS2", "PepProphet_FScore_Avg_CS3", "Cleavage_State" };
 
-            CheckRowsetResults(sink, maxRows, colList);
+            var sprocInfo = "procedure " + target.SprocName + " in " + target.Database;
+            CheckRowsetResults(sink, maxRows, colList, username, sprocInfo);
         }
 
         [Test]
-        public void MTSDatabaseListReadTest()
+        [Category("DatabaseIntegrated")]
+        public void MTSDatabaseTestIntegrated()
+        {
+            MTSDatabaseListReadTest("", "");
+        }
+
+        [Test]
+        [Category("DatabaseNamedUser")]
+        public void MTSDatabaseTestNamedUser()
+        {
+            MTSDatabaseListReadTest(MTS_READER, MTS_READER_PASSWORD);
+        }
+
+        private void MTSDatabaseListReadTest(string username, string password)
         {
             // Create MSSQLReader module and test sink module and connect together
-            var target = new MSSQLReader();
+            var target = new MSSQLReader(username, password);
             var maxRows = 4;
             var sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
@@ -385,28 +527,44 @@ namespace MageUnitTests
             // Define columns (noramlly not needed for production code, but necessary for unit test)
             var colList = new[] { "Name", "Description", "Organism", "Campaign" };
 
-            CheckRowsetResults(sink, maxRows, colList);
+            var sprocInfo = "procedure " + target.SprocName + " in " + target.Database;
+            CheckRowsetResults(sink, maxRows, colList, username, sprocInfo);
         }
 
-        private static void CheckRowsetResults(SimpleSink sink, int maxRows, IReadOnlyList<string> colList)
+        private static void CheckRowsetResults(
+            SimpleSink sink,
+            int maxRows,
+            IReadOnlyList<string> colList,
+            string username,
+            string expectedSqlOrSProc)
         {
+
+            string errorMessage;
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                errorMessage = "using integrated authentication, for " + expectedSqlOrSProc;
+            }
+            else
+            {
+                errorMessage = "as user " + username + ", for " + expectedSqlOrSProc;
+            }
 
             // Did the test sink module get the expected row definitions
             var cols = sink.Columns;
-            Assert.AreEqual(cols.Count, colList.Count);
+            Assert.AreEqual(cols.Count, colList.Count, "Column count mismatch " + errorMessage);
             for (var i = 0; i < cols.Count; i++)
             {
-                Assert.AreEqual(cols[i].Name, colList[i], "Did not get get the expected row definitions");
+                Assert.AreEqual(cols[i].Name, colList[i], "Did not get get the expected row definitions " + errorMessage);
             }
 
             // Did the test sink module get the expected number of data rows
             // on its standard tabular input?
             var rows = sink.Rows;
 
-            Assert.AreEqual(maxRows, rows.Count, "Did not get get the expected number of data rows");
+            Assert.AreEqual(maxRows, rows.Count, "Did not get get the expected number of data rows " + errorMessage);
 
             // Are there the expected number of fields in the data row?
-            Assert.AreEqual(colList.Count, rows[0].Length, "Data rows do not have the expected number of fields");
+            Assert.AreEqual(colList.Count, rows[0].Length, "Data rows do not have the expected number of fields " + errorMessage);
         }
 
     }
