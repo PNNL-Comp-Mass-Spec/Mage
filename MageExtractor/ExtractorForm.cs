@@ -85,8 +85,8 @@ namespace MageExtractor
             {
                 // Configure logging
                 var logFilePath = Path.Combine(SavedState.DataDirectory, "log.txt");
-                FileLogger.AppendDateToBaseFileName = false;
-                FileLogger.ChangeLogFileBaseName(logFilePath);
+                const bool appendDateToBaseName = false;
+                FileLogger.ChangeLogFileBaseName(logFilePath, appendDateToBaseName);
                 FileLogger.WriteLog(BaseLogger.LogLevels.INFO, "Starting Mage Extractor");
 
                 ProcessingPipeline.AppendDateToLogFileName = FileLogger.AppendDateToBaseFileName;

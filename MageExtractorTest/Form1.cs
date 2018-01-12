@@ -2,6 +2,7 @@ using System;
 using System.Windows.Forms;
 using Mage;
 using MageDisplayLib;
+using PRISM.Logging;
 
 
 namespace MageExtractorTest {
@@ -14,6 +15,9 @@ namespace MageExtractorTest {
         public Form1() {
             InitializeComponent();
             SavedState.SetupConfigFiles("MageExtractor");
+            var logFilePath = Path.Combine(SavedState.DataDirectory, "log.txt");
+            const bool appendDateToBaseName = false;
+            FileLogger.ChangeLogFileBaseName(logFilePath, appendDateToBaseName);
         }
 
         #endregion
