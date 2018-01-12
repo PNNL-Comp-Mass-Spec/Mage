@@ -11,7 +11,6 @@ namespace MageFileProcessor
         [STAThread]
         static void Main()
         {
-            PRISM.Logging.FileLogger.AppendDateToBaseFileName = false;
 
             try
             {

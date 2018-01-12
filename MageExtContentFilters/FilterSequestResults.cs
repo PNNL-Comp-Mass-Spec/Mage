@@ -15,7 +15,7 @@ namespace MageExtContentFilters
 
         public bool EvaluateSequest(string peptideSequence, double xCorrValue, double delCNValue, double delCN2Value, int chargeState, double peptideMass, int cleavageState)
         {
-            //Implements IFilterResults.EvaluatePeptide
+            // Implements IFilterResults.EvaluatePeptide
 
             return EvaluateSequest(peptideSequence, xCorrValue, delCNValue, delCN2Value, chargeState, peptideMass, -1, -1, -1, -1, -1, -1);
         }
@@ -23,7 +23,7 @@ namespace MageExtContentFilters
 
         public bool EvaluateSequest(string peptideSequence, double xCorrValue, double delCNValue, double delCN2Value, int chargeState, double peptideMass, int spectrumCount, double discriminantScore, double NETAbsoluteDifference, int cleavageState, double msgfSpecProb, int rankXc)
         {
-            //Implements IFilterResults.EvaluatePeptide
+            // Implements IFilterResults.EvaluatePeptide
 
             var currEval = false;
             var peptideLength = GetPeptideLength(peptideSequence);
@@ -170,12 +170,12 @@ namespace MageExtContentFilters
                     }
 
                     if (currEval == false)
-                        break;                       //Subject didn't pass a criterion value, so move on to the next group
+                        break;                       // Subject didn't pass a criterion value, so move on to the next group
 
                 }
 
                 if (currEval)
-                    break;                           //Subject passed the criteria for this filtergroup
+                    break;                           // Subject passed the criteria for this filtergroup
             }
 
             return currEval;

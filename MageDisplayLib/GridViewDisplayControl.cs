@@ -52,7 +52,7 @@ namespace MageDisplayLib
         #region Member Variables
 
         /// <summary>
-        /// stash the Mage column defs we received on STI
+        /// Stash the Mage column defs we received on STI
         /// in case we need to output them later
         /// </summary>
         private Collection<MageColumnDef> mColumnDefs;
@@ -138,7 +138,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// get reference to internal DataGridView control
+        /// Get reference to internal DataGridView control
         /// </summary>
         public MyDataGridView List => gvQueryResults;
 
@@ -252,7 +252,7 @@ namespace MageDisplayLib
         #region Constructors
 
         /// <summary>
-        /// construct a new GridViewDisplayControl object
+        /// Construct a new GridViewDisplayControl object
         /// </summary>
         public GridViewDisplayControl()
         {
@@ -265,9 +265,9 @@ namespace MageDisplayLib
             gvQueryResults.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCellsExceptHeaders;
             gvQueryResults.RowHeadersVisible = false;
             gvQueryResults.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            //gvQueryResults.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            //gvQueryResults.CellBorderStyle = DataGridViewCellBorderStyle.Single;
-            //gvQueryResults.GridColor = Color.Black;
+            // gvQueryResults.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            // gvQueryResults.CellBorderStyle = DataGridViewCellBorderStyle.Single;
+            // gvQueryResults.GridColor = Color.Black;
             gvQueryResults.AllowUserToAddRows = false;
             gvQueryResults.AllowUserToDeleteRows = false;
             gvQueryResults.AllowUserToResizeColumns = true;
@@ -277,10 +277,10 @@ namespace MageDisplayLib
             gvQueryResults.ShiftClickSelect = true;
             MultiSelect = true;
 
-            //Get and Set the Current Cell
-            //gvQueryResults.CurrentCell.RowIndex;
-            //gvQueryResults.CurrentCell.ColumnIndex;
-            //gvQueryResults.CurrentCell = this.gvQueryResults[1,0]; // column 1, Row 0.
+            // Get and Set the Current Cell
+            // gvQueryResults.CurrentCell.RowIndex;
+            // gvQueryResults.CurrentCell.ColumnIndex;
+            // gvQueryResults.CurrentCell = this.gvQueryResults[1,0]; // column 1, Row 0.
 
         }
 
@@ -289,7 +289,7 @@ namespace MageDisplayLib
         #region Functions for inter-thread UI updating
 
         /// <summary>
-        /// delegates for inter-thread access to DataGridView control
+        /// Delegates for inter-thread access to DataGridView control
         /// </summary>
         private delegate void DisplayColumnCallback(Collection<MageColumnDef> colDefs);
         private delegate void DisplayRowBlockCallback(Collection<string[]> rows);
@@ -460,7 +460,7 @@ namespace MageDisplayLib
         #region STI Member Variables
 
         /// <summary>
-        /// internal buffer to accumulate data rows from standard tabular input
+        /// Internal buffer to accumulate data rows from standard tabular input
         /// </summary>
         private readonly Collection<string[]> mRowBuffer = new Collection<string[]>();
 
@@ -470,7 +470,7 @@ namespace MageDisplayLib
         #region STI Properties
 
         /// <summary>
-        /// number of data rows in an item block
+        /// Number of data rows in an item block
         /// </summary>
         public int ItemBlockSize { get; set; }
 
@@ -525,7 +525,7 @@ namespace MageDisplayLib
         #region Compatibility with ListDisplayControl
 
         /// <summary>
-        /// return suitable ISinkModule reference to this object
+        /// Return suitable ISinkModule reference to this object
         /// </summary>
         /// <returns>ISinkModule reference</returns>
         public ISinkModule MakeSink()
@@ -535,7 +535,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// return suitable ISinkModule reference to this object
+        /// Return suitable ISinkModule reference to this object
         /// </summary>
         /// <param name="title"></param>
         /// <param name="blkSz"></param>
@@ -547,7 +547,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// return suitable ISinkModule reference to this object
+        /// Return suitable ISinkModule reference to this object
         /// </summary>
         /// <param name="blkSz"></param>
         /// <returns>ISinkModule reference</returns>
@@ -587,11 +587,11 @@ namespace MageDisplayLib
             var selIdx = lv.SelectedRows[0].Index;
             if (moveUp)
             {
-                // ignore moveup of row(0)
+                // Ignore moveup of row(0)
                 if (selIdx == 0)
                     return;
 
-                // move the subitems for the previous row
+                // Move the subitems for the previous row
                 // to cache to make room for the selected row
                 for (var i = 0; i < lv.Rows[selIdx].Cells.Count; i++)
                 {
@@ -605,10 +605,11 @@ namespace MageDisplayLib
             }
             else
             {
-                // ignore movedown of last item
+                // Ignore movedown of last item
                 if (selIdx == lv.Rows.Count - 1)
                     return;
-                // move the Cells for the next row
+
+                // Move the Cells for the next row
                 // to cache so we can move the selected row down
                 for (var i = 0; i < lv.Rows[selIdx].Cells.Count; i++)
                 {
@@ -671,7 +672,6 @@ namespace MageDisplayLib
             /// <summary>
             /// Remove the items from the display list that are currently not selected
             /// </summary>
-            ///
             public void DeleteNotSelectedItems()
             {
                 if (AllowDelete)
@@ -846,7 +846,7 @@ namespace MageDisplayLib
 
                         if (myHashTable.ContainsKey(s))
                         {
-                            //If the row is in the hashtable, remove it
+                            // If the row is in the hashtable, remove it
                             myHashTable.Remove(s);
                             Rows[e.RowIndex].Selected = false;
                         }

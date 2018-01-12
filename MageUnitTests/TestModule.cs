@@ -35,23 +35,23 @@ namespace MageUnitTests
 
         public List<KeyValuePair<int, int>> OutToInPosMap => OutputToInputColumnPosMap;
 
-        //        public List<KeyValuePair<string, string>> InternalParameterList { get { return parameters; } }
+        // public List<KeyValuePair<string, string>> InternalParameterList { get { return parameters; } }
 
         #endregion
 
         #region IBaseModule Members
 
         /// <summary>
-        /// called before pipeline runs - module can do any special setup that it needs
+        /// Called before pipeline runs - module can do any special setup that it needs
         /// (override of base class)
         /// </summary>
         public override void Prepare()
         {
-            // nothing to do here
+            // Nothing to do here
         }
 
         /// <summary>
-        /// handler for Mage standard tablular input data rows
+        /// Handler for Mage standard tablular input data rows
         /// (override of base class)
         /// </summary>
         /// <param name="sender"></param>
@@ -69,7 +69,7 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        /// handler for Mage standard tablular column definition
+        /// Handler for Mage standard tablular column definition
         /// (override of base class)
         /// </summary>
         /// <param name="sender"></param>

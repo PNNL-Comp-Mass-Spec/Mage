@@ -138,12 +138,12 @@ namespace MageExtContentFilters
                     }
 
                     if (currEval == false)
-                        break;                       //Subject didn't pass a criterion value, so move on to the next group
+                        break;                       // Subject didn't pass a criterion value, so move on to the next group
 
                 }
 
                 if (currEval)
-                    break;                           //Subject passed the criteria for this filtergroup
+                    break;                           // Subject passed the criteria for this filtergroup
             }
 
             return currEval;

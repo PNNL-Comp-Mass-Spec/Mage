@@ -23,12 +23,12 @@ namespace MageDisplayLib
         #region Events for ListDisplay listeners to register for
 
         /// <summary>
-        /// event that is fired to pass on column definitions to our associated control
+        /// Event that is fired to pass on column definitions to our associated control
         /// </summary>
         public event EventHandler<ColumnHeaderEventArgs> OnColumnBlockRetrieved;
 
         /// <summary>
-        /// event that is fired to pass on a block of display rows to our associated control
+        /// Event that is fired to pass on a block of display rows to our associated control
         /// </summary>
         public event EventHandler<ItemBlockEventArgs> OnItemBlockRetrieved;
 
@@ -45,12 +45,12 @@ namespace MageDisplayLib
         #region Properties
 
         /// <summary>
-        /// number of data rows in an item block
+        /// Number of data rows in an item block
         /// </summary>
         public int ItemBlockSize { get; set; }
 
         /// <summary>
-        /// definition of columns
+        /// Definition of columns
         /// </summary>
         public Collection<MageColumnDef> ColumnDefs => new Collection<MageColumnDef>(mColumnDefs);
 
@@ -64,7 +64,7 @@ namespace MageDisplayLib
         #region Constructors
 
         /// <summary>
-        /// number of items to accumulate before firing an upate event
+        /// Number of items to accumulate before firing an upate event
         /// </summary>
         public LVAccumulator()
         {
@@ -76,7 +76,7 @@ namespace MageDisplayLib
         #region Utility functions
 
         /// <summary>
-        /// clear any accumulate row and column information
+        /// Clear any accumulate row and column information
         /// </summary>
         public void Clear()
         {
@@ -149,7 +149,8 @@ namespace MageDisplayLib
             foreach (var columnDef in mColumnDefs)
             {
                 var ch = new ColumnHeader();
-                // sort out column display size
+
+                // Sort out column display size
                 var colSize = columnDef.Size;
                 var colSizeToUse = 6;
                 if (!string.IsNullOrEmpty(colSize))
@@ -183,7 +184,7 @@ namespace MageDisplayLib
         private readonly ListViewItem[] ItemBlock;
 
         /// <summary>
-        /// get list of items being passed in the event
+        /// Get list of items being passed in the event
         /// </summary>
         /// <returns></returns>
         public ListViewItem[] GetItemBlock()
@@ -192,7 +193,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// construct new ItemBlockEventArgs object
+        /// Construct new ItemBlockEventArgs object
         /// with informatation in given collection of ListViewItems
         /// </summary>
         /// <param name="itemBlock"></param>
@@ -210,7 +211,7 @@ namespace MageDisplayLib
         private readonly ColumnHeader[] ColumnBlock;
 
         /// <summary>
-        /// return array of column definitions
+        /// Return array of column definitions
         /// </summary>
         /// <returns></returns>
         public ColumnHeader[] GetColumnBlock()
@@ -219,7 +220,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// construct a new ColumnHeaderEventArgs object
+        /// Construct a new ColumnHeaderEventArgs object
         /// with information contained in given collection of ColumnHeader objects
         /// </summary>
         /// <param name="columnBlock"></param>

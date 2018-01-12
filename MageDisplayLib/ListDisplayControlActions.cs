@@ -80,7 +80,7 @@ namespace MageDisplayLib
         /// <param name="items"></param>
         public void AppendContextMenuItems(ToolStripItem[] items)
         {
-            //           lvQueryResults.ContextMenuStrip.Items.Add(new ToolStripSeparator());
+            // lvQueryResults.ContextMenuStrip.Items.Add(new ToolStripSeparator());
             lvQueryResults.ContextMenuStrip.Items.AddRange(items);
         }
 
@@ -101,7 +101,7 @@ namespace MageDisplayLib
 
         /// <summary>
         /// Save contents of list display to file chosen by user
-        /// 
+        ///
         /// Prompt user to choose file, create Mage pipeline to write it from
         /// the display list, and either send off as command to be executed by main program
         /// or execute directly
@@ -134,7 +134,7 @@ namespace MageDisplayLib
 
         /// <summary>
         /// Restore contents of display list from file chosen by user.
-        /// 
+        ///
         /// Prompt user to choose file, create Mage pipeline to read it into
         /// the display list, and either send off as command to be executed by main program
         /// or execute directly
@@ -203,7 +203,7 @@ namespace MageDisplayLib
         #region Basic Housekeeping Menus
 
         /// <summary>
-        /// builds a set of new menu items that handle basic housekeeping
+        /// Builds a set of new menu items that handle basic housekeeping
         /// (selection and deletion) of items in list
         /// </summary>
         /// <returns></returns>
@@ -244,7 +244,7 @@ namespace MageDisplayLib
 
         /// <summary>
         /// Builds as set of menu items for actions that copy contents of
-        /// list to clipboard
+        /// List to clipboard
         /// </summary>
         /// <returns></returns>
         private ToolStripItem[] GetCopyMenuItems()
@@ -372,7 +372,7 @@ namespace MageDisplayLib
 
         /// <summary>
         /// Will be wired up to receive "SelectionChanged" events
-        /// from associated ListDisplay so that display state 
+        /// from associated ListDisplay so that display state
         /// of menu items may be adjusted
         /// </summary>
         /// <param name="sender"></param>
@@ -380,7 +380,7 @@ namespace MageDisplayLib
         private void HandleSelectionChanged(object sender, EventArgs args)
         {
 
-            // whole context menu enabled/disabled based on whether there are any rows selected or not
+            // Whole context menu enabled/disabled based on whether there are any rows selected or not
             if (SelectedItemCount == 0)
             {
                 List<string> lstAlwaysActive = null;

@@ -86,30 +86,30 @@ namespace Mage
         {
             Type modType = null;
 
-            // is the module class in the executing assembly?
-            var ae = Assembly.GetExecutingAssembly(); //GetType().Assembly;
-                                                      //modType = ae.GetType(ClassName); // should work, but doesn't
-                                                      //string ne = ae.GetName().Name;
-                                                      //modType = Type.GetType(ne + "." + ClassName); // does work, but do it the long way for consistency
+            // Is the module class in the executing assembly?
+            var ae = Assembly.GetExecutingAssembly(); // GetType().Assembly;
+                                                      // modType = ae.GetType(ClassName); // should work, but doesn't
+                                                      // string ne = ae.GetName().Name;
+                                                      // modType = Type.GetType(ne + "." + ClassName); // does work, but do it the long way for consistency
             modType = GetClassTypeFromAssembly(ClassName, ae);
 
             if (modType == null)
             {
-                // is the module class in the main assembly?
+                // Is the module class in the main assembly?
                 var aa = Assembly.GetEntryAssembly();
                 modType = GetClassTypeFromAssembly(ClassName, aa);
             }
             if (modType == null)
             {
-                // is the module class in the assembly of the code that called us?
-                var ac = Assembly.GetCallingAssembly(); //GetType().Assembly;
-                //string nc = ac.GetName().Name;
+                // Is the module class in the assembly of the code that called us?
+                var ac = Assembly.GetCallingAssembly(); // GetType().Assembly;
+                // string nc = ac.GetName().Name;
                 // modType = Type.GetType(nc + "." + ClassName); // should work, but doesn't
                 modType = GetClassTypeFromAssembly(ClassName, ac);
             }
             if (modType == null)
             {
-                // is the module class found in a loadable assembly?
+                // Is the module class found in a loadable assembly?
                 if (ExternalModuleFolder != null)
                 {
                     var di = new DirectoryInfo(ExternalModuleFolder);
@@ -121,7 +121,7 @@ namespace Mage
                         var af = Assembly.LoadFrom(path);
                         modType = GetClassTypeFromAssembly(ClassName, af);
                         if (modType != null)
-                            break; // we found it, don't keep looking
+                            break; // We found it, don't keep looking
                     } // foreach
                 }
             }
@@ -160,23 +160,23 @@ namespace Mage
         #region Filter Discovery support
 
         /// <summary>
-        /// list of attributes for filters and parameter panels
+        /// List of attributes for filters and parameter panels
         /// </summary>
         private static Collection<MageAttribute> mFilterList = new Collection<MageAttribute>();
 
         /// <summary>
-        /// list of attributes for filters, and filter panels, indexed by ID
+        /// List of attributes for filters, and filter panels, indexed by ID
         /// </summary>
         private static readonly Dictionary<string, MageAttribute> mFilters = new Dictionary<string, MageAttribute>();
         private static readonly Dictionary<string, MageAttribute> mPanels = new Dictionary<string, MageAttribute>();
 
         /// <summary>
-        /// list of attributes for filters, indexed by label
+        /// List of attributes for filters, indexed by label
         /// </summary>
         private static readonly Dictionary<string, MageAttribute> mFiltersByLabel = new Dictionary<string, MageAttribute>();
 
         /// <summary>
-        /// get list of filter labels (for display)
+        /// Get list of filter labels (for display)
         /// </summary>
         public static Collection<string> FilterLabels
         {
@@ -205,7 +205,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// return class name for given filter label
+        /// Return class name for given filter label
         /// </summary>
         /// <param name="filterLabel"></param>
         /// <returns></returns>
@@ -220,7 +220,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// find name of parameter panel associated with given filter label, if there is one
+        /// Find name of parameter panel associated with given filter label, if there is one
         /// </summary>
         /// <param name="filterLabel"></param>
         /// <returns></returns>
@@ -239,7 +239,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// discover filter modules and their associated parameter panels
+        /// Discover filter modules and their associated parameter panels
         /// and set up the necessary internal properties, components, and variables
         /// </summary>
         public static void SetupFilters()
@@ -261,22 +261,22 @@ namespace Mage
         }
 
         /// <summary>
-        /// find filter modules in main assembly and loadable assemblies
+        /// Find filter modules in main assembly and loadable assemblies
         /// and add to the internal master list
         /// </summary>
         /// <returns></returns>
         public static Collection<MageAttribute> FindFilters()
         {
-            // list to hold info about discovered filters
+            // List to hold info about discovered filters
             var filterList = new Collection<MageAttribute>();
 
-            // list to hold classes that we will look at
+            // List to hold classes that we will look at
             var classesToExamine = new List<Type>();
 
-            // add classes from main assembly
+            // Add classes from main assembly
             classesToExamine.AddRange(Assembly.GetEntryAssembly().GetTypes());
 
-            // get classes from loadable DLLs
+            // Get classes from loadable DLLs
             var di = new DirectoryInfo(ExternalModuleFolder);
             var dllFiles = new List<FileInfo>();
             dllFiles.AddRange(di.GetFiles(LoadableModuleFileNamePrefix + "*.dll"));
@@ -322,7 +322,7 @@ namespace Mage
             var doc = new XmlDocument();
             doc.Load(QueryDefinitionFileName);
 
-            // find query node by name
+            // Find query node by name
             var xpath = string.Format(".//query[@name='{0}']", queryName);
             var queryNode = doc.SelectSingleNode(xpath);
 

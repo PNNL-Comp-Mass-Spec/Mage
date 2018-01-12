@@ -9,7 +9,7 @@ namespace BiodiversityFileCopy
   {
     public static Boolean InterpretCommandLineOptions(Processing proc, string[] args)
     {
-      // explanation of command options
+      // Explanation of command options
       var optionDocs = new Dictionary<string, string> {
                 {"-OutputFolder", @"Root folder path for output files to be copied |[Default: \\proto-11\BiodiversityLibrary]"},
                 {"-AssignedOrganisms", @"TSV file that contains list of data package IDs |and their corresponding assigned organism. |[Default: DMS_Organism_Stats_Annotated_MICROBES.txt]"},
@@ -19,7 +19,7 @@ namespace BiodiversityFileCopy
                 {"-Verbose", @"Allowed values: 'on'/'off' [Default: 'off']|If 'on', details for each file will be included in log."},
                 {"-SourceCheck", @"Allowed values: 'on'/'off' [Default: 'on']|If 'on', check existence of source files to be copied.|If 'off', do not check.|Automatically sets '-Copy' to 'off'."}
             };
-      // option keyword-to-internal code map
+      // Option keyword-to-internal code map
       var optionKeywords = new Dictionary<string, string>
             {
                 {"-OutputFolder", @"output_folder"},
@@ -31,7 +31,7 @@ namespace BiodiversityFileCopy
                 {"-SourceCheck", "source_check"}
             };
 
-      // dump usage
+      // Dump usage
       if (args[0].ToLower() == "-help") {
 
         Console.WriteLine(string.Format("BiodiversityFileCopy: {0}\n", proc.GetProgramVersionNumber()));
@@ -55,7 +55,7 @@ namespace BiodiversityFileCopy
       proc.Verbose = false;
       proc.DoSourceCheck = true;
 
-      // process arguments
+      // Process arguments
       var sa = new Stack<string>(args.Reverse());
       while (sa.Count > 0) {
         var opt = sa.Pop();
@@ -124,7 +124,7 @@ namespace BiodiversityFileCopy
         return false;
       }
 
-      // cross-compatibility
+      // Cross-compatibility
       if (!proc.DoSourceCheck) {
         proc.DoCopyFiles = false;
       }

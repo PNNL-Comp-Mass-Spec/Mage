@@ -11,11 +11,11 @@ namespace MageFilePackager
     public partial class FilePackageMgmtPanel : UserControl, IModuleParameters
     {
 
-        //       public event EventHandler<MageCommandEventArgs> OnAction;
+        // public event EventHandler<MageCommandEventArgs> OnAction;
 
         #region Member Variables
 
-        // path for local copy of manifest file
+        // Path for local copy of manifest file
         private string _outputPath;
 
         #endregion
@@ -58,7 +58,7 @@ namespace MageFilePackager
             set { packageListDisplayControl1.PageTitle = value; }
         }
 
-        // display list that provides new content to import into file package 
+        // Display list that provides new content to import into file package
         public GridViewDisplayControl FileSourceList { get; set; }
 
         public string FileListLabelPrefix { get; set; }
@@ -69,7 +69,7 @@ namespace MageFilePackager
             set { ContentInfoCtl.Text = value; }
         }
 
-        // local path for manifest file
+        // Local path for manifest file
         public string OutputFilePath
         {
             get
@@ -176,13 +176,13 @@ namespace MageFilePackager
         }
 
         /// <summary>
-        /// 
+        /// Get current package contents
         /// </summary>
         /// <returns></returns>
         private SimpleSink GetCurrentPackageContents()
         {
             var nvSink = new Accummulator();
-            // save current content of package from content display
+            // Save current content of package from content display
             if (packageListDisplayControl1.ItemCount > 0)
             {
                 var cvSource = new GVPipelineSource(packageListDisplayControl1, "All");
@@ -197,7 +197,7 @@ namespace MageFilePackager
         #region File List Actions
 
         /// <summary>
-        /// display contents of file package in tree view 
+        /// Display contents of file package in tree view
         /// and allow user to choose which files to keep
         /// </summary>
         private void EditPackageListAsTree()
@@ -216,7 +216,7 @@ namespace MageFilePackager
         }
 
         /// <summary>
-        /// save current contents of file package to CSV file
+        /// Save current contents of file package to CSV file
         /// </summary>
         private void SavePackageListToFile()
         {
@@ -249,7 +249,7 @@ namespace MageFilePackager
         }
 
         /// <summary>
-        /// replace contents of file package from CSV file
+        /// Replace contents of file package from CSV file
         /// </summary>
         private void LoadPackageListFromFile()
         {
@@ -284,7 +284,7 @@ namespace MageFilePackager
         #region Make Manifiest Actions
 
         /// <summary>
-        /// create XML manifest for file package contents
+        /// Create XML manifest for file package contents
         /// and optionally save to file and/or submit to DMS web service
         /// </summary>
         private void MakeManifest()
@@ -355,20 +355,22 @@ namespace MageFilePackager
         }
 
         /// <summary>
-        /// calculate total size of all files in file package
+        /// Calculate total size of all files in file package
         /// </summary>
         /// <returns></returns>
         private float TotalKB()
         {
             float totalKB = 0;
-            // find file size column
+
+            // Find file size column
             var idx = -1;
             foreach (DataGridViewColumn col in packageListDisplayControl1.List.Columns)
             {
                 if (col.Name == "KB")
                     idx = col.Index;
             }
-            // build total
+
+            // Build total
             if (idx != -1)
             {
                 foreach (DataGridViewRow row in packageListDisplayControl1.List.Rows)

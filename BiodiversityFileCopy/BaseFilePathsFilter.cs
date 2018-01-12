@@ -3,7 +3,7 @@
 namespace BiodiversityFileCopy
 {
   /// <summary>
-  /// base class for Mage filter to add source and destination 
+  /// Base class for Mage filter to add source and destination
   /// file path columns to output stream
   /// </summary>
   public abstract class BaseFilePathsFilter : ContentFilter
@@ -57,7 +57,7 @@ namespace BiodiversityFileCopy
 
     /// <summary>
     /// This function is overridden by subclasses
-    /// to build the actual source and destination file paths 
+    /// to build the actual source and destination file paths
     /// </summary>
     /// <param name="outRow">current row to be output into the stream</param>
     /// <param name="srcFilePath">full path to source file</param>

@@ -10,9 +10,9 @@ namespace MageExtExtractionFilters
 
         #region Member Variables
 
-        // working copy of X!Tandem filter object
+        // Working copy of X!Tandem filter object
 
-        // indexes into the synopsis row field array
+        // Indexes into the synopsis row field array
         private int peptideSequenceIndex;
         private int delCN2ValueIndex;
         private int chargeStateIndex;
@@ -178,7 +178,7 @@ namespace MageExtExtractionFilters
 
 
         /// <summary>
-        /// set up indexes into row fields array based on column name
+        /// Set up indexes into row fields array based on column name
         /// (saves time when referencing result columns later)
         /// </summary>
         private void PrecalculateFieldIndexes()
@@ -215,14 +215,14 @@ namespace MageExtExtractionFilters
             var runtimeParms = new Dictionary<string, string>() { { "Filter_Set_ID", FilterSetID } };
             var reader = new MSSQLReader(queryDefXML, runtimeParms);
 
-            // create Mage module to receive query results
+            // Create Mage module to receive query results
             var filterCriteria = new SimpleSink();
 
-            // build pipeline and run it
+            // Build pipeline and run it
             var pipeline = ProcessingPipeline.Assemble("GetFilterCriteria", reader, filterCriteria);
             pipeline.RunRoot(null);
 
-            // create new X!Tandem filter object with retrieved filter criteria
+            // Create new X!Tandem filter object with retrieved filter criteria
             return new FilterXTResults(filterCriteria.Rows, FilterSetID);
         }
 

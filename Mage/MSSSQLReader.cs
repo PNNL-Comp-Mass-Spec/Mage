@@ -84,7 +84,7 @@ namespace Mage
         #region Constructors
 
         /// <summary>
-        /// construct a new Mage SQL Server reader module
+        /// Construct a new Mage SQL Server reader module
         /// </summary>
         public MSSQLReader()
         {
@@ -100,7 +100,7 @@ namespace Mage
         {
             SprocName = "";
             var builder = new SQLBuilder(xml, ref args);
-            //            builder.InitializeFromXML(xml, ref args);
+            // builder.InitializeFromXML(xml, ref args);
             SetPropertiesFromBuilder(builder);
         }
 
@@ -130,7 +130,7 @@ namespace Mage
         #region IDisposable Members
 
         /// <summary>
-        /// dispose of held resources
+        /// Dispose of held resources
         /// </summary>
         public void Dispose()
         {
@@ -139,7 +139,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// dispose of held resources
+        /// Dispose of held resources
         /// </summary>
         /// <param name="disposing"></param>
         private void Dispose(bool disposing)
@@ -151,7 +151,7 @@ namespace Mage
             // Code to dispose the un-managed resources of the class
             mConnection?.Dispose();
 
-            //            isDisposed = true;
+            // isDisposed = true;
         }
 
         #endregion
@@ -166,11 +166,11 @@ namespace Mage
         private void SetPropertiesFromBuilder(SQLBuilder builder)
         {
 
-            // set this module's properties from builder's special arguments list
+            // Set this module's properties from builder's special arguments list
             SetParameters(builder.SpecialArgs);
 
             if (!string.IsNullOrEmpty(builder.SprocName))
-            { // if query is via sproc call, set sproc arguments
+            { // If query is via sproc call, set sproc arguments
                 SprocName = builder.SprocName;
                 foreach (var parm in builder.SprocParameters)
                 {
@@ -178,7 +178,7 @@ namespace Mage
                 }
             }
             else
-            { // otherwise, we are doing straight SQL query, build the SQL
+            { // Otherwise, we are doing straight SQL query, build the SQL
                 SprocName = "";
                 SQLText = builder.BuildQuerySQL();
             }
@@ -312,7 +312,7 @@ namespace Mage
             duration = stopTime - startTime;
             traceLogReader.Info("MSSQLReader.GetData --> Get data finish (" + duration + ") [" + totalRows + "]:" + SQLText);
 
-            //Always close the DataReader
+            // Always close the DataReader
             myReader.Close();
         }
 
@@ -324,7 +324,7 @@ namespace Mage
         /// <param name="totalRows">Total rows delivered</param>
         private void OutputDataRows(IDataReader myReader, IReadOnlyList<MageColumnDef> columnDefs, ref int totalRows)
         {
-            // now do all the rows - if anyone is registered as wanting them
+            // Now do all the rows - if anyone is registered as wanting them
             startTime = DateTime.UtcNow;
             traceLogReader.Debug("MSSQLReader.GetData --> Get data start:" + SQLText);
             while (myReader.Read())
@@ -389,7 +389,7 @@ namespace Mage
         /// <param name="columnDefs">Column definitions</param>
         private void OutputColumnDefinitions(IDataReader myReader, out List<MageColumnDef> columnDefs)
         {
-            // if anyone is registered as listening for ColumnDefAvailable events, make it happen for them
+            // If anyone is registered as listening for ColumnDefAvailable events, make it happen for them
             startTime = DateTime.UtcNow;
             traceLogReader.Debug("MSSQLReader.GetData --> Get column info start:" + SQLText);
 
@@ -403,11 +403,11 @@ namespace Mage
             {
                 foreach (DataRow drField in schemaTable.Rows)
                 {
-                    // initialize column definition with canonical fields
+                    // Initialize column definition with canonical fields
                     var columnDef = GetColumnInfo(drField);
                     if (!columnDef.Hidden)
                     {
-                        // pass information about this column to the listeners
+                        // Pass information about this column to the listeners
                         columnDefs.Add(columnDef);
                     }
                     else
@@ -432,7 +432,7 @@ namespace Mage
         /// <returns></returns>
         private static MageColumnDef GetColumnInfo(DataRow drField)
         {
-            // add the canonical column definition fields to column definition
+            // Add the canonical column definition fields to column definition
 
             var columnDef = new MageColumnDef
             {
@@ -447,7 +447,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// inform any interested listeners about our progress
+        /// Inform any interested listeners about our progress
         /// </summary>
         /// <param name="message"></param>
         private void UpdateStatusMessage(string message)
@@ -460,7 +460,7 @@ namespace Mage
         #region Code for stored procedures
 
         /// <summary>
-        /// return a SqlCommand suitable for calling the given stored procedure
+        /// Return a SqlCommand suitable for calling the given stored procedure
         /// with the given argument values
         /// </summary>
         /// <param name="sprocName"></param>
@@ -469,7 +469,7 @@ namespace Mage
         private SqlCommand GetSprocCmd(string sprocName, IReadOnlyDictionary<string, string> parms)
         {
 
-            // start the SqlCommand that we are building up for the sproc
+            // Start the SqlCommand that we are building up for the sproc
             var builtCmd = new SqlCommand
             {
                 Connection = mConnection
@@ -477,7 +477,7 @@ namespace Mage
 
             try
             {
-                // query the database to get argument definitions for the given stored procedure
+                // Query the database to get argument definitions for the given stored procedure
                 var cmd = new SqlCommand
                 {
                     Connection = mConnection
@@ -485,22 +485,22 @@ namespace Mage
 
                 var sqlText = string.Format("SELECT * FROM INFORMATION_SCHEMA.PARAMETERS WHERE SPECIFIC_NAME = '{0}'", sprocName);
                 cmd.CommandText = sqlText;
-                //
+
                 var rdr = cmd.ExecuteReader();
 
-                // column positions for the argument data we need
+                // Column positions for the argument data we need
                 var namIdx = rdr.GetOrdinal("PARAMETER_NAME");
                 var typIdx = rdr.GetOrdinal("DATA_TYPE");
                 var modIdx = rdr.GetOrdinal("PARAMETER_MODE");
                 var sizIdx = rdr.GetOrdinal("CHARACTER_MAXIMUM_LENGTH");
 
-                // more stuff for the SqlCommand being built
+                // More stuff for the SqlCommand being built
                 builtCmd.CommandType = CommandType.StoredProcedure;
                 builtCmd.CommandText = sprocName;
                 builtCmd.Parameters.Add(new SqlParameter("@Return", SqlDbType.Int));
                 builtCmd.Parameters["@Return"].Direction = ParameterDirection.ReturnValue;
 
-                // loop through all the arguments and add a parameter for each one
+                // Loop through all the arguments and add a parameter for each one
                 // the the SqlCommand being built
                 while (rdr.Read())
                 {

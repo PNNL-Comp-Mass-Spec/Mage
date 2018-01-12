@@ -43,7 +43,7 @@ namespace MageUnitTests
             var target = new FileCopyExtracter();
             var sourceFile = "SourceFile";
 
-            // typical usage - ID column in column list and ApplyPrefixToFileName set to "Yes"
+            // Typical usage - ID column in column list and ApplyPrefixToFileName set to "Yes"
             var IDColName = "Tres";
             target.InputColumnPosAccessor = new Dictionary<string, int> { { "Uno", 0 }, { "Dos", 1 }, { IDColName, 2 } };
             target.ColumnToUseForPrefix = IDColName;
@@ -55,7 +55,7 @@ namespace MageUnitTests
             var actual = target.GetDestFileAccessor(sourceFile, fieldPos, fields);
             Assert.AreEqual(expected, actual, "Typical usage");
 
-            // typical usage - ID column in column list and ApplyPrefixToFileName set to "No"
+            // Typical usage - ID column in column list and ApplyPrefixToFileName set to "No"
             IDColName = "Tres";
             target.InputColumnPosAccessor = new Dictionary<string, int> { { "Uno", 0 }, { "Dos", 1 }, { IDColName, 2 } };
             target.ColumnToUseForPrefix = IDColName;

@@ -38,17 +38,17 @@ namespace Mage
         #region Properties
 
         /// <summary>
-        /// database table for SQL query
+        /// Database table for SQL query
         /// </summary>
         public string Table { set; get; }
 
         /// <summary>
-        /// list of columns for SQL query
+        /// List of columns for SQL query
         /// </summary>
         public string Columns { set; get; }
 
         /// <summary>
-        /// format of final SQL query:
+        /// Format of final SQL query:
         /// - colum_data_only
         /// - count_only
         /// - filtered_and_sorted
@@ -57,7 +57,7 @@ namespace Mage
         public string QueryType { get; set; }
 
         /// <summary>
-        /// name of stored procedure to call for query
+        /// Name of stored procedure to call for query
         /// (must be blank if not applicable)
         /// </summary>
         public string SprocName { get; set; }
@@ -68,12 +68,12 @@ namespace Mage
         public Dictionary<string, string> SpecialArgs => mSpecialArgs;
 
         /// <summary>
-        /// get list of stored procedure arguments
+        /// Get list of stored procedure arguments
         /// </summary>
         public Dictionary<string, string> SprocParameters => mSprocParameters;
 
         /// <summary>
-        /// are there any predicate clauses?
+        /// Are there any predicate clauses?
         /// </summary>
         public bool HasPredicate => (mPredicates.Count > 0);
 
@@ -82,34 +82,34 @@ namespace Mage
         #region Private Classes
 
         /// <summary>
-        /// a query predicate item
+        /// A query predicate item
         /// </summary>
         protected class QueryPredicate
         {
 
             /// <summary>
-            /// relationship with other predicate items ("AND" or "OR")
+            /// Relationship with other predicate items ("AND" or "OR")
             /// </summary>
             public string rel { get; set; }
 
             /// <summary>
-            /// column
+            /// Column
             /// </summary>
             public string col { get; set; }
 
             /// <summary>
-            /// comparison
+            /// Comparison
             /// </summary>
             public string cmp { get; set; }
 
 
             /// <summary>
-            /// value to compare
+            /// Value to compare
             /// </summary>
             public string val { get; set; }
 
             /// <summary>
-            /// construct a basic query predicate item
+            /// Construct a basic query predicate item
             /// </summary>
             public QueryPredicate()
             {
@@ -124,17 +124,17 @@ namespace Mage
         {
 
             /// <summary>
-            /// soring column
+            /// Soring column
             /// </summary>
             public string col { get; set; }
 
             /// <summary>
-            /// sorting direction
+            /// Sorting direction
             /// </summary>
             public string dir { get; set; }
 
             /// <summary>
-            /// construct new QuerySort object
+            /// Construct new QuerySort object
             /// </summary>
             public QuerySort()
             {
@@ -148,7 +148,7 @@ namespace Mage
         #region Constructors
 
         /// <summary>
-        /// construct new Mage SQLBuilder object
+        /// Construct new Mage SQLBuilder object
         /// </summary>
         public SQLBuilder()
         {
@@ -159,7 +159,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// construct new Mage SQLBuilder object
+        /// Construct new Mage SQLBuilder object
         /// and build SQL query from given xml template and runtime args
         /// </summary>
         /// <param name="xml"></param>
@@ -194,7 +194,7 @@ namespace Mage
             if (queryNode == null)
                 return;
 
-            // step through all item nodes in query
+            // Step through all item nodes in query
             foreach (System.Xml.XmlNode itemNode in queryNode.ChildNodes)
             {
                 if (itemNode.Attributes == null)
@@ -237,20 +237,20 @@ namespace Mage
                 }
             }
 
-            // find any special runtime arguments (name is marked by prefix)
-            // strip the prefix, add to specialArgs, and remove from runtime arguments list
+            // Find any special runtime arguments (name is marked by prefix)
+            // Strip the prefix, add to specialArgs, and remove from runtime arguments list
             var tempArgs = new Dictionary<string, string>(args);
             foreach (var arg in tempArgs)
             {
                 if (arg.Key.StartsWith(":"))
-                { // special runtime parameters have prefix
+                { // Special runtime parameters have prefix
                     var key = arg.Key.Substring(1, arg.Key.Length - 1);
                     mSpecialArgs[key] = arg.Value;
                     args.Remove(arg.Key);
                 }
             }
 
-            // if this is straight query, apply args to predicate
+            // If this is straight query, apply args to predicate
             if (string.IsNullOrEmpty(SprocName) && args != null)
             {
                 foreach (var arg in args)
@@ -262,7 +262,7 @@ namespace Mage
                 }
             }
 
-            // if this is stored procedure query, apply args to parameters
+            // If this is stored procedure query, apply args to parameters
             if (!string.IsNullOrEmpty(SprocName) && args != null)
             {
                 foreach (var arg in args)
@@ -292,7 +292,7 @@ namespace Mage
             if (queryNode == null)
                 return descriptions;
 
-            // step through all item nodes in query
+            // Step through all item nodes in query
             foreach (System.Xml.XmlNode itemNode in queryNode.ChildNodes)
             {
                 switch (itemNode.Name)
@@ -395,7 +395,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// add item to be used for building the 'Order by' clause
+        /// Add item to be used for building the 'Order by' clause
         /// </summary>
         /// <param name="col">Sort column name</param>
         /// <param name="dir">Sort direction ("ASC"/"DESC")</param>
@@ -416,7 +416,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// wildcards and special characters:
+        /// Wildcards and special characters:
         /// the presence of regex/glob style wildcard characters
         /// will cause the defined column comparison to be
         /// overridden by a 'LIKE' operator, with substitution of
@@ -427,14 +427,14 @@ namespace Mage
         /// <param name="val"></param>
         protected static void ConvertWildcards(ref string cmp, ref string val)
         {
-            // look for wildcard characters
+            // Look for wildcard characters
 
             var exact_match = (val.Substring(0, 1) == "~");
             var regex_all = val.Contains("*");
             var regex_one = val.Contains("?");
             var sql_any = val.Contains("%");
 
-            // force exact match
+            // Force exact match
             if (exact_match)
             {
                 val = val.Replace("~", "");
@@ -450,20 +450,20 @@ namespace Mage
                 var exceptions = new[] { "MatchesText", "MTx", "MatchesTextOrBlank", "MTxOB" };
                 if (!sql_any && !exceptions.Contains(cmp))
                 {
-                    // quote underscores in the absence of '%' or regex/glob wildcards
+                    // Quote underscores in the absence of '%' or regex/glob wildcards
                     val = val.Replace("_", "[_]");
                 }
             }
         }
 
         /// <summary>
-        /// build mssql T-SQL SQL query from component parts
+        /// Build mssql T-SQL SQL query from component parts
         /// </summary>
         /// <returns>SQL string</returns>
         public string BuildQuerySQL()
         {
 
-            // process the predicate list
+            // Process the predicate list
             var p_and = new List<string>();
             var p_or = new List<string>();
 
@@ -484,11 +484,11 @@ namespace Mage
                 }
             }
 
-            // build guts of query
+            // Build guts of query
             var baseSql = new StringBuilder();
             baseSql.Append(" FROM " + Table);
-            //
-            // collect all 'or' clauses as one grouped item and put it into the 'and' item array
+
+            // Collect all 'or' clauses as one grouped item and put it into the 'and' item array
             if (p_or.Count > 0)
             {
                 p_and.Add("(" + string.Join(" OR ", p_or) + ")");
@@ -501,14 +501,14 @@ namespace Mage
                 baseSql.Append(" WHERE " + pred);
             }
 
-            //columns to display
+            // columns to display
             var display_cols = Columns;
 
-            // construct final query according to its intended use
+            // Construct final query according to its intended use
             var sql = new StringBuilder();
             switch (QueryType)
             {
-                case "count_only": // query for returning count of total rows
+                case "count_only": // Query for returning count of total rows
                     sql.Append("SELECT COUNT(*) AS numrows");
                     sql.Append(baseSql);
                     break;
@@ -535,7 +535,7 @@ namespace Mage
         #region Private Functions
 
         /// <summary>
-        /// build "order by" clause
+        /// Build "order by" clause
         /// </summary>
         /// <param name="sortItems"></param>
         /// <returns>SQL text for sorting</returns>
@@ -550,7 +550,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// generate sql predicate string from predicate specification object
+        /// Generate sql predicate string from predicate specification object
         /// (column name, comparison operator, comparison value)
         /// </summary>
         /// <param name="predicate">List of predicate items</param>

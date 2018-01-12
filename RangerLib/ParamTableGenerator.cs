@@ -15,22 +15,22 @@ namespace RangerLib
         private readonly Dictionary<string, string> mParamOperatorLookup = new Dictionary<string, string>();
 
         /// <summary>
-        /// inform user of how many rows will be generated (after parameters are set)
+        /// Inform user of how many rows will be generated (after parameters are set)
         /// </summary>
         public int GeneratedParameterCount { get { return mPGenModule.PredictedOutputRowCount; } }
 
         /// <summary>
-        ///  if ouput is delivered to file, set the path here if not, leave it blank
+        ///  If ouput is delivered to file, set the path here if not, leave it blank
         /// </summary>
         public string FilePath { get; set; }
 
         /// <summary>
-        /// if output is delivered to SQLite DB, set path to DB here
+        /// If output is delivered to SQLite DB, set path to DB here
         /// </summary>
         public string DBPath { get; set; }
 
         /// <summary>
-        /// if output is delivered to SQLite DB, set table name here
+        /// If output is delivered to SQLite DB, set table name here
         /// </summary>
         public string TableName { get; set; }
 
@@ -70,7 +70,7 @@ namespace RangerLib
         public ProcessingPipeline GetPipeline()
         {
 
-            // build column lists and column overwrite specs
+            // Build column lists and column overwrite specs
             var allCols = new List<string>();
             var operatorColOverwrites = new Dictionary<string, string>();
 
@@ -84,12 +84,12 @@ namespace RangerLib
             var genColspec = string.Join(", ", mPGenModule.ParamNames);
             var allColspec = string.Join(", ", allCols.ToArray());
 
-            // set output column parameters for permutation generator module
+            // Set output column parameters for permutation generator module
             mPGenModule.AutoColumnName = "ref";
             mPGenModule.OutputColumnList = string.Format("{0}|+|text, {1}", mPGenModule.AutoColumnName, genColspec);
             mPGenModule.AutoColumnFormat = "ParamSet_{0:000000}";
 
-            // create module to add columns for operators
+            // Create module to add columns for operators
             var filter = new NullFilter
             {
                 OutputColumnList = mPGenModule.AutoColumnName + ", " + allColspec
@@ -99,7 +99,7 @@ namespace RangerLib
             IBaseModule writer;
             if (!string.IsNullOrEmpty(FilePath))
             {
-                // create module to write to file
+                // Create module to write to file
                 var dfw = new DelimitedFileWriter
                 {
                     FilePath = FilePath
@@ -108,7 +108,7 @@ namespace RangerLib
             }
             else
             {
-                // create module to write to SQLite DB
+                // Create module to write to SQLite DB
                 var slw = new SQLiteWriter
                 {
                     DbPath = DBPath,

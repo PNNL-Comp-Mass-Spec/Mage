@@ -24,7 +24,7 @@ namespace MageFilePackager
         #region Properties
 
         /// <summary>
-        /// full path for output files
+        /// Full path for output files
         /// </summary>
         public string FilePath { get; }
 
@@ -39,7 +39,7 @@ namespace MageFilePackager
         #region IDisposable Members
 
         /// <summary>
-        /// dispose of held resources
+        /// Dispose of held resources
         /// </summary>
         public void Dispose()
         {
@@ -48,7 +48,7 @@ namespace MageFilePackager
         }
 
         /// <summary>
-        /// dispose of held resources
+        /// Dispose of held resources
         /// </summary>
         /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
@@ -63,7 +63,7 @@ namespace MageFilePackager
                 _mOutFile.Dispose();
             }
 
-            //            isDisposed = true;
+            // isDisposed = true;
         }
 
         #endregion
@@ -72,7 +72,7 @@ namespace MageFilePackager
         #region IBaseModule Members
 
         /// <summary>
-        /// called before pipeline runs - module can do any special setup that it needs
+        /// Called before pipeline runs - module can do any special setup that it needs
         /// (override of base class)
         /// </summary>
         public override void Prepare()
@@ -94,7 +94,7 @@ namespace MageFilePackager
         }
 
         /// <summary>
-        /// called after pipeline run is complete - module can do any special cleanup
+        /// Called after pipeline run is complete - module can do any special cleanup
         /// this module closes the output file
         /// (override of base class)
         /// </summary>
@@ -108,7 +108,7 @@ namespace MageFilePackager
         }
 
         /// <summary>
-        /// handler for Mage standard tablular column definition
+        /// Handler for Mage standard tablular column definition
         /// (override of base class)
         /// </summary>
         /// <param name="sender"></param>
@@ -120,7 +120,7 @@ namespace MageFilePackager
         }
 
         /// <summary>
-        /// handler for Mage standard tablular input data rows
+        /// Handler for Mage standard tablular input data rows
         /// (override of base class)
         /// </summary>
         /// <param name="sender"></param>
@@ -158,8 +158,8 @@ namespace MageFilePackager
 
         private void OutputFooter()
         {
-            // opportunity to write any closing XML elements
-            //            _mOutFile.WriteLine("</paths>");
+            // Opportunity to write any closing XML elements
+            // _mOutFile.WriteLine("</paths>");
         }
 
         private void OutputDataRow(string[] vals)

@@ -35,7 +35,7 @@ namespace Mage
         #region Constructors
 
         /// <summary>
-        /// construct a terminator module with no limit on input rows
+        /// Construct a terminator module with no limit on input rows
         /// </summary>
         public Terminator()
         {
@@ -47,16 +47,16 @@ namespace Mage
         #region IBaseModule Members
 
         /// <summary>
-        /// called before pipeline runs - module can do any special setup that it needs
+        /// Called before pipeline runs - module can do any special setup that it needs
         /// (override of base class)
         /// </summary>
         public override void Prepare()
         {
-            // nothing to do here
+            // Nothing to do here
         }
 
         /// <summary>
-        /// handler for Mage standard tablular column definition
+        /// Handler for Mage standard tablular column definition
         /// (override of base class)
         /// </summary>
         /// <param name="sender"></param>
@@ -68,7 +68,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// handler for Mage standard tablular input data rows
+        /// Handler for Mage standard tablular input data rows
         /// (override of base class)
         /// </summary>
         /// <param name="sender"></param>

@@ -26,7 +26,7 @@ namespace Mage
         private int mNameDisambiguatorCount = 1;
 
         /// <summary>
-        /// flag that is set by client (via pipeline infrastructure call to Cancel) to abort operation of module
+        /// Flag that is set by client (via pipeline infrastructure call to Cancel) to abort operation of module
         /// </summary>
         protected bool Abort
         {
@@ -41,36 +41,36 @@ namespace Mage
         }
 
         /// <summary>
-        /// master list of input column definitions
+        /// Master list of input column definitions
         /// (default HandleColumnDef will build this)
         /// </summary>
         protected readonly List<MageColumnDef> InputColumnDefs = new List<MageColumnDef>();
 
         /// <summary>
-        /// master list of input column position keyed to column name (for lookup of column index by column name)
+        /// Master list of input column position keyed to column name (for lookup of column index by column name)
         /// (default HandleColumnDef will build this)
         /// </summary>
         protected Dictionary<string, int> InputColumnPos = new Dictionary<string, int>(StringComparer.CurrentCultureIgnoreCase);
 
         /// <summary>
-        /// temporary working reference to input column field used during output column mapping
+        /// Temporary working reference to input column field used during output column mapping
         /// </summary>
         protected int InputColumnIndex;
 
         /// <summary>
-        /// master list of Output column definitions
+        /// Master list of Output column definitions
         /// (not all modules require this feature)
         /// </summary>
         protected List<MageColumnDef> OutputColumnDefs;
 
         /// <summary>
-        /// master list of Output column position keyed to column name (for lookup of column index by column name)
+        /// Master list of Output column position keyed to column name (for lookup of column index by column name)
         /// (not all modules require this feature)
         /// </summary>
         protected Dictionary<string, int> OutputColumnPos;
 
         /// <summary>
-        /// master list of position map between output columns and input columns
+        /// Master list of position map between output columns and input columns
         /// </summary>
         protected List<KeyValuePair<int, int>> OutputToInputColumnPosMap;
 
@@ -90,7 +90,7 @@ namespace Mage
         #region Properties
 
         /// <summary>
-        /// comma-delimited list of specs for output columns that the module will supply to standard tabular output
+        /// Comma-delimited list of specs for output columns that the module will supply to standard tabular output
         /// (this is only needed if module does not simply pass through the input columns)
         /// Col Specs:
         /// [output column name] - simple pass-through of input column with same name
@@ -141,22 +141,22 @@ namespace Mage
         #region IBaseModule Members
 
         /// <summary>
-        /// event that is fired to send row data out via the module's standard tabular output
+        /// Event that is fired to send row data out via the module's standard tabular output
         /// </summary>
         public event EventHandler<MageDataEventArgs> DataRowAvailable;
 
         /// <summary>
-        /// event that is fired to send column definitions out via the module's standard tabular output
+        /// Event that is fired to send column definitions out via the module's standard tabular output
         /// </summary>
         public event EventHandler<MageColumnEventArgs> ColumnDefAvailable;
 
         /// <summary>
-        /// event that is fired to send a status update message
+        /// Event that is fired to send a status update message
         /// </summary>
         public event EventHandler<MageStatusEventArgs> StatusMessageUpdated;
 
         /// <summary>
-        /// event that is fired to send a warning message
+        /// Event that is fired to send a warning message
         /// </summary>
         public event EventHandler<MageStatusEventArgs> WarningMessageUpdated;
 
@@ -214,7 +214,7 @@ namespace Mage
         public string ModuleName { get; set; }
 
         /// <summary>
-        /// pipeline that contains this module (if any)
+        /// Pipeline that contains this module (if any)
         /// </summary>
         public ProcessingPipeline Pipeline { get; set; }
 
@@ -255,7 +255,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// this implements the canonical mechanism for setting module parameters
+        /// This implements the canonical mechanism for setting module parameters
         /// first, parameters are captured in a master key/value list
         /// next, the parameter list is traversed and any properties
         /// whose name matches a parameter's key are set with the parameter's value
@@ -274,7 +274,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// handler for Mage standard tablular input data rows
+        /// Handler for Mage standard tablular input data rows
         /// (override of base class)
         ///
         /// This event handler receives row events from upstream module, one event per row.
@@ -289,7 +289,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// handler for Mage standard tablular column definition
+        /// Handler for Mage standard tablular column definition
         /// (override of base class)
         ///
         /// This event handler receives a column definition event
@@ -305,7 +305,7 @@ namespace Mage
             {
                 try
                 {
-                    // rename column if it has same name as previously handled column
+                    // Rename column if it has same name as previously handled column
                     if (InputColumnPos.ContainsKey(columnDef.Name))
                     {
                         columnDef.Name = columnDef.Name + (++mNameDisambiguatorCount);
@@ -347,7 +347,7 @@ namespace Mage
         /// </summary>
         protected void CancelPipeline()
         {
-            // terminate the pipeline when row count is reached
+            // Terminate the pipeline when row count is reached
             Pipeline?.Cancel();
         }
 
@@ -554,7 +554,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// if there are any columns defined in the OutputColumnList property
+        /// If there are any columns defined in the OutputColumnList property
         /// populate the appropriate internal buffers with column definitions
         /// and field indexes for them
         /// </summary>
@@ -570,7 +570,8 @@ namespace Mage
             NewOutputColumnPos = new Dictionary<string, int>(StringComparer.CurrentCultureIgnoreCase);
 
             var outColIdx = 0;
-            // process each column spec from spec list
+
+            // Process each column spec from spec list
             try
             {
                 if (OutputColumnList.StartsWith("Job, "))
@@ -584,7 +585,7 @@ namespace Mage
 
                 foreach (var colSpec in OutputColumnList.Split(','))
                 {
-                    // break each column spec into fields
+                    // Break each column spec into fields
                     var colSpecFlds = colSpec.Trim().Split('|');
                     var outputColName = colSpecFlds[0].Trim();
                     var inputColName = (colSpecFlds.Length > 1) ? colSpecFlds[1].Trim() : "";
@@ -593,15 +594,15 @@ namespace Mage
 
                     if (outputColName == "*")
                     {
-                        // wildcard
-                        // copy input column def to output col def for any input columns
+                        // Wildcard
+                        // Copy input column def to output col def for any input columns
                         // not already in output colums list
                         outColIdx = MapOutputColumnsForUnmappedInputColumns(outColIdx);
                         continue;
                     }
                     if (inputColName == "+")
                     {
-                        // output column is new column not found in input
+                        // Output column is new column not found in input
                         size = (!string.IsNullOrEmpty(size)) ? size : "10";
                         AddOutputColumnDefinition(new MageColumnDef(outputColName, type, size), outColIdx);
                         AddIndexForNewColumn(outputColName, outColIdx);
@@ -609,11 +610,12 @@ namespace Mage
                         continue;
                     }
 
-                    // output column is mapped to input column
-                    // copy input column def to output col def for this column
+                    // Output column is mapped to input column
+                    // Copy input column def to output col def for this column
                     var colName = (string.IsNullOrEmpty(inputColName)) ? outputColName : inputColName;
                     MapOutputColumnToInputColumn(colName, outColIdx);
-                    // and do any necessary overrides
+
+                    // And do any necessary overrides
                     AdjustOutputColumnProperties(outColIdx, outputColName, type, size);
                     outColIdx++;
                 }
@@ -712,7 +714,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// if the module is using output column definition for output rows
+        /// If the module is using output column definition for output rows
         /// (instead of defaulting to using the input column definition)
         /// this function will create an output row according to output column
         /// definition
@@ -726,7 +728,7 @@ namespace Mage
 
             var actualCount = vals.Length;
 
-            // copy over values from remapped input columns
+            // Copy over values from remapped input columns
             foreach (var colMap in OutputToInputColumnPosMap)
             {
                 if (colMap.Value < actualCount)
@@ -739,7 +741,7 @@ namespace Mage
                 }
             }
 
-            // add any matching context values to new columns
+            // Add any matching context values to new columns
             if (ContextColPos != null)
             {
                 foreach (var newCol in ContextColPos)

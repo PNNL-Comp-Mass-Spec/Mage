@@ -75,7 +75,7 @@ namespace MageUnitTests
             target.AddParamColumn("two", "0", "2", "1");
             target.AddParamColumn("three", "1", "1", "1");
 
-            // create test sink module and connect to MSSQLReader module
+            // Create test sink module and connect to MSSQLReader module
             var sink = new SimpleSink();
             target.ColumnDefAvailable += sink.HandleColumnDef;
             target.DataRowAvailable += sink.HandleDataRow;
@@ -104,7 +104,7 @@ namespace MageUnitTests
             target.OutputColumnList = "ref|+|text, one, two, three, results|+|float";
             target.AutoColumnName = "ref";
 
-            // create test sink module and connect to MSSQLReader module
+            // Create test sink module and connect to MSSQLReader module
             var sink = new SimpleSink();
             target.ColumnDefAvailable += sink.HandleColumnDef;
             target.DataRowAvailable += sink.HandleDataRow;

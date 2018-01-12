@@ -13,52 +13,52 @@ namespace Mage
     {
 
         /// <summary>
-        /// type of module
+        /// Type of module
         /// </summary>
         public string ModType { get; set; }
 
         /// <summary>
-        /// unique identifier (used to associate module with its parameter panel)
+        /// Unique identifier (used to associate module with its parameter panel)
         /// </summary>
         public string ModID { get; set; }
 
         /// <summary>
-        /// short public identifier to appear in selection lists
+        /// Short public identifier to appear in selection lists
         /// </summary>
         public string ModLabel { get; set; }
 
         /// <summary>
-        /// longer description to appear in selection lists (optional)
+        /// Longer description to appear in selection lists (optional)
         /// </summary>
         public string ModDescription { get; set; }
 
         /// <summary>
-        /// name of class (used for dynamic loading)
+        /// Name of class (used for dynamic loading)
         /// </summary>
         public string ModClassName { get; set; }
 
         /// <summary>
-        /// get current module type
+        /// Get current module type
         /// </summary>
         public string type => ModType;
 
         /// <summary>
-        /// get current module ID
+        /// Get current module ID
         /// </summary>
         public string ID => ModID;
 
         /// <summary>
-        /// get current short label
+        /// Get current short label
         /// </summary>
         public string label => ModLabel;
 
         /// <summary>
-        /// get current decriptions
+        /// Get current decriptions
         /// </summary>
         public string description => ModDescription;
 
         /// <summary>
-        /// construct new MageAttribute object
+        /// Construct new MageAttribute object
         /// </summary>
         /// <param name="type">attribute type</param>
         /// <param name="ID">attribute ID</param>

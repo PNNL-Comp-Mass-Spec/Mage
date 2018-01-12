@@ -56,7 +56,7 @@ namespace MageFileProcessor
         private readonly List<string> mAllMenuItems = new List<string>();
 
         /// <summary>
-        /// Lists of names of menu items 
+        /// Lists of names of menu items
         /// that are sensitive to presence of certain columns in list display
         /// </summary>
         private readonly List<string> mFolderSensitiveMenuItems = new List<string>();
@@ -85,7 +85,7 @@ namespace MageFileProcessor
         #region Setup
 
         /// <summary>
-        /// Create the context menu for the display list 
+        /// Create the context menu for the display list
         /// </summary>
         private void SetupContextMenus()
         {
@@ -267,7 +267,7 @@ namespace MageFileProcessor
 
         /// <summary>
         /// Will be wired up to receive "SelectionChanged" events
-        /// from associated ListDisplay so that display state 
+        /// from associated ListDisplay so that display state
         /// of menu items may be adjusted
         /// </summary>
         /// <param name="sender"></param>
@@ -275,7 +275,7 @@ namespace MageFileProcessor
         private void HandleSelectionChanged(object sender, EventArgs args)
         {
 
-            // whole context menu enabled/disabled based on whether there are any rows selected or not
+            // Whole context menu enabled/disabled based on whether there are any rows selected or not
             if (mDisplayUserControl.SelectedItemCount == 0)
             {
                 AdjustMenuItemsFromNameList(mAllMenuItems, false);
@@ -284,12 +284,12 @@ namespace MageFileProcessor
             {
                 AdjustMenuItemsFromNameList(mAllMenuItems, true);
 
-                // enable/disable selected menu items based on presence
+                // Enable/disable selected menu items based on presence
                 // of certain columns in rows
                 AdjustMenuItemsFromNameList(mFolderSensitiveMenuItems, false);
                 AdjustMenuItemsFromNameList(mJobSensitiveMenuItems, false);
                 AdjustMenuItemsFromNameList(mDatasetSensitiveMenuItems, false);
-                //
+
                 foreach (var colDef in mDisplayUserControl.ColumnDefs)
                 {
                     switch (colDef.Name)

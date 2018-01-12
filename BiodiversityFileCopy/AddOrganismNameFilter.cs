@@ -4,7 +4,7 @@ using Mage;
 namespace BiodiversityFileCopy
 {
   /// <summary>
-  /// Mage filter that adds organism column to output stream 
+  /// Mage filter that adds organism column to output stream
   /// using lookup table
   /// </summary>
   public class AddOrganismNameFilter : ContentFilter

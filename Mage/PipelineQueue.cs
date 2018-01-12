@@ -13,12 +13,12 @@ namespace Mage
     {
 
         /// <summary>
-        /// event that is fired when next pipeline in queue begins procession
+        /// Event that is fired when next pipeline in queue begins procession
         /// </summary>
         public event EventHandler<MageStatusEventArgs> OnPipelineStarted;
 
         /// <summary>
-        /// event that is fired when pipeline queue terminates (normally or abnormally)
+        /// Event that is fired when pipeline queue terminates (normally or abnormally)
         /// </summary>
         public event EventHandler<MageStatusEventArgs> OnRunCompleted;
 
@@ -26,7 +26,7 @@ namespace Mage
         #region Member Variables
 
         /// <summary>
-        /// is queue currently running?
+        /// Is queue currently running?
         /// </summary>
         private bool mQueueRunning;
 

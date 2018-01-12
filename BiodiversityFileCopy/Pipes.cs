@@ -49,12 +49,12 @@ namespace BiodiversityFileCopy
                             CopyFile(doCopy, verbose, destPath, sourcePath);
                         }
                     }
-                } // end foreach
+                }
                 catch (IOException e)
                 {
                     Logging.LogError(e.Message);
                 }
-            } // end try
+            }
             return numExist;
         }
 
@@ -75,7 +75,7 @@ namespace BiodiversityFileCopy
             {
                 if (doCopy)
                 {
-                    // make destination folder if necessary
+                    // Make destination folder if necessary
                     EnsureDirectoryExists(destPath);
                     File.Copy(sourcePath, destPath, false);
                     FilteredMsg(string.Format("{2}: {0} -> {1}", sourcePath, destPath, "Copied:"), verbose);
@@ -110,7 +110,7 @@ namespace BiodiversityFileCopy
         /// <returns></returns>
         public static SimpleSink GetDatasetsForDataPackages(string dpkgId, Dictionary<string, string> orgLookup)
         {
-            //var sqlTmpl = @"SELECT Dataset_ID, Dataset, State, Folder, Data_Package_ID FROM V_Mage_Data_Package_Datasets WHERE Data_Package_ID IN (@)";
+            // var sqlTmpl = @"SELECT Dataset_ID, Dataset, State, Folder, Data_Package_ID FROM V_Mage_Data_Package_Datasets WHERE Data_Package_ID IN (@)";
             const string sqlTmpl = @"
 SELECT 
 VMDS.Dataset_ID ,
@@ -151,18 +151,18 @@ WHERE   ( VDPJ.Data_Package_ID IN ( @ ) )
         public static SimpleSink GetFastaFilesForDataPackages(string dPkgId, Dictionary<string, string> orgLookup)
         {
             const string sqlTmpl = @"
-SELECT  Organism ,
-[Organism DB] ,
+SELECT Organism,
+[Organism DB],
 dbo.GetFASTAFilePath([Organism DB], Organism) AS [FASTA_Folder],
 Data_Package_ID
-FROM( 
+FROM(
   SELECT DISTINCT
-  Organism ,
+  Organism,
   [Organism DB],
   Data_Package_ID
   FROM V_Mage_Data_Package_Analysis_Jobs
   WHERE [State] in ('Complete', 'No Export') AND
-  Data_Package_ID IN (@) 
+  Data_Package_ID IN (@)
 ) TX
                     ";
             return GetItemsForDataPackages(dPkgId, orgLookup, sqlTmpl);
@@ -180,10 +180,10 @@ FROM(
             var sql = sqlTmpl.Replace("@", dPkgId);
 
             // Typically gigasax and DMS5
-            var dbr = new MSSQLReader { 
-                Server = Globals.DMSServer, 
-                Database = Globals.DMSDatabase, 
-                SQLText = sql 
+            var dbr = new MSSQLReader {
+                Server = Globals.DMSServer,
+                Database = Globals.DMSDatabase,
+                SQLText = sql
             };
 
             var ogf = new AddOrganismNameFilter
@@ -253,7 +253,7 @@ FROM(
         }
 
         /// <summary>
-        /// Add source and destination raw file paths to given dataset list 
+        /// Add source and destination raw file paths to given dataset list
         /// </summary>
         /// <param name="datasetList"></param>
         /// <param name="outputRootFolderPath">Folder path at root of all output subfolders</param>
@@ -262,7 +262,7 @@ FROM(
         {
             // TBD: use file search as for mzid and mzml
 
-            // set up pipeline source
+            // Set up pipeline source
             var src = new SinkWrapper(datasetList);
 
             var rff = new RawFilePathsFilter();
@@ -298,7 +298,7 @@ FROM(
 
             var mzf = new MzmlFilePathsFilter();
             mzf.SetDefaultProperties(outputRootFolderPath, "MZML");
-            mzf.SourceFolderPathColName = datasetFolderColName; // must match upstream setting
+            mzf.SourceFolderPathColName = datasetFolderColName; // Must match upstream setting
 
             var p1 = ProcessingPipeline.Assemble("Accumulate_File_Paths", src, flf, mzf);
             ConnectPipelineToMessaging(p1);
@@ -320,10 +320,10 @@ FROM(
         private static SimpleSink AddParentFolderToJobList(SimpleSink jobList, string datasetFolderColName)
         {
 
-            // set up pipeline source to only do rows with package IDs in whitelist
+            // Set up pipeline source to only do rows with package IDs in whitelist
             var src = new SinkWrapper(jobList);
 
-            // new filter to impute dataset folder from job results folder
+            // New filter to impute dataset folder from job results folder
             var dsf = new AddJobDatasetFolderFilter
             {
                 OutputColumnList = datasetFolderColName + "|+|text, *",
@@ -417,16 +417,16 @@ FROM(
         private static void SetDefaultFileSearchFilterParameters(FileListFilter flf, string fileNameSelector, string recursiveSearch, string subfolderSearchName)
         {
             flf.OutputColumnList = @"Item|+|text, File|+|text, File_Size_KB|+|text, Folder, *";
-            flf.SourceFolderColumnName = "Folder";          // the name of the input column that contains the folder path to search for files
-            flf.FileSelectorMode = "FileSearch";            // how to use the file matching patterns ("FileSearch" or "RegEx")
-            flf.IncludeFilesOrFolders = "File";             // include files an/or folders in results ("", "Folder", "IncludeFilesOrFolders")
+            flf.SourceFolderColumnName = "Folder";          // The name of the input column that contains the folder path to search for files
+            flf.FileSelectorMode = "FileSearch";            // How to use the file matching patterns ("FileSearch" or "RegEx")
+            flf.IncludeFilesOrFolders = "File";             // Include files an/or folders in results ("", "Folder", "IncludeFilesOrFolders")
             flf.RecursiveSearch = recursiveSearch;
-            flf.FileNameSelector = fileNameSelector;        // semi-colon delimited list of file matching patterns
-            flf.SubfolderSearchName = subfolderSearchName;  // folder name pattern used to restrict recursive search
+            flf.FileNameSelector = fileNameSelector;        // Semi-colon delimited list of file matching patterns
+            flf.SubfolderSearchName = subfolderSearchName;  // Folder name pattern used to restrict recursive search
         }
 
         /// <summary>
-        /// 
+        /// Extract Column From Sink
         /// </summary>
         /// <param name="colName"></param>
         /// <param name="datasetList"></param>

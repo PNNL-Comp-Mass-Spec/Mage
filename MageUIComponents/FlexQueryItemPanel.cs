@@ -62,7 +62,7 @@ namespace MageUIComponents
 
         private void RelationCtl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // do nothing for now
+            // Do nothing for now
         }
     }
 }

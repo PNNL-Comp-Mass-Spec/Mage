@@ -208,7 +208,7 @@ namespace MageExtExtractionFilters
         #endregion
 
         /// <summary>
-        /// get destination writer module based on destination type
+        /// Get destination writer module based on destination type
         /// </summary>
         /// <param name="prefix"></param>
         /// <param name="inputFilePath"></param>

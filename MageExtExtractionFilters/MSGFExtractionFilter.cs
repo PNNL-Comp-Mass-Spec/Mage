@@ -157,7 +157,7 @@ namespace MageExtExtractionFilters
             }
 
             /// <summary>
-            /// if an MSGF filter is defined and a peptide
+            /// If an MSGF filter is defined and a peptide
             /// does not have an entry in the MSGF file
             /// and if "keep all results" is unchecked,
             /// </summary>

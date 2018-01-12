@@ -24,7 +24,7 @@ namespace MageFilePackager
         public static string Post(string url, Dictionary<string, string> postDataList)
         {
 
-            // format the data to be posted
+            // Format the data to be posted
             var postData = FormatPostData(postDataList);
 
             // Prepare Request Object

@@ -31,19 +31,19 @@ namespace MageUnitTests
 
             var sink = ReadSQLiteDB(maxRows, sql, dataFile.FullName);
 
-            // did the test sink object get the expected row definitions
+            // Did the test sink object get the expected row definitions
             var cols = sink.Columns;
             for (var i = 0; i < cols.Count; i++)
             {
                 Assert.AreEqual(cols[i].Name, colList[i]);
             }
 
-            // did the test sink object get the expected number of data rows
+            // Did the test sink object get the expected number of data rows
             // on its standard tabular input?
             var rows = sink.Rows;
             Assert.AreEqual(maxRows, rows.Count);
 
-            // are there the expected number of fields in the data row?
+            // Are there the expected number of fields in the data row?
             Assert.AreEqual(colList.Length, rows[0].Length);
         }
 
@@ -75,7 +75,7 @@ namespace MageUnitTests
 
             var maxRows = 5;
 
-            // runtime parameters for query
+            // Runtime parameters for query
             var runtimeParameters = new Dictionary<string, string>
             {
                 ["Factor"] = "Group",
@@ -83,10 +83,10 @@ namespace MageUnitTests
                 [SQLITE_QUERY_DEF_FILE_PATH_KEY] = queryDefsFile.FullName
             };
 
-            // get data from database
+            // Get data from database
             var result = GetDataFromSQLite("Factors", runtimeParameters, maxRows);
 
-            // did the test sink object get the expected row definitions
+            // Did the test sink object get the expected row definitions
             var colList = new[] { "Dataset", "Dataset_ID", "Factor", "Value" };
             var cols = result.Columns;
             for (var i = 0; i < cols.Count; i++)
@@ -94,14 +94,14 @@ namespace MageUnitTests
                 Assert.AreEqual(cols[i].Name, colList[i]);
             }
 
-            // did the test sink object get the expected number of data rows on its standard tabular input?
+            // Did the test sink object get the expected number of data rows on its standard tabular input?
             var rows = result.Rows;
             Assert.AreEqual(maxRows, rows.Count);
 
-            // are there the expected number of fields in the data row?
+            // Are there the expected number of fields in the data row?
             Assert.AreEqual(colList.Length, rows[0].Length);
 
-            // go through the rows and get value in "Factor" and "Value" columns
+            // Go through the rows and get value in "Factor" and "Value" columns
             var nameIndex = result.ColumnIndex["Factor"];
             var valIndex = result.ColumnIndex["Value"];
             foreach (var row in result.Rows)
@@ -114,7 +114,7 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        /// example of packaged reader pipeline
+        /// Example of packaged reader pipeline
         /// </summary>
         /// <returns></returns>
         public SimpleSink GetDataFromSQLite(string queryDefName, Dictionary<string, string> runtimeParameters, int maxRows)
@@ -137,17 +137,17 @@ namespace MageUnitTests
                 databaseFilePath = "Metadata.db";
             }
 
-            // get XML query definition by name
-            ModuleDiscovery.QueryDefinitionFileName = queryDefFilePath;  // omit if using default query def file
+            // Get XML query definition by name
+            ModuleDiscovery.QueryDefinitionFileName = queryDefFilePath;  // Omit if using default query def file
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef(queryDefName);
 
-            // create database reader module initialized from XML definition
+            // Create database reader module initialized from XML definition
             var reader = new SQLiteReader(queryDefXML, runtimeParameters, databaseFilePath);
 
-            // create sink module to accumulate columns and rows
+            // Create sink module to accumulate columns and rows
             var result = new SimpleSink(maxRows);
 
-            // create pipeline to run the query, and run it
+            // Create pipeline to run the query, and run it
             var pipeline = new ProcessingPipeline("Get_Data_From_Database");
             pipeline.RootModule = pipeline.AddModule("Reader", reader);
             pipeline.AddModule("Results", result);
@@ -158,33 +158,33 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///  example
+        ///  Example
         /// </summary>
         /// <param name="maxRows"></param>
         /// <returns></returns>
         public SimpleSink QueryFromConfig(int maxRows)
         {
 
-            // runtime parameters for query (probably pass this in as an argument)
+            // Runtime parameters for query (probably pass this in as an argument)
             var runtimeParameters = new Dictionary<string, string> {["Factor"] = "Group"};
 
-            // get XML query definition by name
+            // Get XML query definition by name
             ModuleDiscovery.QueryDefinitionFileName = "SQLiteQueryDefinitions.xml";
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("Factors");
             Assert.AreNotEqual("", queryDefXML);
 
-            // create MSSQLReader module initialized from XML definition
+            // Create MSSQLReader module initialized from XML definition
             var reader = new SQLiteReader(queryDefXML, runtimeParameters);
             Assert.AreNotEqual(null, reader);
 
             var expected = "SELECT * FROM factors WHERE \"Factor\" = 'Group'";
             Assert.AreEqual(expected, reader.SQLText);
 
-            // create sink module to accumulate columns and rows
+            // Create sink module to accumulate columns and rows
             var result = new SimpleSink(maxRows);
             Assert.AreNotEqual(null, result);
 
-            // create pipeline to run the query, and run it
+            // Create pipeline to run the query, and run it
             var pipeline = new ProcessingPipeline("SQLite_Reader");
             pipeline.RootModule = pipeline.AddModule("Reader", reader);
             pipeline.AddModule("Results", result);

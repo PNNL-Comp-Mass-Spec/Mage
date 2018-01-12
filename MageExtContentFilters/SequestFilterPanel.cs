@@ -54,10 +54,10 @@ namespace MageExtContentFilters {
                 SQLText = "SELECT Filter_Set_ID, Name, Description FROM V_PDE_Filter_Sets"
             };
 
-            // create Mage module to receive query results
+            // Create Mage module to receive query results
             var filters = gridViewDisplayControl1.MakeSink("Filter Sets", 20);
 
-            // build pipeline and run it
+            // Build pipeline and run it
             mGetFiltersPipeline = ProcessingPipeline.Assemble("GetFilters", reader, filters);
             mGetFiltersPipeline.OnRunCompleted += HandlePipelineCompletion;
             mGetFiltersPipeline.RunRoot(null);

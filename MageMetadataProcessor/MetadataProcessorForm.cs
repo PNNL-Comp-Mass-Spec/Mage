@@ -15,13 +15,13 @@ namespace MageMetadataProcessor
 
         #region Member Variables
 
-        // current Mage pipeline that is running or has most recently run
+        // Current Mage pipeline that is running or has most recently run
         ProcessingPipeline mCurrentPipeline;
 
-        // current command that is being executed or has most recently been executed
+        // Current command that is being executed or has most recently been executed
         MageCommandEventArgs mCurrentCmd;
 
-        // object that sent the current command
+        // Object that sent the current command
         private object mCurrentCmdSender;
 
         #endregion
@@ -45,7 +45,7 @@ namespace MageMetadataProcessor
 
             try
             {
-                // set up configuration folder and files
+                // Set up configuration folder and files
                 SavedState.SetupConfigFiles("MageMetadataProcessor");
             }
             catch (Exception ex)
@@ -53,7 +53,7 @@ namespace MageMetadataProcessor
                 MessageBox.Show("Error loading settings: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
 
-            // tell modules where to look for loadable module DLLs
+            // Tell modules where to look for loadable module DLLs
             var fi = new FileInfo(Application.ExecutablePath);
             ModuleDiscovery.ExternalModuleFolder = fi.DirectoryName;
 
@@ -66,7 +66,7 @@ namespace MageMetadataProcessor
             ProcessingPipeline.AppendDateToLogFileName = FileLogger.AppendDateToBaseFileName;
             ProcessingPipeline.LogFilePath = logFilePath;
 
-            // setup UI component panels
+            // Setup UI component panels
             SetupCommandHandler();
             SetupColumnMapping();
             SetupStatusPanel();
@@ -83,7 +83,7 @@ namespace MageMetadataProcessor
         #region Command Processing
 
         /// <summary>
-        /// execute a command by building and running 
+        /// Execute a command by building and running
         /// the appropriate pipeline (or cancelling
         /// the current pipeline activity)
         /// </summary>
@@ -92,23 +92,24 @@ namespace MageMetadataProcessor
         public void DoCommand(object sender, MageCommandEventArgs command)
         {
 
-            // remember who sent us the command
+            // Remember who sent us the command
             mCurrentCmdSender = sender;
 
-            // cancel the currently running pipeline
+            // Cancel the currently running pipeline
             if (command.Action == "cancel_operation" && mCurrentPipeline != null && mCurrentPipeline.Running)
             {
                 mCurrentPipeline.Cancel();
                 return;
             }
-            // don't allow another pipeline if one is currently running
+
+            // Don't allow another pipeline if one is currently running
             if (mCurrentPipeline != null && mCurrentPipeline.Running)
             {
                 MessageBox.Show("Pipeline is already active");
                 return;
             }
 
-            // construct suitable Mage pipeline for the given command
+            // Construct suitable Mage pipeline for the given command
             // and run that pipeline
             BuildAndRunPipeline(command);
         }
@@ -253,7 +254,7 @@ namespace MageMetadataProcessor
         private delegate void CompletionStateUpdated(object status);
 
         /// <summary>
-        /// handle the status completion message from the currently running pipeline
+        /// Handle the status completion message from the currently running pipeline
         /// </summary>
         /// <param name="sender">(ignored)</param>
         /// <param name="args">Contains status information to be displayed</param>
@@ -337,7 +338,7 @@ namespace MageMetadataProcessor
         #region Panel Support Functions
 
         /// <summary>
-        /// set up status panel
+        /// Set up status panel
         /// </summary>
         private void SetupStatusPanel()
         {
@@ -345,12 +346,12 @@ namespace MageMetadataProcessor
         }
 
         /// <summary>
-        /// wire up the command event in panels that have it
+        /// Wire up the command event in panels that have it
         /// to the DoCommand event handler method
         /// </summary>
         private void SetupCommandHandler()
         {
-            // get reference to the method that handles command events
+            // Get reference to the method that handles command events
             var methodInfo = this.GetType().GetMethod("DoCommand");
             Control subjectControl = this;
 
@@ -358,7 +359,7 @@ namespace MageMetadataProcessor
         }
 
         /// <summary>
-        /// setup path to column mapping config file for selection forms
+        /// Setup path to column mapping config file for selection forms
         /// </summary>
         private void SetupColumnMapping()
         {

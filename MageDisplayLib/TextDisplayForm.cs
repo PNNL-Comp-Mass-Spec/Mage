@@ -11,7 +11,7 @@ namespace MageDisplayLib
     {
 
         /// <summary>
-        /// get complete contents of text display
+        /// Get complete contents of text display
         /// </summary>
         public string Contents
         {

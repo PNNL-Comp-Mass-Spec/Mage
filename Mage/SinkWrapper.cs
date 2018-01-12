@@ -13,14 +13,14 @@ namespace Mage
         private readonly SimpleSink mSink;
 
         /// <summary>
-        /// constructor
+        /// Constructor
         /// </summary>
         public SinkWrapper()
         {
         }
 
         /// <summary>
-        /// constructor
+        /// Constructor
         /// </summary>
         /// <param name="sink"></param>
         public SinkWrapper(SimpleSink sink)

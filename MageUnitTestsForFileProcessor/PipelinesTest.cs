@@ -118,7 +118,7 @@ namespace MageUnitTestsForFileProcessor
 
             IBaseModule sourceObject = new DataGenerator(rows, cols);
 
-            // for mode "File_Output"
+            // For mode "File_Output"
 
             runtimeParms = new Dictionary<string, string>() {
                 { "OutputFolder", "--" },

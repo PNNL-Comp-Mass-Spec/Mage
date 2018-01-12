@@ -24,7 +24,7 @@ namespace MageUnitTests
 
             var dataFile = General.GetTestFile(filePath);
 
-            // create Delimited file reader module
+            // Create Delimited file reader module
             // and connect together
             var reader = new DelimitedFileReader {FilePath = dataFile.FullName};
 

@@ -16,10 +16,10 @@ namespace MageExtContentFilters
 
         #region Member Variables
 
-        // working copy of SEQUEST filter object
+        // Working copy of SEQUEST filter object
         private FilterXTResults mXTFilter;
 
-        // indexes into the synopsis row field array
+        // Indexes into the synopsis row field array
         private int peptideSequenceIndex;
         private int delCN2ValueIndex;
         private int chargeStateIndex;
@@ -40,7 +40,7 @@ namespace MageExtContentFilters
         #endregion
 
         /// <summary>
-        /// called before pipeline runs - module can do any special setup that it needs
+        /// Called before pipeline runs - module can do any special setup that it needs
         /// (override of base class)
         /// </summary>
         public override void Prepare()
@@ -50,7 +50,7 @@ namespace MageExtContentFilters
         }
 
         /// <summary>
-        /// this is called when all the field column definitions 
+        /// This is called when all the field column definitions
         /// have been read from standard tabular input
         /// </summary>
         protected override void ColumnDefsFinished()
@@ -61,7 +61,7 @@ namespace MageExtContentFilters
         /// <summary>
         /// This is called for each row that is being subjected to filtering.
         /// The fields array contains value of each column for the row.
-        /// The position index for each column has been precalculted by 
+        /// The position index for each column has been precalculated by
         /// PrecalculateFieldIndexes() at startup.
         /// </summary>
         /// <param name="fields">Row, as array of fields</param>
@@ -105,19 +105,19 @@ namespace MageExtContentFilters
                         FilterSetID)
             };
 
-            // create Mage module to receive query results
+            // Create Mage module to receive query results
             var filterCriteria = new SimpleSink();
 
-            // build pipeline and run it
+            // Build pipeline and run it
             var pipeline = ProcessingPipeline.Assemble("GetFilterCriteria", reader, filterCriteria);
             pipeline.RunRoot(null);
 
-            // create new Sequest filter object with retrieved filter criteria
+            // Create new Sequest filter object with retrieved filter criteria
             mXTFilter = new FilterXTResults(filterCriteria.Rows, FilterSetID);
         }
 
         /// <summary>
-        /// set up indexes into row fields array based on column name
+        /// Set up indexes into row fields array based on column name
         /// </summary>
         private void PrecalculateFieldIndexes()
         {

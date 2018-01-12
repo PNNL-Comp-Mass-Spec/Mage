@@ -53,7 +53,7 @@ namespace MageDisplayLib
             {
                 var eventInfo = panel.GetType().GetEvent("OnAction");
                 if (eventInfo != null)
-                { // panel defines the command event, wire it up
+                { // Panel defines the command event, wire it up
                     var handler = Delegate.CreateDelegate(eventInfo.EventHandlerType, subjectControl, methodInfo);
                     eventInfo.AddEventHandler(panel, handler);
                 }
@@ -81,7 +81,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// get list for all panels that have parameters interface
+        /// Get list for all panels that have parameters interface
         /// (this list is primarily used for saving and restoring panel parameters)
         /// </summary>
         public static Dictionary<string, IModuleParameters> GetParameterPanelList(Control subjectControl)
@@ -97,7 +97,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// remove duplicates and missing values and return clean list
+        /// Remove duplicates and missing values and return clean list
         /// </summary>
         /// <param name="rawList"></param>
         /// <returns></returns>

@@ -16,7 +16,7 @@ namespace MageDisplayLib
     public static class SavedState
     {
 
-        // names and paths for configuration directory and files
+        // Names and paths for configuration directory and files
         private static string mAppDataFolderName;
         private static string mDataDirectory;
         private static readonly string mQueryDefFileName = "QueryDefinitions.xml";
@@ -41,7 +41,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// path to saved state file
+        /// Path to saved state file
         /// </summary>
         public static string FilePath { get; set; }
 
@@ -57,13 +57,13 @@ namespace MageDisplayLib
             mAppDataFolderName = configFolderName;
             mDataDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), mAppDataFolderName);
 
-            // make sure application data directory exists
+            // Make sure application data directory exists
             if (!Directory.Exists(mDataDirectory))
             {
                 Directory.CreateDirectory(mDataDirectory);
             }
 
-            //Set default path for query definitions config file
+            // Set default path for query definitions config file
             ModuleDiscovery.QueryDefinitionFileName = Path.Combine(mDataDirectory, mQueryDefFileName);
             if (!File.Exists(ModuleDiscovery.QueryDefinitionFileName))
             {
@@ -87,10 +87,10 @@ namespace MageDisplayLib
                 }
             }
 
-            // setup to save and restore settings for UI component panels
+            // Setup to save and restore settings for UI component panels
             FilePath = Path.Combine(mDataDirectory, mSavedStateFileName);
 
-            // tell modules where to look for loadable module DLLs
+            // Tell modules where to look for loadable module DLLs
             var fi = new FileInfo(System.Windows.Forms.Application.ExecutablePath);
             ModuleDiscovery.ExternalModuleFolder = fi.DirectoryName;
         }
@@ -104,11 +104,11 @@ namespace MageDisplayLib
         {
             var sb = new StringBuilder();
 
-            // make XML header and opening root element
+            // Make XML header and opening root element
             sb.AppendLine("<?xml version='1.0' encoding='utf-8' ?>");
             sb.AppendLine("<parameters>");
 
-            // step through panel list and add XML parameter defitions for each parameter
+            // Step through panel list and add XML parameter defitions for each parameter
             // for each panel that has an IModuleParameters interface
             var lineFormat = "<parameter panel='{0}' name='{1}' value='{2}' />";
             foreach (var panelDesc in panelList)
@@ -125,7 +125,7 @@ namespace MageDisplayLib
             // make closing XML root element
             sb.AppendLine("</parameters>");
 
-            // dump XML to file
+            // Dump XML to file
             var mOutFile = new StreamWriter(FilePath);
             mOutFile.WriteLine(sb.ToString());
             mOutFile.Close();
@@ -141,15 +141,15 @@ namespace MageDisplayLib
             if (!File.Exists(FilePath))
                 return;
 
-            // get XML containing saved panel parameters
+            // Get XML containing saved panel parameters
             var doc = new XmlDocument();
             doc.Load(FilePath);
 
-            // get list of paramter nodes
+            // Get list of paramter nodes
             var xpath = ".//parameter";
             var parms = doc.SelectNodes(xpath);
 
-            // for each panel in list, collect its parameters from the XML node list
+            // For each panel in list, collect its parameters from the XML node list
             // and set them for the panel
             foreach (var listPanel in panelList.Keys)
             {

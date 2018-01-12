@@ -12,7 +12,6 @@ namespace MageDisplayLib
     /// It is an adapter for making rows in a GridViewDisplayControl object
     /// available via Mage pipeline data source module connections
     /// </summary>
-
     public class GVPipelineSource : BaseModule
     {
 
@@ -22,7 +21,7 @@ namespace MageDisplayLib
         private GridViewDisplayControl myListControl;
 
         /// <summary>
-        /// whether or not we are outputing all the rows
+        /// Whether or not we are outputing all the rows
         /// in our associated display grid view or only
         /// the currently selected rows
         /// </summary>
@@ -33,7 +32,7 @@ namespace MageDisplayLib
         private List<MageColumnDef> mColumnDefs = new List<MageColumnDef>();
 
         /// <summary>
-        /// internal buffer for cell contents from our associated GridViewDisplayControl
+        /// Internal buffer for cell contents from our associated GridViewDisplayControl
         /// </summary>
         private readonly List<string[]> mRowBuffer = new List<string[]>();
 
@@ -42,7 +41,7 @@ namespace MageDisplayLib
         #region Constructors
 
         /// <summary>
-        /// construct a new GVPipelineSource object
+        /// Construct a new GVPipelineSource object
         /// that will serve data rows from given GridViewDisplayControl
         /// </summary>
         /// <param name="gv">GVPipelineSource object</param>
@@ -54,7 +53,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// construct a new GVPipelineSource object
+        /// Construct a new GVPipelineSource object
         /// that will serve data rows from given GridViewDisplayControl
         /// </summary>
         /// <param name="gv">GVPipelineSource object</param>
@@ -88,7 +87,7 @@ namespace MageDisplayLib
         #region Properties
 
         /// <summary>
-        /// set this module to stop executing
+        /// Set this module to stop executing
         /// </summary>
         public bool Stop
         {
@@ -101,7 +100,7 @@ namespace MageDisplayLib
         #region IBaseModule Members
 
         /// <summary>
-        /// output each row in associated GridViewDisplayList object
+        /// Output each row in associated GridViewDisplayList object
         /// to Mage standard tabular output, one row at a time.
         /// (override of base class)
         /// </summary>
@@ -116,7 +115,7 @@ namespace MageDisplayLib
         #region Private Functions
 
         /// <summary>
-        /// return an array of objects from given DataGridView row cell contents
+        /// Return an array of objects from given DataGridView row cell contents
         /// </summary>
         /// <param name="row"></param>
         /// <returns></returns>
@@ -135,16 +134,19 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// get Mage column definitions from the GridViewDisplay
+        /// Get Mage column definitions from the GridViewDisplay
         /// into our internal bufferes
         /// </summary>
         private void GetColumnDefs()
         {
-            mColumnDefs = new List<MageColumnDef>(myListControl.ColumnDefs);
+            if (myListControl.ColumnDefs == null)
+                mColumnDefs = new List<MageColumnDef>();
+            else
+                mColumnDefs = new List<MageColumnDef>(myListControl.ColumnDefs);
         }
 
         /// <summary>
-        /// get data rows from the GridViewDisplay
+        /// Get data rows from the GridViewDisplay
         /// into our internal buffers
         /// </summary>
         private void GetRowsFromList()

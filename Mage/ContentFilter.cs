@@ -5,7 +5,7 @@ namespace Mage
 {
 
     /// <summary>
-    /// processes input rows from standard tabular input
+    /// Processes input rows from standard tabular input
     /// and passes only selected ones to standard tabular output
     /// it is meant to be the base clase for subclasses that actually do the filtering
     /// </summary>
@@ -26,10 +26,10 @@ namespace Mage
         #region IBaseModule Members
 
         /// <summary>
-        /// handler for Mage standard tablular column definition
+        /// Handler for Mage standard tablular column definition
         /// (override of base class)
         ///
-        /// let base class processess columns for us
+        /// Let base class processess columns for us
         /// and pass the appropriate definitions to our listeners
         /// </summary>
         /// <param name="sender"></param>
@@ -45,10 +45,10 @@ namespace Mage
         }
 
         /// <summary>
-        /// handler for Mage standard tablular input data rows
+        /// Handler for Mage standard tablular input data rows
         /// (override of base class)
         ///
-        /// check each input row against the filter and pass on the
+        /// Check each input row against the filter and pass on the
         /// rows that are accepted
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -57,14 +57,14 @@ namespace Mage
         {
             if (args.DataAvailable)
             {
-                // do filtering here
+                // Do filtering here
                 var vals = args.Fields;
                 if (CheckFilter(ref vals))
                 {
                     passedRowsCounter++;
                     OnDataRowAvailable(new MageDataEventArgs(vals));
                 }
-                // report progress
+                // Report progress
                 if (++totalRowsCounter % reportRowBlockSize == 0)
                 {
                     var msg = "Processed " + totalRowsCounter + " total rows, passed " + passedRowsCounter;
@@ -86,7 +86,7 @@ namespace Mage
         #region Filtering Functions
 
         /// <summary>
-        /// this function should be overriden by subclasses to do the actual filtering
+        /// This function should be overriden by subclasses to do the actual filtering
         /// </summary>
         /// <param name="vals"></param>
         /// <returns></returns>
@@ -98,7 +98,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// called when all column definitions are complete
+        /// Called when all column definitions are complete
         /// this function can be overridden by subclasses to set up processing
         /// </summary>
         protected virtual void ColumnDefsFinished()
@@ -107,7 +107,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// allows a content filter module to provide a file nane conversion
+        /// Allows a content filter module to provide a file nane conversion
         /// </summary>
         /// <param name="sourceFile">name of input file</param>
         /// <param name="fieldPos">index of field in file metadata to be used for renaming</param>

@@ -6,13 +6,13 @@ namespace MageDisplayLib
 {
 
     /// <summary>
-    /// intercepts horizontal scrollbar events, gets X position of scroll, and fires onScroll event
+    /// Intercepts horizontal scrollbar events, gets X position of scroll, and fires onScroll event
     /// </summary>
     public class ListViewEx : ListView
     {
 
         /// <summary>
-        /// event that is fired to simulate a .Net scroll event
+        /// Event that is fired to simulate a .Net scroll event
         /// </summary>
         public event ScrollEventHandler onScroll;
 
@@ -25,7 +25,7 @@ namespace MageDisplayLib
         private const int SB_VERT = 1;
 
         /// <summary>
-        /// override WndProc to snare horizontal scrolling event from raw Windows message stream
+        /// Override WndProc to snare horizontal scrolling event from raw Windows message stream
         /// (since ListView does not provide scrolling event)
         /// </summary>
         /// <param name="m"></param>
@@ -42,7 +42,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// call to raw WinAPI function to get position of horizontal scroll bar
+        /// Call to raw WinAPI function to get position of horizontal scroll bar
         /// </summary>
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         static extern int GetScrollPos(IntPtr hWnd, int nBar);

@@ -28,7 +28,7 @@ namespace MageUnitTests
         public void FileSubPipelineBrokerBasicTest()
         {
 
-            // set up test parameters
+            // Set up test parameters
             var idColumnName = "Padding";
             var idColContents = "Borked";
             var folderColName = "Folder_Col";
@@ -37,7 +37,7 @@ namespace MageUnitTests
             var testInputFileName = "victim.txt";
             var destFolder = System.Environment.CurrentDirectory;
 
-            // set up data generator
+            // Set up data generator
             var dGen = new DataGenerator(2, 4)
             {
                 AddAdHocRow = new[] { folderColName, fileColName, idColumnName }
@@ -53,7 +53,7 @@ namespace MageUnitTests
                 writer.WriteLine(idColContents + '\t' + testFolderPath + '\t' + testInputFileName);
             }
 
-            // set up test class
+            // Set up test class
             var target = new FileSubPipelineBroker
             {
                 SourceFileColumnName = fileColName,
@@ -65,7 +65,7 @@ namespace MageUnitTests
             target.SetPipelineMaker(MakeTestSubpipeline);
             target.SetOutputFileNamer(RenameOutputFile);
 
-            // build and run pipeline
+            // Build and run pipeline
             var pipeline = new ProcessingPipeline("FileColumnProcessorTest");
             pipeline.RootModule = pipeline.AddModule("Gen", dGen);
             pipeline.AddModule("Target", target);
@@ -78,7 +78,7 @@ namespace MageUnitTests
             Assert.AreEqual("Kilroy was here too", mPipelineDummyModuleResults, "Dummy module results");
         }
 
-        // this function builds the a file processing pipeline
+        // This function builds the a file processing pipeline
         // which is a simple file filtering process that has a file reader module, file filter module, and file writer module,
         // using a filter module specified by the FilterModuleClasssName, which must be set by the client
         private ProcessingPipeline MakeTestSubpipeline(string inputFilePath, string outputFilePath, Dictionary<string, string> context)
@@ -93,7 +93,7 @@ namespace MageUnitTests
             return pipeline;
         }
 
-        // delegate that handles renaming of source file to output file
+        // Delegate that handles renaming of source file to output file
         public string RenameOutputFile(string sourceFile, Dictionary<string, int> fieldPos, string[] fields)
         {
             return "out_" + sourceFile;
@@ -169,7 +169,7 @@ namespace MageUnitTests
         {
 
             /// <summary>
-            /// test
+            /// Test
             /// </summary>
             /// <param name="state"></param>
             public override void Run(object state)

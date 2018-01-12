@@ -16,27 +16,27 @@ namespace MageUIComponents
         }
 
         /// <summary>
-        /// event for issuing commands
+        /// Event for issuing commands
         /// </summary>
         public event EventHandler<MageCommandEventArgs> OnAction;
 
         /// <summary>
-        /// delegate for getting information about file to extract column information from
+        /// Delegate for getting information about file to extract column information from
         /// </summary>
         public Func<Dictionary<string, string>> GetSelectedFileInfo;
 
-        // delegate for getting information about output file/database
+        // Delegate for getting information about output file/database
         public Func<Dictionary<string, string>> GetSelectedOutputInfo;
 
         #region Member Variables
 
         /// <summary>
-        /// stores parameter sets for filters, keyed by filter name.
+        /// Stores parameter sets for filters, keyed by filter name.
         /// </summary>
         private readonly Dictionary<string, Dictionary<string, string>> mParameters = new Dictionary<string, Dictionary<string, string>>();
 
         /// <summary>
-        /// output column list from seleted column mapping (if any)
+        /// Output column list from seleted column mapping (if any)
         /// </summary>
         private string mOutputColumnList = "";
 
@@ -45,7 +45,7 @@ namespace MageUIComponents
         #region Properties
 
         /// <summary>
-        /// return class name for selected filter
+        /// Return class name for selected filter
         /// </summary>
         public string SelectedFilterClassName => ModuleDiscovery.SelectedFilterClassName(FilterSelectionCtl.Text);
 
@@ -54,16 +54,16 @@ namespace MageUIComponents
         #region IModuleParameters Members
 
         /// <summary>
-        /// get a merged set of parameters consisting of the canonical parameters
+        /// Get a merged set of parameters consisting of the canonical parameters
         /// plus any specific parameters for the currently selected filter
         /// (added by filter's parameter panel)
         /// </summary>
         /// <returns></returns>
         public Dictionary<string, string> GetParameters()
         {
-            // if there is a parameter set for the currently selected filter
+            // If there is a parameter set for the currently selected filter
             // use it as starting point for parameter
-            // otherwise start with blank collection.
+            // Otherwise start with blank collection.
             Dictionary<string, string> p;
             if (mParameters.ContainsKey(FilterSelectionCtl.Text))
             {
@@ -73,7 +73,8 @@ namespace MageUIComponents
             {
                 p = new Dictionary<string, string>();
             }
-            // add the canonical parameters for the processing panel itself
+
+            // Add the canonical parameters for the processing panel itself
             p["SelectedFilterClassName"] = SelectedFilterClassName;
             p["OutputColumnList"] = mOutputColumnList;
             return p;
@@ -113,7 +114,7 @@ namespace MageUIComponents
 
 
         /// <summary>
-        /// see if there is a parameter panel associated with the currently selected filter
+        /// See if there is a parameter panel associated with the currently selected filter
         /// and, if there is one, present it to the user and save its returned parameter values
         /// </summary>
         private void GetFilterParams()
@@ -122,19 +123,19 @@ namespace MageUIComponents
             var panelName = ModuleDiscovery.GetParameterPanelForFilter(FilterLabel);
             if (!string.IsNullOrEmpty(panelName))
             {
-                // create an instance of the parameter panel
+                // Create an instance of the parameter panel
                 var modType = ModuleDiscovery.GetModuleTypeFromClassName(panelName);
                 var paramForm = (Form)Activator.CreateInstance(modType);
 
-                // need reference that lets us access its parameters
+                // Need reference that lets us access its parameters
                 var iPar = (IModuleParameters)paramForm;
 
-                // initialize its current parameter values
+                // Initialize its current parameter values
                 if (mParameters.ContainsKey(FilterLabel))
                 {
                     iPar.SetParameters(mParameters[FilterLabel]);
                 }
-                // popup the parameter panel and save its parameter values
+                // Popup the parameter panel and save its parameter values
                 if (paramForm.ShowDialog() == DialogResult.OK)
                 {
                     mParameters[FilterLabel] = iPar.GetParameters();
@@ -147,7 +148,7 @@ namespace MageUIComponents
 
         // (if there is such a panel)
         /// <summary>
-        /// bring up parameter panel associated with currently selected filter
+        /// Bring up parameter panel associated with currently selected filter
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -157,7 +158,7 @@ namespace MageUIComponents
         }
 
         /// <summary>
-        /// enable and disable the button that brings up parameter panel
+        /// Enable and disable the button that brings up parameter panel
         /// that is associated with currently selected filter
         /// according to whether or not such a panel exists
         /// </summary>
@@ -181,7 +182,7 @@ namespace MageUIComponents
         #region Column Mapping Functions
 
         /// <summary>
-        /// bring up column mapping selection list and allow user to choose one
+        /// Bring up column mapping selection list and allow user to choose one
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

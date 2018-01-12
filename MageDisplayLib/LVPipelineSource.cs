@@ -6,7 +6,7 @@ namespace MageDisplayLib
 {
 
     /// <summary>
-    /// this is a pipeline module
+    /// This is a pipeline module
     /// that can serve the contents of a ListDisplayControl to standard tabular output
     ///
     /// It is an adapter for making rows in a ListDisplayControl object
@@ -17,7 +17,7 @@ namespace MageDisplayLib
 
         #region Member Variables
 
-        // object whose data we are serving
+        // Object whose data we are serving
         private readonly ListDisplayControl myListControl;
 
         private readonly List<MageColumnDef> mColumnDefs = new List<MageColumnDef>();
@@ -29,7 +29,7 @@ namespace MageDisplayLib
         #region Constructors
 
         /// <summary>
-        /// construct a LVPipelineSource object
+        /// Construct a LVPipelineSource object
         /// that can serve data rows from associated ListDisplayControl
         /// according to mode
         /// </summary>
@@ -56,7 +56,7 @@ namespace MageDisplayLib
         #region Properties
 
         /// <summary>
-        /// set the module to stop execution
+        /// Set the module to stop execution
         /// </summary>
         public bool Stop
         {
@@ -69,7 +69,7 @@ namespace MageDisplayLib
         #region IBaseModule Members
 
         /// <summary>
-        /// output each row in associated ListViewDisplayList object
+        /// Output each row in associated ListViewDisplayList object
         /// to Mage standard tabular output, one row at a time.
         /// (override of base class)
         /// </summary>
@@ -124,7 +124,7 @@ namespace MageDisplayLib
         {
             OnColumnDefAvailable(new MageColumnEventArgs(mColumnDefs.ToArray()));
 
-            // output the rows from the list control according to current mode setting
+            // Output the rows from the list control according to current mode setting
             foreach (var row in RowBuffer)
             {
                 if (Abort)

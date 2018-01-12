@@ -43,10 +43,10 @@ namespace MageFileProcessor
         /// <remarks>Used to determine which field names to use for source files when copying files or processing files</remarks>
         private string mFileSourcePipelineName = string.Empty;
 
-        // current command that is being executed or has most recently been executed
+        // Current command that is being executed or has most recently been executed
         MageCommandEventArgs mCurrentCmd;
 
-        // object that sent the current command
+        // Object that sent the current command
         object mCurrentCmdSender;
 
         #endregion
@@ -103,13 +103,13 @@ namespace MageFileProcessor
                 MessageBox.Show("Error instantiating trace log: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
 
-            // setup UI component panels
+            // Setup UI component panels
             SetupStatusPanel();
             SetupCommandHandler();
             SetupFilterSelectionListForFileProcessor();
             SetupColumnMapping();
 
-            // setup context menus for list displays
+            // Setup context menus for list displays
 
             // ReSharper disable once ObjectCreationAsStatement
             new GridViewDisplayActions(JobListDisplayControl);
@@ -123,15 +123,15 @@ namespace MageFileProcessor
             // Connect the pipeline queue to message handlers
             ConnectPipelineQueueToStatusDisplay(mPipelineQueue);
 
-            // connect callbacks for UI panels
+            // Connect callbacks for UI panels
             FileProcessingPanel1.GetSelectedFileInfo += GetSelectedFileItem;
             FileProcessingPanel1.GetSelectedOutputInfo += GetSelectedOutputItem;
 
-            SetupFlexQueryPanels(); // must be done before restoring saved state
+            SetupFlexQueryPanels(); // Must be done before restoring saved state
 
             try
             {
-                // restore settings to UI component panels
+                // Restore settings to UI component panels
                 SavedState.RestoreSavedPanelParameters(PanelSupport.GetParameterPanelList(this));
             }
             catch (Exception ex)
@@ -216,7 +216,7 @@ namespace MageFileProcessor
         }
 
         /// <summary>
-        /// execute a command by building and running
+        /// Execute a command by building and running
         /// the appropriate pipeline (or cancelling
         /// the current pipeline activity)
         /// </summary>
@@ -225,7 +225,7 @@ namespace MageFileProcessor
         public void DoCommand(object sender, MageCommandEventArgs command)
         {
 
-            // remember who sent us the command
+            // Remember who sent us the command
             mCurrentCmdSender = sender;
 
             if (command.Action == "display_reloaded")
@@ -235,21 +235,21 @@ namespace MageFileProcessor
                 return;
             }
 
-            // cancel the currently running pipeline
+            // Cancel the currently running pipeline
             if (command.Action == "cancel_operation" && mPipelineQueue != null && mPipelineQueue.IsRunning)
             {
                 mPipelineQueue.Cancel();
                 return;
             }
 
-            // don't allow another pipeline if one is currently running
+            // Don't allow another pipeline if one is currently running
             if (mPipelineQueue != null && mPipelineQueue.IsRunning)
             {
                 MessageBox.Show("Pipeline is already active", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            // construct suitable Mage pipeline for the given command
+            // Construct suitable Mage pipeline for the given command
             // and run that pipeline
             BuildAndRunPipeline(command);
         }
@@ -266,7 +266,7 @@ namespace MageFileProcessor
 
             try
             {
-                // build and run the pipeline appropriate to the command
+                // Build and run the pipeline appropriate to the command
                 Dictionary<string, string> runtimeParms;
                 GVPipelineSource source;
                 ISinkModule sink;
@@ -541,7 +541,7 @@ namespace MageFileProcessor
         /// </summary>
         private void AdjustInitialUIState()
         {
-            // initial labels for display list control panels
+            // Initial labels for display list control panels
             JobListDisplayControl.PageTitle = "Entities";
             FileListDisplayControl.PageTitle = "Files";
             FileListDisplayControl.AutoSizeColumnWidths = true;
@@ -549,7 +549,7 @@ namespace MageFileProcessor
             JobDatasetIDList1.Legend = "(Dataset IDs)";
             JobDatasetIDList1.ListName = "Dataset_ID";
 
-            // disable certain UI component panels
+            // Disable certain UI component panels
             EntityFilePanel1.Enabled = false;
             FileProcessingPanel1.Enabled = false;
             FileCopyPanel1.Enabled = false;
@@ -656,7 +656,7 @@ namespace MageFileProcessor
         }
 
         /// <summary>
-        /// adjust tab label for file source actions according to entity type
+        /// Adjust tab label for file source actions according to entity type
         /// </summary>
         private void AdjustEntityFileTabLabels()
         {
@@ -711,7 +711,7 @@ namespace MageFileProcessor
         }
 
         /// <summary>
-        /// control enable state of filter panel based on output tab choice
+        /// Control enable state of filter panel based on output tab choice
         /// </summary>
         private void EnableDisableOutputTabs()
         {
@@ -719,16 +719,16 @@ namespace MageFileProcessor
             if (mode == "Copy_Files")
             {
                 FileProcessingPanel1.Enabled = false;
-                //FileProcessingPanel1.Visible = false;
-                //panel3.Height = 180;
+                // FileProcessingPanel1.Visible = false;
+                // panel3.Height = 180;
             }
             else
             {
                 if (FolderDestinationPanel1.Enabled || SQLiteDestinationPanel1.Enabled)
                 {
                     FileProcessingPanel1.Enabled = true;
-                    //FileProcessingPanel1.Visible = true;
-                    //panel3.Height = 280;
+                    // FileProcessingPanel1.Visible = true;
+                    // panel3.Height = 280;
                 }
             }
         }
@@ -882,13 +882,14 @@ namespace MageFileProcessor
         private static string GetBestPrefixIDColumnName(IEnumerable<MageColumnDef> colDefs)
         {
             var IDColumnName = "";
-            // define list of potential candidate names in order of precedence
+
+            // Define list of potential candidate names in order of precedence
             var candidateIDColumnNames = new Dictionary<string, bool>
             {
                 { "Job", false }, { "Dataset_ID", false }, { "Dataset", false }
             };
 
-            // go through actual column names and make the potential candidates
+            // Go through actual column names and make the potential candidates
             foreach (var colDef in colDefs)
             {
                 if (candidateIDColumnNames.ContainsKey(colDef.Name))
@@ -896,7 +897,8 @@ namespace MageFileProcessor
                     candidateIDColumnNames[colDef.Name] = true;
                 }
             }
-            // use the higest precedence marked potential candiate
+
+            // Use the higest precedence marked potential candiate
             foreach (var candidateIDColName in candidateIDColumnNames)
             {
                 if (candidateIDColName.Value)
@@ -928,7 +930,7 @@ namespace MageFileProcessor
         }
 
         /// <summary>
-        /// handle updating control enable status on completion of running pipeline
+        /// Handle updating control enable status on completion of running pipeline
         /// </summary>
         /// <param name="sender">(ignored)</param>
         /// <param name="args">Contains status information to be displayed</param>
@@ -984,8 +986,8 @@ namespace MageFileProcessor
             // to true.
             lblAboutLink.LinkVisited = true;
 
-            //Call the Process.Start method to open the default browser
-            //with a URL:
+            // Call the Process.Start method to open the default browser
+            // with a URL:
             Process.Start(lblAboutLink.Text);
         }
 
@@ -994,7 +996,7 @@ namespace MageFileProcessor
         #region Panel Support Functions
 
         /// <summary>
-        /// set up status panel
+        /// Set up status panel
         /// </summary>
         private void SetupStatusPanel()
         {
@@ -1002,12 +1004,12 @@ namespace MageFileProcessor
         }
 
         /// <summary>
-        /// wire up the command event in panels that have it
+        /// Wire up the command event in panels that have it
         /// to the DoCommand event handler method
         /// </summary>
         private void SetupCommandHandler()
         {
-            // get reference to the method that handles command events
+            // Get reference to the method that handles command events
             var methodInfo = GetType().GetMethod("DoCommand");
             Control subjectControl = this;
 
@@ -1015,7 +1017,7 @@ namespace MageFileProcessor
         }
 
         /// <summary>
-        /// set up filter selection list for file processing panel
+        /// Set up filter selection list for file processing panel
         /// </summary>
         private static void SetupFilterSelectionListForFileProcessor()
         {
@@ -1023,7 +1025,7 @@ namespace MageFileProcessor
         }
 
         /// <summary>
-        /// setup path to column mapping config file for selection forms
+        /// Setup path to column mapping config file for selection forms
         /// </summary>
         private void SetupColumnMapping()
         {

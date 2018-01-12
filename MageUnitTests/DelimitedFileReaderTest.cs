@@ -61,7 +61,7 @@ namespace MageUnitTests
         {
             var dataFile = General.GetTestFile(isosFilePath);
 
-            // create DelimitedFileReader object and test sink object
+            // Create DelimitedFileReader object and test sink object
             // and connect together
             var target = new DelimitedFileReader();
             var maxRows = 7;
@@ -73,7 +73,7 @@ namespace MageUnitTests
             target.Delimiter = ","; // "CSV"
             target.Run(null);
 
-            // did the test sink object get the expected row definitions
+            // Did the test sink object get the expected row definitions
             var colList = new[] {
                 "frame_num", "ims_scan_num", "charge", "abundance", "mz", "fit", "average_mw",
                 "monoisotopic_mw", "mostabundant_mw", "fwhm", "signal_noise", "mono_abundance",
@@ -85,12 +85,12 @@ namespace MageUnitTests
                 Assert.AreEqual(cols[i].Name, colList[i]);
             }
 
-            // did the test sink object get the expected number of data rows
+            // Did the test sink object get the expected number of data rows
             // on its standard tabular input?
             var rows = sink.Rows;
             Assert.AreEqual(maxRows, rows.Count);
 
-            // are there the expected number of fields in the data row?
+            // Are there the expected number of fields in the data row?
             Assert.AreEqual(colList.Length, rows[0].Length);
         }
 

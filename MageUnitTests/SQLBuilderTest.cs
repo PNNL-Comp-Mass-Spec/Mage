@@ -116,20 +116,20 @@ namespace MageUnitTests
         {
             var queryDefsFile = General.GetTestFile(queryDefinitionsPath);
 
-            // runtime parameters for query
+            // Runtime parameters for query
             var runtimeParameters = new Dictionary<string, string>();
             var testDB = "DMS5_T3";
             runtimeParameters[":Database"] = testDB;
             runtimeParameters["Dataset"] = "sarc";
 
-            // get XML query definition by name
+            // Get XML query definition by name
             ModuleDiscovery.QueryDefinitionFileName = queryDefsFile.FullName;
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("Factors_List_Report");
             Assert.AreNotEqual("", queryDefXML);
 
             var target = new SQLBuilder(queryDefXML, ref runtimeParameters);
-            //           SQLBuilder target = new SQLBuilder();
-            //           target.InitializeFromXML(queryDefXML, ref runtimeParameters);
+            // SQLBuilder target = new SQLBuilder();
+            // target.InitializeFromXML(queryDefXML, ref runtimeParameters);
             var specialArgs = target.SpecialArgs;
 
             Assert.AreEqual(Globals.DMSServer.ToLower(), specialArgs[SQLBuilder.SERVER_NAME_KEY].ToLower());
@@ -148,16 +148,16 @@ namespace MageUnitTests
         {
             var queryDefsFile = General.GetTestFile(queryDefinitionsPath);
 
-            // expected predefined parameter
+            // Expected predefined parameter
             var defParam = "@MinimumPMTQualityScore";
             var defValue = "4";
 
-            // runtime parameters for query
+            // Runtime parameters for query
             var testParam = "@ExperimentFilter";
             var testValue = "borked";
             var runtimeParameters = new Dictionary<string, string> {[testParam] = testValue};
 
-            // get XML query definition by name
+            // Get XML query definition by name
             ModuleDiscovery.QueryDefinitionFileName = queryDefsFile.FullName;
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("GetMassTagsPlusPepProphetStats");
             Assert.AreNotEqual("", queryDefXML);
@@ -176,7 +176,7 @@ namespace MageUnitTests
         {
             var queryDefsFile = General.GetTestFile(queryDefinitionsPath);
 
-            // get XML query definition by name
+            // Get XML query definition by name
             ModuleDiscovery.QueryDefinitionFileName = queryDefsFile.FullName;
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("GetMassTagsPlusPepProphetStats");
             Assert.AreNotEqual("", queryDefXML);
@@ -186,7 +186,7 @@ namespace MageUnitTests
             Assert.AreEqual("", descriptions["@MinimumHighDiscriminantScore"]);
             Assert.AreEqual("Descriptive text for MassCorrectionIDFilterList", descriptions["@MassCorrectionIDFilterList"]);
 
-            // get XML query definition by name
+            // Get XML query definition by name
             queryDefXML = ModuleDiscovery.GetQueryXMLDef("Factors_List_Report");
             Assert.AreNotEqual("", queryDefXML);
 

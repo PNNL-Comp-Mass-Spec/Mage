@@ -44,7 +44,7 @@ namespace Mage
         #region Constructors
 
         /// <summary>
-        /// construct a new Mage SQLite reader module
+        /// Construct a new Mage SQLite reader module
         /// </summary>
         public SQLiteReader()
         {
@@ -85,7 +85,7 @@ namespace Mage
         #region IDisposable Members
 
         /// <summary>
-        /// dispose of held resources
+        /// Dispose of held resources
         /// </summary>
         public void Dispose()
         {
@@ -94,7 +94,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// dispose of held resources
+        /// Dispose of held resources
         /// </summary>
         /// <param name="disposing"></param>
         private void Dispose(bool disposing)
@@ -106,7 +106,7 @@ namespace Mage
             // Code to dispose the un-managed resources of the class
             mConnection?.Dispose();
 
-            //            isDisposed = true;
+            // isDisposed = true;
         }
 
         #endregion
@@ -120,13 +120,13 @@ namespace Mage
         private void SetPropertiesFromBuilder(SQLBuilder builder)
         {
 
-            // set this module's properties from builder's special arguments list
+            // Set this module's properties from builder's special arguments list
             SetParameters(builder.SpecialArgs);
 
-            // we are doing straight SQL query, build the SQL
+            // We are doing straight SQL query, build the SQL
             var sql = builder.BuildQuerySQL();
 
-            // change MSSQL quote characters to SQLite quote characters
+            // Change MSSQL quote characters to SQLite quote characters
             sql = sql.Replace('[', '"').Replace(']', '"');
             SQLText = sql;
         }
@@ -178,8 +178,8 @@ namespace Mage
                         if (password != null) {
                             builder.Password = password;
                         }
-                        //builder.PageSize = 4096
-                        //builder.UseUTF16Encoding = True
+                        // builder.PageSize = 4096
+                        // builder.UseUTF16Encoding = True
             */
             var connstring = builder.ConnectionString;
 
@@ -194,7 +194,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// output results of query to Mage standard tabular output
+        /// Output results of query to Mage standard tabular output
         /// </summary>
         /// <param name="myReader"></param>
         private void GetData(IDataReader myReader)
@@ -214,7 +214,7 @@ namespace Mage
             duration = stopTime - startTime;
             traceLogReader.Info("SQLiteReader.GetData --> Get data finish (" + duration + ") [" + totalRows + "]:" + SQLText);
 
-            //Always close the DataReader
+            // Always close the DataReader
             myReader.Close();
 
         }
@@ -249,7 +249,7 @@ namespace Mage
 
         private void OutputColumnDefinitions(IDataReader myReader)
         {
-            // if anyone is registered as listening for ColumnDefAvailable events, make it happen for them
+            // If anyone is registered as listening for ColumnDefAvailable events, make it happen for them
             startTime = DateTime.UtcNow;
             traceLogReader.Debug("SQLiteReader.GetData --> Get column info start:" + SQLText);
 
@@ -265,7 +265,7 @@ namespace Mage
                     var columnDef = GetColumnInfo(drField);
                     if (!columnDef.Hidden)
                     {
-                        // pass information about this column to the listeners
+                        // Pass information about this column to the listeners
                         columnDefs.Add(columnDef);
                     }
                     else
@@ -284,14 +284,14 @@ namespace Mage
         }
 
         /// <summary>
-        /// return a MageColumnDef object constructed from information
+        /// Return a MageColumnDef object constructed from information
         /// from given DataRow object
         /// </summary>
         /// <param name="drField"></param>
         /// <returns></returns>
         private static MageColumnDef GetColumnInfo(DataRow drField)
         {
-            // add the canonical column definition fields to column definition
+            // Add the canonical column definition fields to column definition
 
             var columnDef = new MageColumnDef
             {
@@ -306,7 +306,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// inform any listeners about our progress
+        /// Inform any listeners about our progress
         /// </summary>
         /// <param name="message"></param>
         private void UpdateStatusMessage(string message)

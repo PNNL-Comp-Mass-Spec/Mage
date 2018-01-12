@@ -70,7 +70,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// construct a new Mage data generator object
+        /// Construct a new Mage data generator object
         /// </summary>
         public DataGenerator()
         {
@@ -78,7 +78,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// construct a new Mage data generator object
+        /// Construct a new Mage data generator object
         /// with Rows and Cols properties set
         /// </summary>
         public DataGenerator(int rows, int cols)
@@ -151,7 +151,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// return a simulted row of data with the given number of columns
+        /// Return a simulted row of data with the given number of columns
         /// </summary>
         /// <param name="numCols"></param>
         /// <returns></returns>
@@ -166,7 +166,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// return a simulated row of data based on the given row number and number of columns
+        /// Return a simulated row of data based on the given row number and number of columns
         /// </summary>
         /// <param name="i"></param>
         /// <param name="numCols"></param>
@@ -183,7 +183,7 @@ namespace Mage
 
         private void OutputHeaderLine(IEnumerable<string> fields)
         {
-            // output the column definitions
+            // Output the column definitions
             var columnDefs = new List<MageColumnDef>();
             foreach (var field in fields)
             {

@@ -16,7 +16,7 @@ namespace Mage
         #region Member Variables
 
         /// <summary>
-        /// list of definitions for the parameters that will be permutated
+        /// List of definitions for the parameters that will be permutated
         /// and included in the standard tabular output as columns
         /// </summary>
         private readonly List<ParameterDef> mParamColDefinitions = new List<ParameterDef>();
@@ -35,32 +35,32 @@ namespace Mage
         public bool IncludeHeaderInOutput { get; set; }
 
         /// <summary>
-        /// number of active parameters
+        /// Number of active parameters
         /// </summary>
         public int ParamCount => mParamColDefinitions.Count;
 
         /// <summary>
-        /// number of permutation rows that will be generated
+        /// Number of permutation rows that will be generated
         /// </summary>
         public int PredictedOutputRowCount => mTotalRows;
 
         /// <summary>
-        /// name of identifier column
+        /// Name of identifier column
         /// </summary>
         public string AutoColumnName { get; set; }
 
         /// <summary>
-        /// format of identifier column
+        /// Format of identifier column
         /// </summary>
         public string AutoColumnFormat { get; set; }
 
         /// <summary>
-        /// initial sequence number for identifier column
+        /// Initial sequence number for identifier column
         /// </summary>
         public int AutoColumnSeed { get; set; }
 
         /// <summary>
-        /// list of active parameters names
+        /// List of active parameters names
         /// </summary>
         public IEnumerable<string> ParamNames
         {
@@ -80,7 +80,7 @@ namespace Mage
         #region Constructors
 
         /// <summary>
-        /// construct a new empty Mage permutation generator object
+        /// Construct a new empty Mage permutation generator object
         /// </summary>
         public PermutationGenerator()
         {
@@ -126,7 +126,7 @@ namespace Mage
         #region IBaseModule Members
 
         /// <summary>
-        /// generate data and output it
+        /// Generate data and output it
         /// (override of base class)
         /// </summary>
         /// <param name="state">Mage ProcessingPipeline object that contains the module (if there is one)</param>
@@ -145,7 +145,7 @@ namespace Mage
 
         #region Private Functions
 
-        // set up auto column
+        // Set up auto column
         private void SetupAutoColumn()
         {
             mAutoColumnIndex = -1;
@@ -158,7 +158,7 @@ namespace Mage
             }
         }
 
-        // set up to use BaseModule internal column handling
+        // Set up to use BaseModule internal column handling
         private void SetupInputColumns()
         {
             var colDefs = new List<MageColumnDef>();
@@ -170,11 +170,11 @@ namespace Mage
             base.HandleColumnDef(this, new MageColumnEventArgs(colDefs.ToArray()));
         }
 
-        // set the row cycle count for each parameter def object
+        // Set the row cycle count for each parameter def object
         // and get total row count that will be produced
         private void SetCycleCountsForParamterColDefList()
         {
-            // set cycle count for each parameter def object
+            // Set cycle count for each parameter def object
             // and get total row count that will be produced
             mTotalRows = 1;
             foreach (var pDef in mParamColDefinitions)
@@ -184,12 +184,12 @@ namespace Mage
             }
         }
 
-        // generate output rows given parameter column definitions
+        // Generate output rows given parameter column definitions
         // and total row count and output them via standard tabular output
         private void GenerateRows()
         {
             var totalCols = mParamColDefinitions.Count;
-            // step through all row numbers for output rows
+            // Step through all row numbers for output rows
             // and generate a row for each and add it to list
             for (var rowNum = 0; rowNum < mTotalRows; rowNum++)
             {
@@ -198,9 +198,11 @@ namespace Mage
                     ReportProcessingAborted();
                     break;
                 }
-                // make new empty row
+
+                // Make new empty row
                 var row = new string[totalCols];
-                // step through each column and update row fields
+
+                // Step through each column and update row fields
                 // using previously set up column parameter objects
                 for (var colNum = 0; colNum < totalCols; colNum++)
                 {
@@ -212,7 +214,7 @@ namespace Mage
             OutputDataLine(null, 0);
         }
 
-        // send the data row information to any listeners
+        // Send the data row information to any listeners
         // via standard tabular output
         private void OutputDataLine(string[] fields, int rowNum)
         {
@@ -243,11 +245,11 @@ namespace Mage
             }
         }
 
-        // send the header information to any listeners
+        // Send the header information to any listeners
         // via standard tabular output
         private void OutputHeaderLine()
         {
-            // output the column definitions
+            // Output the column definitions
             if (OutputColumnDefs != null)
             {
                 OnColumnDefAvailable(new MageColumnEventArgs(OutputColumnDefs.ToArray()));
@@ -268,33 +270,30 @@ namespace Mage
         {
             public string ParamName { get; private set; }
 
-            // increment range parameters
-            // used to calculate specific incremental values
+            // Increment range parameters used to calculate specific incremental values
             private double UpperBound { get; set; }
             private double LowerBound { get; set; }
             private double Step { get; set; }
 
-            // list (comma-delimited) of explicit
-            // incremental values
+            // List (comma-delimited) of explicit incremental values
             private string IncrementList { get; set; }
 
-            // list of increment values that this parameter object
-            // will cycle through.  Increment values are either calculated
-            // from increment range parameters or supplied as an explicit list
+            // List of increment values that this parameter object will cycle through.
+            // Increment values are either calculated from increment range parameters
+            // or supplied as an explicit list
             private readonly List<string> increments = new List<string>();
             public int NumberOfIncrements => increments.Count;
 
-            // number of output rows that must pass
-            // before this object's parameter increment values
-            // advances to the next value.
+            // Number of output rows that must pass before this object's
+            // parameter increment values advances to the next value.
             public int RowCycle { private get; set; }
 
-            // index to current increment
+            // Index to current increment
             private int incrementIndex;
 
-            // get the current parameter increment value for
-            // parameter represented by this object, based on
-            // the rowNum and cycle (which must be set externally)
+            // Get the current parameter increment value for parameter
+            // represented by this object, based on the rowNum and cycle
+            // (which must be set externally)
             public string CurrentIncrement(int rowNum)
             {
                 if ((rowNum != 0) && (rowNum % RowCycle == 0))
@@ -314,7 +313,7 @@ namespace Mage
                 IncrementList = "";
             }
 
-            // constructor
+            // Constructor
             public ParameterDef(Dictionary<string, string> paramList)
             {
                 Initialize();
@@ -353,7 +352,7 @@ namespace Mage
             }
 
 
-            // constructor
+            // Constructor
             public ParameterDef(string name, string lower, string upper, string step)
             {
                 Initialize();
@@ -376,8 +375,7 @@ namespace Mage
             }
 
 
-            // set up list of increment values
-            // based on increment range parameters
+            // Set up list of increment values based on increment range parameters
             // or list of increment values
             private void CalculateIncrements()
             {

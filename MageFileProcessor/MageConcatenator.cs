@@ -25,10 +25,10 @@ namespace MageFileProcessor
 
         private string mFinalPipelineName = string.Empty;
 
-        // current command that is being executed or has most recently been executed
+        // Current command that is being executed or has most recently been executed
         MageCommandEventArgs mCurrentCmd;
 
-        // object that sent the current command
+        // Object that sent the current command
         object mCurrentCmdSender;
 
         #endregion
@@ -41,7 +41,7 @@ namespace MageFileProcessor
 
             try
             {
-                // set up configuration folder and files
+                // Set up configuration folder and files
                 SavedState.SetupConfigFiles("MageConcatenator");
             }
             catch (Exception ex)
@@ -51,7 +51,7 @@ namespace MageFileProcessor
 
             try
             {
-                // set up configuration folder and files
+                // Set up configuration folder and files
                 // Set log4net path and kick the logger into action
                 string LogFileName = Path.Combine(SavedState.DataDirectory, "log.txt");
                 log4net.GlobalContext.Properties["LogName"] = LogFileName;
@@ -63,12 +63,12 @@ namespace MageFileProcessor
                 MessageBox.Show("Error instantiating trace log: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
 
-            // setup UI component panels
+            // Setup UI component panels
             SetupStatusPanel();
             SetupCommandHandler();
             SetupFilterSelectionListForFileProcessor();
 
-            // setup context menus for list displays
+            // Setup context menus for list displays
             new GridViewDisplayActions(FileListDisplayControl);
 
             // Connect the pipeline queue to message handlers
@@ -76,7 +76,7 @@ namespace MageFileProcessor
 
             try
             {
-                // restore settings to UI component panels
+                // Restore settings to UI component panels
                 SavedState.RestoreSavedPanelParameters(PanelSupport.GetParameterPanelList(this));
             }
             catch (Exception ex)
@@ -122,7 +122,7 @@ namespace MageFileProcessor
         }
 
         /// <summary>
-        /// execute a command by building and running 
+        /// Execute a command by building and running
         /// the appropriate pipeline (or cancelling
         /// the current pipeline activity)
         /// </summary>
@@ -131,7 +131,7 @@ namespace MageFileProcessor
         public void DoCommand(object sender, MageCommandEventArgs command)
         {
 
-            // remember who sent us the command
+            // Remember who sent us the command
             mCurrentCmdSender = sender;
 
             if (command.Action == "display_reloaded")
@@ -141,21 +141,21 @@ namespace MageFileProcessor
                 return;
             }
 
-            // cancel the currently running pipeline
+            // Cancel the currently running pipeline
             if (command.Action == "cancel_operation" && mPipelineQueue != null && mPipelineQueue.IsRunning)
             {
                 mPipelineQueue.Cancel();
                 return;
             }
 
-            // don't allow another pipeline if one is currently running
+            // Don't allow another pipeline if one is currently running
             if (mPipelineQueue != null && mPipelineQueue.IsRunning)
             {
                 MessageBox.Show("Pipeline is already active", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            // construct suitable Mage pipeline for the given command
+            // Construct suitable Mage pipeline for the given command
             // and run that pipeline
             BuildAndRunPipeline(command);
         }
@@ -172,7 +172,7 @@ namespace MageFileProcessor
 
             try
             {
-                // build and run the pipeline appropriate to the command
+                // Build and run the pipeline appropriate to the command
                 Dictionary<string, string> runtimeParms;
                 GVPipelineSource source;
                 ISinkModule sink;
@@ -180,7 +180,7 @@ namespace MageFileProcessor
                 ProcessingPipeline pipeline;
 
                 switch (command.Action)
-                {                   
+                {
                     case "get_files_from_local_folder":
                         runtimeParms = GetRuntimeParmsForLocalFolder();
                         string sFolder = runtimeParms["Folder"];
@@ -193,9 +193,9 @@ namespace MageFileProcessor
 
                         pipeline = Pipelines.MakePipelineToGetLocalFileList(sink, runtimeParms);
                         mPipelineQueue.Pipelines.Enqueue(pipeline);
-                        mFinalPipelineName = pipeline.PipelineName;                        
+                        mFinalPipelineName = pipeline.PipelineName;
                         break;
-                    
+
                     default:
                         return;
                 }
@@ -284,10 +284,10 @@ namespace MageFileProcessor
         /// </summary>
         private void AdjustInitialUIState()
         {
-            // initial labels for display list control panels
+            // Initial labels for display list control panels
             FileListDisplayControl.PageTitle = "Files";
 
-            // disable certain UI component panels 
+            // Disable certain UI component panels
             FolderDestinationPanel1.Enabled = false;
 
             EnableCancel(false);
@@ -349,7 +349,7 @@ namespace MageFileProcessor
                     break;
             }
         }
-    
+
         private Dictionary<string, string> GetRuntimeParmsForLocalFolder()
         {
             var rp = new Dictionary<string, string>
@@ -358,7 +358,7 @@ namespace MageFileProcessor
                 {"FileSelectionMode", LocalFolderPanel1.FileSelectionMode},
                 {"Folder", LocalFolderPanel1.Folder},
                 {"SearchInSubfolders", LocalFolderPanel1.SearchInSubfolders},
-                {"SubfolderSearchName", LocalFolderPanel1.SubfolderSearchName}                
+                {"SubfolderSearchName", LocalFolderPanel1.SubfolderSearchName}
             };
             return rp;
         }
@@ -395,7 +395,7 @@ namespace MageFileProcessor
         }
 
         /// <summary>
-        /// handle updating control enable status on completion of running pipeline
+        /// Handle updating control enable status on completion of running pipeline
         /// </summary>
         /// <param name="sender">(ignored)</param>
         /// <param name="args">Contains status information to be displayed</param>
@@ -412,7 +412,7 @@ namespace MageFileProcessor
 
                     CompletionStateUpdated csu = AdjusttPostCommndUIState;
                     Invoke(csu, new object[] { null });
-                    
+
                 }
             }
 
@@ -436,7 +436,7 @@ namespace MageFileProcessor
         #region Panel Support Functions
 
         /// <summary>
-        /// set up status panel
+        /// Set up status panel
         /// </summary>
         private void SetupStatusPanel()
         {
@@ -444,12 +444,12 @@ namespace MageFileProcessor
         }
 
         /// <summary>
-        /// wire up the command event in panels that have it
+        /// Wire up the command event in panels that have it
         /// to the DoCommand event handler method
         /// </summary>
         private void SetupCommandHandler()
         {
-            // get reference to the method that handles command events
+            // Get reference to the method that handles command events
             MethodInfo methodInfo = this.GetType().GetMethod("DoCommand");
             Control subjectControl = this;
 
@@ -457,7 +457,7 @@ namespace MageFileProcessor
         }
 
         /// <summary>
-        /// set up filter selection list for file processing panel
+        /// Set up filter selection list for file processing panel
         /// </summary>
         private static void SetupFilterSelectionListForFileProcessor()
         {

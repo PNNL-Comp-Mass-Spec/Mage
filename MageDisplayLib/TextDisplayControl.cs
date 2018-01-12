@@ -14,7 +14,7 @@ namespace MageDisplayLib
         #region Properties
 
         /// <summary>
-        /// get complete contents of text display
+        /// Get complete contents of text display
         /// </summary>
         public string Contents
         {
@@ -23,7 +23,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// get contents of text display as list of lines
+        /// Get contents of text display as list of lines
         /// </summary>
         public Collection<string> Lines => new Collection<string>(MainTextCtl.Lines);
 
@@ -57,7 +57,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// construct new Mage TextDisplayControl object
+        /// Construct new Mage TextDisplayControl object
         /// </summary>
         public TextDisplayControl()
         {

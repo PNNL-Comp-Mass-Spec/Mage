@@ -13,16 +13,16 @@ namespace Ranger {
         public RangerForm() {
             InitializeComponent();
             InitializeParameterSubpanels();
-            
+
             try {
-                // set up configuration folder and files
+                // Set up configuration folder and files
                 SavedState.SetupConfigFiles("MageRanger");
             } catch (Exception ex) {
                 MessageBox.Show("Error loading settings: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
 
             try {
-                // restore settings to UI component panels
+                // Restore settings to UI component panels
                 SavedState.RestoreSavedPanelParameters(PanelSupport.GetParameterPanelList(this));
             } catch (Exception ex) {
                 MessageBox.Show("Error restoring saved settings; will auto-delete SavedState.xml.  Message details: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -39,7 +39,7 @@ namespace Ranger {
         }
 
         private void InitializeParameterSubpanels() {
-            // make list of parameter subpanels for convenient access
+            // Make list of parameter subpanels for convenient access
             mParamPanels.Add(incrementalParameterSubPanel1);
             mParamPanels.Add(incrementalParameterSubPanel2);
             mParamPanels.Add(incrementalParameterSubPanel3);
@@ -49,7 +49,7 @@ namespace Ranger {
             mParamPanels.Add(incrementalParameterLitSubPanel1);
             mParamPanels.Add(incrementalParameterLitSubPanel2);
 
-            // preset parameter subpanels
+            // Preset parameter subpanels
             incrementalParameterSubPanel1.SetValues("ChargeState", "1", "5", "1", true);
             incrementalParameterSubPanel2.SetValues("CleavageType", "0", "2", "1", true);
             incrementalParameterSubPanel3.SetValues("Xcorr", "0", "5", "0.1", false);
@@ -83,20 +83,21 @@ namespace Ranger {
 
         private bool BuildAndRunPipeline() {
             var ran = false;
-            // make new pipeline to generate parameter table
+            // Make new pipeline to generate parameter table
             var ptg = new ParamTableGenerator();
 
-            // populate pipeline with specs for each parameter to be generated
+            // Populate pipeline with specs for each parameter to be generated
             foreach (var iP in mParamPanels) {
                 var p = iP.GetParameters();
                 if (p["Active"] == "On") {
                     ptg.AddParamColumn(p);
                 }
             }
-            // setup pipeline output
+
+            // Setup pipeline output
             switch (tabControl1.SelectedTab.Tag.ToString()) {
                 case "SaveToFile":
-                    // create module to write to file
+                    // Create module to write to file
                     ptg.FilePath = simpleFilePanel1.FilePath;
                     break;
                 case "SaveToSQLite":
@@ -104,12 +105,13 @@ namespace Ranger {
                     ptg.TableName = simpleSQLitePanel1.TableName;
                     break;
             }
-            // inform user of how many rows will be generated and
+
+            // Inform user of how many rows will be generated and
             // allow for confirmation or cancellation
             var prompt = string.Format("This will generate {0} rows", ptg.GeneratedParameterCount);
             var r = MessageBox.Show(prompt, "Confirm save", MessageBoxButtons.OKCancel);
             if (r == DialogResult.OK) {
-                // connect pipeline and run it
+                // Connect pipeline and run it
                 ran = true;
                 var pipeline = ptg.GetPipeline();
                 pipeline.OnStatusMessageUpdated += HandleStatusMessageUpdated;
@@ -127,35 +129,35 @@ namespace Ranger {
         private delegate void CompletionStateUpdated(object status);
 
         /// <summary>
-        /// handle the status update messages from the currently running pipeline
+        /// Handle the status update messages from the currently running pipeline
         /// </summary>
         /// <param name="sender">(ignored))</param>
         /// <param name="args">(ignored)</param>
         private void HandleStatusMessageUpdated(object sender, MageStatusEventArgs args) {
-            // the current pipleline will call this function from its own thread
-            // we need to do the cross-thread thing to update the GUI
+            // The current pipleline will call this function from its own thread
+            // We need to do the cross-thread thing to update the GUI
             MessageHandler ncb = SetStatusMessage;
             Invoke(ncb, args.Message);
         }
 
         /// <summary>
-        /// handle the status completion message from the currently running pipeline
+        /// Handle the status completion message from the currently running pipeline
         /// </summary>
         /// <param name="sender">(ignored)</param>
         /// <param name="args">Contains status information to be displayed</param>
         private void HandlePipelineCompletion(object sender, MageStatusEventArgs args) {
-            // pipeline didn't blow up, make nice reassuring message
+            // Pipeline didn't blow up, make nice reassuring message
             if (string.IsNullOrEmpty(args.Message)) {
                 args.Message = "Process completed normally";
             }
 
-            // the current pipleline will call this function from its own thread
-            // we need to do the cross-thread thing to update the GUI
+            // The current pipleline will call this function from its own thread
+            // We need to do the cross-thread thing to update the GUI
             MessageHandler ncb = SetStatusMessage;
             Invoke(ncb, args.Message);
         }
 
-        // this is targeted by the cross-thread invoke from HandleStatusMessageUpdated
+        // This is targeted by the cross-thread invoke from HandleStatusMessageUpdated
         // and update the message status display
         private void SetStatusMessage(string Message) {
             StatusCtl.Text = Message;

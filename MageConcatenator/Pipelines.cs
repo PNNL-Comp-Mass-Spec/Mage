@@ -13,13 +13,13 @@ namespace MageConcatenator
 
         public const string PIPELINE_GET_LOCAL_FILES = "PipelineToGetLocalFileList";
 
-        // class is not instantiated
+        // Class is not instantiated
         private Pipelines()
         {
         }
 
         /// <summary>
-        /// pipeline to get selected list of files from local folder into list display
+        /// Pipeline to get selected list of files from local folder into list display
         /// </summary>
         /// <param name="sinkObject">External ISinkModule object that will receive list of files found</param>
         /// <param name="runtimeParms">Settings for parameters for modules in the pipeline</param>
@@ -27,7 +27,7 @@ namespace MageConcatenator
         public static ProcessingPipeline MakePipelineToGetLocalFileList(ISinkModule sinkObject, Dictionary<string, string> runtimeParms)
         {
 
-            // make source module in pipeline to get list of files in local directory
+            // Make source module in pipeline to get list of files in local directory
             var reader = new FileListFilter();
             reader.AddFolderPath(runtimeParms["Folder"]);
             reader.FileNameSelector = runtimeParms["FileNameFilter"];
@@ -49,7 +49,7 @@ namespace MageConcatenator
             reader.OutputColumnList = string.Format("{0}|+|text, {1}|+|text, {2}|+|text, {3}|+|text, {4}|+|text", reader.FileTypeColumnName, reader.FileColumnName, reader.FileSizeColumnName, reader.FileDateColumnName, reader.SourceFolderColumnName);
             reader.IncludeFilesOrFolders = "File";
 
-            // build and wire pipeline
+            // Build and wire pipeline
             return ProcessingPipeline.Assemble(PIPELINE_GET_LOCAL_FILES, reader, sinkObject);
         }
 

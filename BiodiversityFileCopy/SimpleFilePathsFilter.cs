@@ -17,7 +17,9 @@ namespace BiodiversityFileCopy
 
     public override bool BuildPaths(string[] outRow, ref string srcFilePath, ref string destFilepath)
     {
-      if (outRow[ItemIdx] == "file") { // skip input rows that don't actually specify a file
+      // skip input rows that don't actually specify a file
+      if (outRow[ItemIdx] == "file")
+      {
         srcFilePath = Path.Combine(outRow[SourceFldrIdx], outRow[FileIdx]);
         var msgfFileName = outRow[FileIdx];
         var ogName = outRow[OrgNameIdx];

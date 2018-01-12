@@ -50,6 +50,6 @@ namespace MageUIComponents
             InitializeComponent();
         }
 
-        //FUTURE: Add automatic conversion to comma delimited for increment list
+        // FUTURE: Add automatic conversion to comma delimited for increment list
     }
 }

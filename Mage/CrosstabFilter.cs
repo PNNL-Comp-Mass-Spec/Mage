@@ -12,7 +12,7 @@ namespace Mage
 
         #region Member Variables
 
-        // indexes to critical columns
+        // Indexes to critical columns
         private int mEntityIdx = -1;
         private int mEntityIDIdx = -1;
         private int mFactorIdx = -1;
@@ -55,7 +55,7 @@ namespace Mage
         #region Constructors
 
         /// <summary>
-        /// construct a new Mage crosstab filter module
+        /// Construct a new Mage crosstab filter module
         /// </summary>
         public CrosstabFilter()
         {
@@ -70,13 +70,13 @@ namespace Mage
         #region BaseModule Overrides
 
         /// <summary>
-        /// handler for Mage standard tablular column definition
+        /// Handler for Mage standard tablular column definition
         /// (override of base class)
         ///
         /// Handle the column definitions
-        /// Just call the base class, and then 
+        /// Just call the base class, and then
         /// precalculate the indexes to the critical columns
-        /// </summary> 
+        /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
         public override void HandleColumnDef(object sender, MageColumnEventArgs args)
@@ -89,9 +89,9 @@ namespace Mage
         }
 
         /// <summary>
-        /// handler for Mage standard tablular input data rows
+        /// Handler for Mage standard tablular input data rows
         /// (override of base class)
-        /// 
+        ///
         /// Accumulate the data fields into the crosstab buffers
         /// and then output the accumulated results when the input
         /// data stream completes.
@@ -116,23 +116,23 @@ namespace Mage
         #region Data Utitilites
 
         /// <summary>
-        /// Pull data of of the input fields and add it to 
+        /// Pull data of of the input fields and add it to
         /// accumulating crosstab buffers
         /// </summary>
         /// <param name="args"></param>
         private void RememberFactorData(MageDataEventArgs args)
         {
 
-            // get values of critical fields using precalculated indexes
+            // Get values of critical fields using precalculated indexes
             var entityName = args.Fields[mEntityIdx];
             var entityID = args.Fields[mEntityIDIdx];
             var factor = args.Fields[mFactorIdx];
             var value = args.Fields[mValueIdx];
 
-            // make sure entity ID (and name) are in master list
+            // Make sure entity ID (and name) are in master list
             mEntityList[entityID] = entityName;
 
-            // create dictionary to accumulate entity id /factor value pairs
+            // Create dictionary to accumulate entity id /factor value pairs
             // for the factor
             if (!mFactorList.ContainsKey(factor))
             {
@@ -147,22 +147,22 @@ namespace Mage
         /// </summary>
         private void OutputDataRows()
         {
-            // iterate over all the entity IDs in the master list
+            // Iterate over all the entity IDs in the master list
             // and create an output row for each one
             foreach (var entityID in mEntityList.Keys)
             {
 
-                // create list to hold output row fields
-                // add entity name and entity ID fields
+                // Create list to hold output row fields
+                // Add entity name and entity ID fields
                 var outputRow = new List<string>
                 {
                     entityID,
                     mEntityList[entityID]
                 };
 
-                // add entity name and entity ID fields
+                // Add entity name and entity ID fields
 
-                // add fields for all factors
+                // Add fields for all factors
                 // and set field values for factors that the entity has vales for
                 foreach (var factor in mFactorList.Keys)
                 {
@@ -175,7 +175,8 @@ namespace Mage
                 }
                 OnDataRowAvailable(new MageDataEventArgs(outputRow.ToArray()));
             }
-            // inform our subscribers that all data has been sent
+
+            // Inform our subscribers that all data has been sent
             OnDataRowAvailable(new MageDataEventArgs(null));
         }
 
@@ -185,8 +186,8 @@ namespace Mage
         private void OutputColumnDefinitions()
         {
 
-            // start with empty column definition list
-            // add the entity name and id columns
+            // Start with empty column definition list
+            // Add the entity name and id columns
             var outCols = new List<MageColumnDef>
             {
                 InputColumnDefs[mEntityIDIdx],
@@ -194,7 +195,7 @@ namespace Mage
             };
 
 
-            // add a column for each factor
+            // Add a column for each factor
             foreach (var fac in mFactorList.Keys)
             {
                 outCols.Add(new MageColumnDef(fac, "text", "15"));

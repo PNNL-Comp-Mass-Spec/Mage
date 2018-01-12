@@ -18,14 +18,14 @@ namespace MageUnitTests
         public void FileColumnProcessorTest()
         {
 
-            // set up test parameters
+            // Set up test parameters
             var folderColName = "Folder_Col";
             var fileColName = "File_Col";
             var folder = System.Environment.CurrentDirectory;
             var file = "tab_delim.txt";
             var destFolder = @"C:\data\";
 
-            // set up data generator
+            // Set up data generator
             var dGen = new DataGenerator(2, 4)
             {
                 AddAdHocRow = new[] { folderColName, fileColName, "Padding" }
@@ -33,7 +33,7 @@ namespace MageUnitTests
 
             dGen.AddAdHocRow = new[] { folder, file, "Padding" };
 
-            // set up test mule (subclass of file processor module)
+            // Set up test mule (subclass of file processor module)
             var target = new TestFileContentProcessorModule
             {
                 SourceFileColumnName = fileColName,
@@ -46,9 +46,9 @@ namespace MageUnitTests
                 ExpectedDestPath = Path.GetFullPath(Path.Combine(destFolder, file))
             };
 
-            // tell the test mule what to expect
+            // Tell the test mule what to expect
 
-            // build and run pipeline
+            // Build and run pipeline
             var pipeline = new ProcessingPipeline("FileColumnProcessorTest");
             pipeline.RootModule = pipeline.AddModule("Gen", dGen);
             pipeline.AddModule("Target", target);

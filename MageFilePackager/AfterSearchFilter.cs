@@ -15,7 +15,7 @@ namespace MageFilePackager
         // Precalulate field indexes
         protected override void ColumnDefsFinished()
         {
-            // set up indexes into fields array
+            // Set up indexes into fields array
             if (!InputColumnPos.TryGetValue("Item", out _itemIdx))
                 _itemIdx = -1;
         }
@@ -29,11 +29,11 @@ namespace MageFilePackager
         protected override bool CheckFilter(ref string[] vals)
         {
 
-            // reject any "file not found" rows
+            // Reject any "file not found" rows
             if (string.IsNullOrEmpty(vals[_itemIdx]))
                 return false;
 
-            // apply field mapping to output
+            // Apply field mapping to output
             if (OutputColumnDefs != null)
             {
                 var outRow = MapDataRow(vals);

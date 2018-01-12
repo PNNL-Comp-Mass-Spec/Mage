@@ -54,7 +54,7 @@ namespace MageUIComponents {
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK) {
                 LocalManifestFileCtl.Text = openFileDialog1.FileName;
-                //string dirName = Path.GetDirectoryName(openFileDialog1.FileName);
+                // string dirName = Path.GetDirectoryName(openFileDialog1.FileName);
             }
         }
 

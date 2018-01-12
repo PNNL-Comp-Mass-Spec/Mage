@@ -96,7 +96,7 @@ namespace MageExtExtractionFilters
         }
 
         /// <summary>
-        /// receives a data row representing a results file and one or more 
+        /// Receives a data row representing a results file and one or more
         /// associated files that need to be merged into the output data
         /// </summary>
         /// <param name="sender"></param>
@@ -186,7 +186,7 @@ namespace MageExtExtractionFilters
                     }
                 }
 
-                // add actual file name to merge file list
+                // Add actual file name to merge file list
                 foreach (var mf in mMergeFiles.Values)
                 {
                     mf.MergeFileName = (mf.ColumnIndx < 0) ? "" : args.Fields[mf.ColumnIndx];
@@ -209,7 +209,7 @@ namespace MageExtExtractionFilters
                     }
                     else
                     {
-                        // build and run pipeline (in this thread) to process file contents
+                        // Build and run pipeline (in this thread) to process file contents
                         var resultsFileReader = new DelimitedFileReader
                         {
                             FilePath = inputFilePath

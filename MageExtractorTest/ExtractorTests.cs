@@ -10,7 +10,7 @@ namespace MageExtractorTest
     class ExtractorTests
     {
 
-        #region Member Variables 
+        #region Member Variables
 
         public event EventHandler<MageStatusEventArgs> OnMessageUpdated;
 
@@ -24,7 +24,7 @@ namespace MageExtractorTest
         private string mJobInputResultsFolder = "JobResultsFolders";
         private string mExtractionResultsFromTestFolder = "ExtractionResultsFromTest";
 
-        // test case columns
+        // Test case columns
         int JobListFileIdx = 0;
         int ExtractionTypeIdx = 1;
         int FilterSetIDIdx = 2;
@@ -40,8 +40,8 @@ namespace MageExtractorTest
 
         public string TestRootFolderPath
         {
-            get { return mTestRootFolderPath; }
-            set { mTestRootFolderPath = value; }
+            get => mTestRootFolderPath;
+            set => mTestRootFolderPath = value;
         }
 
         #endregion
@@ -53,7 +53,7 @@ namespace MageExtractorTest
 
         public void RunTests()
         {
-            //RunAllFindFilesTests();
+            // RunAllFindFilesTests();
             RunAllExtractionTests();
         }
 
@@ -64,23 +64,37 @@ namespace MageExtractorTest
         /// </summary>
         protected void RunAllExtractionTests()
         {
+            var testRootFolder = new DirectoryInfo(mTestRootFolderPath);
+            if (!testRootFolder.Exists)
+            {
+                UpdateMessage("Root test folder not found; cannot run tests: " + testRootFolder.FullName);
+                return;
+            }
+
             // "Sequest Synopsis" "Sequest First Hits"  "X!Tandem First Protein"  "X!Tandem All Proteins"  "Inspect Synopsis"
 
-            Console.WriteLine(string.Format("Extraction Tests Begin"));
+            Console.WriteLine("Extraction Tests Begin");
 
-            // get test cases to run
-            var testCaseFilePath = Path.Combine(mTestRootFolderPath, Path.Combine(mTestCasesFolder, "LocalJobExtractionTestCases.txt")); // JobExtractionTestCases.txt
+            // Get test cases to run
+            var testCaseFilePath = Path.Combine(testRootFolder.FullName, Path.Combine(mTestCasesFolder, "LocalJobExtractionTestCases.txt")); // JobExtractionTestCases.txt
             var cases = GetFileContentsToSink(testCaseFilePath);
 
-            // run each case
+            // Run each case
             RunExtractionTestCases(cases);
-            Console.WriteLine(string.Format("Extraction Tests Complete"));
+            Console.WriteLine("Extraction Tests Complete");
         }
 
         public void RunExtractionTestCases(SimpleSink cases)
         {
-            UpdateMessage(string.Format("Extraction Tests Begin"));
-            var testResultsPath = Path.Combine(mTestRootFolderPath, mExtractionResultsFromTestFolder);
+            var testRootFolder = new DirectoryInfo(mTestRootFolderPath);
+            if (!testRootFolder.Exists)
+            {
+                UpdateMessage("Root test folder not found; cannot run tests: " + testRootFolder.FullName);
+                return;
+            }
+
+            UpdateMessage("Extraction Tests Begin");
+            var testResultsPath = Path.Combine(testRootFolder.FullName, mExtractionResultsFromTestFolder);
 
             foreach (var file in Directory.GetFiles(testResultsPath))
             {
@@ -88,34 +102,33 @@ namespace MageExtractorTest
             }
 
             var extractionParms = new ExtractionType();
-            DestinationType destination = null;
             foreach (var testCase in cases.Rows)
             {
 
-                // get job list to extract from
-                var jobListFileName = testCase[JobListFileIdx].ToString();
-                var jobListFilePath = Path.Combine(mTestRootFolderPath, Path.Combine(mJobListTestFileFolder, jobListFileName));
+                // Get job list to extract from
+                var jobListFileName = testCase[JobListFileIdx];
+                var jobListFilePath = Path.Combine(testRootFolder.FullName, Path.Combine(mJobListTestFileFolder, jobListFileName));
                 var jobList = GetFileContentsToSink(jobListFilePath);
 
-                // adjust job list for local folders
+                // Adjust job list for local folders
                 AdjustFolderPathForLocalFolders(jobList);
 
-                // set up extraction parameters
-                extractionParms.RType = ResultType.TypeList[testCase[ExtractionTypeIdx].ToString()];
-                extractionParms.ResultFilterSetID = testCase[FilterSetIDIdx].ToString();
-                extractionParms.MSGFCutoff = testCase[MSGFCutoffIdx].ToString();
-                extractionParms.KeepAllResults = testCase[KeepAllIdx].ToString();
+                // Set up extraction parameters
+                extractionParms.RType = ResultType.TypeList[testCase[ExtractionTypeIdx]];
+                extractionParms.ResultFilterSetID = testCase[FilterSetIDIdx];
+                extractionParms.MSGFCutoff = testCase[MSGFCutoffIdx];
+                extractionParms.KeepAllResults = testCase[KeepAllIdx];
 
-                // set up destination
-                var type = testCase[DestinationTypeIdx].ToString();
-                var outputPath = Path.Combine(testResultsPath, testCase[ContainerIdx].ToString());
-                var item = testCase[NameIdx].ToString();
-                destination = new DestinationType(type, outputPath, item);
+                // Set up destination
+                var type = testCase[DestinationTypeIdx];
+                var outputPath = Path.Combine(testResultsPath, testCase[ContainerIdx]);
+                var item = testCase[NameIdx];
+                var destination = new DestinationType(type, outputPath, item);
 
                 UpdateMessage(string.Format("Test Case:{0} ============", jobListFileName));
                 TestExtractFromJobList(jobList, extractionParms, destination);
             }
-            UpdateMessage(string.Format("Extraction Tests Complete"));
+            UpdateMessage("Extraction Tests Complete");
         }
 
 
@@ -136,12 +149,12 @@ namespace MageExtractorTest
         /// <param name="jobList"></param>
         private void AdjustFolderPathForLocalFolders(SimpleSink jobList)
         {
-            // adjust job list for local folders
+            // Adjust job list for local folders
             var folderColIdx = jobList.ColumnIndex["Folder"];
             var localPath = Path.Combine(mTestRootFolderPath, mJobInputResultsFolder);
             for (var i = 0; i < jobList.Rows.Count; i++)
             {
-                var folder = jobList.Rows[i][folderColIdx].ToString();
+                var folder = jobList.Rows[i][folderColIdx];
                 jobList.Rows[i][folderColIdx] = folder.Replace("[local]", localPath);
             }
         }
@@ -152,28 +165,41 @@ namespace MageExtractorTest
 
         protected void RunAllFindFilesTests()
         {
+            var testRootFolder = new DirectoryInfo(mTestRootFolderPath);
+            if (!testRootFolder.Exists)
+            {
+                UpdateMessage("Root test folder not found; cannot run tests: " + testRootFolder.FullName);
+                return;
+            }
+
             // "Sequest Synopsis" "Sequest First Hits"  "X!Tandem First Protein"  "X!Tandem All Proteins"  "Inspect Synopsis"
 
-            var testCaseFilePath = Path.Combine(mTestRootFolderPath, Path.Combine(mTestCasesFolder, "FileListTestCases.txt"));
+            var testCaseFilePath = Path.Combine(testRootFolder.FullName, Path.Combine(mTestCasesFolder, "FileListTestCases.txt"));
             var cases = GetFileContentsToSink(testCaseFilePath);
 
             var extractionParms = new ExtractionType();
             foreach (var testCase in cases.Rows)
             {
-                var jobListFile = testCase[0].ToString();
-                extractionParms.RType = ResultType.TypeList[testCase[1].ToString()];
+                var jobListFile = testCase[0];
+                extractionParms.RType = ResultType.TypeList[testCase[1]];
                 TestFindFilesForJobList(jobListFile, extractionParms);
             }
         }
 
         /// <summary>
-        /// given the name of a file containing a list of jobs, and an extraction type,
-        /// get list of files that would be part of extraction.
+        /// Given the name of a file containing a list of jobs, and an extraction type,
+        /// Get list of files that would be part of extraction.
         /// </summary>
         protected void TestFindFilesForJobList(string jobListFileName, ExtractionType extractionParms)
         {
+            var testRootFolder = new DirectoryInfo(mTestRootFolderPath);
+            if (!testRootFolder.Exists)
+            {
+                UpdateMessage("Root test folder not found; cannot run tests: " + testRootFolder.FullName);
+                return;
+            }
 
-            var jobList = GetFileContentsToSink(Path.Combine(mTestRootFolderPath, Path.Combine(mJobListTestFileFolder, jobListFileName)));
+            var jobList = GetFileContentsToSink(Path.Combine(testRootFolder.FullName, Path.Combine(mJobListTestFileFolder, jobListFileName)));
 
             var fileListSink = new SimpleSink();
 
@@ -182,15 +208,15 @@ namespace MageExtractorTest
             p.RunRoot(null);
 
             var goodFileName = Path.GetFileNameWithoutExtension(jobListFileName) + "_file_list.txt";
-            var goodValues = GetFileContentsToSink(Path.Combine(mTestRootFolderPath, Path.Combine(mJobListTestKnownGoodFolder, goodFileName)));
+            var goodValues = GetFileContentsToSink(Path.Combine(testRootFolder.FullName, Path.Combine(mJobListTestKnownGoodFolder, goodFileName)));
             var errorMsg = CompareSinks(fileListSink, goodValues);
             if (string.IsNullOrEmpty(errorMsg))
             {
-                Console.WriteLine(string.Format("Passed:{0}", jobListFileName));
+                Console.WriteLine("Passed:{0}", jobListFileName);
             }
             else
             {
-                Console.WriteLine(string.Format("ERROR:{0}", jobListFileName));
+                Console.WriteLine("ERROR:{0}", jobListFileName);
                 Console.WriteLine(errorMsg);
             }
         }
@@ -244,7 +270,7 @@ namespace MageExtractorTest
             {
                 for (var j = 0; j < sourceCols.Count; j++)
                 {
-                    if (sourceRows[i][j].ToString() != resultRows[i][j].ToString())
+                    if (sourceRows[i][j] != resultRows[i][j])
                     {
                         mb.AppendLine(string.Format("Row {0} cell {1} content does not match", i, j));
                     }

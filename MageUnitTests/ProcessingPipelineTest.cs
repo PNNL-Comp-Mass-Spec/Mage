@@ -245,8 +245,8 @@ namespace MageUnitTests
             var pipeline = ProcessingPipeline.Assemble(pipelineXML2.Replace(dataFileName, dataFile.FullName));
 
             var sink = new SimpleSink(maxRows);
-            //            pipeline.ConnectExternalModule(sink);
-            //            sink.ModuleName = "Caboose";
+            // pipeline.ConnectExternalModule(sink);
+            // sink.ModuleName = "Caboose";
             pipeline.AppendModule(sink);
 
             var mod = pipeline.GetModule("Module1");
@@ -256,7 +256,7 @@ namespace MageUnitTests
 
             pipeline.RunRoot(null);
 
-            // did the test sink object get the expected number of data rows
+            // Did the test sink object get the expected number of data rows
             // on its standard tabular input?
             var rows = sink.Rows;
             Assert.AreEqual(maxRows, rows.Count, "Sink did not receive the expected number of rows");

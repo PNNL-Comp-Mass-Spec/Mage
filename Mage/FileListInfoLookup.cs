@@ -21,7 +21,7 @@ namespace Mage
         #region Properties
 
         /// <summary>
-        /// the name of the input column that contains the filename
+        /// The name of the input column that contains the filename
         /// </summary>
         public string SourceFileColumnName { get; set; }
 
@@ -30,7 +30,7 @@ namespace Mage
         #region Constructors
 
         /// <summary>
-        /// construct a new Mage file list filter module
+        /// Construct a new Mage file list filter module
         /// </summary>
         public FileListInfoLookup()
         {

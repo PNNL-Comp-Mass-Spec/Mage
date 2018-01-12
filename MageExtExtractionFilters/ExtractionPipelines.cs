@@ -23,7 +23,7 @@ namespace MageExtExtractionFilters
             var pxfl = MakePipelineToExportFileList(new MyEMSLSinkWrapper(fileList), destination);
             pipelineQueue.Add(pxfl);
 
-            // extract contents of list of files
+            // Extract contents of list of files
             var pefc = MakePipelineToExtractFileContents(new SinkWrapper(fileList), extractionParms, destination);
             pipelineQueue.Add(pefc);
 
@@ -42,10 +42,10 @@ namespace MageExtExtractionFilters
             var pxjm = MakePipelineToExportJobMetadata(jobList, destination);
             pipelineQueue.Add(pxjm);
 
-            // buffer module to accumulate aggregated file list
+            // Buffer module to accumulate aggregated file list
             var fileList = new SimpleSink();
 
-            // search job results folders for list of results files to process
+            // Search job results folders for list of results files to process
             // and accumulate into buffer module
             var plof = MakePipelineToGetListOfFiles(jobList, fileList, extractionParms);
             pipelineQueue.Add(plof);
@@ -53,7 +53,7 @@ namespace MageExtExtractionFilters
             var pxfl = MakePipelineToExportFileList(new MyEMSLSinkWrapper(fileList), destination);
             pipelineQueue.Add(pxfl);
 
-            // extract contents of list of files
+            // Extract contents of list of files
             var pefc = MakePipelineToExtractFileContents(new SinkWrapper(fileList), extractionParms, destination);
             pipelineQueue.Add(pefc);
 
@@ -112,7 +112,7 @@ namespace MageExtExtractionFilters
         }
 
         /// <summary>
-        /// make pipeline to extract contents of files given in list
+        /// Make pipeline to extract contents of files given in list
         /// and add it to the queue
         /// </summary>
         public static ProcessingPipeline MakePipelineToExtractFileContents(BaseModule fileListSource, ExtractionType extractionParms, DestinationType destination)

@@ -35,21 +35,21 @@ namespace Mage
         #region Properites
 
         /// <summary>
-        /// name of the column in the standard tabular input
+        /// Name of the column in the standard tabular input
         /// that contains the input folder path
         /// (optional - defaults to "Folder")
         /// </summary>
         public string SourceFolderColumnName { get; }
 
         /// <summary>
-        /// name of the column in the standard tabular input
+        /// Name of the column in the standard tabular input
         /// that contains the input file name
         /// optional - defaults to "Name")
         /// </summary>
         public string SourceFileColumnName { get; }
 
         /// <summary>
-        /// name of the output column that receives name of associated file
+        /// Name of the output column that receives name of associated file
         /// </summary>
         public string ColumnToReceiveAssocFileName { get; set; }
 
@@ -137,7 +137,7 @@ namespace Mage
                 }
                 else
                 {
-                    // folderPathSpec may contain multiple folders, separated by a vertical bar
+                    // FolderPathSpec may contain multiple folders, separated by a vertical bar
                     // If that is the case, then we'll search for files in each folder, preferentially using files in the folder listed first
                     var folderPaths = new List<string>();
                     if (folderPathSpec.Contains('|'))

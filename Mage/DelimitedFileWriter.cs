@@ -28,7 +28,7 @@ namespace Mage
         public string Delimiter { get; set; }
 
         /// <summary>
-        /// full path for output files
+        /// Full path for output files
         /// </summary>
         public string FilePath { get; set; }
 
@@ -37,7 +37,7 @@ namespace Mage
         public string Header { get; set; }
 
         /// <summary>
-        /// whether or not output file should be overwritten or appended to
+        /// Whether or not output file should be overwritten or appended to
         /// if it exists ("Yes" or "No")
         /// </summary>
         public string Append { get; set; }
@@ -47,7 +47,7 @@ namespace Mage
         #region Constructors
 
         /// <summary>
-        /// construct new Mage delimited file writer module
+        /// Construct new Mage delimited file writer module
         /// with propery defaults:
         /// Delimiter = "\t";
         /// Header = "Yes";
@@ -64,7 +64,7 @@ namespace Mage
         #region IDisposable Members
 
         /// <summary>
-        /// dispose of held resources
+        /// Dispose of held resources
         /// </summary>
         public void Dispose()
         {
@@ -73,7 +73,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// dispose of held resources
+        /// Dispose of held resources
         /// </summary>
         /// <param name="disposing"></param>
         private void Dispose(bool disposing)
@@ -85,7 +85,7 @@ namespace Mage
             // Code to dispose the un-managed resources of the class
             mOutFile?.Dispose();
 
-            //            isDisposed = true;
+            // isDisposed = true;
         }
 
         #endregion
@@ -128,7 +128,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// called after pipeline run is complete - module can do any special cleanup
+        /// Called after pipeline run is complete - module can do any special cleanup
         /// this module closes the output file
         /// (override of base class)
         /// </summary>
@@ -139,7 +139,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// handler for Mage standard tablular column definition
+        /// Handler for Mage standard tablular column definition
         /// (override of base class)
         /// </summary>
         /// <param name="sender"></param>
@@ -154,7 +154,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// handler for Mage standard tablular input data rows
+        /// Handler for Mage standard tablular input data rows
         /// (override of base class)
         /// </summary>
         /// <param name="sender"></param>
@@ -178,8 +178,8 @@ namespace Mage
         private void OutputHeader()
         {
             var h = new List<string>();
-            // use our output column definitions, if we have them
-            // otherwise just use the input column definitions
+            // Use our output column definitions, if we have them
+            // Otherwise just use the input column definitions
             if (OutputColumnDefs != null)
             {
                 foreach (var col in OutputColumnDefs)
@@ -200,8 +200,8 @@ namespace Mage
         private void OutputDataRow(string[] vals)
         {
             var delim = "";
-            // remap results according to our output column definitions, if we have them
-            // otherwise just use the as-delivered format
+            // Remap results according to our output column definitions, if we have them
+            // Otherwise just use the as-delivered format
             var outRow = vals;
             if (OutputColumnDefs != null)
             {

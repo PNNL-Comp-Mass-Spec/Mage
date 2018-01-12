@@ -11,13 +11,13 @@ namespace Mage
     {
 
         /// <summary>
-        /// get list of parameters
+        /// Get list of parameters
         /// </summary>
         /// <returns></returns>
         Dictionary<string, string> GetParameters();
 
         /// <summary>
-        /// set list of parameters
+        /// Set list of parameters
         /// </summary>
         /// <param name="paramList"></param>
         void SetParameters(Dictionary<string, string> paramList);

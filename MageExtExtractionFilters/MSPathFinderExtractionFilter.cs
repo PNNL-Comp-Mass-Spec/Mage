@@ -25,9 +25,9 @@ namespace MageExtExtractionFilters
 
         #region Member Variables
 
-        // working copy of MSPathFinder filter object
+        // Working copy of MSPathFinder filter object
 
-        // indexes into the synopsis row field array
+        // Indexes into the synopsis row field array
         private udtColumnIndices mColumnIndices;
         private int peptideMassIndex;
         private int specEValueIndex;
@@ -239,7 +239,7 @@ namespace MageExtExtractionFilters
         }
 
         /// <summary>
-        /// set up indexes into row fields array based on column name
+        /// Set up indexes into row fields array based on column name
         /// (saves time when referencing result columns later)
         /// </summary>
         private void PrecalculateFieldIndexes()
@@ -288,14 +288,14 @@ namespace MageExtExtractionFilters
             var runtimeParms = new Dictionary<string, string>() { { "Filter_Set_ID", FilterSetID } };
             var reader = new MSSQLReader(queryDefXML, runtimeParms);
 
-            // create Mage module to receive query results
+            // Create Mage module to receive query results
             var filterCriteria = new SimpleSink();
 
-            // build pipeline and run it
+            // Build pipeline and run it
             var pipeline = ProcessingPipeline.Assemble("GetFilterCriteria", reader, filterCriteria);
             pipeline.RunRoot(null);
 
-            // create new MSGF+ filter object with retrieved filter criteria
+            // Create new MSGF+ filter object with retrieved filter criteria
             return new FilterMSPathFinderResults(filterCriteria.Rows, FilterSetID);
         }
 

@@ -15,7 +15,7 @@ namespace MageFilePackager {
 
         #region Member Variables
 
-        // column information for the standard file package format
+        // Column information for the standard file package format
         private List<MageColumnDef> _columnDefs;
         private Dictionary<string, int> _columnPos;
 
@@ -82,7 +82,7 @@ namespace MageFilePackager {
             }
         }
         private void SizeCheckedItems(TreeNode node, ref float runningTally) {
-            // if this node is checked, and has an object stored in tag filed, add its object's size property to total
+            // If this node is checked, and has an object stored in tag filed, add its object's size property to total
             float myTally = 0;
             if (node.Tag != null && node.Checked) {
                 var row = (object[])node.Tag;
@@ -94,12 +94,13 @@ namespace MageFilePackager {
                 myTally += kb;
 
             }
-            // otherwise recursively call this method for all nodes in its nodes collection
+
+            // Otherwise recursively call this method for all nodes in its nodes collection
             foreach (TreeNode subNode in node.Nodes) {
                 SizeCheckedItems(subNode, ref myTally);
             }
             runningTally += myTally;
-            // 
+
             if (node.Tag == null) {
                 node.Text = string.Format("{0} [{1:###,###,##0.0} MB]", node.Name, myTally / 1024);
             }
@@ -121,14 +122,14 @@ namespace MageFilePackager {
         }
 
 
-        // expand all nodes to given level
+        // Expand all nodes to given level
         private void ExpandToLevel(int level) {
             foreach (TreeNode node in treeView1.Nodes) {
                 ExpandNodes(node, level);
             }
         }
 
-        // expand child nodes to given level
+        // Expand child nodes to given level
         private void ExpandNodes(TreeNode node, int level) {
             if (node.Level < level) {
                 node.Expand();
@@ -157,7 +158,7 @@ namespace MageFilePackager {
             // The code only executes if the user caused the checked state to change.
             if (e.Action != TreeViewAction.Unknown) {
                 if (e.Node.Nodes.Count > 0) {
-                    // Calls the CheckAllChildNodes method, passing in the current 
+                    // Calls the CheckAllChildNodes method, passing in the current
                     // Checked value of the TreeNode whose checked state changed.
                     CheckAllChildNodes(e.Node, e.Node.Checked);
                 }
@@ -176,9 +177,9 @@ namespace MageFilePackager {
         public class TreeBuilder : ContentFilter {
 
             // private int _folderIdx;
-            //  private int _sourceIdx;
+            // private int _sourceIdx;
             private int _pathIdx;
-            //  private int _itemIdx;
+            // private int _itemIdx;
             private int _nameIdx;
             private int _kbIdx;
 
@@ -202,10 +203,10 @@ namespace MageFilePackager {
                 var path = vals[_pathIdx];
                 var kb = vals[_kbIdx];
 
-                // break folder path into segements
+                // Break folder path into segements
                 var folders = path.Split('\\');
 
-                // find bottom folder in hierarchy 
+                // Find bottom folder in hierarchy
                 // (and build out as necessary)
                 var curNodeList = FileTree.Nodes;
                 foreach (var folder in folders) {
@@ -222,7 +223,7 @@ namespace MageFilePackager {
                     }
                 }
 
-                // add file to bottom folder in path
+                // Add file to bottom folder in path
                 float sz;
                 float.TryParse(kb, out sz);
                 var label = string.Format("{0} [{1:###,###,##0.0} KB]", vals[_nameIdx], sz);
@@ -253,7 +254,7 @@ namespace MageFilePackager {
             }
 
             private void OutputCheckedItems(TreeNode node) {
-                // if this node is checked, and has an object stored in tag filed, output it
+                // If this node is checked, and has an object stored in tag filed, output it
                 if (node.Tag != null && node.Checked) {
                     var tagData = (object[])node.Tag;
 
@@ -263,7 +264,7 @@ namespace MageFilePackager {
 
                     OnDataRowAvailable(new MageDataEventArgs(tagVals));
                 }
-                // otherwise recursively call this method for all nodes in its nodes collection
+                // Otherwise recursively call this method for all nodes in its nodes collection
                 foreach (TreeNode subNode in node.Nodes) {
                     OutputCheckedItems(subNode);
                 }

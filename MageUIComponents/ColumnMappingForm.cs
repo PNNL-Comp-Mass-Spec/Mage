@@ -18,7 +18,7 @@ namespace MageUIComponents
         #region Member Variables
 
         /// <summary>
-        /// definition of columns that was read from input file
+        /// Definition of columns that was read from input file
         /// </summary>
         private Collection<MageColumnDef> mInputColumnDefs = new Collection<MageColumnDef>();
 
@@ -53,7 +53,7 @@ namespace MageUIComponents
         public Dictionary<string, string> OutputInfo { get; set; } = new Dictionary<string, string>();
 
         /// <summary>
-        /// editing field for the column mapping name
+        /// Editing field for the column mapping name
         /// in the col spec editing panel
         /// </summary>
         public string MappingName
@@ -63,7 +63,7 @@ namespace MageUIComponents
         }
 
         /// <summary>
-        /// editing field for the column mapping description
+        /// Editing field for the column mapping description
         /// in the col spec editing panel
         /// </summary>
         public string MappingDescription
@@ -73,7 +73,7 @@ namespace MageUIComponents
         }
 
         /// <summary>
-        /// name of selected column mapping
+        /// Name of selected column mapping
         /// </summary>
         public string ColumnMapping
         {
@@ -90,7 +90,7 @@ namespace MageUIComponents
         }
 
         /// <summary>
-        /// output column specification (in string format) for selected column mapping
+        /// Output column specification (in string format) for selected column mapping
         /// </summary>
         public string OutputColumnList
         {
@@ -107,7 +107,7 @@ namespace MageUIComponents
         }
 
         /// <summary>
-        /// number or rows to show in row preview
+        /// Number or rows to show in row preview
         /// </summary>
         public int PreviewRowLimit { get; }
 
@@ -126,7 +126,7 @@ namespace MageUIComponents
         #region Initialization
 
         /// <summary>
-        /// initialization actions after form is loaded
+        /// Initialization actions after form is loaded
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -139,7 +139,7 @@ namespace MageUIComponents
         }
 
         /// <summary>
-        /// how we want grid view display list to autosize themselves
+        /// How we want grid view display list to autosize themselves
         /// </summary>
         private void SetupGridDisplayListBehavior()
         {
@@ -167,7 +167,7 @@ namespace MageUIComponents
         }
 
         /// <summary>
-        /// setup initial values in editing panel
+        /// Setup initial values in editing panel
         /// </summary>
         private void LoadEditingPanel()
         {
@@ -181,13 +181,13 @@ namespace MageUIComponents
         #region Column Mapping List Functions
 
         /// <summary>
-        /// use Mage pipeline to get contents of column mapping definition file
+        /// Use Mage pipeline to get contents of column mapping definition file
         /// and use it to populate column mapping display panel
         /// </summary>
         private void LoadColumnMappingList()
         {
             if (!File.Exists(MappingConfigFilePath))
-            {// need to create config file
+            {// Need to create config file
                 CreateDefaultColumnMappingConfigFile();
             }
             var reader = new DelimitedFileReader { FilePath = MappingConfigFilePath };
@@ -197,7 +197,7 @@ namespace MageUIComponents
         }
 
         /// <summary>
-        /// make a default column mapping config file if one does not exist
+        /// Make a default column mapping config file if one does not exist
         /// </summary>
         private static void CreateDefaultColumnMappingConfigFile()
         {
@@ -289,7 +289,7 @@ namespace MageUIComponents
         #region Conversion Of Column List Between String And Table Formats
 
         /// <summary>
-        /// positions of fields in column spec
+        /// Positions of fields in column spec
         /// </summary>
         private const int OutputColIdx = 0;
         private const int InputColIdx = 1;
@@ -297,7 +297,7 @@ namespace MageUIComponents
         private const int SizeColIdx = 3;
 
         /// <summary>
-        /// roll the individual column specs in collection of field arrays
+        /// Roll the individual column specs in collection of field arrays
         /// int a column list in column mapping format
         /// </summary>
         /// <param name="colItems"></param>
@@ -309,37 +309,37 @@ namespace MageUIComponents
             {
                 var fields = new List<string> {colFlds[OutputColIdx]};
 
-                // always have an output column name
+                // Always have an output column name
 
-                // input column name may be blank if same as output column name
+                // Input column name may be blank if same as output column name
                 var inputCol = (colFlds[InputColIdx] != colFlds[OutputColIdx]) ? colFlds[InputColIdx] : "";
 
-                // add input column name if present, or if placeholder needed
+                // Add input column name if present, or if placeholder needed
                 if (!string.IsNullOrEmpty(inputCol) || !string.IsNullOrEmpty(colFlds[DataTypeColIdx]))
                 {
                     fields.Add(inputCol);
                 }
 
-                // add data type to spec if present
+                // Add data type to spec if present
                 if (!string.IsNullOrEmpty(colFlds[DataTypeColIdx]))
                 {
                     fields.Add(colFlds[DataTypeColIdx]);
                 }
 
-                // add data size to spec if present
+                // Add data size to spec if present
                 if (!string.IsNullOrEmpty(colFlds[SizeColIdx]))
                 {
                     fields.Add(colFlds[SizeColIdx]);
                 }
-                // roll this column spec's fields up to delimited string
+                // Roll this column spec's fields up to delimited string
                 specs.Add(string.Join("|", fields));
             }
-            // roll column specs up to delimited string
+            // Roll column specs up to delimited string
             return string.Join(",", specs);
         }
 
         /// <summary>
-        /// parse the column list in string format into list of separate column specs
+        /// Parse the column list in string format into list of separate column specs
         /// </summary>
         /// <param name="colList">column list in string format</param>
         /// <returns>List of column specs</returns>
@@ -356,7 +356,7 @@ namespace MageUIComponents
                     {
                         row[i] = specFields[i];
                     }
-                    //if (string.IsNullOrEmpty(row[1]) && row[0] != "*") {
+                    // if (string.IsNullOrEmpty(row[1]) && row[0] != "*") {
                     //    row[1] = row[0];
                     //}
                     rows.Add(row);
@@ -381,7 +381,7 @@ namespace MageUIComponents
         }
 
         /// <summary>
-        /// parse the column list into separate column specs
+        /// Parse the column list into separate column specs
         /// and use Mage pipeline to
         /// load into the column spec display list in the editing panel
         /// </summary>
@@ -399,7 +399,7 @@ namespace MageUIComponents
             AddEditingColumnForDataType();
             AddEditingColumnForDataSize();
 
-            // parse the column list string into fields
+            // Parse the column list string into fields
             // and add them to pipeline source module
             var rows = GetColumnSpecItemsFromColumnList(colList);
             AddMissingInputColumns(rows, mInputColumnDefs);
@@ -466,20 +466,21 @@ namespace MageUIComponents
         }
 
         /// <summary>
-        /// for each input column field that is blank (and not in a wildcard row),
+        /// For each input column field that is blank (and not in a wildcard row),
         /// try to find a match in input column list and set it if found
         /// </summary>
         /// <param name="rows"></param>
         /// <param name="colDefs"></param>
         private static void AddMissingInputColumns(Collection<string[]> rows, Collection<MageColumnDef> colDefs)
         {
-            // make list of input column names
+            // Make list of input column names
             var inputColList = new List<string>();
             foreach (var colDef in colDefs)
             {
                 inputColList.Add(colDef.Name);
             }
-            // try to match up missing input columns
+
+            // Try to match up missing input columns
             foreach (var row in rows)
             {
                 if (string.IsNullOrEmpty(row[1]) && row[0] != "*")
@@ -493,7 +494,7 @@ namespace MageUIComponents
         }
 
         /// <summary>
-        /// roll the individual column specs in the column spec editing display list
+        /// Roll the individual column specs in the column spec editing display list
         /// int a column list in column mapping format
         /// </summary>
         /// <returns></returns>
@@ -504,7 +505,7 @@ namespace MageUIComponents
         }
 
         /// <summary>
-        /// get the individual column specs in the column spec editing display list
+        /// Get the individual column specs in the column spec editing display list
         /// as a collection of field arrays
         /// </summary>
         /// <returns></returns>
@@ -527,7 +528,7 @@ namespace MageUIComponents
         }
 
         /// <summary>
-        /// roll up the column specs in the column spec editing panel
+        /// Roll up the column specs in the column spec editing panel
         /// into a column mapping and add it to the column mapping display list
         /// </summary>
         /// <param name="sender"></param>
@@ -548,7 +549,7 @@ namespace MageUIComponents
         }
 
         /// <summary>
-        /// roll up the column specs in the column spec editing panel
+        /// Roll up the column specs in the column spec editing panel
         /// into a column mapping and replace the currently selected
         /// column mapping display list item with it
         /// </summary>
@@ -593,7 +594,7 @@ namespace MageUIComponents
         }
 
         /// <summary>
-        /// add new column row to column list in editing panel
+        /// Add new column row to column list in editing panel
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -604,7 +605,7 @@ namespace MageUIComponents
         }
 
         /// <summary>
-        /// insert new column row to column list ahead of current selection
+        /// Insert new column row to column list ahead of current selection
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -752,7 +753,7 @@ namespace MageUIComponents
         private string mPreviewSourceLabel = "";
 
         /// <summary>
-        /// return a Mage reader module that is set up
+        /// Return a Mage reader module that is set up
         /// to read preview of selected file processing output file/database
         /// </summary>
         /// <returns></returns>
@@ -786,7 +787,7 @@ namespace MageUIComponents
         }
 
         /// <summary>
-        /// return a Mage SimpleSink object that is populated
+        /// Return a Mage SimpleSink object that is populated
         /// with preview results by a Mage pipeline using the previously set up Mage reader module
         /// </summary>
         /// <param name="reader"></param>
@@ -803,7 +804,7 @@ namespace MageUIComponents
         }
 
         /// <summary>
-        /// return a Mage SimpleSink module populated with
+        /// Return a Mage SimpleSink module populated with
         /// preview from file processing input target
         /// </summary>
         /// <returns></returns>
@@ -818,9 +819,9 @@ namespace MageUIComponents
 
         private static void ImputeColumnTypes(SimpleSink sink)
         {
-            //a) If it has letters, then is text/varchar
-            //b) If has a decimal point, then it's a float
-            //c) Otherwise, it's an int
+            // a) If it has letters, then is text/varchar
+            // b) If has a decimal point, then it's a float
+            // c) Otherwise, it's an int
             for (var i = 0; i < sink.Columns.Count; i++)
             {
                 var intType = true;
@@ -853,7 +854,7 @@ namespace MageUIComponents
         }
 
         /// <summary>
-        /// return a Mage SimpleSink module populated with
+        /// Return a Mage SimpleSink module populated with
         /// preview from file processing output target
         /// </summary>
         /// <returns></returns>
@@ -865,7 +866,7 @@ namespace MageUIComponents
         }
 
         /// <summary>
-        /// setup input column stuff from given set of column definitions
+        /// Setup input column stuff from given set of column definitions
         /// </summary>
         /// <param name="colDefs"></param>
         private void InitializeInputColumnDefs(Collection<MageColumnDef> colDefs)

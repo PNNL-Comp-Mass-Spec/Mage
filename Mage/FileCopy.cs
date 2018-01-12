@@ -24,7 +24,8 @@ namespace Mage
 
         #region Member Variables
 
-        private int tagIndex; // used to provide unique prefix for duplicate file names
+        // Used to provide unique prefix for duplicate file names
+        private int tagIndex;
 
         #endregion
 
@@ -42,7 +43,7 @@ namespace Mage
         public string ApplyPrefixToFileName { set; get; }
 
         /// <summary>
-        /// literal text to apply as first part of prefix (optional)
+        /// Literal text to apply as first part of prefix (optional)
         /// </summary>
         public string PrefixLeader { set; get; }
 
@@ -61,7 +62,7 @@ namespace Mage
         #region Constructors
 
         /// <summary>
-        /// construct a new Mage file copy module
+        /// Construct a new Mage file copy module
         /// </summary>
         public FileCopy()
         {
@@ -78,7 +79,7 @@ namespace Mage
         #region Overrides
 
         /// <summary>
-        /// copy given file to output
+        /// Copy given file to output
         /// </summary>
         /// <param name="sourceFile">name of input file</param>
         /// <param name="sourcePath">containing folder for input file</param>
@@ -199,7 +200,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// copy given folder to output
+        /// Copy given folder to output
         /// </summary>
         /// <param name="sourcePath">input folder</param>
         /// <param name="destPath">output folder</param>
@@ -217,7 +218,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// determine the name to be used for the destination file
+        /// Determine the name to be used for the destination file
         /// </summary>
         /// <param name="sourceFile"></param>
         /// <param name="fieldPos"></param>

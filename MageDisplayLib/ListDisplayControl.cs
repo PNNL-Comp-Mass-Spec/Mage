@@ -6,17 +6,17 @@ using System.Collections.ObjectModel;
 
 namespace MageDisplayLib
 {
-    // callbacks
+    // Callbacks
 
     /// <summary>
-    /// callback
+    /// Callback
     /// </summary>
     /// <param name="control"></param>
     /// <param name="active"></param>
     public delegate void ActivationCallback(UserControl control, bool active);
 
     /// <summary>
-    /// callback
+    /// Callback
     /// </summary>
     /// <param name="text"></param>
     public delegate void NoticeCallback(string text);
@@ -31,9 +31,9 @@ namespace MageDisplayLib
     /// When combined with a LVPipelineSource object, it can supply
     /// data rows to a Mage pipeline.
     ///
-    /// an external module (usually an LVAccumulator objet) provides
+    /// An external module (usually an LVAccumulator objet) provides
     /// a block of column definitions and blocks of row items for the
-    /// list view at the heart of this user control.
+    /// List view at the heart of this user control.
     /// These blocks are delivered by the external module via events
     /// that are connected to the HandleLVItemBlock and HandleColumnBlock
     /// delegates.  Since the external object is usually running in its
@@ -46,7 +46,7 @@ namespace MageDisplayLib
     {
 
         /// <summary>
-        /// this event fires to send command to external handler(s)
+        /// This event fires to send command to external handler(s)
         /// </summary>
         public event EventHandler<MageCommandEventArgs> OnAction;
 
@@ -57,7 +57,7 @@ namespace MageDisplayLib
 
         #region "Delegate Functions"
 
-        // callback for accessing fields from worker thread
+        // Callback for accessing fields from worker thread
         private delegate void ColumnBlockCallback(ColumnHeader[] columnBlock);
         private delegate void ItemBlockCallback(ListViewItem[] itemBlock);
 
@@ -109,7 +109,7 @@ namespace MageDisplayLib
         bool mListViewSortAscending = true;
 
         /// <summary>
-        ///  cell editor for ListView for this object
+        ///  Cell editor for ListView for this object
         /// </summary>
         private readonly ListViewCellEditor mCellEditor;
 
@@ -162,7 +162,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// get the current cell editor for the ListView of this object
+        /// Get the current cell editor for the ListView of this object
         /// </summary>
         public ListViewCellEditor CellEditor => mCellEditor;
 
@@ -219,7 +219,7 @@ namespace MageDisplayLib
         #region Constructors
 
         /// <summary>
-        /// construct new Mage ListDisplayControl object
+        /// Construct new Mage ListDisplayControl object
         /// </summary>
         public ListDisplayControl()
         {
@@ -276,7 +276,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// select all rows in display
+        /// Select all rows in display
         /// </summary>
         public void SelectAllRows()
         {
@@ -293,7 +293,7 @@ namespace MageDisplayLib
         #region "LVAccumulator Functions"
 
         /// <summary>
-        /// create a new LVAccumulator for this user control
+        /// Create a new LVAccumulator for this user control
         /// and wire up its events to this user control's event handlers
         /// </summary>
         /// <returns></returns>
@@ -304,7 +304,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// return an LVAccumulator object that can supply input rows to this object
+        /// Return an LVAccumulator object that can supply input rows to this object
         /// </summary>
         /// <param name="blksz"></param>
         /// <returns></returns>
@@ -349,7 +349,7 @@ namespace MageDisplayLib
         /// <param name="args"></param>
         public void HandleColumnBlock(object sender, ColumnHeaderEventArgs args)
         {
-            //            lvQueryResults.Columns.AddRange(columnBlock);
+            // lvQueryResults.Columns.AddRange(columnBlock);
             ColumnBlockCallback cb = UpdateListViewColumns;
             Invoke(cb, new object[] { args.GetColumnBlock() });
         }
@@ -582,16 +582,16 @@ namespace MageDisplayLib
         /// <param name="blkSz">Number of rows to be accumulated into each update block</param>
         public static void ConnectToPipeline(ProcessingPipeline pipeline, string mod, ListDisplayControl lc, int blkSz)
         {
-            // connect list display control to pipeline via an accumulator object
+            // Connect list display control to pipeline via an accumulator object
             lc.Clear();
             var lva = lc.MakeAccumulator();
             pipeline.ConnectExternalModule(mod, lva.HandleColumnDef, lva.HandleDataRow);
             lva.ItemBlockSize = blkSz;
-            //            lc.PageTitle = mod;
+            // lc.PageTitle = mod;
         }
 
         /// <summary>
-        /// return an ISinkModule reference that
+        /// Return an ISinkModule reference that
         /// Mage pipeline can use to populate this control
         /// </summary>
         /// <returns></returns>
@@ -602,7 +602,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// return an ISinkModule reference that
+        /// Return an ISinkModule reference that
         /// Mage pipeline can use to populate this control
         /// </summary>
         /// <param name="title"></param>
@@ -615,7 +615,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// return an ISinkModule reference that
+        /// Return an ISinkModule reference that
         /// Mage pipeline can use to populate this control
         /// </summary>
         /// <param name="blkSz"></param>
@@ -645,11 +645,11 @@ namespace MageDisplayLib
             var selIdx = lv.SelectedItems[0].Index;
             if (moveUp)
             {
-                // ignore moveup of row(0)
+                // Ignore moveup of row(0)
                 if (selIdx == 0)
                     return;
 
-                // move the subitems for the previous row
+                // Move the subitems for the previous row
                 // to cache to make room for the selected row
                 for (var i = 0; i < lv.Items[selIdx].SubItems.Count; i++)
                 {
@@ -666,10 +666,11 @@ namespace MageDisplayLib
             }
             else
             {
-                // ignore movedown of last item
+                // Ignore movedown of last item
                 if (selIdx == lv.Items.Count - 1)
                     return;
-                // move the subitems for the next row
+
+                // Move the subitems for the next row
                 // to cache so we can move the selected row down
                 for (var i = 0; i < lv.Items[selIdx].SubItems.Count; i++)
                 {

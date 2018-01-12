@@ -21,17 +21,17 @@ namespace Mage
         #region Properties
 
         /// <summary>
-        /// delimiter for input file (default to tab)
+        /// Delimiter for input file (default to tab)
         /// </summary>
         public string Delimiter { get; set; }
 
         /// <summary>
-        /// full path to input files
+        /// Full path to input files
         /// </summary>
         public string FilePath { get; set; }
 
         /// <summary>
-        /// whether or not input file has a header line ("Yes" or "No")
+        /// Whether or not input file has a header line ("Yes" or "No")
         /// </summary>
         public string Header { get; set; }
 
@@ -40,7 +40,7 @@ namespace Mage
         #region Constructors
 
         /// <summary>
-        /// construct a new Mage delimited file reader object
+        /// Construct a new Mage delimited file reader object
         /// (defaulted to "AutoSense" and expecting a header line
         /// </summary>
         public DelimitedFileReader()
@@ -54,7 +54,7 @@ namespace Mage
         #region IBaseModule Members
 
         /// <summary>
-        /// called before pipeline runs - module can do any special setup that it needs
+        /// Called before pipeline runs - module can do any special setup that it needs
         /// (override of base class)
         /// </summary>
         public override void Prepare()
@@ -89,7 +89,7 @@ namespace Mage
         #region Support Functions
 
         /// <summary>
-        /// output contents of file, automatically deciding 
+        /// Output contents of file, automatically deciding
         /// whether it is tab-delimited or comma-delimited
         /// </summary>
         private void OutputContents()
@@ -120,14 +120,14 @@ namespace Mage
                             break;
                         }
 
-                        // check first line for delimiter type
+                        // Check first line for delimiter type
                         if (checkDelimiter)
                         {
                             tabDelimited = !SwitchToCSV(line);
                             checkDelimiter = false;
                         }
 
-                        // parse line according to delimiter type
+                        // Parse line according to delimiter type
                         string[] fields;
                         if (tabDelimited)
                         {
@@ -138,7 +138,7 @@ namespace Mage
                             fields = r.Split(line);
                         }
 
-                        // output line
+                        // Output line
                         if (doHeaderLine)
                         {
                             doHeaderLine = false;
@@ -229,7 +229,7 @@ namespace Mage
 
         private void OutputHeaderLine(IEnumerable<string> fields)
         {
-            // output the column definitions
+            // Output the column definitions
             var colDefs = new List<MageColumnDef>();
             foreach (var field in fields)
             {

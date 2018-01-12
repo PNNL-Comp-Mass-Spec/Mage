@@ -29,19 +29,19 @@ namespace Mage
         private static readonly FileLogger traceLogPipeline = new FileLogger(DEFAULT_LOG_FILE_NAME, BaseLogger.LogLevels.INFO, false);
 
         /// <summary>
-        /// event that is fired during execution of pipeline
+        /// Event that is fired during execution of pipeline
         /// (pass-through for status messages from modules contained in the pipeline)
         /// </summary>
         public event EventHandler<MageStatusEventArgs> OnStatusMessageUpdated;
 
         /// <summary>
-        /// event that is fired during execution of pipeline
+        /// Event that is fired during execution of pipeline
         /// (pass-through for warning messages from modules contained in the pipeline)
         /// </summary>
         public event EventHandler<MageStatusEventArgs> OnWarningMessageUpdated;
 
         /// <summary>
-        /// event that is fired when pipeline run terminates (normally or abnormally)
+        /// Event that is fired when pipeline run terminates (normally or abnormally)
         /// </summary>
         public event EventHandler<MageStatusEventArgs> OnRunCompleted;
 
@@ -136,16 +136,16 @@ namespace Mage
         #region Functions Available to Clients
 
         /// <summary>
-        /// invoke the run method on the root module of pipeline in separate thread from thread pool
+        /// Invoke the run method on the root module of pipeline in separate thread from thread pool
         /// </summary>
         public void Run()
         {
-            // fire off the pipeline
+            // Fire off the pipeline
             ThreadPool.QueueUserWorkItem(RunRoot);
         }
 
         /// <summary>
-        /// call the Run method on the root module of pipeline (execution will be in caller's thread)
+        /// Call the Run method on the root module of pipeline (execution will be in caller's thread)
         /// </summary>
         /// <param name="state">Provided so that this function has necessary signature to be target of ThreadPool.QueueUserWorkItem</param>
         public void RunRoot(Object state)
@@ -162,7 +162,7 @@ namespace Mage
             HandleStatusMessageUpdated(this, new MageStatusEventArgs("Running..."));
             traceLogPipeline.Info(string.Format("Pipeline {0} started...", PipelineName));
 
-            // give all modules in pipeline a chance to prepare themselves
+            // Give all modules in pipeline a chance to prepare themselves
             foreach (var modDef in mModuleIndex)
             {
                 try
@@ -237,7 +237,7 @@ namespace Mage
                 }
             }
 
-            // give all modules in pipeline a chance to clean up after themselves
+            // Give all modules in pipeline a chance to clean up after themselves
             foreach (var modDef in mModuleIndex)
             {
                 modDef.Value.Cleanup();
@@ -266,7 +266,7 @@ namespace Mage
         /// <param name="moduleParams">Key/value list of parameters</param>
         public void SetModuleParameters(string moduleName, Dictionary<string, string> moduleParams)
         {
-            // get reference to module by name and send it the list of parameters
+            // Get reference to module by name and send it the list of parameters
             var mod = mModuleIndex[moduleName];
             if (mod != null)
             {
@@ -286,7 +286,7 @@ namespace Mage
         /// <param name="paramValue">Value</param>
         public void SetModuleParameter(string moduleName, string paramName, string paramValue)
         {
-            // get reference to module by name, package the parameter, and send it to the module
+            // Get reference to module by name, package the parameter, and send it to the module
             var mod = mModuleIndex[moduleName];
             if (mod != null)
             {
@@ -306,7 +306,7 @@ namespace Mage
         /// <param name="downstreamModule">Module name of downstream module</param>
         public void ConnectModules(string upstreamModule, string downstreamModule)
         {
-            // get reference to both the upstream and downstream modules by name
+            // Get reference to both the upstream and downstream modules by name
             // and wire the downstream module's pipeline event handlers to the upstream module's pipeline events
             try
             {
@@ -503,7 +503,7 @@ namespace Mage
         #region Error Messages
 
         /// <summary>
-        /// buffer to accumulate error messages from status update stream
+        /// Buffer to accumulate error messages from status update stream
         /// </summary>
         private readonly List<string> mErrorMessages = new List<string>();
 
@@ -554,16 +554,16 @@ namespace Mage
         /// <param name="pipelineSpec">Path to the XML definition file</param>
         public void Build(string pipelineSpec)
         {
-            // step through XML module specification document
+            // Step through XML module specification document
             // and build and wire modules as specified
             //
 
-            //            pipelineSpec = "<root>" + pipelineSpec + "</root>";
+            // pipelineSpec = "<root>" + pipelineSpec + "</root>";
             var doc = new XmlDocument();
             doc.LoadXml(pipelineSpec);
             var xnl = doc.SelectNodes(".//module");
 
-            // get next module description from specification
+            // Get next module description from specification
             if (xnl == null)
             {
                 return;
@@ -579,10 +579,10 @@ namespace Mage
                 var moduleName = n.Attributes["name"].InnerText;
                 var moduleType = n.Attributes["type"].InnerText;
 
-                // create the module
+                // Create the module
                 var mod = MakeModule(moduleName, moduleType);
 
-                // wire it to an upstream module, if required
+                // Wire it to an upstream module, if required
                 XmlNode cn = n.Attributes["connectedTo"];
                 if (cn != null)
                 {
@@ -591,8 +591,7 @@ namespace Mage
                 }
                 else
                 {
-                    // module with no upstream module
-                    // is assumed to be the root of the pipeline
+                    // Module with no upstream module is assumed to be the root of the pipeline
                     // (we play by Highlander rules - there can be only one)
                     RootModule = mod;
                 }
@@ -605,19 +604,19 @@ namespace Mage
         /// <param name="pipelineModuleParams">Path to the XML definition file</param>
         public void SetAllModuleParameters(string pipelineModuleParams)
         {
-            // step though XML document that defines parameters for modules,
-            // and for each module in the document, extract a key/value list of paramters
+            // Step though XML document that defines parameters for modules.
+            // For each module in the document, extract a key/value list of paramters
             // and send them to the module
 
-            // parse the XML definition of the module parameters
+            // Parse the XML definition of the module parameters
             pipelineModuleParams = "<root>" + pipelineModuleParams + "</root>";
             var doc = new XmlDocument();
             doc.LoadXml(pipelineModuleParams);
 
-            // step through list of module sections in specification
+            // Step through list of module sections in specification
             var xnl = doc.SelectNodes(".//module");
 
-            // do section for current module in specifiction
+            // Do section for current module in specifiction
             if (xnl == null)
             {
                 return;
@@ -625,7 +624,7 @@ namespace Mage
 
             foreach (XmlNode modNode in xnl)
             {
-                // get the name of the module that the paramters belong to
+                // Get the name of the module that the paramters belong to
                 if (modNode.Attributes == null)
                 {
                     continue;
@@ -633,7 +632,7 @@ namespace Mage
 
                 var moduleName = modNode.Attributes["name"].InnerText;
 
-                // build list of parameters for the module
+                // Build list of parameters for the module
                 var moduleParams = new Dictionary<string, string>();
                 foreach (XmlNode parmNode in modNode.ChildNodes)
                 {
@@ -645,7 +644,7 @@ namespace Mage
                     }
                 }
 
-                // send list of parameters to module
+                // Send list of parameters to module
                 SetModuleParameters(moduleName, moduleParams);
             }
         }
@@ -779,7 +778,7 @@ namespace Mage
                     throw new NullReferenceException("pipeline XML node does not contain attribute; cannot assemble");
                 }
 
-                // create the module
+                // Create the module
                 var nameAttr = n.Attributes["name"];
 
                 var moduleName = nameAttr?.InnerText ?? string.Format("Module{0}", namedModuleList.Count + 1);
@@ -818,7 +817,7 @@ namespace Mage
     {
 
         /// <summary>
-        /// pipeline name of Mage module object
+        /// Pipeline name of Mage module object
         /// </summary>
         public string ModuleName { get; set; }
 
@@ -828,7 +827,7 @@ namespace Mage
         public object ModuleObject { get; set; }
 
         /// <summary>
-        /// construct a new ModuleDef object
+        /// Construct a new ModuleDef object
         /// from given module with given module name
         /// </summary>
         /// <param name="name"></param>

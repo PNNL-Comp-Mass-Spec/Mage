@@ -8,7 +8,7 @@ namespace MageFileProcessor
     class XT2FHTFilter : ContentFilter
     {
 
-        // this is called for each row that is being subjected to filtering
+        // This is called for each row that is being subjected to filtering
         // the fields array contains value of each column for the row
         // the column index of each field can be looked up by field name in columnPos[]
         // to prevent the row from being sent to the ouput, return false
@@ -22,7 +22,7 @@ namespace MageFileProcessor
         }
 
         /// <summary>
-        /// called before pipeline runs - module can do any special setup that it needs
+        /// Called before pipeline runs - module can do any special setup that it needs
         /// this filter module sets up its own column remapping
         /// (override of base class)
         /// </summary>
@@ -32,7 +32,7 @@ namespace MageFileProcessor
             OutputColumnList = GetFilterColumnMap();
         }
 
-        // this is a function that returns an output column map
+        // This is a function that returns an output column map
         private static string GetFilterColumnMap()
         {
             var colMapfields = new List<string>
@@ -61,7 +61,7 @@ namespace MageFileProcessor
         }
 
         /// <summary>
-        /// delegate that handles renaming of source file to output file 
+        /// Delegate that handles renaming of source file to output file
         /// </summary>
         /// <param name="sourceFile"></param>
         /// <param name="fieldPos"></param>

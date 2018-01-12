@@ -67,13 +67,13 @@ namespace Mage
         public string FileSelectorMode { get; set; }
 
         /// <summary>
-        /// include files an/or folders in results
+        /// Include files an/or folders in results
         /// ("File", "Folder", "IncludeFilesOrFolders")
         /// </summary>
         public string IncludeFilesOrFolders { get; set; }
 
         /// <summary>
-        /// setting this property sets the file path to the internal file path buffer
+        /// Setting this property sets the file path to the internal file path buffer
         /// (necessary if Run will be called instead of processing via standard tabular input)
         /// </summary>
         public string FolderPath
@@ -87,7 +87,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// add a path to a folder to be searched
+        /// Add a path to a folder to be searched
         /// (used when this module's "Run" method is to be called
         /// such as when it is installed as the root module in a pipeline)
         /// </summary>
@@ -105,7 +105,7 @@ namespace Mage
 
                     for (var colIndex = 0; colIndex < outputColumnDefs.Count; colIndex++)
                     {
-                        // break each column spec into searchResult
+                        // Break each column spec into searchResult
                         var colSpecFlds = outputColumnDefs[colIndex].Trim().Split('|');
                         var outputColName = colSpecFlds[0].Trim();
 
@@ -127,12 +127,12 @@ namespace Mage
         }
 
         /// <summary>
-        /// do recursive file search
+        /// Do recursive file search
         /// </summary>
         public string RecursiveSearch { get; set; }
 
         /// <summary>
-        /// folder name pattern used to restrict recursive search
+        /// Folder name pattern used to restrict recursive search
         /// </summary>
         public string SubfolderSearchName { get; set; }
 
@@ -142,7 +142,7 @@ namespace Mage
         #region Constructors
 
         /// <summary>
-        /// construct a new Mage file list filter module
+        /// Construct a new Mage file list filter module
         /// </summary>
         public FileListFilter()
         {
@@ -470,7 +470,7 @@ namespace Mage
                 selectors.Add("*");
             }
 
-            // get list of files for each selector
+            // Get list of files for each selector
             foreach (var selector in selectors)
             {
                 var fiList = GetMyEMSLFilesOrFolders(searchMode, selector, datasetName, subDir, parentFolders);
@@ -558,7 +558,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// search files in folder and return list of files
+        /// Search files in folder and return list of files
         /// whose names satisfy the selection criteria
         /// </summary>
         /// <param name="fileList"></param>
@@ -569,7 +569,7 @@ namespace Mage
 
             var filteredFilesOrFolders = new List<FileSystemInfo>(fileList.Count);
 
-            // find files (or folders) that meet selection criteria.
+            // Find files (or folders) that meet selection criteria.
             foreach (var fiEntry in fileList)
             {
                 if (fileNameRegExSpecs.Count == 0)
@@ -616,7 +616,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// get list of individual file selectors from selector list
+        /// Get list of individual file selectors from selector list
         /// </summary>
         /// <returns></returns>
         public List<string> GetFileNameSelectors()

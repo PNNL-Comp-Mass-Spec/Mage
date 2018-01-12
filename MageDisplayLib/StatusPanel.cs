@@ -13,7 +13,7 @@ namespace MageDisplayLib
     {
 
         /// <summary>
-        /// this event fires to send command to external command handler(s)
+        /// This event fires to send command to external command handler(s)
         /// </summary>
         public event EventHandler<MageCommandEventArgs> OnAction;
 
@@ -31,12 +31,12 @@ namespace MageDisplayLib
         #region Properties
 
         /// <summary>
-        /// the control that we are installed in
+        /// The control that we are installed in
         /// </summary>
         public Control OwnerControl { get; set; }
 
         /// <summary>
-        /// set the status message display
+        /// Set the status message display
         /// </summary>
         /// <param name="Message"></param>
         public void SetStatusMessage(string Message)
@@ -45,7 +45,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// enable or disable the cancel button
+        /// Enable or disable the cancel button
         /// </summary>
         public bool EnableCancel
         {
@@ -54,7 +54,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// show or hide the cancel button
+        /// Show or hide the cancel button
         /// </summary>
         public bool ShowCancel
         {
@@ -84,32 +84,32 @@ namespace MageDisplayLib
         private delegate void MessageHandler(string message);
 
         /// <summary>
-        /// handle a status message update that arrives from a different
+        /// Handle a status message update that arrives from a different
         /// thread than our owner control's thread
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
         public void HandleStatusMessageUpdated(object sender, MageStatusEventArgs args)
         {
-            // we need to do the cross-thread thing to update the GUI
+            // We need to do the cross-thread thing to update the GUI
             UpdateStatusMessage(args.Message);
         }
 
 
         /// <summary>
-        /// handle a warning message update that arrives from a different
+        /// Handle a warning message update that arrives from a different
         /// thread than our owner control's thread
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
         public void HandleWarningMessageUpdated(object sender, MageStatusEventArgs args)
         {
-            // we need to do the cross-thread thing to update the GUI
+            // We need to do the cross-thread thing to update the GUI
             AddNewWarningMessage(args.Message);
         }
 
         /// <summary>
-        /// handle a status completion message that arrives from a different
+        /// Handle a status completion message that arrives from a different
         /// thread than our owner control's thread
         /// </summary>
         /// <param name="sender">(ignored)</param>
@@ -118,7 +118,7 @@ namespace MageDisplayLib
         {
             if (string.IsNullOrEmpty(args.Message))
             {
-                // pipeline didn't blow up, make nice reassuring message
+                // Pipeline didn't blow up, make nice reassuring message
                 args.Message = "Process completed normally";
             }
             UpdateStatusMessage(args.Message);
@@ -172,7 +172,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// update our status message in the owner control's thread
+        /// Update our status message in the owner control's thread
         /// </summary>
         /// <param name="message">New status message</param>
         private void UpdateStatusMessage(string message)

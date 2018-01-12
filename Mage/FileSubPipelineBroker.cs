@@ -16,22 +16,22 @@ namespace Mage
     public delegate ProcessingPipeline FileProcessingPipelineGenerator(string inputFilePath, string outputFilePath, Dictionary<string, string> context);
 
     /// <summary>
-    /// module that creates and runs a Mage pipeline for one or more input files
+    /// Module that creates and runs a Mage pipeline for one or more input files
     ///
-    /// it expects to receive path information for files via its standard tabular input
+    /// It expects to receive path information for files via its standard tabular input
     /// (its FileContentProcessor base class provides the basic functionality)
     ///
-    /// this module builds a filtering sub-pipeline to process each file
+    /// This module builds a filtering sub-pipeline to process each file
     /// and runs that in the the same thread the module is currently running in
     ///
-    /// there are two internally-defined file processing sub-pipelines, that have a delimited file
+    /// There are two internally-defined file processing sub-pipelines, that have a delimited file
     /// reader module that reads rows from a file and passed them to a filter module, which passes
     /// its rows to a writer module.
     ///
-    /// one of the internally-defined sub-pipelines uses a delimited file writer module,
+    /// One of the internally-defined sub-pipelines uses a delimited file writer module,
     /// and the other uses a SQLite writer.
     ///
-    /// to use either of these internally-defined sub-pipelines, the client need only
+    /// To use either of these internally-defined sub-pipelines, the client need only
     /// supply the name of the filter module to be used (by setting the FileFilterModuleName property)
     /// if the DatabaseName property is set, the SQLite database sub-pipeline will be used
     /// otherwise the delimited file writer sub-pipeline is used
@@ -41,7 +41,7 @@ namespace Mage
     /// a separate table.  Table names will be equivalent to what the output file name would have been
     /// for the source file, minus the file extension.
     ///
-    /// the sub-pipeline can also be supplied by the client by setting the FileProcessingPipelineGenerator
+    /// The sub-pipeline can also be supplied by the client by setting the FileProcessingPipelineGenerator
     /// delegate to call the client's pipeline generator function
     /// </summary>
     public class FileSubPipelineBroker : FileContentProcessor
@@ -49,13 +49,13 @@ namespace Mage
 
         #region Member Variables
 
-        // running count of number of files processed
+        // Running count of number of files processed
         private int mFileCount;
 
-        // handle to the currently running sub-pipeline
+        // Handle to the currently running sub-pipeline
         private ProcessingPipeline mPipeline;
 
-        // delegate that this module calls to build sub-pipeline
+        // Delegate that this module calls to build sub-pipeline
         private FileProcessingPipelineGenerator ProcessingPipelineMaker;
 
         private Dictionary<string, string> mFileFilterParameters = new Dictionary<string, string>();
@@ -67,7 +67,7 @@ namespace Mage
         #region Functions Available to Clients
 
         /// <summary>
-        /// define a delegate function that will be called by this module
+        /// Define a delegate function that will be called by this module
         /// to construct and run a file processing pipeline
         /// for each file handled by this broker module
         /// </summary>
@@ -82,12 +82,12 @@ namespace Mage
         #region Properties
 
         /// <summary>
-        /// name of filter module that is used when internally defined sub-pipeline is used
+        /// Name of filter module that is used when internally defined sub-pipeline is used
         /// </summary>
         public string FileFilterModuleName { get; set; }
 
         /// <summary>
-        /// path to SQLite database file
+        /// Path to SQLite database file
         /// (parameter for SQLite database writer for internally defined sub-pipelines using SQLite Writer)
         /// </summary>
         public string DatabaseName { get; set; }
@@ -153,14 +153,14 @@ namespace Mage
         #region Constructors
 
         /// <summary>
-        /// construct a new Mage file subpipeline broker module
+        /// Construct a new Mage file subpipeline broker module
         /// </summary>
         public FileSubPipelineBroker()
         {
-            // set up to use our own default sub-pipeline maker
-            //in case the client doesn't give us another one
-            FileFilterModuleName = ""; // client must set this property to use internally defined sub-pipelines
-            DatabaseName = ""; // client must set these properties to user internally-defined SQLiteWriter sub-pipeline
+            // Set up to use our own default sub-pipeline maker
+            // in case the client doesn't give us another one
+            FileFilterModuleName = ""; // Client must set this property to use internally defined sub-pipelines
+            DatabaseName = ""; // Client must set these properties to user internally-defined SQLiteWriter sub-pipeline
             TableName = "";
         }
 
@@ -169,7 +169,7 @@ namespace Mage
         #region Overrides
 
         /// <summary>
-        /// called before pipeline runs - module can do any special setup that it needs
+        /// Called before pipeline runs - module can do any special setup that it needs
         /// (override of base class)
         /// </summary>
         public override void Prepare()
@@ -178,7 +178,7 @@ namespace Mage
 
             if (!string.IsNullOrEmpty(FileFilterModuleName))
             {
-                // optionally, set up our sub-pipeline generator delegate to use
+                // Optionally, set up our sub-pipeline generator delegate to use
                 // an internally-defined sub-pipeline, according to module settings
                 if (!string.IsNullOrEmpty(DatabaseName))
                 {
@@ -188,13 +188,14 @@ namespace Mage
                 {
                     ProcessingPipelineMaker = MakeDefaultFileProcessingPipeline;
                 }
-                // set up to use the file renaming function provided by the filter module
+
+                // Set up to use the file renaming function provided by the filter module
                 SetupFileRenamer(FileFilterModuleName);
             }
         }
 
         /// <summary>
-        /// this is called from the base class for each input file to be processed
+        /// This is called from the base class for each input file to be processed
         /// </summary>
         /// <param name="sourceFile"></param>
         /// <param name="sourcePath"></param>
@@ -206,9 +207,9 @@ namespace Mage
             {
                 mPipeline = ProcessingPipelineMaker(sourcePath, destPath, context);
                 mPipeline.OnStatusMessageUpdated += UpdateStatus;
-                mPipeline.RunRoot(null); // we are already in a pipeline thread - don't run sub-pipeline in a new one
+                mPipeline.RunRoot(null); // We are already in a pipeline thread - don't run sub-pipeline in a new one
 
-                // sub-pipeline encountered fatal error, interrupt the main pipeline
+                // Sub-pipeline encountered fatal error, interrupt the main pipeline
                 if (!string.IsNullOrEmpty(mPipeline.CompletionCode))
                 {
                     throw new MageException(mPipeline.CompletionCode);
@@ -266,7 +267,7 @@ namespace Mage
 
 
         /// <summary>
-        /// wire the filter module's file renaming method to this broker module's delegate
+        /// Wire the filter module's file renaming method to this broker module's delegate
         /// if such a renaming method is present
         /// </summary>
         /// <param name="filterModule"></param>

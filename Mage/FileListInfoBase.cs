@@ -86,27 +86,27 @@ namespace Mage
         #region Properties
 
         /// <summary>
-        /// the name of the input column that contains the folder path to search for files
+        /// The name of the input column that contains the folder path to search for files
         /// </summary>
         public string SourceFolderColumnName { get; set; }
 
         /// <summary>
-        /// name of output column that will receive filename
+        /// Name of output column that will receive filename
         /// </summary>
         public string FileColumnName { get; set; }
 
         /// <summary>
-        /// name of output column that will receive file size (bytes)
+        /// Name of output column that will receive file size (bytes)
         /// </summary>
         public string FileSizeColumnName { get; set; }
 
         /// <summary>
-        /// name of output column that will receive file date
+        /// Name of output column that will receive file date
         /// </summary>
         public string FileDateColumnName { get; set; }
 
         /// <summary>
-        /// the name of the output column that will contain the file type
+        /// The name of the output column that will contain the file type
         /// </summary>
         public string FileTypeColumnName { get; set; }
 
@@ -115,7 +115,7 @@ namespace Mage
         #region Constructors
 
         /// <summary>
-        /// construct a new Mage file list filter module
+        /// Construct a new Mage file list filter module
         /// </summary>
         protected FileListInfoBase()
         {
@@ -132,7 +132,7 @@ namespace Mage
         #region IBaseModule Members
 
         /// <summary>
-        /// called when this module functions as source module
+        /// Called when this module functions as source module
         /// (requires that optional property FolderPath be set)
         /// </summary>
         /// <param name="state"></param>
@@ -145,10 +145,10 @@ namespace Mage
 
 
         /// <summary>
-        /// handler for Mage standard tablular input data rows
+        /// Handler for Mage standard tablular input data rows
         /// (override of base class)
         ///
-        /// receive storage folder path as column in data row,
+        /// Receive storage folder path as column in data row,
         /// and save it and the ID column value to our local folder path buffer
         /// </summary>
         /// <param name="sender"></param>
@@ -161,24 +161,24 @@ namespace Mage
             }
             else
             {
-                // if we have subscribers, do the file lookup and tell them about it
+                // If we have subscribers, do the file lookup and tell them about it
                 SearchFoldersAndOutputFiles();
             }
         }
 
         /// <summary>
-        /// handler for Mage standard tablular column definition
+        /// Handler for Mage standard tablular column definition
         /// (override of base class)
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
         public override void HandleColumnDef(object sender, MageColumnEventArgs args)
         {
-            // build lookup of column index by column name
+            // Build lookup of column index by column name
             base.HandleColumnDef(sender, args);
+            // End of column definitions from our source,
 
-            // end of column definitions from our source,
-            // now tell our subscribers what columns to expect from us
+            // Now tell our subscribers what columns to expect from us
             ExportColumnDefs();
         }
 
@@ -187,7 +187,7 @@ namespace Mage
         #region Functions for Output Columns
 
         /// <summary>
-        /// tell our subscribers what columns to expect from us
+        /// Tell our subscribers what columns to expect from us
         /// which will be an internal (filename) column
         /// followed by any input columns that are passed through to output
         /// </summary>
@@ -227,7 +227,7 @@ namespace Mage
         private void SearchFoldersAndOutputFiles()
         {
 
-            // set up indexes for row columns
+            // Set up indexes for row columns
             TryGetOutputColumnPos(SourceFolderColumnName, out mFolderPathColIndx);
             TryGetOutputColumnPos(FileColumnName, out mFileNameOutColIndx);
             TryGetOutputColumnPos(FileSizeColumnName, out mFileSizeOutColIndx);
@@ -270,7 +270,7 @@ namespace Mage
             }
 
 
-            // go through each folder that we accumulated in our internal buffer
+            // Go through each folder that we accumulated in our internal buffer
             for (var outputBufferRowIdx = 0; outputBufferRowIdx < mOutputBuffer.Count; outputBufferRowIdx++)
             {
                 if (Abort)
@@ -282,7 +282,7 @@ namespace Mage
                 var folderPathSpec = mOutputBuffer[outputBufferRowIdx][mFolderPathColIndx];
                 var folderPaths = new List<string>();
 
-                // folderPathSpec may contain multiple folders, separated by a vertical bar
+                // FolderPathSpec may contain multiple folders, separated by a vertical bar
                 // If that is the case, then we'll search for files in each folder, preferentially using files in the folder listed first
                 if (folderPathSpec.Contains('|'))
                 {
@@ -316,7 +316,7 @@ namespace Mage
 
                 }
 
-                // inform our subscribers of what we found
+                // Inform our subscribers of what we found
                 if ((fileInfo.Count == 0) && (subfolderInfo.Count == 0))
                 {
                     ReportNothingFound(outputBufferRowIdx);
@@ -384,7 +384,7 @@ namespace Mage
                 }
             }
 
-            // inform our subscribers that all data has been sent
+            // Inform our subscribers that all data has been sent
             OnDataRowAvailable(new MageDataEventArgs(null));
         }
 
@@ -418,7 +418,7 @@ namespace Mage
         #region File/Subfolder Result Reporting
 
         /// <summary>
-        /// report a found subfolder to output
+        /// Report a found subfolder to output
         /// </summary>
         /// <param name="outputBufferRowIdx">Index to row in mOutputBuffer</param>
         /// <param name="folderPath"></param>
@@ -432,13 +432,13 @@ namespace Mage
                 outRow[mFolderPathColIndx] = folderPath;
             }
             outRow[mFileNameOutColIndx] = subfolderName;
-            //if (mFileSizeOutColIndx > -1)
+            // if (mFileSizeOutColIndx > -1)
             //    outRow[mFileSizeOutColIndx] = 0;
             OnDataRowAvailable(new MageDataEventArgs(outRow));
         }
 
         /// <summary>
-        /// report a found file to output
+        /// Report a found file to output
         /// </summary>
         /// <param name="outputBufferRowIdx">Index to row in mOutputBuffer</param>
         /// <param name="folderPath"></param>
@@ -464,7 +464,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// report nothing found to output
+        /// Report nothing found to output
         /// </summary>
         /// <param name="outputBufferRowIdx">Index to row in mOutputBuffer</param>
         private void ReportNothingFound(int outputBufferRowIdx)
@@ -473,13 +473,13 @@ namespace Mage
             {
                 mOutputBuffer[outputBufferRowIdx][mFileTypeOutColIndex] = "";
             }
-            // output record that says we didn't find any files
+            // Output record that says we didn't find any files
             mOutputBuffer[outputBufferRowIdx][mFileNameOutColIndx] = kNoFilesFound;
             OnDataRowAvailable(new MageDataEventArgs(mOutputBuffer[outputBufferRowIdx]));
         }
 
         /// <summary>
-        /// output record that says we had problem accessing files
+        /// Output record that says we had problem accessing files
         /// </summary>
         /// <param name="outputBufferRowIdx"></param>
         /// <param name="msg"></param>

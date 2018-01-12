@@ -23,13 +23,13 @@ namespace Mage
 
         #region Member Variables
 
-        // buffer for accumulating rows into output block
+        // Buffer for accumulating rows into output block
         private readonly List<string[]> mRows = new List<string[]>();
 
-        // description of table we will be inserting rows into
+        // Description of table we will be inserting rows into
         private TableSchema mSchema;
 
-        // connection to SQLite database
+        // Connection to SQLite database
         private SQLiteConnection mConnection;
 
         private int mRowsAccumulated;
@@ -62,7 +62,7 @@ namespace Mage
         public string DbPassword { get; set; }
 
         /// <summary>
-        /// number of input rows that are grouped into SQLite transaction blocks
+        /// Number of input rows that are grouped into SQLite transaction blocks
         /// </summary>
         public string BlockSize
         {
@@ -81,7 +81,7 @@ namespace Mage
         #region IDisposable Members
 
         /// <summary>
-        /// dispose of held resources
+        /// Dispose of held resources
         /// </summary>
         public void Dispose()
         {
@@ -90,7 +90,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// dispose of held resources
+        /// Dispose of held resources
         /// </summary>
         /// <param name="disposing"></param>
         private void Dispose(bool disposing)
@@ -102,7 +102,7 @@ namespace Mage
             // Code to dispose the un-managed resources of the class
             mConnection?.Dispose();
 
-            //           isDisposed = true;
+            // isDisposed = true;
         }
 
         #endregion
@@ -110,7 +110,7 @@ namespace Mage
         #region IBaseModule Members
 
         /// <summary>
-        /// called after pipeline run is complete - module can do any special cleanup
+        /// Called after pipeline run is complete - module can do any special cleanup
         /// this module closes the database connection
         /// (override of base class)
         /// </summary>
@@ -121,7 +121,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// handler for Mage standard tablular column definition
+        /// Handler for Mage standard tablular column definition
         /// (override of base class)
         ///
         /// In addition to base module column definition
@@ -133,18 +133,20 @@ namespace Mage
         public override void HandleColumnDef(object sender, MageColumnEventArgs args)
         {
             base.HandleColumnDef(sender, args);
-            // make table schema
+
+            // Make table schema
             var cd = OutputColumnDefs ?? InputColumnDefs;
             mSchema = MakeTableSchema(cd);
-            // create db and table in database
+
+            // Create db and table in database
             CreateTableInDatabase();
         }
 
         /// <summary>
-        /// handler for Mage standard tablular input data rows
+        /// Handler for Mage standard tablular input data rows
         /// (override of base class)
         ///
-        /// receive data row, add to accumulator, write to SQLite when buffer is full, or reader finishes
+        /// Receive data row, add to accumulator, write to SQLite when buffer is full, or reader finishes
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -234,13 +236,13 @@ namespace Mage
 
         #region "Top level SQLite Stuff"
 
-        // create the target file if it doesn't exist.
+        // Create the target file if it doesn't exist.
         private void AssureDBExists()
         {
             if (!File.Exists(DbPath))
             {
                 CreateSQLiteDatabaseOnly(DbPath);
-                //File.Delete(DbPath)
+                // File.Delete(DbPath)
             }
         }
 
@@ -262,7 +264,7 @@ namespace Mage
 
         private void CreateTableInDatabase()
         {
-            // create the target file if it doesn't exist.
+            // Create the target file if it doesn't exist.
             AssureDBExists();
 
             // Prepare a CREATE TABLE DDL statement
@@ -360,14 +362,14 @@ namespace Mage
             traceLogWriter.Debug("Executed raw SQL");
         }
 
-
         #endregion
 
         #region "General SQLite Stuff"
 
-
-        // returns the CREATE TABLE DDL for creating the SQLite table
-        // from the specified table schema object.
+        /// <summary>
+        /// Returns the CREATE TABLE DDL for creating the SQLite table
+        /// from the specified table schema object.
+        /// </summary>
         private string BuildCreateTableQuery(TableSchema ts)
         {
             var sb = new StringBuilder();
@@ -391,8 +393,10 @@ namespace Mage
             return query;
         }
 
+        /// <summary>
         /// Used when creating the CREATE TABLE DDL. Creates a single row
         /// for the specified column.
+        /// </summary>
         private string BuildColumnStatement(ColumnSchema col)
         {
             var sb = new StringBuilder();
@@ -406,7 +410,7 @@ namespace Mage
             {
                 sb.Append(col.ColumnType);
             }
-            //End If
+
             if (!col.IsNullable)
             {
                 sb.Append(" NOT NULL");
@@ -414,7 +418,7 @@ namespace Mage
 
             var defval = StripParens(col.DefaultValue);
             defval = DiscardNational(defval);
-            //traceLogWriter.Debug(("DEFAULT VALUE BEFORE [" & col.DefaultValue & "] AFTER [") + defval & "]")
+            // traceLogWriter.Debug(("DEFAULT VALUE BEFORE [" & col.DefaultValue & "] AFTER [") + defval & "]")
             if (!string.IsNullOrEmpty(defval) && defval.ToUpper().Contains("GETDATE"))
             {
                 traceLogWriter.Debug("converted SQL Server GETDATE() to CURRENT_TIMESTAMP for column [" + col.ColumnName + "]");
@@ -440,8 +444,8 @@ namespace Mage
             {
                 builder.Password = password;
             }
-            //builder.PageSize = 4096
-            //builder.UseUTF16Encoding = True
+            // builder.PageSize = 4096
+            // builder.UseUTF16Encoding = True
             var connstring = builder.ConnectionString;
 
             return connstring;
@@ -502,7 +506,7 @@ namespace Mage
                 // Remember the parameter name in order to avoid duplicates
                 pnames.Add(pname);
             }
-            // for
+
             sb.Append(")");
             res.CommandText = sb.ToString();
             res.CommandType = CommandType.Text;
@@ -651,7 +655,7 @@ namespace Mage
                     traceLogWriter.Error("argument exception - illegal database type");
                     throw new ArgumentException("Illegal database type [" + Enum.GetName(typeof(DbType), dt) + "]");
             }
-            // switch
+
             return val;
         }
 
@@ -792,8 +796,8 @@ namespace Mage
             public string ColumnType = "";
             public readonly bool IsNullable = true;
             public readonly string DefaultValue = "";
-            //           public bool IsIdentity = false;
-            //           public bool IsCaseSensitivite = false; // null??
+            // public bool IsIdentity = false;
+            // public bool IsCaseSensitivite = false; // null??
         }
 
         private class TableSchema

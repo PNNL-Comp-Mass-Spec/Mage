@@ -73,7 +73,7 @@ namespace MageExtractor
 
             try
             {
-                // set up configuration folder and files
+                // Set up configuration folder and files
                 SavedState.SetupConfigFiles("MageExtractor");
             }
             catch (Exception ex)
@@ -107,7 +107,7 @@ namespace MageExtractor
 
             DisableCancelButton();
 
-            SetupFlexQueryPanels(); // must be done before restoring saved state
+            SetupFlexQueryPanels(); // Must be done before restoring saved state
 
             try
             {
@@ -466,8 +466,8 @@ namespace MageExtractor
             // to true.
             lblAboutLink.LinkVisited = true;
 
-            //Call the Process.Start method to open the default browser
-            //with a URL:
+            // Call the Process.Start method to open the default browser
+            // with a URL:
             System.Diagnostics.Process.Start(lblAboutLink.Text);
         }
 
@@ -515,7 +515,7 @@ namespace MageExtractor
         }
 
         /// <summary>
-        /// build and run Mage pipeline to populate main list display with jobs
+        /// Build and run Mage pipeline to populate main list display with jobs
         /// </summary>
         /// <param name="queryName">Query name to use</param>
         private bool GetJobList(string queryName)
@@ -628,7 +628,7 @@ namespace MageExtractor
             return et;
         }
 
-        //private bool LoadDataIntoAccess(PipelineQueue oPipelineQueue, DestinationType oDestination) {
+        // private bool LoadDataIntoAccess(PipelineQueue oPipelineQueue, DestinationType oDestination) {
 
         //    try
         //    {

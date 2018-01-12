@@ -5,28 +5,28 @@ namespace MageDisplayLib
 {
 
     /// <summary>
-    /// how data rows will be served from display list
+    /// How data rows will be served from display list
     /// </summary>
     public enum DisplaySourceMode
     {
         /// <summary>
-        /// serve all rows in display
+        /// Serve all rows in display
         /// </summary>
         All,
         /// <summary>
-        /// serve only selected rows in display
+        /// Serve only selected rows in display
         /// </summary>
         Selected
     }
 
     /// <summary>
-    /// defines common features of Mage list display user controls
+    /// Defines common features of Mage list display user controls
     /// </summary>
     public interface IMageDisplayControl
     {
 
         /// <summary>
-        /// get or set the visible title field for this control
+        /// Get or set the visible title field for this control
         /// </summary>
         string PageTitle { get; set; }
 

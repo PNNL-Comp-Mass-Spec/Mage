@@ -7,7 +7,7 @@ namespace MageDisplayLib
 {
 
     /// <summary>
-    /// implements a floating entry field editor that overlays display cells
+    /// Implements a floating entry field editor that overlays display cells
     /// </summary>
     public class ListViewCellEditor
     {
@@ -15,12 +15,12 @@ namespace MageDisplayLib
         #region Member Variables
 
         /// <summary>
-        /// default cell editor
+        /// Default cell editor
         /// </summary>
         private TextBox mDefaultCellEditor;
 
         /// <summary>
-        /// the ListView control that we provide cell editing for
+        /// The ListView control that we provide cell editing for
         /// </summary>
         private readonly ListViewEx mListView;
 
@@ -36,13 +36,13 @@ namespace MageDisplayLib
         private int mSubItemUnderEdit;
 
         /// <summary>
-        /// position of last mouse click (used to determine which cell to edit)
+        /// Position of last mouse click (used to determine which cell to edit)
         /// </summary>
         private int mLastClickX;
         private int mLastClickY;
 
         /// <summary>
-        /// position of last horizontal scroll
+        /// Position of last horizontal scroll
         /// </summary>
         private int mLastScrollX;
 
@@ -61,7 +61,7 @@ namespace MageDisplayLib
         #region Properties
 
         /// <summary>
-        /// defines whether or not the cell editor
+        /// Defines whether or not the cell editor
         /// can make changes to underlying cell
         /// </summary>
         public bool Editable
@@ -75,7 +75,7 @@ namespace MageDisplayLib
         #region Constructors
 
         /// <summary>
-        /// construct a new ListViewCellEditor object and bind it to the given ListView control
+        /// Construct a new ListViewCellEditor object and bind it to the given ListView control
         /// </summary>
         /// <param name="lv"></param>
         public ListViewCellEditor(ListViewEx lv)
@@ -133,7 +133,7 @@ namespace MageDisplayLib
             cmbBox.SelectedIndexChanged += HandleEditingComboBoxSelectionChanged;
             cmbBox.LostFocus += HandleEditingComboBoxLostFocus;
             cmbBox.KeyPress += HandleEditingComboBoxKeyPress;
-            //            cmbBox.BackColor = Color.SkyBlue;
+            // cmbBox.BackColor = Color.SkyBlue;
             cmbBox.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbBox.Hide();
         }
@@ -176,7 +176,7 @@ namespace MageDisplayLib
             editBox.Location = new Point(0, 0);
             editBox.KeyPress += HandleEditTextboxKeyPress;
             editBox.LostFocus += HandleEditingTextBoxLostFocus;
-            //           editBox.BackColor = Color.LightYellow;
+            // editBox.BackColor = Color.LightYellow;
             editBox.BorderStyle = BorderStyle.Fixed3D;
             editBox.Hide();
             editBox.Text = "";
@@ -206,7 +206,7 @@ namespace MageDisplayLib
             if (cellEditor == null) return;
 
             mListViewItemUnderEdit.SubItems[mSubItemUnderEdit].Text = cellEditor.Text;
-            cellEditor.Hide(); //  mEditBox.Hide();
+            cellEditor.Hide(); // mEditBox.Hide();
         }
 
         #endregion
@@ -214,7 +214,7 @@ namespace MageDisplayLib
         #region Initiate Cell Editing
 
         /// <summary>
-        /// remember where we clicked
+        /// Remember where we clicked
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -226,7 +226,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// remember where we scrolled horizontally
+        /// Remember where we scrolled horizontally
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -236,7 +236,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// find the subitem that was clicked and lay the appropriate cell editor over it
+        /// Find the subitem that was clicked and lay the appropriate cell editor over it
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

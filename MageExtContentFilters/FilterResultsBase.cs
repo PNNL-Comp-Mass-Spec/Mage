@@ -19,7 +19,7 @@ namespace MageExtContentFilters
         protected static int CriteriaValueIntIndex = 3;
         protected static int CriterionIDIndex = 4;
 
-        // internal class
+        // Internal class
         protected class FilterCriteriaDef
         {
             public string CriteriaName;
@@ -86,8 +86,8 @@ namespace MageExtContentFilters
                 }
                 m_FilterGroups[groupID].Add(fc);
             }
-            //            this.m_filters = filterCriteria;
-            //            this.m_FilterGroups = GetGroupList(this.m_filters);
+            // this.m_filters = filterCriteria;
+            // this.m_FilterGroups = GetGroupList(this.m_filters);
             m_CleanSeqRegex = new Regex(@"(?<cleanseq>[a-zA-z\.]+)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
             m_CleavageStateRegex = new Regex(@"^(?<Prefix>\S)\.(?<PepStart>\S)\S*(?<PepEnd>[A-Z])[^A-Z]*\.(?<Suffix>\S)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
             m_TerminusStateRegex = new Regex(@"^(?<LeftAA>\S)\.\S+\.(?<RightAA>\S)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
@@ -142,27 +142,27 @@ namespace MageExtContentFilters
             switch (operatorSymbol)
             {
                 case "<":
-                    //less than
+                    // less than
                     if (valueToCompare < criterionValue)
                         tmpvalue = true;
                     break;
                 case "<=":
-                    //less than or equal to
+                    // less than or equal to
                     if (((valueToCompare < criterionValue) | (tmpDelta < thresholdNearlyEqual)))
                         tmpvalue = true;
                     break;
                 case "=":
-                    //equal
+                    // equal
                     if (tmpDelta < thresholdNearlyEqual)
                         tmpvalue = true;
                     break;
                 case ">=":
-                    //greater than or equal to
+                    // greater than or equal to
                     if (((valueToCompare > criterionValue) | (tmpDelta < thresholdNearlyEqual)))
                         tmpvalue = true;
                     break;
                 case ">":
-                    //greater than
+                    // greater than
                     if (valueToCompare > criterionValue)
                         tmpvalue = true;
                     break;
@@ -180,27 +180,27 @@ namespace MageExtContentFilters
             switch (operatorSymbol)
             {
                 case "<":
-                    //less than
+                    // less than
                     if (valueToCompare < criterionValue)
                         tmpvalue = true;
                     break;
                 case "<=":
-                    //less than or equal to
+                    // less than or equal to
                     if (valueToCompare <= criterionValue)
                         tmpvalue = true;
                     break;
                 case "=":
-                    //equal
+                    // equal
                     if (valueToCompare == criterionValue)
                         tmpvalue = true;
                     break;
                 case ">=":
-                    //greater than or equal to
+                    // greater than or equal to
                     if (valueToCompare >= criterionValue)
                         tmpvalue = true;
                     break;
                 case ">":
-                    //greater than
+                    // greater than
                     if (valueToCompare > criterionValue)
                         tmpvalue = true;
                     break;
@@ -231,12 +231,12 @@ namespace MageExtContentFilters
 
         protected eCleavageStates GetCleavageState(string peptideSequence)
         {
-            //Implements IFilterResults.GetCleavageState
+            // Implements IFilterResults.GetCleavageState
             eCleavageStates tmpState;
 
             var num = 0;
-            //Dim r As New Regex("^(?<1>\S)\.(?<2>\S)\S+(?<3>\S)\.(?<4>\S)$")
-            //Dim r As New Regex("^(?<1>\S)\.(?<2>\S)\S*(?<3>[A-Ja-j,L-Ql-q,S-Zs-z])[^A-Za-z]*\.(?<4>\S)$")
+            // var r = new Regex("^(?<1>\S)\.(?<2>\S)\S+(?<3>\S)\.(?<4>\S)$")
+            // var r = new Regex("^(?<1>\S)\.(?<2>\S)\S*(?<3>[A-Ja-j,L-Ql-q,S-Zs-z])[^A-Za-z]*\.(?<4>\S)$")
 
             var m = m_CleavageStateRegex.Match(peptideSequence);
 
@@ -286,7 +286,7 @@ namespace MageExtContentFilters
 
         protected int GetTerminusState(string peptideSequence)
         {
-            //Dim r As New Regex("^(?<LeftAA>\S)\.\S+\.(?<RightAA>\S)$")
+            // var r = new Regex("^(?<LeftAA>\S)\.\S+\.(?<RightAA>\S)$")
             var m = m_TerminusStateRegex.Match(peptideSequence);
             int num;
 

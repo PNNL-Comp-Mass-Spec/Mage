@@ -24,10 +24,10 @@ namespace MageUnitTests
             var initialColumns = new[] { "Alpha", "Beta", "Gamma" };
             string[] expectedColumns = { "Alpha", "Added1|+|text", "Beta", "Added2|+|text", "Gamma" };
 
-            // set up data generator
+            // Set up data generator
             var gen = new DataGenerator
             {
-                AddAdHocRow = initialColumns    // header
+                AddAdHocRow = initialColumns    // Header
             };
             gen.AddAdHocRow = new[] { "A1", "B1", "C1" };
             gen.AddAdHocRow = new[] { "A2", "B2", "C2" };

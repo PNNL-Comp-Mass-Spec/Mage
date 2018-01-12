@@ -13,8 +13,6 @@ namespace MageExtractorTest
         [STAThread]
         static void Main()
         {
-            PRISM.Logging.FileLogger.AppendDateToBaseFileName = false;
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());

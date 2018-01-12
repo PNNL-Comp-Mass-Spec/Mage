@@ -4,7 +4,9 @@ using Mage;
 namespace MageFilePackager
 {
 
-    // cleans up input file search data and normalizes it for inclusion in manifest
+    /// <summary>
+    /// Cleans up input file search data and normalizes it for inclusion in manifest
+    /// </summary>
     class FilePackageFilter : ContentFilter
     {
 
@@ -49,28 +51,28 @@ namespace MageFilePackager
         protected override bool CheckFilter(ref string[] vals)
         {
 
-            // apply field mapping to output
+            // Apply field mapping to output
             if (OutputColumnDefs != null)
             {
                 var outRow = MapDataRow(vals);
 
-                // what kind DMS entity does the file belong to?
+                // What kind DMS entity does the file belong to?
                 var source = outRow[_sourceIdx];
 
                 if (source == "Data_Package")
                 {
-                    // we don't have an actual archive path to work with
+                    // We don't have an actual archive path to work with
                     // - fake one from storage path
                     var folderPath = vals[_folderIdx];
                     outRow[_pathIdx] = folderPath.Replace(DataPackageShareRoot, "");
                 }
                 else
                 {
-                    // we have an actual archive path to work with
+                    // We have an actual archive path to work with
                     var archivePath = vals[_folderIdx];
 
-                    // if it is not an archive path, 
-                    // replace the storage root path 
+                    // If it is not an archive path,
+                    // replace the storage root path
                     // with the archive root path
                     var prefix = (PrefixList.ContainsKey(source)) ? PrefixList[source] : "";
                     var purged = vals[_purgedIdx];

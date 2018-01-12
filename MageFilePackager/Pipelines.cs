@@ -5,10 +5,10 @@ namespace MageFilePackager
 {
     internal static class Pipelines
     {
-        // class is not instantiated
+        // Class is not instantiated
 
         /// <summary>
-        /// pipeline to get list of jobs from DMS into list display
+        /// Pipeline to get list of jobs from DMS into list display
         /// </summary>
         /// <param name="sinkObject">External ISinkModule object that will receive list of jobs</param>
         /// <param name="queryDefXML">XML-formatted definition of query to use</param>
@@ -17,10 +17,10 @@ namespace MageFilePackager
         public static ProcessingPipeline MakeJobQueryPipeline(ISinkModule sinkObject, string queryDefXML, Dictionary<string, string> runtimeParms)
         {
 
-            // make source module and initialize from query def XML and runtime parameters
+            // Make source module and initialize from query def XML and runtime parameters
             var rdr = new MSSQLReader(queryDefXML, runtimeParms);
 
-            // build and wire pipeline
+            // Build and wire pipeline
             return ProcessingPipeline.Assemble("JobQueryPipeline", rdr, sinkObject);
         }
 
@@ -35,7 +35,7 @@ namespace MageFilePackager
         public static ProcessingPipeline MakeFileListPipeline(IBaseModule sourceObject, ISinkModule sinkObject, Dictionary<string, string> runtimeParms)
         {
 
-            // create file filter module and initialize it
+            // Create file filter module and initialize it
             var fileFilter = new FileListFilter
             {
                 SourceFolderColumnName = runtimeParms["SourceFolderColumnName"],
@@ -48,10 +48,10 @@ namespace MageFilePackager
                 SubfolderSearchName = runtimeParms["SubfolderSearchName"]
             };
 
-            // filter to remove "not found" rows
+            // Filter to remove "not found" rows
             var cleanupFilter = new AfterSearchFilter();
 
-            // build and wire pipeline
+            // Build and wire pipeline
             return ProcessingPipeline.Assemble("FileListPipeline", sourceObject, fileFilter, cleanupFilter, sinkObject);
         }
 

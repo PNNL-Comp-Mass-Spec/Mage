@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Windows.Forms;
 using Mage;
 using MageDisplayLib;
@@ -132,7 +133,7 @@ namespace MageExtractorTest {
         }
 
         private ProcessingPipeline ImportContentsOfFiles(string sourceFolderPath, string fileNameSelector, string columnMap, string containerPath, string name, string destinationType) {
-            // make source module in pipeline
+            // Make source module in pipeline
             // to get filtered list of files in local directory
             var reader = new FileListFilter
             {
@@ -145,7 +146,7 @@ namespace MageExtractorTest {
                 IncludeFilesOrFolders = "File"
             };
 
-            // make file sub-pipeline processing broker module
+            // Make file sub-pipeline processing broker module
             // to run a filter pipeline against files from list
             // and extract their contents
             var broker = new FileSubPipelineBroker
@@ -156,7 +157,7 @@ namespace MageExtractorTest {
                 FileFilterParameters = "OutputColumnList:" + columnMap
             };
 
-            // output extracted filed contents
+            // Output extracted filed contents
             // to SQLite or delimited file(s)
             if (destinationType == "database") {
                 broker.OutputFolderPath = "";
@@ -170,13 +171,14 @@ namespace MageExtractorTest {
                 broker.DatabaseName = "";
                 broker.TableName = "";
             }
-            // build pipeline from modules
+
+            // Build pipeline from modules
             return ProcessingPipeline.Assemble("Import_Files", reader, broker);
         }
 
-        // export SQLite query to file
+        // Export SQLite query to file
 
-        // do extraction
+        // Do extraction
 
         #endregion
     }

@@ -33,7 +33,7 @@ namespace Mage
             set;
         }
         /// <summary>
-        /// constructor
+        /// Constructor
         /// </summary>
         public MyEMSLSinkWrapper()
         {
@@ -41,7 +41,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// constructor
+        /// Constructor
         /// </summary>
         /// <param name="sink"></param>
         public MyEMSLSinkWrapper(SimpleSink sink)

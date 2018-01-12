@@ -61,7 +61,7 @@ namespace MageExtractor {
         /// </summary>
         public void InitializeFilterSetList()
         {
-            // create Mage module to query DMS (typically on gigasax)
+            // Create Mage module to query DMS (typically on gigasax)
             var reader = new MSSQLReader
             {
                 Database = Globals.DMSDatabase,
@@ -69,10 +69,10 @@ namespace MageExtractor {
                 SQLText = "SELECT Filter_Set_ID, Name, Description FROM V_PDE_Filter_Sets"
             };
 
-            // create Mage module to receive query results
+            // Create Mage module to receive query results
             var filters = gridViewDisplayControl1.MakeSink("Filter Sets", 20);
 
-            // build pipeline and run it
+            // Build pipeline and run it
             mGetFilterSetsPipeline = ProcessingPipeline.Assemble("GetFilters", reader, filters);
             mGetFilterSetsPipeline.OnRunCompleted += HandlePipelineCompletion;
             mGetFilterSetsPipeline.RunRoot(null);

@@ -237,7 +237,7 @@ namespace MageFileProcessor
         private void HandleSelectionChanged(object sender, EventArgs args)
         {
 
-            // whole context menu enabled/disabled based on whether there are any rows selected or not
+            // Whole context menu enabled/disabled based on whether there are any rows selected or not
             if (mListDisplay.SelectedItemCount == 0)
             {
                 AdjustMenuItemsFromNameList(mAllMenuItems, false);
@@ -246,12 +246,12 @@ namespace MageFileProcessor
             {
                 AdjustMenuItemsFromNameList(mAllMenuItems, true);
 
-                // enable/disable selected menu items based on presence
+                // Enable/disable selected menu items based on presence
                 // of certain columns in rows
                 AdjustMenuItemsFromNameList(mFolderSensitiveMenuItems, false);
                 AdjustMenuItemsFromNameList(mJobSensitiveMenuItems, false);
                 AdjustMenuItemsFromNameList(mDatasetSensitiveMenuItems, false);
-                //
+
                 foreach (var colDef in mListDisplay.ColumnDefs)
                 {
                     switch (colDef.Name)

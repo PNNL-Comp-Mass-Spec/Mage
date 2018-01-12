@@ -13,10 +13,10 @@ namespace MageDisplayLib
 
         #region Member Variables
 
-        // object whose data we are serving
+        // Object whose data we are serving
         private readonly TextDisplayControl myTextControl;
 
-        // delimiter for parsing text into tabular format
+        // Delimiter for parsing text into tabular format
         private char[] mDelimiter = { '\t' };
 
         private bool doHeaderLine = true;
@@ -26,7 +26,7 @@ namespace MageDisplayLib
         #region Constructors
 
         /// <summary>
-        /// construct new Mage TDPipelineSource object
+        /// Construct new Mage TDPipelineSource object
         /// that can serve data from given TextDisplayControl object
         /// via Mage standard tabular output stream
         /// </summary>
@@ -42,7 +42,7 @@ namespace MageDisplayLib
         #region Properties
 
         /// <summary>
-        /// delimiter used to separate text lines into fields
+        /// Delimiter used to separate text lines into fields
         /// </summary>
         public string Delimiter
         {
@@ -51,7 +51,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// there is a header line ("Yes" or "No")
+        /// There is a header line ("Yes" or "No")
         /// </summary>
         public string Header { get; }
 
@@ -60,7 +60,7 @@ namespace MageDisplayLib
 
         #region IBaseModule Members
 
-        /// output each row in associated TextDisplayList object
+        /// Output each row in associated TextDisplayList object
         /// to Mage standard tabular output, one row at a time.
         /// (override of base class)
         public override void Run(object state)
@@ -95,7 +95,7 @@ namespace MageDisplayLib
 
         private void OutputHeaderLine(string[] fields)
         {
-            // output the column definitions
+            // Output the column definitions
             var columnDefs = new List<MageColumnDef>();
             foreach (var field in fields)
             {

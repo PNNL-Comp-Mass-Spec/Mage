@@ -104,25 +104,27 @@ namespace MageUnitTests
             dGen.ColumnDefAvailable += target.HandleColumnDef;
             dGen.DataRowAvailable += target.HandleDataRow;
 
-            // generate list of input column names that dGen will output
+            // Generate list of input column names that dGen will output
             var inColNames = new List<string>(DataGenerator.MakeSimulatedHeaderRow(cols));
 
-            // generate shuffled list of input column names as output column names
+            // Generate shuffled list of input column names as output column names
             var outColNames = new List<string> {
                 inColNames[0],
                 string.Format("{0}|+|text",
                 insertedColumnName), "*"};
 
-            // insert new column and use wildcard for remainder of input columns
+            // Insert new column and use wildcard for remainder of input columns
 
             var outColList = string.Join(", ", outColNames);
             target.OutputColumnList = outColList;
 
             dGen.Run(null);
 
-            // compare output column definitions from target module
+            // Compare output column definitions from target module
             // against expected output column list
-            outColNames.Clear(); // make list of expected column names
+
+            // Make list of expected column names
+            outColNames.Clear();
             for (var i = 0; i < inColNames.Count; i++)
             {
                 outColNames.Add(inColNames[i]);
@@ -138,7 +140,7 @@ namespace MageUnitTests
                 Assert.AreEqual(outColNames[i], actual[i].Name, "Output column name does not match");
             }
 
-            // compare output column position index
+            // Compare output column position index
             // against expected position index
             var outColPos = new Dictionary<string, int>();
             for (var i = 0; i < outColNames.Count; i++)
@@ -165,10 +167,10 @@ namespace MageUnitTests
             dGen.ColumnDefAvailable += target.HandleColumnDef;
             dGen.DataRowAvailable += target.HandleDataRow;
 
-            // generate list of input column names that dGen will output
+            // Generate list of input column names that dGen will output
             var inColNames = new List<string>(DataGenerator.MakeSimulatedHeaderRow(cols));
 
-            // generate shuffled list of input column names as output column names
+            // Generate shuffled list of input column names as output column names
             var outColNames = new List<string>(inColNames);
             Shuffle(outColNames);
             var outColList = string.Join(", ", outColNames);
@@ -181,7 +183,7 @@ namespace MageUnitTests
 
             dGen.Run(null);
 
-            // compare output column definitions from target module
+            // Compare output column definitions from target module
             // against expected output column list
             var actual = target.OutColDefs;
             Assert.AreEqual(inColNames.Count, actual.Count, "Number of output columns does not match.");
@@ -190,14 +192,14 @@ namespace MageUnitTests
                 Assert.AreEqual(outColNames[i], actual[i].Name, "Output column name does not match");
             }
 
-            // compare output column position index
+            // Compare output column position index
             // against expected position index
             foreach (var item in target.OutColPos.Keys)
             {
                 Assert.AreEqual(outColPos[item], target.OutColPos[item], "Column postion map index does not match");
             }
 
-            // check remapped data rows
+            // Check remapped data rows
             var inputRows = target.Rows;
             var mappedRows = target.MappedRows;
             Assert.AreEqual(inputRows.Count, mappedRows.Count, "Input rows and mapped rows count does not match.");
@@ -212,7 +214,7 @@ namespace MageUnitTests
 
         }
 
-        // rearrange the order of items in the List
+        // Rearrange the order of items in the List
         private static void Shuffle(IList<string> list)
         {
             var rng = new Random();

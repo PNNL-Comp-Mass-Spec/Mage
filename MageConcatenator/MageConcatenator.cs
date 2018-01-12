@@ -27,7 +27,7 @@ namespace MageConcatenator
         private Timer mFileInfoUpdater;
         private bool mFileInfoUpdateRequired;
 
-        // current command that is being executed or has most recently been executed
+        // Current command that is being executed or has most recently been executed
         MageCommandEventArgs mCurrentCmd;
 
         private clsFileCombiner mFileCombiner;
@@ -52,7 +52,7 @@ namespace MageConcatenator
 
             try
             {
-                // set up configuration folder and files
+                // Set up configuration folder and files
                 SavedState.SetupConfigFiles("MageConcatenator");
             }
             catch (Exception ex)
@@ -64,8 +64,8 @@ namespace MageConcatenator
             {
                 // Configure logging
                 var logFilePath = Path.Combine(SavedState.DataDirectory, "log.txt");
-                FileLogger.AppendDateToBaseFileName = false;
-                FileLogger.ChangeLogFileBaseName(logFilePath);
+                const bool appendDateToBaseName = false;
+                FileLogger.ChangeLogFileBaseName(logFilePath, appendDateToBaseName);
                 FileLogger.WriteLog(BaseLogger.LogLevels.INFO, "Starting Mage Concatenator");
 
                 ProcessingPipeline.AppendDateToLogFileName = FileLogger.AppendDateToBaseFileName;
@@ -76,12 +76,12 @@ namespace MageConcatenator
                 MessageBox.Show("Error instantiating trace log: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
 
-            // setup UI component panels
+            // Setup UI component panels
             SetupStatusPanel();
             SetupCommandHandler();
             SetupFilterSelectionListForFileProcessor();
 
-            // setup context menus for list displays
+            // Setup context menus for list displays
             var dummy = new GridViewDisplayActions(FileListDisplayControl);
 
             // Connect the pipeline queue to message handlers
@@ -89,7 +89,7 @@ namespace MageConcatenator
 
             try
             {
-                // restore settings to UI component panels
+                // Restore settings to UI component panels
                 SavedState.RestoreSavedPanelParameters(PanelSupport.GetParameterPanelList(this));
             }
             catch (Exception ex)
@@ -135,7 +135,7 @@ namespace MageConcatenator
         }
 
         /// <summary>
-        /// execute a command by building and running
+        /// Execute a command by building and running
         /// the appropriate pipeline (or cancelling
         /// the current pipeline activity)
         /// </summary>
@@ -151,21 +151,21 @@ namespace MageConcatenator
                 return;
             }
 
-            // cancel the currently running pipeline
+            // Cancel the currently running pipeline
             if (command.Action == "cancel_operation" && mPipelineQueue != null && mPipelineQueue.IsRunning)
             {
                 mPipelineQueue.Cancel();
                 return;
             }
 
-            // don't allow another pipeline if one is currently running
+            // Don't allow another pipeline if one is currently running
             if (mPipelineQueue != null && mPipelineQueue.IsRunning)
             {
                 MessageBox.Show("Pipeline is already active", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            // construct suitable Mage pipeline for the given command
+            // Construct suitable Mage pipeline for the given command
             // and run that pipeline
             BuildAndRunPipeline(command);
         }
@@ -180,7 +180,7 @@ namespace MageConcatenator
 
             try
             {
-                // build and run the pipeline appropriate to the command
+                // Build and run the pipeline appropriate to the command
 
                 switch (command.Action)
                 {
@@ -472,11 +472,11 @@ namespace MageConcatenator
         /// </summary>
         private void AdjustInitialUIState()
         {
-            // initial labels for display list control panels
+            // Initial labels for display list control panels
             FileListDisplayControl.PageTitle = "Files";
             FileListDisplayControl.AutoSizeColumnWidths = true;
 
-            // disable certain UI component panels
+            // Disable certain UI component panels
             FolderDestinationPanel1.Enabled = false;
 
             EnableCancel(false);
@@ -592,7 +592,7 @@ namespace MageConcatenator
         }
 
         /// <summary>
-        /// handle updating control enable status on completion of running pipeline
+        /// Handle updating control enable status on completion of running pipeline
         /// </summary>
         /// <param name="sender">(ignored)</param>
         /// <param name="args">Contains status information to be displayed</param>
@@ -642,7 +642,7 @@ namespace MageConcatenator
         #region Panel Support Functions
 
         /// <summary>
-        /// set up status panel
+        /// Set up status panel
         /// </summary>
         private void SetupStatusPanel()
         {
@@ -659,12 +659,12 @@ namespace MageConcatenator
         }
 
         /// <summary>
-        /// wire up the command event in panels that have it
+        /// Wire up the command event in panels that have it
         /// to the DoCommand event handler method
         /// </summary>
         private void SetupCommandHandler()
         {
-            // get reference to the method that handles command events
+            // Get reference to the method that handles command events
             var methodInfo = GetType().GetMethod("DoCommand");
             Control subjectControl = this;
 
@@ -672,7 +672,7 @@ namespace MageConcatenator
         }
 
         /// <summary>
-        /// set up filter selection list for file processing panel
+        /// Set up filter selection list for file processing panel
         /// </summary>
         private static void SetupFilterSelectionListForFileProcessor()
         {

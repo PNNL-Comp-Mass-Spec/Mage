@@ -6,7 +6,7 @@ using Mage;
 namespace BiodiversityFileCopy
 {
   /// <summary>
-  /// Mage filter that adds input and output mzML file paths to output stream 
+  /// Mage filter that adds input and output mzML file paths to output stream
   /// </summary>
   public class MzmlFilePathsFilter : BaseFilePathsFilter
   {
@@ -32,14 +32,14 @@ namespace BiodiversityFileCopy
 
     public override bool BuildPaths(string[] outRow, ref string srcFilePath, ref string destFilepath)
     {
-      // look at tool for row
+      // Look at tool for row
       // if it is refinery and dataset is in refinery set, output it
       // if it is not refinery and dataset is in not refinery set, output it.
 
-      // skip input rows that don't actually specify a file
+      // Skip input rows that don't actually specify a file
       if (outRow[ItemIdx] == "file") {
 
-        // save mzML cache file path for dataset based on tool
+        // Save mzML cache file path for dataset based on tool
         // to internal buffer
         var datasetId = outRow[_datasetIdIdx];
         var cacheFilePath = Path.Combine(outRow[SourceFldrIdx], outRow[FileIdx]);
@@ -56,11 +56,11 @@ namespace BiodiversityFileCopy
           _mzMLPaths[datasetId].RefRow = outRow;
         }
       }
-      return false; // this is a sink module which accumulates to its own internal buffer - not appropriate to pass rows to output stream
+      return false; // This is a sink module which accumulates to its own internal buffer - not appropriate to pass rows to output stream
     }
 
     /// <summary>
-    /// Iterate through all saved rows and set up the correct 
+    /// Iterate through all saved rows and set up the correct
     /// mzML source and destination file paths
     /// </summary>
     private IEnumerable<string[]> CorrectFilePaths()
@@ -80,7 +80,7 @@ namespace BiodiversityFileCopy
         }
         Debug.Assert(row != null, "row != null");
         var cacheFilePath = Path.Combine(row[SourceFldrIdx], row[FileIdx]);
-        //        var gen = cacheFilePath.Contains(_msxmlGenPattern);
+        // var gen = cacheFilePath.Contains(_msxmlGenPattern);
 
         var fc = File.ReadAllLines(cacheFilePath);
         if (fc.Length <= 0) continue;
@@ -114,7 +114,7 @@ namespace BiodiversityFileCopy
     }
 
     /// <summary>
-    /// possible paths for mzML cache
+    /// Possible paths for mzML cache
     /// </summary>
     public class MzMLPath
     {

@@ -25,22 +25,22 @@ namespace BiodiversityFileCopy
 
     public void ProcessDataPackages()
     {
-      // read list of data packages to process from external file
+      // Read list of data packages to process from external file
       var dataPkgList = Pipes.GetDataPackageList(Path.Combine(InputFileRootFolderPath, DataPackageListFile));
       if (dataPkgList.Rows.Count == 0) {
         Logging.LogError("The assigned organism file was missing or could not be read");
         return;
       }
 
-      // extract lookup table of organisms defined for data packages in list
+      // Extract lookup table of organisms defined for data packages in list
       var orgLookup = Pipes.ExtractOrganismLookupFromSink(dataPkgList);
 
       // Set up subset of data packages to process
       // (defaults to all if not specfied
       var subset = string.IsNullOrEmpty(DataPkgsToProcess) ? Pipes.ExtracttIdListFromSink(dataPkgList) : DataPkgsToProcess.Split(',').ToList();
 
-      // process each data package in subset
-      // (we choose to do one at a time at this point 
+      // Process each data package in subset
+      // (we choose to do one at a time at this point
       // even though pipelines can do multiples themselves)
       foreach (var dPkgId in subset) {
         var org = orgLookup[dPkgId].Substring(0, 5);
@@ -72,52 +72,52 @@ namespace BiodiversityFileCopy
     /// <param name="orgLookup"></param>
     private void ProcessSelectedDataPackage(string dPkgId, Dictionary<string, string> orgLookup)
     {
-      // get list of datasets for data packages
+      // Get list of datasets for data packages
       var datasetList = Pipes.GetDatasetsForDataPackages(dPkgId, orgLookup);
       var packageDatasetIDs = new HashSet<string>(Pipes.ExtractColumnFromSink("Dataset_ID", datasetList));
 
-      // get list of jobs for data packages 
+      // Get list of jobs for data packages
       var jobList = Pipes.GetJobsForDataPackages(dPkgId, orgLookup);
       var packageDatasetIDForJobs = new HashSet<string>(Pipes.ExtractColumnFromSink("Dataset_ID", jobList));
 
       // TBD: check job vs dataset coverage
       CheckJobsVsDatasets(packageDatasetIDs, packageDatasetIDForJobs);
 
-      // copy raw files for datasets (if enabled) 
+      // Copy raw files for datasets (if enabled)
       if (DoRawCopy) {
         Logging.LogMsg(string.Format("Processing RAW files [{0}]", DateTime.Now.ToString(CultureInfo.InvariantCulture)));
 
         var rawFileList = Pipes.AddRawFilePaths(datasetList, OutputRootFolderPath);
 
-        // check mzML file coverage against datasets
+        // Check mzML file coverage against datasets
         CheckFileCoverage(packageDatasetIDs, rawFileList, "Dataset_ID", "raw");
 
         var ne = Pipes.CopyFiles(rawFileList, "SourceFilePath", "DestinationFilePath", DoCopyFiles, Verbose, DoSourceCheck);
         Logging.LogMsg(string.Format("{0} RAW files exist at destination out of {1} in list for {2} datasets ", ne, rawFileList.Rows.Count, packageDatasetIDs.Count));
       }
 
-      // copy mzML files for datasets (if enabled)
+      // Copy mzML files for datasets (if enabled)
       if (DoMZMLCopy) {
         Logging.LogMsg(string.Format("Processing mzML files [{0}]", DateTime.Now.ToString(CultureInfo.InvariantCulture)));
 
         var mzmlFileList = Pipes.AddMzmlFilePathsFromJobs(jobList, OutputRootFolderPath);
-        //var fileList = Pipes.AddMzmlFilePathsFromDatasets(datasetList, dPkgId, OutputRootFolderPath);
+        // var fileList = Pipes.AddMzmlFilePathsFromDatasets(datasetList, dPkgId, OutputRootFolderPath);
 
-        // check mzML file coverage against datasets
+        // Check mzML file coverage against datasets
         CheckFileCoverage(packageDatasetIDs, mzmlFileList, "Dataset_ID", "mzML");
 
         var ne = Pipes.CopyFiles(mzmlFileList, "SourceFilePath", "DestinationFilePath", DoCopyFiles, Verbose, DoSourceCheck);
         Logging.LogMsg(string.Format("{0} mzML files exist at destination out of {1} in list for {2} datasets ", ne, mzmlFileList.Rows.Count, packageDatasetIDs.Count));
       }
 
-      // copy *msgf.gz files for data package jobs
+      // Copy *msgf.gz files for data package jobs
       if (DoMZIDCopy) {
         Logging.LogMsg(string.Format("Processing mzid.gz files [{0}]", DateTime.Now.ToString(CultureInfo.InvariantCulture)));
 
-        // add source and destination file paths for files
+        // Add source and destination file paths for files
         var fileList = Pipes.AddMzidfFilePaths(jobList, OutputRootFolderPath);
 
-        // check mzML file coverage against datasets
+        // Check mzML file coverage against datasets
         CheckFileCoverage(packageDatasetIDs, fileList, "Dataset_ID", "msgf");
 
         var ne = Pipes.CopyFiles(fileList, "SourceFilePath", "DestinationFilePath", DoCopyFiles, Verbose, DoSourceCheck);
@@ -127,24 +127,24 @@ namespace BiodiversityFileCopy
       if (DoFHTCopy) {
         Logging.LogMsg(string.Format("Processing fht.txt files [{0}]", DateTime.Now.ToString(CultureInfo.InvariantCulture)));
 
-        // add source and destination file paths for files
+        // Add source and destination file paths for files
         var fileList = Pipes.AddFhtFilePaths(jobList, OutputRootFolderPath);
 
-        // check mzML file coverage against datasets
+        // Check mzML file coverage against datasets
         CheckFileCoverage(packageDatasetIDs, fileList, "Dataset_ID", "fht");
 
         var ne = Pipes.CopyFiles(fileList, "SourceFilePath", "DestinationFilePath", DoCopyFiles, Verbose, DoSourceCheck);
         Logging.LogMsg(string.Format("{0} fht.txt files exist at destination out of {1} in list for {2} datasets ", ne, fileList.Rows.Count, packageDatasetIDs.Count));
       }
 
-      // copy *.fasta files for data package jobs
+      // Copy *.fasta files for data package jobs
       if (DoFASTACopy) {
         Logging.LogMsg(string.Format("Processing fasta files [{0}]", DateTime.Now.ToString(CultureInfo.InvariantCulture)));
 
-        // get distinct list of fasta files from data package jobs
+        // Get distinct list of fasta files from data package jobs
         var fastaList = Pipes.GetFastaFilesForDataPackages(dPkgId, orgLookup);
 
-        // add source and destination file paths for files
+        // Add source and destination file paths for files
         var fileList = Pipes.AddFastaFilePaths(fastaList, OutputRootFolderPath);
 
         var ne = Pipes.CopyFiles(fileList, "SourceFilePath", "DestinationFilePath", DoCopyFiles, Verbose, DoSourceCheck);

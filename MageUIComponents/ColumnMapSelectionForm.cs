@@ -76,7 +76,7 @@ namespace MageUIComponents
         }
 
         /// <summary>
-        /// build and run pipeline to get contents of column mapping definition file
+        /// Build and run pipeline to get contents of column mapping definition file
         /// and use it to set up file processing panel
         /// </summary>
         private void LoadColumnMappingList()

@@ -26,14 +26,14 @@ namespace MageExtExtractionFilters
         // Keys are ResultID, values are SequenceId
         private Dictionary<string, int> mProtDataLookup;
 
-        // indexes for the protein columns in the result
+        // Indexes for the protein columns in the result
         private int ODX_Cleavage_State = -1;
         private int ODX_Terminus_State = -1;
         private int ODX_Protein_Name = -1;
         private int ODX_Protein_Expectation_Value_Log = -1;
         private int ODX_Protein_Intensity_Log = -1;
 
-        // index for the result column that contains 
+        // Index for the result column that contains
         // the key to use to look up the protein
         public int LookupColumn { get; set; } = -1;
 
@@ -51,7 +51,7 @@ namespace MageExtExtractionFilters
             MergeMode = eMergeMode;
         }
 
-        // precalculate field indexes in protein buffer
+        // Precalculate field indexes in protein buffer
         // (to save time later)
         public void SetMergeSourceColIndexes(Dictionary<string, int> colPos)
         {
@@ -68,28 +68,28 @@ namespace MageExtExtractionFilters
             if (MergeMode == MergeModeConstants.InspectOrMSGFDB)
             {
                 // The Protein column is present in the original _msgfplus_syn.txt file
-                // we are replacing the protein name listed with the name from the _msgfplus_syn_SeqToProteinMap.txt file
+                // We are replacing the protein name listed with the name from the _msgfplus_syn_SeqToProteinMap.txt file
                 ODX_Protein_Name = colPos["Protein"];
             }
 
             if (MergeMode == MergeModeConstants.MSPathFinder)
             {
-                // The Protein column is present in the original _msgfplus_syn.txt file; 
-                // we are replacing the protein name listed with the name from the _msgfplus_syn_SeqToProteinMap.txt file
+                // The Protein column is present in the original _msgfplus_syn.txt file;
+                // We are replacing the protein name listed with the name from the _msgfplus_syn_SeqToProteinMap.txt file
                 ODX_Protein_Name = colPos["ProteinName"];
             }
 
         }
 
-        // lookup index relating Unique_Seq_ID 
+        // Lookup index relating Unique_Seq_ID
         // to index of first occurrence row in proteinData
         Dictionary<int, int> mFirstOccurrenceIndex;
 
-        // protein data buffer
+        // Protein data buffer
         readonly List<ProteinInfo> mProteinDataSorted = new List<ProteinInfo>();
 
         /// <summary>
-        /// Look up first protein identified for result 
+        /// Look up first protein identified for result
         /// and merge protein columns into result row
         /// </summary>
         /// <param name="outRow"></param>
@@ -162,7 +162,7 @@ namespace MageExtExtractionFilters
             matchFound = true;
 
             var numberOfProteins = 0;
-            // starting at first protein, merge protein fields into outRow
+            // Starting at first protein, merge protein fields into outRow
             // and then walk down the protein list checking the sequence ID.
             // If single protein, outRow has been updated, and no futher action taken.
             // If more than one protein for current sequence, create list,
@@ -210,7 +210,7 @@ namespace MageExtExtractionFilters
         // FUTURE: check for missing file names before loading file.
         public void GetProteinLookupData(ResultType.MergeFile mapMergeFile, ResultType.MergeFile protMergeFile, string resultFolderPath)
         {
-            // get result to protein mapping data
+            // Get result to protein mapping data
             var mapFileName = mapMergeFile.MergeFileName;
             var resultToSequenceMap = new SimpleSink();
             if (!string.IsNullOrEmpty(mapFileName))
@@ -222,7 +222,7 @@ namespace MageExtExtractionFilters
                 ProcessingPipeline.Assemble("Lookup Protein Map", mapFileReader, resultToSequenceMap).RunRoot(null);
             }
 
-            // get protein data
+            // Get protein data
             var mProteinData = new SimpleSink();
 
             var protFileName = protMergeFile.MergeFileName;
@@ -294,7 +294,7 @@ namespace MageExtExtractionFilters
 
             mProteinDataSorted.Sort(new ProteinDataSorter());
 
-            // index relating Unique_Seq_ID to index of first occurrence row in proteinData
+            // Index relating Unique_Seq_ID to index of first occurrence row in proteinData
             mFirstOccurrenceIndex = new Dictionary<int, int>(mProteinDataSorted.Count);
             var currentSeqID = 0;
             for (var rowIdx = 0; rowIdx < mProteinDataSorted.Count; rowIdx++)
@@ -307,7 +307,7 @@ namespace MageExtExtractionFilters
                 currentSeqID = mProteinDataSorted[rowIdx].Unique_Seq_ID;
             }
 
-            // index for Result_ID to Unique_Seq_ID map
+            // Index for Result_ID to Unique_Seq_ID map
             // FUTURE: look up column index based on column header
             mProtDataLookup = new Dictionary<string, int>();
             foreach (var row in resultToSequenceMap.Rows)

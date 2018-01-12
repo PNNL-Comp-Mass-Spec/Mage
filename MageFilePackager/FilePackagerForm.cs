@@ -31,13 +31,13 @@ namespace MageFilePackager
 
         #region Member Variables
 
-        // current Mage pipeline that is running or has most recently run
+        // Current Mage pipeline that is running or has most recently run
         ProcessingPipeline _mCurrentPipeline;
 
-        // current command that is being executed or has most recently been executed
+        // Current command that is being executed or has most recently been executed
         MageCommandEventArgs _mCurrentCmd;
 
-        // object that sent the current command
+        // Object that sent the current command
         object _mCurrentCmdSender;
 
         #endregion
@@ -74,7 +74,7 @@ namespace MageFilePackager
 
             try
             {
-                // set up configuration folder and files
+                // Set up configuration folder and files
                 SavedState.SetupConfigFiles("MageFilePackager");
             }
             catch (Exception ex)
@@ -106,14 +106,14 @@ namespace MageFilePackager
                 MessageBox.Show("Error instantiating trace log: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
 
-            // setup UI component panels
+            // Setup UI component panels
             SetupStatusPanel();
             SetupCommandHandler();
 
             filePackageMgmtPanel1.FileSourceList = FileListDisplayControl;
             filePackageMgmtPanel1.FileListLabelPrefix = FileListLabelPrefix;
 
-            // setup context menus for list displays
+            // Setup context menus for list displays
 
             // ReSharper disable once ObjectCreationAsStatement
             new GridViewDisplayActions(JobListDisplayControl);
@@ -124,14 +124,14 @@ namespace MageFilePackager
             // Connect click events
             lblAboutLink.LinkClicked += LblAboutLinkLinkClicked;
 
-            // connect callbacks for UI panels
+            // Connect callbacks for UI panels
             //--            FileProcessingPanel1.GetSelectedFileInfo += GetSelectedFileItem;
             //--            FileProcessingPanel1.GetSelectedOutputInfo += GetSelectedOutputItem;
 
-            SetupFlexQueryPanels(); // must be done before restoring saved state
+            SetupFlexQueryPanels(); // Must be done before restoring saved state
             try
             {
-                // restore settings to UI component panels
+                // Restore settings to UI component panels
                 SavedState.RestoreSavedPanelParameters(PanelSupport.GetParameterPanelList(this));
             }
             catch (Exception ex)
@@ -196,7 +196,7 @@ namespace MageFilePackager
         #region Command Processing
 
         /// <summary>
-        /// execute a command by building and running
+        /// Execute a command by building and running
         /// the appropriate pipeline (or cancelling
         /// the current pipeline activity)
         /// </summary>
@@ -205,7 +205,7 @@ namespace MageFilePackager
         public void DoCommand(object sender, MageCommandEventArgs command)
         {
 
-            // remember who sent us the command
+            // Remember who sent us the command
             _mCurrentCmdSender = sender;
 
             if (command.Action == "display_reloaded")
@@ -214,19 +214,22 @@ namespace MageFilePackager
                 AdjusttPostCommndUIState(null);
                 return;
             }
-            // cancel the currently running pipeline
+
+            // Cancel the currently running pipeline
             if (command.Action == "cancel_operation" && _mCurrentPipeline != null && _mCurrentPipeline.Running)
             {
                 _mCurrentPipeline.Cancel();
                 return;
             }
-            // don't allow another pipeline if one is currently running
+
+            // Don't allow another pipeline if one is currently running
             if (_mCurrentPipeline != null && _mCurrentPipeline.Running)
             {
                 MessageBox.Show("Pipeline is already active", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
-            // construct suitable Mage pipeline for the given command
+
+            // Construct suitable Mage pipeline for the given command
             // and run that pipeline
             BuildAndRunPipeline(command);
         }
@@ -241,7 +244,7 @@ namespace MageFilePackager
 
             try
             {
-                // build and run the pipeline appropriate to the command
+                // Build and run the pipeline appropriate to the command
                 ISinkModule sink;
                 string queryDefXML;
                 switch (command.Action)
@@ -400,13 +403,13 @@ namespace MageFilePackager
         /// </summary>
         private void AdjustInitialUIState()
         {
-            // initial labels for display list control panels
+            // Initial labels for display list control panels
             JobListDisplayControl.PageTitle = "Entities";
             FileListDisplayControl.PageTitle = "Files";
             JobDatasetIDList1.Legend = "(Dataset IDs)";
             JobDatasetIDList1.ListName = "Dataset_ID";
 
-            // disable certain UI component panels
+            // Disable certain UI component panels
             EntityFilePanel1.Enabled = false;
             EnableCancel(false);
         }
@@ -486,7 +489,7 @@ namespace MageFilePackager
         }
 
         /// <summary>
-        /// adjust tab label for file source actions according to entity type
+        /// Adjust tab label for file source actions according to entity type
         /// </summary>
         private void AdjustEntityFileTabLabels()
         {
@@ -533,19 +536,19 @@ namespace MageFilePackager
         }
 
         /// <summary>
-        /// control enable state of filter panel based on output tab choice
+        /// Control enable state of filter panel based on output tab choice
         /// </summary>
         private void EnableDisableOutputTabs()
         {
-            //--
-            //string mode = FilterOutputTabs.SelectedTab.Tag.ToString();
-            //if (mode == "Copy_Files") {
-            //    FileProcessingPanel1.Enabled = false;
-            //} else {
-            //    if (FolderDestinationPanel1.Enabled || SQLiteDestinationPanel1.Enabled) {
-            //        FileProcessingPanel1.Enabled = true;
-            //    }
-            //}
+
+            // string mode = FilterOutputTabs.SelectedTab.Tag.ToString();
+            // if (mode == "Copy_Files") {
+            //     FileProcessingPanel1.Enabled = false;
+            // } else {
+            //     if (FolderDestinationPanel1.Enabled || SQLiteDestinationPanel1.Enabled) {
+            //         FileProcessingPanel1.Enabled = true;
+            //     }
+            // }
         }
 
         #endregion
@@ -565,11 +568,12 @@ namespace MageFilePackager
             Control queryPage = EntityListSourceTabs.SelectedTab;
             queryName = queryPage.Tag.ToString();
 
-            // get XML query definitions from bin copy of file
+            // Get XML query definitions from bin copy of file
             // not the one in AppData
             var doc = new XmlDocument();
             doc.Load("QueryDefinitions.xml");
-            // find query node by name
+
+            // Find query node by name
             var xpath = string.Format(".//query[@name='{0}']", queryName);
             var queryNode = doc.SelectSingleNode(xpath);
             return queryNode?.OuterXml ?? "";
@@ -617,7 +621,7 @@ namespace MageFilePackager
         private delegate void VoidFnDelegate();
 
         /// <summary>
-        /// handle updating control enable status on completion of running pipeline
+        /// Handle updating control enable status on completion of running pipeline
         /// </summary>
         /// <param name="sender">(ignored)</param>
         /// <param name="args">Contains status information to be displayed</param>
@@ -652,8 +656,8 @@ namespace MageFilePackager
             // to true.
             lblAboutLink.LinkVisited = true;
 
-            //Call the Process.Start method to open the default browser
-            //with a URL:
+            // Call the Process.Start method to open the default browser
+            // with a URL:
             System.Diagnostics.Process.Start(lblAboutLink.Text);
         }
 
@@ -662,7 +666,7 @@ namespace MageFilePackager
         #region Panel Support Functions
 
         /// <summary>
-        /// set up status panel
+        /// Set up status panel
         /// </summary>
         private void SetupStatusPanel()
         {
@@ -670,12 +674,12 @@ namespace MageFilePackager
         }
 
         /// <summary>
-        /// wire up the command event in panels that have it
+        /// Wire up the command event in panels that have it
         /// to the DoCommand event handler method
         /// </summary>
         private void SetupCommandHandler()
         {
-            // get reference to the method that handles command events
+            // Get reference to the method that handles command events
             var methodInfo = GetType().GetMethod("DoCommand");
             Control subjectControl = this;
 

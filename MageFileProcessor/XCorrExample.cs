@@ -13,7 +13,7 @@ namespace MageFileProcessor
         // Precalulate field indexes
         protected override void ColumnDefsFinished()
         {
-            // set up indexes into fields array
+            // Set up indexes into fields array
             if (!this.InputColumnPos.TryGetValue("XCorr", out xCorrIdx))
                 xCorrIdx = -1;
         }
@@ -24,7 +24,7 @@ namespace MageFileProcessor
         {
             var accepted = false;
 
-            // convert XCorr from text to number
+            // Convert XCorr from text to number
             // and accept it if it meets minimum value
             double v;
             if (xCorrIdx >= 0)
@@ -36,7 +36,8 @@ namespace MageFileProcessor
             {
                 accepted = true;
             }
-            // apply output column mapping (if active)
+
+            // Apply output column mapping (if active)
             if (accepted && OutputColumnDefs != null)
             {
                 fields = MapDataRow(fields);

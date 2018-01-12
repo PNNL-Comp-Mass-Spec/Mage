@@ -5,7 +5,7 @@ namespace Mage
 {
 
     /// <summary>
-    /// delegate for a function that returns an output file name for a given input file name and parameters
+    /// Delegate for a function that returns an output file name for a given input file name and parameters
     /// </summary>
     /// <param name="sourceFile">the original name of the file</param>
     /// <param name="fieldPos">index to the metadata field to be used in renaming</param>
@@ -14,24 +14,24 @@ namespace Mage
     public delegate string OutputFileNamer(string sourceFile, Dictionary<string, int> fieldPos, string[] fields);
 
     /// <summary>
-    /// module that provides base functions for processing one or more input files
+    /// Module that provides base functions for processing one or more input files
     ///
-    /// it expects to receive path information for files via its standard tabular input
+    /// It expects to receive path information for files via its standard tabular input
     ///
-    /// each row of standard tabular input will contain information for a single file
+    /// Each row of standard tabular input will contain information for a single file
     /// (parameters SourceFileColumnName and SourceFolderColumnName) define which
     /// columns in stardard input contain the folder and name of the input file.
     ///
-    /// the OutputFolderPath parameter tells this module where to put results files
+    /// The OutputFolderPath parameter tells this module where to put results files
     ///
-    /// this module outputs a record of each file processed on stardard tabular output
+    /// This module outputs a record of each file processed on stardard tabular output
     /// </summary>
     public class FileContentProcessor : FileProcessingBase
     {
 
         #region Member Variables
 
-        // delegate that this module calls to get output file name
+        // Delegate that this module calls to get output file name
         private OutputFileNamer GetOutputFileName;
 
         #endregion
@@ -39,7 +39,7 @@ namespace Mage
         #region Functions Available to Clients
 
         /// <summary>
-        /// define a delegate function that will generate output file name
+        /// Define a delegate function that will generate output file name
         /// </summary>
         /// <param name="namer"></param>
         public void SetOutputFileNamer(OutputFileNamer namer)
@@ -52,7 +52,7 @@ namespace Mage
         #region Properties
 
         /// <summary>
-        /// path to the folder into which the
+        /// Path to the folder into which the
         /// processed input file contents will be saved as an output file
         /// (required by subclasses that create result files)
         /// </summary>
@@ -67,28 +67,28 @@ namespace Mage
         public string OutputFileName { get; set; }
 
         /// <summary>
-        /// name of the column in the standard tabular input
+        /// Name of the column in the standard tabular input
         /// that contains the input folder path
         /// (optional - defaults to "Folder")
         /// </summary>
         public string SourceFolderColumnName { get; set; }
 
         /// <summary>
-        /// name of the column in the standard tabular input
+        /// Name of the column in the standard tabular input
         /// that contains the input file name
         /// optional - defaults to "File")
         /// </summary>
         public string SourceFileColumnName { get; set; }
 
         /// <summary>
-        /// name of the column in the standard tabular input
+        /// Name of the column in the standard tabular input
         /// that contains the input file type
         /// optional - defaults to blank)
         /// </summary>
         public string FileTypeColumnName { get; set; }
 
         /// <summary>
-        /// the name of the output column that will contain the file name
+        /// The name of the output column that will contain the file name
         /// </summary>
         public string OutputFileColumnName { get; set; }
 
@@ -97,7 +97,7 @@ namespace Mage
         #region Constructors
 
         /// <summary>
-        /// construct new Mage file content processor module
+        /// Construct new Mage file content processor module
         /// </summary>
         public FileContentProcessor()
         {
@@ -116,7 +116,7 @@ namespace Mage
         #region IBaseModule Members
 
         /// <summary>
-        /// handler for Mage standard tablular input data rows
+        /// Handler for Mage standard tablular input data rows
         /// (override of base class)
         /// </summary>
         /// <param name="sender"></param>
@@ -188,17 +188,17 @@ namespace Mage
 
                 var destPath = Path.GetFullPath(Path.Combine(destFolder, destFile));
 
-                // package fields as dictionary
+                // Package fields as dictionary
                 var context = new Dictionary<string, string>();
                 foreach (var colPos in InputColumnPos)
                 {
                     context.Add(colPos.Key, args.Fields[colPos.Value] ?? string.Empty);
                 }
 
-                // process file
+                // Process file
                 if (sourceFile == kNoFilesFound)
                 {
-                    // skip
+                    // Skip
                 }
                 else
                     if (string.IsNullOrEmpty(FileTypeColumnName) && fileType != "folder")
@@ -236,17 +236,18 @@ namespace Mage
         }
 
         /// <summary>
-        /// handler for Mage standard tablular column definition
+        /// Handler for Mage standard tablular column definition
         /// (override of base class)
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
         public override void HandleColumnDef(object sender, MageColumnEventArgs args)
         {
-            // build lookup of column index by column name
+            // Build lookup of column index by column name
             base.HandleColumnDef(sender, args);
-            // end of column definitions from our source,
-            // now tell our subscribers what columns to expect from us
+            // End of column definitions from our source,
+
+            // Now tell our subscribers what columns to expect from us
             ExportColumnDefs();
         }
 
@@ -255,7 +256,7 @@ namespace Mage
         #region Overrides
 
         /// <summary>
-        /// this function should be overriden by subclasses to do the actual processing
+        /// This function should be overriden by subclasses to do the actual processing
         /// </summary>
         /// <param name="sourceFile"></param>
         /// <param name="sourcePath"></param>
@@ -266,7 +267,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// this function should be overriden by subclasses to do the actual processing
+        /// This function should be overriden by subclasses to do the actual processing
         /// </summary>
         /// <param name="sourcePath"></param>
         /// <param name="destPath"></param>
@@ -279,7 +280,7 @@ namespace Mage
         #region Utility functions
 
         /// <summary>
-        /// default output file renamer
+        /// Default output file renamer
         /// </summary>
         /// <param name="sourceFile"></param>
         /// <param name="fieldPos"></param>
@@ -294,9 +295,9 @@ namespace Mage
 
         #region Functions for Output Columns
 
-        // tell our subscribers what columns to expect from us
+        // Tell our subscribers what columns to expect from us
         // which will be information about the files processed
-        // pluss any input columns that are passed through to output
+        // plus any input columns that are passed through to output
         private void ExportColumnDefs()
         {
             OnColumnDefAvailable(new MageColumnEventArgs(OutputColumnDefs.ToArray()));
@@ -307,7 +308,7 @@ namespace Mage
         #region Event Handlers
 
         /// <summary>
-        /// update any interested listeners about our progress
+        /// Update any interested listeners about our progress
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>

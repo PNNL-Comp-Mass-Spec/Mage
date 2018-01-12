@@ -5,7 +5,7 @@ using System.IO;
 namespace BiodiversityFileCopy
 {
   /// <summary>
-  /// Mage filter that adds input and output raw file paths to output stream 
+  /// Mage filter that adds input and output raw file paths to output stream
   /// </summary>
   public class RawFilePathsFilter : BaseFilePathsFilter
   {

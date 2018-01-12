@@ -13,9 +13,9 @@ namespace MageExtExtractionFilters
 
         #region Member Variables
 
-        // working copy of SEQUEST hit checker object
+        // Working copy of SEQUEST hit checker object
 
-        // indexes into the synopsis row field array
+        // Indexes into the synopsis row field array
         private int peptideSequenceIndex;
         private int xCorrValueIndex;
         private int delCNValueIndex;
@@ -126,7 +126,7 @@ namespace MageExtExtractionFilters
         }
 
         /// <summary>
-        /// set up indexes into row fields array based on column name
+        /// Set up indexes into row fields array based on column name
         /// (saves time when referencing result columns later)
         /// </summary>
         private void PrecalculateFieldIndexes()
@@ -166,14 +166,14 @@ namespace MageExtExtractionFilters
             var runtimeParms = new Dictionary<string, string>() { { "Filter_Set_ID", FilterSetID } };
             var reader = new MSSQLReader(queryDefXML, runtimeParms);
 
-            // create Mage module to receive query results
+            // Create Mage module to receive query results
             var filterCriteria = new SimpleSink();
 
-            // build pipeline and run it
+            // Build pipeline and run it
             var pipeline = ProcessingPipeline.Assemble("GetFilterCriteria", reader, filterCriteria);
             pipeline.RunRoot(null);
 
-            // create new Sequest filter object with retrieved filter criteria
+            // Create new Sequest filter object with retrieved filter criteria
             return new FilterSequestResults(filterCriteria.Rows, FilterSetID);
         }
     }

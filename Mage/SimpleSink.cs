@@ -51,7 +51,7 @@ namespace Mage
         public Collection<MageColumnDef> Columns => new Collection<MageColumnDef>(InputColumnDefs);
 
         /// <summary>
-        /// assocation of name of input column with its column position index
+        /// Assocation of name of input column with its column position index
         /// </summary>
         public Dictionary<string, int> ColumnIndex => InputColumnPos;
 
@@ -65,7 +65,7 @@ namespace Mage
         #region Constructors
 
         /// <summary>
-        /// construct a new Mage sink object
+        /// Construct a new Mage sink object
         /// </summary>
         public SimpleSink()
         {
@@ -74,7 +74,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// construct a new Mage sink object with input row limit
+        /// Construct a new Mage sink object with input row limit
         /// </summary>
         /// <param name="rows">input row limit</param>
         public SimpleSink(int rows)
@@ -84,7 +84,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// construct a new Mage sink object that (optionally) spills it guts to console out
+        /// Construct a new Mage sink object that (optionally) spills it guts to console out
         /// </summary>
         /// <param name="rows">input row limit</param>
         /// <param name="verbose">spill my guts?</param>
@@ -99,16 +99,16 @@ namespace Mage
         #region IBaseModule Members
 
         /// <summary>
-        /// called before pipeline runs - module can do any special setup that it needs
+        /// Called before pipeline runs - module can do any special setup that it needs
         /// (override of base class)
         /// </summary>
         public override void Prepare()
         {
-            // nothing to do here
+            // Nothing to do here
         }
 
         /// <summary>
-        /// handler for Mage standard tablular input data rows
+        /// Handler for Mage standard tablular input data rows
         /// (override of base class)
         /// </summary>
         /// <param name="sender"></param>
@@ -139,7 +139,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// handler for Mage standard tablular column definition
+        /// Handler for Mage standard tablular column definition
         /// (override of base class)
         /// </summary>
         /// <param name="sender"></param>

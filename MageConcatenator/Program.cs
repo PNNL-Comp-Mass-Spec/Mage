@@ -27,7 +27,6 @@ namespace MageConcatenator
         [STAThread]
         static void Main()
         {
-            PRISM.Logging.FileLogger.AppendDateToBaseFileName = false;
 
             try
             {
