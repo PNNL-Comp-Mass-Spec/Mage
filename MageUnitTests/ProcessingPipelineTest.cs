@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 namespace MageUnitTests
 {
 
-
     /// <summary>
     /// This is a test class for ProcessingPipelineTest and is intended
     /// to contain all ProcessingPipelineTest Unit Tests

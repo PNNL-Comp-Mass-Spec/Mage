@@ -3,7 +3,6 @@ using NUnit.Framework;
 namespace MageUnitTests
 {
 
-
     /// <summary>
     /// This is a test class for PermutationGeneratorTest and is intended
     /// to contain all PermutationGeneratorTest Unit Tests

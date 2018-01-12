@@ -5,7 +5,6 @@ using NUnit.Framework;
 namespace MageUnitTests
 {
 
-
     /// <summary>
     /// This is a test class for FileListFilterTest and is intended
     /// to contain all FileListFilterTest Unit Tests

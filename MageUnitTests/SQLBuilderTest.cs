@@ -5,7 +5,6 @@ using System.Collections.Generic;
 namespace MageUnitTests
 {
 
-
     /// <summary>
     /// This is a test class for SQLBuilderTest and is intended
     /// to contain all SQLBuilderTest Unit Tests

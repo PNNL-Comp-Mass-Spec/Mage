@@ -4,7 +4,6 @@ using NUnit.Framework;
 namespace MageUnitTests
 {
 
-
     /// <summary>
     /// This is a test class for SQLiteWriterTest and is intended
     /// to contain all SQLiteWriterTest Unit Tests

@@ -4,6 +4,7 @@ using NUnit.Framework;
 
 namespace MageUnitTests
 {
+
     /// <summary>
     /// Summary description for General
     /// </summary>

@@ -4,7 +4,9 @@ using Mage;
 namespace MageUnitTests
 {
 
-    // Test mule for getting access to BaseModule stuff
+    /// <summary>
+    /// Test harness for getting access to BaseModule stuff
+    /// </summary>
     public class TestModule : BaseModule
     {
 

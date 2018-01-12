@@ -6,7 +6,6 @@ using System.IO;
 namespace MageUnitTests
 {
 
-
     /// <summary>
     /// This is a test class for FileSubPipelineBrokerTest and is intended
     /// to contain all FileSubPipelineBrokerTest Unit Tests

@@ -5,7 +5,6 @@ using System.IO;
 namespace MageUnitTests
 {
 
-
     /// <summary>
     /// This is a test class for FileContentProcessorTest and is intended
     /// to contain all FileContentProcessorTest Unit Tests
@@ -33,7 +32,7 @@ namespace MageUnitTests
 
             dGen.AddAdHocRow = new[] { folder, file, "Padding" };
 
-            // Set up test mule (subclass of file processor module)
+            // Set up test harness (subclass of file processor module)
             var target = new TestFileContentProcessorModule
             {
                 SourceFileColumnName = fileColName,
@@ -46,7 +45,7 @@ namespace MageUnitTests
                 ExpectedDestPath = Path.GetFullPath(Path.Combine(destFolder, file))
             };
 
-            // Tell the test mule what to expect
+            // Tell the test harness what to expect
 
             // Build and run pipeline
             var pipeline = new ProcessingPipeline("FileColumnProcessorTest");
