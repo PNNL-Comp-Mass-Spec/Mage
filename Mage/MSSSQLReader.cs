@@ -94,9 +94,19 @@ namespace Mage
         /// <summary>
         /// Construct a new Mage SQL Server reader module
         /// </summary>
+        public MSSQLReader()
+        {
+            SprocName = string.Empty;
+            Username = string.Empty;
+            Password = string.Empty;
+        }
+
+        /// <summary>
+        /// Construct a new Mage SQL Server reader module, using the given SQL Server user
+        /// </summary>
         /// <param name="username">SQL Server Username; leave blank (or null) to use integrated authentication</param>
         /// <param name="password">Password if username is non-blank</param>
-        public MSSQLReader(string username = "", string password = "")
+        public MSSQLReader(string username, string password)
         {
             SprocName = string.Empty;
             Username = username;
@@ -113,18 +123,18 @@ namespace Mage
         public MSSQLReader(string xml, Dictionary<string, string> args, string username = "", string password = "")
         {
             SprocName = string.Empty;
-            Username = username;
-            Password = password;
             var builder = new SQLBuilder(xml, ref args);
-            SetPropertiesFromBuilder(builder);
+            SetPropertiesFromBuilder(builder, username, password);
         }
 
         /// <summary>
         /// </summary>
         /// <param name="builder"></param>
-        public MSSQLReader(SQLBuilder builder)
+        /// <param name="username">SQL Server Username; leave blank (or null) to use integrated authentication</param>
+        /// <param name="password">Password if username is non-blank</param>
+        public MSSQLReader(SQLBuilder builder, string username = "", string password = "")
         {
-            SetPropertiesFromBuilder(builder);
+            SetPropertiesFromBuilder(builder, username, password);
         }
 
         /// <summary>
@@ -177,14 +187,20 @@ namespace Mage
         /// Set this module's properties using initialized SQLBuiler
         /// </summary>
         /// <param name="builder">SQL builder</param>
-        private void SetPropertiesFromBuilder(SQLBuilder builder)
+        /// <param name="username">SQL Server Username; leave blank (or null) to use integrated authentication</param>
+        /// <param name="password">Password if username is non-blank</param>
+        private void SetPropertiesFromBuilder(SQLBuilder builder, string username, string password)
         {
+
+            Username = username;
+            Password = password;
 
             // Set this module's properties from builder's special arguments list
             SetParameters(builder.SpecialArgs);
 
             if (!string.IsNullOrEmpty(builder.SprocName))
-            { // If query is via sproc call, set sproc arguments
+            {
+                // If query is via sproc call, set sproc arguments
                 SprocName = builder.SprocName;
                 foreach (var parm in builder.SprocParameters)
                 {
@@ -192,7 +208,8 @@ namespace Mage
                 }
             }
             else
-            { // Otherwise, we are doing straight SQL query, build the SQL
+            {
+                // Otherwise, we are doing straight SQL query, build the SQL
                 SprocName = string.Empty;
                 SQLText = builder.BuildQuerySQL();
             }
