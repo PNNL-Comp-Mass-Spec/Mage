@@ -120,8 +120,7 @@ namespace Mage
             if (appendDateToLogFileName != AppendDateToLogFileName ||
                 !string.IsNullOrWhiteSpace(logFilePath) && !string.Equals(logFilePath, LogFilePath))
             {
-                FileLogger.AppendDateToBaseFileName = appendDateToLogFileName;
-                FileLogger.ChangeLogFileBaseName(logFilePath);
+                FileLogger.ChangeLogFileBaseName(logFilePath, appendDateToLogFileName);
             }
 
             traceLogPipeline.Debug(string.Format("Building pipeline '{0}'", PipelineName));
@@ -155,8 +154,7 @@ namespace Mage
 
             if (!string.IsNullOrWhiteSpace(LogFilePath) && !string.Equals(LogFilePath, FileLogger.LogFilePath))
             {
-                FileLogger.AppendDateToBaseFileName = AppendDateToLogFileName;
-                FileLogger.ChangeLogFileBaseName(LogFilePath);
+                FileLogger.ChangeLogFileBaseName(LogFilePath, AppendDateToLogFileName);
             }
 
             Running = true;
