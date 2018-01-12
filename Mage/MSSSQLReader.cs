@@ -41,21 +41,30 @@ namespace Mage
         /// <summary>
         /// Full connection string for database
         /// </summary>
-        public string ConnectionString
-        {
-            get => mConnectionString;
-            set => mConnectionString = value;
-        }
+        public string ConnectionString { get; private set; }
 
         /// <summary>
-        /// MS SequelServer instance to connect to
+        /// MS SQL Server instance to connect to
         /// </summary>
+        /// <remarks>Requires that ConnectionString include @server@ and @database@ placholders</remarks>
         public string Server { get; set; }
 
         /// <summary>
         /// Database to connect to
         /// </summary>
+        /// <remarks>Requires that ConnectionString include @server@ and @database@ placholders</remarks>
         public string Database { get; set; }
+
+        /// <summary>
+        /// Specific user to use when connecting to the database
+        /// </summary>
+        /// <remarks>Will use integrated authentication if Username is empty or null</remarks>
+        public string Username { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Password to use when Username is defined
+        /// </summary>
+        public string Password { get; set; } = string.Empty;
 
         /// <summary>
         /// SQL statement to run to get rowset
@@ -86,9 +95,13 @@ namespace Mage
         /// <summary>
         /// Construct a new Mage SQL Server reader module
         /// </summary>
-        public MSSQLReader()
+        /// <param name="username">SQL Server Username; leave blank (or null) to use integrated authentication</param>
+        /// <param name="password">Password if username is non-blank</param>
+        public MSSQLReader(string username = "", string password = "")
         {
-            SprocName = "";
+            SprocName = string.Empty;
+            Username = username;
+            Password = password;
         }
 
         /// <summary>
@@ -96,11 +109,14 @@ namespace Mage
         /// </summary>
         /// <param name="xml"></param>
         /// <param name="args"></param>
-        public MSSQLReader(string xml, Dictionary<string, string> args)
+        /// <param name="username">SQL Server Username; leave blank (or null) to use integrated authentication</param>
+        /// <param name="password">Password if username is non-blank</param>
+        public MSSQLReader(string xml, Dictionary<string, string> args, string username = "", string password = "")
         {
-            SprocName = "";
+            SprocName = string.Empty;
+            Username = username;
+            Password = password;
             var builder = new SQLBuilder(xml, ref args);
-            // builder.InitializeFromXML(xml, ref args);
             SetPropertiesFromBuilder(builder);
         }
 
@@ -156,7 +172,6 @@ namespace Mage
 
         #endregion
 
-
         #region Initialization
 
         /// <summary>
@@ -179,7 +194,7 @@ namespace Mage
             }
             else
             { // Otherwise, we are doing straight SQL query, build the SQL
-                SprocName = "";
+                SprocName = string.Empty;
                 SQLText = builder.BuildQuerySQL();
             }
         }
@@ -235,8 +250,7 @@ namespace Mage
         /// </summary>
         private void Connect()
         {
-            var cnStr = mConnectionString.Replace("@server@", Server);
-            cnStr = cnStr.Replace("@database@", Database);
+            var cnStr = GetConnectionString(Server, Database, Username, Password);
             mConnection = new SqlConnection
             {
                 ConnectionString = cnStr
@@ -250,6 +264,15 @@ namespace Mage
         private void Close()
         {
             mConnection.Close();
+        }
+
+        private static string GetConnectionString(string server, string database, string username, string password)
+        {
+
+            if (string.IsNullOrWhiteSpace(username))
+                return string.Format("Data Source={0};Initial Catalog={1};Integrated Security=SSPI;", server, database);
+
+            return string.Format("Data Source={0};Initial Catalog={1};User={2};Password={3};", server, database, username, password);
         }
 
         /// <summary>
