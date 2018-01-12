@@ -7,9 +7,9 @@ namespace MageUnitTestsForFileProcessor
 {
 
     /// <summary>
-    ///This is a test class for PipelinesTest and is intended
-    ///to contain all PipelinesTest Unit Tests
-    ///</summary>
+    /// This is a test class for PipelinesTest and is intended
+    /// to contain all PipelinesTest Unit Tests
+    /// </summary>
     [TestFixture]
     public class PipelinesTest
     {
@@ -21,8 +21,8 @@ namespace MageUnitTestsForFileProcessor
         Dictionary<string, string> runtimeParms;
 
         /// <summary>
-        ///A test for MakeJobQueryPipeline
-        ///</summary>
+        /// A test for MakeJobQueryPipeline
+        /// </summary>
         [Test]
         public void MakeJobQueryPipelineTest()
         {
@@ -57,8 +57,8 @@ namespace MageUnitTestsForFileProcessor
         }
 
         /// <summary>
-        ///A test for MakePipelineToGetLocalFileList
-        ///</summary>
+        /// A test for MakePipelineToGetLocalFileList
+        /// </summary>
         [Test]
         public void MakePipelineToGetLocalFileListTest()
         {
@@ -82,8 +82,8 @@ namespace MageUnitTestsForFileProcessor
         }
 
         /// <summary>
-        ///A test for MakePipelineToGetFilesFromManifest
-        ///</summary>
+        /// A test for MakePipelineToGetFilesFromManifest
+        /// </summary>
         [Test]
         public void MakePipelineToGetFilesFromManifestTest()
         {
@@ -110,8 +110,8 @@ namespace MageUnitTestsForFileProcessor
         }
 
         /// <summary>
-        ///A test for MakePipelineToFilterSelectedfiles
-        ///</summary>
+        /// A test for MakePipelineToFilterSelectedfiles
+        /// </summary>
         [Test]
         public void MakePipelineToFilterSelectedfilesTest()
         {
@@ -180,8 +180,8 @@ namespace MageUnitTestsForFileProcessor
         }
 
         /// <summary>
-        ///A test for MakeFileListPipeline
-        ///</summary>
+        /// A test for MakeFileListPipeline
+        /// </summary>
         [Test]
         public void MakeFileListPipelineTest()
         {
@@ -207,8 +207,8 @@ namespace MageUnitTestsForFileProcessor
         }
 
         /// <summary>
-        ///A test for MakeFileCopyPipeline
-        ///</summary>
+        /// A test for MakeFileCopyPipeline
+        /// </summary>
         [Test]
         public void MakeFileCopyPipelineTest()
         {

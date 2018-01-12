@@ -72,8 +72,8 @@ namespace MageMetadataProcessor
             SetupStatusPanel();
 
             // restore settings to UI component panels
-            ////SavedState.FilePath = Path.Combine(mDataDirectory, "SavedState.xml");
-            ////SavedState.RestoreSavedPanelParameters(GetParameterPanelList());
+            /// SavedState.FilePath = Path.Combine(mDataDirectory, "SavedState.xml");
+            /// SavedState.RestoreSavedPanelParameters(GetParameterPanelList());
 
             AdjustInitialUIState();
         }

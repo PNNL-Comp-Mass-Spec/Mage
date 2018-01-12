@@ -6,16 +6,16 @@ namespace MageUnitTests
 
 
     /// <summary>
-    ///This is a test class for CrosstabFilterTest and is intended
-    ///to contain all CrosstabFilterTest Unit Tests
-    ///</summary>
+    /// This is a test class for CrosstabFilterTest and is intended
+    /// to contain all CrosstabFilterTest Unit Tests
+    /// </summary>
     [TestFixture]
     public class CrosstabFilterTest
     {
 
         /// <summary>
-        ///A test for FactorValueCol
-        ///</summary>
+        /// A test for FactorValueCol
+        /// </summary>
         [Test]
         [TestCase(@"..\..\..\TestItems\factors_test.txt")]
         public void CrosstabFilterMainTest(string filePath)
@@ -53,8 +53,8 @@ namespace MageUnitTests
 
 
         /// <summary>
-        ///A test for FactorValueCol
-        ///</summary>
+        /// A test for FactorValueCol
+        /// </summary>
         [Test]
         public void FactorValueColTest()
         {
@@ -66,8 +66,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for FactorNameCol
-        ///</summary>
+        /// A test for FactorNameCol
+        /// </summary>
         [Test]
         public void FactorNameColTest()
         {
@@ -79,8 +79,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for EntityNameCol
-        ///</summary>
+        /// A test for EntityNameCol
+        /// </summary>
         [Test]
         public void EntityNameColTest()
         {
@@ -92,8 +92,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for EntityIDCol
-        ///</summary>
+        /// A test for EntityIDCol
+        /// </summary>
         [Test]
         public void EntityIDColTest()
         {

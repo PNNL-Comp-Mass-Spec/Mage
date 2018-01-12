@@ -6,9 +6,9 @@ namespace MageUnitTests
 
 
     /// <summary>
-    ///This is a test class for DelimitedFileWriterTest and is intended
-    ///to contain all DelimitedFileWriterTest Unit Tests
-    ///</summary>
+    /// This is a test class for DelimitedFileWriterTest and is intended
+    /// to contain all DelimitedFileWriterTest Unit Tests
+    /// </summary>
     [TestFixture]
     public class DelimitedFileWriterTest
     {
@@ -59,8 +59,8 @@ namespace MageUnitTests
 
 
         /// <summary>
-        ///A test for Header
-        ///</summary>
+        /// A test for Header
+        /// </summary>
         [Test]
         public void HeaderTest()
         {
@@ -72,8 +72,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for FilePath
-        ///</summary>
+        /// A test for FilePath
+        /// </summary>
         [Test]
         public void FilePathTest()
         {
@@ -85,8 +85,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for Delimiter
-        ///</summary>
+        /// A test for Delimiter
+        /// </summary>
         [Test]
         public void DelimiterTest()
         {

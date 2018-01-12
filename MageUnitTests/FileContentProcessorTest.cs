@@ -7,9 +7,9 @@ namespace MageUnitTests
 
 
     /// <summary>
-    ///This is a test class for FileContentProcessorTest and is intended
-    ///to contain all FileContentProcessorTest Unit Tests
-    ///</summary>
+    /// This is a test class for FileContentProcessorTest and is intended
+    /// to contain all FileContentProcessorTest Unit Tests
+    /// </summary>
     [TestFixture]
     public class FileContentProcessorTest
     {
@@ -57,8 +57,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for FileColumnName
-        ///</summary>
+        /// A test for FileColumnName
+        /// </summary>
         [Test]
         public void OutputFileColumnNameTest()
         {
@@ -70,8 +70,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for OutputFolderPath
-        ///</summary>
+        /// A test for OutputFolderPath
+        /// </summary>
         [Test]
         public void OutputFolderPathTest()
         {
@@ -83,8 +83,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for SourceFileColumnName
-        ///</summary>
+        /// A test for SourceFileColumnName
+        /// </summary>
         [Test]
         public void SourceFileColumnNameTest()
         {
@@ -96,8 +96,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for SourceFolderColumnName
-        ///</summary>
+        /// A test for SourceFolderColumnName
+        /// </summary>
         [Test]
         public void SourceFolderColumnNameTest()
         {

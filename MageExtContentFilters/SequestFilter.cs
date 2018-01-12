@@ -26,9 +26,9 @@ namespace MageExtContentFilters
         private int delCN2ValueIndex;
         private int chargeStateIndex;
         private int peptideMassIndex;
-        ////private int spectrumCountIndex = 0;
-        ////private int discriminantScoreIndex = 0;
-        ////private int NETAbsoluteDifferenceIndex = 0;
+        /// private int spectrumCountIndex = 0;
+        /// private int discriminantScoreIndex = 0;
+        /// private int NETAbsoluteDifferenceIndex = 0;
         private int cleavageStateIndex;
         private int msgfSpecProbIndex;
         private int rankXcIndex;

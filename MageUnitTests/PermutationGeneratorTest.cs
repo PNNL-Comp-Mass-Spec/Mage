@@ -5,16 +5,16 @@ namespace MageUnitTests
 
 
     /// <summary>
-    ///This is a test class for PermutationGeneratorTest and is intended
-    ///to contain all PermutationGeneratorTest Unit Tests
-    ///</summary>
+    /// This is a test class for PermutationGeneratorTest and is intended
+    /// to contain all PermutationGeneratorTest Unit Tests
+    /// </summary>
     [TestFixture]
     public class PermutationGeneratorTest
     {
 
         /// <summary>
-        ///A test for AddParamColumn
-        ///</summary>
+        /// A test for AddParamColumn
+        /// </summary>
         [Test]
         public void AddParamColumnTest()
         {
@@ -28,8 +28,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for PredictedOutputRowCount
-        ///</summary>
+        /// A test for PredictedOutputRowCount
+        /// </summary>
         [Test]
         public void PredictedOutputRowCountTest()
         {
@@ -47,8 +47,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for IncludeHeaderInOutput
-        ///</summary>
+        /// A test for IncludeHeaderInOutput
+        /// </summary>
         [Test]
         public void IncludeHeaderInOutputTest()
         {
@@ -65,8 +65,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for Run
-        ///</summary>
+        /// A test for Run
+        /// </summary>
         [Test]
         public void BasicPermutationGenerator()
         {
@@ -91,8 +91,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for Run
-        ///</summary>
+        /// A test for Run
+        /// </summary>
         [Test]
         public void PermutationGeneratorWithMappedColumns()
         {

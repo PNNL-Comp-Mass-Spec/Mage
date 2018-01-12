@@ -24,7 +24,6 @@ namespace Mage
         #region member variables
 
         private SqlConnection mConnection;
-        private string mConnectionString = "Data Source=@server@;Initial Catalog=@database@;integrated security=SSPI";
 
         private const int CommandTimeoutSeconds = 15;
 

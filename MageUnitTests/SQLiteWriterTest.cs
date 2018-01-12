@@ -6,9 +6,9 @@ namespace MageUnitTests
 
 
     /// <summary>
-    ///This is a test class for SQLiteWriterTest and is intended
-    ///to contain all SQLiteWriterTest Unit Tests
-    ///</summary>
+    /// This is a test class for SQLiteWriterTest and is intended
+    /// to contain all SQLiteWriterTest Unit Tests
+    /// </summary>
     [TestFixture]
     public class SQLiteWriterTest
     {
@@ -104,8 +104,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for BlockSize
-        ///</summary>
+        /// A test for BlockSize
+        /// </summary>
         [Test]
         public void BlockSizeTest()
         {
@@ -117,8 +117,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for DbPassword
-        ///</summary>
+        /// A test for DbPassword
+        /// </summary>
         [Test]
         public void DbPasswordTest()
         {
@@ -130,8 +130,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for DbPath
-        ///</summary>
+        /// A test for DbPath
+        /// </summary>
         [Test]
         public void DbPathTest()
         {
@@ -143,8 +143,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for TableName
-        ///</summary>
+        /// A test for TableName
+        /// </summary>
         [Test]
         public void TableNameTest()
         {

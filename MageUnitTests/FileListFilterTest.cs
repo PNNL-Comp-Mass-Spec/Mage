@@ -7,16 +7,16 @@ namespace MageUnitTests
 
 
     /// <summary>
-    ///This is a test class for FileListFilterTest and is intended
-    ///to contain all FileListFilterTest Unit Tests
-    ///</summary>
+    /// This is a test class for FileListFilterTest and is intended
+    /// to contain all FileListFilterTest Unit Tests
+    /// </summary>
     [TestFixture]
     public class FileListFilterTest
     {
 
         /// <summary>
-        ///A test for FileListFilter run as source using RegEx file selector mode
-        ///</summary>
+        /// A test for FileListFilter run as source using RegEx file selector mode
+        /// </summary>
         [Test]
         [TestCase(@"..\..\..\TestItems\TargetFolder")]
         public void RunFileListFilterAsSourceRegEx(string testFolderPath)
@@ -64,8 +64,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for FileListFilter run as source using file search selector mode
-        ///</summary>
+        /// A test for FileListFilter run as source using file search selector mode
+        /// </summary>
         [Test]
         [TestCase(@"..\..\..\TestItems\TargetFolder")]
         public void RunFileListFilterAsSourceFileSearch(string testFolderPath)
@@ -125,8 +125,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for GetFileNamesFromSourceFolder
-        ///</summary>
+        /// A test for GetFileNamesFromSourceFolder
+        /// </summary>
         [Test]
         public void GetFileNamesFromSourceFolderTest()
         {
@@ -169,8 +169,8 @@ namespace MageUnitTests
 
 
         /// <summary>
-        ///A test for FileColumnName
-        ///</summary>
+        /// A test for FileColumnName
+        /// </summary>
         [Test]
         public void FileColumnNameTest()
         {
@@ -182,8 +182,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for SourceFolderColumnName
-        ///</summary>
+        /// A test for SourceFolderColumnName
+        /// </summary>
         [Test]
         public void SourceFolderColumnNameTest()
         {

@@ -7,16 +7,16 @@ namespace MageUnitTests
 {
 
     /// <summary>
-    ///This is a test class for BaseModuleTest and is intended
-    ///to contain all BaseModuleTest Unit Tests
-    ///</summary>
+    /// This is a test class for BaseModuleTest and is intended
+    /// to contain all BaseModuleTest Unit Tests
+    /// </summary>
     [TestFixture]
     public class BaseModuleTest
     {
 
         /// <summary>
-        ///A test for OutputColumnList
-        ///</summary>
+        /// A test for OutputColumnList
+        /// </summary>
         [Test]
         public void OutputColumnListTest()
         {
@@ -28,8 +28,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for ModuleName
-        ///</summary>
+        /// A test for ModuleName
+        /// </summary>
         [Test]
         public void ModuleNameTest()
         {
@@ -41,8 +41,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for SetParameters
-        ///</summary>
+        /// A test for SetParameters
+        /// </summary>
         [Test]
         public void SetParametersTest()
         {

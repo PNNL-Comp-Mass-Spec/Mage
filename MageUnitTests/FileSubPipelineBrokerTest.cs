@@ -8,9 +8,9 @@ namespace MageUnitTests
 
 
     /// <summary>
-    ///This is a test class for FileSubPipelineBrokerTest and is intended
-    ///to contain all FileSubPipelineBrokerTest Unit Tests
-    ///</summary>
+    /// This is a test class for FileSubPipelineBrokerTest and is intended
+    /// to contain all FileSubPipelineBrokerTest Unit Tests
+    /// </summary>
     [TestFixture]
     public class FileSubPipelineBrokerTest
     {
@@ -100,8 +100,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for SetPipelineMaker
-        ///</summary>
+        /// A test for SetPipelineMaker
+        /// </summary>
         [Test]
         public void SetPipelineMakerTest()
         {
@@ -110,8 +110,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for DatabaseName
-        ///</summary>
+        /// A test for DatabaseName
+        /// </summary>
         [Test]
         public void DatabaseNameTest()
         {
@@ -123,8 +123,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for FileFilterModuleName
-        ///</summary>
+        /// A test for FileFilterModuleName
+        /// </summary>
         [Test]
         public void FileFilterModuleNameTest()
         {
@@ -136,8 +136,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for FileFilterParameters
-        ///</summary>
+        /// A test for FileFilterParameters
+        /// </summary>
         [Test]
         public void FileFilterParametersTest()
         {
@@ -149,8 +149,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for TableName
-        ///</summary>
+        /// A test for TableName
+        /// </summary>
         [Test]
         public void TableNameTest()
         {

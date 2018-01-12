@@ -7,17 +7,17 @@ namespace MageUnitTests
 
 
     /// <summary>
-    ///This is a test class for SQLiteReaderTest and is intended
-    ///to contain all SQLiteReaderTest Unit Tests
-    ///</summary>
+    /// This is a test class for SQLiteReaderTest and is intended
+    /// to contain all SQLiteReaderTest Unit Tests
+    /// </summary>
     [TestFixture]
     public class SQLiteReaderTest
     {
         public const string SQLITE_QUERY_DEF_FILE_PATH_KEY = "SQLiteQueryDefinitionsFilePath";
 
         /// <summary>
-        ///A test for Run
-        ///</summary>
+        /// A test for Run
+        /// </summary>
         [Test]
         [TestCase(@"..\..\..\TestItems\Metadata.db")]
         public void QueryTest(string filePath)
@@ -195,8 +195,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for database
-        ///</summary>
+        /// A test for database
+        /// </summary>
         [Test]
         public void DatabasePropertyTest()
         {
@@ -208,8 +208,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for sqlText
-        ///</summary>
+        /// A test for sqlText
+        /// </summary>
         [Test]
         public void SQLTextPropertyTest()
         {

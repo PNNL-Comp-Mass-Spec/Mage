@@ -7,9 +7,9 @@ namespace MageUnitTests
 
 
     /// <summary>
-    ///This is a test class for FileCopyTest and is intended
-    ///to contain all FileCopyTest Unit Tests
-    ///</summary>
+    /// This is a test class for FileCopyTest and is intended
+    /// to contain all FileCopyTest Unit Tests
+    /// </summary>
     [TestFixture]
     public class FileCopyTest
     {
@@ -35,8 +35,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for GetDestFile
-        ///</summary>
+        /// A test for GetDestFile
+        /// </summary>
         [Test]
         public void GetDestFileTest()
         {
@@ -79,8 +79,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for IDColumnName
-        ///</summary>
+        /// A test for IDColumnName
+        /// </summary>
         [Test]
         public void ColumnToUseForPrefixText()
         {
@@ -92,8 +92,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for OutputMode
-        ///</summary>
+        /// A test for OutputMode
+        /// </summary>
         [Test]
         public void OutputModeTest()
         {

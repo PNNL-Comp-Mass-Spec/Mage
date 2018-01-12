@@ -6,16 +6,16 @@ namespace MageUnitTests
 
 
     /// <summary>
-    ///This is a test class for ProcessingPipelineTest and is intended
-    ///to contain all ProcessingPipelineTest Unit Tests
-    ///</summary>
+    /// This is a test class for ProcessingPipelineTest and is intended
+    /// to contain all ProcessingPipelineTest Unit Tests
+    /// </summary>
     [TestFixture]
     public class ProcessingPipelineTest
     {
 
         /// <summary>
-        ///A test for SetModuleParameter
-        ///</summary>
+        /// A test for SetModuleParameter
+        /// </summary>
         [Test]
         public void SetModuleParameterTest()
         {
@@ -34,7 +34,7 @@ namespace MageUnitTests
 
         /// <summary>
         /// Tests ability to make Mage basic modules by class name
-        ///</summary>
+        /// </summary>
         [Test]
         public void MakeModuleTest()
         {
@@ -73,7 +73,7 @@ namespace MageUnitTests
 
         /// <summary>
         /// Tests assembling pipeline from list of module objects
-        ///</summary>
+        /// </summary>
         [Test]
         public void PipelineFromModuleListTest()
         {
@@ -102,7 +102,7 @@ namespace MageUnitTests
 
         /// <summary>
         /// Tests assembling pipeline from list of module class names as strings
-        ///</summary>
+        /// </summary>
         [Test]
         public void PipelineFromNamesListTest()
         {
@@ -128,7 +128,7 @@ namespace MageUnitTests
         /// <summary>
         /// Tests making pipeline from list of ModuleDef objects
         /// where modules are defined by class name
-        ///</summary>
+        /// </summary>
         [Test]
         public void PipelineFromNamedModuleListTest1()
         {
@@ -160,7 +160,7 @@ namespace MageUnitTests
         /// Tests making pipeline from list of ModuleDef objects
         /// where some modules are directly referenced and
         /// some modules are defined by class name
-        ///</summary>
+        /// </summary>
         [Test]
         public void PipelineFromNamedModuleListTest2()
         {
@@ -206,8 +206,8 @@ namespace MageUnitTests
 "</pipeline>";
 
         /// <summary>
-        ///A test for Build
-        ///</summary>
+        /// A test for Build
+        /// </summary>
         [Test]
         public void AssembleXML()
         {
@@ -230,8 +230,8 @@ namespace MageUnitTests
 ";
 
         /// <summary>
-        ///A test for Build
-        ///</summary>
+        /// A test for Build
+        /// </summary>
         [Test]
         public void AssembleXMLAndRun()
         {

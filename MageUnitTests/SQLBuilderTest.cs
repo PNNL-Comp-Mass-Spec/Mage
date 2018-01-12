@@ -7,9 +7,9 @@ namespace MageUnitTests
 
 
     /// <summary>
-    ///This is a test class for SQLBuilderTest and is intended
-    ///to contain all SQLBuilderTest Unit Tests
-    ///</summary>
+    /// This is a test class for SQLBuilderTest and is intended
+    /// to contain all SQLBuilderTest Unit Tests
+    /// </summary>
     [TestFixture]
     public class SQLBuilderTest
     {
@@ -39,8 +39,8 @@ namespace MageUnitTests
 
 
         /// <summary>
-        ///A test for Table
-        ///</summary>
+        /// A test for Table
+        /// </summary>
         [Test]
         public void TableTest()
         {
@@ -51,8 +51,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for Columns
-        ///</summary>
+        /// A test for Columns
+        /// </summary>
         [Test]
         public void ColumnsTest()
         {
@@ -67,8 +67,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for AddSortingItem
-        ///</summary>
+        /// A test for AddSortingItem
+        /// </summary>
         [Test]
         public void AddSortingItemTest()
         {
@@ -84,8 +84,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for AddPredicateItem
-        ///</summary>
+        /// A test for AddPredicateItem
+        /// </summary>
         [Test]
         public void AddPredicateItemTest()
         {

@@ -6,16 +6,16 @@ namespace MageUnitTests
 {
 
     /// <summary>
-    ///This is a test class for MSSQLReaderTest and is intended
-    ///to contain all MSSQLReaderTest Unit Tests
-    ///</summary>
+    /// This is a test class for MSSQLReaderTest and is intended
+    /// to contain all MSSQLReaderTest Unit Tests
+    /// </summary>
     [TestFixture]
     public class MSSQLReaderTest
     {
 
         /// <summary>
-        ///A test for sqlText
-        ///</summary>
+        /// A test for sqlText
+        /// </summary>
         [Test]
         public void SQLTextPropertyTest()
         {
@@ -27,8 +27,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for sprocName
-        ///</summary>
+        /// A test for sprocName
+        /// </summary>
         [Test]
         public void SprocNamePropertyTest()
         {
@@ -40,8 +40,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for server
-        ///</summary>
+        /// A test for server
+        /// </summary>
         [Test]
         public void ServerPropertyTest()
         {
@@ -53,8 +53,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for database
-        ///</summary>
+        /// A test for database
+        /// </summary>
         [Test]
         public void DatabasePropertyTest()
         {

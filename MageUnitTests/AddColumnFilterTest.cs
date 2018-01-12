@@ -5,18 +5,17 @@ using System.Collections.Generic;
 namespace MageUnitTests
 {
 
-
     /// <summary>
-    ///This is a test class for AddColumnFilterTest and is intended
-    ///to contain all AddColumnFilterTest Unit Tests
-    ///</summary>
+    /// This is a test class for AddColumnFilterTest and is intended
+    /// to contain all AddColumnFilterTest Unit Tests
+    /// </summary>
     [TestFixture]
     public class AddColumnFilterTest
     {
 
         /// <summary>
-        ///A test for AddColumnFilter
-        ///</summary>
+        /// A test for AddColumnFilter
+        /// </summary>
         [Test]
         public void AddColumnFilterConstructorTest()
         {

@@ -4,16 +4,16 @@ namespace MageUnitTests
 {
 
     /// <summary>
-    ///This is a test class for ProcessingPipelineTest and is intended
-    ///to contain all ProcessingPipelineTest Unit Tests
-    ///</summary>
+    /// This is a test class for ProcessingPipelineTest and is intended
+    /// to contain all ProcessingPipelineTest Unit Tests
+    /// </summary>
     [TestFixture]
     public class QueryDefinitionTest
     {
 
         /// <summary>
-        ///A test for GetQueryXMLDef
-        ///</summary>
+        /// A test for GetQueryXMLDef
+        /// </summary>
         [Test]
         [TestCase(@"..\..\..\TestItems\QueryDefinitions.xml")]
         public void GetQueryXMLDefTest(string queryDefinitionsPath)

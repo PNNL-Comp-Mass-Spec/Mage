@@ -5,16 +5,16 @@ namespace MageUnitTests
 {
 
     /// <summary>
-    ///This is a test class for DelimitedFileReaderTest and is intended
-    ///to contain all DelimitedFileReaderTest Unit Tests
-    ///</summary>
+    /// This is a test class for DelimitedFileReaderTest and is intended
+    /// to contain all DelimitedFileReaderTest Unit Tests
+    /// </summary>
     [TestFixture]
     public class DelimitedFileReaderTest
     {
 
         /// <summary>
-        ///A test for Header
-        ///</summary>
+        /// A test for Header
+        /// </summary>
         [Test]
         public void HeaderTest()
         {
@@ -26,8 +26,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for FilePath
-        ///</summary>
+        /// A test for FilePath
+        /// </summary>
         [Test]
         public void FilePathTest()
         {
@@ -39,8 +39,8 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        ///A test for Delimiter
-        ///</summary>
+        /// A test for Delimiter
+        /// </summary>
         [Test]
         public void DelimiterTest()
         {
@@ -53,8 +53,8 @@ namespace MageUnitTests
 
 
         /// <summary>
-        ///A test for Run
-        ///</summary>
+        /// A test for Run
+        /// </summary>
         [Test]
         [TestCase(@"..\..\..\MageUnitTests\TestItems\Sarc_MS_Filtered_isos.csv")]
         public void ReadCommaDelimitedFileTest(string isosFilePath)
