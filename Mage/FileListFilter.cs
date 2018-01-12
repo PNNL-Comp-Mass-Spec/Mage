@@ -243,8 +243,8 @@ namespace Mage
 
         private void SearchFolders(
             int outputBufferRowIdx,
-            Dictionary<string, FileInfo> fileInfo,
-            Dictionary<string, DirectoryInfo> subfolderInfo,
+            IDictionary<string, FileInfo> fileInfo,
+            IDictionary<string, DirectoryInfo> subfolderInfo,
             string folderPath,
             string datasetName)
         {
@@ -294,8 +294,7 @@ namespace Mage
                 {
                     foreach (var entry in foundFiles)
                     {
-                        var fileEntry = entry as FileInfo;
-                        if (fileEntry != null && !fileInfo.ContainsKey(fileEntry.Name))
+                        if (entry is FileInfo fileEntry && !fileInfo.ContainsKey(fileEntry.Name))
                             fileInfo.Add(fileEntry.Name, fileEntry);
                     }
                 }
@@ -305,8 +304,7 @@ namespace Mage
                 {
                     foreach (var entry in foundSubFolders)
                     {
-                        var subfolderEntry = entry as DirectoryInfo;
-                        if (subfolderEntry != null && !subfolderInfo.ContainsKey(subfolderEntry.Name))
+                        if (entry is DirectoryInfo subfolderEntry && !subfolderInfo.ContainsKey(subfolderEntry.Name))
                             subfolderInfo.Add(subfolderEntry.Name, subfolderEntry);
                     }
                 }
@@ -460,9 +458,7 @@ namespace Mage
 
         private List<FileSystemInfo> GetFileOrFolderNamesFromFolderBySearchPatternMyEMSL(string folderPath, FolderSearchMode searchMode, string datasetName)
         {
-            string subDir;
-            string parentFolders;
-            GetMyEMSLParentFoldersAndSubDir(folderPath, datasetName, out subDir, out parentFolders);
+            GetMyEMSLParentFoldersAndSubDir(folderPath, datasetName, out var subDir, out var parentFolders);
 
             var filteredFilesOrFolders = new Dictionary<string, FileSystemInfo>();
 
@@ -520,9 +516,7 @@ namespace Mage
 
         private List<FileSystemInfo> GetFileOrFolderNamesFromFolderByRegExMyEMSL(string folderPath, FolderSearchMode searchMode, string datasetName)
         {
-            string subDir;
-            string parentFolders;
-            GetMyEMSLParentFoldersAndSubDir(folderPath, datasetName, out subDir, out parentFolders);
+            GetMyEMSLParentFoldersAndSubDir(folderPath, datasetName, out var subDir, out var parentFolders);
 
             const string fileSelector = "*";
             var fiList = GetMyEMSLFilesOrFolders(searchMode, fileSelector, datasetName, subDir, parentFolders);
@@ -570,7 +564,7 @@ namespace Mage
         /// <param name="fileList"></param>
         /// <param name="fileNameRegExSpecs"></param>
         /// <returns></returns>
-        private static List<FileSystemInfo> FilterFileNamesFromList(List<FileSystemInfo> fileList, List<Regex> fileNameRegExSpecs)
+        private static List<FileSystemInfo> FilterFileNamesFromList(IReadOnlyCollection<FileSystemInfo> fileList, IReadOnlyCollection<Regex> fileNameRegExSpecs)
         {
 
             var filteredFilesOrFolders = new List<FileSystemInfo>(fileList.Count);
