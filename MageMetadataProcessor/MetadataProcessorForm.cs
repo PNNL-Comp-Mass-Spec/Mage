@@ -63,9 +63,6 @@ namespace MageMetadataProcessor
             FileLogger.ChangeLogFileBaseName(logFilePath, appendDateToBaseName);
             FileLogger.WriteLog(BaseLogger.LogLevels.INFO, "Starting Mage Metadata Processor");
 
-            ProcessingPipeline.AppendDateToLogFileName = FileLogger.AppendDateToBaseFileName;
-            ProcessingPipeline.LogFilePath = logFilePath;
-
             // Setup UI component panels
             SetupCommandHandler();
             SetupColumnMapping();

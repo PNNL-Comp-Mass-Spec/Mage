@@ -24,7 +24,6 @@ namespace Mage
     /// </summary>
     public class ProcessingPipeline
     {
-        private static string DEFAULT_LOG_FILE_NAME = "log.txt";
         private static readonly FileLogger traceLogPipeline = new FileLogger(FileLogger.BaseLogFileName, BaseLogger.LogLevels.INFO, FileLogger.AppendDateToBaseFileName);
 
         /// <summary>
@@ -61,16 +60,6 @@ namespace Mage
         #region Properties
 
         /// <summary>
-        /// When true, append today's date to the log file name
-        /// </summary>
-        public static bool AppendDateToLogFileName { get; set; } = false;
-
-        /// <summary>
-        /// Log file path
-        /// </summary>
-        public static string LogFilePath { get; set; } = DEFAULT_LOG_FILE_NAME;
-
-        /// <summary>
         /// Message available to client after pipeline execution completes.
         /// </summary>
         public string CompletionCode { get; set; }
@@ -102,26 +91,10 @@ namespace Mage
         /// <summary>
         /// Construct a new Mage pipeline object
         /// </summary>
-        /// <param name="name"></param>
-        public ProcessingPipeline(string name) : this(name, LogFilePath, AppendDateToLogFileName)
-        {
-        }
-
-        /// <summary>
-        /// Construct a new Mage pipeline object
-        /// </summary>
         /// <param name="name">Name of the pipeline (appears in log messages)</param>
-        /// <param name="logFilePath">Use to change from the default 'log.txt' file in the executable folder</param>
-        /// <param name="appendDateToLogFileName"></param>
-        public ProcessingPipeline(string name, string logFilePath, bool appendDateToLogFileName)
+        public ProcessingPipeline(string name)
         {
             PipelineName = name;
-            if (appendDateToLogFileName != AppendDateToLogFileName ||
-                !string.IsNullOrWhiteSpace(logFilePath) && !string.Equals(logFilePath, LogFilePath))
-            {
-                FileLogger.ChangeLogFileBaseName(logFilePath, appendDateToLogFileName);
-            }
-
             traceLogPipeline.Debug(string.Format("Building pipeline '{0}'", PipelineName));
         }
 
@@ -150,11 +123,6 @@ namespace Mage
         public void RunRoot(Object state)
         {
             var bError = false;
-
-            if (!string.IsNullOrWhiteSpace(LogFilePath) && !string.Equals(LogFilePath, FileLogger.LogFilePath))
-            {
-                FileLogger.ChangeLogFileBaseName(LogFilePath, AppendDateToLogFileName);
-            }
 
             Running = true;
             CompletionCode = "";
@@ -693,7 +661,7 @@ namespace Mage
         /// <returns>Pipeline</returns>
         public static ProcessingPipeline Assemble(string name, IEnumerable<ModuleDef> namedModuleList)
         {
-            var pipeline = new ProcessingPipeline(name, LogFilePath, AppendDateToLogFileName);
+            var pipeline = new ProcessingPipeline(name);
 
             var currentModName = "";
             foreach (var mod in namedModuleList)

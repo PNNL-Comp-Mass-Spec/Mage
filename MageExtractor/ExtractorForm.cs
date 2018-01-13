@@ -88,9 +88,6 @@ namespace MageExtractor
                 const bool appendDateToBaseName = false;
                 FileLogger.ChangeLogFileBaseName(logFilePath, appendDateToBaseName);
                 FileLogger.WriteLog(BaseLogger.LogLevels.INFO, "Starting Mage Extractor");
-
-                ProcessingPipeline.AppendDateToLogFileName = FileLogger.AppendDateToBaseFileName;
-                ProcessingPipeline.LogFilePath = logFilePath;
             }
             catch (Exception ex)
             {

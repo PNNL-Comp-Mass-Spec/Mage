@@ -67,9 +67,6 @@ namespace MageConcatenator
                 const bool appendDateToBaseName = false;
                 FileLogger.ChangeLogFileBaseName(logFilePath, appendDateToBaseName);
                 FileLogger.WriteLog(BaseLogger.LogLevels.INFO, "Starting Mage Concatenator");
-
-                ProcessingPipeline.AppendDateToLogFileName = FileLogger.AppendDateToBaseFileName;
-                ProcessingPipeline.LogFilePath = logFilePath;
             }
             catch (Exception ex)
             {

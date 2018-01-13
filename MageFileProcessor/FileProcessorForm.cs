@@ -93,10 +93,7 @@ namespace MageFileProcessor
                 var logFilePath = Path.Combine(SavedState.DataDirectory, "log.txt");
                 const bool appendDateToBaseName = false;
                 FileLogger.ChangeLogFileBaseName(logFilePath, appendDateToBaseName);
-                FileLogger.WriteLog(BaseLogger.LogLevels.INFO, "Starting Mage File Processor");
-
-                ProcessingPipeline.AppendDateToLogFileName = FileLogger.AppendDateToBaseFileName;
-                ProcessingPipeline.LogFilePath = logFilePath;
+                FileLogger.WriteLog(BaseLogger.LogLevels.INFO, "Starting Mage File Processor");                
             }
             catch (Exception ex)
             {
