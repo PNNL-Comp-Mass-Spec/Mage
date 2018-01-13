@@ -25,8 +25,7 @@ namespace Mage
     public class ProcessingPipeline
     {
         private static string DEFAULT_LOG_FILE_NAME = "log.txt";
-
-        private static readonly FileLogger traceLogPipeline = new FileLogger(DEFAULT_LOG_FILE_NAME, BaseLogger.LogLevels.INFO, false);
+        private static readonly FileLogger traceLogPipeline = new FileLogger(FileLogger.BaseLogFileName, BaseLogger.LogLevels.INFO, FileLogger.AppendDateToBaseFileName);
 
         /// <summary>
         /// Event that is fired during execution of pipeline

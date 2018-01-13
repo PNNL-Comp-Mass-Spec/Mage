@@ -19,7 +19,7 @@ namespace Mage
         /// </summary>
         public const string SQL_COMMAND_ERROR = "Problem forming SQL command";
 
-        private static readonly FileLogger traceLogReader = new FileLogger("log.txt", BaseLogger.LogLevels.INFO, false);
+        private static readonly FileLogger traceLogReader = new FileLogger(FileLogger.BaseLogFileName, BaseLogger.LogLevels.INFO, FileLogger.AppendDateToBaseFileName);
 
         #region member variables
 

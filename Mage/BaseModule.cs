@@ -13,7 +13,7 @@ namespace Mage
     public class BaseModule : IBaseModule
     {
 
-        private static readonly FileLogger traceLogBase = new FileLogger("log.txt", BaseLogger.LogLevels.INFO, false);
+        private static readonly FileLogger traceLogBase = new FileLogger(FileLogger.BaseLogFileName, BaseLogger.LogLevels.INFO, FileLogger.AppendDateToBaseFileName);
 
         /// <summary>
         /// Constant used when no files are found

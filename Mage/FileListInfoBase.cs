@@ -28,7 +28,7 @@ namespace Mage
         /// <summary>
         /// Trace logger
         /// </summary>
-        protected static readonly FileLogger traceLogFileList = new FileLogger("log.txt", BaseLogger.LogLevels.INFO, false);
+        protected static readonly FileLogger traceLogFileList = new FileLogger(FileLogger.BaseLogFileName, BaseLogger.LogLevels.INFO, FileLogger.AppendDateToBaseFileName);
 
         #region Member Variables
 

@@ -19,7 +19,7 @@ namespace Mage
     public sealed class SQLiteWriter : BaseModule, IDisposable
     {
 
-        private static readonly FileLogger traceLogWriter = new FileLogger("log.txt", BaseLogger.LogLevels.INFO, false);
+        private static readonly FileLogger traceLogWriter = new FileLogger(FileLogger.BaseLogFileName, BaseLogger.LogLevels.INFO, FileLogger.AppendDateToBaseFileName);
 
         #region Member Variables
 
