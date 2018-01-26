@@ -1,5 +1,9 @@
 Mage Revision History
 
+Version 1.5.6600; January 26, 2018
+	- Obtain Jayrock.Json from NuGet
+	- Updated versions of MyEMSLReader.dll and Pacifica.Core.dll
+
 Version 1.5.6586; January 12, 2018
 	- Replace log4net with the FileLogger in PRISM.dll
 	- Allow connecting to SQL server using a specific SQL Server username
