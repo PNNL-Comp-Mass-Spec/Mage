@@ -93,9 +93,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Mage\lib\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
-    <Reference Include="Jayrock.Json">
-      <HintPath>..\Mage\lib\Jayrock.Json.dll</HintPath>
-    </Reference>
     <Reference Include="MyEMSLReader, Version=1.0.5007.30861, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Mage\lib\MyEMSLReader.dll</HintPath>
@@ -206,6 +203,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="jayrock-json">
+      <Version>0.9.16530.1</Version>
+    </PackageReference>
     <PackageReference Include="PRISM-Library">
       <Version>2.4.54</Version>
     </PackageReference>
