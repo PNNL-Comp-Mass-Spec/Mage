@@ -24,7 +24,6 @@ Source: ..\DeployedFiles\MageConcatenator\System.Data.SQLite.dll        ; DestDi
 Source: ..\DeployedFiles\MageConcatenator\MageConcatenator.exe          ; DestDir: {app}\MageConcatenator
 
 Source: ..\DeployedFiles\MageConcatenator\ReadMe.txt                    ; DestDir: {app}\MageConcatenator
-Source: ..\DeployedFiles\MageConcatenator\Logging.config                ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\QueryDefinitions.xml          ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\x64\SQLite.Interop.dll        ; DestDir: {app}\MageConcatenator\x64
 Source: ..\DeployedFiles\MageConcatenator\x86\SQLite.Interop.dll        ; DestDir: {app}\MageConcatenator\x86
@@ -45,7 +44,6 @@ Source: ..\DeployedFiles\MageExtractor\System.Data.SQLite.dll           ; DestDi
 Source: ..\DeployedFiles\MageExtractor\MageExtractor.exe                ; DestDir: {app}\MageExtractor
 
 Source: ..\DeployedFiles\MageExtractor\ReadMe.txt                       ; DestDir: {app}\MageExtractor
-Source: ..\DeployedFiles\MageExtractor\Logging.config                   ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\QueryDefinitions.xml             ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\x64\SQLite.Interop.dll           ; DestDir: {app}\MageExtractor\x64
 Source: ..\DeployedFiles\MageExtractor\x86\SQLite.Interop.dll           ; DestDir: {app}\MageExtractor\x86
@@ -63,7 +61,6 @@ Source: ..\DeployedFiles\MageFilePackager\System.Data.SQLite.dll        ; DestDi
 Source: ..\DeployedFiles\MageFilePackager\MageFilePackager.exe          ; DestDir: {app}\MageFilePackager
 
 Source: ..\DeployedFiles\MageFilePackager\ReadMe.txt                    ; DestDir: {app}\MageFilePackager
-Source: ..\DeployedFiles\MageFilePackager\Logging.config                ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\QueryDefinitions.xml          ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\x64\SQLite.Interop.dll        ; DestDir: {app}\MageFilePackager\x64
 Source: ..\DeployedFiles\MageFilePackager\x86\SQLite.Interop.dll        ; DestDir: {app}\MageFilePackager\x86
@@ -84,7 +81,6 @@ Source: ..\DeployedFiles\MageFileProcessor\System.Data.SQLite.dll       ; DestDi
 Source: ..\DeployedFiles\MageFileProcessor\MageFileProcessor.exe        ; DestDir: {app}\MageFileProcessor
 
 Source: ..\DeployedFiles\MageFileProcessor\ReadMe.txt                   ; DestDir: {app}\MageFileProcessor
-Source: ..\DeployedFiles\MageFileProcessor\Logging.config               ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\QueryDefinitions.xml         ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\ColumnMapping.txt            ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\x64\SQLite.Interop.dll       ; DestDir: {app}\MageFileProcessor\x64
