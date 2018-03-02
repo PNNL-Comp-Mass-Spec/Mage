@@ -155,9 +155,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="App.config" />
-    <None Include="Logging.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -221,7 +218,6 @@ xcopy "$(TargetDir)x86\*.dll" "$(ProjectDir)..\DeployedFiles\$(ProjectName)\x86\
 xcopy "$(TargetDir)x64\*.dll" "$(ProjectDir)..\DeployedFiles\$(ProjectName)\x64\" /D /Y
 xcopy "$(TargetDir)QueryDefinitions.xml" "$(ProjectDir)..\DeployedFiles\$(ProjectName)" /D /Y
 xcopy "$(TargetFileName).config" "$(ProjectDir)..\DeployedFiles\$(ProjectName)" /D /Y
-xcopy "$(TargetDir)Logging.config" "$(ProjectDir)..\DeployedFiles\$(ProjectName)" /D /Y
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
