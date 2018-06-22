@@ -1,5 +1,8 @@
 Mage Revision History
 
+Version 1.5.6746; June 21, 2018
+	- Search for files both the File and Folder checkboxes are unchecked
+
 Version 1.5.6600; January 26, 2018
 	- Obtain Jayrock.Json from NuGet
 	- Updated versions of MyEMSLReader.dll and Pacifica.Core.dll
