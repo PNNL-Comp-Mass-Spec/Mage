@@ -11,3 +11,5 @@ TestResults/
 /Installer/Mage on CBDMS.lnk
 /Installer/Mage on Floyd.lnk
 **/.vs/
+/MageDemo/MageDemo/lib/*.dll
+/MageDemo/MageDemo/lib/*.xml
