@@ -248,10 +248,9 @@ namespace Mage
         /// <returns>True if the column exists and contains a numeric value; otherwise false</returns>
         public bool TryGetValueViaColumnName(string columnName, int rowIndex, out double value)
         {
-            int colIndex;
             value = 0;
 
-            if (ColumnIndex.TryGetValue(columnName, out colIndex))
+            if (ColumnIndex.TryGetValue(columnName, out var colIndex))
             {
                 if (double.TryParse(Rows[rowIndex][colIndex], out value))
                 {
@@ -270,10 +269,9 @@ namespace Mage
         /// <returns>True if the column exists and contains a numeric value; otherwise false</returns>
         public bool TryGetValueViaColumnName(string columnName, int rowIndex, out int value)
         {
-            int colIndex;
             value = 0;
 
-            if (ColumnIndex.TryGetValue(columnName, out colIndex))
+            if (ColumnIndex.TryGetValue(columnName, out var colIndex))
             {
                 if (int.TryParse(Rows[rowIndex][colIndex], out value))
                 {
@@ -292,10 +290,9 @@ namespace Mage
         /// <returns>True if the column exists; otherwise false</returns>
         public bool TryGetValueViaColumnName(string columnName, int rowIndex, out string value)
         {
-            int colIndex;
             value = null;
 
-            if (ColumnIndex.TryGetValue(columnName, out colIndex))
+            if (ColumnIndex.TryGetValue(columnName, out var colIndex))
             {
                 value = Rows[rowIndex][colIndex];
                 return true;

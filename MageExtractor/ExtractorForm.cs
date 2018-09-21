@@ -294,8 +294,7 @@ namespace MageExtractor
                     cutoff = cutoff.Substring(0, cutoff.Length - 1);
                 }
 
-                double result;
-                if (!double.TryParse(cutoff, out result))
+                if (!double.TryParse(cutoff, out var result))
                 {
                     result = -1;
                 }
@@ -378,8 +377,7 @@ namespace MageExtractor
 
                     foreach (var datasetID in values)
                     {
-                        int iValue;
-                        if (!int.TryParse(datasetID, out iValue))
+                        if (!int.TryParse(datasetID, out _))
                         {
                             msg = sWarning + datasetID + "' is not numeric";
                             break;
@@ -421,8 +419,7 @@ namespace MageExtractor
             statusPanel1.HandleCompletionMessageUpdate(this, new MageStatusEventArgs(args.Message));
             Console.WriteLine(args.Message);
 
-            var pipeline = sender as ProcessingPipeline;
-            if (pipeline != null)
+            if (sender is ProcessingPipeline pipeline)
             {
                 if (pipeline.PipelineName == mFinalPipelineName)
                 {
