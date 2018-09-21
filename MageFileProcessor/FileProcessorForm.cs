@@ -61,7 +61,7 @@ namespace MageFileProcessor
             InitializeComponent();
 
             const bool isBetaVersion = false;
-            SetFormTitle("2018-06-21", isBetaVersion);
+            SetFormTitle("2018-09-20", isBetaVersion);
 
             SetTags();
 
@@ -93,7 +93,7 @@ namespace MageFileProcessor
                 var logFilePath = Path.Combine(SavedState.DataDirectory, "log.txt");
                 const bool appendDateToBaseName = false;
                 FileLogger.ChangeLogFileBaseName(logFilePath, appendDateToBaseName);
-                FileLogger.WriteLog(BaseLogger.LogLevels.INFO, "Starting Mage File Processor");                
+                FileLogger.WriteLog(BaseLogger.LogLevels.INFO, "Starting Mage File Processor");
             }
             catch (Exception ex)
             {

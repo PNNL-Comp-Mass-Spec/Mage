@@ -68,7 +68,7 @@ namespace Mage
         /// <param name="state">Mage ProcessingPipeline object that contains the module (if there is one)</param>
         public override void Run(object state)
         {
-            UpdateStatus("Reading file " + PRISM.clsFileTools.CompactPathString(FilePath, 60));
+            UpdateStatus("Reading file " + PRISM.FileTools.CompactPathString(FilePath, 60));
             doHeaderLine = OptionEnabled(Header);
             switch (Delimiter)
             {
