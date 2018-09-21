@@ -145,7 +145,7 @@ namespace Mage
 
 
         /// <summary>
-        /// Handler for Mage standard tablular input data rows
+        /// Handler for Mage standard tabular input data rows
         /// (override of base class)
         ///
         /// Receive storage folder path as column in data row,
@@ -167,7 +167,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Handler for Mage standard tablular column definition
+        /// Handler for Mage standard tabular column definition
         /// (override of base class)
         /// </summary>
         /// <param name="sender"></param>

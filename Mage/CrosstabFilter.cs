@@ -70,7 +70,7 @@ namespace Mage
         #region BaseModule Overrides
 
         /// <summary>
-        /// Handler for Mage standard tablular column definition
+        /// Handler for Mage standard tabular column definition
         /// (override of base class)
         ///
         /// Handle the column definitions
@@ -89,7 +89,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Handler for Mage standard tablular input data rows
+        /// Handler for Mage standard tabular input data rows
         /// (override of base class)
         ///
         /// Accumulate the data fields into the crosstab buffers

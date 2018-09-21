@@ -121,7 +121,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Handler for Mage standard tablular column definition
+        /// Handler for Mage standard tabular column definition
         /// (override of base class)
         ///
         /// In addition to base module column definition
@@ -143,7 +143,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Handler for Mage standard tablular input data rows
+        /// Handler for Mage standard tabular input data rows
         /// (override of base class)
         ///
         /// Receive data row, add to accumulator, write to SQLite when buffer is full, or reader finishes
@@ -288,7 +288,7 @@ namespace Mage
 
         private void CopyTabularDataRowsToSQLiteDB()
         {
-            // traceLogWriter.Debug("preparing to insert tablular data ...");
+            // traceLogWriter.Debug("preparing to insert tabular data ...");
 
             AssureDBConnection();
             var tx = mConnection.BeginTransaction();

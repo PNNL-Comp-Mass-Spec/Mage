@@ -228,7 +228,7 @@ namespace MageFileProcessor
             if (command.Action == "display_reloaded")
             {
                 mCurrentCmd = command;
-                AdjusttPostCommndUIState(null);
+                AdjustPostCommandUIState(null);
                 return;
             }
 
@@ -264,7 +264,7 @@ namespace MageFileProcessor
             try
             {
                 // Build and run the pipeline appropriate to the command
-                Dictionary<string, string> runtimeParms;
+                Dictionary<string, string> runtimeParams;
                 GVPipelineSource source;
                 ISinkModule sink;
                 string queryDefXML;
@@ -280,7 +280,7 @@ namespace MageFileProcessor
                             return;
                         }
 
-                        var queryParameters = GetRuntimeParmsForEntityQuery();
+                        var queryParameters = GetRuntimeParamsForEntityQuery();
                         if (!ValidQueryParameters(queryName, queryParameters))
                         {
                             return;
@@ -311,19 +311,19 @@ namespace MageFileProcessor
 
                     case "get_files_from_entities":
                         var entityType = JobListDisplayControl.PageTitle;
-                        runtimeParms = GetRuntimeParmsForEntityFileType(entityType);
+                        runtimeParams = GetRuntimeParamsForEntityFileType(entityType);
                         source = new GVPipelineSource(JobListDisplayControl, mode);
                         sink = FileListDisplayControl.MakeSink("Files", 15);
 
-                        pipeline = Pipelines.MakeFileListPipeline(source, sink, runtimeParms);
+                        pipeline = Pipelines.MakeFileListPipeline(source, sink, runtimeParams);
                         mPipelineQueue.Pipelines.Enqueue(pipeline);
                         mFinalPipelineName = pipeline.PipelineName;
                         mFileSourcePipelineName = pipeline.PipelineName;
                         break;
 
                     case "get_files_from_local_folder":
-                        runtimeParms = GetRuntimeParmsForLocalFolder();
-                        var sFolder = GetRuntimeParam(runtimeParms, "Folder");
+                        runtimeParams = GetRuntimeParamsForLocalFolder();
+                        var sFolder = GetRuntimeParam(runtimeParams, "Folder");
                         if (!Directory.Exists(sFolder))
                         {
                             MessageBox.Show("Folder not found: " + sFolder, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -331,15 +331,15 @@ namespace MageFileProcessor
                         }
                         sink = FileListDisplayControl.MakeSink("Files", 15);
 
-                        pipeline = Pipelines.MakePipelineToGetLocalFileList(sink, runtimeParms);
+                        pipeline = Pipelines.MakePipelineToGetLocalFileList(sink, runtimeParams);
                         mPipelineQueue.Pipelines.Enqueue(pipeline);
                         mFinalPipelineName = pipeline.PipelineName;
                         mFileSourcePipelineName = pipeline.PipelineName;
                         break;
 
                     case "get_files_from_local_manifest":
-                        runtimeParms = GetRuntimeParmsForManifestFile();
-                        var sFile = GetRuntimeParam(runtimeParms, "ManifestFilePath");
+                        runtimeParams = GetRuntimeParamsForManifestFile();
+                        var sFile = GetRuntimeParam(runtimeParams, "ManifestFilePath");
                         if (!File.Exists(sFile))
                         {
                             MessageBox.Show("Manifest file not found: " + sFile, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -347,15 +347,15 @@ namespace MageFileProcessor
                         }
                         sink = FileListDisplayControl.MakeSink("Files", 15);
 
-                        pipeline = Pipelines.MakePipelineToGetFilesFromManifest(sink, runtimeParms);
+                        pipeline = Pipelines.MakePipelineToGetFilesFromManifest(sink, runtimeParams);
                         mPipelineQueue.Pipelines.Enqueue(pipeline);
                         mFinalPipelineName = pipeline.PipelineName;
                         mFileSourcePipelineName = pipeline.PipelineName;
                         break;
 
                     case "copy_files":
-                        runtimeParms = GetRuntimeParmsForCopyFiles();
-                        if (string.IsNullOrEmpty(GetRuntimeParam(runtimeParms, "OutputFolder")))
+                        runtimeParams = GetRuntimeParamsForCopyFiles();
+                        if (string.IsNullOrEmpty(GetRuntimeParam(runtimeParams, "OutputFolder")))
                         {
                             MessageBox.Show("Destination folder cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             return;
@@ -363,25 +363,25 @@ namespace MageFileProcessor
 
                         source = new GVPipelineSource(FileListDisplayControl, mode);
 
-                        pipeline = Pipelines.MakeFileCopyPipeline(source, runtimeParms);
+                        pipeline = Pipelines.MakeFileCopyPipeline(source, runtimeParams);
                         mPipelineQueue.Pipelines.Enqueue(pipeline);
                         mFinalPipelineName = pipeline.PipelineName;
                         break;
 
                     case "process_file_contents":
-                        var filterParms = FileProcessingPanel1.GetParameters();
-                        runtimeParms = GetRuntimeParmsForFileProcessing();
+                        var filterParams = FileProcessingPanel1.GetParameters();
+                        runtimeParams = GetRuntimeParamsForFileProcessing();
 
                         switch (FilterOutputTabs.SelectedTab.Tag.ToString())
                         {
                             case "File_Output":
-                                if (string.IsNullOrEmpty(GetRuntimeParam(runtimeParms, "OutputFolder")))
+                                if (string.IsNullOrEmpty(GetRuntimeParam(runtimeParams, "OutputFolder")))
                                 {
                                     MessageBox.Show("Destination folder cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                                     return;
                                 }
 
-                                if (string.IsNullOrEmpty(GetRuntimeParam(runtimeParms, "OutputFile")))
+                                if (string.IsNullOrEmpty(GetRuntimeParam(runtimeParams, "OutputFile")))
                                 {
                                     MessageBox.Show("Destination file cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                                     return;
@@ -389,13 +389,13 @@ namespace MageFileProcessor
                                 break;
 
                             case "SQLite_Output":
-                                if (string.IsNullOrEmpty(GetRuntimeParam(runtimeParms, "DatabaseName")))
+                                if (string.IsNullOrEmpty(GetRuntimeParam(runtimeParams, "DatabaseName")))
                                 {
                                     MessageBox.Show("SQLite Database path cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                                     return;
                                 }
 
-                                if (string.IsNullOrEmpty(GetRuntimeParam(runtimeParms, "TableName")))
+                                if (string.IsNullOrEmpty(GetRuntimeParam(runtimeParams, "TableName")))
                                 {
                                     MessageBox.Show("SQLite destination table name cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                                     return;
@@ -409,7 +409,7 @@ namespace MageFileProcessor
 
                         source = new GVPipelineSource(FileListDisplayControl, mode);
 
-                        mPipelineQueue = Pipelines.MakePipelineQueueToPreProcessThenFilterFiles(source, runtimeParms, filterParms);
+                        mPipelineQueue = Pipelines.MakePipelineQueueToPreProcessThenFilterFiles(source, runtimeParams, filterParams);
                         mFinalPipelineName = mPipelineQueue.Pipelines.Last().PipelineName;
 
                         break;
@@ -568,11 +568,11 @@ namespace MageFileProcessor
         }
 
         /// <summary>
-        /// Adjust the labelling and status of various UI components
+        /// Adjust the labeling and status of various UI components
         /// (called when a command pipeline completes via cross-thread invoke from HandleStatusMessageUpdated)
         /// </summary>
         /// <param name="status"></param>
-        private void AdjusttPostCommndUIState(object status)
+        private void AdjustPostCommandUIState(object status)
         {
             if (mCurrentCmd == null)
                 return;
@@ -580,7 +580,7 @@ namespace MageFileProcessor
             EnableCancel(false);
 
             AdjustEntityFileTabLabels();
-            AdjustListDisplayTitleFromColumDefs();
+            AdjustListDisplayTitleFromColumnDefs();
             AdjustFileListLabels();
             AdjustFileExtractionPanel();
             AdjustFileProcessingPanels();
@@ -628,7 +628,7 @@ namespace MageFileProcessor
 
         /// <summary>
         /// Since the list of files can be derived from different sources,
-        /// adjust the labelling to inform the user about which one was used
+        /// adjust the labeling to inform the user about which one was used
         /// </summary>
         private void AdjustFileListLabels()
         {
@@ -671,7 +671,7 @@ namespace MageFileProcessor
         /// according to the combination of columns it has,
         /// and set its title accordingly
         /// </summary>
-        private void AdjustListDisplayTitleFromColumDefs()
+        private void AdjustListDisplayTitleFromColumnDefs()
         {
             if (mCurrentCmd.Action != "reload_list_display" && mCurrentCmd.Action != "display_reloaded")
             {
@@ -762,7 +762,7 @@ namespace MageFileProcessor
             return runtimeParams[keyName];
         }
 
-        private Dictionary<string, string> GetRuntimeParmsForEntityQuery()
+        private Dictionary<string, string> GetRuntimeParamsForEntityQuery()
         {
             Control queryPage = EntityListSourceTabs.SelectedTab;
             var panel = PanelSupport.GetParameterPanel(queryPage);
@@ -772,7 +772,7 @@ namespace MageFileProcessor
             return panel.GetParameters();
         }
 
-        private Dictionary<string, string> GetRuntimeParmsForLocalFolder()
+        private Dictionary<string, string> GetRuntimeParamsForLocalFolder()
         {
             var rp = new Dictionary<string, string>
             {
@@ -785,7 +785,7 @@ namespace MageFileProcessor
             return rp;
         }
 
-        private Dictionary<string, string> GetRuntimeParmsForManifestFile()
+        private Dictionary<string, string> GetRuntimeParamsForManifestFile()
         {
             var rp = new Dictionary<string, string>
             {
@@ -794,7 +794,7 @@ namespace MageFileProcessor
             return rp;
         }
 
-        private Dictionary<string, string> GetRuntimeParmsForFileProcessing()
+        private Dictionary<string, string> GetRuntimeParamsForFileProcessing()
         {
             var rp = new Dictionary<string, string>
             {
@@ -818,7 +818,7 @@ namespace MageFileProcessor
             return rp;
         }
 
-        private Dictionary<string, string> GetRuntimeParmsForCopyFiles()
+        private Dictionary<string, string> GetRuntimeParamsForCopyFiles()
         {
             var rp = new Dictionary<string, string>
             {
@@ -848,7 +848,7 @@ namespace MageFileProcessor
             return rp;
         }
 
-        private Dictionary<string, string> GetRuntimeParmsForEntityFileType(string entityType)
+        private Dictionary<string, string> GetRuntimeParamsForEntityFileType(string entityType)
         {
             var rp = new Dictionary<string, string>
             {
@@ -873,7 +873,7 @@ namespace MageFileProcessor
         }
 
         /// <summary>
-        /// Get "best" column name to use for naming prefix according to hueristec
+        /// Get "best" column name to use for naming prefix according to heuristic
         /// </summary>
         /// <returns></returns>
         private static string GetBestPrefixIDColumnName(IEnumerable<MageColumnDef> colDefs)
@@ -895,7 +895,7 @@ namespace MageFileProcessor
                 }
             }
 
-            // Use the higest precedence marked potential candiate
+            // Use the highest precedence marked potential candidate
             foreach (var candidateIDColName in candidateIDColumnNames)
             {
                 if (candidateIDColName.Value)
@@ -941,7 +941,7 @@ namespace MageFileProcessor
                 if (pipeline.PipelineName == mFinalPipelineName)
                 {
 
-                    CompletionStateUpdated csu = AdjusttPostCommndUIState;
+                    CompletionStateUpdated csu = AdjustPostCommandUIState;
                     Invoke(csu, new object[] { null });
 
                     // Must use a delegate and Invoke to avoid "cross-thread operation not valid" exceptions

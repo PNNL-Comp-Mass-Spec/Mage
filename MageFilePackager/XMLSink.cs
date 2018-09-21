@@ -39,7 +39,7 @@ namespace MageFilePackager
         }
 
         /// <summary>
-        /// Handler for Mage standard tablular input data rows
+        /// Handler for Mage standard tabular input data rows
         /// (override of base class)
         /// </summary>
         /// <param name="sender"></param>

@@ -144,7 +144,7 @@ namespace MageConcatenator
             if (command.Action == "display_reloaded")
             {
                 mCurrentCmd = command;
-                AdjusttPostCommndUIState(null);
+                AdjustPostCommandUIState(null);
                 return;
             }
 
@@ -182,7 +182,7 @@ namespace MageConcatenator
                 switch (command.Action)
                 {
                     case "get_files_from_local_folder":
-                        var runtimeParms = GetRuntimeParmsForLocalFolder();
+                        var runtimeParms = GetRuntimeParamsForLocalFolder();
                         var sFolder = runtimeParms["Folder"];
                         if (!Directory.Exists(sFolder))
                         {
@@ -243,7 +243,7 @@ namespace MageConcatenator
 
             if (success)
             {
-                CompletionStateUpdated csu = AdjusttPostCommndUIState;
+                CompletionStateUpdated csu = AdjustPostCommandUIState;
                 Invoke(csu, new object[] { null });
             }
             else
@@ -262,7 +262,7 @@ namespace MageConcatenator
 
             try
             {
-                var runtimeParms = GetRuntimeParmsForFileProcessing();
+                var runtimeParms = GetRuntimeParamsForFileProcessing();
 
                 if (string.IsNullOrWhiteSpace(runtimeParms["OutputFolder"]))
                 {
@@ -501,7 +501,7 @@ namespace MageConcatenator
         /// (called when a command pipeline completes via cross-thread invoke from HandleStatusMessageUpdated)
         /// </summary>
         /// <param name="status"></param>
-        private void AdjusttPostCommndUIState(object status)
+        private void AdjustPostCommandUIState(object status)
         {
             if (mCurrentCmd == null)
                 return;
@@ -544,7 +544,7 @@ namespace MageConcatenator
             }
         }
 
-        private Dictionary<string, string> GetRuntimeParmsForLocalFolder()
+        private Dictionary<string, string> GetRuntimeParamsForLocalFolder()
         {
             var rp = new Dictionary<string, string>
             {
@@ -556,7 +556,7 @@ namespace MageConcatenator
             };
             return rp;
         }
-        private Dictionary<string, string> GetRuntimeParmsForFileProcessing()
+        private Dictionary<string, string> GetRuntimeParamsForFileProcessing()
         {
             var rp = new Dictionary<string, string>
             {
@@ -603,7 +603,7 @@ namespace MageConcatenator
                 if (pipeline.PipelineName == mFinalPipelineName)
                 {
 
-                    CompletionStateUpdated csu = AdjusttPostCommndUIState;
+                    CompletionStateUpdated csu = AdjustPostCommandUIState;
                     Invoke(csu, new object[] { null });
 
                 }

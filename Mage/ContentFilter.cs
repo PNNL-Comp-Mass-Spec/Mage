@@ -26,7 +26,7 @@ namespace Mage
         #region IBaseModule Members
 
         /// <summary>
-        /// Handler for Mage standard tablular column definition
+        /// Handler for Mage standard tabular column definition
         /// (override of base class)
         ///
         /// Let base class processess columns for us
@@ -45,7 +45,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Handler for Mage standard tablular input data rows
+        /// Handler for Mage standard tabular input data rows
         /// (override of base class)
         ///
         /// Check each input row against the filter and pass on the

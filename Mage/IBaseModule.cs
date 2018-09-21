@@ -33,13 +33,13 @@ namespace Mage
         /// <summary>
         /// Set the given property of the module by key/value pair
         /// </summary>
-        /// <param name="key">name of poperty</param>
+        /// <param name="key">name of property</param>
         /// <param name="val">value to set property to</param>
         void SetPropertyByName(string key, string val);
 
         /// <summary>
         /// Set multiple properties of the module from list of key/value pairs
-        /// (propertie must be of type string)
+        /// (property must be of type string)
         /// </summary>
         /// <param name="parameters">list of key/value pairs</param>
         void SetParameters(Dictionary<string, string> parameters);
@@ -69,7 +69,7 @@ namespace Mage
 
         /// <summary>
         /// Pass execution to module instead of having it respond to standard tabular input stream events
-        /// (for example, module that gets its data froma a database)
+        /// (for example, module that gets its data from a database)
         /// </summary>
         /// <param name="state">Mage ProcessingPipeline object that contains the module (if there is one)</param>
         void Run(Object state);

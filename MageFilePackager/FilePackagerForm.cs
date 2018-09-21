@@ -62,7 +62,7 @@ namespace MageFilePackager
 
             SetAboutText();
 
-            // These settings are loaded from file MagerConcatenator.exe.config
+            // These settings are loaded from file MageConcatenator.exe.config
             // Typically gigasax and DMS5
             Globals.DMSServer = Settings.Default.DMSServer;
             Globals.DMSDatabase = Settings.Default.DMSDatabase;
@@ -175,7 +175,7 @@ namespace MageFilePackager
         }
 
         /// <summary>
-        /// Set labelling for UI panels
+        /// Set labeling for UI panels
         /// </summary>
         private void SetTags()
         {
@@ -208,7 +208,7 @@ namespace MageFilePackager
             if (command.Action == "display_reloaded")
             {
                 _mCurrentCmd = command;
-                AdjusttPostCommndUIState(null);
+                AdjustPostCommandUIState(null);
                 return;
             }
 
@@ -232,7 +232,7 @@ namespace MageFilePackager
         }
 
         /// <summary>
-        /// Construnct and run a Mage pipeline for the given command
+        /// Construct and run a Mage pipeline for the given command
         /// </summary>
         /// <param name="command"></param>
         private void BuildAndRunPipeline(MageCommandEventArgs command)
@@ -253,7 +253,7 @@ namespace MageFilePackager
                             MessageBox.Show("Unknown query type '" + queryName + "'.  Your QueryDefinitions.xml file is out-of-date", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             return;
                         }
-                        var queryParameters = GetRuntimeParmsForEntityQuery();
+                        var queryParameters = GetRuntimeParamsForEntityQuery();
                         if (!ValidQueryParameters(queryName, queryParameters))
                         {
                             return;
@@ -281,10 +281,10 @@ namespace MageFilePackager
 
                     case "get_files_from_entities":
                         var entityType = JobListDisplayControl.PageTitle;
-                        var runtimeParms = GetRuntimeParmsForEntityFileType(entityType);
+                        var runtimeParams = GetRuntimeParamsForEntityFileType(entityType);
                         var source = new GVPipelineSource(JobListDisplayControl, mode);
                         sink = FileListDisplayControl.MakeSink("Files", 15);
-                        _mCurrentPipeline = Pipelines.MakeFileListPipeline(source, sink, runtimeParms);
+                        _mCurrentPipeline = Pipelines.MakeFileListPipeline(source, sink, runtimeParams);
                         break;
                     default:
                         return;
@@ -422,11 +422,11 @@ namespace MageFilePackager
         }
 
         /// <summary>
-        /// Adjust the labelling and status of various UI components
+        /// Adjust the labeling and status of various UI components
         /// (called when a command pipeline completes via cross-thread invoke from HandleStatusMessageUpdated)
         /// </summary>
         /// <param name="status"></param>
-        private void AdjusttPostCommndUIState(object status)
+        private void AdjustPostCommandUIState(object status)
         {
             if (_mCurrentCmd == null)
                 return;
@@ -434,7 +434,7 @@ namespace MageFilePackager
             EnableCancel(false);
 
             AdjustEntityFileTabLabels();
-            AdjustListDisplayTitleFromColumDefs();
+            AdjustListDisplayTitleFromColumnDefs();
             AdjustFileListLabels();
             AdjustFileExtractionPanel();
             AdjustFileProcessingPanels();
@@ -463,7 +463,7 @@ namespace MageFilePackager
 
         /// <summary>
         /// Since the list of files can be derived from different sources,
-        /// adjust the labelling to inform the user about which one was used
+        /// adjust the labeling to inform the user about which one was used
         /// </summary>
         private void AdjustFileListLabels()
         {
@@ -504,7 +504,7 @@ namespace MageFilePackager
         /// according to the combination of columns it has,
         /// and set its title accordingly
         /// </summary>
-        private void AdjustListDisplayTitleFromColumDefs()
+        private void AdjustListDisplayTitleFromColumnDefs()
         {
             if (_mCurrentCmd.Action == "reload_list_display" || _mCurrentCmd.Action == "display_reloaded")
             {
@@ -577,14 +577,14 @@ namespace MageFilePackager
             //--            return ModuleDiscovery.GetQueryXMLDef(queryName);
         }
 
-        private Dictionary<string, string> GetRuntimeParmsForEntityQuery()
+        private Dictionary<string, string> GetRuntimeParamsForEntityQuery()
         {
             Control queryPage = EntityListSourceTabs.SelectedTab;
             var panel = PanelSupport.GetParameterPanel(queryPage);
             return panel.GetParameters();
         }
 
-        private Dictionary<string, string> GetRuntimeParmsForEntityFileType(string entityType)
+        private Dictionary<string, string> GetRuntimeParamsForEntityFileType(string entityType)
         {
             var rp = new Dictionary<string, string> {
                              {"FileSelectors", EntityFilePanel1.FileSelectors},
@@ -624,7 +624,7 @@ namespace MageFilePackager
         /// <param name="args">Contains status information to be displayed</param>
         private void HandlePipelineCompletion(object sender, MageStatusEventArgs args)
         {
-            CompletionStateUpdated csu = AdjusttPostCommndUIState;
+            CompletionStateUpdated csu = AdjustPostCommandUIState;
             Invoke(csu, new object[] { null });
 
             if (args.Message.StartsWith(MSSQLReader.SQL_COMMAND_ERROR))

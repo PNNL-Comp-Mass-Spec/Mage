@@ -11,7 +11,7 @@ namespace Mage
     /// <summary>
     /// This module searches a list of folder paths for files and compares the file names
     /// against a set of file selection criteria and accumulates an internal list of files that pass,
-    /// and outputs the selected files (and their folder path) via standard tablular output
+    /// and outputs the selected files (and their folder path) via standard tabular output
     /// </summary>
     public class FileListFilter : FileListInfoBase
     {

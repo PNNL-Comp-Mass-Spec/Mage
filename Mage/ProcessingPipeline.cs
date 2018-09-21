@@ -267,7 +267,7 @@ namespace Mage
 
         /// <summary>
         /// Connect the standard tabular output events (column definition and row data)
-        /// of the upstream module to the standard tablular input handlers of the downstream module
+        /// of the upstream module to the standard tabular input handlers of the downstream module
         /// </summary>
         /// <param name="upstreamModule">Module name of upstream module</param>
         /// <param name="downstreamModule">Module name of downstream module</param>
@@ -291,7 +291,7 @@ namespace Mage
 
         /// <summary>
         /// Connect the standard tabular output events (column definition and row data)
-        /// of the upstream module to the standard tablular input handlers of the downstream module
+        /// of the upstream module to the standard tabular input handlers of the downstream module
         /// </summary>
         /// <param name="modUp">Upstream module</param>
         /// <param name="modDn">Downstream module</param>

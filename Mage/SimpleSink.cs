@@ -7,10 +7,10 @@ namespace Mage
 
     /// <summary>
     /// This Mage module can receive data over its standard tabular input
-    /// and perfrom several actions useful for testing other Mage modules
+    /// and perform several actions useful for testing other Mage modules
     /// or as a simple end terminus for a pipeline
     ///
-    /// By default, it outputs desriptions of column definition events and data rows that it
+    /// By default, it outputs descriptions of column definition events and data rows that it
     /// receives to the console (this behavior can be disabled via the WriteToConsole property)
     ///
     /// By default, it retains column definitions (via BaseModule behavior)
@@ -18,7 +18,7 @@ namespace Mage
     /// It also can accumulate data rows in an internal buffer.  The maximum number of rows
     /// that it will accumulate is set by the RowsToSave property (defaults to a few rows)
     ///
-    /// Both the column definitions and any accumulated data rows can be retreived by client
+    /// Both the column definitions and any accumulated data rows can be retrieved by client
     ///
     /// </summary>
     public class SimpleSink : BaseModule
@@ -51,12 +51,12 @@ namespace Mage
         public Collection<MageColumnDef> Columns => new Collection<MageColumnDef>(InputColumnDefs);
 
         /// <summary>
-        /// Assocation of name of input column with its column position index
+        /// Association of name of input column with its column position index
         /// </summary>
         public Dictionary<string, int> ColumnIndex => InputColumnPos;
 
         /// <summary>
-        /// Get rows that were accumumlated in the internal row buffer
+        /// Get rows that were accumulated in the internal row buffer
         /// </summary>
         public Collection<string[]> Rows => new Collection<string[]>(SavedRows);
 
@@ -108,7 +108,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Handler for Mage standard tablular input data rows
+        /// Handler for Mage standard tabular input data rows
         /// (override of base class)
         /// </summary>
         /// <param name="sender"></param>
@@ -139,7 +139,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Handler for Mage standard tablular column definition
+        /// Handler for Mage standard tabular column definition
         /// (override of base class)
         /// </summary>
         /// <param name="sender"></param>

@@ -53,7 +53,7 @@ namespace Mage
         public string label => ModLabel;
 
         /// <summary>
-        /// Get current decriptions
+        /// Get current descriptions
         /// </summary>
         public string description => ModDescription;
 

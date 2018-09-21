@@ -8,10 +8,10 @@ namespace Mage
     public interface ISinkModule
     {
 
-        // Module receives standard tablular input via these handlers
+        // Module receives standard tabular input via these handlers
 
         /// <summary>
-        /// Handler for Mage standard tablular input data rows
+        /// Handler for Mage standard tabular input data rows
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>

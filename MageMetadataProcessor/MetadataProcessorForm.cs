@@ -239,7 +239,7 @@ namespace MageMetadataProcessor
             statusPanel1.EnableCancel = enabled;
         }
 
-        private void AdjusttPostCommndUIState(object status)
+        private void AdjustPostCommandUIState(object status)
         {
             EnableCancel(false);
         }
@@ -260,7 +260,7 @@ namespace MageMetadataProcessor
             statusPanel1.HandleCompletionMessageUpdate(this, new MageStatusEventArgs(args.Message));
             Console.WriteLine(args.Message);
 
-            CompletionStateUpdated csu = AdjusttPostCommndUIState;
+            CompletionStateUpdated csu = AdjustPostCommandUIState;
             Invoke(csu, new object[] { null });
         }
 

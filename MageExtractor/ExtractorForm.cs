@@ -32,7 +32,7 @@ namespace MageExtractor
         /// <summary>
         /// The parameters for the slated extraction
         /// </summary>
-        private ExtractionType mExtractionParms;
+        private ExtractionType mExtractionParams;
 
         /// <summary>
         /// Where extracted results will be delivered
@@ -237,7 +237,7 @@ namespace MageExtractor
         {
             try
             {
-                mExtractionParms = GetExtractionParameters();
+                mExtractionParams = GetExtractionParameters();
                 mDestination = GetDestinationParameters();
 
                 if (mDestination == null)
@@ -246,7 +246,7 @@ namespace MageExtractor
                 if (!CheckForJobsToProcess()) return;
 
                 var mode = (command.Mode == "all") ? DisplaySourceMode.All : DisplaySourceMode.Selected;
-                var msg = ExtractionPipelines.CheckJobResultType(new GVPipelineSource(JobListDisplayCtl, mode), "Tool", mExtractionParms);
+                var msg = ExtractionPipelines.CheckJobResultType(new GVPipelineSource(JobListDisplayCtl, mode), "Tool", mExtractionParams);
                 if (!string.IsNullOrEmpty(msg))
                 {
                     MessageBox.Show(msg, "Invalid Selection", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -256,7 +256,7 @@ namespace MageExtractor
                 if (!DestinationType.VerifyDestinationOptionsWithUser(mDestination)) return;
 
                 // Validate the MSGF and FDR cutoffs
-                if (!ValidateThreshold(mExtractionParms.MSGFCutoff, "MSGF SpecProb Cutoff"))
+                if (!ValidateThreshold(mExtractionParams.MSGFCutoff, "MSGF SpecProb Cutoff"))
                     return;
 
                 try
@@ -494,13 +494,13 @@ namespace MageExtractor
 
         /// <summary>
         /// Build and run Mage pipeline queue to extract contents of results files
-        /// for jobs given in jobList according to parameters defined in mExtractionParms
+        /// for jobs given in jobList according to parameters defined in mExtractionParams
         /// and deliver output according to mDestination.  Also create metadata file for jobList.
         /// </summary>
         /// <param name="jobList"></param>
         private void ExtractFileContents(BaseModule jobList)
         {
-            mPipelineQueue = ExtractionPipelines.MakePipelineQueueToExtractFromJobList(jobList, mExtractionParms, mDestination);
+            mPipelineQueue = ExtractionPipelines.MakePipelineQueueToExtractFromJobList(jobList, mExtractionParams, mDestination);
             foreach (var p in mPipelineQueue.Pipelines.ToArray())
             {
                 ConnectPipelineToStatusDisplay(p);
