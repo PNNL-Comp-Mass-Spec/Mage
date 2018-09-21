@@ -12,7 +12,7 @@ namespace BiodiversityFileCopy
     public override bool BuildPaths(string[] outRow, ref string srcFilePath, ref string destFilepath)
     {
       if (srcFilePath == null) throw new ArgumentNullException("srcFilePath");
-      var sourceFolder = outRow[SourceFldrIdx];
+      var sourceFolder = outRow[SourceFolderIdx];
       var dataset = outRow[DatasetIdx];
       var datasetFile = dataset + ".RAW";
       srcFilePath = Path.Combine(sourceFolder, datasetFile);

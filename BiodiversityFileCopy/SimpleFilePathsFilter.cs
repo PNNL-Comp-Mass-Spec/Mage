@@ -20,7 +20,7 @@ namespace BiodiversityFileCopy
       // skip input rows that don't actually specify a file
       if (outRow[ItemIdx] == "file")
       {
-        srcFilePath = Path.Combine(outRow[SourceFldrIdx], outRow[FileIdx]);
+        srcFilePath = Path.Combine(outRow[SourceFolderIdx], outRow[FileIdx]);
         var msgfFileName = outRow[FileIdx];
         var ogName = outRow[OrgNameIdx];
         destFilepath = Path.Combine(DestinationRootFolderPath, ogName, OutputSubfolderName, msgfFileName);

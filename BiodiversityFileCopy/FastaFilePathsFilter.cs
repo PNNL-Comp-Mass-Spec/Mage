@@ -4,14 +4,14 @@ using System.IO;
 namespace BiodiversityFileCopy
 {
   /// <summary>
-  /// Mage filter that adds input and output fasta file paths to output stream
+  /// Mage filter that adds input and output FASTA file paths to output stream
   /// </summary>
   public class FastaFilePathsFilter : BaseFilePathsFilter
   {
     public override bool BuildPaths(string[] outRow, ref string srcFilePath, ref string destFilepath)
     {
       if (srcFilePath == null) throw new ArgumentNullException(nameof(srcFilePath));
-      var sourceFolder = outRow[SourceFldrIdx];
+      var sourceFolder = outRow[SourceFolderIdx];
       var fastaFileName = outRow[DatasetIdx];
       srcFilePath = Path.Combine(sourceFolder, fastaFileName);
       var ogName = outRow[OrgNameIdx];

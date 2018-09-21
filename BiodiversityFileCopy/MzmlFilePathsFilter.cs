@@ -42,7 +42,7 @@ namespace BiodiversityFileCopy
         // Save mzML cache file path for dataset based on tool
         // to internal buffer
         var datasetId = outRow[_datasetIdIdx];
-        var cacheFilePath = Path.Combine(outRow[SourceFldrIdx], outRow[FileIdx]);
+        var cacheFilePath = Path.Combine(outRow[SourceFolderIdx], outRow[FileIdx]);
         var gen = cacheFilePath.Contains(MzmlGenPattern);
 
         if (!_mzMLPaths.ContainsKey(datasetId)) {
@@ -79,7 +79,7 @@ namespace BiodiversityFileCopy
           row[SourceFileIdx] = q.GenPath;
         }
         Debug.Assert(row != null, "row != null");
-        var cacheFilePath = Path.Combine(row[SourceFldrIdx], row[FileIdx]);
+        var cacheFilePath = Path.Combine(row[SourceFolderIdx], row[FileIdx]);
         // var gen = cacheFilePath.Contains(_msxmlGenPattern);
 
         var fc = File.ReadAllLines(cacheFilePath);

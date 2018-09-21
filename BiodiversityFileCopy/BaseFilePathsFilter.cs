@@ -8,7 +8,7 @@ namespace BiodiversityFileCopy
   /// </summary>
   public abstract class BaseFilePathsFilter : ContentFilter
   {
-    protected int SourceFldrIdx;
+    protected int SourceFolderIdx;
     protected int DatasetIdx;
     protected int PkgIdIdx;
     protected int SourceFileIdx;
@@ -29,7 +29,7 @@ namespace BiodiversityFileCopy
     public override void HandleColumnDef(object sender, MageColumnEventArgs args)
     {
       base.HandleColumnDef(sender, args);
-      SourceFldrIdx = OutputColumnPos[SourceFolderPathColName];
+      SourceFolderIdx = OutputColumnPos[SourceFolderPathColName];
       DatasetIdx = OutputColumnPos[DatasetColName];
       PkgIdIdx = OutputColumnPos[DataPackageIDColName];
       SourceFileIdx = OutputColumnPos[SourceFilePathColName];
