@@ -1,5 +1,8 @@
 Mage Revision History
 
+Version 1.5.6838; September 21, 2018
+	- Updated MyEMSLReader.dll, Pacifica.Core.dll, and PRISM.dll
+
 Version 1.5.6746; June 21, 2018
 	- Search for files both the File and Folder checkboxes are unchecked
 
