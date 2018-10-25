@@ -37,6 +37,7 @@ namespace Mage
         /// </summary>
         protected const string COLUMN_NAME_DATASET_NUM = "Dataset_Num";
 
+        // ReSharper disable once CommentTypo
         // protected const string COLUMN_NAME_DATASETID = "DatasetID";
         // protected const string COLUMN_NAME_DATASET_ID = "Dataset_ID";
 
@@ -58,7 +59,7 @@ namespace Mage
         protected static List<DatasetDirectoryOrFileInfo> m_RecentlyFoundMyEMSLFiles;
 
         /// <summary>
-        /// All MyEMSL fils that pass filters; keys are MyEMSL File IDs, values are the MyEMSL Info.  Items will be auto-purged from this list if the list grows to over 1 million records
+        /// All MyEMSL files that pass filters; keys are MyEMSL File IDs, values are the MyEMSL Info.  Items will be auto-purged from this list if the list grows to over 1 million records
         /// </summary>
         /// <remarks>This dictionary is used by the FileCopy class to determine the archived file info for a file in MyEMSL using MyEMSLFile ID</remarks>
         protected static Dictionary<Int64, DatasetDirectoryOrFileInfo> m_FilterPassingMyEMSLFiles;
