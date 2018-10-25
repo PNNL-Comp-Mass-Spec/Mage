@@ -63,10 +63,10 @@ namespace MageExtractor
 
             // These settings are loaded from file MageExtractor.exe.config
             // Typically gigasax and DMS5
-            Mage.Globals.DMSServer = Settings.Default.DMSServer;
-            Mage.Globals.DMSDatabase = Settings.Default.DMSDatabase;
+            Globals.DMSServer = Settings.Default.DMSServer;
+            Globals.DMSDatabase = Settings.Default.DMSDatabase;
 
-            txtServer.Text = "DMS Server: " + Mage.Globals.DMSServer;
+            txtServer.Text = "DMS Server: " + Globals.DMSServer;
 
             ModuleDiscovery.DMSServerOverride = Globals.DMSServer;
             ModuleDiscovery.DMSDatabaseOverride = Globals.DMSDatabase;
@@ -149,15 +149,15 @@ namespace MageExtractor
             }
 
             if (beta)
-                this.Text += " (beta)";
+                Text += " (beta)";
 
         }
 
         private void SetTags()
         {
-            this.JobListTabPage.Tag = TAG_JOB_IDs;
-            this.JobsFromDatasetIDTabPage.Tag = TAG_JOB_IDs_FROM_DATASETS;
-            this.DataPackageTabPage.Tag = TAG_DATA_PACKAGE_ID;
+            JobListTabPage.Tag = TAG_JOB_IDs;
+            JobsFromDatasetIDTabPage.Tag = TAG_JOB_IDs_FROM_DATASETS;
+            DataPackageTabPage.Tag = TAG_DATA_PACKAGE_ID;
         }
 
         /// <summary>

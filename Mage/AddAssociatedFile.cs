@@ -114,7 +114,7 @@ namespace Mage
                 {
                     if (resultFileName.IndexOf(sourceFileNamePart, StringComparison.OrdinalIgnoreCase) > 0)
                     {
-                        assocFileName = base.ReplaceEx(resultFileName, sourceFileNamePart, mAssociatedFileNameFragment);
+                        assocFileName = ReplaceEx(resultFileName, sourceFileNamePart, mAssociatedFileNameFragment);
                         break;
                     }
                 }
@@ -122,7 +122,7 @@ namespace Mage
                 if (string.IsNullOrEmpty(assocFileName))
                 {
                     // Match not found; this is unexpected
-                    assocFileName = base.ReplaceEx(resultFileName, mSourceFileNameFragment, mAssociatedFileNameFragment);
+                    assocFileName = ReplaceEx(resultFileName, mSourceFileNameFragment, mAssociatedFileNameFragment);
                 }
 
                 if (resultFileName.Contains("_msgfdb") && assocFileName.Contains("_msgfplus"))
