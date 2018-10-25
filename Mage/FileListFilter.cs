@@ -106,8 +106,8 @@ namespace Mage
                     for (var colIndex = 0; colIndex < outputColumnDefs.Count; colIndex++)
                     {
                         // Break each column spec into searchResult
-                        var colSpecFlds = outputColumnDefs[colIndex].Trim().Split('|');
-                        var outputColName = colSpecFlds[0].Trim();
+                        var colSpecFields = outputColumnDefs[colIndex].Trim().Split('|');
+                        var outputColName = colSpecFields[0].Trim();
 
                         if (outputColName == SourceFolderColumnName)
                             columnHeaders[colIndex] = path;
@@ -174,7 +174,7 @@ namespace Mage
             // Update folder paths if the File Name Selector starts with ..\
             foreach (var searchResult in mOutputBuffer)
             {
-                var path = searchResult[mFolderPathColIndx];
+                var path = searchResult[mFolderPathColIndex];
                 if (path.StartsWith(MYEMSL_PATH_FLAG))
                 {
                     // MyEMSL does not support relative file name filters
@@ -183,10 +183,10 @@ namespace Mage
 
                 var folderPathToSearch = HandleRelativePathFilter(path, filterSpec);
 
-                if (!string.Equals(folderPathToSearch, searchResult[mFolderPathColIndx]))
+                if (!string.Equals(folderPathToSearch, searchResult[mFolderPathColIndex]))
                 {
                     // Update the stored path
-                    searchResult[mFolderPathColIndx] = folderPathToSearch;
+                    searchResult[mFolderPathColIndex] = folderPathToSearch;
                 }
             }
 
@@ -206,7 +206,7 @@ namespace Mage
 
             foreach (var searchResult in mOutputBuffer)
             {
-                var path = searchResult[mFolderPathColIndx];
+                var path = searchResult[mFolderPathColIndex];
                 if (path.StartsWith(MYEMSL_PATH_FLAG))
                 {
                     // Recursive searching is handled differently for MyEMSL
@@ -219,7 +219,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Seach for files in the given folder
+        /// Search for files in the given folder
         /// </summary>
         /// <param name="outputBufferRowIdx">Row index in mOutputBuffer to examine</param>
         /// <param name="fileInfo">Dictionary of found files (input/output parameter)</param>
@@ -348,10 +348,10 @@ namespace Mage
         /// <summary>
         /// Add subdirectories to search list (used in recursive search mode)
         /// </summary>
-        /// <param name="searchResult">Search result row. Column at index mFolderPathColIndx will have a folder path </param>
+        /// <param name="searchResult">Search result row. Column at index mFolderPathColIndex will have a folder path </param>
         private void AddSearchSubfolders(string[] searchResult)
         {
-            var path = searchResult[mFolderPathColIndx];
+            var path = searchResult[mFolderPathColIndex];
             if (path.StartsWith(MYEMSL_PATH_FLAG))
                 return;
 
@@ -377,7 +377,7 @@ namespace Mage
 
                     var subfolderRow = (string[])searchResult.Clone();
                     var subfolderPath = Path.Combine(path, sfDi.Name);
-                    subfolderRow[mFolderPathColIndx] = subfolderPath;
+                    subfolderRow[mFolderPathColIndex] = subfolderPath;
                     mSearchSubfolders.Add(subfolderRow);
                     AddSearchSubfolders(subfolderRow);
                 }

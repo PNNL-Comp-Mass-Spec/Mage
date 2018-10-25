@@ -45,11 +45,11 @@ namespace Mage
         /// <summary>
         /// Column index that has the folder path
         /// </summary>
-        protected int mFolderPathColIndx = -1;
+        protected int mFolderPathColIndex = -1;
 
-        private int mFileNameOutColIndx = -1;
-        private int mFileSizeOutColIndx = -1;
-        private int mFileDateOutColIndx = -1;
+        private int mFileNameOutColIndex = -1;
+        private int mFileSizeOutColIndex = -1;
+        private int mFileDateOutColIndex = -1;
         private int mFileTypeOutColIndex = -1;
 
         #endregion
@@ -206,7 +206,7 @@ namespace Mage
         protected abstract void SetupSearch();
 
         /// <summary>
-        /// Seach for files in the given folder
+        /// Search for files in the given folder
         /// </summary>
         /// <param name="outputBufferRowIdx">Row index in mOutputBuffer to examine</param>
         /// <param name="fileInfo">Dictionary of found files (input/output parameter)</param>
@@ -228,10 +228,10 @@ namespace Mage
         {
 
             // Set up indexes for row columns
-            TryGetOutputColumnPos(SourceFolderColumnName, out mFolderPathColIndx);
-            TryGetOutputColumnPos(FileColumnName, out mFileNameOutColIndx);
-            TryGetOutputColumnPos(FileSizeColumnName, out mFileSizeOutColIndx);
-            TryGetOutputColumnPos(FileDateColumnName, out mFileDateOutColIndx);
+            TryGetOutputColumnPos(SourceFolderColumnName, out mFolderPathColIndex);
+            TryGetOutputColumnPos(FileColumnName, out mFileNameOutColIndex);
+            TryGetOutputColumnPos(FileSizeColumnName, out mFileSizeOutColIndex);
+            TryGetOutputColumnPos(FileDateColumnName, out mFileDateOutColIndex);
 
             if (string.IsNullOrEmpty(FileTypeColumnName))
                 mFileTypeOutColIndex = -1;
@@ -247,8 +247,8 @@ namespace Mage
             for (var outputBufferRowIdx = 0; outputBufferRowIdx < mOutputBuffer.Count; outputBufferRowIdx++)
             {
                 var folderPathSpec = string.Empty;
-                if (mFolderPathColIndx < mOutputBuffer[outputBufferRowIdx].Length)
-                    folderPathSpec = mOutputBuffer[outputBufferRowIdx][mFolderPathColIndx];
+                if (mFolderPathColIndex < mOutputBuffer[outputBufferRowIdx].Length)
+                    folderPathSpec = mOutputBuffer[outputBufferRowIdx][mFolderPathColIndex];
 
                 var datasetName = DetermineDatasetName(mOutputBuffer[outputBufferRowIdx], folderPathSpec);
 
@@ -279,7 +279,7 @@ namespace Mage
                     break;
                 }
 
-                var folderPathSpec = mOutputBuffer[outputBufferRowIdx][mFolderPathColIndx];
+                var folderPathSpec = mOutputBuffer[outputBufferRowIdx][mFolderPathColIndex];
                 var folderPaths = new List<string>();
 
                 // FolderPathSpec may contain multiple folders, separated by a vertical bar
@@ -429,11 +429,11 @@ namespace Mage
             if (mFileTypeOutColIndex > -1)
             {
                 outRow[mFileTypeOutColIndex] = "folder";
-                outRow[mFolderPathColIndx] = folderPath;
+                outRow[mFolderPathColIndex] = folderPath;
             }
-            outRow[mFileNameOutColIndx] = subfolderName;
-            // if (mFileSizeOutColIndx > -1)
-            //    outRow[mFileSizeOutColIndx] = 0;
+            outRow[mFileNameOutColIndex] = subfolderName;
+            // if (mFileSizeOutColIndex > -1)
+            //    outRow[mFileSizeOutColIndex] = 0;
             OnDataRowAvailable(new MageDataEventArgs(outRow));
         }
 
@@ -451,14 +451,14 @@ namespace Mage
             if (mFileTypeOutColIndex > -1)
             {
                 outRow[mFileTypeOutColIndex] = "file";
-                outRow[mFolderPathColIndx] = folderPath;
+                outRow[mFolderPathColIndex] = folderPath;
             }
-            outRow[mFileNameOutColIndx] = fileName;
-            if (mFileSizeOutColIndx > -1)
-                outRow[mFileSizeOutColIndx] = fileSizeKB;
+            outRow[mFileNameOutColIndex] = fileName;
+            if (mFileSizeOutColIndex > -1)
+                outRow[mFileSizeOutColIndex] = fileSizeKB;
 
-            if (mFileDateOutColIndx > -1)
-                outRow[mFileDateOutColIndx] = fileDate;
+            if (mFileDateOutColIndex > -1)
+                outRow[mFileDateOutColIndex] = fileDate;
 
             OnDataRowAvailable(new MageDataEventArgs(outRow));
         }
@@ -474,7 +474,7 @@ namespace Mage
                 mOutputBuffer[outputBufferRowIdx][mFileTypeOutColIndex] = "";
             }
             // Output record that says we didn't find any files
-            mOutputBuffer[outputBufferRowIdx][mFileNameOutColIndx] = kNoFilesFound;
+            mOutputBuffer[outputBufferRowIdx][mFileNameOutColIndex] = kNoFilesFound;
             OnDataRowAvailable(new MageDataEventArgs(mOutputBuffer[outputBufferRowIdx]));
         }
 
@@ -485,7 +485,7 @@ namespace Mage
         /// <param name="msg"></param>
         protected void ReportSearchErrorToOutput(int outputBufferRowIdx, string msg)
         {
-            mOutputBuffer[outputBufferRowIdx][mFileNameOutColIndx] = "--Error: " + msg;
+            mOutputBuffer[outputBufferRowIdx][mFileNameOutColIndex] = "--Error: " + msg;
             traceLogFileList.Error(msg);
             OnDataRowAvailable(new MageDataEventArgs(mOutputBuffer[outputBufferRowIdx]));
         }

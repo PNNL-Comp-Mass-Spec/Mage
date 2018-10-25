@@ -7,7 +7,7 @@ namespace Mage
 
     /// <summary>
     /// Mage module that reads content of a delimited files
-    /// and streams it to Mage standard tabular ouput
+    /// and streams it to Mage standard tabular output
     /// </summary>
     public class DelimitedFileReader : FileProcessingBase
     {
@@ -96,7 +96,7 @@ namespace Mage
         {
             var checkDelimiter = true;
             var tabDelimited = true;
-            var delim = "\t".ToCharArray();
+            var delimiter = "\t".ToCharArray();
 
             // This RegEx is used to parse CSV files
             // It assures that we only split on commas that are not inside double-quoted strings
@@ -131,7 +131,7 @@ namespace Mage
                         string[] fields;
                         if (tabDelimited)
                         {
-                            fields = line.Split(delim);
+                            fields = line.Split(delimiter);
                         }
                         else
                         {
@@ -172,7 +172,7 @@ namespace Mage
 
         private void OutputFileContents()
         {
-            var delim = Delimiter.ToCharArray();
+            var delimiter = Delimiter.ToCharArray();
 
             using (var fileReader = new StreamReader(new FileStream(FilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
             {
@@ -184,7 +184,7 @@ namespace Mage
                         ReportProcessingAborted();
                         break;
                     }
-                    var fields = line.Split(delim);
+                    var fields = line.Split(delimiter);
                     if (doHeaderLine)
                     {
                         doHeaderLine = false;

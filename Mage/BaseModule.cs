@@ -207,7 +207,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Arbritrary name for a particular module object.
+        /// Arbitrary name for a particular module object.
         /// This will be the same name that the pipeline has for this object.
         /// </summary>
         public string ModuleName { get; set; }
@@ -477,7 +477,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Perform case insenstive replacement string replace
+        /// Perform case insensitive replacement string replace
         /// </summary>
         /// <param name="original">Text to search</param>
         /// <param name="pattern">Text to find</param>
@@ -491,7 +491,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Perform case insenstive replacement string replace
+        /// Perform case insensitive replacement string replace
         /// </summary>
         /// <param name="original">Text to search</param>
         /// <param name="pattern">Text to find</param>
@@ -585,17 +585,17 @@ namespace Mage
                 foreach (var colSpec in OutputColumnList.Split(','))
                 {
                     // Break each column spec into fields
-                    var colSpecFlds = colSpec.Trim().Split('|');
-                    var outputColName = colSpecFlds[0].Trim();
-                    var inputColName = (colSpecFlds.Length > 1) ? colSpecFlds[1].Trim() : "";
-                    var type = (colSpecFlds.Length > 2) ? colSpecFlds[2].Trim() : "";
-                    var size = (colSpecFlds.Length > 3) ? colSpecFlds[3].Trim() : "";
+                    var colSpecFields = colSpec.Trim().Split('|');
+                    var outputColName = colSpecFields[0].Trim();
+                    var inputColName = (colSpecFields.Length > 1) ? colSpecFields[1].Trim() : "";
+                    var type = (colSpecFields.Length > 2) ? colSpecFields[2].Trim() : "";
+                    var size = (colSpecFields.Length > 3) ? colSpecFields[3].Trim() : "";
 
                     if (outputColName == "*")
                     {
                         // Wildcard
                         // Copy input column def to output col def for any input columns
-                        // not already in output colums list
+                        // not already in output column list
                         outColIdx = MapOutputColumnsForUnmappedInputColumns(outColIdx);
                         continue;
                     }
@@ -639,7 +639,7 @@ namespace Mage
 
         /// <summary>
         /// Add output column definitions that are a pass-through of an input column
-        /// for any input columns not already mapped to output colums list
+        /// for any input columns not already mapped to output column list
         /// </summary>
         private int MapOutputColumnsForUnmappedInputColumns(int outColIdx)
         {

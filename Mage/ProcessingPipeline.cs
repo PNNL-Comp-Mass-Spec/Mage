@@ -216,7 +216,7 @@ namespace Mage
 
 
         /// <summary>
-        /// Terminate exection of pipleline
+        /// Terminate execution of pipeline
         /// </summary>
         public void Cancel()
         {
@@ -374,7 +374,7 @@ namespace Mage
         /// Create a new module of class named by moduleType
         /// and set its name as given by moduleName, and add it to pipeline
         /// </summary>
-        /// <param name="moduleName">Arbitrary name to set for new moudle</param>
+        /// <param name="moduleName">Arbitrary name to set for new module</param>
         /// <param name="moduleType">name of class to instantiate the module from</param>
         /// <returns>Module</returns>
         public IBaseModule MakeModule(string moduleName, string moduleType)
@@ -572,7 +572,7 @@ namespace Mage
         public void SetAllModuleParameters(string pipelineModuleParams)
         {
             // Step though XML document that defines parameters for modules.
-            // For each module in the document, extract a key/value list of paramters
+            // For each module in the document, extract a key/value list of parameters
             // and send them to the module
 
             // Parse the XML definition of the module parameters
@@ -583,7 +583,7 @@ namespace Mage
             // Step through list of module sections in specification
             var xnl = doc.SelectNodes(".//module");
 
-            // Do section for current module in specifiction
+            // Do section for current module in specification
             if (xnl == null)
             {
                 return;
@@ -591,7 +591,7 @@ namespace Mage
 
             foreach (XmlNode modNode in xnl)
             {
-                // Get the name of the module that the paramters belong to
+                // Get the name of the module that the parameters belong to
                 if (modNode.Attributes == null)
                 {
                     continue;
@@ -601,12 +601,12 @@ namespace Mage
 
                 // Build list of parameters for the module
                 var moduleParams = new Dictionary<string, string>();
-                foreach (XmlNode parmNode in modNode.ChildNodes)
+                foreach (XmlNode paramNode in modNode.ChildNodes)
                 {
-                    if (parmNode.Attributes != null)
+                    if (paramNode.Attributes != null)
                     {
-                        var paramName = parmNode.Attributes["name"].InnerText;
-                        var paramVal = parmNode.InnerText;
+                        var paramName = paramNode.Attributes["name"].InnerText;
+                        var paramVal = paramNode.InnerText;
                         moduleParams.Add(paramName, paramVal);
                     }
                 }
@@ -755,13 +755,13 @@ namespace Mage
                 var pnl = n.SelectNodes(".//param");
                 if (pnl != null)
                 {
-                    foreach (XmlNode parmNode in pnl)
+                    foreach (XmlNode paramNode in pnl)
                     {
-                        if (parmNode.Attributes == null)
+                        if (paramNode.Attributes == null)
                             continue;
 
-                        var paramName = parmNode.Attributes["name"].InnerText;
-                        var paramVal = parmNode.InnerText;
+                        var paramName = paramNode.Attributes["name"].InnerText;
+                        var paramVal = paramNode.InnerText;
                         mod.SetPropertyByName(paramName, paramVal);
                     }
                 }

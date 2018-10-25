@@ -31,7 +31,7 @@ namespace Mage
         private DateTime stopTime;
         private TimeSpan duration;
 
-        private readonly Dictionary<string, string> mSprocParameters = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> mStoredProcParameters = new Dictionary<string, string>();
 
         #endregion
 
@@ -68,12 +68,12 @@ namespace Mage
         public string Password { get; set; } = string.Empty;
 
         /// <summary>
-        /// SQL statement to run to get rowset
+        /// SQL statement to run to obtain data
         /// </summary>
         public string SQLText { get; set; } = string.Empty;
 
         /// <summary>
-        /// Name of stored procedure to call to get rowset
+        /// Name of stored procedure to call to obtain data
         /// (must be blank of straight SQL query is being used instead)
         /// </summary>
         public string SprocName { get; set; } = string.Empty;
@@ -86,7 +86,7 @@ namespace Mage
         /// <param name="value">Value for argument</param>
         public void SetSprocParam(string name, string value)
         {
-            mSprocParameters[name] = value;
+            mStoredProcParameters[name] = value;
         }
 
         #endregion
@@ -202,7 +202,7 @@ namespace Mage
         #region Initialization
 
         /// <summary>
-        /// Set this module's properties using initialized SQLBuiler
+        /// Set this module's properties using initialized SQLBuilder
         /// </summary>
         /// <param name="builder">SQL builder</param>
         /// <param name="username">SQL Server Username; leave blank (or null) to use integrated authentication</param>
@@ -222,9 +222,9 @@ namespace Mage
             {
                 // If query is via sproc call, set sproc arguments
                 SprocName = builder.SprocName;
-                foreach (var parm in builder.SprocParameters)
+                foreach (var param in builder.SprocParameters)
                 {
-                    SetSprocParam(parm.Key, parm.Value);
+                    SetSprocParam(param.Key, param.Value);
                 }
             }
             else
@@ -371,13 +371,13 @@ namespace Mage
         /// </summary>
         private void GetDataFromDatabaseSproc()
         {
-            var myCmd = GetSprocCmd(SprocName, mSprocParameters);
+            var myCmd = GetSprocCmd(SprocName, mStoredProcParameters);
             var myReader = myCmd.ExecuteReader();
             GetData(myReader);
         }
 
         /// <summary>
-        /// Deliver rowset from query via standard tabular output
+        /// Deliver data from query via standard tabular output
         /// </summary>
         /// <param name="myReader"></param>
         private void GetData(IDataReader myReader)

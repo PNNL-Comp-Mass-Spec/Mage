@@ -10,7 +10,7 @@ namespace Mage
     /// <summary>
     /// This modules accepts a list of files on standard tabular input
     /// looks for an associated file for each one and adds that file's
-    /// name to standard ouput stream
+    /// name to standard output stream
     /// </summary>
     public class AddAssociatedFile : FileProcessingBase
     {
@@ -61,9 +61,9 @@ namespace Mage
             get => string.Format("{0}|{1}", mSourceFileNameFragment, mAssociatedFileNameFragment);
             set
             {
-                var flds = value.Split('|');
-                mSourceFileNameFragment = flds[0];
-                mAssociatedFileNameFragment = flds[1];
+                var fields = value.Split('|');
+                mSourceFileNameFragment = fields[0];
+                mAssociatedFileNameFragment = fields[1];
             }
         }
 

@@ -35,7 +35,7 @@ namespace Mage
         public string Database { get; set; }
 
         /// <summary>
-        /// SQL query to execute agains database
+        /// SQL query to execute against database
         /// </summary>
         public string SQLText { get; set; }
 
@@ -114,7 +114,7 @@ namespace Mage
         #region Initialization
 
         /// <summary>
-        /// Set this module's properties using initialized SQLBuiler
+        /// Set this module's properties using initialized SQLBuilder
         /// </summary>
         /// <param name="builder">SQL builder</param>
         private void SetPropertiesFromBuilder(SQLBuilder builder)
@@ -181,10 +181,10 @@ namespace Mage
                         // builder.PageSize = 4096
                         // builder.UseUTF16Encoding = True
             */
-            var connstring = builder.ConnectionString;
+            var connString = builder.ConnectionString;
 
             // Note: providing true for parseViaFramework as a workaround for reading SqLite files located on UNC or in readonly folders
-            mConnection = new SQLiteConnection(connstring, true);
+            mConnection = new SQLiteConnection(connString, true);
             mConnection.Open();
         }
 
