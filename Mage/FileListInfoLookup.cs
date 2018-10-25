@@ -132,13 +132,10 @@ namespace Mage
 
         private FileInfo GetFileInfoMyEMSL(string folderPath, string fileName, string datasetName)
         {
-            string subDir;
-            string parentFolders;
 
-            GetMyEMSLParentFoldersAndSubDir(folderPath, datasetName, out subDir, out parentFolders);
+            GetMyEMSLParentFoldersAndSubDir(folderPath, datasetName, out var subDir, out var parentFolders);
 
-            string fileNameClean;
-            DatasetInfoBase.ExtractMyEMSLFileID(fileName, out fileNameClean);
+            DatasetInfoBase.ExtractMyEMSLFileID(fileName, out var fileNameClean);
 
             m_RecentlyFoundMyEMSLFiles = m_MyEMSLDatasetInfoCache.FindFiles(fileNameClean, subDir, datasetName, recurse: false);
 

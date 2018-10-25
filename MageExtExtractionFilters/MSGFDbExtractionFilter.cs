@@ -116,8 +116,7 @@ namespace MageExtExtractionFilters
 
                 if (!mOutputAllProteins)
                 {
-                    string warningMessage;
-                    var mergeSuccess = mProteinMerger.MergeFirstProtein(outRow, out warningMessage);
+                    var mergeSuccess = mProteinMerger.MergeFirstProtein(outRow, out var warningMessage);
                     if (!mergeSuccess)
                     {
                         // mProteinMerger does not have a record of this row's ResultID
@@ -150,9 +149,8 @@ namespace MageExtExtractionFilters
                 }
                 else
                 {
-                    bool matchFound;
 
-                    var rows = mProteinMerger.MergeAllProteins(outRow, out matchFound);
+                    var rows = mProteinMerger.MergeAllProteins(outRow, out var matchFound);
                     if (rows == null)
                     {
                         // Either the peptide only maps to one protein, or the ProteinMerger did not find a match for the row
@@ -285,9 +283,8 @@ namespace MageExtExtractionFilters
 
         public static int GetMSGFDBColumnIndex(Dictionary<MSGFDBColumns, int> columnPos, MSGFDBColumns columnName)
         {
-            int value;
 
-            if (columnPos.TryGetValue(columnName, out value))
+            if (columnPos.TryGetValue(columnName, out var value))
                 return value;
 
             return -1;
@@ -312,9 +309,8 @@ namespace MageExtExtractionFilters
         private void PrecalculateFieldIndexes(Dictionary<string, int> columnPos)
         {
 
-            Dictionary<MSGFDBColumns, int> dctColumnMapping;
 
-            DetermineFieldIndexes(columnPos, out dctColumnMapping);
+            DetermineFieldIndexes(columnPos, out var dctColumnMapping);
 
             mColumnIndices.ScanNumber = GetMSGFDBColumnIndex(dctColumnMapping, MSGFDBColumns.Scan);
             mColumnIndices.PeptideSequence = GetMSGFDBColumnIndex(dctColumnMapping, MSGFDBColumns.Peptide);

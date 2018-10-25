@@ -153,14 +153,11 @@ namespace Mage
                     {
                         if (resultFolderPath.StartsWith(MYEMSL_PATH_FLAG))
                         {
-                            string subDir;
-                            string parentFolders;
                             var datasetName = DetermineDatasetName(resultFolderPath);
 
-                            GetMyEMSLParentFoldersAndSubDir(resultFolderPath, datasetName, out subDir, out parentFolders);
+                            GetMyEMSLParentFoldersAndSubDir(resultFolderPath, datasetName, out var subDir, out _);
 
-                            string assocFileNameClean;
-                            DatasetInfoBase.ExtractMyEMSLFileID(assocFileName, out assocFileNameClean);
+                            DatasetInfoBase.ExtractMyEMSLFileID(assocFileName, out var assocFileNameClean);
 
                             m_RecentlyFoundMyEMSLFiles = m_MyEMSLDatasetInfoCache.FindFiles(assocFileNameClean, subDir, datasetName, recurse: false);
                             if (m_RecentlyFoundMyEMSLFiles.Count > 0)

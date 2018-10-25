@@ -94,8 +94,7 @@ namespace Mage
                 if (sourcePath.StartsWith(MYEMSL_PATH_FLAG))
                 {
                     var myEMSLFileID = DatasetInfoBase.ExtractMyEMSLFileID(sourcePath);
-                    string destPathClean;
-                    DatasetInfoBase.ExtractMyEMSLFileID(destPath, out destPathClean);
+                    DatasetInfoBase.ExtractMyEMSLFileID(destPath, out var destPathClean);
 
                     if (!OverwriteExistingFiles && File.Exists(destPathClean))
                     {
@@ -106,8 +105,7 @@ namespace Mage
                     }
                     else
                     {
-                        DatasetDirectoryOrFileInfo cachedFileInfo;
-                        if (m_FilterPassingMyEMSLFiles.TryGetValue(myEMSLFileID, out cachedFileInfo))
+                        if (m_FilterPassingMyEMSLFiles.TryGetValue(myEMSLFileID, out var cachedFileInfo))
                         {
                             UpdateStatus(this, new MageStatusEventArgs("Queuing file for Download->" + sourceFile));
 
@@ -363,12 +361,9 @@ namespace Mage
 
             try
             {
-                // Download the files
-                string subDir;
-                string parentFolders;
                 var datasetName = DetermineDatasetName(sourceFolder.FullName);
 
-                GetMyEMSLParentFoldersAndSubDir(sourceFolder.FullName, datasetName, out subDir, out parentFolders);
+                GetMyEMSLParentFoldersAndSubDir(sourceFolder.FullName, datasetName, out var subDir, out var parentFolders);
 
                 m_RecentlyFoundMyEMSLFiles = m_MyEMSLDatasetInfoCache.FindFiles("*", subDir, datasetName, true);
 
@@ -446,7 +441,7 @@ namespace Mage
                     if (reader.EndOfStream)
                     {
                         UpdateStatus(this, new MageStatusEventArgs("WARNING->CacheInfo file is empty: " + cacheInfoFilePath, 0));
-                        OnWarningMessage(new MageStatusEventArgs("WARNING->CacheInfo fileis empty: " + cacheInfoFilePath));
+                        OnWarningMessage(new MageStatusEventArgs("WARNING->CacheInfo file is empty: " + cacheInfoFilePath));
                         return false;
                     }
 
@@ -455,7 +450,7 @@ namespace Mage
                     if (string.IsNullOrWhiteSpace(remoteFilePath))
                     {
                         UpdateStatus(this, new MageStatusEventArgs("WARNING->CacheInfo file is empty: " + cacheInfoFilePath, 0));
-                        OnWarningMessage(new MageStatusEventArgs("WARNING->CacheInfo fileis empty: " + cacheInfoFilePath));
+                        OnWarningMessage(new MageStatusEventArgs("WARNING->CacheInfo file is empty: " + cacheInfoFilePath));
                         return false;
                     }
 

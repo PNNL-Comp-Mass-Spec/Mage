@@ -92,8 +92,7 @@ namespace MageExtExtractionFilters
 
                 if (!mOutputAllProteins)
                 {
-                    string warningMessage;
-                    if (!mProteinMerger.MergeFirstProtein(outRow, out warningMessage))
+                    if (!mProteinMerger.MergeFirstProtein(outRow, out var warningMessage))
                     {
                         OnWarningMessage(
                             new MageStatusEventArgs("ProteinMerger reports " + warningMessage + " for row " + mTotalRowsCounter));
@@ -103,8 +102,7 @@ namespace MageExtExtractionFilters
                 }
                 else
                 {
-                    bool matchFound;
-                    var rows = mProteinMerger.MergeAllProteins(outRow, out matchFound);
+                    var rows = mProteinMerger.MergeAllProteins(outRow, out var matchFound);
                     if (rows == null)
                     {
                         CheckFilter(outRow);

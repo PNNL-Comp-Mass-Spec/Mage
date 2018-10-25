@@ -86,12 +86,8 @@ namespace Mage
             }
 
             downloadFolderPath = Path.Combine(downloadFolderPath, MAGE_TEMP_FILES_FOLDER);
-
-            // Look for the Folder and Name columns
-            int folderColIndex;
-            int filenameColIndex;
-            if (mSink.ColumnIndex.TryGetValue("Folder", out folderColIndex) &&
-                mSink.ColumnIndex.TryGetValue("Name", out filenameColIndex))
+            if (mSink.ColumnIndex.TryGetValue("Folder", out var folderColIndex) &&
+                mSink.ColumnIndex.TryGetValue("Name", out var filenameColIndex))
             {
                 for (var i = 0; i < mSink.Rows.Count; i++)
                 {
@@ -172,15 +168,13 @@ namespace Mage
             if (filePathWithID == kNoFilesFound)
                 return false;
 
-            string filePathClean;
 
-            var myEMSLFileID = DatasetInfoBase.ExtractMyEMSLFileID(filePathWithID, out filePathClean);
+            var myEMSLFileID = DatasetInfoBase.ExtractMyEMSLFileID(filePathWithID, out var filePathClean);
 
             if (myEMSLFileID <= 0)
                 return false;
 
-            DatasetDirectoryOrFileInfo cachedFileInfo;
-            if (m_FilterPassingMyEMSLFiles.TryGetValue(myEMSLFileID, out cachedFileInfo))
+            if (m_FilterPassingMyEMSLFiles.TryGetValue(myEMSLFileID, out var cachedFileInfo))
             {
                 m_MyEMSLDatasetInfoCache.AddFileToDownloadQueue(cachedFileInfo.FileInfo);
 

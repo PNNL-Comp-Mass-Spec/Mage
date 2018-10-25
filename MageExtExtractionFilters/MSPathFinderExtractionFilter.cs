@@ -105,8 +105,7 @@ namespace MageExtExtractionFilters
 
                 if (!mOutputAllProteins)
                 {
-                    string warningMessage;
-                    if (!mProteinMerger.MergeFirstProtein(outRow, out warningMessage))
+                    if (!mProteinMerger.MergeFirstProtein(outRow, out var warningMessage))
                     {
                         OnWarningMessage(
                             new MageStatusEventArgs("ProteinMerger reports " + warningMessage + " for row " + mTotalRowsCounter));
@@ -121,9 +120,8 @@ namespace MageExtExtractionFilters
                 }
                 else
                 {
-                    bool matchFound;
 
-                    var rows = mProteinMerger.MergeAllProteins(outRow, out matchFound);
+                    var rows = mProteinMerger.MergeAllProteins(outRow, out var matchFound);
                     if (rows == null)
                     {
                         // Either the peptide only maps to one protein, or the ProteinMerger did not find a match for the row
@@ -230,9 +228,8 @@ namespace MageExtExtractionFilters
 
         public static int GetColumnIndex(Dictionary<MSPathFinderColumns, int> columnPos, MSPathFinderColumns columnName)
         {
-            int value;
 
-            if (columnPos.TryGetValue(columnName, out value))
+            if (columnPos.TryGetValue(columnName, out var value))
                 return value;
 
             return -1;
@@ -257,9 +254,8 @@ namespace MageExtExtractionFilters
         private void PrecalculateFieldIndexes(Dictionary<string, int> columnPos)
         {
 
-            Dictionary<MSPathFinderColumns, int> dctColumnMapping;
 
-            DetermineFieldIndexes(columnPos, out dctColumnMapping);
+            DetermineFieldIndexes(columnPos, out var dctColumnMapping);
 
             mColumnIndices.ScanNumber = GetColumnIndex(dctColumnMapping, MSPathFinderColumns.Scan);
             mColumnIndices.PeptideSequence = GetColumnIndex(dctColumnMapping, MSPathFinderColumns.Peptide);

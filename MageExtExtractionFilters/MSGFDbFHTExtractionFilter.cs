@@ -141,9 +141,8 @@ namespace MageExtExtractionFilters
 
         private void PrecalculateFieldIndexes(Dictionary<string, int> columnPos)
         {
-            Dictionary<MSGFDbExtractionFilter.MSGFDBColumns, int> dctColumnMapping;
 
-            MSGFDbExtractionFilter.DetermineFieldIndexes(columnPos, out dctColumnMapping);
+            MSGFDbExtractionFilter.DetermineFieldIndexes(columnPos, out var dctColumnMapping);
 
             peptideSequenceIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.Peptide);
             chargeStateIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.Charge);

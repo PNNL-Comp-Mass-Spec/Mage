@@ -98,9 +98,8 @@ namespace MageExtExtractionFilters
         public bool MergeFirstProtein(string[] outRow, out string warningMessage)
         {
             var resultID = outRow[LookupColumn];
-            int sequenceID;
 
-            if (!mProtDataLookup.TryGetValue(resultID, out sequenceID))
+            if (!mProtDataLookup.TryGetValue(resultID, out var sequenceID))
             {
                 warningMessage = "resultID " + resultID + " not found in the result to protein lookup table";
                 return false;
@@ -110,9 +109,8 @@ namespace MageExtExtractionFilters
             outRow[ODX_Terminus_State] = string.Empty;
             outRow[ODX_Protein_Name] = string.Empty;
 
-            int rowIdx;
 
-            if (!mFirstOccurrenceIndex.TryGetValue(sequenceID, out rowIdx))
+            if (!mFirstOccurrenceIndex.TryGetValue(sequenceID, out var rowIdx))
             {
                 warningMessage = "sequenceID " + sequenceID + " not found in the FirstOccurrence dictionary";
                 return false;
@@ -145,16 +143,14 @@ namespace MageExtExtractionFilters
         {
             Collection<string[]> outRows = null;
             var resultID = outRow[LookupColumn];
-            int sequenceID;
-            int rowIdx;
             matchFound = false;
 
-            if (!mProtDataLookup.TryGetValue(resultID, out sequenceID))
+            if (!mProtDataLookup.TryGetValue(resultID, out var sequenceID))
             {
                 return null;
             }
 
-            if (!mFirstOccurrenceIndex.TryGetValue(sequenceID, out rowIdx))
+            if (!mFirstOccurrenceIndex.TryGetValue(sequenceID, out var rowIdx))
             {
                 return null;
             }
@@ -235,36 +231,28 @@ namespace MageExtExtractionFilters
                 ProcessingPipeline.Assemble("Lookup Protein Data", protFileReader, mProteinData).RunRoot(null);
             }
 
-            int colIndexUniqueSeqID;
-            int colIndexCleavageState;
-            int colIndexTerminusState;
-            int colIndexProteinName;
-            int colIndexEValue;
-            int colIndexProteinIntensity;
-
-            if (!mProteinData.ColumnIndex.TryGetValue("Unique_Seq_ID", out colIndexUniqueSeqID))
+            if (!mProteinData.ColumnIndex.TryGetValue("Unique_Seq_ID", out var colIndexUniqueSeqID))
                 colIndexUniqueSeqID = -1;
-            if (!mProteinData.ColumnIndex.TryGetValue("Cleavage_State", out colIndexCleavageState))
+            if (!mProteinData.ColumnIndex.TryGetValue("Cleavage_State", out var colIndexCleavageState))
                 colIndexCleavageState = -1;
-            if (!mProteinData.ColumnIndex.TryGetValue("Terminus_State", out colIndexTerminusState))
+            if (!mProteinData.ColumnIndex.TryGetValue("Terminus_State", out var colIndexTerminusState))
                 colIndexTerminusState = -1;
-            if (!mProteinData.ColumnIndex.TryGetValue("Protein_Name", out colIndexProteinName))
+            if (!mProteinData.ColumnIndex.TryGetValue("Protein_Name", out var colIndexProteinName))
                 colIndexProteinName = -1;
-            if (!mProteinData.ColumnIndex.TryGetValue("Protein_Expectation_Value_Log(e)", out colIndexEValue))
+            if (!mProteinData.ColumnIndex.TryGetValue("Protein_Expectation_Value_Log(e)", out var colIndexEValue))
                 colIndexEValue = -1;
-            if (!mProteinData.ColumnIndex.TryGetValue("Protein_Intensity_Log(I)", out colIndexProteinIntensity))
+            if (!mProteinData.ColumnIndex.TryGetValue("Protein_Intensity_Log(I)", out var colIndexProteinIntensity))
                 colIndexProteinIntensity = -1;
 
             // Extract the protein data from the SimpleSink so that we can sort it
             mProteinDataSorted.Clear();
             for (var rowIdx = 0; rowIdx < mProteinData.Rows.Count; rowIdx++)
             {
-                int iValue;
 
                 var bValidProteinInfo = false;
                 var oProteinInfo = new ProteinInfo();
 
-                if (mProteinData.TryGetValueViaColumnIndex(colIndexUniqueSeqID, rowIdx, out iValue))
+                if (mProteinData.TryGetValueViaColumnIndex(colIndexUniqueSeqID, rowIdx, out int iValue))
                 {
                     bValidProteinInfo = true;
                     oProteinInfo.Unique_Seq_ID = iValue;
@@ -278,8 +266,7 @@ namespace MageExtExtractionFilters
                     if (mProteinData.TryGetValueViaColumnIndex(colIndexTerminusState, rowIdx, out iValue))
                         oProteinInfo.Terminus_State = iValue;
 
-                    string sValue;
-                    if (mProteinData.TryGetValueViaColumnIndex(colIndexProteinName, rowIdx, out sValue))
+                    if (mProteinData.TryGetValueViaColumnIndex(colIndexProteinName, rowIdx, out string sValue))
                         oProteinInfo.Protein_Name = sValue;
 
                     if (mProteinData.TryGetValueViaColumnIndex(colIndexEValue, rowIdx, out sValue))
@@ -312,8 +299,7 @@ namespace MageExtExtractionFilters
             mProtDataLookup = new Dictionary<string, int>();
             foreach (var row in resultToSequenceMap.Rows)
             {
-                int sID;
-                if (int.TryParse(row[1], out sID))
+                if (int.TryParse(row[1], out var sID))
                 {
                     mProtDataLookup[row[0]] = sID;
                 }

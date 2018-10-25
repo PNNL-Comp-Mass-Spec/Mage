@@ -114,8 +114,7 @@ namespace Mage
                 m_FilterPassingMyEMSLFiles = new Dictionary<long, DatasetDirectoryOrFileInfo>();
 
 
-            DatasetDirectoryOrFileInfo fileInfoCached;
-            if (!m_FilterPassingMyEMSLFiles.TryGetValue(fileInfo.FileID, out fileInfoCached))
+            if (!m_FilterPassingMyEMSLFiles.TryGetValue(fileInfo.FileID, out var fileInfoCached))
             {
                 m_FilterPassingMyEMSLFiles.Add(fileInfo.FileID, new DatasetDirectoryOrFileInfo(fileInfo.FileID, false, fileInfo));
             }
@@ -255,14 +254,12 @@ namespace Mage
 
             if (filePathRemote.StartsWith(MYEMSL_PATH_FLAG))
             {
-                string filePathClean;
-                var myEMSLFileID = DatasetInfoBase.ExtractMyEMSLFileID(filePathRemote, out filePathClean);
+                var myEMSLFileID = DatasetInfoBase.ExtractMyEMSLFileID(filePathRemote, out var filePathClean);
 
                 if (myEMSLFileID <= 0)
                     throw new MageException("MyEMSL File does not have the MyEMSL FileID tag (" + MyEMSLReader.DatasetInfoBase.MYEMSL_FILE_ID_TAG + "): " + filePathRemote);
 
-                DatasetDirectoryOrFileInfo cachedFileInfo;
-                if (m_FilterPassingMyEMSLFiles.TryGetValue(myEMSLFileID, out cachedFileInfo))
+                if (m_FilterPassingMyEMSLFiles.TryGetValue(myEMSLFileID, out var cachedFileInfo))
                 {
                     filePathLocal = Path.Combine(Path.GetTempPath(), MAGE_TEMP_FILES_FOLDER, cachedFileInfo.FileInfo.Dataset, Path.GetFileName(filePathClean));
 

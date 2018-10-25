@@ -140,14 +140,12 @@ namespace MageExtExtractionFilters
 
                         for (var i = 0; i < filesToDownload.Count; i++)
                         {
-                            string filePathClean;
-                            var myEMSLFileID = DatasetInfoBase.ExtractMyEMSLFileID(filesToDownload[i], out filePathClean);
+                            var myEMSLFileID = DatasetInfoBase.ExtractMyEMSLFileID(filesToDownload[i], out _);
 
                             if (myEMSLFileID <= 0)
                                 throw new MageException("File does not have the MyEMSL FileID tag (" + DatasetInfoBase.MYEMSL_FILE_ID_TAG + "): " + filesToDownload[i]);
 
-                            DatasetDirectoryOrFileInfo cachedFileInfo;
-                            if (m_FilterPassingMyEMSLFiles.TryGetValue(myEMSLFileID, out cachedFileInfo))
+                            if (m_FilterPassingMyEMSLFiles.TryGetValue(myEMSLFileID, out var cachedFileInfo))
                             {
                                 if (i == 0)
                                 {
@@ -191,8 +189,7 @@ namespace MageExtExtractionFilters
                 {
                     mf.MergeFileName = (mf.ColumnIndx < 0) ? "" : args.Fields[mf.ColumnIndx];
 
-                    string filePathClean;
-                    var myEMSLFileID = DatasetInfoBase.ExtractMyEMSLFileID(mf.MergeFileName, out filePathClean);
+                    var myEMSLFileID = DatasetInfoBase.ExtractMyEMSLFileID(mf.MergeFileName, out var filePathClean);
 
                     if (myEMSLFileID > 0)
                         mf.MergeFileName = filePathClean;

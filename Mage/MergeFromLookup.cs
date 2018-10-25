@@ -67,8 +67,7 @@ namespace Mage
             {
                 var outRow = MapDataRow(vals);
 
-                string columnValue;
-                if (LookupKV.TryGetValue(outRow[_keyColIdx], out columnValue))
+                if (LookupKV.TryGetValue(outRow[_keyColIdx], out var columnValue))
                 {
                     outRow[_mergeColIdx] = columnValue;
                 }

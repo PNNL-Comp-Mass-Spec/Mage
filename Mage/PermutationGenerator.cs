@@ -358,8 +358,7 @@ namespace Mage
                 Initialize();
                 ParamName = name;
 
-                double value;
-                if (double.TryParse(lower, out value))
+                if (double.TryParse(lower, out var value))
                 {
                     LowerBound = value;
                 }
