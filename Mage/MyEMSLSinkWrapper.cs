@@ -120,7 +120,7 @@ namespace Mage
 
             if (downloadMyEMSLFiles)
             {
-                var success = ProcessMyEMSLDownloadQueue(downloadFolderPath, Downloader.DownloadFolderLayout.DatasetNameAndSubFolders);
+                var success = ProcessMyEMSLDownloadQueue(downloadFolderPath, Downloader.DownloadLayout.DatasetNameAndSubdirectories);
 
                 if (!success)
                 {
@@ -179,7 +179,7 @@ namespace Mage
             if (myEMSLFileID <= 0)
                 return false;
 
-            DatasetFolderOrFileInfo cachedFileInfo;
+            DatasetDirectoryOrFileInfo cachedFileInfo;
             if (m_FilterPassingMyEMSLFiles.TryGetValue(myEMSLFileID, out cachedFileInfo))
             {
                 m_MyEMSLDatasetInfoCache.AddFileToDownloadQueue(cachedFileInfo.FileInfo);

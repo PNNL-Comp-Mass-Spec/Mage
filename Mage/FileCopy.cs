@@ -106,7 +106,7 @@ namespace Mage
                     }
                     else
                     {
-                        DatasetFolderOrFileInfo cachedFileInfo;
+                        DatasetDirectoryOrFileInfo cachedFileInfo;
                         if (m_FilterPassingMyEMSLFiles.TryGetValue(myEMSLFileID, out cachedFileInfo))
                         {
                             UpdateStatus(this, new MageStatusEventArgs("Queuing file for Download->" + sourceFile));
@@ -376,7 +376,7 @@ namespace Mage
                 {
                     foreach (var archiveFile in m_RecentlyFoundMyEMSLFiles)
                     {
-                        if (!archiveFile.IsFolder)
+                        if (!archiveFile.IsDirectory)
                             m_MyEMSLDatasetInfoCache.AddFileToDownloadQueue(archiveFile.FileInfo);
                     }
 
@@ -389,7 +389,7 @@ namespace Mage
                         target = target.Parent;
                     }
 
-                    var success = ProcessMyEMSLDownloadQueue(target.FullName, Downloader.DownloadFolderLayout.SingleDataset);
+                    var success = ProcessMyEMSLDownloadQueue(target.FullName, Downloader.DownloadLayout.SingleDataset);
 
                     if (success) return;
 

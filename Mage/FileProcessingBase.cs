@@ -55,13 +55,13 @@ namespace Mage
         /// Recently found MyEMSL files
         /// </summary>
         /// <remarks>This list is cleared each time .FindFiles is called</remarks>
-        protected static List<DatasetFolderOrFileInfo> m_RecentlyFoundMyEMSLFiles;
+        protected static List<DatasetDirectoryOrFileInfo> m_RecentlyFoundMyEMSLFiles;
 
         /// <summary>
         /// All MyEMSL fils that pass filters; keys are MyEMSL File IDs, values are the MyEMSL Info.  Items will be auto-purged from this list if the list grows to over 1 million records
         /// </summary>
         /// <remarks>This dictionary is used by the FileCopy class to determine the archived file info for a file in MyEMSL using MyEMSLFile ID</remarks>
-        protected static Dictionary<Int64, DatasetFolderOrFileInfo> m_FilterPassingMyEMSLFiles;
+        protected static Dictionary<Int64, DatasetDirectoryOrFileInfo> m_FilterPassingMyEMSLFiles;
 
         /// <summary>
         /// RegEx to extract the dataset name from a path similar to these examples:
@@ -110,13 +110,13 @@ namespace Mage
                 return;
 
             if (m_FilterPassingMyEMSLFiles == null)
-                m_FilterPassingMyEMSLFiles = new Dictionary<long, DatasetFolderOrFileInfo>();
+                m_FilterPassingMyEMSLFiles = new Dictionary<long, DatasetDirectoryOrFileInfo>();
 
 
-            DatasetFolderOrFileInfo fileInfoCached;
+            DatasetDirectoryOrFileInfo fileInfoCached;
             if (!m_FilterPassingMyEMSLFiles.TryGetValue(fileInfo.FileID, out fileInfoCached))
             {
-                m_FilterPassingMyEMSLFiles.Add(fileInfo.FileID, new DatasetFolderOrFileInfo(fileInfo.FileID, false, fileInfo));
+                m_FilterPassingMyEMSLFiles.Add(fileInfo.FileID, new DatasetDirectoryOrFileInfo(fileInfo.FileID, false, fileInfo));
             }
 
             if (m_FilterPassingMyEMSLFiles.Count > 1000000)
@@ -258,9 +258,9 @@ namespace Mage
                 var myEMSLFileID = DatasetInfoBase.ExtractMyEMSLFileID(filePathRemote, out filePathClean);
 
                 if (myEMSLFileID <= 0)
-                    throw new MageException("MyEMSL File does not have the MyEMSL FileID tag (" + MyEMSLReader.DatasetInfoBase.MYEMSL_FILEID_TAG + "): " + filePathRemote);
+                    throw new MageException("MyEMSL File does not have the MyEMSL FileID tag (" + MyEMSLReader.DatasetInfoBase.MYEMSL_FILE_ID_TAG + "): " + filePathRemote);
 
-                DatasetFolderOrFileInfo cachedFileInfo;
+                DatasetDirectoryOrFileInfo cachedFileInfo;
                 if (m_FilterPassingMyEMSLFiles.TryGetValue(myEMSLFileID, out cachedFileInfo))
                 {
                     filePathLocal = Path.Combine(Path.GetTempPath(), MAGE_TEMP_FILES_FOLDER, cachedFileInfo.FileInfo.Dataset, Path.GetFileName(filePathClean));
@@ -272,7 +272,7 @@ namespace Mage
                     m_MyEMSLDatasetInfoCache.AddFileToDownloadQueue(myEMSLFileID, cachedFileInfo.FileInfo, unzipRequired, filePathLocal);
 
                     // Note that the target folder path will be ignored since we explicitly defined the destination file path when queuing the file
-                    var success = m_MyEMSLDatasetInfoCache.ProcessDownloadQueue(".", Downloader.DownloadFolderLayout.SingleDataset);
+                    var success = m_MyEMSLDatasetInfoCache.ProcessDownloadQueue(".", Downloader.DownloadLayout.SingleDataset);
                     if (!success)
                     {
                         var msg = "Failed to download file " + cachedFileInfo.FileInfo.RelativePathWindows + " from MyEMSL";
@@ -381,7 +381,7 @@ namespace Mage
         public override bool PostProcess()
         {
             // Note that the target folder path will most likely be ignored since explicit destination file paths were likely used when files were added to the queue
-            var success = ProcessMyEMSLDownloadQueue(".", Downloader.DownloadFolderLayout.SingleDataset);
+            var success = ProcessMyEMSLDownloadQueue(".", Downloader.DownloadLayout.SingleDataset);
             return success;
         }
 
@@ -392,7 +392,7 @@ namespace Mage
         /// <param name="folderLayout">Folder layout to use</param>
         /// <returns>True if success (including an empty queue), false if an error</returns>
         /// <remarks>Any queued files that have explicit download paths will be downloaded to the explicit path and not downloadFolderPath</remarks>
-        protected bool ProcessMyEMSLDownloadQueue(string downloadFolderPath, Downloader.DownloadFolderLayout folderLayout)
+        protected bool ProcessMyEMSLDownloadQueue(string downloadFolderPath, Downloader.DownloadLayout folderLayout)
         {
             if (m_MyEMSLDatasetInfoCache.FilesToDownload.Count == 0)
                 return true;

@@ -144,9 +144,9 @@ namespace MageExtExtractionFilters
                             var myEMSLFileID = DatasetInfoBase.ExtractMyEMSLFileID(filesToDownload[i], out filePathClean);
 
                             if (myEMSLFileID <= 0)
-                                throw new MageException("File does not have the MyEMSL FileID tag (" + DatasetInfoBase.MYEMSL_FILEID_TAG + "): " + filesToDownload[i]);
+                                throw new MageException("File does not have the MyEMSL FileID tag (" + DatasetInfoBase.MYEMSL_FILE_ID_TAG + "): " + filesToDownload[i]);
 
-                            DatasetFolderOrFileInfo cachedFileInfo;
+                            DatasetDirectoryOrFileInfo cachedFileInfo;
                             if (m_FilterPassingMyEMSLFiles.TryGetValue(myEMSLFileID, out cachedFileInfo))
                             {
                                 if (i == 0)
@@ -171,7 +171,7 @@ namespace MageExtExtractionFilters
                         }
 
                         // Note that the target folder path will be ignored since we explicitly defined the destination file path when queuing the file
-                        var success = m_MyEMSLDatasetInfoCache.ProcessDownloadQueue(".", Downloader.DownloadFolderLayout.SingleDataset);
+                        var success = m_MyEMSLDatasetInfoCache.ProcessDownloadQueue(".", Downloader.DownloadLayout.SingleDataset);
                         if (!success)
                         {
                             var msg = "Failed to download Mage Extractor merge files from MyEMSL";

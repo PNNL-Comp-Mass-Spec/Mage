@@ -547,7 +547,7 @@ namespace Mage
 
             if (searchMode == FolderSearchMode.Folders)
             {
-                m_RecentlyFoundMyEMSLFiles = m_MyEMSLDatasetInfoCache.FindFolders(fileSelector, datasetName);
+                m_RecentlyFoundMyEMSLFiles = m_MyEMSLDatasetInfoCache.FindDirectories(fileSelector, datasetName);
 
                 foreach (var archiveFolder in m_RecentlyFoundMyEMSLFiles)
                 {
