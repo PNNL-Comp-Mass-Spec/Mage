@@ -74,9 +74,9 @@
             this.ProcessFilesToLocalTabPage.SuspendLayout();
             this.ProcessFileToSQLiteDBTabPage.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // EntityListSourceTabs
-            // 
+            //
             this.EntityListSourceTabs.AccessibleDescription = " ";
             this.EntityListSourceTabs.Controls.Add(this.QueryTabPage);
             this.EntityListSourceTabs.Controls.Add(this.JobsFlexQueryTabPage);
@@ -92,9 +92,9 @@
             this.EntityListSourceTabs.Size = new System.Drawing.Size(1225, 138);
             this.EntityListSourceTabs.TabIndex = 6;
             this.EntityListSourceTabs.Tag = "About";
-            // 
+            //
             // QueryTabPage
-            // 
+            //
             this.QueryTabPage.BackColor = System.Drawing.SystemColors.Control;
             this.QueryTabPage.Controls.Add(this.JobSimpleQueryPanel);
             this.QueryTabPage.Location = new System.Drawing.Point(4, 25);
@@ -105,9 +105,9 @@
             this.QueryTabPage.TabIndex = 0;
             this.QueryTabPage.Tag = "Jobs";
             this.QueryTabPage.Text = "Jobs From Query";
-            // 
+            //
             // JobSimpleQueryPanel
-            // 
+            //
             this.JobSimpleQueryPanel.BackColor = System.Drawing.SystemColors.Control;
             this.JobSimpleQueryPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.JobSimpleQueryPanel.Location = new System.Drawing.Point(4, 4);
@@ -116,9 +116,9 @@
             this.JobSimpleQueryPanel.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
             this.JobSimpleQueryPanel.Size = new System.Drawing.Size(1209, 101);
             this.JobSimpleQueryPanel.TabIndex = 0;
-            // 
+            //
             // JobsFlexQueryTabPage
-            // 
+            //
             this.JobsFlexQueryTabPage.BackColor = System.Drawing.SystemColors.Control;
             this.JobsFlexQueryTabPage.Controls.Add(this.JobFlexQueryPanel);
             this.JobsFlexQueryTabPage.Location = new System.Drawing.Point(4, 25);
@@ -129,9 +129,9 @@
             this.JobsFlexQueryTabPage.TabIndex = 6;
             this.JobsFlexQueryTabPage.Tag = "Job_Flex_Query";
             this.JobsFlexQueryTabPage.Text = "Jobs From Flex Query";
-            // 
+            //
             // JobFlexQueryPanel
-            // 
+            //
             this.JobFlexQueryPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.JobFlexQueryPanel.Location = new System.Drawing.Point(4, 4);
             this.JobFlexQueryPanel.Margin = new System.Windows.Forms.Padding(5);
@@ -140,9 +140,9 @@
             this.JobFlexQueryPanel.QueryName = null;
             this.JobFlexQueryPanel.Size = new System.Drawing.Size(1209, 101);
             this.JobFlexQueryPanel.TabIndex = 0;
-            // 
+            //
             // JobListTabPage
-            // 
+            //
             this.JobListTabPage.BackColor = System.Drawing.SystemColors.Control;
             this.JobListTabPage.Controls.Add(this.JobIDListPanel1);
             this.JobListTabPage.Location = new System.Drawing.Point(4, 25);
@@ -152,9 +152,9 @@
             this.JobListTabPage.Size = new System.Drawing.Size(1217, 109);
             this.JobListTabPage.TabIndex = 1;
             this.JobListTabPage.Text = "Jobs From Job List";
-            // 
+            //
             // JobIDListPanel1
-            // 
+            //
             this.JobIDListPanel1.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.JobIDListPanel1.BackColor = System.Drawing.SystemColors.Control;
             this.JobIDListPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -166,9 +166,9 @@
             this.JobIDListPanel1.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
             this.JobIDListPanel1.Size = new System.Drawing.Size(1209, 101);
             this.JobIDListPanel1.TabIndex = 0;
-            // 
+            //
             // JobsFromDatasetIDTabPage
-            // 
+            //
             this.JobsFromDatasetIDTabPage.BackColor = System.Drawing.SystemColors.Control;
             this.JobsFromDatasetIDTabPage.Controls.Add(this.JobDatasetIDList1);
             this.JobsFromDatasetIDTabPage.Location = new System.Drawing.Point(4, 25);
@@ -178,9 +178,9 @@
             this.JobsFromDatasetIDTabPage.Size = new System.Drawing.Size(1217, 109);
             this.JobsFromDatasetIDTabPage.TabIndex = 5;
             this.JobsFromDatasetIDTabPage.Text = "Jobs From Dataset List";
-            // 
+            //
             // JobDatasetIDList1
-            // 
+            //
             this.JobDatasetIDList1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.JobDatasetIDList1.Legend = "(Dataset IDs)";
             this.JobDatasetIDList1.ListName = "Dataset_ID";
@@ -190,9 +190,9 @@
             this.JobDatasetIDList1.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
             this.JobDatasetIDList1.Size = new System.Drawing.Size(1209, 101);
             this.JobDatasetIDList1.TabIndex = 0;
-            // 
+            //
             // DataPackageTabPage
-            // 
+            //
             this.DataPackageTabPage.BackColor = System.Drawing.SystemColors.Control;
             this.DataPackageTabPage.Controls.Add(this.JobDataPackagePanel1);
             this.DataPackageTabPage.Location = new System.Drawing.Point(4, 25);
@@ -202,9 +202,9 @@
             this.DataPackageTabPage.Size = new System.Drawing.Size(1217, 109);
             this.DataPackageTabPage.TabIndex = 2;
             this.DataPackageTabPage.Text = "Jobs From Data Package";
-            // 
+            //
             // JobDataPackagePanel1
-            // 
+            //
             this.JobDataPackagePanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.JobDataPackagePanel1.Location = new System.Drawing.Point(4, 4);
             this.JobDataPackagePanel1.Margin = new System.Windows.Forms.Padding(5);
@@ -214,9 +214,9 @@
             this.JobDataPackagePanel1.ShowGetJobs = true;
             this.JobDataPackagePanel1.Size = new System.Drawing.Size(1209, 101);
             this.JobDataPackagePanel1.TabIndex = 0;
-            // 
+            //
             // AboutTabPage
-            // 
+            //
             this.AboutTabPage.Controls.Add(this.pnlAbout);
             this.AboutTabPage.Location = new System.Drawing.Point(4, 25);
             this.AboutTabPage.Margin = new System.Windows.Forms.Padding(4);
@@ -226,9 +226,9 @@
             this.AboutTabPage.TabIndex = 7;
             this.AboutTabPage.Text = "About";
             this.AboutTabPage.UseVisualStyleBackColor = true;
-            // 
+            //
             // pnlAbout
-            // 
+            //
             this.pnlAbout.BackColor = System.Drawing.SystemColors.Control;
             this.pnlAbout.Controls.Add(this.txtServer);
             this.pnlAbout.Controls.Add(this.txtVersion);
@@ -242,9 +242,9 @@
             this.pnlAbout.Name = "pnlAbout";
             this.pnlAbout.Size = new System.Drawing.Size(1209, 101);
             this.pnlAbout.TabIndex = 0;
-            // 
+            //
             // txtServer
-            // 
+            //
             this.txtServer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtServer.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtServer.Location = new System.Drawing.Point(696, 78);
@@ -255,9 +255,9 @@
             this.txtServer.Size = new System.Drawing.Size(190, 20);
             this.txtServer.TabIndex = 10;
             this.txtServer.Text = "Server";
-            // 
+            //
             // txtVersion
-            // 
+            //
             this.txtVersion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtVersion.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtVersion.Location = new System.Drawing.Point(903, 78);
@@ -268,9 +268,9 @@
             this.txtVersion.Size = new System.Drawing.Size(302, 20);
             this.txtVersion.TabIndex = 9;
             this.txtVersion.Text = "Version";
-            // 
+            //
             // txtAbout3
-            // 
+            //
             this.txtAbout3.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtAbout3.Location = new System.Drawing.Point(16, 78);
             this.txtAbout3.Margin = new System.Windows.Forms.Padding(4);
@@ -280,9 +280,9 @@
             this.txtAbout3.Size = new System.Drawing.Size(229, 20);
             this.txtAbout3.TabIndex = 4;
             this.txtAbout3.Text = "For usage instructions, please see";
-            // 
+            //
             // lblAboutLink
-            // 
+            //
             this.lblAboutLink.AutoSize = true;
             this.lblAboutLink.Location = new System.Drawing.Point(253, 77);
             this.lblAboutLink.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -291,9 +291,9 @@
             this.lblAboutLink.TabIndex = 3;
             this.lblAboutLink.TabStop = true;
             this.lblAboutLink.Text = "lblAboutLink";
-            // 
+            //
             // txtAbout2
-            // 
+            //
             this.txtAbout2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtAbout2.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -305,9 +305,9 @@
             this.txtAbout2.Size = new System.Drawing.Size(1174, 18);
             this.txtAbout2.TabIndex = 2;
             this.txtAbout2.Text = "Written by ...";
-            // 
+            //
             // txtAbout1
-            // 
+            //
             this.txtAbout1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtAbout1.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -319,9 +319,9 @@
             this.txtAbout1.Size = new System.Drawing.Size(1174, 44);
             this.txtAbout1.TabIndex = 0;
             this.txtAbout1.Text = "Mage Extractor can ...";
-            // 
+            //
             // panel1
-            // 
+            //
             this.panel1.Controls.Add(this.JobListDisplayCtl);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 138);
@@ -330,9 +330,9 @@
             this.panel1.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
             this.panel1.Size = new System.Drawing.Size(1225, 239);
             this.panel1.TabIndex = 7;
-            // 
+            //
             // JobListDisplayCtl
-            // 
+            //
             this.JobListDisplayCtl.AllowDisableShiftClickMode = true;
             this.JobListDisplayCtl.AutoSizeColumnWidths = false;
             this.JobListDisplayCtl.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -346,9 +346,9 @@
             this.JobListDisplayCtl.PageTitle = "Jobs";
             this.JobListDisplayCtl.Size = new System.Drawing.Size(1211, 227);
             this.JobListDisplayCtl.TabIndex = 1;
-            // 
+            //
             // statusPanel1
-            // 
+            //
             this.statusPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.statusPanel1.EnableCancel = true;
             this.statusPanel1.Location = new System.Drawing.Point(0, 245);
@@ -359,9 +359,9 @@
             this.statusPanel1.ShowCancel = true;
             this.statusPanel1.Size = new System.Drawing.Size(1225, 52);
             this.statusPanel1.TabIndex = 8;
-            // 
+            //
             // panel5
-            // 
+            //
             this.panel5.Controls.Add(this.extractionSettingsPanel1);
             this.panel5.Controls.Add(this.statusPanel1);
             this.panel5.Controls.Add(this.panel4);
@@ -371,9 +371,9 @@
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(1225, 297);
             this.panel5.TabIndex = 19;
-            // 
+            //
             // extractionSettingsPanel1
-            // 
+            //
             this.extractionSettingsPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.extractionSettingsPanel1.KeepAllResults = "No";
             this.extractionSettingsPanel1.Location = new System.Drawing.Point(0, 135);
@@ -385,9 +385,9 @@
             this.extractionSettingsPanel1.ResultTypeName = "Sequest Synopsis";
             this.extractionSettingsPanel1.Size = new System.Drawing.Size(1225, 110);
             this.extractionSettingsPanel1.TabIndex = 18;
-            // 
+            //
             // panel4
-            // 
+            //
             this.panel4.Controls.Add(this.FilterOutputTabs);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(0, 0);
@@ -396,9 +396,9 @@
             this.panel4.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
             this.panel4.Size = new System.Drawing.Size(1225, 135);
             this.panel4.TabIndex = 17;
-            // 
+            //
             // FilterOutputTabs
-            // 
+            //
             this.FilterOutputTabs.Controls.Add(this.ProcessFilesToLocalTabPage);
             this.FilterOutputTabs.Controls.Add(this.ProcessFileToSQLiteDBTabPage);
             this.FilterOutputTabs.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -408,9 +408,9 @@
             this.FilterOutputTabs.SelectedIndex = 0;
             this.FilterOutputTabs.Size = new System.Drawing.Size(1211, 123);
             this.FilterOutputTabs.TabIndex = 15;
-            // 
+            //
             // ProcessFilesToLocalTabPage
-            // 
+            //
             this.ProcessFilesToLocalTabPage.BackColor = System.Drawing.SystemColors.Control;
             this.ProcessFilesToLocalTabPage.Controls.Add(this.FolderDestinationPanel1);
             this.ProcessFilesToLocalTabPage.Location = new System.Drawing.Point(4, 25);
@@ -421,9 +421,9 @@
             this.ProcessFilesToLocalTabPage.TabIndex = 0;
             this.ProcessFilesToLocalTabPage.Tag = "File_Output";
             this.ProcessFilesToLocalTabPage.Text = "Extract Results To File";
-            // 
+            //
             // FolderDestinationPanel1
-            // 
+            //
             this.FolderDestinationPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.FolderDestinationPanel1.Location = new System.Drawing.Point(4, 4);
             this.FolderDestinationPanel1.Margin = new System.Windows.Forms.Padding(5);
@@ -434,9 +434,9 @@
             this.FolderDestinationPanel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.FolderDestinationPanel1.Size = new System.Drawing.Size(1195, 86);
             this.FolderDestinationPanel1.TabIndex = 13;
-            // 
+            //
             // ProcessFileToSQLiteDBTabPage
-            // 
+            //
             this.ProcessFileToSQLiteDBTabPage.BackColor = System.Drawing.SystemColors.Control;
             this.ProcessFileToSQLiteDBTabPage.Controls.Add(this.SQLiteDestinationPanel1);
             this.ProcessFileToSQLiteDBTabPage.Location = new System.Drawing.Point(4, 25);
@@ -447,9 +447,9 @@
             this.ProcessFileToSQLiteDBTabPage.TabIndex = 1;
             this.ProcessFileToSQLiteDBTabPage.Tag = "SQLite_Output";
             this.ProcessFileToSQLiteDBTabPage.Text = "Extract Results To SQLite Database";
-            // 
+            //
             // SQLiteDestinationPanel1
-            // 
+            //
             this.SQLiteDestinationPanel1.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.SQLiteDestinationPanel1.DatabaseName = "C:\\Data\\test.db";
             this.SQLiteDestinationPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -461,9 +461,9 @@
             this.SQLiteDestinationPanel1.Size = new System.Drawing.Size(1195, 86);
             this.SQLiteDestinationPanel1.TabIndex = 14;
             this.SQLiteDestinationPanel1.TableName = "Extracted_Results";
-            // 
+            //
             // ExtractorForm
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1225, 674);

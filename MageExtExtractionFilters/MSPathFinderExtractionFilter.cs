@@ -271,8 +271,6 @@ namespace MageExtExtractionFilters
 
         }
 
-
-
         /// <summary>
         /// Return a MSPathFinder filter object that is preset with filter criteria
         /// that is obtained (by means of a Mage pipeline) for the given FilterSetID from DMS
