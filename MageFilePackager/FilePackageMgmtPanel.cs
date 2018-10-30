@@ -54,8 +54,8 @@ namespace MageFilePackager
 
         public string ListTitle
         {
-            get { return packageListDisplayControl1.PageTitle; }
-            set { packageListDisplayControl1.PageTitle = value; }
+            get => packageListDisplayControl1.PageTitle;
+            set => packageListDisplayControl1.PageTitle = value;
         }
 
         // Display list that provides new content to import into file package
@@ -65,8 +65,8 @@ namespace MageFilePackager
 
         public string TotalSizeDisplay
         {
-            get { return ContentInfoCtl.Text; }
-            set { ContentInfoCtl.Text = value; }
+            get => ContentInfoCtl.Text;
+            set => ContentInfoCtl.Text = value;
         }
 
         // Local path for manifest file
@@ -82,7 +82,7 @@ namespace MageFilePackager
                 }
                 return _outputPath;
             }
-            set { _outputPath = value; }
+            set => _outputPath = value;
         }
 
         #endregion
@@ -92,7 +92,7 @@ namespace MageFilePackager
         private void ClearPackageList()
         {
             var result = MessageBox.Show("Are you sure?", "Delete current package contents", MessageBoxButtons.YesNo);
-            if (result == System.Windows.Forms.DialogResult.Yes)
+            if (result == DialogResult.Yes)
             {
                 packageListDisplayControl1.Clear();
                 TotalSizeDisplay = "";

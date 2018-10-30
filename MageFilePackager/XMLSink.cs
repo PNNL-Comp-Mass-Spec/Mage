@@ -16,7 +16,7 @@ namespace MageFilePackager
 
         #region Properties
 
-        public string Text { get { return _text.ToString(); } }
+        public string Text => _text.ToString();
 
         public Dictionary<string, string> Prefixes { get; set; }
 
@@ -86,7 +86,7 @@ namespace MageFilePackager
         {
         }
 
-        private void OutputDataRow(string[] vals)
+        private void OutputDataRow(IReadOnlyList<string> vals)
         {
             _text.Append("<path ");
             for (var i = 0; i < InputColumnDefs.Count; i++)

@@ -58,10 +58,7 @@ namespace MageFilePackager
                 // Code to dispose the managed resources of the class
             }
             // Code to dispose the un-managed resources of the class
-            if (_mOutFile != null)
-            {
-                _mOutFile.Dispose();
-            }
+            _mOutFile?.Dispose();
 
             // isDisposed = true;
         }
@@ -101,10 +98,7 @@ namespace MageFilePackager
         public override void Cleanup()
         {
             base.Cleanup();
-            if (_mOutFile != null)
-            {
-                _mOutFile.Close();
-            }
+            _mOutFile?.Close();
         }
 
         /// <summary>
@@ -151,7 +145,7 @@ namespace MageFilePackager
             {
                 foreach (var kv in Prefixes)
                 {
-                    _mOutFile.WriteLine(string.Format("<prefix source='{0}' value='{1}' />", kv.Key, kv.Value));
+                    _mOutFile.WriteLine("<prefix source='{0}' value='{1}' />", kv.Key, kv.Value);
                 }
             }
         }
@@ -162,7 +156,7 @@ namespace MageFilePackager
             // _mOutFile.WriteLine("</paths>");
         }
 
-        private void OutputDataRow(string[] vals)
+        private void OutputDataRow(IReadOnlyList<string> vals)
         {
             var sb = new StringBuilder();
             sb.Append("<path ");
