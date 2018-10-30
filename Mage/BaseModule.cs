@@ -49,7 +49,7 @@ namespace Mage
         /// Master list of input column position keyed to column name (for lookup of column index by column name)
         /// (default HandleColumnDef will build this)
         /// </summary>
-        protected Dictionary<string, int> InputColumnPos = new Dictionary<string, int>(StringComparer.CurrentCultureIgnoreCase);
+        protected Dictionary<string, int> InputColumnPos = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         /// Temporary working reference to input column field used during output column mapping
@@ -64,8 +64,9 @@ namespace Mage
 
         /// <summary>
         /// Master list of Output column position keyed to column name (for lookup of column index by column name)
-        /// (not all modules require this feature)
+        /// (case insensitive)
         /// </summary>
+        /// <remarks>Not all modules require this feature</remarks>
         protected Dictionary<string, int> OutputColumnPos;
 
         /// <summary>
@@ -79,8 +80,8 @@ namespace Mage
         protected Dictionary<string, string> Context;
 
         /// <summary>
-        /// Position map list of new output columns
-        /// the have matching keys in the Context parameters
+        /// Position map list of new output columns that have
+        /// matching keys in the Context parameters (case insensitive dictionary)
         /// </summary>
         protected Dictionary<string, int> ContextColPos;
 
@@ -99,7 +100,6 @@ namespace Mage
         /// <example>*, MSGF_SpecProb|+|text</example>
         /// <example>Dataset, Dataset_ID, Alias|+|text, *</example>
         /// <example>Item|+|text, Name|+|text, File_Size_KB|+|text, Directory, *</example>
-        /// <example>Item|+|text, Name|+|text, File_Size_KB|+|text, Folder, *</example>
         /// <example>ref|+|text, one, two, three, results|+|float</example>
         public string OutputColumnList { get; set; }
 
@@ -116,7 +116,7 @@ namespace Mage
                 Context = context;
             else
             {
-                var mergedContext = new Dictionary<string, string>();
+                var mergedContext = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
                 // Update existing values
                 foreach (var setting in Context)
@@ -535,14 +535,14 @@ namespace Mage
 
 
         /// <summary>
-        /// Setup position map list of new output columns
-        /// the have matching keys in the Context parameters
+        /// Setup position map list of new output columns that have
+        /// matching keys in the Context parameters
         /// </summary>
         protected void SetupOutputColumnToContextMapping()
         {
             if (Context != null && NewOutputColumnPos != null)
             {
-                ContextColPos = new Dictionary<string, int>(StringComparer.CurrentCultureIgnoreCase);
+                ContextColPos = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
                 foreach (var colPos in NewOutputColumnPos)
                 {
                     if (Context.ContainsKey(colPos.Key))
@@ -564,10 +564,10 @@ namespace Mage
             if (string.IsNullOrEmpty(OutputColumnList))
                 return;
 
-            OutputColumnPos = new Dictionary<string, int>(StringComparer.CurrentCultureIgnoreCase);
+            OutputColumnPos = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
             OutputColumnDefs = new List<MageColumnDef>();
             OutputToInputColumnPosMap = new List<KeyValuePair<int, int>>();
-            NewOutputColumnPos = new Dictionary<string, int>(StringComparer.CurrentCultureIgnoreCase);
+            NewOutputColumnPos = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
             var outColIdx = 0;
 
@@ -629,8 +629,9 @@ namespace Mage
 
         /// <summary>
         /// A name/position map for "new" output columns (columns added to output that don't remap input columns)
-        /// (not all modules require this feature)
+        /// (case insensitive)
         /// </summary>
+        /// <remarks>Not all modules require this feature</remarks>
         protected Dictionary<string, int> NewOutputColumnPos;
 
         private void AddIndexForNewColumn(string outputColName, int outColIdx)
@@ -689,7 +690,7 @@ namespace Mage
             {
                 // Column name not found
                 // Possibly auto-switch from Directory to Folder
-                if (inputColName == "Directory" && InputColumnPos.ContainsKey("Folder"))
+                if (inputColName.Equals("Directory", StringComparison.OrdinalIgnoreCase) && InputColumnPos.ContainsKey("Folder"))
                 {
                     inputColName = "Folder";
                 }

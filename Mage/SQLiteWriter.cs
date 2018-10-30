@@ -207,7 +207,7 @@ namespace Mage
                 {
                     foreach (var overrideDef in ColDefOverride)
                     {
-                        if (string.Compare(overrideDef.Name, cs.ColumnName, StringComparison.CurrentCultureIgnoreCase) == 0)
+                        if (string.Compare(overrideDef.Name, cs.ColumnName, StringComparison.OrdinalIgnoreCase) == 0)
                         {
                             cs.ColumnType = overrideDef.DataType;
                             break;

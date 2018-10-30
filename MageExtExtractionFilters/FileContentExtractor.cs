@@ -286,7 +286,7 @@ namespace MageExtExtractionFilters
         /// </summary>
         private void SetupCurrentResultsChecker()
         {
-            if (!string.Equals(ExtractionParms.ResultFilterSetID, ExtractionFilter.ALL_PASS_CUTOFF, StringComparison.CurrentCultureIgnoreCase))
+            if (!string.Equals(ExtractionParms.ResultFilterSetID, ExtractionFilter.ALL_PASS_CUTOFF, StringComparison.OrdinalIgnoreCase))
             {
                 mResultsChecker = ExtractionParms.RType.GetResultsChecker(ExtractionParms.ResultFilterSetID);
 

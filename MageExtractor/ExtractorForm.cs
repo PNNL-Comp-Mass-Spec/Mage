@@ -285,7 +285,7 @@ namespace MageExtractor
 
         private bool ValidateThreshold(string cutoff, string cutoffDescription)
         {
-            if (!string.Equals(cutoff, ExtractionFilter.ALL_PASS_CUTOFF, StringComparison.CurrentCultureIgnoreCase))
+            if (!string.Equals(cutoff, ExtractionFilter.ALL_PASS_CUTOFF, StringComparison.OrdinalIgnoreCase))
             {
 
                 if (cutoff.EndsWith("%"))

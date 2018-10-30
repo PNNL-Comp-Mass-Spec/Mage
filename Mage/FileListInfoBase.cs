@@ -240,7 +240,7 @@ namespace Mage
 
             // Set up indexes for row columns
             var directoryColDefined = TryGetOutputColumnPos(SourceDirectoryColumnName, out mDirectoryPathColIndex);
-            if (!directoryColDefined && SourceDirectoryColumnName == "Directory")
+            if (!directoryColDefined && SourceDirectoryColumnName.Equals("Directory", StringComparison.OrdinalIgnoreCase))
             {
                 // Column name not found
                 // Possibly auto-switch from Directory to Folder
@@ -249,7 +249,7 @@ namespace Mage
 
             if (mDirectoryPathColIndex < 0)
             {
-                throw new MageException("SearchDirectoriesAndOutputFiles: Unable to determine the directory column index");
+                throw new MageException("SearchDirectoriesAndOutputFiles: Unable to determine the index of the Directory column");
             }
 
             TryGetOutputColumnPos(FileColumnName, out mFileNameOutColIndex);
@@ -317,10 +317,10 @@ namespace Mage
                 }
 
                 // This dictionary holds filename and file system info for each file that is found
-                var fileInfo = new Dictionary<string, FileInfo>(StringComparer.CurrentCultureIgnoreCase);
+                var fileInfo = new Dictionary<string, FileInfo>(StringComparer.OrdinalIgnoreCase);
 
                 // This dictionary holds subdirectory name file system info for each subdirectory that is found
-                var subdirectoryInfo = new Dictionary<string, DirectoryInfo>(StringComparer.CurrentCultureIgnoreCase);
+                var subdirectoryInfo = new Dictionary<string, DirectoryInfo>(StringComparer.OrdinalIgnoreCase);
 
                 var datasetName = dctRowDatasets[outputBufferRowIdx];
 

@@ -144,7 +144,7 @@ namespace MageExtExtractionFilters
             /// <param name="cutoff"></param>
             public void SetCutoff(string cutoff)
             {
-                if (string.Equals(cutoff, ALL_PASS_CUTOFF, StringComparison.CurrentCultureIgnoreCase))
+                if (string.Equals(cutoff, ALL_PASS_CUTOFF, StringComparison.OrdinalIgnoreCase))
                 {
                     mCheckCutoff = false;
                     mCutoffThreshold = 0;

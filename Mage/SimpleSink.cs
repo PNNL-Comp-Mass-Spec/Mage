@@ -52,6 +52,7 @@ namespace Mage
 
         /// <summary>
         /// Association of name of input column with its column position index
+        /// (case insensitive)
         /// </summary>
         public Dictionary<string, int> ColumnIndex => InputColumnPos;
 
