@@ -332,11 +332,13 @@ namespace MageFilePackager
 
                 try
                 {
-                    var result = DMSHttp.Post(submissionForm.URL, postDataList);
+                    var responseData = DMSHttp.Post(submissionForm.URL, postDataList);
+                    if (!string.IsNullOrWhiteSpace(responseData))
+                        MessageBox.Show(responseData, "Response");
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(ex.Message, "Error Submitting to DMS");
                 }
             }
         }
