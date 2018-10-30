@@ -224,39 +224,39 @@ namespace Mage
         private ProcessingPipeline MakeDefaultFileProcessingPipeline(string inputFilePath, string outputFilePath, Dictionary<string, string> context)
         {
             var reader = new DelimitedFileReader();
-            var filter = ProcessingPipeline.MakeModule(FileFilterModuleName) as BaseModule;
-            var writer = new DelimitedFileWriter();
 
-            if (filter == null)
+            if (!(ProcessingPipeline.MakeModule(FileFilterModuleName) is BaseModule filter))
                 throw new NullReferenceException("Failed to create module " + FileFilterModuleName +
                                                  " in MakeDefaultFileProcessingPipeline; filter is not of type BaseModule");
+
+            var writer = new DelimitedFileWriter();
 
             filter.SetParameters(mFileFilterParameters);
             filter.SetContext(context);
 
             reader.FilePath = inputFilePath;
             writer.FilePath = outputFilePath;
-            var concatenateFiles = (!string.IsNullOrEmpty(OutputFileName)) && (mFileCount > 0);
-            writer.Append = (concatenateFiles) ? "Yes" : "No";
-            writer.Header = (concatenateFiles) ? "No" : "Yes";
+            var concatenateFiles = !string.IsNullOrEmpty(OutputFileName) && mFileCount > 0;
+            writer.Append = concatenateFiles ? "Yes" : "No";
+            writer.Header = concatenateFiles ? "No" : "Yes";
             return ProcessingPipeline.Assemble("DefaultFileProcessingPipeline", reader, filter, writer);
         }
 
         private ProcessingPipeline MakeDefaultSQLiteProcessingPipeline(string inputFilePath, string outputFilePath, Dictionary<string, string> context)
         {
             var reader = new DelimitedFileReader();
-            var filter = ProcessingPipeline.MakeModule(FileFilterModuleName) as BaseModule;
-            var writer = new SQLiteWriter();
 
-            if (filter == null)
+            if (!(ProcessingPipeline.MakeModule(FileFilterModuleName) is BaseModule filter))
                 throw new NullReferenceException("Failed to create module " + FileFilterModuleName +
                                                  " in MakeDefaultSQLiteProcessingPipeline; filter is not of type BaseModule");
+
+            var writer = new SQLiteWriter();
 
             filter.SetParameters(mFileFilterParameters);
             filter.SetContext(context);
 
             reader.FilePath = inputFilePath;
-            var tableName = (!string.IsNullOrEmpty(TableName)) ? TableName : Path.GetFileNameWithoutExtension(inputFilePath);
+            var tableName = !string.IsNullOrEmpty(TableName) ? TableName : Path.GetFileNameWithoutExtension(inputFilePath);
             writer.DbPath = DatabaseName;
             writer.TableName = tableName;
             return ProcessingPipeline.Assemble("DefaultFileProcessingPipeline", reader, filter, writer);
@@ -274,12 +274,12 @@ namespace Mage
         {
             var pipeline = new ProcessingPipeline("FileProcessingSubPipeline");
             pipeline.MakeModule(filterModule, FileFilterModuleName);
-            var bm = (BaseModule)pipeline.GetModule(filterModule);
+            var baseModule = (BaseModule)pipeline.GetModule(filterModule);
 
-            var mi = bm.GetType().GetMethod("RenameOutputFile");
-            if (mi != null)
+            var renameOutputFileMethod = baseModule.GetType().GetMethod("RenameOutputFile");
+            if (renameOutputFileMethod != null)
             {
-                var filterMod = (ContentFilter)bm;
+                var filterMod = (ContentFilter)baseModule;
                 var namer = new OutputFileNamer(filterMod.RenameOutputFile);
                 SetOutputFileNamer(namer);
             }

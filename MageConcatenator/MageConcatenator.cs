@@ -182,8 +182,7 @@ namespace MageConcatenator
                 switch (command.Action)
                 {
                     case "get_files_from_local_directory":
-                        var runtimeParms = GetRuntimeParamsForLocalDirectory();
-                        string sourceDirectory;
+                        var runtimeParams = GetRuntimeParamsForLocalDirectory();
 
                         if (runtimeParms.ContainsKey("Directory"))
                             sourceDirectory = runtimeParms["Directory"];
@@ -199,7 +198,7 @@ namespace MageConcatenator
                         }
                         var sink = FileListDisplayControl.MakeSink("Files", 15);
 
-                        var pipeline = Pipelines.MakePipelineToGetLocalFileList(sink, runtimeParms);
+                        var pipeline = Pipelines.MakePipelineToGetLocalFileList(sink, runtimeParams);
                         mPipelineQueue.Pipelines.Enqueue(pipeline);
                         mFinalPipelineName = pipeline.PipelineName;
                         break;
