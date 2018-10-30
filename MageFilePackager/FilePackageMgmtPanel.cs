@@ -363,15 +363,15 @@ namespace MageFilePackager
             float totalKB = 0;
 
             // Find file size column
-            var idx = -1;
+            var colIndex = -1;
             foreach (DataGridViewColumn col in packageListDisplayControl1.List.Columns)
             {
                 if (col.Name == "KB")
-                    idx = col.Index;
+                    colIndex = col.Index;
             }
 
             // Build total
-            if (idx != -1)
+            if (colIndex >= 0)
             {
                 foreach (DataGridViewRow row in packageListDisplayControl1.List.Rows)
                 {

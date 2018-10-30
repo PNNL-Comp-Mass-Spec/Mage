@@ -46,20 +46,20 @@ namespace MageDisplayLib
         /// </summary>
         private void SetupContextMenus(Control targetControl)
         {
-            var mMyMenuItems = new List<ToolStripItem>();
-            mMyMenuItems.AddRange(GetBasicHousekeepingMenuItems().ToArray());
-            mMyMenuItems.Add(new ToolStripSeparator());
-            mMyMenuItems.AddRange(GetCopyMenuItems());
+            var toolStripItems = new List<ToolStripItem>();
+            toolStripItems.AddRange(GetBasicHousekeepingMenuItems().ToArray());
+            toolStripItems.Add(new ToolStripSeparator());
+            toolStripItems.AddRange(GetCopyMenuItems());
 
             var contextMenu = new ContextMenuStrip();
-            contextMenu.Items.AddRange(mMyMenuItems.ToArray());
+            contextMenu.Items.AddRange(toolStripItems.ToArray());
             contextMenu.Items.AddRange(GetPersistenceMenuItems().ToArray());
             targetControl.ContextMenuStrip = contextMenu;
 
-            foreach (var tsmi in mMyMenuItems)
+            foreach (var menuItem in toolStripItems)
             {
-                tsmi.Enabled = false;
-                mAllMenuItems.Add(tsmi.Name);
+                menuItem.Enabled = false;
+                mAllMenuItems.Add(menuItem.Name);
             }
 
             mSelectAllOrNoneMenuItems.Clear();
@@ -178,7 +178,7 @@ namespace MageDisplayLib
         /// <returns></returns>
         private ToolStripItem[] GetBasicHousekeepingMenuItems()
         {
-            var l = new List<ToolStripItem>
+            var toolStripItems = new List<ToolStripItem>
             {
                 new ToolStripMenuItem("Select All", null, HandleSelectAll, MENU_SELECT_ALL),
                 new ToolStripMenuItem("Select None", null, HandleClearSelection, MENU_SELECT_NONE),
@@ -186,7 +186,7 @@ namespace MageDisplayLib
                 new ToolStripMenuItem("Delete selected rows", null, HandleDeleteSelectedRows, MENU_DELETE_SELECTED),
                 new ToolStripMenuItem("Delete all except selected rows", null, HandleDeleteNotSelectedRows, MENU_DELETE_NON_SELECTED)
             };
-            return l.ToArray();
+            return toolStripItems.ToArray();
         }
 
         /// <summary>
@@ -218,13 +218,13 @@ namespace MageDisplayLib
 
         private List<ToolStripItem> GetPersistenceMenuItems()
         {
-            var menuItems = new List<ToolStripItem>
+            var toolStripItems = new List<ToolStripItem>
             {
                 new ToolStripSeparator(),
                 new ToolStripMenuItem("Save to file", null, HandleSaveListDisplay, "SaveToFile"),
                 new ToolStripMenuItem("Reload from file", null, HandleReloadListDisplay, "ReloadFromFile")
             };
-            return menuItems;
+            return toolStripItems;
         }
 
         /// <summary>
@@ -344,12 +344,12 @@ namespace MageDisplayLib
         /// <returns></returns>
         private ToolStripItem[] GetCopyMenuItems()
         {
-            var l = new List<ToolStripItem>
+            var toolStripItems = new List<ToolStripItem>
             {
                 new ToolStripMenuItem("Copy selected rows", null, HandleCopyRows, "CopySelectedRows"),
                 new ToolStripMenuItem("Copy data in sorted column", null, HandleListCopyColumn, "CopyDataInSortedColumn")
             };
-            return l.ToArray();
+            return toolStripItems.ToArray();
         }
 
         /// <summary>

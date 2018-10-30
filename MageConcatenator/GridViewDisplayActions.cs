@@ -37,7 +37,7 @@ namespace MageConcatenator
         /// Lists of names of menu items
         /// that are sensitive to presence of certain columns in list display
         /// </summary>
-        private readonly List<string> mFolderSensitiveMenuItems = new List<string>();
+        private readonly List<string> mDirectorySensitiveMenuItems = new List<string>();
         private readonly List<string> mJobSensitiveMenuItems = new List<string>();
         private readonly List<string> mDatasetSensitiveMenuItems = new List<string>();
 
@@ -68,16 +68,16 @@ namespace MageConcatenator
         private void SetupContextMenus()
         {
 
-            var mMyMenuItems = new List<ToolStripItem> { new ToolStripSeparator() };
-            mMyMenuItems.AddRange(GetFolderMenuItems().ToArray());
-            mMyMenuItems.AddRange(GetWebActionMenuItems().ToArray());
+            var toolStripItems = new List<ToolStripItem> { new ToolStripSeparator() };
+            toolStripItems.AddRange(GetDirectoryMenuItems().ToArray());
+            toolStripItems.AddRange(GetWebActionMenuItems().ToArray());
 
-            mDisplayUserControl.AppendContextMenuItems(mMyMenuItems.ToArray());
+            mDisplayUserControl.AppendContextMenuItems(toolStripItems.ToArray());
 
-            foreach (var tsmi in mMyMenuItems)
+            foreach (var menuItem in toolStripItems)
             {
-                tsmi.Enabled = false;
-                mAllMenuItems.Add(tsmi.Name);
+                menuItem.Enabled = false;
+                mAllMenuItems.Add(menuItem.Name);
             }
         }
 
@@ -130,21 +130,21 @@ namespace MageConcatenator
         /// <returns>Menu items</returns>
         private ToolStripItem[] GetWebActionMenuItems()
         {
-            var tsmil = new List<ToolStripItem>();
-            var webmi = new ToolStripMenuItem("Open DMS web page")
+            var toolStripItems = new List<ToolStripItem>();
+            var webPageMenuItem = new ToolStripMenuItem("Open DMS web page")
             {
                 Name = "WebPageSubmenu"
             };
-            tsmil.Add(webmi);
+            toolStripItems.Add(webPageMenuItem);
 
-            var tsmi = new ToolStripMenuItem("Job detail", null, HandleJobWebAction, "JobDetailWebPage");
-            mJobSensitiveMenuItems.Add(tsmi.Name);
-            webmi.DropDownItems.Add(tsmi);
+            var jobDetailMenuItem = new ToolStripMenuItem("Job detail", null, HandleJobWebAction, "JobDetailWebPage");
+            mJobSensitiveMenuItems.Add(jobDetailMenuItem.Name);
+            webPageMenuItem.DropDownItems.Add(jobDetailMenuItem);
 
-            tsmi = new ToolStripMenuItem("Dataset detail", null, HandleDatasetWebAction, "DatasetDetailWebPage");
-            mDatasetSensitiveMenuItems.Add(tsmi.Name);
-            webmi.DropDownItems.Add(tsmi);
-            return tsmil.ToArray();
+            var datasetDetailMenuItem = new ToolStripMenuItem("Dataset detail", null, HandleDatasetWebAction, "DatasetDetailWebPage");
+            mDatasetSensitiveMenuItems.Add(datasetDetailMenuItem.Name);
+            webPageMenuItem.DropDownItems.Add(datasetDetailMenuItem);
+            return toolStripItems.ToArray();
         }
 
         /// <summary>
@@ -186,15 +186,15 @@ namespace MageConcatenator
 
         #endregion
 
-        #region Windows Explorer Folder Menu Actions
+        #region Windows Explorer Directory Menu Actions
 
-        private ToolStripItem[] GetFolderMenuItems()
+        private ToolStripItem[] GetDirectoryMenuItems()
         {
-            var l = new List<ToolStripItem>();
-            var tsmi = new ToolStripMenuItem("Open Folder", null, HandleFolderAction, "OpenFolder");
-            mFolderSensitiveMenuItems.Add(tsmi.Name);
-            l.Add(tsmi);
-            return l.ToArray();
+            var toolStripItems = new List<ToolStripItem>();
+            var openDirectoryMenuItem = new ToolStripMenuItem("Open Directory", null, HandleDirectoryAction, "OpenDirectory");
+            mDirectorySensitiveMenuItems.Add(openDirectoryMenuItem.Name);
+            toolStripItems.Add(openDirectoryMenuItem);
+            return toolStripItems.ToArray();
         }
 
         /// <summary>
@@ -202,9 +202,9 @@ namespace MageConcatenator
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void HandleFolderAction(object sender, EventArgs e)
+        private void HandleDirectoryAction(object sender, EventArgs e)
         {
-            OpenWindowsExplorer("Folder");
+            OpenWindowsExplorer("Directory");
         }
 
         /// <summary>

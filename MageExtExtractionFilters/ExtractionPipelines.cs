@@ -163,23 +163,20 @@ namespace MageExtExtractionFilters
             }
             else
             {
-                var f = extractionParams.RType.Filter;
-                var t = tools.Keys.ElementAt(0);
-                if (string.Equals(f, t, StringComparison.CurrentCultureIgnoreCase))
+                var filterName = extractionParams.RType.Filter;
+                var toolName = tools.Keys.ElementAt(0);
+                if (string.Equals(filterName, toolName, StringComparison.OrdinalIgnoreCase))
                 {
                     return msg;
                 }
 
-                var bInvalid = true;
-
-                if (t.ToLower() == "msgfplus" && f.ToLower().StartsWith("msgfplus"))
+                if (toolName.ToLower() == "msgfplus" && filterName.ToLower().StartsWith("msgfplus"))
                 {
                     // MSGF+ results can be processed by two different extractors: msgfdb and msgfdbFHT
-                    bInvalid = false;
+                    return msg;
                 }
 
-                if (bInvalid)
-                    msg = string.Format("Result type chosen for extraction ({0}) is not correct for selected jobs ({1})", f, t);
+                msg = string.Format("Result type chosen for extraction ({0}) is not correct for selected jobs ({1})", filterName, toolName);
             }
             return msg;
         }

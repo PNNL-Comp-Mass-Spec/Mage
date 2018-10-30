@@ -21,26 +21,26 @@ namespace MageFilePackager
         /// The particular GridViewDisplayControl object that this object is attached to
         /// and supplies context menu items for
         /// </summary>
-        private readonly GridViewDisplayControl _displayUserControl;
+        private readonly GridViewDisplayControl mDisplayUserControl;
 
         /// <summary>
         /// The DataGridView control contained by the attached GridViewDisplayControl
         /// (broken out as separate reference for convenience)
         /// </summary>
-        private readonly DataGridView _displayView;
+        private readonly DataGridView mDisplayView;
 
         /// <summary>
         /// List of names of all menu items created by this class
         /// </summary>
-        private readonly List<string> _allMenuItems = new List<string>();
+        private readonly List<string> mAllMenuItems = new List<string>();
 
         /// <summary>
         /// Lists of names of menu items
         /// that are sensitive to presence of certain columns in list display
         /// </summary>
-        private readonly List<string> _folderSensitiveMenuItems = new List<string>();
-        private readonly List<string> _jobSensitiveMenuItems = new List<string>();
-        private readonly List<string> _datasetSensitiveMenuItems = new List<string>();
+        private readonly List<string> mFolderSensitiveMenuItems = new List<string>();
+        private readonly List<string> mJobSensitiveMenuItems = new List<string>();
+        private readonly List<string> mDatasetSensitiveMenuItems = new List<string>();
 
         #endregion
 
@@ -53,9 +53,9 @@ namespace MageFilePackager
         /// <param name="listDisplay"></param>
         public GridViewDisplayActions(GridViewDisplayControl listDisplay)
         {
-            _displayUserControl = listDisplay;
-            _displayView = _displayUserControl.List;
-            _displayUserControl.SelectionChanged += HandleSelectionChanged;
+            mDisplayUserControl = listDisplay;
+            mDisplayView = mDisplayUserControl.List;
+            mDisplayUserControl.SelectionChanged += HandleSelectionChanged;
             SetupContextMenus();
         }
 
@@ -69,16 +69,16 @@ namespace MageFilePackager
         private void SetupContextMenus()
         {
 
-            var mMyMenuItems = new List<ToolStripItem> { new ToolStripSeparator() };
-            mMyMenuItems.AddRange(GetFolderMenuItems().ToArray());
-            mMyMenuItems.AddRange(GetWebActionMenuItems().ToArray());
+            var toolStripItems = new List<ToolStripItem> { new ToolStripSeparator() };
+            toolStripItems.AddRange(GetFolderMenuItems().ToArray());
+            toolStripItems.AddRange(GetWebActionMenuItems().ToArray());
 
-            _displayUserControl.AppendContextMenuItems(mMyMenuItems.ToArray());
+            mDisplayUserControl.AppendContextMenuItems(toolStripItems.ToArray());
 
-            foreach (var tsmi in mMyMenuItems)
+            foreach (var menuItem in toolStripItems)
             {
-                tsmi.Enabled = false;
-                _allMenuItems.Add(tsmi.Name);
+                menuItem.Enabled = false;
+                mAllMenuItems.Add(menuItem.Name);
             }
         }
 
@@ -129,18 +129,20 @@ namespace MageFilePackager
         /// <returns>Menu items</returns>
         private IEnumerable<ToolStripItem> GetWebActionMenuItems()
         {
-            var tsmil = new List<ToolStripItem>();
-            var webmi = new ToolStripMenuItem("Open DMS web page") { Name = "WebPageSubmenu" };
-            tsmil.Add(webmi);
+            var toolStripItems = new List<ToolStripItem>();
 
-            var tsmi = new ToolStripMenuItem("Job detail", null, HandleJobWebAction, "JobDetailWebPage");
-            _jobSensitiveMenuItems.Add(tsmi.Name);
-            webmi.DropDownItems.Add(tsmi);
+            var webPageMenuItem = new ToolStripMenuItem("Open DMS web page") { Name = "WebPageSubmenu" };
+            toolStripItems.Add(webPageMenuItem);
 
-            tsmi = new ToolStripMenuItem("Dataset detail", null, HandleDatasetWebAction, "DatasetDetailWebPage");
-            _datasetSensitiveMenuItems.Add(tsmi.Name);
-            webmi.DropDownItems.Add(tsmi);
-            return tsmil.ToArray();
+            var jobDetailMenuItem = new ToolStripMenuItem("Job detail", null, HandleJobWebAction, "JobDetailWebPage");
+            mJobSensitiveMenuItems.Add(jobDetailMenuItem.Name);
+            webPageMenuItem.DropDownItems.Add(jobDetailMenuItem);
+
+            var datasetDetailMenuItem = new ToolStripMenuItem("Dataset detail", null, HandleDatasetWebAction, "DatasetDetailWebPage");
+            mDatasetSensitiveMenuItems.Add(datasetDetailMenuItem.Name);
+            webPageMenuItem.DropDownItems.Add(datasetDetailMenuItem);
+
+            return toolStripItems.ToArray();
         }
 
         /// <summary>
@@ -182,15 +184,17 @@ namespace MageFilePackager
 
         #endregion
 
-        #region Windows Explorer Folder Menu Actions
+        #region Windows Explorer Directory Menu Actions
 
         private IEnumerable<ToolStripItem> GetFolderMenuItems()
         {
-            var l = new List<ToolStripItem>();
-            var tsmi = new ToolStripMenuItem("Open Folder", null, HandleFolderAction, "OpenFolder");
-            _folderSensitiveMenuItems.Add(tsmi.Name);
-            l.Add(tsmi);
-            return l.ToArray();
+            var toolStripItems = new List<ToolStripItem>();
+
+            var openDirectoryMenuItem = new ToolStripMenuItem("Open Directory", null, HandleFolderAction, "OpenDirectory");
+            mFolderSensitiveMenuItems.Add(openDirectoryMenuItem.Name);
+            toolStripItems.Add(openDirectoryMenuItem);
+
+            return toolStripItems.ToArray();
         }
 
         /// <summary>
@@ -242,32 +246,32 @@ namespace MageFilePackager
         {
 
             // Whole context menu enabled/disabled based on whether there are any rows selected or not
-            if (_displayUserControl.SelectedItemCount == 0)
+            if (mDisplayUserControl.SelectedItemCount == 0)
             {
-                AdjustMenuItemsFromNameList(_allMenuItems, false);
+                AdjustMenuItemsFromNameList(mAllMenuItems, false);
             }
             else
             {
-                AdjustMenuItemsFromNameList(_allMenuItems, true);
+                AdjustMenuItemsFromNameList(mAllMenuItems, true);
 
                 // Enable/disable selected menu items based on presence
                 // of certain columns in rows
-                AdjustMenuItemsFromNameList(_folderSensitiveMenuItems, false);
-                AdjustMenuItemsFromNameList(_jobSensitiveMenuItems, false);
-                AdjustMenuItemsFromNameList(_datasetSensitiveMenuItems, false);
+                AdjustMenuItemsFromNameList(mFolderSensitiveMenuItems, false);
+                AdjustMenuItemsFromNameList(mJobSensitiveMenuItems, false);
+                AdjustMenuItemsFromNameList(mDatasetSensitiveMenuItems, false);
 
-                foreach (var colDef in _displayUserControl.ColumnDefs)
+                foreach (var colDef in mDisplayUserControl.ColumnDefs)
                 {
                     switch (colDef.Name)
                     {
                         case "Job":
-                            AdjustMenuItemsFromNameList(_jobSensitiveMenuItems, true);
+                            AdjustMenuItemsFromNameList(mJobSensitiveMenuItems, true);
                             break;
                         case "Dataset":
-                            AdjustMenuItemsFromNameList(_datasetSensitiveMenuItems, true);
+                            AdjustMenuItemsFromNameList(mDatasetSensitiveMenuItems, true);
                             break;
                         case "Folder":
-                            AdjustMenuItemsFromNameList(_folderSensitiveMenuItems, true);
+                            AdjustMenuItemsFromNameList(mFolderSensitiveMenuItems, true);
                             break;
                     }
                 }
@@ -286,7 +290,7 @@ namespace MageFilePackager
             {
                 if (!string.IsNullOrEmpty(name))
                 {
-                    foreach (var tsi in _displayView.ContextMenuStrip.Items.Find(name, true))
+                    foreach (var tsi in mDisplayView.ContextMenuStrip.Items.Find(name, true))
                     {
                         tsi.Enabled = active;
                     }

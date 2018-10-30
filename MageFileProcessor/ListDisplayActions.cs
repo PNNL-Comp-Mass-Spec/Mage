@@ -68,16 +68,16 @@ namespace MageFileProcessor
         private void SetupContextMenus()
         {
 
-            var mMyMenuItems = new List<ToolStripItem> { new ToolStripSeparator() };
-            mMyMenuItems.AddRange(GetFolderMenuItems().ToArray());
-            mMyMenuItems.AddRange(GetWebActionMenuItems().ToArray());
+            var toolStripItems = new List<ToolStripItem> { new ToolStripSeparator() };
+            toolStripItems.AddRange(GetFolderMenuItems().ToArray());
+            toolStripItems.AddRange(GetWebActionMenuItems().ToArray());
 
-            mListDisplay.AppendContextMenuItems(mMyMenuItems.ToArray());
+            mListDisplay.AppendContextMenuItems(toolStripItems.ToArray());
 
-            foreach (var tsmi in mMyMenuItems)
+            foreach (var menuItem in toolStripItems)
             {
-                tsmi.Enabled = false;
-                mAllMenuItems.Add(tsmi.Name);
+                menuItem.Enabled = false;
+                mAllMenuItems.Add(menuItem.Name);
             }
         }
 
@@ -125,18 +125,19 @@ namespace MageFileProcessor
         /// <returns>Menu items</returns>
         private ToolStripItem[] GetWebActionMenuItems()
         {
-            var tsmil = new List<ToolStripItem>();
-            var webmi = new ToolStripMenuItem("Open DMS web page") { Name = "WebPageSubmenu" };
-            tsmil.Add(webmi);
+            var toolStripItems = new List<ToolStripItem>();
 
-            var tsmi = new ToolStripMenuItem("Job detail", null, HandleJobWebAction, "JobDetailWebPage");
-            mJobSensitiveMenuItems.Add(tsmi.Name);
-            webmi.DropDownItems.Add(tsmi);
+            var webPageMenuItem = new ToolStripMenuItem("Open DMS web page") { Name = "WebPageSubmenu" };
+            toolStripItems.Add(webPageMenuItem);
 
-            tsmi = new ToolStripMenuItem("Dataset detail", null, HandleDatasetWebAction, "DatasetDetailWebPage");
-            mDatasetSensitiveMenuItems.Add(tsmi.Name);
-            webmi.DropDownItems.Add(tsmi);
-            return tsmil.ToArray();
+            var jobDetailMenuItem = new ToolStripMenuItem("Job detail", null, HandleJobWebAction, "JobDetailWebPage");
+            mJobSensitiveMenuItems.Add(jobDetailMenuItem.Name);
+            webPageMenuItem.DropDownItems.Add(jobDetailMenuItem);
+
+            var datasetDetailMenuItem = new ToolStripMenuItem("Dataset detail", null, HandleDatasetWebAction, "DatasetDetailWebPage");
+            mDatasetSensitiveMenuItems.Add(datasetDetailMenuItem.Name);
+            webPageMenuItem.DropDownItems.Add(datasetDetailMenuItem);
+            return toolStripItems.ToArray();
         }
 
         /// <summary>
@@ -182,11 +183,13 @@ namespace MageFileProcessor
 
         private ToolStripItem[] GetFolderMenuItems()
         {
-            var l = new List<ToolStripItem>();
-            var tsmi = new ToolStripMenuItem("Open Folder", null, HandleFolderAction, "OpenFolder");
-            mFolderSensitiveMenuItems.Add(tsmi.Name);
-            l.Add(tsmi);
-            return l.ToArray();
+            var toolStripItems = new List<ToolStripItem>();
+
+            var openDirectoryMenuItem = new ToolStripMenuItem("Open Directory", null, HandleFolderAction, "OpenDirectory");
+            mFolderSensitiveMenuItems.Add(openDirectoryMenuItem.Name);
+            toolStripItems.Add(openDirectoryMenuItem);
+
+            return toolStripItems.ToArray();
         }
 
         /// <summary>
