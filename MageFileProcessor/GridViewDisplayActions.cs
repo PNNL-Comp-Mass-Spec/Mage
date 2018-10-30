@@ -90,60 +90,17 @@ namespace MageFileProcessor
         private void SetupContextMenus()
         {
 
-            var mMyMenuItems = new List<ToolStripItem>
-            {
-                new ToolStripSeparator()
-            };
-            mMyMenuItems.AddRange(GetFolderMenuItems().ToArray());
-            mMyMenuItems.AddRange(GetWebActionMenuItems().ToArray());
+            var toolStripItems = new List<ToolStripItem> { new ToolStripSeparator() };
+            toolStripItems.AddRange(GetFolderMenuItems().ToArray());
+            toolStripItems.AddRange(GetWebActionMenuItems().ToArray());
 
-            mDisplayUserControl.AppendContextMenuItems(mMyMenuItems.ToArray());
+            mDisplayUserControl.AppendContextMenuItems(toolStripItems.ToArray());
 
-            foreach (var tsmi in mMyMenuItems)
+            foreach (var menuItem in toolStripItems)
             {
-                tsmi.Enabled = false;
-                mAllMenuItems.Add(tsmi.Name);
+                menuItem.Enabled = false;
+                mAllMenuItems.Add(menuItem.Name);
             }
-        }
-
-        #endregion
-
-        #region Column Functions
-
-        /// <summary>
-        /// Return the index to the given column
-        /// </summary>
-        /// <param name="colName">Name of column to get index for</param>
-        /// <returns>Position of column in item array; -1 if not found</returns>
-        private int GetColumnIndex(string colName)
-        {
-            var columnDef = mDisplayView.Columns[colName];
-            if (columnDef == null)
-            {
-                return -1;
-            }
-
-            var i = columnDef.Index;
-            return i;
-        }
-
-        /// <summary>
-        /// Get values in given column for currently selected items in display list
-        /// </summary>
-        /// <param name="colName">Column name to get values from</param>
-        /// <returns>List of contents of column for each selected row</returns>
-        private string[] GetItemList(string colName)
-        {
-            var lst = new List<string>();
-            var i = GetColumnIndex(colName);
-            if (i != -1)
-            {
-                foreach (DataGridViewRow objRow in mDisplayView.SelectedRows)
-                {
-                    lst.Add(objRow.Cells[i].Value.ToString());
-                }
-            }
-            return lst.ToArray();
         }
 
         #endregion
@@ -156,23 +113,20 @@ namespace MageFileProcessor
         /// <returns>Menu items</returns>
         private ToolStripItem[] GetWebActionMenuItems()
         {
-            var tsmil = new List<ToolStripItem>();
+            var toolStripItems = new List<ToolStripItem>();
 
-            var webmi = new ToolStripMenuItem("Open DMS web page")
-            {
-                Name = "WebPageSubmenu"
-            };
-            tsmil.Add(webmi);
+            var webPageMenuItem = new ToolStripMenuItem("Open DMS web page") { Name = "WebPageSubmenu" };
+            toolStripItems.Add(webPageMenuItem);
 
-            var tsmiJob = new ToolStripMenuItem("Job detail", null, HandleJobWebAction, "JobDetailWebPage");
-            mJobSensitiveMenuItems.Add(tsmiJob.Name);
-            webmi.DropDownItems.Add(tsmiJob);
+            var jobDetailMenuItem = new ToolStripMenuItem("Job detail", null, HandleJobWebAction, "JobDetailWebPage");
+            mJobSensitiveMenuItems.Add(jobDetailMenuItem.Name);
+            webPageMenuItem.DropDownItems.Add(jobDetailMenuItem);
 
-            var tsmiDataset = new ToolStripMenuItem("Dataset detail", null, HandleDatasetWebAction, "DatasetDetailWebPage");
-            mDatasetSensitiveMenuItems.Add(tsmiDataset.Name);
-            webmi.DropDownItems.Add(tsmiDataset);
+            var datasetDetailMenuItem = new ToolStripMenuItem("Dataset detail", null, HandleDatasetWebAction, "DatasetDetailWebPage");
+            mDatasetSensitiveMenuItems.Add(datasetDetailMenuItem.Name);
+            webPageMenuItem.DropDownItems.Add(datasetDetailMenuItem);
 
-            return tsmil.ToArray();
+            return toolStripItems.ToArray();
         }
 
         /// <summary>
@@ -207,11 +161,13 @@ namespace MageFileProcessor
 
         private ToolStripItem[] GetFolderMenuItems()
         {
-            var tsmil = new List<ToolStripItem>();
-            var tsmi = new ToolStripMenuItem("Open Folder", null, HandleFolderAction, "OpenFolder");
-            mFolderSensitiveMenuItems.Add(tsmi.Name);
-            tsmil.Add(tsmi);
-            return tsmil.ToArray();
+            var toolStripItems = new List<ToolStripItem>();
+
+            var openDirectoryMenuItem = new ToolStripMenuItem("Open Directory", null, HandleFolderAction, "OpenDirectory");
+            mFolderSensitiveMenuItems.Add(openDirectoryMenuItem.Name);
+            toolStripItems.Add(openDirectoryMenuItem);
+
+            return toolStripItems.ToArray();
         }
 
         /// <summary>
