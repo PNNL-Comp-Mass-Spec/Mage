@@ -36,39 +36,45 @@ namespace MageUnitTests
         /// Tests ability to make Mage basic modules by class name
         /// </summary>
         [Test]
-        public void MakeModuleTest()
+        [TestCase("NullFilter", true)]
+        [TestCase("NullFilter", true)]
+        [TestCase("ContentFilter", true)]
+        [TestCase("CrosstabFilter", true)]
+        [TestCase("DelimitedFileReader", true)]
+        [TestCase("DelimitedFileWriter", true)]
+        [TestCase("FileContentProcessor", true)]
+        [TestCase("FileCopy", true)]
+        [TestCase("FileListFilter", true)]
+        [TestCase("FileSubPipelineBroker", true)]
+        [TestCase("MSSQLReader", true)]
+        [TestCase("PermutationGenerator", true)]
+        [TestCase("SimpleSink", true)]
+        [TestCase("SQLiteReader", true)]
+        [TestCase("SQLiteWriter", true)]
+        [TestCase("NonExistentModuleName", false)]
+        public void MakeModuleTest(string moduleName, bool validModule)
         {
-            // ReSharper disable once JoinDeclarationAndInitializer
-            IBaseModule mod;
+            var mod = ProcessingPipeline.MakeModule(moduleName);
 
-            mod = ProcessingPipeline.MakeModule("NullFilter");
-            Assert.AreNotEqual(null, mod);
-            mod = ProcessingPipeline.MakeModule("ContentFilter");
-            Assert.AreNotEqual(null, mod);
-            mod = ProcessingPipeline.MakeModule("CrosstabFilter");
-            Assert.AreNotEqual(null, mod);
-            mod = ProcessingPipeline.MakeModule("DelimitedFileReader");
-            Assert.AreNotEqual(null, mod);
-            mod = ProcessingPipeline.MakeModule("DelimitedFileWriter");
-            Assert.AreNotEqual(null, mod);
-            mod = ProcessingPipeline.MakeModule("FileContentProcessor");
-            Assert.AreNotEqual(null, mod);
-            mod = ProcessingPipeline.MakeModule("FileCopy");
-            Assert.AreNotEqual(null, mod);
-            mod = ProcessingPipeline.MakeModule("FileListFilter");
-            Assert.AreNotEqual(null, mod);
-            mod = ProcessingPipeline.MakeModule("FileSubPipelineBroker");
-            Assert.AreNotEqual(null, mod);
-            mod = ProcessingPipeline.MakeModule("MSSQLReader");
-            Assert.AreNotEqual(null, mod);
-            mod = ProcessingPipeline.MakeModule("PermutationGenerator");
-            Assert.AreNotEqual(null, mod);
-            mod = ProcessingPipeline.MakeModule("SimpleSink");
-            Assert.AreNotEqual(null, mod);
-            mod = ProcessingPipeline.MakeModule("SQLiteReader");
-            Assert.AreNotEqual(null, mod);
-            mod = ProcessingPipeline.MakeModule("SQLiteWriter");
-            Assert.AreNotEqual(null, mod);
+            if (validModule)
+            {
+                if (mod == null)
+                {
+                    Assert.Fail("Unrecognized module name: " + moduleName);
+                }
+                else
+                {
+                    Console.WriteLine("Created: " + mod);
+                }
+            }
+            else
+            {
+                if (mod != null)
+                {
+                    Assert.Fail("A module was created, even though the module name should be unrecognized: " + moduleName);
+                }
+            }
+
         }
 
         /// <summary>
@@ -93,11 +99,11 @@ namespace MageUnitTests
             IBaseModule mod;
 
             mod = pipeline.GetModule("DelimitedFileReader1");
-            Assert.AreNotEqual(null, mod);
+            Assert.NotNull(mod);
             mod = pipeline.GetModule("NullFilter2");
-            Assert.AreNotEqual(null, mod);
+            Assert.NotNull(mod);
             mod = pipeline.GetModule("SQLiteWriter3");
-            Assert.AreNotEqual(null, mod);
+            Assert.NotNull(mod);
         }
 
         /// <summary>
@@ -118,11 +124,11 @@ namespace MageUnitTests
             IBaseModule mod;
 
             mod = pipeline.GetModule("DelimitedFileReader1");
-            Assert.AreNotEqual(null, mod);
+            Assert.NotNull(mod);
             mod = pipeline.GetModule("NullFilter2");
-            Assert.AreNotEqual(null, mod);
+            Assert.NotNull(mod);
             mod = pipeline.GetModule("SimpleSink3");
-            Assert.AreNotEqual(null, mod);
+            Assert.NotNull(mod);
         }
 
         /// <summary>
@@ -149,11 +155,11 @@ namespace MageUnitTests
             IBaseModule mod;
 
             mod = pipeline.GetModule("Larry");
-            Assert.AreNotEqual(null, mod);
+            Assert.NotNull(mod);
             mod = pipeline.GetModule("Moe");
-            Assert.AreNotEqual(null, mod);
+            Assert.NotNull(mod);
             mod = pipeline.GetModule("Curly");
-            Assert.AreNotEqual(null, mod);
+            Assert.NotNull(mod);
         }
 
         /// <summary>
@@ -184,13 +190,13 @@ namespace MageUnitTests
             IBaseModule mod;
 
             mod = pipeline.GetModule("Larry");
-            Assert.AreNotEqual(null, mod);
+            Assert.NotNull(mod);
             Assert.AreEqual("DelimitedFileReader", mod.GetType().Name);
             mod = pipeline.GetModule("Moe");
-            Assert.AreNotEqual(null, mod);
+            Assert.NotNull(mod);
             Assert.AreEqual("NullFilter", mod.GetType().Name);
             mod = pipeline.GetModule("Curly");
-            Assert.AreNotEqual(null, mod);
+            Assert.NotNull(mod);
             Assert.AreEqual("SQLiteWriter", mod.GetType().Name);
         }
 
@@ -241,7 +247,6 @@ namespace MageUnitTests
 
             var dataFile = General.GetTestFile(dataFileName);
 
-
             var pipeline = ProcessingPipeline.Assemble(pipelineXML2.Replace(dataFileName, dataFile.FullName));
 
             var sink = new SimpleSink(maxRows);
@@ -259,6 +264,8 @@ namespace MageUnitTests
             // Did the test sink object get the expected number of data rows
             // on its standard tabular input?
             var rows = sink.Rows;
+
+            Console.WriteLine("Pipeline returned {0} rows of data", rows.Count);
             Assert.AreEqual(maxRows, rows.Count, "Sink did not receive the expected number of rows");
 
         }
@@ -266,20 +273,20 @@ namespace MageUnitTests
         readonly string pipelineXML3 = @"<?xml version='1.0' encoding='UTF-8'?><!-- to get filtered list of files in local directory -->
 <pipeline name='Test_Pipeline'>
     <module type='FileListFilter'>
-        <param name='FolderPath'><![CDATA[\\proto-2\unitTest_Files\Mage\SynopsisFiles]]></param>
+        <param name='DirectoryPath'><![CDATA[\\proto-2\unitTest_Files\Mage\SynopsisFiles]]></param>
         <param name='FileNameSelector'>_syn.txt</param>
         <param name='FileTypeColumnName'>Item</param>
         <param name='FileColumnName'>Name</param>
-        <param name='SourceFolderColumnName'>Folder</param>
-        <param name='OutputColumnList'>Item|+|text, Name|+|text, Folder|+|text</param>
-        <param name='IncludeFilesOrFolders'>File</param>
+        <param name='SourceDirectoryColumnName'>Directory</param>
+        <param name='OutputColumnList'>Item|+|text, Name|+|text, Directory|+|text</param>
+        <param name='IncludeFilesOrDirectories'>File</param>
     </module>
     <module type='FileSubPipelineBroker'>
         <param name='FileFilterModuleName'>NullFilter</param>
         <param name='SourceFileColumnName'>Name</param>
-        <param name='SourceFolderColumnName'>Folder</param>
+        <param name='SourceDirectoryColumnName'>Directory</param>
         <param name='FileFilterParameters'>OutputColumnList:Name|+|text, *</param>
-        <param name='OutputFolderPath'><![CDATA[\\proto-2\unitTest_Files\Mage\TargetFolder]]></param>
+        <param name='OutputDirectoryPath'><![CDATA[\\proto-2\unitTest_Files\Mage\TargetDirectory]]></param>
         <param name='OutputFileName'>junk.txt</param>
         <param name='DatabaseName'></param>
         <param name='TableName'></param>
@@ -291,7 +298,15 @@ namespace MageUnitTests
         public void AssembleComplexXML()
         {
             var pipeline = ProcessingPipeline.Assemble(pipelineXML3);
+            Assert.AreEqual(2, pipeline.ModuleList.Count, "Module list should have 2 modules");
 
+            Assert.AreEqual("Mage.FileListFilter", pipeline.ModuleList[0].ToString(), "Unexpected module type for Module " + pipeline.ModuleList[0]);
+            Assert.AreEqual("Mage.FileSubPipelineBroker", pipeline.ModuleList[1].ToString(), "Unexpected module type for Module " + pipeline.ModuleList[1]);
+
+            foreach (var module in pipeline.ModuleList)
+            {
+                Console.WriteLine(module.ToString());
+            }
         }
     }
 }

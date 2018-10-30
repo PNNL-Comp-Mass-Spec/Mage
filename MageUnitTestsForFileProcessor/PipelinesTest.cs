@@ -151,7 +151,7 @@ namespace MageUnitTestsForFileProcessor
             Assert.AreNotEqual(null, module);
             Assert.IsInstanceOf(typeof(DelimitedFileWriter), module);
             var writer = (DelimitedFileWriter)module;
-            Assert.IsTrue(writer.FilePath.Contains("Runlog_Bogus_"));
+            Assert.IsTrue(writer.FilePath.Contains("RunLog_Bogus_"), "Unexpected FilePath for writer: " + writer.FilePath);
 
             // For mode "SQLite_Output":
 

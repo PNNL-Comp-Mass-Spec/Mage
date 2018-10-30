@@ -42,39 +42,38 @@ namespace MageUnitTests
             var target = new FileCopyExtractor();
             var sourceFile = "SourceFile";
 
-            // Typical usage - ID column in column list and ApplyPrefixToFileName set to "Yes"
-            var IDColName = "Tres";
-            target.InputColumnPosAccessor = new Dictionary<string, int> { { "Uno", 0 }, { "Dos", 1 }, { IDColName, 2 } };
-            target.ColumnToUseForPrefix = IDColName;
-            target.ApplyPrefixToFileName = "Yes";
-            target.PrefixLeader = IDColName;
-            var fieldPos = target.InputColumnPosAccessor;
             var fields = new[] { "FirstField", "SecondField", "ThirdField" };
-            var expected = IDColName + "_" + fields[target.InputColumnPosAccessor[target.ColumnToUseForPrefix]] + "_" + sourceFile;
-            var actual = target.GetDestFileAccessor(sourceFile, fieldPos, fields);
-            Assert.AreEqual(expected, actual, "Typical usage");
 
-            // Typical usage - ID column in column list and ApplyPrefixToFileName set to "No"
-            IDColName = "Tres";
-            target.InputColumnPosAccessor = new Dictionary<string, int> { { "Uno", 0 }, { "Dos", 1 }, { IDColName, 2 } };
-            target.ColumnToUseForPrefix = IDColName;
+            // Typical usage - ID column in column list and ApplyPrefixToFileName set to "Yes"
+            var idColNameTest1 = "Third";
+            target.InputColumnPosAccessor = new Dictionary<string, int> { { "First", 0 }, { "Second", 1 }, { idColNameTest1, 2 } };
+            target.ColumnToUseForPrefix = idColNameTest1;
+            target.ApplyPrefixToFileName = "Yes";
+            target.PrefixLeader = idColNameTest1;
+            var fieldPosTest1 = target.InputColumnPosAccessor;
+            var expectedTest1 = idColNameTest1 + "_" + fields[target.InputColumnPosAccessor[target.ColumnToUseForPrefix]] + "_" + sourceFile;
+            var actualTest1 = target.GetDestFileAccessor(sourceFile, fieldPosTest1, fields);
+            Assert.AreEqual(expectedTest1, actualTest1, "Typical usage");
+
+            // ID column in column list and ApplyPrefixToFileName set to "No"
+            var idColNameTest2 = "Third";
+            target.InputColumnPosAccessor = new Dictionary<string, int> { { "First", 0 }, { "Second", 1 }, { idColNameTest2, 2 } };
+            target.ColumnToUseForPrefix = idColNameTest2;
             target.ApplyPrefixToFileName = "No";
-            fieldPos = target.InputColumnPosAccessor;
-            fields = new[] { "FirstField", "SecondField", "ThirdField" };
-            expected = sourceFile;
-            actual = target.GetDestFileAccessor(sourceFile, fieldPos, fields);
-            Assert.AreEqual(expected, actual, "No prefix");
+            var fieldPosTest2 = target.InputColumnPosAccessor;
+            var expectedTest2 = sourceFile;
+            var actualTest2 = target.GetDestFileAccessor(sourceFile, fieldPosTest2, fields);
+            Assert.AreEqual(expectedTest2, actualTest2, "No prefix");
 
             // ID column NOT in column list and ApplyPrefixToFileName set to "Yes"
-            IDColName = "Tres";
-            target.InputColumnPosAccessor = new Dictionary<string, int> { { "Uno", 0 }, { "Dos", 1 }, { "ChoppedLiver", 2 } };
-            target.ColumnToUseForPrefix = IDColName;
+            var idColNameTest3 = "Third";
+            target.InputColumnPosAccessor = new Dictionary<string, int> { { "First", 0 }, { "Second", 1 }, { "ChoppedLiver", 2 } };
+            target.ColumnToUseForPrefix = idColNameTest3;
             target.ApplyPrefixToFileName = "Yes";
-            fieldPos = target.InputColumnPosAccessor;
-            fields = new[] { "FirstField", "SecondField", "ThirdField" };
-            expected = "Tag_0_" + sourceFile;
-            actual = target.GetDestFileAccessor(sourceFile, fieldPos, fields);
-            Assert.AreEqual(expected, actual, "Missing ID column");
+            var fieldPosTest3 = target.InputColumnPosAccessor;
+            var expectedTest3 = "Tag_0_" + sourceFile;
+            var actualTest3 = target.GetDestFileAccessor(sourceFile, fieldPosTest3, fields);
+            Assert.AreEqual(expectedTest3, actualTest3, "Missing ID column");
         }
 
         /// <summary>

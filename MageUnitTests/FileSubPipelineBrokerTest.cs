@@ -29,8 +29,8 @@ namespace MageUnitTests
 
             // Set up test parameters
             var idColumnName = "Padding";
-            var idColContents = "Borked";
-            var folderColName = "Folder_Col";
+            var idColContents = "Example Contents";
+            var directoryColName = "Directory_Col";
             var fileColName = "File_Col";
             var testDirectoryPath = System.Environment.CurrentDirectory;
             var testInputFileName = "victim.txt";
@@ -39,7 +39,7 @@ namespace MageUnitTests
             // Set up data generator
             var dGen = new DataGenerator(2, 4)
             {
-                AddAdHocRow = new[] { folderColName, fileColName, idColumnName }
+                AddAdHocRow = new[] { directoryColName, fileColName, idColumnName }
             };
 
             dGen.AddAdHocRow = new[] { testDirectoryPath, testInputFileName, idColContents };
@@ -48,7 +48,7 @@ namespace MageUnitTests
             var testFile = new FileInfo(Path.Combine(testDirectoryPath, testInputFileName));
             using (var writer = new StreamWriter(new FileStream(testFile.FullName, FileMode.Create, FileAccess.Write)))
             {
-                writer.WriteLine(idColumnName + '\t' + folderColName + '\t' + fileColName);
+                writer.WriteLine(idColumnName + '\t' + directoryColName + '\t' + fileColName);
                 writer.WriteLine(idColContents + '\t' + testDirectoryPath + '\t' + testInputFileName);
             }
 
@@ -57,11 +57,11 @@ namespace MageUnitTests
             {
                 SourceFileColumnName = fileColName,
                 OutputFileColumnName = fileColName,
-                SourceDirectoryColumnName = folderColName,
+                SourceDirectoryColumnName = directoryColName,
                 OutputDirectoryPath = destDirectory,
-                OutputColumnList = string.Format("{0}|+|text, {1}", fileColName, folderColName)
+                OutputColumnList = string.Format("{0}|+|text, {1}", fileColName, directoryColName)
             };
-            target.SetPipelineMaker(MakeTestSubpipeline);
+            target.SetPipelineMaker(MakeTestSubPipeline);
             target.SetOutputFileNamer(RenameOutputFile);
 
             // Build and run pipeline
@@ -71,22 +71,22 @@ namespace MageUnitTests
             pipeline.ConnectModules("Gen", "Target");
             pipeline.RunRoot(null);
 
-            Assert.AreEqual("Kilroy was here", mPipelineResults, "Subpipeline creation.");
-            Assert.AreEqual(Path.Combine(testDirectoryPath, testInputFileName), mPipelineInputFilePath, "Subpipeline input file path");
-            Assert.AreEqual(Path.Combine(destDirectory, RenameOutputFile(testInputFileName, null, null)), mPipelineOutputFilePath, "Subpipeline output file path");
+            Assert.AreEqual("Kilroy was here", mPipelineResults, "SubPipeline creation.");
+            Assert.AreEqual(Path.Combine(testDirectoryPath, testInputFileName), mPipelineInputFilePath, "SubPipeline input file path");
+            Assert.AreEqual(Path.Combine(destDirectory, RenameOutputFile(testInputFileName, null, null)), mPipelineOutputFilePath, "SubPipeline output file path");
             Assert.AreEqual("Kilroy was here too", mPipelineDummyModuleResults, "Dummy module results");
         }
 
         // This function builds the a file processing pipeline
         // which is a simple file filtering process that has a file reader module, file filter module, and file writer module,
         // using a filter module specified by the FilterModuleClassName, which must be set by the client
-        private ProcessingPipeline MakeTestSubpipeline(string inputFilePath, string outputFilePath, Dictionary<string, string> context)
+        private ProcessingPipeline MakeTestSubPipeline(string inputFilePath, string outputFilePath, Dictionary<string, string> context)
         {
             mPipelineResults = "Kilroy was here";
             mPipelineInputFilePath = inputFilePath;
             mPipelineOutputFilePath = outputFilePath;
 
-            var pipeline = new ProcessingPipeline("TestSubpipeline");
+            var pipeline = new ProcessingPipeline("TestSubPipeline");
             var dm = new DummyModule();
             pipeline.RootModule = pipeline.AddModule("Mule", dm);
             return pipeline;
@@ -105,7 +105,7 @@ namespace MageUnitTests
         public void SetPipelineMakerTest()
         {
             var target = new FileSubPipelineBroker();
-            target.SetPipelineMaker(MakeTestSubpipeline);
+            target.SetPipelineMaker(MakeTestSubPipeline);
         }
 
         /// <summary>
@@ -140,9 +140,16 @@ namespace MageUnitTests
         [Test]
         public void FileFilterParametersTest()
         {
-            var target = new FileSubPipelineBroker(); // TODO: Initialize to an appropriate value
-            Dictionary<string, string> expected = null; // TODO: Initialize to an appropriate value
+            var target = new FileSubPipelineBroker();
+
+            var expected = new Dictionary<string, string> {
+                { "TestKeyA", "TestValue1"},
+                { "TestKeyB", "TestValue2"},
+                { "TestKeyC", "TestValue3"}
+            };
+
             target.SetFileFilterParameters(expected);
+
             var actual = target.GetFileFilterParameters();
             Assert.AreEqual(expected, actual);
         }
@@ -153,9 +160,10 @@ namespace MageUnitTests
         [Test]
         public void TableNameTest()
         {
-            var target = new FileSubPipelineBroker(); // TODO: Initialize to an appropriate value
-            var expected = "Test Value";
+            var target = new FileSubPipelineBroker();
+            var expected = "Test TableName";
             target.TableName = expected;
+
             var actual = target.TableName;
             Assert.AreEqual(expected, actual);
         }
