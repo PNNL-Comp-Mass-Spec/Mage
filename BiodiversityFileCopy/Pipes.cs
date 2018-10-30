@@ -111,20 +111,20 @@ namespace BiodiversityFileCopy
         public static SimpleSink GetDatasetsForDataPackages(string dataPackageId, Dictionary<string, string> orgLookup)
         {
             // var queryTemplate = @"SELECT Dataset_ID, Dataset, State, Folder As   Directory, Data_Package_ID FROM V_Mage_Data_Package_Datasets WHERE Data_Package_ID IN   (@)";
+            // var queryTemplate = @"SELECT Dataset_ID, Dataset, State, Folder As Directory, Data_Package_ID FROM V_Mage_Data_Package_Datasets WHERE Data_Package_ID IN (@)";
             const string queryTemplate = @"
-SELECT 
-VMDS.Dataset_ID ,
-VMDS.Dataset ,
-VMDS.State ,
-VMDS.Folder As Directory ,
-VMDS.Data_Package_ID,
-VDFP.Dataset_Folder_Path ,
-VDFP.Archive_Folder_Path ,
-VDFP.MyEMSL_Path_Flag   ,
-VDFP.Instrument_Data_Purged
-FROM V_Mage_Data_Package_Datasets   AS VMDS
-INNER   JOIN V_Dataset_Folder_Paths AS VDFP ON VMDS.Dataset_ID = VDFP.Dataset_ID
-WHERE   (   VMDS.Data_Package_ID IN (   @   )   )
+SELECT DS.Dataset_ID ,
+       DS.Dataset ,
+       DS.State ,
+       DS.Folder As Directory ,
+       DS.Data_Package_ID,
+       DFP.Dataset_Folder_Path ,
+       DFP.Archive_Folder_Path ,
+       DFP.MyEMSL_Path_Flag ,
+       DFP.Instrument_Data_Purged
+FROM V_Mage_Data_Package_Datasets AS DS
+INNER JOIN V_Dataset_Folder_Paths AS DFP ON DS.Dataset_ID = DFP.Dataset_ID
+WHERE DS.Data_Package_ID IN (@)
 ";
             return GetItemsForDataPackages(dataPackageId, orgLookup, queryTemplate);
         }
@@ -132,19 +132,19 @@ WHERE   (   VMDS.Data_Package_ID IN (   @   )   )
         public static SimpleSink GetJobsForDataPackages(string dataPackageId, Dictionary<string, string> orgLookup)
         {
             const string queryTemplate = @"
-SELECT  Job ,
-                [Results Folder] ,
-                Folder as   Directory   ,
-                Tool ,
-                [Organism   DB] ,
-                Dataset ,
-                Dataset_ID ,
-                Organism ,
-                Data_Package_ID ,
-                [State]
-FROM        V_Mage_Data_Package_Analysis_Jobs   AS VDPJ
-WHERE       (   VDPJ.Data_Package_ID IN (   @   )   )
-                AND [State] in ('Complete', 'No Export')";
+SELECT Job ,
+       [Results Folder] ,
+       Folder as Directory ,
+       Tool ,
+       [Organism DB] ,
+       Dataset ,
+       Dataset_ID ,
+       Organism ,
+       Data_Package_ID ,
+       [State]
+FROM V_Mage_Data_Package_Analysis_Jobs AS DPAJ
+WHERE DPAJ.Data_Package_ID IN (@)
+      AND [State] in ('Complete', 'No Export')";
             return GetItemsForDataPackages(dataPackageId, orgLookup, queryTemplate);
         }
 
@@ -152,18 +152,18 @@ WHERE       (   VDPJ.Data_Package_ID IN (   @   )   )
         {
             const string queryTemplate = @"
 SELECT Organism,
-[Organism   DB],
-dbo.GetFASTAFilePath([Organism DB], Organism)   AS [FASTA_Folder],
-Data_Package_ID
-FROM(
+       [Organism DB],
+       dbo.GetFASTAFilePath([Organism DB], Organism) AS [FASTA_Folder],
+       Data_Package_ID
+FROM (
     SELECT DISTINCT
-    Organism,
-    [Organism   DB],
-    Data_Package_ID
+           Organism,
+           [Organism DB],
+           Data_Package_ID
     FROM V_Mage_Data_Package_Analysis_Jobs
-    WHERE   [State] in ('Complete', 'No Export') AND
-    Data_Package_ID IN (@)
-)   TX
+    WHERE [State] in ('Complete', 'No Export') AND
+          Data_Package_ID IN (@)
+) TX
                                         ";
             return GetItemsForDataPackages(dataPackageId, orgLookup, queryTemplate);
         }
