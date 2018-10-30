@@ -90,7 +90,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Accummulator.cs" />
+    <Compile Include="Accumulator.cs" />
     <Compile Include="AfterSearchFilter.cs" />
     <Compile Include="DMSHttp.cs" />
     <Compile Include="FilePackageFilter.cs" />
