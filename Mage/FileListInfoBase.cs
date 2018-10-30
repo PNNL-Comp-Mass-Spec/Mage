@@ -242,6 +242,8 @@ namespace Mage
             var directoryColDefined = TryGetOutputColumnPos(SourceDirectoryColumnName, out mDirectoryPathColIndex);
             if (!directoryColDefined && SourceDirectoryColumnName == "Directory")
             {
+                // Column name not found
+                // Possibly auto-switch from Directory to Folder
                 TryGetOutputColumnPos("Folder", out mDirectoryPathColIndex);
             }
 

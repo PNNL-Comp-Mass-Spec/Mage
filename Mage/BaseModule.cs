@@ -687,6 +687,8 @@ namespace Mage
         {
             if (!InputColumnPos.ContainsKey(inputColName))
             {
+                // Column name not found
+                // Possibly auto-switch from Directory to Folder
                 if (inputColName == "Directory" && InputColumnPos.ContainsKey("Folder"))
                 {
                     inputColName = "Folder";
