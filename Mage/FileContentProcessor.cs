@@ -181,7 +181,7 @@ namespace Mage
                 }
                 else
                 {
-                    fileType = args.Fields[InputColumnPos[FileTypeColumnName]];
+                    fileType = args.Fields[InputColumnPos[FileTypeColumnName]].ToLower();
                 }
 
                 if (fileType == "directory" || fileType == "folder")
