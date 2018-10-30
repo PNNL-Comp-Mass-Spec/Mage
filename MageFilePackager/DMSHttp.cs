@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -8,12 +7,6 @@ namespace MageFilePackager
 {
     internal static class DMSHttp
     {
-
-        public enum HTTPMethod
-        {
-            HTTPGet = 0,
-            HTTPPost = 1
-        }
 
         /// <summary>
         /// Post web service request and receive response

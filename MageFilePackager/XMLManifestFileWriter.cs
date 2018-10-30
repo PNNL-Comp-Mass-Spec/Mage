@@ -6,7 +6,7 @@ using Mage;
 
 namespace MageFilePackager
 {
-
+    [Obsolete("Unused")]
     class XMLManifestFileWriter : BaseModule, IDisposable
     {
 
