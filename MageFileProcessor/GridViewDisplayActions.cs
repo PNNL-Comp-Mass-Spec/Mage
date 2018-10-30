@@ -28,7 +28,7 @@ namespace MageFileProcessor
                         return "http://cbdmsweb.pnl.gov";
                     default:
                         // Includes gigasax
-                        return "http://dms2.pnl.gov";
+                        return "https://dms2.pnl.gov";
                 }
 
             }
@@ -136,12 +136,12 @@ namespace MageFileProcessor
         /// <param name="e"></param>
         private void HandleJobWebAction(object sender, EventArgs e)
         {
-            // Example URL: http://dms2.pnl.gov/analysis_job/show/1302557
+            // Example URL: https://dms2.pnl.gov/analysis_job/show/1302557
             LaunchWebBrowser(BaseDmsUrl + "/analysis_job/show/", "Job");
         }
         private void HandleDatasetWebAction(object sender, EventArgs e)
         {
-            // Example URL: http://dms2.pnl.gov/dataset/show/QC_Shew_16_01_2_11Apr16_Pippin_16-03-05
+            // Example URL: https://dms2.pnl.gov/dataset/show/QC_Shew_16_01_2_11Apr16_Pippin_16-03-05
             LaunchWebBrowser(BaseDmsUrl + "/dataset/show/", "Dataset");
         }
 

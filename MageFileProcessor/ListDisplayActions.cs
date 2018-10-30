@@ -113,11 +113,11 @@ namespace MageFileProcessor
         /// <param name="e"></param>
         private void HandleJobWebAction(object sender, EventArgs e)
         {
-            LaunchWebBrowser("http://dms2.pnl.gov/analysis_job/show/", "Job");
+            LaunchWebBrowser("https://dms2.pnl.gov/analysis_job/show/", "Job");
         }
         private void HandleDatasetWebAction(object sender, EventArgs e)
         {
-            LaunchWebBrowser("http://dms2.pnl.gov/dataset/show/", "Dataset");
+            LaunchWebBrowser("https://dms2.pnl.gov/dataset/show/", "Dataset");
         }
 
         /// <summary>

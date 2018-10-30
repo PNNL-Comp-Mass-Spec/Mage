@@ -132,7 +132,7 @@
             this.urlCtl.Name = "urlCtl";
             this.urlCtl.Size = new System.Drawing.Size(317, 20);
             this.urlCtl.TabIndex = 11;
-            this.urlCtl.Text = "http://dms2.pnl.gov/data_package_publish/submit";
+            this.urlCtl.Text = "https://dms2.pnl.gov/data_package_publish/submit";
             // 
             // saveToFileCtl
             // 
