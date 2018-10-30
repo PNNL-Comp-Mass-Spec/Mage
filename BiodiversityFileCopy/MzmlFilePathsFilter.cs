@@ -13,11 +13,7 @@ namespace BiodiversityFileCopy
         protected int ItemIdx;
         protected int FileIdx;
 
-        private readonly Dictionary<string, MzMLPath> _mzMLPaths = new Dictionary<string, MzMLPath>();
-        public Dictionary<string, MzMLPath> MzMLPaths
-        {
-            get { return _mzMLPaths; }
-        }
+        public Dictionary<string, MzMLPath> MzMLPaths { get; } = new Dictionary<string, MzMLPath>();
 
         private int _datasetIdIdx;
         private const string MzmlGenPattern = "MSXML_Gen";
@@ -27,41 +23,41 @@ namespace BiodiversityFileCopy
             base.HandleColumnDef(sender, args);
             ItemIdx = OutputColumnPos["Item"];// TBD: look up from property
             FileIdx = OutputColumnPos["File"];// TBD: look up from property
-            _datasetIdIdx = OutputColumnPos["Dataset_ID"];// TBD:   look up from property
+            _datasetIdIdx = OutputColumnPos["Dataset_ID"];// TBD: look up from property
         }
 
         public override bool BuildPaths(string[] outRow, ref string srcFilePath, ref string destFilepath)
         {
             // Look at tool for row
-            // if   it is   refinery and dataset is in refinery set, output it
-            // if   it is   not refinery and dataset is in not refinery set, output it.
+            // if it is refinery and dataset is in refinery set, output it
+            // if it is not refinery and dataset is in not refinery set, output it.
 
-            // Skip input   rows that   don't   actually specify a file
+            // Skip input rows that don't actually specify a file
             if (outRow[ItemIdx] == "file")
             {
 
-                // Save mzML cache file path for dataset based on   tool
-                // to   internal buffer
+                // Save mzML cache file path for dataset based on tool
+                // to internal buffer
                 var datasetId = outRow[_datasetIdIdx];
-                var cacheFilePath = Path.Combine(outRow[SourceFolderIdx], outRow[FileIdx]);
+                var cacheFilePath = Path.Combine(outRow[SourceDirectoryIdx], outRow[FileIdx]);
                 var gen = cacheFilePath.Contains(MzmlGenPattern);
 
-                if (!_mzMLPaths.ContainsKey(datasetId))
+                if (!MzMLPaths.ContainsKey(datasetId))
                 {
-                    _mzMLPaths[datasetId] = new MzMLPath();
+                    MzMLPaths[datasetId] = new MzMLPath();
                 }
                 if (gen)
                 {
-                    _mzMLPaths[datasetId].GenPath = cacheFilePath;
-                    _mzMLPaths[datasetId].GenRow = outRow;
+                    MzMLPaths[datasetId].GenPath = cacheFilePath;
+                    MzMLPaths[datasetId].GenRow = outRow;
                 }
                 else
                 {
-                    _mzMLPaths[datasetId].RefineryPath = cacheFilePath;
-                    _mzMLPaths[datasetId].RefRow = outRow;
+                    MzMLPaths[datasetId].RefineryPath = cacheFilePath;
+                    MzMLPaths[datasetId].RefRow = outRow;
                 }
             }
-            return false;   // This is a sink   module which accumulates to its own internal buffer -   not appropriate to pass rows to output stream
+            return false; // This is a sink module which accumulates to its own internal buffer - not appropriate to pass rows to output stream
         }
 
         /// <summary>
@@ -71,7 +67,7 @@ namespace BiodiversityFileCopy
         private IEnumerable<string[]> CorrectFilePaths()
         {
             var savedRows = new List<string[]>();
-            foreach (var kv in _mzMLPaths)
+            foreach (var kv in MzMLPaths)
             {
                 string[] row = null;
 
@@ -88,18 +84,18 @@ namespace BiodiversityFileCopy
                     row[SourceFileIdx] = q.GenPath;
                 }
                 Debug.Assert(row != null, "row != null");
-                var cacheFilePath = Path.Combine(row[SourceFolderIdx], row[FileIdx]);
+                var cacheFilePath = Path.Combine(row[SourceDirectoryIdx], row[FileIdx]);
                 // var gen = cacheFilePath.Contains(_msxmlGenPattern);
 
                 var fc = File.ReadAllLines(cacheFilePath);
                 if (fc.Length <= 0) continue;
 
-                var srcFilePath = fc[0].Trim();   // TBD: check   for exactly one line
+                var srcFilePath = fc[0].Trim(); // TBD: check for exactly one line
                 var mzmlFileName = Path.GetFileName(srcFilePath);
                 if (string.IsNullOrEmpty(mzmlFileName)) continue;
 
                 var ogName = row[OrgNameIdx];
-                var destFilepath = Path.Combine(DestinationRootFolderPath, ogName, OutputSubfolderName, mzmlFileName);
+                var destFilepath = Path.Combine(DestinationRootDirectoryPath, ogName, OutputSubdirectoryName, mzmlFileName);
                 row[SourceFileIdx] = srcFilePath;
                 row[DestFileIdx] = destFilepath;
                 savedRows.Add(row);

@@ -1,28 +1,25 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using Mage;
 
 namespace BiodiversityFileCopy
 {
     /// <summary>
-    /// Mage filter to add dataset folder column to stream
-    /// based on job results folder path
+    /// Mage filter to add dataset directory column to stream
+    /// based on job results directory path
     /// </summary>
-    public class AddJobDatasetFolderFilter : ContentFilter
+    public class AddJobDatasetDirectoryFilter : ContentFilter
     {
-        protected int DatasetFolderIdx;
-        protected int JobResultsFolderIndex;
+        protected int DatasetDirectoryIndex;
+        protected int JobResultsDirectoryIndex;
 
-        public string DatasetFolderColName { get; set; }
-        public string JobResultsFolderColName { get; set; }
-
-        public Dictionary<string, string> OrganismLookup { get; set; }
+        public string DatasetDirectoryColName { get; set; }
+        public string JobResultsDirectoryColName { get; set; }
 
         public override void HandleColumnDef(object sender, MageColumnEventArgs args)
         {
             base.HandleColumnDef(sender, args);
-            DatasetFolderIdx = OutputColumnPos[DatasetFolderColName];
-            JobResultsFolderIndex = OutputColumnPos[JobResultsFolderColName];
+            DatasetDirectoryIndex = OutputColumnPos[DatasetDirectoryColName];
+            JobResultsDirectoryIndex = OutputColumnPos[JobResultsDirectoryColName];
         }
 
         protected override bool CheckFilter(ref string[] vals)
@@ -31,8 +28,8 @@ namespace BiodiversityFileCopy
             {
                 var outRow = MapDataRow(vals);
 
-                var resultsFolderPath = outRow[JobResultsFolderIndex];
-                outRow[DatasetFolderIdx] = Path.GetDirectoryName(resultsFolderPath);
+                var resultsDirectoryPath = outRow[JobResultsDirectoryIndex];
+                outRow[DatasetDirectoryIndex] = Path.GetDirectoryName(resultsDirectoryPath);
                 vals = outRow;
             }
             return true;

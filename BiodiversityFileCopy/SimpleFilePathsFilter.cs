@@ -17,13 +17,13 @@ namespace BiodiversityFileCopy
 
         public override bool BuildPaths(string[] outRow, ref string srcFilePath, ref string destFilepath)
         {
-            // skip input   rows that   don't   actually specify a file
+            // skip input rows that don't actually specify a file
             if (outRow[ItemIdx] == "file")
             {
-                srcFilePath = Path.Combine(outRow[SourceFolderIdx], outRow[FileIdx]);
+                srcFilePath = Path.Combine(outRow[SourceDirectoryIdx], outRow[FileIdx]);
                 var msgfFileName = outRow[FileIdx];
                 var ogName = outRow[OrgNameIdx];
-                destFilepath = Path.Combine(DestinationRootFolderPath, ogName, OutputSubfolderName, msgfFileName);
+                destFilepath = Path.Combine(DestinationRootDirectoryPath, ogName, OutputSubdirectoryName, msgfFileName);
                 return true;
             }
             return false;

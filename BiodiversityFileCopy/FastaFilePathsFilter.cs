@@ -11,18 +11,18 @@ namespace BiodiversityFileCopy
         public override bool BuildPaths(string[] outRow, ref string srcFilePath, ref string destFilepath)
         {
             if (srcFilePath == null) throw new ArgumentNullException(nameof(srcFilePath));
-            var sourceFolder = outRow[SourceFolderIdx];
+            var sourceDirectory = outRow[SourceDirectoryIdx];
             var fastaFileName = outRow[DatasetIdx];
-            srcFilePath = Path.Combine(sourceFolder, fastaFileName);
+            srcFilePath = Path.Combine(sourceDirectory, fastaFileName);
             var ogName = outRow[OrgNameIdx];
-            destFilepath = Path.Combine(DestinationRootFolderPath, ogName, OutputSubfolderName, fastaFileName);
+            destFilepath = Path.Combine(DestinationRootDirectoryPath, ogName, OutputSubdirectoryName, fastaFileName);
             return true;
         }
 
         public override void SetDefaultProperties(string outputRootFolderPath, string outputSubfolderName)
         {
-            base.SetDefaultProperties(outputRootFolderPath, outputSubfolderName);
-            SourceFolderPathColName = "FASTA_Folder";
+            base.SetDefaultProperties(outputRootFolderPath, OutputSubdirectoryName);
+            SourceDirectoryPathColName = "FASTA_Folder";
             DatasetColName = "Organism DB";
             DataPackageIDColName = "Data_Package_ID";
             OrganismNameColumn = "OG_Name";

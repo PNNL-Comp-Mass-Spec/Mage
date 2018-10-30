@@ -8,12 +8,7 @@ namespace BiodiversityFileCopy
     static class Logging
     {
         public static string LogRootFolder { get; set; }
-        private static string _logFileLabel = "";
-        public static string LogFileLabel
-        {
-            get { return _logFileLabel; }
-            set { _logFileLabel = value; }
-        }
+        public static string LogFileLabel { get; set; } = "";
 
         public static void LogMsg(string msg)
         {

@@ -13,7 +13,7 @@ namespace BiodiversityFileCopy
                 proc.ProcessDataPackages();
             }
             Console.WriteLine("----");
-            Console.WriteLine("Program Finished.    Hit any key to exit");
+            Console.WriteLine("Program Finished. Press any key to exit");
             Console.ReadKey();
         }
     }

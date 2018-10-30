@@ -11,13 +11,13 @@ namespace BiodiversityFileCopy
     {
         public override bool BuildPaths(string[] outRow, ref string srcFilePath, ref string destFilepath)
         {
-            if (srcFilePath == null) throw new ArgumentNullException("srcFilePath");
-            var sourceFolder = outRow[SourceFolderIdx];
+            if (srcFilePath == null) throw new ArgumentNullException(nameof(srcFilePath));
+            var sourceDirectory = outRow[SourceDirectoryIdx];
             var dataset = outRow[DatasetIdx];
             var datasetFile = dataset + ".RAW";
-            srcFilePath = Path.Combine(sourceFolder, datasetFile);
+            srcFilePath = Path.Combine(sourceDirectory, datasetFile);
             var ogName = outRow[OrgNameIdx];
-            destFilepath = Path.Combine(DestinationRootFolderPath, ogName, OutputSubfolderName, datasetFile);
+            destFilepath = Path.Combine(DestinationRootDirectoryPath, ogName, OutputSubdirectoryName, datasetFile);
             return true;
         }
     }

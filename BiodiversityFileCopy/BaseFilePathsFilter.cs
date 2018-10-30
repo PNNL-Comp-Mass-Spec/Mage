@@ -1,4 +1,5 @@
-﻿using Mage;
+﻿using System;
+using Mage;
 
 namespace BiodiversityFileCopy
 {
@@ -8,7 +9,7 @@ namespace BiodiversityFileCopy
     /// </summary>
     public abstract class BaseFilePathsFilter : ContentFilter
     {
-        protected int SourceFolderIdx;
+        protected int SourceDirectoryIdx;
         protected int DatasetIdx;
         protected int PkgIdIdx;
         protected int SourceFileIdx;
@@ -19,17 +20,40 @@ namespace BiodiversityFileCopy
         public string DatasetColName { get; set; }
         public string OrganismNameColumn { get; set; }
 
-        public string SourceFolderPathColName { get; set; }
-        public string DestinationRootFolderPath { get; set; }
+        public string SourceDirectoryPathColName { get; set; }
+
+        [Obsolete("Use SourceDirectoryPathColName")]
+        public string SourceFolderPathColName
+        {
+            get => SourceDirectoryPathColName;
+            set => SourceDirectoryPathColName = value;
+        }
+
+        public string DestinationRootDirectoryPath { get; set; }
+
+        [Obsolete("Use DestinationRootDirectoryPath")]
+        public string DestinationRootFolderPath
+        {
+            get => DestinationRootDirectoryPath;
+            set => DestinationRootDirectoryPath = value;
+        }
+
         public string SourceFilePathColName { get; set; }
         public string DestinationFilePathColName { get; set; }
 
-        public string OutputSubfolderName { get; set; }
+        public string OutputSubdirectoryName { get; set; }
+
+        [Obsolete("Use OutputSubdirectoryName")]
+        public string OutputSubfolderName
+        {
+            get => OutputSubdirectoryName;
+            set => OutputSubdirectoryName = value;
+        }
 
         public override void HandleColumnDef(object sender, MageColumnEventArgs args)
         {
             base.HandleColumnDef(sender, args);
-            SourceFolderIdx = OutputColumnPos[SourceFolderPathColName];
+            SourceDirectoryIdx = OutputColumnPos[SourceDirectoryPathColName];
             DatasetIdx = OutputColumnPos[DatasetColName];
             PkgIdIdx = OutputColumnPos[DataPackageIDColName];
             SourceFileIdx = OutputColumnPos[SourceFilePathColName];
@@ -67,16 +91,16 @@ namespace BiodiversityFileCopy
         /// <returns>should row actually be added to output stream</returns>
         public abstract bool BuildPaths(string[] outRow, ref string srcFilePath, ref string destFilepath);
 
-        public virtual void SetDefaultProperties(string outputRootFolderPath, string outputSubfolderName)
+        public virtual void SetDefaultProperties(string outputRootDirectoryPath, string outputSubdirectoryName)
         {
-            OutputSubfolderName = outputSubfolderName;
+            OutputSubdirectoryName = outputSubdirectoryName;
             OutputColumnList = "SourceFilePath|+|text, DestinationFilePath|+|text, *";
             SourceFilePathColName = "SourceFilePath";
             DestinationFilePathColName = "DestinationFilePath";
-            DestinationRootFolderPath = outputRootFolderPath;
+            DestinationRootDirectoryPath = outputRootDirectoryPath;
             DataPackageIDColName = "Data_Package_ID";
             OrganismNameColumn = "OG_Name";
-            SourceFolderPathColName = "Folder";
+            SourceDirectoryPathColName = "Directory";
             DatasetColName = "Dataset";
         }
     }
