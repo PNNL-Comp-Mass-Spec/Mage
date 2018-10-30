@@ -8,7 +8,6 @@ namespace MageConcatenator
     class clsFileCombiner
     {
 
-
         #region Constants and Classwide Variables
 
         public const int MAX_ROWS_TO_TRACK = 100000;
@@ -183,27 +182,45 @@ namespace MageConcatenator
         private void ParseHeaderLine(string currentRow, TextWriter writer, string filePath,
                                      ref bool headerWritten, ref string headerLine, ref char headerDelimiter)
         {
+            bool writeHeader;
+            string currentHeader;
 
             if (!headerWritten)
             {
                 headerWritten = true;
                 headerLine = string.Copy(currentRow);
+                currentHeader = headerLine;
 
                 headerDelimiter = VerifyDelimiter(currentRow, headerDelimiter);
 
-                if (AddFileNameFirstColumn)
-                    writer.WriteLine("Source_file" + headerDelimiter + headerLine);
-                else
-                    writer.WriteLine(headerLine);
+                writeHeader = true;
+            }
+            else
+            {
 
-                return;
+                // Compare this file's header to the first file's header
+                if (headerLine.Equals(currentRow, StringComparison.OrdinalIgnoreCase))
+                {
+                    writeHeader = false;
+                    currentHeader = string.Empty;
+                }
+                else
+                {
+                    ReportWarning("The header line for file " + Path.GetFileName(filePath) +
+                                  " does not match the header line of the first file");
+
+                    // Since the headers don't match, include the new header in the output file
+                    writeHeader = true;
+                    currentHeader = currentRow;
+                }
             }
 
-            // Compare this file's header to the first file's header
-            if (string.Compare(headerLine, currentRow, StringComparison.OrdinalIgnoreCase) != 0)
+            if (writeHeader)
             {
-                ReportWarning("The header line for file " + Path.GetFileName(filePath) +
-                          " does not match the header line of the first file");
+                if (AddFileNameFirstColumn)
+                    writer.WriteLine("Source_file" + headerDelimiter + currentHeader);
+                else
+                    writer.WriteLine(currentHeader);
             }
 
         }
