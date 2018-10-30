@@ -285,6 +285,15 @@ namespace MageConcatenator
 
                 mCombineFilesTargetFilePath = Path.Combine(runtimeParms["OutputDirectory"], runtimeParms["OutputFile"]);
 
+                if (File.Exists(mCombineFilesTargetFilePath))
+                {
+                    var response = MessageBox.Show("Overwrite existing file at " + PRISM.PathUtils.CompactPathString(mCombineFilesTargetFilePath, 60),
+                                                   "Warning", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+                    if (response != DialogResult.Yes)
+                        return;
+                }
+
                 if (processAllFiles)
                 {
                     FileListDisplayControl.SelectAllRows();
