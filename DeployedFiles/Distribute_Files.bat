@@ -4,6 +4,7 @@ xcopy MageExtractor\Mage.dll                      F:\Documents\Projects\DataMini
 xcopy MageExtractor\MageDisplayLib.dll            F:\Documents\Projects\DataMining\DMS_Managers\Analysis_Manager\AM_Common\ /D /Y
 xcopy MageExtractor\MageExtContentFilters.dll     F:\Documents\Projects\DataMining\DMS_Managers\Analysis_Manager\AM_Common\ /D /Y
 xcopy MageExtractor\MageExtExtractionFilters.dll  F:\Documents\Projects\DataMining\DMS_Managers\Analysis_Manager\AM_Common\ /D /Y
+xcopy Ranger\RangerLib.dll                        F:\Documents\Projects\DataMining\DMS_Managers\Analysis_Manager\AM_Common\ /D /Y
 
 xcopy MageExtractor\Mage.dll                      F:\Documents\Projects\JohnSandoval\APE_DLL\Lib\ /D /Y
 xcopy MageExtractor\MageDisplayLib.dll            F:\Documents\Projects\JohnSandoval\APE_DLL\Lib\ /D /Y
