@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 using Mage;
@@ -59,7 +58,7 @@ namespace MageFileProcessor
         /// Lists of names of menu items
         /// that are sensitive to presence of certain columns in list display
         /// </summary>
-        private readonly List<string> mFolderSensitiveMenuItems = new List<string>();
+        private readonly List<string> mDirectorySensitiveMenuItems = new List<string>();
         private readonly List<string> mJobSensitiveMenuItems = new List<string>();
         private readonly List<string> mDatasetSensitiveMenuItems = new List<string>();
 
@@ -91,7 +90,7 @@ namespace MageFileProcessor
         {
 
             var toolStripItems = new List<ToolStripItem> { new ToolStripSeparator() };
-            toolStripItems.AddRange(GetFolderMenuItems().ToArray());
+            toolStripItems.AddRange(GetDirectoryMenuItems().ToArray());
             toolStripItems.AddRange(GetWebActionMenuItems().ToArray());
 
             mDisplayUserControl.AppendContextMenuItems(toolStripItems.ToArray());
@@ -157,14 +156,14 @@ namespace MageFileProcessor
 
         #endregion
 
-        #region Windows Explorer Folder Menu Actions
+        #region Windows Explorer Directory Menu Actions
 
-        private ToolStripItem[] GetFolderMenuItems()
+        private ToolStripItem[] GetDirectoryMenuItems()
         {
             var toolStripItems = new List<ToolStripItem>();
 
-            var openDirectoryMenuItem = new ToolStripMenuItem("Open Directory", null, HandleFolderAction, "OpenDirectory");
-            mFolderSensitiveMenuItems.Add(openDirectoryMenuItem.Name);
+            var openDirectoryMenuItem = new ToolStripMenuItem("Open Directory", null, HandleDirectoryAction, "OpenDirectory");
+            mDirectorySensitiveMenuItems.Add(openDirectoryMenuItem.Name);
             toolStripItems.Add(openDirectoryMenuItem);
 
             return toolStripItems.ToArray();
@@ -175,9 +174,9 @@ namespace MageFileProcessor
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void HandleFolderAction(object sender, EventArgs e)
+        private void HandleDirectoryAction(object sender, EventArgs e)
         {
-            OpenWindowsExplorer("Folder");
+            OpenWindowsExplorer("Directory");
         }
 
         /// <summary>
@@ -215,7 +214,7 @@ namespace MageFileProcessor
 
                 // Enable/disable selected menu items based on presence
                 // of certain columns in rows
-                AdjustMenuItemsFromNameList(mFolderSensitiveMenuItems, false);
+                AdjustMenuItemsFromNameList(mDirectorySensitiveMenuItems, false);
                 AdjustMenuItemsFromNameList(mJobSensitiveMenuItems, false);
                 AdjustMenuItemsFromNameList(mDatasetSensitiveMenuItems, false);
 
@@ -229,8 +228,9 @@ namespace MageFileProcessor
                         case "Dataset":
                             AdjustMenuItemsFromNameList(mDatasetSensitiveMenuItems, true);
                             break;
+                        case "Directory":
                         case "Folder":
-                            AdjustMenuItemsFromNameList(mFolderSensitiveMenuItems, true);
+                            AdjustMenuItemsFromNameList(mDirectorySensitiveMenuItems, true);
                             break;
                     }
                 }

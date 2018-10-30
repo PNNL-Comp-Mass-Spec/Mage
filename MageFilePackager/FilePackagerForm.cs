@@ -56,7 +56,7 @@ namespace MageFilePackager
             InitializeComponent();
 
             const bool isBetaVersion = true;
-            SetFormTitle("2018-10-29", isBetaVersion);
+            SetFormTitle("2018-10-30", isBetaVersion);
 
             SetTags();
 
@@ -74,7 +74,7 @@ namespace MageFilePackager
 
             try
             {
-                // Set up configuration folder and files
+                // Set up configuration directory and files
                 SavedState.SetupConfigFiles("MageFilePackager");
             }
             catch (Exception ex)

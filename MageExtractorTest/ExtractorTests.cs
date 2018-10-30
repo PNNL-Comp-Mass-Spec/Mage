@@ -90,9 +90,16 @@ namespace MageExtractorTest
             UpdateMessage("Extraction Tests Begin");
             var testResultsPath = Path.Combine(testRootDirectory.FullName, mExtractionResultsFromTestFolder);
 
-            foreach (var file in Directory.GetFiles(testResultsPath))
+            if (Directory.Exists(testResultsPath))
             {
-                File.Delete(file);
+                foreach (var file in Directory.GetFiles(testResultsPath))
+                {
+                    File.Delete(file);
+                }
+            }
+            else
+            {
+                Directory.CreateDirectory(testResultsPath);
             }
 
             var extractionParms = new ExtractionType();

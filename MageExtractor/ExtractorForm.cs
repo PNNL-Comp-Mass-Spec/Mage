@@ -40,9 +40,9 @@ namespace MageExtractor
         private DestinationType mDestination;
 
         /// <summary>
-        /// Keeps track of the target folders to which files were saved; used by ClearTempFiles
+        /// Keeps track of the target directories to which files were saved; used by ClearTempFiles
         /// </summary>
-        private readonly SortedSet<string> mOutputFolderPaths = new SortedSet<string>();
+        private readonly SortedSet<string> mOutputDirectoryPaths = new SortedSet<string>();
 
         private string mFinalPipelineName = string.Empty;
 
@@ -55,7 +55,7 @@ namespace MageExtractor
             InitializeComponent();
 
             const bool isBetaVersion = false;
-            SetFormTitle("2018-10-29", isBetaVersion);
+            SetFormTitle("2018-10-30", isBetaVersion);
 
             SetTags();
 
@@ -73,7 +73,7 @@ namespace MageExtractor
 
             try
             {
-                // Set up configuration folder and files
+                // Set up configuration directory and files
                 SavedState.SetupConfigFiles("MageExtractor");
             }
             catch (Exception ex)
@@ -261,8 +261,8 @@ namespace MageExtractor
 
                 try
                 {
-                    if (!mOutputFolderPaths.Contains(mDestination.ContainerPath))
-                        mOutputFolderPaths.Add(mDestination.ContainerPath);
+                    if (!mOutputDirectoryPaths.Contains(mDestination.ContainerPath))
+                        mOutputDirectoryPaths.Add(mDestination.ContainerPath);
 
                     BaseModule jobList = new GVPipelineSource(JobListDisplayCtl, mode);
                     ExtractFileContents(jobList);
@@ -677,18 +677,18 @@ namespace MageExtractor
             return ok;
         }
 
-        private void ClearMageTempFiles(string folderPath)
+        private void ClearMageTempFiles(string directoryPath)
         {
             try
             {
-                var targetFolder = new DirectoryInfo(Path.Combine(folderPath, FileProcessingBase.MAGE_TEMP_FILES_DIRECTORY));
-                if (targetFolder.Exists)
+                var targetDirectory = new DirectoryInfo(Path.Combine(directoryPath, FileProcessingBase.MAGE_TEMP_FILES_DIRECTORY));
+                if (targetDirectory.Exists)
                 {
-                    targetFolder.Delete(true);
+                    targetDirectory.Delete(true);
                 }
                 else
                 {
-                    var fiFileCheck = new FileInfo(folderPath);
+                    var fiFileCheck = new FileInfo(directoryPath);
                     if (fiFileCheck.Exists && fiFileCheck.Directory != null)
                     {
                         ClearMageTempFiles(fiFileCheck.Directory.FullName);
@@ -705,12 +705,12 @@ namespace MageExtractor
         {
             try
             {
-                if (!mOutputFolderPaths.Contains(Path.GetTempPath()))
-                    mOutputFolderPaths.Add(Path.GetTempPath());
+                if (!mOutputDirectoryPaths.Contains(Path.GetTempPath()))
+                    mOutputDirectoryPaths.Add(Path.GetTempPath());
 
-                foreach (var folderPath in mOutputFolderPaths)
+                foreach (var directoryPath in mOutputDirectoryPaths)
                 {
-                    ClearMageTempFiles(folderPath);
+                    ClearMageTempFiles(directoryPath);
                 }
             }
             catch

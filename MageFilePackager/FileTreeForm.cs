@@ -172,14 +172,12 @@ namespace MageFilePackager {
 
         /// <summary>
         /// Mage sink module that populates tree view from file paths
-        /// recevied via standard tabular input
+        /// received via standard tabular input
         /// </summary>
-        public class TreeBuilder : ContentFilter {
+        public class TreeBuilder : ContentFilter
+        {
 
-            // private int _folderIdx;
-            // private int _sourceIdx;
             private int _pathIdx;
-            // private int _itemIdx;
             private int _nameIdx;
             private int _kbIdx;
 
@@ -201,32 +199,35 @@ namespace MageFilePackager {
             protected override bool CheckFilter(ref string[] vals)
             {
                 var path = vals[_pathIdx];
-                var kb = vals[_kbIdx];
+                var sizeKBText = vals[_kbIdx];
 
-                // Break folder path into segements
-                var folders = path.Split('\\');
+                // Break directory path into segments
+                var directoryParts = path.Split('\\');
 
-                // Find bottom folder in hierarchy
+                // Find bottom directory in hierarchy
                 // (and build out as necessary)
                 var curNodeList = FileTree.Nodes;
-                foreach (var folder in folders) {
-                    if (string.IsNullOrEmpty(folder)) continue;
-                    var n = curNodeList.IndexOfKey(folder);
+                foreach (var directoryName in directoryParts)
+                {
+                    if (string.IsNullOrEmpty(directoryName)) continue;
+                    var n = curNodeList.IndexOfKey(directoryName);
                     TreeNode curNode;
-                    if (n < 0) {
-                        curNode = new TreeNode(folder) { Name = folder };
+                    if (n < 0)
+                    {
+                        curNode = new TreeNode(directoryName) { Name = directoryName };
                         curNodeList.Add(curNode);
                         curNodeList = curNode.Nodes;
-                    } else {
+                    }
+                    else
+                    {
                         curNode = curNodeList[n];
                         curNodeList = curNode.Nodes;
                     }
                 }
 
-                // Add file to bottom folder in path
-                float sz;
-                float.TryParse(kb, out sz);
-                var label = string.Format("{0} [{1:###,###,##0.0} KB]", vals[_nameIdx], sz);
+                // Add file to bottom directory in path
+                float.TryParse(sizeKBText, out var sizeKB);
+                var label = string.Format("{0} [{1:###,###,##0.0} KB]", vals[_nameIdx], sizeKB);
                 var fileNode = new TreeNode { Text = label, Tag = vals };
                 curNodeList.Add(fileNode);
                 return true;

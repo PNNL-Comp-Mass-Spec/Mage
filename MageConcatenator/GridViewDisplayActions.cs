@@ -139,9 +139,11 @@ namespace MageConcatenator
         private ToolStripItem[] GetDirectoryMenuItems()
         {
             var toolStripItems = new List<ToolStripItem>();
+
             var openDirectoryMenuItem = new ToolStripMenuItem("Open Directory", null, HandleDirectoryAction, "OpenDirectory");
             mDirectorySensitiveMenuItems.Add(openDirectoryMenuItem.Name);
             toolStripItems.Add(openDirectoryMenuItem);
+
             return toolStripItems.ToArray();
         }
 
@@ -190,7 +192,7 @@ namespace MageConcatenator
 
                 // Enable/disable selected menu items based on presence
                 // of certain columns in rows
-                AdjustMenuItemsFromNameList(mFolderSensitiveMenuItems, false);
+                AdjustMenuItemsFromNameList(mDirectorySensitiveMenuItems, false);
                 AdjustMenuItemsFromNameList(mJobSensitiveMenuItems, false);
                 AdjustMenuItemsFromNameList(mDatasetSensitiveMenuItems, false);
 
@@ -204,8 +206,9 @@ namespace MageConcatenator
                         case "Dataset":
                             AdjustMenuItemsFromNameList(mDatasetSensitiveMenuItems, true);
                             break;
+                        case "Directory":
                         case "Folder":
-                            AdjustMenuItemsFromNameList(mFolderSensitiveMenuItems, true);
+                            AdjustMenuItemsFromNameList(mDirectorySensitiveMenuItems, true);
                             break;
                     }
                 }

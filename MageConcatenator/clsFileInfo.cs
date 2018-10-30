@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace MageConcatenator
 {
@@ -7,7 +8,14 @@ namespace MageConcatenator
         public string Name { get; set; }
         public string SizeKB { get; set; }
         public string DateModified { get; set; }
-        public string FolderPath { get; set; }
+        public string DirectoryPath { get; set; }
+
+        [Obsolete("Use DirectoryPath")]
+        public string FolderPath
+        {
+            get => DirectoryPath;
+            set => DirectoryPath = value;
+        }
 
         public int Rows { get; set; }
         public int Columns { get; set; }
@@ -16,23 +24,31 @@ namespace MageConcatenator
         {
             get
             {
-                if (string.IsNullOrEmpty(FolderPath))
+                if (string.IsNullOrEmpty(DirectoryPath))
                     return Name;
 
-                return Path.Combine(FolderPath, Name);
+                return Path.Combine(DirectoryPath, Name);
             }
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="filename"></param>
         public clsFileInfo(string filename)
         {
-            FolderPath = string.Empty;
+            DirectoryPath = string.Empty;
             Name = filename;
         }
 
-
-        public clsFileInfo(string folderPath, string filename)
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="directoryPath"></param>
+        /// <param name="filename"></param>
+        public clsFileInfo(string directoryPath, string filename)
         {
-            FolderPath = folderPath;
+            DirectoryPath = directoryPath;
             Name = filename;
         }
 

@@ -15,7 +15,7 @@ namespace MageConcatenator
     {
         #region Member Variables
 
-        public const string PROGRAM_DATE = "October 24, 2014";
+        public const string PROGRAM_DATE = "October 30, 2018";
 
         /// <summary>
         /// Pipeline queue for running the multiple pipelines that make up the workflows for this module
@@ -184,12 +184,10 @@ namespace MageConcatenator
                     case "get_files_from_local_directory":
                         var runtimeParams = GetRuntimeParamsForLocalDirectory();
 
-                        if (runtimeParms.ContainsKey("Directory"))
-                            sourceDirectory = runtimeParms["Directory"];
-                        else if (runtimeParms.ContainsKey("Folder"))
-                            sourceDirectory = runtimeParms["Folder"];
-                        else
-                            throw new Exception("MageConcatenator.BuildAndRunPipeline: runtimeParms must contain Directory or Folder");
+                        if (!runtimeParams.ContainsKey("Directory"))
+                            throw new Exception("MageConcatenator.BuildAndRunPipeline: runtimeParams is missing the Directory parameter");
+
+                        var sourceDirectory = runtimeParams["Directory"];
 
                         if (!Directory.Exists(sourceDirectory))
                         {
@@ -298,7 +296,7 @@ namespace MageConcatenator
                 foreach (var selectedFileRow in FileListDisplayControl.SelectedItemRowsDictionaryList)
                 {
 
-                    var sourceFilePath = Path.Combine(selectedFileRow["Folder"], selectedFileRow["File"]);
+                    var sourceFilePath = Path.Combine(selectedFileRow["Directory"], selectedFileRow["File"]);
 
                     // Make sure the target file is not in the source file list
                     if (string.Compare(sourceFilePath, mCombineFilesTargetFilePath, StringComparison.OrdinalIgnoreCase) == 0)
@@ -307,7 +305,7 @@ namespace MageConcatenator
                         var fiTargetFile = new FileInfo(mCombineFilesTargetFilePath);
                         if (fiTargetFile.Directory == null)
                         {
-                            MessageBox.Show("Error in CombineFiles: cannot determine the parent folder path for the target file, " + mCombineFilesTargetFilePath, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            MessageBox.Show("Error in CombineFiles: cannot determine the parent directory path for the target file, " + mCombineFilesTargetFilePath, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             return;
                         }
 
@@ -366,26 +364,26 @@ namespace MageConcatenator
             foreach (var selectedFileRow in FileListDisplayControl.SelectedItemRowsDictionaryList)
             {
 
-                selectedFileRow.TryGetValue("Folder", out var folderPath);
+                selectedFileRow.TryGetValue("Directory", out var directoryPath);
                 selectedFileRow.TryGetValue("File", out var filename);
                 selectedFileRow.TryGetValue("File_Size_KB", out var fileSizeKB);
                 selectedFileRow.TryGetValue("File_Date", out var dateModified);
 
-                if (string.IsNullOrWhiteSpace(folderPath))
-                    folderPath = string.Empty;
+                if (string.IsNullOrWhiteSpace(directoryPath))
+                    directoryPath = string.Empty;
 
                 if (string.IsNullOrWhiteSpace(filename))
                 {
                     continue;
                 }
 
-                var fullPath = Path.Combine(folderPath, filename);
+                var fullPath = Path.Combine(directoryPath, filename);
                 if (combineFilesPaths.Contains(fullPath))
                 {
                     continue;
                 }
 
-                var fileInfo = new clsFileInfo(folderPath, filename)
+                var fileInfo = new clsFileInfo(directoryPath, filename)
                 {
                     DateModified = dateModified,
                     SizeKB = fileSizeKB
@@ -424,7 +422,7 @@ namespace MageConcatenator
                         new MageColumnDef("File", "text", "128"),
                         new MageColumnDef("File_Size_KB", "float", "32"),
                         new MageColumnDef("File_Date", "string", "128"),
-                        new MageColumnDef("Folder", "string", "255"),
+                        new MageColumnDef("Directory", "string", "255"),
                         new MageColumnDef("Rows", "string", "32"),
                         new MageColumnDef("Columns", "string", "32")
                     };
@@ -438,7 +436,7 @@ namespace MageConcatenator
                         data[0] = currentFile.Name;
                         data[1] = currentFile.SizeKB;
                         data[2] = currentFile.DateModified;
-                        data[3] = currentFile.FolderPath;
+                        data[3] = currentFile.DirectoryPath;
                         data[4] = currentFile.Rows.ToString("#,##0");
 
                         if (currentFile.Rows >= clsFileCombiner.MAX_ROWS_TO_TRACK)

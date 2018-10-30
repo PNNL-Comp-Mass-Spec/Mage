@@ -13,7 +13,7 @@ namespace MageFilePackager
         // Indexes into the row field data array
         private int _sourceIdx;
         private int _pathIdx;
-        private int _folderIdx;
+        private int _directoryIdx;
         private int _storagePathIdx;
         private int _archivePathIdx;
         private int _purgedIdx;
@@ -26,10 +26,10 @@ namespace MageFilePackager
                                                                       { "Dataset", @"\\adms.emsl.pnl.gov\dmsarch\" }
                                                                   };
 
-        // Precalulate field indexes
+        // Precalculate field indexes
         protected override void ColumnDefsFinished()
         {
-            _folderIdx = InputColumnPos["Folder"];
+            _directoryIdx = InputColumnPos["Directory"];
             _storagePathIdx = (InputColumnPos.ContainsKey("Storage_Path")) ? InputColumnPos["Storage_Path"] : -1;
             _archivePathIdx = InputColumnPos["Archive_Path"];
             _purgedIdx = (InputColumnPos.ContainsKey("Purged")) ? InputColumnPos["Purged"] : -1;
@@ -63,13 +63,13 @@ namespace MageFilePackager
                 {
                     // We don't have an actual archive path to work with
                     // - fake one from storage path
-                    var folderPath = vals[_folderIdx];
-                    outRow[_pathIdx] = folderPath.Replace(DataPackageShareRoot, "");
+                    var directoryPath = vals[_directoryIdx];
+                    outRow[_pathIdx] = directoryPath.Replace(DataPackageShareRoot, "");
                 }
                 else
                 {
                     // We have an actual archive path to work with
-                    var archivePath = vals[_folderIdx];
+                    var archivePath = vals[_directoryIdx];
 
                     // If it is not an archive path,
                     // replace the storage root path

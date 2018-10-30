@@ -25,10 +25,10 @@ namespace MageFilePackager
         }
 
         /// <summary>
-        /// Pipeline to get list of files from results folders of jobs that are selected in list display
+        /// Pipeline to get list of files from results directories of jobs that are selected in list display
         /// and deliver the list to the files list display
         /// </summary>
-        /// <param name="sourceObject">Module that will supply list of folders to search</param>
+        /// <param name="sourceObject">Module that will supply list of directories to search</param>
         /// <param name="sinkObject">External ISinkModule object that will receive list of files found</param>
         /// <param name="runtimeParms">Settings for parameters for modules in the pipeline</param>
         /// <returns>Mage pipeline</returns>
