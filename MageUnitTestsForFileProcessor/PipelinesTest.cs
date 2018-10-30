@@ -1,6 +1,6 @@
-﻿using MageFileProcessor;
+﻿using System.Collections.Generic;
 using Mage;
-using System.Collections.Generic;
+using MageFileProcessor;
 using NUnit.Framework;
 
 namespace MageUnitTestsForFileProcessor

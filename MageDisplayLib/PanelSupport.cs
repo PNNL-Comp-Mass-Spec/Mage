@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Reflection;
 using System.Windows.Forms;
 using Mage;
-using System.Reflection;
-using System.Diagnostics;
 
 namespace MageDisplayLib
 {

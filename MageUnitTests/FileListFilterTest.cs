@@ -1,5 +1,5 @@
-﻿using Mage;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Mage;
 using NUnit.Framework;
 
 namespace MageUnitTests

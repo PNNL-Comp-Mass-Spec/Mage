@@ -1,4 +1,5 @@
-﻿using Mage;
+﻿using System;
+using Mage;
 using NUnit.Framework;
 using System.Collections.ObjectModel;
 namespace MageUnitTests

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using Mage;
 using System.IO;
+using System.Text;
 using System.Xml;
+using Mage;
 
 namespace MageDisplayLib
 {

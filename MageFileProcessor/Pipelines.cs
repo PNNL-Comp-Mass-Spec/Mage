@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Mage;
-using System.IO;
 using System.Collections.ObjectModel;
+using System.IO;
+using Mage;
 
 namespace MageFileProcessor
 {

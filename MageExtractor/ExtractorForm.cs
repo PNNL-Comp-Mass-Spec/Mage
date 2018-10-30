@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using Mage;
 using System.IO;
+using Mage;
 using MageDisplayLib;
 using MageExtExtractionFilters;
 using MageExtractor.Properties;

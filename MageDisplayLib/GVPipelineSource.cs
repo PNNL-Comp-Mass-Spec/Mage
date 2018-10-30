@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using Mage;
 using System.Windows.Forms;
+using Mage;
 
 namespace MageDisplayLib
 {
