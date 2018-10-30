@@ -16,17 +16,19 @@ namespace MageUnitTests
         protected readonly List<string[]> SavedRows = new List<string[]>();
         protected readonly List<string[]> SavedMappedRows = new List<string[]>();
 
-
         #endregion
 
         #region Properties
 
+        /// <summary>
+        /// This property name is used by Unit Test SetModuleParameterTest
+        /// </summary>
         public string Dummy { get; set; }
 
         // Get the column definitions
         public List<MageColumnDef> Columns => InputColumnDefs;
 
-        // Get rows that were accumumlated in the internal row buffer
+        // Get rows that were accumulated in the internal row buffer
         public List<string[]> Rows => SavedRows;
 
         public List<string[]> MappedRows => SavedMappedRows;

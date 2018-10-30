@@ -27,9 +27,13 @@ namespace MageExtractor
 
                 var fiExe = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location);
                 if (fiExe.FullName.StartsWith(@"\\") && fiExe.Directory != null)
-                    MessageBox.Show("You are running this program from a network share.  " +
-                        "Try copying folder " + fiExe.Directory.Name + " to your local computer and then re-running " + fiExe.Name,
-                        "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                {
+                    MessageBox.Show(string.Format(
+                                        "You are running this program from a network share. " +
+                                        "Try copying directory {0} to your local computer and then re-running {1}",
+                                        fiExe.Directory.Name, fiExe.Name),
+                                    "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
         }
     }

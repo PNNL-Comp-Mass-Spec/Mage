@@ -19,7 +19,7 @@ namespace MageUnitTests
         /// Another option was using PrivateObject, which requires
         ///    Microsoft.VisualStudio.TestTools.UnitTesting and performs operations using reflection.
         /// </summary>
-        private class FileCopyExtracter : FileCopy
+        private class FileCopyExtractor : FileCopy
         {
             public Dictionary<string, int> InputColumnPosAccessor
             {
@@ -39,7 +39,7 @@ namespace MageUnitTests
         [Test]
         public void GetDestFileTest()
         {
-            var target = new FileCopyExtracter();
+            var target = new FileCopyExtractor();
             var sourceFile = "SourceFile";
 
             // Typical usage - ID column in column list and ApplyPrefixToFileName set to "Yes"

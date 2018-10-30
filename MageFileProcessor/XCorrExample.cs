@@ -10,7 +10,7 @@ namespace MageFileProcessor
         // Indexes into the row field data array
         private int xCorrIdx;
 
-        // Precalulate field indexes
+        // Precalculate field indexes
         protected override void ColumnDefsFinished()
         {
             // Set up indexes into fields array

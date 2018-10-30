@@ -13,7 +13,7 @@ namespace MageDisplayLib
     /// that can be wired into a Mage pipeline to receive data.
     ///
     /// It converts data rows into ListView item lists suitable
-    /// for populating a ListDisplayControl and accumlates them
+    /// for populating a ListDisplayControl and accumulates them
     /// into a buffer.  When the buffer is full, it is emptied
     /// into the associated ListDisplayControl.
     /// </summary>

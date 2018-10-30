@@ -12,7 +12,7 @@ namespace MageFilePackager
         // Indexes into the row field data array
         private int _itemIdx;
 
-        // Precalulate field indexes
+        // Precalculate field indexes
         protected override void ColumnDefsFinished()
         {
             // Set up indexes into fields array

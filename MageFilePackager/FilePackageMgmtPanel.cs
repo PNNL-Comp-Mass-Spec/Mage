@@ -152,7 +152,7 @@ namespace MageFilePackager
         }
 
         /// <summary>
-        /// Set package conents display (use column remapping)
+        /// Set package contents display (use column remapping)
         /// </summary>
         /// <param name="entityType"></param>
         /// <param name="fileToAdd"></param>
@@ -166,7 +166,7 @@ namespace MageFilePackager
         }
 
         /// <summary>
-        /// Replace contents of package list with conents of source
+        /// Replace contents of package list with contents of source
         /// </summary>
         /// <param name="newContents">Contains contents to set</param>
         private void SetPackageContents(SimpleSink newContents)

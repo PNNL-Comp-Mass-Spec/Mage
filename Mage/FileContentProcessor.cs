@@ -97,14 +97,14 @@ namespace Mage
         /// <summary>
         /// Name of the column in the standard tabular input
         /// that contains the input file name
-        /// optional - defaults to "File")
+        /// (optional - defaults to "File")
         /// </summary>
         public string SourceFileColumnName { get; set; }
 
         /// <summary>
         /// Name of the column in the standard tabular input
         /// that contains the input file type
-        /// optional - defaults to blank)
+        /// (optional - defaults to blank)
         /// </summary>
         public string FileTypeColumnName { get; set; }
 

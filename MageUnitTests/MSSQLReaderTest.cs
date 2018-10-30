@@ -210,7 +210,7 @@ namespace MageUnitTests
             target.Server = Globals.DMSServer;
             target.Database = Globals.DMSDatabase;
 
-            // Define columns (noramlly not needed for production code, but necessary for unit test)
+            // Define columns (normally not needed for production code, but necessary for unit test)
             var colList = new[] {
                 "DatasetID", "volName", "path", "datasetFolder", "resultsFolder",
                 "datasetName", "JobId", "ColumnID", "AcquisitionTime", "Labelling",

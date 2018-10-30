@@ -21,7 +21,7 @@ namespace MageDisplayLib
         private GridViewDisplayControl myListControl;
 
         /// <summary>
-        /// Whether or not we are outputing all the rows
+        /// Whether or not we are outputting all the rows
         /// in our associated display grid view or only
         /// the currently selected rows
         /// </summary>
@@ -135,7 +135,7 @@ namespace MageDisplayLib
 
         /// <summary>
         /// Get Mage column definitions from the GridViewDisplay
-        /// into our internal bufferes
+        /// into our internal buffers
         /// </summary>
         private void GetColumnDefs()
         {

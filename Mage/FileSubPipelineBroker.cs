@@ -10,7 +10,7 @@ namespace Mage
     /// Delegate for a client-supplied function that this module can call to build its sub-pipeline
     /// </summary>
     /// <param name="inputFilePath">path to input file that sub-pipeline should process</param>
-    /// <param name="outputFilePath">path to output file that sub-pipeling should deliver results to</param>
+    /// <param name="outputFilePath">path to output file that sub-pipeline should deliver results to</param>
     /// <param name="context">key/values pairs that sub-pipeline can use for column mapping</param>
     /// <returns></returns>
     public delegate ProcessingPipeline FileProcessingPipelineGenerator(string inputFilePath, string outputFilePath, Dictionary<string, string> context);
@@ -138,7 +138,6 @@ namespace Mage
             mFileFilterParameters = parms;
         }
 
-
         /// <summary>
         /// (needs work)
         /// </summary>
@@ -153,7 +152,7 @@ namespace Mage
         #region Constructors
 
         /// <summary>
-        /// Construct a new Mage file subpipeline broker module
+        /// Construct a new Mage file sub pipeline broker module
         /// </summary>
         public FileSubPipelineBroker()
         {
