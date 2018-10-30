@@ -15,3 +15,18 @@ xcopy ..\DeployedFiles\Ranger\*.* \\floyd\software\Mage\Exe_Only\Ranger\ /D /Y
 
 xcopy ..\README.md \\FLOYD\software\Mage\Exe_Only /D /Y
 xcopy ..\RevisionHistory.txt \\FLOYD\software\Mage\Exe_Only /D /Y
+
+@echo off
+echo.
+echo.
+echo Distributing DLLs
+sleep 1
+
+pushd ..\DeployedFiles
+call Distribute_Files.bat
+
+@echo off
+popd
+
+echo.
+pause
