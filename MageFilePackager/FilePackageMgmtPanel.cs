@@ -375,8 +375,7 @@ namespace MageFilePackager
             {
                 foreach (DataGridViewRow row in packageListDisplayControl1.List.Rows)
                 {
-                    float temp;
-                    float.TryParse(row.Cells[idx].Value.ToString(), out temp);
+                    float.TryParse(row.Cells[colIndex].Value.ToString(), out var temp);
                     totalKB += temp;
                 }
             }
