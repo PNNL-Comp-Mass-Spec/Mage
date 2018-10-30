@@ -277,7 +277,8 @@ namespace MageDisplayLib
         /// <param name="delimiter"></param>
         private void CopyColumnList(string colName, string delimiter)
         {
-            var sourceColumnIndex = GetColumnIndex(colName);
+            var sourceColumnIndex = PanelSupport.GetColumnIndex(lvQueryResults, colName);
+
             if (sourceColumnIndex == -1)
                 return;
 
@@ -334,36 +335,6 @@ namespace MageDisplayLib
                 intRowIndex++;
             }
             Clipboard.SetText(copiedText.ToString());
-        }
-
-        /// <summary>
-        /// Return the index to the given column
-        /// </summary>
-        /// <param name="colName">Name of column to get index for</param>
-        /// <returns>Position of column in item array</returns>
-        private int GetColumnIndex(string colName)
-        {
-            var i = lvQueryResults.Columns.IndexOfKey(colName);
-            return i;
-        }
-
-        /// <summary>
-        /// Get values in given column for currently selected items in display list
-        /// </summary>
-        /// <param name="colName">Column name to get values from</param>
-        /// <returns>List of contents of column for each selected row</returns>
-        public string[] GetItemList(string colName)
-        {
-            var lst = new List<string>();
-            var i = GetColumnIndex(colName);
-            if (i != -1)
-            {
-                foreach (ListViewItem objRow in lvQueryResults.SelectedItems)
-                {
-                    lst.Add(objRow.SubItems[i].Text);
-                }
-            }
-            return lst.ToArray();
         }
 
         #endregion

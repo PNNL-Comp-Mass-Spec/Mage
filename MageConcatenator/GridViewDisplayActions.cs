@@ -83,45 +83,6 @@ namespace MageConcatenator
 
         #endregion
 
-        #region Column Functions
-
-        /// <summary>
-        /// Return the index to the given column
-        /// </summary>
-        /// <param name="colName">Name of column to get index for</param>
-        /// <returns>Position of column in item array; -1 if not found</returns>
-        private int GetColumnIndex(string colName)
-        {
-            var dataGridViewColumn = mDisplayView.Columns[colName];
-            if (dataGridViewColumn != null)
-            {
-                var i = dataGridViewColumn.Index;
-                return i;
-            }
-            return -1;
-        }
-
-        /// <summary>
-        /// Get values in given column for currently selected items in display list
-        /// </summary>
-        /// <param name="colName">Column name to get values from</param>
-        /// <returns>List of contents of column for each selected row</returns>
-        private string[] GetItemList(string colName)
-        {
-            var lst = new List<string>();
-            var i = GetColumnIndex(colName);
-            if (i != -1)
-            {
-                foreach (DataGridViewRow objRow in mDisplayView.SelectedRows)
-                {
-                    lst.Add(objRow.Cells[i].Value.ToString());
-                }
-            }
-            return lst.ToArray();
-        }
-
-        #endregion
-
         #region Web Action Menus
 
         /// <summary>
@@ -168,20 +129,7 @@ namespace MageConcatenator
         /// <param name="columnName">column to get trailing URL segment from</param>
         private void LaunchWebBrowser(string url, string columnName)
         {
-            var itemList = GetItemList(columnName);
-            if (mDisplayView.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("No rows selected");
-            }
-            else
-                if (itemList.Length == 0)
-            {
-                MessageBox.Show(string.Format("Column '{0}' not present in row", columnName));
-            }
-            else
-            {
-                System.Diagnostics.Process.Start(url + itemList[0]);
-            }
+            PanelSupport.LaunchWebBrowser(mDisplayView, url, columnName);
         }
 
         #endregion
@@ -214,21 +162,7 @@ namespace MageConcatenator
         /// <param name="columnName"></param>
         private void OpenWindowsExplorer(string columnName)
         {
-            var itemList = GetItemList(columnName);
-            if (mDisplayView.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("No rows selected");
-            }
-            else
-                if (itemList.Length == 0)
-            {
-                MessageBox.Show(string.Format("Column '{0}' not present in row", columnName));
-            }
-            else
-            {
-                var filePath = itemList[0];
-                System.Diagnostics.Process.Start("explorer.exe", filePath);
-            }
+            PanelSupport.OpenWindowsExplorer(mDisplayView, columnName);
         }
 
         #endregion

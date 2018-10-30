@@ -198,20 +198,7 @@ namespace MageFileProcessor
         /// <param name="columnName">column to get trailing URL segment from</param>
         private void LaunchWebBrowser(string url, string columnName)
         {
-            var itemList = GetItemList(columnName);
-            if (mDisplayView.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("No rows selected");
-            }
-            else
-                if (itemList.Length == 0)
-            {
-                MessageBox.Show(string.Format("Column '{0}' not present in row", columnName));
-            }
-            else
-            {
-                Process.Start(url + itemList[0]);
-            }
+            PanelSupport.LaunchWebBrowser(mDisplayView, url, columnName);
         }
 
         #endregion
@@ -244,21 +231,7 @@ namespace MageFileProcessor
         /// <param name="columnName"></param>
         private void OpenWindowsExplorer(string columnName)
         {
-            var itemList = GetItemList(columnName);
-            if (mDisplayView.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("No rows selected");
-            }
-            else
-                if (itemList.Length == 0)
-            {
-                MessageBox.Show(string.Format("Column '{0}' not present in row", columnName));
-            }
-            else
-            {
-                var filePath = itemList[0];
-                Process.Start("explorer.exe", filePath);
-            }
+            PanelSupport.OpenWindowsExplorer(mDisplayView, columnName);
         }
 
         #endregion

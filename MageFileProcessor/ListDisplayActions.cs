@@ -83,40 +83,6 @@ namespace MageFileProcessor
 
         #endregion
 
-        #region Column Functions
-
-        /// <summary>
-        /// Return the index to the given column
-        /// </summary>
-        /// <param name="colName">Name of column to get index for</param>
-        /// <returns>Position of column in item array</returns>
-        private int GetColumnIndex(string colName)
-        {
-            var i = mListView.Columns.IndexOfKey(colName);
-            return i;
-        }
-
-        /// <summary>
-        /// Get values in given column for currently selected items in display list
-        /// </summary>
-        /// <param name="colName">Column name to get values from</param>
-        /// <returns>List of contents of column for each selected row</returns>
-        private string[] GetItemList(string colName)
-        {
-            var lst = new List<string>();
-            var i = GetColumnIndex(colName);
-            if (i != -1)
-            {
-                foreach (ListViewItem objRow in mListView.SelectedItems)
-                {
-                    lst.Add(objRow.SubItems[i].Text);
-                }
-            }
-            return lst.ToArray();
-        }
-
-        #endregion
-
         #region Web Action Menus
 
         /// <summary>
@@ -161,20 +127,7 @@ namespace MageFileProcessor
         /// <param name="columnName">column to get trailing URL segment from</param>
         private void LaunchWebBrowser(string url, string columnName)
         {
-            var itemList = GetItemList(columnName);
-            if (mListView.SelectedItems.Count == 0)
-            {
-                MessageBox.Show("No rows selected");
-            }
-            else
-                if (itemList.Length == 0)
-            {
-                MessageBox.Show(string.Format("Column '{0}' not present in row", columnName));
-            }
-            else
-            {
-                System.Diagnostics.Process.Start(url + itemList[0]);
-            }
+            PanelSupport.LaunchWebBrowser(mListView, url, columnName);
         }
 
         #endregion
@@ -209,21 +162,7 @@ namespace MageFileProcessor
         /// <param name="columnName"></param>
         private void OpenWindowsExplorer(string columnName)
         {
-            var itemList = GetItemList(columnName);
-            if (mListView.SelectedItems.Count == 0)
-            {
-                MessageBox.Show("No rows selected");
-            }
-            else
-                if (itemList.Length == 0)
-            {
-                MessageBox.Show(string.Format("Column '{0}' not present in row", columnName));
-            }
-            else
-            {
-                var filePath = itemList[0];
-                System.Diagnostics.Process.Start("explorer.exe", filePath);
-            }
+            PanelSupport.OpenWindowsExplorer(mListView, columnName);
         }
 
         #endregion

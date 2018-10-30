@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using Mage;
 using System.Reflection;
+using System.Diagnostics;
 
 namespace MageDisplayLib
 {
@@ -158,6 +159,190 @@ namespace MageDisplayLib
             }
 
             return delimiterToUse;
+        }
+
+        /// <summary>
+        /// Return the index to the given column
+        /// </summary>
+        /// <param name="displayView">DataGrid view</param>
+        /// <param name="colName">Name of column to get index for</param>
+        /// <returns>Position of column in item array; -1 if not found</returns>
+        public static int GetColumnIndex(DataGridView displayView, string colName)
+        {
+            var columnDef = displayView.Columns[colName];
+            if (columnDef == null)
+            {
+                return -1;
+            }
+
+            return columnDef.Index;
+        }
+
+        /// <summary>
+        /// Return the index to the given column
+        /// </summary>
+        /// <param name="listView">ListView</param>
+        /// <param name="colName">Name of column to get index for</param>
+        /// <returns>Position of column in item array</returns>
+        public static int GetColumnIndex(ListView listView, string colName)
+        {
+            var i = listView.Columns.IndexOfKey(colName);
+            return i;
+        }
+
+        /// <summary>
+        /// Get values in given column for currently selected items in display list
+        /// </summary>
+        /// <param name="displayView">DataGrid View</param>
+        /// <param name="colName">Column name to get values from</param>
+        /// <returns>List of contents of column for each selected row</returns>
+        public static List<string> GetItemList(DataGridView displayView, string colName)
+        {
+            var items = new List<string>();
+            var i = GetColumnIndex(displayView, colName);
+            if (i >= 0)
+            {
+                foreach (DataGridViewRow objRow in displayView.SelectedRows)
+                {
+                    items.Add(objRow.Cells[i].Value.ToString());
+                }
+            }
+            return items;
+        }
+
+        /// <summary>
+        /// Get values in given column for currently selected items in display list
+        /// </summary>
+        /// <param name="listView">ListView</param>
+        /// <param name="colName">Column name to get values from</param>
+        /// <returns>List of contents of column for each selected row</returns>
+        public static List<string> GetItemList(ListView listView, string colName)
+        {
+            var items = new List<string>();
+            var i = GetColumnIndex(listView, colName);
+            if (i >= 0)
+            {
+                foreach (ListViewItem objRow in listView.SelectedItems)
+                {
+                    items.Add(objRow.SubItems[i].Text);
+                }
+            }
+            return items;
+        }
+
+        /// <summary>
+        /// Launch the default web browser with URL
+        /// </summary>
+        /// <param name="displayView">DataGrid View</param>
+        /// <param name="url">Base URL</param>
+        /// <param name="columnName">column to get trailing URL segment from</param>
+        public static void LaunchWebBrowser(DataGridView displayView, string url, string columnName)
+        {
+            if (displayView.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("No rows selected");
+                return;
+            }
+
+            var itemList = GetItemList(displayView, columnName);
+
+            TryLaunchWebBrowser(url, columnName, itemList);
+        }
+
+        /// <summary>
+        /// Launch the default web browser with URL
+        /// </summary>
+        /// <param name="listView">ListView</param>
+        /// <param name="url">Base URL</param>
+        /// <param name="columnName">column to get trailing URL segment from</param>
+        public static void LaunchWebBrowser(ListView listView, string url, string columnName)
+        {
+            if (listView.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("No rows selected");
+                return;
+            }
+
+            var itemList = GetItemList(listView, columnName);
+
+            TryLaunchWebBrowser(url, columnName, itemList);
+        }
+
+        /// <summary>
+        /// Opens a Windows Explorer window with contents of given column
+        /// as file path to open
+        /// </summary>
+        /// <param name="displayView">DataGrid View</param>
+        /// <param name="columnName"></param>
+        public static void OpenWindowsExplorer(DataGridView displayView, string columnName)
+        {
+            if (displayView.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("No rows selected");
+                return;
+            }
+
+            var itemList = GetItemList(displayView, columnName);
+
+            if (itemList.Count == 0 && columnName.Equals("Directory", StringComparison.OrdinalIgnoreCase))
+            {
+                var alternateItemList = GetItemList(displayView, "Folder");
+                itemList.AddRange(alternateItemList);
+            }
+
+            TryOpenWindowsExplorer(columnName, itemList);
+        }
+
+        /// <summary>
+        /// Opens a Windows Explorer window with contents of given column
+        /// as file path to open
+        /// </summary>
+        /// <param name="listView">ListView</param>
+        /// <param name="columnName"></param>
+        public static void OpenWindowsExplorer(ListView listView, string columnName)
+        {
+            if (listView.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("No rows selected");
+                return;
+            }
+
+            var itemList = GetItemList(listView, columnName);
+
+            if (itemList.Count == 0 && columnName.Equals("Directory", StringComparison.OrdinalIgnoreCase))
+            {
+                var alternateItemList = GetItemList(listView, "Folder");
+                itemList.AddRange(alternateItemList);
+            }
+
+            TryOpenWindowsExplorer(columnName, itemList);
+        }
+
+        private static void TryLaunchWebBrowser(string url, string columnName, IReadOnlyList<string> itemList)
+        {
+            if (itemList.Count == 0)
+            {
+                MessageBox.Show(string.Format("Column '{0}' not present in row", columnName));
+            }
+            else
+            {
+                Process.Start(url + itemList[0]);
+            }
+
+        }
+
+        private static void TryOpenWindowsExplorer(string columnName, IReadOnlyList<string> itemList)
+        {
+            if (itemList.Count == 0)
+            {
+                MessageBox.Show(string.Format("Column '{0}' not present in row", columnName));
+            }
+            else
+            {
+                var directoryPath = itemList[0];
+                Process.Start("explorer.exe", directoryPath);
+            }
+
         }
     }
 
