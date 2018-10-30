@@ -5,125 +5,135 @@ using Mage;
 
 namespace BiodiversityFileCopy
 {
-  /// <summary>
-  /// Mage filter that adds input and output mzML file paths to output stream
-  /// </summary>
-  public class MzmlFilePathsFilter : BaseFilePathsFilter
-  {
-    protected int ItemIdx;
-    protected int FileIdx;
-
-    private readonly Dictionary<string, MzMLPath> _mzMLPaths = new Dictionary<string, MzMLPath>();
-    public Dictionary<string, MzMLPath> MzMLPaths
-    {
-      get { return _mzMLPaths; }
-    }
-
-    private int _datasetIdIdx;
-    private const string MzmlGenPattern = "MSXML_Gen";
-
-    public override void HandleColumnDef(object sender, MageColumnEventArgs args)
-    {
-      base.HandleColumnDef(sender, args);
-      ItemIdx = OutputColumnPos["Item"];// TBD: look up from property
-      FileIdx = OutputColumnPos["File"];// TBD: look up from property
-      _datasetIdIdx = OutputColumnPos["Dataset_ID"];// TBD: look up from property
-    }
-
-    public override bool BuildPaths(string[] outRow, ref string srcFilePath, ref string destFilepath)
-    {
-      // Look at tool for row
-      // if it is refinery and dataset is in refinery set, output it
-      // if it is not refinery and dataset is in not refinery set, output it.
-
-      // Skip input rows that don't actually specify a file
-      if (outRow[ItemIdx] == "file") {
-
-        // Save mzML cache file path for dataset based on tool
-        // to internal buffer
-        var datasetId = outRow[_datasetIdIdx];
-        var cacheFilePath = Path.Combine(outRow[SourceFolderIdx], outRow[FileIdx]);
-        var gen = cacheFilePath.Contains(MzmlGenPattern);
-
-        if (!_mzMLPaths.ContainsKey(datasetId)) {
-          _mzMLPaths[datasetId] = new MzMLPath();
-        }
-        if (gen) {
-          _mzMLPaths[datasetId].GenPath = cacheFilePath;
-          _mzMLPaths[datasetId].GenRow = outRow;
-        } else {
-          _mzMLPaths[datasetId].RefineryPath = cacheFilePath;
-          _mzMLPaths[datasetId].RefRow = outRow;
-        }
-      }
-      return false; // This is a sink module which accumulates to its own internal buffer - not appropriate to pass rows to output stream
-    }
-
     /// <summary>
-    /// Iterate through all saved rows and set up the correct
-    /// mzML source and destination file paths
+    /// Mage filter that adds input and output mzML file paths to output stream
     /// </summary>
-    private IEnumerable<string[]> CorrectFilePaths()
+    public class MzmlFilePathsFilter : BaseFilePathsFilter
     {
-      var savedRows = new List<string[]>();
-      foreach (var kv in _mzMLPaths) {
-        string[] row = null;
+        protected int ItemIdx;
+        protected int FileIdx;
 
-        var q = kv.Value;
-        if (q == null) continue;
-        if (q.RefineryPath != null) {
-          row = q.RefRow;
-          row[SourceFileIdx] = q.RefineryPath;
-        } else if (q.GenPath != null) {
-          row = q.GenRow;
-          row[SourceFileIdx] = q.GenPath;
+        private readonly Dictionary<string, MzMLPath> _mzMLPaths = new Dictionary<string, MzMLPath>();
+        public Dictionary<string, MzMLPath> MzMLPaths
+        {
+            get { return _mzMLPaths; }
         }
-        Debug.Assert(row != null, "row != null");
-        var cacheFilePath = Path.Combine(row[SourceFolderIdx], row[FileIdx]);
-        // var gen = cacheFilePath.Contains(_msxmlGenPattern);
 
-        var fc = File.ReadAllLines(cacheFilePath);
-        if (fc.Length <= 0) continue;
+        private int _datasetIdIdx;
+        private const string MzmlGenPattern = "MSXML_Gen";
 
-        var srcFilePath = fc[0].Trim(); // TBD: check for exactly one line
-        var mzmlFileName = Path.GetFileName(srcFilePath);
-        if (string.IsNullOrEmpty(mzmlFileName)) continue;
+        public override void HandleColumnDef(object sender, MageColumnEventArgs args)
+        {
+            base.HandleColumnDef(sender, args);
+            ItemIdx = OutputColumnPos["Item"];// TBD: look up from property
+            FileIdx = OutputColumnPos["File"];// TBD: look up from property
+            _datasetIdIdx = OutputColumnPos["Dataset_ID"];// TBD:   look up from property
+        }
 
-        var ogName = row[OrgNameIdx];
-        var destFilepath = Path.Combine(DestinationRootFolderPath, ogName, OutputSubfolderName, mzmlFileName);
-        row[SourceFileIdx] = srcFilePath;
-        row[DestFileIdx] = destFilepath;
-        savedRows.Add(row);
-      }
-      return savedRows;
+        public override bool BuildPaths(string[] outRow, ref string srcFilePath, ref string destFilepath)
+        {
+            // Look at tool for row
+            // if   it is   refinery and dataset is in refinery set, output it
+            // if   it is   not refinery and dataset is in not refinery set, output it.
+
+            // Skip input   rows that   don't   actually specify a file
+            if (outRow[ItemIdx] == "file")
+            {
+
+                // Save mzML cache file path for dataset based on   tool
+                // to   internal buffer
+                var datasetId = outRow[_datasetIdIdx];
+                var cacheFilePath = Path.Combine(outRow[SourceFolderIdx], outRow[FileIdx]);
+                var gen = cacheFilePath.Contains(MzmlGenPattern);
+
+                if (!_mzMLPaths.ContainsKey(datasetId))
+                {
+                    _mzMLPaths[datasetId] = new MzMLPath();
+                }
+                if (gen)
+                {
+                    _mzMLPaths[datasetId].GenPath = cacheFilePath;
+                    _mzMLPaths[datasetId].GenRow = outRow;
+                }
+                else
+                {
+                    _mzMLPaths[datasetId].RefineryPath = cacheFilePath;
+                    _mzMLPaths[datasetId].RefRow = outRow;
+                }
+            }
+            return false;   // This is a sink   module which accumulates to its own internal buffer -   not appropriate to pass rows to output stream
+        }
+
+        /// <summary>
+        /// Iterate through all saved rows and set up the correct
+        /// mzML source and destination file paths
+        /// </summary>
+        private IEnumerable<string[]> CorrectFilePaths()
+        {
+            var savedRows = new List<string[]>();
+            foreach (var kv in _mzMLPaths)
+            {
+                string[] row = null;
+
+                var q = kv.Value;
+                if (q == null) continue;
+                if (q.RefineryPath != null)
+                {
+                    row = q.RefRow;
+                    row[SourceFileIdx] = q.RefineryPath;
+                }
+                else if (q.GenPath != null)
+                {
+                    row = q.GenRow;
+                    row[SourceFileIdx] = q.GenPath;
+                }
+                Debug.Assert(row != null, "row != null");
+                var cacheFilePath = Path.Combine(row[SourceFolderIdx], row[FileIdx]);
+                // var gen = cacheFilePath.Contains(_msxmlGenPattern);
+
+                var fc = File.ReadAllLines(cacheFilePath);
+                if (fc.Length <= 0) continue;
+
+                var srcFilePath = fc[0].Trim();   // TBD: check   for exactly one line
+                var mzmlFileName = Path.GetFileName(srcFilePath);
+                if (string.IsNullOrEmpty(mzmlFileName)) continue;
+
+                var ogName = row[OrgNameIdx];
+                var destFilepath = Path.Combine(DestinationRootFolderPath, ogName, OutputSubfolderName, mzmlFileName);
+                row[SourceFileIdx] = srcFilePath;
+                row[DestFileIdx] = destFilepath;
+                savedRows.Add(row);
+            }
+            return savedRows;
+        }
+
+        /// <summary>
+        /// Serve contents of paths collection
+        /// </summary>
+        /// <param name="state"></param>
+        public override void Run(object state)
+        {
+            var rows = CorrectFilePaths();
+            OnColumnDefAvailable(new MageColumnEventArgs(OutputColumnDefs.ToArray()));
+            foreach (var row in rows)
+            {
+                if (Abort) break;
+                OnDataRowAvailable(new MageDataEventArgs(row));
+            }
+            OnDataRowAvailable(new MageDataEventArgs(null));
+        }
+
+        /// <summary>
+        /// Possible paths for mzML cache
+        /// </summary>
+        public class MzMLPath
+        {
+            public string GenPath { get; set; }
+            public string[] GenRow { get; set; }
+            public string RefineryPath { get; set; }
+            public string[] RefRow { get; set; }
+        }
     }
-
-    /// <summary>
-    /// Serve contents of paths collection
-    /// </summary>
-    /// <param name="state"></param>
-    public override void Run(object state)
-    {
-      var rows = CorrectFilePaths();
-      OnColumnDefAvailable(new MageColumnEventArgs(OutputColumnDefs.ToArray()));
-      foreach (var row in rows) {
-        if (Abort) break;
-        OnDataRowAvailable(new MageDataEventArgs(row));
-      }
-      OnDataRowAvailable(new MageDataEventArgs(null));
-    }
-
-    /// <summary>
-    /// Possible paths for mzML cache
-    /// </summary>
-    public class MzMLPath
-    {
-      public string GenPath { get; set; }
-      public string[] GenRow { get; set; }
-      public string RefineryPath { get; set; }
-      public string[] RefRow { get; set; }
-    }
-  }
 
 
 }

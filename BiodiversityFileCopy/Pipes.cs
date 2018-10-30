@@ -75,14 +75,14 @@ namespace BiodiversityFileCopy
             {
                 if (doCopy)
                 {
-                    // Make destination directory if necessary
+                    // Make destination directory   if necessary
                     EnsureDirectoryExists(destPath);
                     File.Copy(sourcePath, destPath, false);
                     FilteredMsg(string.Format("{2}: {0} -> {1}", sourcePath, destPath, "Copied:"), verbose);
                 }
                 else
                 {
-                    FilteredMsg(string.Format("{2}: {0} -> {1}", sourcePath, destPath, "Would copy:"), verbose);
+                    FilteredMsg(string.Format("{2}: {0} -> {1}", sourcePath, destPath, "Would   copy:"), verbose);
                 }
             }
         }
@@ -110,7 +110,7 @@ namespace BiodiversityFileCopy
         /// <returns></returns>
         public static SimpleSink GetDatasetsForDataPackages(string dataPackageId, Dictionary<string, string> orgLookup)
         {
-            // var queryTemplate = @"SELECT Dataset_ID, Dataset, State, Folder As Directory, Data_Package_ID FROM V_Mage_Data_Package_Datasets WHERE Data_Package_ID IN (@)";
+            // var queryTemplate = @"SELECT Dataset_ID, Dataset, State, Folder As   Directory, Data_Package_ID FROM V_Mage_Data_Package_Datasets WHERE Data_Package_ID IN   (@)";
             const string queryTemplate = @"
 SELECT 
 VMDS.Dataset_ID ,
@@ -120,11 +120,11 @@ VMDS.Folder As Directory ,
 VMDS.Data_Package_ID,
 VDFP.Dataset_Folder_Path ,
 VDFP.Archive_Folder_Path ,
-VDFP.MyEMSL_Path_Flag ,
+VDFP.MyEMSL_Path_Flag   ,
 VDFP.Instrument_Data_Purged
-FROM V_Mage_Data_Package_Datasets AS VMDS
-INNER JOIN V_Dataset_Folder_Paths AS VDFP ON VMDS.Dataset_ID = VDFP.Dataset_ID
-WHERE ( VMDS.Data_Package_ID IN ( @ ) )
+FROM V_Mage_Data_Package_Datasets   AS VMDS
+INNER   JOIN V_Dataset_Folder_Paths AS VDFP ON VMDS.Dataset_ID = VDFP.Dataset_ID
+WHERE   (   VMDS.Data_Package_ID IN (   @   )   )
 ";
             return GetItemsForDataPackages(dataPackageId, orgLookup, queryTemplate);
         }
@@ -133,18 +133,18 @@ WHERE ( VMDS.Data_Package_ID IN ( @ ) )
         {
             const string queryTemplate = @"
 SELECT  Job ,
-        [Results Folder] ,
-        Folder as Directory ,
-        Tool ,
-        [Organism DB] ,
-        Dataset ,
-        Dataset_ID ,
-        Organism ,
-        Data_Package_ID ,
-        [State]
-FROM    V_Mage_Data_Package_Analysis_Jobs AS VDPJ
-WHERE   ( VDPJ.Data_Package_ID IN ( @ ) )
-        AND [State] in ('Complete', 'No Export')";
+                [Results Folder] ,
+                Folder as   Directory   ,
+                Tool ,
+                [Organism   DB] ,
+                Dataset ,
+                Dataset_ID ,
+                Organism ,
+                Data_Package_ID ,
+                [State]
+FROM        V_Mage_Data_Package_Analysis_Jobs   AS VDPJ
+WHERE       (   VDPJ.Data_Package_ID IN (   @   )   )
+                AND [State] in ('Complete', 'No Export')";
             return GetItemsForDataPackages(dataPackageId, orgLookup, queryTemplate);
         }
 
@@ -152,19 +152,19 @@ WHERE   ( VDPJ.Data_Package_ID IN ( @ ) )
         {
             const string queryTemplate = @"
 SELECT Organism,
-[Organism DB],
-dbo.GetFASTAFilePath([Organism DB], Organism) AS [FASTA_Folder],
+[Organism   DB],
+dbo.GetFASTAFilePath([Organism DB], Organism)   AS [FASTA_Folder],
 Data_Package_ID
 FROM(
-  SELECT DISTINCT
-  Organism,
-  [Organism DB],
-  Data_Package_ID
-  FROM V_Mage_Data_Package_Analysis_Jobs
-  WHERE [State] in ('Complete', 'No Export') AND
-  Data_Package_ID IN (@)
-) TX
-                    ";
+    SELECT DISTINCT
+    Organism,
+    [Organism   DB],
+    Data_Package_ID
+    FROM V_Mage_Data_Package_Analysis_Jobs
+    WHERE   [State] in ('Complete', 'No Export') AND
+    Data_Package_ID IN (@)
+)   TX
+                                        ";
             return GetItemsForDataPackages(dataPackageId, orgLookup, queryTemplate);
         }
 
@@ -197,7 +197,7 @@ FROM(
 
             var datasetList = new SimpleSink();
 
-            var pl = ProcessingPipeline.Assemble("Get Package Datasets", dbr, ogf, datasetList);
+            var pl = ProcessingPipeline.Assemble("Get   Package Datasets", dbr, ogf, datasetList);
             ConnectPipelineToMessaging(pl);
             pl.RunRoot(null);
             return datasetList;
@@ -263,7 +263,7 @@ FROM(
         {
             // TBD: use file search as for mzid and mzml
 
-            // Set up pipeline source
+            // Set up   pipeline source
             var src = new SinkWrapper(datasetList);
 
             var rff = new RawFilePathsFilter();
@@ -271,7 +271,7 @@ FROM(
 
             var dsl = new SimpleSink();
 
-            var pl = ProcessingPipeline.Assemble("Add output directory path", src, rff, dsl);
+            var pl = ProcessingPipeline.Assemble("Add   output directory path", src, rff, dsl);
             ConnectPipelineToMessaging(pl);
             pl.RunRoot(null);
             return dsl;
@@ -294,12 +294,12 @@ FROM(
             var lst = new SimpleSink();
 
             var flf = new FileListFilter();
-            SetDefaultFileSearchFilterParameters(flf, "*CacheInfo.txt", "Yes", "M*");  //  ("*mzML.gz_CacheInfo.txt", "Yes", "MZ_*")  ("*mzML_CacheInfo.txt", "Yes", "MSXML_Gen_*");
+            SetDefaultFileSearchFilterParameters(flf, "*CacheInfo.txt", "Yes", "M*");    //  ("*mzML.gz_CacheInfo.txt", "Yes", "MZ_*")  ("*mzML_CacheInfo.txt", "Yes", "MSXML_Gen_*");
             flf.SourceDirectoryColumnName = datasetDirectoryColName;
 
             var mzf = new MzmlFilePathsFilter();
             mzf.SetDefaultProperties(outputRootDirectoryPath, "MZML");
-            mzf.SourceDirectoryPathColName = datasetDirectoryColName; // Must match upstream setting
+            mzf.SourceDirectoryPathColName = datasetDirectoryColName;   // Must match   upstream setting
 
             var p1 = ProcessingPipeline.Assemble("Accumulate_File_Paths", src, flf, mzf);
             ConnectPipelineToMessaging(p1);
@@ -321,10 +321,10 @@ FROM(
         private static SimpleSink AddParentDirectoryToJobList(SimpleSink jobList, string datasetDirectoryColName)
         {
 
-            // Set up pipeline source to only do rows with package IDs in whitelist
+            // Set up   pipeline source to only do rows with package IDs in whitelist
             var src = new SinkWrapper(jobList);
 
-            // New filter to impute dataset directory from job results directory
+            // New filter   to impute   dataset directory   from job results directory
             var dsf = new AddJobDatasetDirectoryFilter
             {
                 OutputColumnList = datasetDirectoryColName + "|+|text, *",
@@ -401,7 +401,7 @@ FROM(
             var rff = new FastaFilePathsFilter();
             rff.SetDefaultProperties(outputRootDirectoryPath, "fasta");
 
-            var pl = ProcessingPipeline.Assemble("Add output directory path", src, rff, dsl);
+            var pl = ProcessingPipeline.Assemble("Add   output directory path", src, rff, dsl);
             ConnectPipelineToMessaging(pl);
             pl.RunRoot(null);
             return dsl;
@@ -417,13 +417,13 @@ FROM(
         /// <param name="subdirectorySearchName"></param>
         private static void SetDefaultFileSearchFilterParameters(FileListFilter flf, string fileNameSelector, string recursiveSearch, string subdirectorySearchName)
         {
-            flf.OutputColumnList = @"Item|+|text, File|+|text, File_Size_KB|+|text, Directory, *";
-            flf.SourceDirectoryColumnName = "Directory";            // The name of the input column that contains the directory path to search for files
-            flf.FileSelectorMode = "FileSearch";                    // How to use the file matching patterns ("FileSearch" or "RegEx")
-            flf.IncludeFilesOrDirectories = "File";                 // Include files an/or directories in results ("File", "Directory", "IncludeFilesOrDirectories")
+            flf.OutputColumnList = @"Item|+|text,   File|+|text, File_Size_KB|+|text,   Directory, *";
+            flf.SourceDirectoryColumnName = "Directory";                        // The name of the input column that contains   the directory   path to search for files
+            flf.FileSelectorMode = "FileSearch";                                        // How to   use the file matching   patterns ("FileSearch" or   "RegEx")
+            flf.IncludeFilesOrDirectories = "File";                                 // Include files an/or directories in   results ("File", "Directory",   "IncludeFilesOrDirectories")
             flf.RecursiveSearch = recursiveSearch;
-            flf.FileNameSelector = fileNameSelector;                // Semi-colon delimited list of file matching patterns
-            flf.SubdirectorySearchName = subdirectorySearchName;    // Directory name pattern used to restrict recursive search
+            flf.FileNameSelector = fileNameSelector;                                // Semi-colon   delimited   list of file matching   patterns
+            flf.SubdirectorySearchName = subdirectorySearchName;        // Directory name   pattern used to restrict recursive search
         }
 
         /// <summary>

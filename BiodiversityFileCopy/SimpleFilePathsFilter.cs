@@ -3,31 +3,31 @@ using Mage;
 
 namespace BiodiversityFileCopy
 {
-  class SimpleFilePathsFilter : BaseFilePathsFilter
-  {
-    protected int ItemIdx;
-    protected int FileIdx;
-
-    public override void HandleColumnDef(object sender, MageColumnEventArgs args)
+    class SimpleFilePathsFilter : BaseFilePathsFilter
     {
-      base.HandleColumnDef(sender, args);
-      ItemIdx = OutputColumnPos["Item"];// TBD: look up from property??
-      FileIdx = OutputColumnPos["File"];// TBD: look up from property??
-    }
+        protected int ItemIdx;
+        protected int FileIdx;
 
-    public override bool BuildPaths(string[] outRow, ref string srcFilePath, ref string destFilepath)
-    {
-      // skip input rows that don't actually specify a file
-      if (outRow[ItemIdx] == "file")
-      {
-        srcFilePath = Path.Combine(outRow[SourceFolderIdx], outRow[FileIdx]);
-        var msgfFileName = outRow[FileIdx];
-        var ogName = outRow[OrgNameIdx];
-        destFilepath = Path.Combine(DestinationRootFolderPath, ogName, OutputSubfolderName, msgfFileName);
-        return true;
-      }
-      return false;
-    }
+        public override void HandleColumnDef(object sender, MageColumnEventArgs args)
+        {
+            base.HandleColumnDef(sender, args);
+            ItemIdx = OutputColumnPos["Item"];// TBD: look up from property??
+            FileIdx = OutputColumnPos["File"];// TBD: look up from property??
+        }
 
-  }
+        public override bool BuildPaths(string[] outRow, ref string srcFilePath, ref string destFilepath)
+        {
+            // skip input   rows that   don't   actually specify a file
+            if (outRow[ItemIdx] == "file")
+            {
+                srcFilePath = Path.Combine(outRow[SourceFolderIdx], outRow[FileIdx]);
+                var msgfFileName = outRow[FileIdx];
+                var ogName = outRow[OrgNameIdx];
+                destFilepath = Path.Combine(DestinationRootFolderPath, ogName, OutputSubfolderName, msgfFileName);
+                return true;
+            }
+            return false;
+        }
+
+    }
 }
