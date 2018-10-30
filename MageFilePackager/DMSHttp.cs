@@ -35,36 +35,47 @@ namespace MageFilePackager
             request.ContentLength = postData.Length;
 
             // Send Request
-            StreamWriter sw = null;
-            StreamReader sr = null;
-            String responseData;
-            try
+            string responseData;
+
+            using (var writer = new StreamWriter(request.GetRequestStream()))
             {
-                sw = new StreamWriter(request.GetRequestStream());
-                sw.Write(postData);
-            }
-            finally
-            {
-                sw?.Close();
+                writer.Write(postData);
             }
 
             // Receive Response
             try
             {
                 var response = (HttpWebResponse)request.GetResponse();
-                sr = new StreamReader(response.GetResponseStream());
-                responseData = sr.ReadToEnd();
+                var responseStream = response.GetResponseStream();
+
+                if (responseStream == null)
+                {
+                    responseData = string.Empty;
+                }
+                else
+                {
+                    using (var reader = new StreamReader(responseStream))
+                    {
+                        responseData = reader.ReadToEnd();
+                    }
+                }
             }
-            catch (WebException wex)
+            catch (WebException ex)
             {
-                sr = new StreamReader(wex.Response.GetResponseStream());
-                responseData = sr.ReadToEnd();
-                throw new Exception(responseData);
+                var responseStream = ex.Response.GetResponseStream();
+                if (responseStream == null)
+                {
+                    responseData = string.Empty;
+                }
+                else
+                {
+                    using (var reader = new StreamReader(responseStream))
+                    {
+                        responseData = reader.ReadToEnd();
+                    }
+                }
             }
-            finally
-            {
-                sr?.Close();
-            }
+
             return responseData;
         }
 
