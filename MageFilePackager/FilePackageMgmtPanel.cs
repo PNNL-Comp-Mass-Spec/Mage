@@ -181,7 +181,7 @@ namespace MageFilePackager
         /// <returns></returns>
         private SimpleSink GetCurrentPackageContents()
         {
-            var nvSink = new Accummulator();
+            var nvSink = new Accumulator();
             // Save current content of package from content display
             if (packageListDisplayControl1.ItemCount > 0)
             {

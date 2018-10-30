@@ -5,13 +5,13 @@ namespace MageFilePackager
 
     /// <summary>
     /// A variation on a Mage sink module
-    /// that can acccumulate rows from multiple pipeline runs
+    /// that can accumulate rows from multiple pipeline runs
     /// Using initial column definitions
     /// </summary>
-    class Accummulator : SimpleSink
+    class Accumulator : SimpleSink
     {
 
-        public Accummulator()
+        public Accumulator()
         {
             RetainColumnDefs = false;
         }
