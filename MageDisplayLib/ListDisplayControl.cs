@@ -186,7 +186,7 @@ namespace MageDisplayLib
         /// Get contents of first selected row as key/value pairs
         /// where key is column name and value is contents of column
         /// </summary>
-        public Dictionary<string, string> SeletedItemFields
+        public Dictionary<string, string> SelectedItemFields
         {
             get
             {

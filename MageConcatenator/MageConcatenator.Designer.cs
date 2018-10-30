@@ -40,9 +40,9 @@
             this.LocalFolderPanel1 = new MageUIComponents.LocalFolderPanel();
             this.pnlControlsAndStatus.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // pnlControlsAndStatus
-            // 
+            //
             this.pnlControlsAndStatus.Controls.Add(this.cmdAbout);
             this.pnlControlsAndStatus.Controls.Add(this.chkAddFileName);
             this.pnlControlsAndStatus.Controls.Add(this.FolderDestinationPanel1);
@@ -54,9 +54,9 @@
             this.pnlControlsAndStatus.Name = "pnlControlsAndStatus";
             this.pnlControlsAndStatus.Size = new System.Drawing.Size(1274, 159);
             this.pnlControlsAndStatus.TabIndex = 15;
-            // 
+            //
             // cmdAbout
-            // 
+            //
             this.cmdAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cmdAbout.Location = new System.Drawing.Point(1191, 10);
             this.cmdAbout.Margin = new System.Windows.Forms.Padding(4);
@@ -66,9 +66,9 @@
             this.cmdAbout.Text = "About";
             this.cmdAbout.UseVisualStyleBackColor = true;
             this.cmdAbout.Click += new System.EventHandler(this.cmdAbout_Click);
-            // 
+            //
             // chkAddFileName
-            // 
+            //
             this.chkAddFileName.AutoSize = true;
             this.chkAddFileName.Checked = true;
             this.chkAddFileName.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -78,25 +78,25 @@
             this.chkAddFileName.TabIndex = 25;
             this.chkAddFileName.Text = "Add Filename as first column";
             this.chkAddFileName.UseVisualStyleBackColor = true;
-            // 
+            //
             // FolderDestinationPanel1
-            // 
-            this.FolderDestinationPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.FolderDestinationPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.FolderDestinationPanel1.Location = new System.Drawing.Point(5, 10);
             this.FolderDestinationPanel1.Margin = new System.Windows.Forms.Padding(5);
             this.FolderDestinationPanel1.Name = "FolderDestinationPanel1";
             this.FolderDestinationPanel1.OutputFile = "";
-            this.FolderDestinationPanel1.OutputFolder = "C:\\Data\\Junk";
+            this.FolderDestinationPanel1.OutputDirectory = "C:\\Data\\Junk";
             this.FolderDestinationPanel1.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
             this.FolderDestinationPanel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.FolderDestinationPanel1.Size = new System.Drawing.Size(983, 84);
             this.FolderDestinationPanel1.TabIndex = 23;
-            // 
+            //
             // statusPanel1
-            // 
+            //
             this.statusPanel1.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
-            this.statusPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.statusPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.statusPanel1.EnableCancel = true;
             this.statusPanel1.Location = new System.Drawing.Point(5, 104);
@@ -107,9 +107,9 @@
             this.statusPanel1.ShowCancel = true;
             this.statusPanel1.Size = new System.Drawing.Size(1264, 50);
             this.statusPanel1.TabIndex = 24;
-            // 
+            //
             // ProcessAllFilesCtl
-            // 
+            //
             this.ProcessAllFilesCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.ProcessAllFilesCtl.Location = new System.Drawing.Point(993, 46);
             this.ProcessAllFilesCtl.Margin = new System.Windows.Forms.Padding(4);
@@ -119,9 +119,9 @@
             this.ProcessAllFilesCtl.Text = "&Process All Files";
             this.ProcessAllFilesCtl.UseVisualStyleBackColor = true;
             this.ProcessAllFilesCtl.Click += new System.EventHandler(this.ProcessAllFilesCtl_Click);
-            // 
+            //
             // ProcessSelectedFilesCtl
-            // 
+            //
             this.ProcessSelectedFilesCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.ProcessSelectedFilesCtl.Location = new System.Drawing.Point(993, 10);
             this.ProcessSelectedFilesCtl.Margin = new System.Windows.Forms.Padding(4);
@@ -131,9 +131,9 @@
             this.ProcessSelectedFilesCtl.Text = "Process Selected &Files";
             this.ProcessSelectedFilesCtl.UseVisualStyleBackColor = true;
             this.ProcessSelectedFilesCtl.Click += new System.EventHandler(this.ProcessSelectedFilesCtl_Click);
-            // 
+            //
             // FileListDisplayControl
-            // 
+            //
             this.FileListDisplayControl.AllowDisableShiftClickMode = true;
             this.FileListDisplayControl.AutoSizeColumnWidths = false;
             this.FileListDisplayControl.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -147,25 +147,25 @@
             this.FileListDisplayControl.PageTitle = "Title";
             this.FileListDisplayControl.Size = new System.Drawing.Size(1274, 319);
             this.FileListDisplayControl.TabIndex = 17;
-            // 
+            //
             // LocalFolderPanel1
-            // 
+            //
             this.LocalFolderPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.LocalFolderPanel1.FileNameFilter = "syn.txt";
             this.LocalFolderPanel1.FileSelectionMode = "FileSearch";
-            this.LocalFolderPanel1.Folder = "C:\\Data\\syn";
+            this.LocalFolderPanel1.Directory = "C:\\Data\\syn";
             this.LocalFolderPanel1.Location = new System.Drawing.Point(0, 0);
             this.LocalFolderPanel1.Margin = new System.Windows.Forms.Padding(5);
-            this.LocalFolderPanel1.MostRecentFolder = "";
+            this.LocalFolderPanel1.MostRecentDirectory = "";
             this.LocalFolderPanel1.Name = "LocalFolderPanel1";
             this.LocalFolderPanel1.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
-            this.LocalFolderPanel1.SearchInSubfolders = "No";
+            this.LocalFolderPanel1.SearchInSubdirectories = "No";
             this.LocalFolderPanel1.Size = new System.Drawing.Size(1274, 93);
-            this.LocalFolderPanel1.SubfolderSearchName = "*";
+            this.LocalFolderPanel1.SubdirectorySearchName = "*";
             this.LocalFolderPanel1.TabIndex = 8;
-            // 
+            //
             // MageConcatenator
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1274, 571);

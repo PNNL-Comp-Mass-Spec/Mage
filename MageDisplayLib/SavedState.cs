@@ -15,30 +15,14 @@ namespace MageDisplayLib
     /// </summary>
     public static class SavedState
     {
-
-        // Names and paths for configuration directory and files
-        private static string mAppDataFolderName;
-        private static string mDataDirectory;
         private static readonly string mQueryDefFileName = "QueryDefinitions.xml";
+
         private static readonly string mSavedStateFileName = "SavedState.xml";
 
         /// <summary>
-        /// Name of folder that contains config/state files for application
+        /// Path to directory that contains config data
         /// </summary>
-        public static string AppDataFolderName
-        {
-            get => mAppDataFolderName;
-            set => mAppDataFolderName = value;
-        }
-
-        /// <summary>
-        /// Path to folder that contains config folder
-        /// </summary>
-        public static string DataDirectory
-        {
-            get => mDataDirectory;
-            set => mDataDirectory = value;
-        }
+        public static string DataDirectory { get; set; }
 
         /// <summary>
         /// Path to saved state file
@@ -48,23 +32,22 @@ namespace MageDisplayLib
 
         /// <summary>
         /// Set global paths to reference where config files live
-        /// and assure that valild folder exists and valid copies
+        /// and assure that valid directory exists and valid copies
         /// of the basic config files.
         /// </summary>
-        public static void SetupConfigFiles(string configFolderName)
+        public static void SetupConfigFiles(string configDirectoryName)
         {
 
-            mAppDataFolderName = configFolderName;
-            mDataDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), mAppDataFolderName);
+            DataDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), configDirectoryName);
 
             // Make sure application data directory exists
-            if (!Directory.Exists(mDataDirectory))
+            if (!Directory.Exists(DataDirectory))
             {
-                Directory.CreateDirectory(mDataDirectory);
+                Directory.CreateDirectory(DataDirectory);
             }
 
             // Set default path for query definitions config file
-            ModuleDiscovery.QueryDefinitionFileName = Path.Combine(mDataDirectory, mQueryDefFileName);
+            ModuleDiscovery.QueryDefinitionFileName = Path.Combine(DataDirectory, mQueryDefFileName);
             if (!File.Exists(ModuleDiscovery.QueryDefinitionFileName))
             {
                 var ioQueryDef = new FileInfo(mQueryDefFileName);
@@ -88,11 +71,11 @@ namespace MageDisplayLib
             }
 
             // Setup to save and restore settings for UI component panels
-            FilePath = Path.Combine(mDataDirectory, mSavedStateFileName);
+            FilePath = Path.Combine(DataDirectory, mSavedStateFileName);
 
             // Tell modules where to look for loadable module DLLs
             var fi = new FileInfo(System.Windows.Forms.Application.ExecutablePath);
-            ModuleDiscovery.ExternalModuleFolder = fi.DirectoryName;
+            ModuleDiscovery.ExternalModuleDirectory = fi.DirectoryName;
         }
 
         /// <summary>
@@ -108,7 +91,7 @@ namespace MageDisplayLib
             sb.AppendLine("<?xml version='1.0' encoding='utf-8' ?>");
             sb.AppendLine("<parameters>");
 
-            // Step through panel list and add XML parameter defitions for each parameter
+            // Step through panel list and add XML parameter definitions for each parameter
             // for each panel that has an IModuleParameters interface
             var lineFormat = "<parameter panel='{0}' name='{1}' value='{2}' />";
             foreach (var panelDesc in panelList)
@@ -145,7 +128,7 @@ namespace MageDisplayLib
             var doc = new XmlDocument();
             doc.Load(FilePath);
 
-            // Get list of paramter nodes
+            // Get list of parameter nodes
             var xpath = ".//parameter";
             var parms = doc.SelectNodes(xpath);
 
@@ -155,13 +138,13 @@ namespace MageDisplayLib
             {
                 var parameterList = new Dictionary<string, string>();
                 if (parms != null)
-                    foreach (XmlNode parm in parms)
+                    foreach (XmlNode parameter in parms)
                     {
-                        if (parm.Attributes == null) continue;
+                        if (parameter.Attributes == null) continue;
 
-                        var paramPanel = parm.Attributes["panel"].InnerText;
-                        var paramName = parm.Attributes["name"].InnerText;
-                        var paramValue = parm.Attributes["value"].InnerText;
+                        var paramPanel = parameter.Attributes["panel"].InnerText;
+                        var paramName = parameter.Attributes["name"].InnerText;
+                        var paramValue = parameter.Attributes["value"].InnerText;
 
                         if (paramPanel == listPanel)
                         {

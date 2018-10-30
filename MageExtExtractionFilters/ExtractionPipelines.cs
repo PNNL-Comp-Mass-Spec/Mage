@@ -9,23 +9,22 @@ namespace MageExtExtractionFilters
 {
 
     /// <summary>
-    /// Builds Mage piplines and pipeline queues for extracting DMS analsis job
+    /// Builds Mage pipelines and pipeline queues for extracting DMS analysis job
     /// results file content
     /// </summary>
     public static class ExtractionPipelines
     {
 
-
         public static PipelineQueue MakePipelineQueueToExtractFromFileList(SimpleSink fileList, ExtractionType extractionParms, DestinationType destination)
         {
             var pipelineQueue = new PipelineQueue();
 
-            var pxfl = MakePipelineToExportFileList(new MyEMSLSinkWrapper(fileList), destination);
-            pipelineQueue.Add(pxfl);
+            var fileListExporterPipeline = MakePipelineToExportFileList(new MyEMSLSinkWrapper(fileList), destination);
+            pipelineQueue.Add(fileListExporterPipeline);
 
             // Extract contents of list of files
-            var pefc = MakePipelineToExtractFileContents(new SinkWrapper(fileList), extractionParms, destination);
-            pipelineQueue.Add(pefc);
+            var fileContentExtractorPipeline = MakePipelineToExtractFileContents(new SinkWrapper(fileList), extractionParms, destination);
+            pipelineQueue.Add(fileContentExtractorPipeline);
 
             return pipelineQueue;
         }
@@ -39,30 +38,30 @@ namespace MageExtExtractionFilters
         {
             var pipelineQueue = new PipelineQueue();
 
-            var pxjm = MakePipelineToExportJobMetadata(jobList, destination);
-            pipelineQueue.Add(pxjm);
+            var jobMetadataExportPipeline = MakePipelineToExportJobMetadata(jobList, destination);
+            pipelineQueue.Add(jobMetadataExportPipeline);
 
             // Buffer module to accumulate aggregated file list
             var fileList = new SimpleSink();
 
-            // Search job results folders for list of results files to process
+            // Search job results directories for list of results files to process
             // and accumulate into buffer module
-            var plof = MakePipelineToGetListOfFiles(jobList, fileList, extractionParms);
-            pipelineQueue.Add(plof);
+            var fileListPipeline = MakePipelineToGetListOfFiles(jobList, fileList, extractionParms);
+            pipelineQueue.Add(fileListPipeline);
 
-            var pxfl = MakePipelineToExportFileList(new MyEMSLSinkWrapper(fileList), destination);
-            pipelineQueue.Add(pxfl);
+            var fileExportPipeline = MakePipelineToExportFileList(new MyEMSLSinkWrapper(fileList), destination);
+            pipelineQueue.Add(fileExportPipeline);
 
             // Extract contents of list of files
-            var pefc = MakePipelineToExtractFileContents(new SinkWrapper(fileList), extractionParms, destination);
-            pipelineQueue.Add(pefc);
+            var fileContentExtractorPipeline = MakePipelineToExtractFileContents(new SinkWrapper(fileList), extractionParms, destination);
+            pipelineQueue.Add(fileContentExtractorPipeline);
 
             return pipelineQueue;
         }
 
         /// <summary>
         /// Make a Mage pipeline to get list of files for list of jobs
-        /// containted in given source module and accumulate
+        /// contained in given source module and accumulate
         /// into given sink module
         /// </summary>
         /// <param name="jobListSource">Mage module that contains list of jobs to search</param>
@@ -78,14 +77,14 @@ namespace MageExtExtractionFilters
 
             var fileFinder = new FileListFilter
             {
-                IncludeFilesOrFolders = "File",
+                IncludeFilesOrDirectories = "File",
                 FileSelectorMode = FileListFilter.FILE_SELECTOR_REGEX,
                 FileColumnName = "Name",
                 FileNameSelector = extractionParms.RType.ResultsFileNamePattern
             };
 
             fileFinder.OutputColumnList = string.Format(
-                "Job, {0}|+|text, Folder, {1}|+|text, {2}|+|text, {3}|+|text",
+                "Job, {0}|+|text, Directory, {1}|+|text, {2}|+|text, {3}|+|text",
                 FileListInfoBase.COLUMN_NAME_FILE_TYPE,
                 fileFinder.FileColumnName,
                 FileListInfoBase.COLUMN_NAME_FILE_SIZE,
@@ -121,7 +120,7 @@ namespace MageExtExtractionFilters
             {
                 ExtractionParms = extractionParms,
                 Destination = destination,
-                SourceFolderColumnName = "Folder",
+                SourceDirectoryColumnName = "Directory",
                 SourceFileColumnName = "Name"
             };
 

@@ -56,7 +56,7 @@ namespace MageFilePackager
             InitializeComponent();
 
             const bool isBetaVersion = true;
-            SetFormTitle("2018-10-15", isBetaVersion);
+            SetFormTitle("2018-10-29", isBetaVersion);
 
             SetTags();
 
@@ -475,8 +475,8 @@ namespace MageFilePackager
                     //--                    FileCopyPanel1.PrefixColumnName = GetBestPrefixIDColumnName(FileListDisplayControl.ColumnDefs);
                     break;
                     /*
-                                    case "get_files_from_local_folder":
-                                        FileListDisplayControl.PageTitle = FileListLabelPrefix + "Local Folder";
+                                    case "get_files_from_local_directory":
+                                        FileListDisplayControl.PageTitle = FileListLabelPrefix + "Local Directory";
                                         break;
                                     case "get_files_from_local_manifest":
                                         FileListDisplayControl.PageTitle = FileListLabelPrefix + "Manifest";
@@ -586,28 +586,28 @@ namespace MageFilePackager
 
         private Dictionary<string, string> GetRuntimeParamsForEntityFileType(string entityType)
         {
-            var rp = new Dictionary<string, string> {
+            var runtimeParams = new Dictionary<string, string> {
                              {"FileSelectors", EntityFilePanel1.FileSelectors},
                              {"FileSelectionMode", EntityFilePanel1.FileSelectionMode},
-                             {"IncludeFilesOrFolders", EntityFilePanel1.IncludeFilesOrFolders},
-                             {"SearchInSubfolders", EntityFilePanel1.SearchInSubfolders},
-                             {"SubfolderSearchName", EntityFilePanel1.SubfolderSearchName},
-                             {"SourceFolderColumnName", "Folder"},
+                             {"IncludeFilesOrDirectories", EntityFilePanel1.IncludeFilesOrDirectories},
+                             {"SearchInSubdirectories", EntityFilePanel1.SearchInSubdirectories},
+                             {"SubdirectorySearchName", EntityFilePanel1.SubdirectorySearchName},
+                             {"SourceDirectoryColumnName", "Directory"},
                              {"FileColumnName", "Name"}
                          };
             switch (entityType)
             {
                 case "Jobs":
-                    rp.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_DATE + "|+|text, Folder, Job, Dataset, Dataset_ID, Tool, Settings_File, Parameter_File, Instrument, Storage_Path, Purged, Archive_Path");
+                    runtimeParams.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_DATE + "|+|text, Directory, Job, Dataset, Dataset_ID, Tool, Settings_File, Parameter_File, Instrument, Storage_Path, Purged, Archive_Path");
                     break;
                 case "Datasets":
-                    rp.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_DATE + "|+|text, Folder, Dataset, Dataset_ID, State, Instrument, Type, Storage_Path, Purged, Archive_Path");
+                    runtimeParams.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_DATE + "|+|text, Directory, Dataset, Dataset_ID, State, Instrument, Type, Storage_Path, Purged, Archive_Path");
                     break;
                 default:
-                    rp.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_DATE + "|+|text, Folder, *");
+                    runtimeParams.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_DATE + "|+|text, Directory, *");
                     break;
             }
-            return rp;
+            return runtimeParams;
         }
 
         #endregion

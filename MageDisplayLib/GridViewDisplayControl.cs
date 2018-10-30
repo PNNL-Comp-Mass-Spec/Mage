@@ -36,13 +36,10 @@ namespace MageDisplayLib
         /// <returns></returns>
         public void SetParameters(Dictionary<string, string> paramList)
         {
-            string sValue;
-
-            if (paramList.TryGetValue("ShiftClickMode", out sValue))
+            if (paramList.TryGetValue("ShiftClickMode", out var value))
             {
-                bool bChecked;
-                if (bool.TryParse(paramList["ShiftClickMode"], out bChecked))
-                    chkShiftClickMode.Checked = bChecked;
+                if (bool.TryParse(value, out var isChecked))
+                    chkShiftClickMode.Checked = isChecked;
             }
         }
 
@@ -111,7 +108,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// Supplemental information about rows in list display (typicall number of rows)
+        /// Supplemental information about rows in list display (typically number of rows)
         /// </summary>
         public string Notice
         {
@@ -212,7 +209,7 @@ namespace MageDisplayLib
         /// Get contents of first selected row as key/value pairs
         /// where key is column name and value is contents of column
         /// </summary>
-        public Dictionary<string, string> SeletedItemFields
+        public Dictionary<string, string> SelectedItemFields
         {
             get
             {
@@ -232,7 +229,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// Get collection of columnn names
+        /// Get collection of column names
         /// </summary>
         public Collection<string> ColumnNames
         {
@@ -317,9 +314,9 @@ namespace MageDisplayLib
             {
                 if (gvQueryResults.Columns.Count > 0)
                 {
-                    foreach (var row in rows)
+                    foreach (var currentRow in rows)
                     {
-                        gvQueryResults.Rows.Add(row);
+                        gvQueryResults.Rows.Add(currentRow);
                     }
                     UpdateNoticeFld(".");
                 }
@@ -587,7 +584,7 @@ namespace MageDisplayLib
             var selIdx = lv.SelectedRows[0].Index;
             if (moveUp)
             {
-                // Ignore moveup of row(0)
+                // Ignore move up of row(0)
                 if (selIdx == 0)
                     return;
 
@@ -605,7 +602,7 @@ namespace MageDisplayLib
             }
             else
             {
-                // Ignore movedown of last item
+                // Ignore move down of last item
                 if (selIdx == lv.Rows.Count - 1)
                     return;
 
@@ -635,18 +632,11 @@ namespace MageDisplayLib
         {
 
             private readonly Hashtable myHashTable = new Hashtable();
-            string s;
-            bool mLayoutSuspended;
-            bool mAllowDelete = true;
 
             /// <summary>
             /// Defines whether or not user can delete rows using the right-click menu
             /// </summary>
-            public bool AllowDelete
-            {
-                get => mAllowDelete;
-                set => mAllowDelete = value;
-            }
+            public bool AllowDelete { get; set; } = true;
 
             /// <summary>
             /// Toggles whether or not Shift+Click is supported
@@ -657,7 +647,7 @@ namespace MageDisplayLib
             /// <summary>
             /// True when SuspendLayout() is en effect for this data grid
             /// </summary>
-            public bool LayoutSuspended => mLayoutSuspended;
+            public bool LayoutSuspended { get; private set; }
 
             /// <summary>
             /// Clears the current selection by unselecting all selected cells.
@@ -679,7 +669,7 @@ namespace MageDisplayLib
                     var toRemove = new List<DataGridViewRow>();
 
                     SuspendLayout();
-                    mLayoutSuspended = true;
+                    LayoutSuspended = true;
 
                     foreach (DataGridViewRow item in Rows)
                     {
@@ -693,7 +683,7 @@ namespace MageDisplayLib
                         Rows.Remove(item);
                     }
 
-                    mLayoutSuspended = false;
+                    LayoutSuspended = false;
                     ResumeLayout();
 
                     Update();
@@ -709,7 +699,7 @@ namespace MageDisplayLib
                 if (SelectedRows.Count > 0 && AllowDelete)
                 {
                     SuspendLayout();
-                    mLayoutSuspended = true;
+                    LayoutSuspended = true;
 
                     var toRemove = new List<DataGridViewRow>(SelectedRows.Count);
 
@@ -725,7 +715,7 @@ namespace MageDisplayLib
                         Rows.Remove(item);
                     }
 
-                    mLayoutSuspended = false;
+                    LayoutSuspended = false;
                     ResumeLayout();
 
                     Update();
@@ -842,7 +832,7 @@ namespace MageDisplayLib
                         // A cell was clicked
                         // Do not call the base class .OnCellMouseDown() event
 
-                        s = e.RowIndex.ToString();
+                        var s = e.RowIndex.ToString();
 
                         if (myHashTable.ContainsKey(s))
                         {

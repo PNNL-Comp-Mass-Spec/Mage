@@ -13,7 +13,7 @@ namespace Mage
     {
         #region Member Variables
 
-        private int mFileNameColIndx = -1;
+        private int mFileNameColIndex = -1;
 
         #endregion
 
@@ -47,30 +47,30 @@ namespace Mage
         /// </summary>
         protected override void SetupSearch()
         {
-            TryGetOutputColumnPos(SourceFileColumnName, out mFileNameColIndx);
+            TryGetOutputColumnPos(SourceFileColumnName, out mFileNameColIndex);
         }
 
         /// <summary>
-        /// Seach for files in the given folder
+        /// Search for files in the given directory
         /// </summary>
         /// <param name="outputBufferRowIdx">Row index in mOutputBuffer to examine</param>
         /// <param name="fileInfo">Dictionary of found files (input/output parameter)</param>
-        /// <param name="subfolderInfo">Dictionary of found folders (input/output parameter)</param>
-        /// <param name="folderPath">Folder path to examine</param>
+        /// <param name="subdirectoryInfo">Dictionary of found directories (input/output parameter)</param>
+        /// <param name="directoryPath">Directory path to examine</param>
         /// <param name="datasetName">Dataset name</param>
-        /// <remarks>This function only looks for the file in column mFileNameColIndx</remarks>
-        protected override void SearchOneFolder(
+        /// <remarks>This function only looks for the file in column mFileNameColIndex</remarks>
+        protected override void SearchOneDirectory(
             int outputBufferRowIdx,
             Dictionary<string, FileInfo> fileInfo,
-            Dictionary<string, DirectoryInfo> subfolderInfo,
-            string folderPath,
+            Dictionary<string, DirectoryInfo> subdirectoryInfo,
+            string directoryPath,
             string datasetName)
         {
-            if (mFileNameColIndx < 0)
+            if (mFileNameColIndex < 0)
                 return;
 
-            var sourceFileName = mOutputBuffer[outputBufferRowIdx][mFileNameColIndx];
-            GetFileInfo(outputBufferRowIdx, fileInfo, folderPath, sourceFileName, datasetName);
+            var sourceFileName = mOutputBuffer[outputBufferRowIdx][mFileNameColIndex];
+            GetFileInfo(outputBufferRowIdx, fileInfo, directoryPath, sourceFileName, datasetName);
         }
 
         #endregion
@@ -79,8 +79,8 @@ namespace Mage
 
         private void GetFileInfo(
             int outputBufferRowIdx,
-            Dictionary<string, FileInfo> fileInfo,
-            string folderPath,
+            IDictionary<string, FileInfo> fileInfo,
+            string directoryPath,
             string fileName,
             string datasetName)
         {
@@ -89,10 +89,10 @@ namespace Mage
             {
                 FileInfo fiFile;
 
-                if (folderPath.StartsWith(MYEMSL_PATH_FLAG))
-                    fiFile = GetFileInfoMyEMSL(folderPath, fileName, datasetName);
+                if (directoryPath.StartsWith(MYEMSL_PATH_FLAG))
+                    fiFile = GetFileInfoMyEMSL(directoryPath, fileName, datasetName);
                 else
-                    fiFile = GetFileInfoUNC(folderPath, fileName);
+                    fiFile = GetFileInfoUNC(directoryPath, fileName);
 
                 // Append new files in fileNames to fileInfo
                 if (fiFile != null)
@@ -130,10 +130,10 @@ namespace Mage
                 return null;
         }
 
-        private FileInfo GetFileInfoMyEMSL(string folderPath, string fileName, string datasetName)
+        private FileInfo GetFileInfoMyEMSL(string directoryPath, string fileName, string datasetName)
         {
 
-            GetMyEMSLParentFoldersAndSubDir(folderPath, datasetName, out var subDir, out var parentFolders);
+            GetMyEMSLParentDirectoriesAndSubDir(directoryPath, datasetName, out var subDir, out var parentDirectories);
 
             DatasetInfoBase.ExtractMyEMSLFileID(fileName, out var fileNameClean);
 
@@ -142,7 +142,7 @@ namespace Mage
             if (m_RecentlyFoundMyEMSLFiles.Count > 0)
             {
                 var archiveFile = m_RecentlyFoundMyEMSLFiles.First();
-                var encodedFilePath = DatasetInfoBase.AppendMyEMSLFileID(Path.Combine(parentFolders, archiveFile.FileInfo.RelativePathWindows), archiveFile.FileID);
+                var encodedFilePath = DatasetInfoBase.AppendMyEMSLFileID(Path.Combine(parentDirectories, archiveFile.FileInfo.RelativePathWindows), archiveFile.FileID);
                 return new FileInfo(encodedFilePath);
             }
 

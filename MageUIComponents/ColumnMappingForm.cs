@@ -80,7 +80,7 @@ namespace MageUIComponents
             get
             {
                 var result = "";
-                var selectedColMapping = ColumnMappingDisplayList.SeletedItemFields;
+                var selectedColMapping = ColumnMappingDisplayList.SelectedItemFields;
                 if (selectedColMapping != null && selectedColMapping.ContainsKey("name"))
                 {
                     result = selectedColMapping["name"];
@@ -97,7 +97,7 @@ namespace MageUIComponents
             get
             {
                 var result = "";
-                var selectedColMapping = ColumnMappingDisplayList.SeletedItemFields;
+                var selectedColMapping = ColumnMappingDisplayList.SelectedItemFields;
                 if (selectedColMapping != null && selectedColMapping.ContainsKey("column_list"))
                 {
                     result = selectedColMapping["column_list"];
@@ -139,7 +139,7 @@ namespace MageUIComponents
         }
 
         /// <summary>
-        /// How we want grid view display list to autosize themselves
+        /// How we want grid view display list to auto size themselves
         /// </summary>
         private void SetupGridDisplayListBehavior()
         {
@@ -206,7 +206,7 @@ namespace MageUIComponents
                 AddAdHocRow = new[] { "name", "description", "column_list" }
             };
             dGen.AddAdHocRow = new[] { "Add Job Column", "Add new column that will contain Job number", "Job|+|text, *" };
-            var writer = new DelimitedFileWriter {FilePath = MappingConfigFilePath};
+            var writer = new DelimitedFileWriter { FilePath = MappingConfigFilePath };
             var pipeline2 = ProcessingPipeline.Assemble("CreateColumnMapping", dGen, writer);
             pipeline2.RunRoot(null);
         }
@@ -218,7 +218,7 @@ namespace MageUIComponents
         private void SaveColumnMappingList()
         {
             IBaseModule source = new GVPipelineSource(ColumnMappingDisplayList, DisplaySourceMode.All);
-            var writer = new DelimitedFileWriter {FilePath = MappingConfigFilePath};
+            var writer = new DelimitedFileWriter { FilePath = MappingConfigFilePath };
             var pipeline = ProcessingPipeline.Assemble("SaveColumnMapping", source, writer);
             pipeline.RunRoot(null);
             UnsavedChanges(false);
@@ -253,7 +253,7 @@ namespace MageUIComponents
         /// <param name="e"></param>
         private void DisplaySelectedColumnMappingInEditingPanel(object sender, EventArgs e)
         {
-            var fields = ColumnMappingDisplayList.SeletedItemFields;
+            var fields = ColumnMappingDisplayList.SelectedItemFields;
             if (fields.Count == 0)
                 return;
 
@@ -305,31 +305,31 @@ namespace MageUIComponents
         private static string GetColumnListFromColumnSpecItems(IEnumerable<string[]> colItems)
         {
             var specs = new List<string>();
-            foreach (var colFlds in colItems)
+            foreach (var colFields in colItems)
             {
-                var fields = new List<string> {colFlds[OutputColIdx]};
+                var fields = new List<string> { colFields[OutputColIdx] };
 
                 // Always have an output column name
 
                 // Input column name may be blank if same as output column name
-                var inputCol = (colFlds[InputColIdx] != colFlds[OutputColIdx]) ? colFlds[InputColIdx] : "";
+                var inputCol = (colFields[InputColIdx] != colFields[OutputColIdx]) ? colFields[InputColIdx] : "";
 
                 // Add input column name if present, or if placeholder needed
-                if (!string.IsNullOrEmpty(inputCol) || !string.IsNullOrEmpty(colFlds[DataTypeColIdx]))
+                if (!string.IsNullOrEmpty(inputCol) || !string.IsNullOrEmpty(colFields[DataTypeColIdx]))
                 {
                     fields.Add(inputCol);
                 }
 
                 // Add data type to spec if present
-                if (!string.IsNullOrEmpty(colFlds[DataTypeColIdx]))
+                if (!string.IsNullOrEmpty(colFields[DataTypeColIdx]))
                 {
-                    fields.Add(colFlds[DataTypeColIdx]);
+                    fields.Add(colFields[DataTypeColIdx]);
                 }
 
                 // Add data size to spec if present
-                if (!string.IsNullOrEmpty(colFlds[SizeColIdx]))
+                if (!string.IsNullOrEmpty(colFields[SizeColIdx]))
                 {
-                    fields.Add(colFlds[SizeColIdx]);
+                    fields.Add(colFields[SizeColIdx]);
                 }
                 // Roll this column spec's fields up to delimited string
                 specs.Add(string.Join("|", fields));
@@ -419,7 +419,7 @@ namespace MageUIComponents
 
         private void AddEditingColumnForOutputColumnName()
         {
-            var col1 = new DataGridViewTextBoxColumn {Name = "Output Column"};
+            var col1 = new DataGridViewTextBoxColumn { Name = "Output Column" };
             ColumnSpecEditingDisplayList.List.Columns.Add(col1);
         }
 
@@ -442,7 +442,7 @@ namespace MageUIComponents
             }
             else
             {
-                var col2 = new DataGridViewTextBoxColumn {Name = "Input Column"};
+                var col2 = new DataGridViewTextBoxColumn { Name = "Input Column" };
                 ColumnSpecEditingDisplayList.List.Columns.Add(col2);
             }
         }
@@ -461,7 +461,7 @@ namespace MageUIComponents
 
         private void AddEditingColumnForDataSize()
         {
-            var col4 = new DataGridViewTextBoxColumn {Name = "Data Size"};
+            var col4 = new DataGridViewTextBoxColumn { Name = "Data Size" };
             ColumnSpecEditingDisplayList.List.Columns.Add(col4);
         }
 
@@ -555,7 +555,7 @@ namespace MageUIComponents
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ReplaceExistingColumnMapptingBtn_Click(object sender, EventArgs e)
+        private void ReplaceExistingColumnMappingBtn_Click(object sender, EventArgs e)
         {
             if (ColumnMappingDisplayList.SelectedItemCount > 0)
             {
@@ -706,10 +706,10 @@ namespace MageUIComponents
         #region Column Cleanup Functions
 
         /// <summary>
-        /// Clean off superflous data size values for data types that don't need them
+        /// Clean off superfluous data size values for data types that don't need them
         /// </summary>
         /// <param name="colDefs"></param>
-        private static void NormalizeColumnSize(Collection<MageColumnDef> colDefs)
+        private static void NormalizeColumnSize(IEnumerable<MageColumnDef> colDefs)
         {
             foreach (var colDef in colDefs)
             {
@@ -759,8 +759,17 @@ namespace MageUIComponents
         /// <returns></returns>
         private BaseModule GetReaderForOutputPreview()
         {
-            BaseModule rdr = null;
-            if (OutputInfo.ContainsKey("OutputFolder") && OutputInfo.ContainsKey("OutputFile"))
+            BaseModule rdr;
+            if (OutputInfo.ContainsKey("OutputDirectory") && OutputInfo.ContainsKey("OutputFile"))
+            {
+                var reader = new DelimitedFileReader
+                {
+                    FilePath = Path.Combine(OutputInfo["OutputDirectory"], OutputInfo["OutputFile"])
+                };
+                rdr = reader;
+                mPreviewSourceLabel = Path.GetFileName(OutputInfo["OutputFile"]);
+            }
+            else if (OutputInfo.ContainsKey("OutputFolder") && OutputInfo.ContainsKey("OutputFile"))
             {
                 var reader = new DelimitedFileReader
                 {
@@ -769,7 +778,7 @@ namespace MageUIComponents
                 rdr = reader;
                 mPreviewSourceLabel = Path.GetFileName(OutputInfo["OutputFile"]);
             }
-            if (OutputInfo.ContainsKey("DatabaseName"))
+            else if (OutputInfo.ContainsKey("DatabaseName"))
             {
                 var reader = new SQLiteReader
                 {
@@ -779,9 +788,9 @@ namespace MageUIComponents
                 rdr = reader;
                 mPreviewSourceLabel = Path.GetFileName(OutputInfo["DatabaseName"]) + "/" + OutputInfo["TableName"];
             }
-            if (rdr == null)
+            else
             {
-                throw new MageException("No ouput file or database was specified");
+                throw new MageException("No output file or database was specified");
             }
             return rdr;
         }
@@ -795,7 +804,7 @@ namespace MageUIComponents
         /// <returns></returns>
         private static SimpleSink GetPreviewFromSource(BaseModule reader, int numRows)
         {
-            var sink = new SimpleSink {RowsToSave = numRows};
+            var sink = new SimpleSink { RowsToSave = numRows };
 
             var pipeline = ProcessingPipeline.Assemble("GetFileColumns", reader, sink);
             pipeline.RunRoot(null);

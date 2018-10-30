@@ -59,8 +59,8 @@ namespace MageExtExtractionFilters
             OutputColumnList = "Job|+|text, MSGF_SpecProb|+|double, *";
             base.HandleColumnDef(sender, args);
 
-            /// List<MageColumnDef> cd = (OutputColumnDefs != null) ? OutputColumnDefs : InputColumnDefs;
-            /// OnColumnDefAvailable(new MageColumnEventArgs(cd.ToArray()));
+            // List<MageColumnDef> cd = (OutputColumnDefs != null) ? OutputColumnDefs : InputColumnDefs;
+            // OnColumnDefAvailable(new MageColumnEventArgs(cd.ToArray()));
             OnColumnDefAvailable(new MageColumnEventArgs(OutputColumnDefs.ToArray()));
 
             if (mMSGFMerger != null && !Abort)
@@ -70,7 +70,7 @@ namespace MageExtExtractionFilters
                     msgfFile = new ResultType.MergeFile(string.Empty, string.Empty, string.Empty, string.Empty);
                 }
 
-                mMSGFMerger.GetMSGFLookupData(msgfFile, mResultFolderPath);
+                mMSGFMerger.GetMSGFLookupData(msgfFile, mResultsDirectoryPath);
                 mMSGFMerger.MatchColIdx = OutputColumnPos[mMatchColumnName];
                 mMSGFMerger.MergeColIdx = OutputColumnPos[mMergeColumnName];
             }
@@ -209,15 +209,15 @@ namespace MageExtExtractionFilters
             /// Populate given KVSink module with MSGF lookup data
             /// </summary>
             /// <param name="mergeFile"></param>
-            /// <param name="resultFolderPath"></param>
-            public void GetMSGFLookupData(ResultType.MergeFile mergeFile, string resultFolderPath)
+            /// <param name="resultDirectoryPath"></param>
+            public void GetMSGFLookupData(ResultType.MergeFile mergeFile, string resultDirectoryPath)
             {
                 var msgfFileName = mergeFile.MergeFileName;
                 if (!string.IsNullOrEmpty(msgfFileName))
                 {
                     var msgfFileReader = new DelimitedFileReader
                     {
-                        FilePath = Path.Combine(resultFolderPath, msgfFileName)
+                        FilePath = Path.Combine(resultDirectoryPath, msgfFileName)
                     };
 
                     var msgfScoreLookup = new KVSink

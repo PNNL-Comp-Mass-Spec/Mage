@@ -98,6 +98,7 @@ namespace Mage
         /// </summary>
         /// <example>*, MSGF_SpecProb|+|text</example>
         /// <example>Dataset, Dataset_ID, Alias|+|text, *</example>
+        /// <example>Item|+|text, Name|+|text, File_Size_KB|+|text, Directory, *</example>
         /// <example>Item|+|text, Name|+|text, File_Size_KB|+|text, Folder, *</example>
         /// <example>ref|+|text, one, two, three, results|+|float</example>
         public string OutputColumnList { get; set; }
@@ -686,7 +687,14 @@ namespace Mage
         {
             if (!InputColumnPos.ContainsKey(inputColName))
             {
-                throw new Exception($"Tried to map input column '{inputColName}' which does not exist");
+                if (inputColName == "Directory" && InputColumnPos.ContainsKey("Folder"))
+                {
+                    inputColName = "Folder";
+                }
+                else
+                {
+                    throw new Exception($"Tried to map input column '{inputColName}' which does not exist");
+                }
             }
             var inputColIdx = InputColumnPos[inputColName];
             var colDef = InputColumnDefs[inputColIdx];
@@ -754,9 +762,9 @@ namespace Mage
         /// <summary>
         /// Returns the column index defined in OutputColumnPos for column columnName
         /// </summary>
-        /// <param name="columnName"></param>
-        /// <param name="colIndex"></param>
-        /// <returns>Index if defined; -1 if columnName is not present in OutputColumnPos</returns>
+        /// <param name="columnName">Column name</param>
+        /// <param name="colIndex">Output: Index if defined; -1 if columnName is not present in OutputColumnPos</param>
+        /// <returns>True if successful, otherwise false</returns>
         protected bool TryGetOutputColumnPos(string columnName, out int colIndex)
         {
 

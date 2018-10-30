@@ -32,10 +32,19 @@ namespace Mage
         #region Properties
 
         /// <summary>
-        /// Folder path where this class will search for DLLs that contain
-        /// loabable Mage modules (including content filter modules and associated parameter panels)
+        /// Directory path where this class will search for DLLs that contain loadable Mage modules
+        /// (including content filter modules and associated parameter panels)
         /// </summary>
-        public static string ExternalModuleFolder { get; set; }
+        public static string ExternalModuleDirectory { get; set; }
+
+        /// <summary>
+        /// Directory path where this class will search for DLLs that contain loadable Mage modules
+        /// </summary>
+        [Obsolete("Use ExternalModuleDirectory")]
+        public static string ExternalModuleFolder {
+            get => ExternalModuleDirectory;
+            set => ExternalModuleDirectory = value;
+        }
 
         /// <summary>
         /// Prefix that this class will require file names of DLLs to
@@ -73,8 +82,8 @@ namespace Mage
         /// <summary>
         /// Looks for a class with the given class name in the canonical
         /// assemblies already loaded for the parent application and
-        /// also searches assembly DLLs that are in the folder given
-        /// by the ExternalModuleFolder property and tagged with the
+        /// also searches assembly DLLs that are in the directory given
+        /// by the ExternalModuleDirectory property and tagged with the
         /// file name prefix given by the LoadableModuleFileNamePrefix property.
         ///
         /// Returns a .Net Type object suitable for further examination or
@@ -84,14 +93,12 @@ namespace Mage
         /// <returns></returns>
         public static Type GetModuleTypeFromClassName(string ClassName)
         {
-            Type modType = null;
-
             // Is the module class in the executing assembly?
             var ae = Assembly.GetExecutingAssembly(); // GetType().Assembly;
                                                       // modType = ae.GetType(ClassName); // should work, but doesn't
                                                       // string ne = ae.GetName().Name;
                                                       // modType = Type.GetType(ne + "." + ClassName); // does work, but do it the long way for consistency
-            modType = GetClassTypeFromAssembly(ClassName, ae);
+            var modType = GetClassTypeFromAssembly(ClassName, ae);
 
             if (modType == null)
             {
@@ -110,14 +117,14 @@ namespace Mage
             if (modType == null)
             {
                 // Is the module class found in a loadable assembly?
-                if (ExternalModuleFolder != null)
+                if (ExternalModuleDirectory != null)
                 {
-                    var di = new DirectoryInfo(ExternalModuleFolder);
+                    var di = new DirectoryInfo(ExternalModuleDirectory);
                     var dllFiles = di.GetFiles(LoadableModuleFileNamePrefix + "*.dll");
                     foreach (var fi in dllFiles)
                     {
                         var DLLName = fi.Name;
-                        var path = Path.Combine(ExternalModuleFolder, DLLName);
+                        var path = Path.Combine(ExternalModuleDirectory, DLLName);
                         var af = Assembly.LoadFrom(path);
                         modType = GetClassTypeFromAssembly(ClassName, af);
                         if (modType != null)
@@ -178,6 +185,7 @@ namespace Mage
         /// <summary>
         /// Get list of filter labels (for display)
         /// </summary>
+        [Obsolete("Unused")]
         public static Collection<string> FilterLabels
         {
             get
@@ -199,6 +207,7 @@ namespace Mage
         /// <summary>
         /// Get Mage attributes for filters
         /// </summary>
+        [Obsolete("Unused")]
         public static MageAttribute GetFilterAttributes(string filterName)
         {
             return mFilters[filterName];
@@ -245,7 +254,7 @@ namespace Mage
         public static void SetupFilters()
         {
             mFilterList.Clear();
-            mFilterList = ModuleDiscovery.FindFilters();
+            mFilterList = FindFilters();
             foreach (var ma in mFilterList)
             {
                 if (ma.ModType == "Filter")
@@ -277,14 +286,14 @@ namespace Mage
             classesToExamine.AddRange(Assembly.GetEntryAssembly().GetTypes());
 
             // Get classes from loadable DLLs
-            var di = new DirectoryInfo(ExternalModuleFolder);
+            var di = new DirectoryInfo(ExternalModuleDirectory);
             var dllFiles = new List<FileInfo>();
             dllFiles.AddRange(di.GetFiles(LoadableModuleFileNamePrefix + "*.dll"));
 
             foreach (var fi in dllFiles)
             {
                 var DLLName = fi.Name;
-                var path = Path.Combine(ExternalModuleFolder, DLLName);
+                var path = Path.Combine(ExternalModuleDirectory, DLLName);
                 classesToExamine.AddRange(Assembly.LoadFrom(path).GetTypes());
             }
 
@@ -293,14 +302,13 @@ namespace Mage
             foreach (var modType in classesToExamine)
             {
                 Console.WriteLine(modType.ToString());
-                var atrbs = modType.GetCustomAttributes(false);
-                foreach (var obj in atrbs)
+                var customAttributes = modType.GetCustomAttributes(false);
+                foreach (var candidateAttribute in customAttributes)
                 {
-                    var ma = obj as MageAttribute;
-                    if (ma != null)
+                    if (candidateAttribute is MageAttribute newFilter)
                     {
-                        ma.ModClassName = modType.Name;
-                        filterList.Add(ma);
+                        newFilter.ModClassName = modType.Name;
+                        filterList.Add(newFilter);
                     }
                 }
             }
@@ -354,16 +362,16 @@ namespace Mage
                 if (node.Attributes == null)
                     continue;
 
-                foreach (XmlAttribute attrib in node.Attributes)
+                foreach (XmlAttribute candidateAttribute in node.Attributes)
                 {
-                    if (attrib.Name == "server" && !string.IsNullOrWhiteSpace(dmsServerOverride))
+                    if (candidateAttribute.Name.Equals("server", StringComparison.OrdinalIgnoreCase) && !string.IsNullOrWhiteSpace(dmsServerOverride))
                     {
-                        attrib.Value = dmsServerOverride;
+                        candidateAttribute.Value = dmsServerOverride;
                     }
 
-                    if (attrib.Name == "database" && !string.IsNullOrWhiteSpace(dmsServerOverride))
+                    if (candidateAttribute.Name.Equals("database", StringComparison.OrdinalIgnoreCase) && !string.IsNullOrWhiteSpace(dmsServerOverride))
                     {
-                        attrib.Value = dmsDatabaseOverride;
+                        candidateAttribute.Value = dmsDatabaseOverride;
                     }
                 }
             }

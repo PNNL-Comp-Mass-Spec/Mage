@@ -68,14 +68,14 @@ namespace MageExtExtractionFilters
             OutputColumnList = "Job, Passed_Filter|+|text, *, Cleavage_State|+|text, Terminus_State|+|text";
             base.HandleColumnDef(sender, args);
 
-            /// List<MageColumnDef> cd = (OutputColumnDefs != null) ? OutputColumnDefs : InputColumnDefs;
-            /// OnColumnDefAvailable(new MageColumnEventArgs(cd.ToArray()));
+            // List<MageColumnDef> cd = (OutputColumnDefs != null) ? OutputColumnDefs : InputColumnDefs;
+            // OnColumnDefAvailable(new MageColumnEventArgs(cd.ToArray()));
             OnColumnDefAvailable(new MageColumnEventArgs(OutputColumnDefs.ToArray()));
 
             PrecalculateFieldIndexes();
             if (mProteinMerger != null)
             {
-                mProteinMerger.GetProteinLookupData(mMergeFiles["ResultToSeqMap"], mMergeFiles["SeqToProteinMap"], mResultFolderPath);
+                mProteinMerger.GetProteinLookupData(mMergeFiles["ResultToSeqMap"], mMergeFiles["SeqToProteinMap"], mResultsDirectoryPath);
                 mProteinMerger.LookupColumn = OutputColumnPos[mExtractionType.RType.ResultIDColName];
                 mProteinMerger.SetMergeSourceColIndexes(OutputColumnPos);
             }

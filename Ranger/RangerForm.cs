@@ -49,7 +49,7 @@ namespace Ranger {
             mParamPanels.Add(incrementalParameterLitSubPanel1);
             mParamPanels.Add(incrementalParameterLitSubPanel2);
 
-            // Preset parameter subpanels
+            // Preset parameter sub panels
             incrementalParameterSubPanel1.SetValues("ChargeState", "1", "5", "1", true);
             incrementalParameterSubPanel2.SetValues("CleavageType", "0", "2", "1", true);
             incrementalParameterSubPanel3.SetValues("Xcorr", "0", "5", "0.1", false);

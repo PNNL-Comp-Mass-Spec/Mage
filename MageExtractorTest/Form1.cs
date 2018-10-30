@@ -38,7 +38,7 @@ namespace MageExtractorTest {
 
             textBox1.Clear();
 
-            var et = new ExtractorTests {TestRootFolderPath = TestRootPathCtl.Text};
+            var et = new ExtractorTests { TestDirectoryPath = TestRootPathCtl.Text};
             et.OnMessageUpdated += HandleMessage;
             et.RunExtractionTestCases(testCases);
         }
@@ -74,20 +74,20 @@ namespace MageExtractorTest {
         string mXMLForPipelineToImportToFile = @"
 <pipeline name='Test_Pipeline'>
     <module type='FileListFilter'>
-        <param name='FolderPath'><![CDATA[C:\Data\syn2]]></param>
+        <param name='DirectoryPath'><![CDATA[C:\Data\syn2]]></param>
         <param name='FileNameSelector'>_syn.txt</param>
         <param name='FileTypeColumnName'>Item</param>
         <param name='FileColumnName'>Name</param>
-        <param name='SourceFolderColumnName'>Folder</param>
-        <param name='OutputColumnList'>Item|+|text, Name|+|text, Folder|+|text</param>
-        <param name='IncludeFilesOrFolders'>File</param>
+        <param name='SourceDirectoryColumnName'>Directory</param>
+        <param name='OutputColumnList'>Item|+|text, Name|+|text, Directory|+|text</param>
+        <param name='IncludeFilesOrDirectories'>File</param>
     </module>
     <module type='FileSubPipelineBroker'>
         <param name='FileFilterModuleName'>NullFilter</param>
         <param name='SourceFileColumnName'>Name</param>
-        <param name='SourceFolderColumnName'>Folder</param>
+        <param name='SourceDirectoryColumnName'>Directory</param>
         <param name='FileFilterParameters'>OutputColumnList:Name|+|text, *</param>
-        <param name='OutputFolderPath'><![CDATA[C:\Data\syn2\]]></param>
+        <param name='OutputDirectoryPath'><![CDATA[C:\Data\syn2\]]></param>
         <param name='OutputFileName'>junk.txt</param>
         <param name='DatabaseName'></param>
         <param name='TableName'></param>
@@ -98,23 +98,23 @@ namespace MageExtractorTest {
         string mXMLForPipelineToImportToSQLite = @"
 <pipeline name='Test_Pipeline'>
     <module type='FileListFilter'>
-        <param name='FolderPath'><![CDATA[C:\Data\syn2]]></param>
+        <param name='DirectoryPath'><![CDATA[C:\Data\syn2]]></param>
         <param name='FileNameSelector'>_syn.txt</param>
 
         <param name='FileTypeColumnName'>Item</param>
         <param name='FileColumnName'>Name</param>
-        <param name='SourceFolderColumnName'>Folder</param>
-        <param name='OutputColumnList'>Item|+|text, Name|+|text, Folder|+|text</param>
-        <param name='IncludeFilesOrFolders'>File</param>
+        <param name='SourceDirectoryColumnName'>Directory</param>
+        <param name='OutputColumnList'>Item|+|text, Name|+|text, Directory|+|text</param>
+        <param name='IncludeFilesOrDirectories'>File</param>
     </module>
     <module type='FileSubPipelineBroker'>
         <param name='FileFilterParameters'>OutputColumnList:Name|+|text, *</param>
-        <param name='OutputFolderPath'></param>
+        <param name='OutputDirectoryPath'></param>
         <param name='OutputFileName'></param>
         <param name='DatabaseName'><![CDATA[C:\Data\syn2\junk.db3]]></param>
         <param name='TableName'>t_test</param>
 
-        <param name='SourceFolderColumnName'>Folder</param>
+        <param name='SourceDirectoryColumnName'>Directory</param>
         <param name='FileFilterModuleName'>NullFilter</param>
         <param name='SourceFileColumnName'>Name</param>
     </module>
@@ -132,18 +132,18 @@ namespace MageExtractorTest {
             pipeline.RunRoot(null);
         }
 
-        private ProcessingPipeline ImportContentsOfFiles(string sourceFolderPath, string fileNameSelector, string columnMap, string containerPath, string name, string destinationType) {
+        private ProcessingPipeline ImportContentsOfFiles(string sourceDirectoryPath, string fileNameSelector, string columnMap, string containerPath, string name, string destinationType) {
             // Make source module in pipeline
             // to get filtered list of files in local directory
             var reader = new FileListFilter
             {
-                FolderPath = sourceFolderPath,
+                DirectoryPath = sourceDirectoryPath,
                 FileNameSelector = fileNameSelector,
                 FileTypeColumnName = "Item",
                 FileColumnName = "Name",
-                SourceFolderColumnName = "Folder",
-                OutputColumnList = "Item|+|text, Name|+|text, Folder|+|text",
-                IncludeFilesOrFolders = "File"
+                SourceDirectoryColumnName = "Directory",
+                OutputColumnList = "Item|+|text, Name|+|text, Directory|+|text",
+                IncludeFilesOrDirectories = "File"
             };
 
             // Make file sub-pipeline processing broker module
@@ -153,20 +153,20 @@ namespace MageExtractorTest {
             {
                 FileFilterModuleName = "NullFilter",
                 SourceFileColumnName = "Name",
-                SourceFolderColumnName = "Folder",
+                SourceDirectoryColumnName = "Directory",
                 FileFilterParameters = "OutputColumnList:" + columnMap
             };
 
             // Output extracted filed contents
             // to SQLite or delimited file(s)
             if (destinationType == "database") {
-                broker.OutputFolderPath = "";
+                broker.OutputDirectoryPath = "";
                 broker.OutputFileName = "";
                 broker.DatabaseName = containerPath;
                 broker.TableName = name;
             }
             if (destinationType == "file") {
-                broker.OutputFolderPath = containerPath;
+                broker.OutputDirectoryPath = containerPath;
                 broker.OutputFileName = name;
                 broker.DatabaseName = "";
                 broker.TableName = "";

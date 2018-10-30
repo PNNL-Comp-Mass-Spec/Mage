@@ -41,7 +41,7 @@ namespace MageFileProcessor
 
             try
             {
-                // Set up configuration folder and files
+                // Set up configuration directory and files
                 SavedState.SetupConfigFiles("MageConcatenator");
             }
             catch (Exception ex)
@@ -51,7 +51,7 @@ namespace MageFileProcessor
 
             try
             {
-                // Set up configuration folder and files
+                // Set up configuration directory and files
                 // Set log4net path and kick the logger into action
                 string LogFileName = Path.Combine(SavedState.DataDirectory, "log.txt");
                 log4net.GlobalContext.Properties["LogName"] = LogFileName;
@@ -181,12 +181,12 @@ namespace MageFileProcessor
 
                 switch (command.Action)
                 {
-                    case "get_files_from_local_folder":
-                        runtimeParms = GetRuntimeParmsForLocalFolder();
-                        string sFolder = runtimeParms["Folder"];
-                        if (!Directory.Exists(sFolder))
+                    case "get_files_from_local_directory":
+                        runtimeParms = GetRuntimeParmsForLocalDirectory();
+                        string sourceDirectory = runtimeParms["Directory"];
+                        if (!Directory.Exists(sourceDirectory))
                         {
-                            MessageBox.Show("Folder not found: " + sFolder, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            MessageBox.Show("Directory not found: " + sourceDirectory, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             return;
                         }
                         sink = FileListDisplayControl.MakeSink("Files", 15);
@@ -236,9 +236,9 @@ namespace MageFileProcessor
             {
                 var runtimeParms = GetRuntimeParmsForFileProcessing();
 
-                if (string.IsNullOrEmpty(runtimeParms["OutputFolder"]))
+                if (string.IsNullOrEmpty(runtimeParms["OutputDirectory"]))
                 {
-                    MessageBox.Show("Destination folder cannot be empty", "Error", MessageBoxButtons.OK,
+                    MessageBox.Show("Destination directory cannot be empty", "Error", MessageBoxButtons.OK,
                                     MessageBoxIcon.Exclamation);
                     return;
                 }
@@ -260,7 +260,7 @@ namespace MageFileProcessor
 
                 foreach (var selectedFileRow in FileListDisplayControl.SelectedItemRowsDictionaryList)
                 {
-                    lstFilePaths.Add(Path.Combine(selectedFileRow["Folder"], selectedFileRow["Name"]));
+                    lstFilePaths.Add(Path.Combine(selectedFileRow["Directory"], selectedFileRow["Name"]));
                 }
 
                 var fileCombiner = new clsFileCombiner;
@@ -344,21 +344,21 @@ namespace MageFileProcessor
         {
             switch (mCurrentCmd.Action)
             {
-                case "get_files_from_local_folder":
-                    FileListDisplayControl.PageTitle = mFileListLabelPrefix + "Local Folder";
+                case "get_files_from_local_directory":
+                    FileListDisplayControl.PageTitle = mFileListLabelPrefix + "Local Directory";
                     break;
             }
         }
 
-        private Dictionary<string, string> GetRuntimeParmsForLocalFolder()
+        private Dictionary<string, string> GetRuntimeParmsForLocalDirectory()
         {
             var rp = new Dictionary<string, string>
             {
                 {"FileNameFilter", LocalFolderPanel1.FileNameFilter},
                 {"FileSelectionMode", LocalFolderPanel1.FileSelectionMode},
-                {"Folder", LocalFolderPanel1.Folder},
-                {"SearchInSubfolders", LocalFolderPanel1.SearchInSubfolders},
-                {"SubfolderSearchName", LocalFolderPanel1.SubfolderSearchName}
+                {"Directory", LocalFolderPanel1.Directory},
+                {"SearchInSubDirectories", LocalFolderPanel1.SearchInSubdirectories},
+                {"SubdirectorySearchName", LocalFolderPanel1.SubdirectorySearchName}
             };
             return rp;
         }
@@ -366,7 +366,7 @@ namespace MageFileProcessor
         {
             var rp = new Dictionary<string, string>
             {
-                {"OutputFolder", FolderDestinationPanel1.OutputFolder},
+                {"OutputDirectory", FolderDestinationPanel1.OutputDirectory},
                 {"OutputFile", FolderDestinationPanel1.OutputFile},
                 {"OutputMode", "File_Output"},
                 {"ManifestFileName", string.Format("Manifest_{0:yyyy-MM-dd_hhmmss}.txt", DateTime.Now)},

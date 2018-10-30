@@ -32,9 +32,9 @@ namespace MageUnitTests
             var idColContents = "Borked";
             var folderColName = "Folder_Col";
             var fileColName = "File_Col";
-            var testFolderPath = System.Environment.CurrentDirectory;
+            var testDirectoryPath = System.Environment.CurrentDirectory;
             var testInputFileName = "victim.txt";
-            var destFolder = System.Environment.CurrentDirectory;
+            var destDirectory = System.Environment.CurrentDirectory;
 
             // Set up data generator
             var dGen = new DataGenerator(2, 4)
@@ -42,14 +42,14 @@ namespace MageUnitTests
                 AddAdHocRow = new[] { folderColName, fileColName, idColumnName }
             };
 
-            dGen.AddAdHocRow = new[] { testFolderPath, testInputFileName, idColContents };
+            dGen.AddAdHocRow = new[] { testDirectoryPath, testInputFileName, idColContents };
 
             // Create the test input file
-            var testFile = new FileInfo(Path.Combine(testFolderPath, testInputFileName));
+            var testFile = new FileInfo(Path.Combine(testDirectoryPath, testInputFileName));
             using (var writer = new StreamWriter(new FileStream(testFile.FullName, FileMode.Create, FileAccess.Write)))
             {
                 writer.WriteLine(idColumnName + '\t' + folderColName + '\t' + fileColName);
-                writer.WriteLine(idColContents + '\t' + testFolderPath + '\t' + testInputFileName);
+                writer.WriteLine(idColContents + '\t' + testDirectoryPath + '\t' + testInputFileName);
             }
 
             // Set up test class
@@ -57,8 +57,8 @@ namespace MageUnitTests
             {
                 SourceFileColumnName = fileColName,
                 OutputFileColumnName = fileColName,
-                SourceFolderColumnName = folderColName,
-                OutputFolderPath = destFolder,
+                SourceDirectoryColumnName = folderColName,
+                OutputDirectoryPath = destDirectory,
                 OutputColumnList = string.Format("{0}|+|text, {1}", fileColName, folderColName)
             };
             target.SetPipelineMaker(MakeTestSubpipeline);
@@ -72,14 +72,14 @@ namespace MageUnitTests
             pipeline.RunRoot(null);
 
             Assert.AreEqual("Kilroy was here", mPipelineResults, "Subpipeline creation.");
-            Assert.AreEqual(Path.Combine(testFolderPath, testInputFileName), mPipelineInputFilePath, "Subpipeline input file path");
-            Assert.AreEqual(Path.Combine(destFolder, RenameOutputFile(testInputFileName, null, null)), mPipelineOutputFilePath, "Subpipeline output file path");
+            Assert.AreEqual(Path.Combine(testDirectoryPath, testInputFileName), mPipelineInputFilePath, "Subpipeline input file path");
+            Assert.AreEqual(Path.Combine(destDirectory, RenameOutputFile(testInputFileName, null, null)), mPipelineOutputFilePath, "Subpipeline output file path");
             Assert.AreEqual("Kilroy was here too", mPipelineDummyModuleResults, "Dummy module results");
         }
 
         // This function builds the a file processing pipeline
         // which is a simple file filtering process that has a file reader module, file filter module, and file writer module,
-        // using a filter module specified by the FilterModuleClasssName, which must be set by the client
+        // using a filter module specified by the FilterModuleClassName, which must be set by the client
         private ProcessingPipeline MakeTestSubpipeline(string inputFilePath, string outputFilePath, Dictionary<string, string> context)
         {
             mPipelineResults = "Kilroy was here";

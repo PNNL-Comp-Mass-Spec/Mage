@@ -18,7 +18,6 @@ namespace MageExtExtractionFilters
 
         #endregion
 
-
         #region Structures
 
         protected struct udtColumnIndices
@@ -39,7 +38,7 @@ namespace MageExtExtractionFilters
 
         protected Dictionary<string, ResultType.MergeFile> mMergeFiles;
 
-        protected string mResultFolderPath = "";
+        protected string mResultsDirectoryPath = "";
 
 
         // Output column that will receive message about whether filter passed or failed
@@ -77,12 +76,19 @@ namespace MageExtExtractionFilters
         }
 
         /// <summary>
-        /// Path to the folder containing the result files to be processed
+        /// Path to the directory containing the result files to be processed
         /// </summary>
+        public string ResultsDirectoryPath
+        {
+            get => mResultsDirectoryPath;
+            set => mResultsDirectoryPath = value;
+        }
+
+        [Obsolete("Use ResultsDirectoryPath")]
         public string ResultFolderPath
         {
-            get => mResultFolderPath;
-            set => mResultFolderPath = value;
+            get => ResultsDirectoryPath;
+            set => ResultsDirectoryPath = value;
         }
 
         /// <summary>

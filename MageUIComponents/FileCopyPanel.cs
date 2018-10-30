@@ -25,10 +25,17 @@ namespace MageUIComponents
             set => OverwriteExistingCtl.Checked = string.Equals(value, "Yes", StringComparison.OrdinalIgnoreCase);
         }
 
+        public string OutputDirectory
+        {
+            get => OutputDirectoryCtl.Text;
+            set => OutputDirectoryCtl.Text = value;
+        }
+
+        [Obsolete("Use OutputDirectory")]
         public string OutputFolder
         {
-            get => OutputFolderCtl.Text;
-            set => OutputFolderCtl.Text = value;
+            get => OutputDirectory;
+            set => OutputDirectory = value;
         }
 
         public string ApplyPrefixToFileName
@@ -67,7 +74,7 @@ namespace MageUIComponents
         {
             return new Dictionary<string, string>
             {
-                { "OutputFolder",           OutputFolder},
+                { "OutputDirectory",        OutputDirectory},
                 { "OverwriteExistingFiles", OverwriteExistingFiles},
                 { "ApplyPrefixToFileName",  ApplyPrefixToFileName},
                 { "PrefixLeader",           PrefixLeader},
@@ -82,8 +89,9 @@ namespace MageUIComponents
             {
                 switch (paramDef.Key)
                 {
+                    case "OutputDirectory":
                     case "OutputFolder":
-                        OutputFolder = paramDef.Value;
+                        OutputDirectory = paramDef.Value;
                         break;
                     case "OverwriteExistingFiles":
                         OverwriteExistingFiles = paramDef.Value;
@@ -134,16 +142,16 @@ namespace MageUIComponents
             }
         }
 
-        private void SelectFolderCtl_Click(object sender, EventArgs e)
+        private void SelectDirectoryCtl_Click(object sender, EventArgs e)
         {
 
             var folderBrowser = new FolderBrowser();
 
             try
             {
-                if (OutputFolderCtl.TextLength > 0 && Directory.Exists(OutputFolderCtl.Text))
+                if (OutputDirectoryCtl.TextLength > 0 && Directory.Exists(OutputDirectoryCtl.Text))
                 {
-                    folderBrowser.FolderPath = OutputFolderCtl.Text;
+                    folderBrowser.FolderPath = OutputDirectoryCtl.Text;
                 }
             }
             catch (Exception)
@@ -153,7 +161,7 @@ namespace MageUIComponents
 
             if (folderBrowser.BrowseForFolder())
             {
-                OutputFolderCtl.Text = folderBrowser.FolderPath;
+                OutputDirectoryCtl.Text = folderBrowser.FolderPath;
             }
 
         }

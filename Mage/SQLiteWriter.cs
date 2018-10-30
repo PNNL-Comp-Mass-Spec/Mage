@@ -252,7 +252,7 @@ namespace Mage
             {
                 var sqliteConnString = CreateSQLiteConnectionString(DbPath, DbPassword);
 
-                // Note: providing true for parseViaFramework as a workaround for reading SqLite files located on UNC or in readonly folders
+                // Note: providing true for parseViaFramework as a workaround for reading SqLite files located on UNC or in readonly directories
                 mConnection = new SQLiteConnection(sqliteConnString, true);
                 mConnection.Open();
             }
@@ -301,32 +301,32 @@ namespace Mage
                 {
                     insert.Connection = mConnection;
                     insert.Transaction = tx;
-                    var pnames = new List<string>();
+                    var paramNames = new List<string>();
                     for (var j = 0; j <= mSchema.Columns.Count - 1; j++)
                     {
                         // Check for the row having fewer columns of data than the header
                         if (j >= row.Length)
                             break;
 
-                        var pname = "@" + GetNormalizedName(mSchema.Columns[j].ColumnName, pnames);
+                        var paramName = "@" + GetNormalizedName(mSchema.Columns[j].ColumnName, paramNames);
 
                         if (columnDataTypes[j] == DbType.DateTime)
                         {
                             if (DateTime.TryParse(row[j], out var dtDate))
                             {
-                                insert.Parameters[pname].Value = dtDate.ToString("yyyy-MM-dd HH:mm:ss");
+                                insert.Parameters[paramName].Value = dtDate.ToString("yyyy-MM-dd HH:mm:ss");
                             }
                             else
                             {
-                                insert.Parameters[pname].Value = null;
+                                insert.Parameters[paramName].Value = null;
                             }
                         }
                         else
                         {
-                            // Old: insert.Parameters[pname].Value = CastValueForColumn(row[j], mSchema.Columns[j]);
-                            insert.Parameters[pname].Value = row[j];
+                            // Old: insert.Parameters[paramName].Value = CastValueForColumn(row[j], mSchema.Columns[j]);
+                            insert.Parameters[paramName].Value = row[j];
                         }
-                        pnames.Add(pname);
+                        paramNames.Add(paramName);
                     }
                     insert.ExecuteNonQuery();
                 }
@@ -416,17 +416,17 @@ namespace Mage
                 sb.Append(" NOT NULL");
             }
 
-            var defval = StripParens(col.DefaultValue);
-            defval = DiscardNational(defval);
+            var defaultValue = StripParens(col.DefaultValue);
+            defaultValue = DiscardNational(defaultValue);
             // traceLogWriter.Debug(("DEFAULT VALUE BEFORE [" & col.DefaultValue & "] AFTER [") + defval & "]")
-            if (!string.IsNullOrEmpty(defval) && defval.ToUpper().Contains("GETDATE"))
+            if (!string.IsNullOrEmpty(defaultValue) && defaultValue.ToUpper().Contains("GETDATE"))
             {
                 traceLogWriter.Debug("converted SQL Server GETDATE() to CURRENT_TIMESTAMP for column [" + col.ColumnName + "]");
                 sb.Append(" DEFAULT (CURRENT_TIMESTAMP)");
             }
-            else if (string.IsNullOrEmpty(defval) && IsValidDefaultValue(defval))
+            else if (string.IsNullOrEmpty(defaultValue) && IsValidDefaultValue(defaultValue))
             {
-                sb.Append(" DEFAULT " + defval);
+                sb.Append(" DEFAULT " + defaultValue);
             }
 
             return sb.ToString();
@@ -487,24 +487,24 @@ namespace Mage
 
             sb.Append(") VALUES (");
 
-            var pnames = new List<string>();
+            var paramNames = new List<string>();
             for (var i = 0; i <= ts.Columns.Count - 1; i++)
             {
-                var pname = "@" + GetNormalizedName(ts.Columns[i].ColumnName, pnames);
-                sb.Append(pname);
+                var paramName = "@" + GetNormalizedName(ts.Columns[i].ColumnName, paramNames);
+                sb.Append(paramName);
                 if (i < ts.Columns.Count - 1)
                 {
                     sb.Append(", ");
                 }
 
                 var dbType = GetDbTypeOfColumn(ts.Columns[i]);
-                var prm = new SQLiteParameter(pname, dbType, ts.Columns[i].ColumnName);
+                var prm = new SQLiteParameter(paramName, dbType, ts.Columns[i].ColumnName);
                 res.Parameters.Add(prm);
 
                 columnDataTypes.Add(dbType);
 
                 // Remember the parameter name in order to avoid duplicates
-                pnames.Add(pname);
+                paramNames.Add(paramName);
             }
 
             sb.Append(")");
@@ -521,7 +521,7 @@ namespace Mage
             var sb = new StringBuilder();
             for (var i = 0; i <= str.Length - 1; i++)
             {
-                if (Char.IsLetterOrDigit(str[i]) || str[i] == '_')
+                if (char.IsLetterOrDigit(str[i]) || str[i] == '_')
                 {
                     sb.Append(str[i]);
                 }

@@ -23,7 +23,7 @@ namespace Mage
         #region Properties
 
         /// <summary>
-        /// Delimiter to use for ouput file (defaults to tab)
+        /// Delimiter to use for output file (defaults to tab)
         /// </summary>
         public string Delimiter { get; set; }
 
@@ -48,7 +48,7 @@ namespace Mage
 
         /// <summary>
         /// Construct new Mage delimited file writer module
-        /// with propery defaults:
+        /// with property defaults:
         /// Delimiter = "\t";
         /// Header = "Yes";
         /// Append = "No";
@@ -199,7 +199,8 @@ namespace Mage
 
         private void OutputDataRow(string[] vals)
         {
-            var delim = "";
+            var delimiter = "";
+
             // Remap results according to our output column definitions, if we have them
             // Otherwise just use the as-delivered format
             var outRow = vals;
@@ -209,8 +210,8 @@ namespace Mage
             }
             foreach (var item in outRow)
             {
-                mOutFile.Write(delim + (item ?? ""));
-                delim = Delimiter;
+                mOutFile.Write(delimiter + (item ?? ""));
+                delimiter = Delimiter;
             }
             mOutFile.WriteLine();
         }

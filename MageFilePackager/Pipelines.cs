@@ -38,14 +38,14 @@ namespace MageFilePackager
             // Create file filter module and initialize it
             var fileFilter = new FileListFilter
             {
-                SourceFolderColumnName = runtimeParms["SourceFolderColumnName"],
+                SourceDirectoryColumnName = runtimeParms["SourceDirectoryColumnName"],
                 FileColumnName = runtimeParms["FileColumnName"],
                 OutputColumnList = runtimeParms["OutputColumnList"],
                 FileNameSelector = runtimeParms["FileSelectors"],
                 FileSelectorMode = runtimeParms["FileSelectionMode"],
-                IncludeFilesOrFolders = runtimeParms["IncludeFilesOrFolders"],
-                RecursiveSearch = runtimeParms["SearchInSubfolders"],
-                SubfolderSearchName = runtimeParms["SubfolderSearchName"]
+                IncludeFilesOrDirectories = runtimeParms["IncludeFilesOrDirectories"],
+                RecursiveSearch = runtimeParms["SearchInSubdirectories"],
+                SubdirectorySearchName = runtimeParms["SubdirectorySearchName"]
             };
 
             // Filter to remove "not found" rows

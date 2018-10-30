@@ -37,19 +37,27 @@ namespace MageUIComponents
             }
         }
 
-        public string IncludeFilesOrFolders
+        /// <summary>
+        /// This should be File or Directory or Folder
+        /// </summary>
+        public string IncludeFilesOrDirectories
         {
             set
             {
                 IncludefilesCtl.Checked = false;
-                IncludeFoldersCtl.Checked = false;
+                IncludeDirectoriesCtl.Checked = false;
                 if (value.Contains("File"))
                 {
                     IncludefilesCtl.Checked = true;
-                } else if (value.Contains("Folder"))
+                } else if (value.Contains("Directory") || value.Contains("Directories"))
                 {
-                    IncludeFoldersCtl.Checked = true;
+                    IncludeDirectoriesCtl.Checked = true;
                 }
+                else if (value.Contains("Folder"))
+                {
+                    IncludeDirectoriesCtl.Checked = true;
+                }
+
                 else
                 {
                     // Search for files by default
@@ -62,9 +70,9 @@ namespace MageUIComponents
                 if (IncludefilesCtl.Checked)
                 {
                     state += "File";
-                } else if (IncludeFoldersCtl.Checked)
+                } else if (IncludeDirectoriesCtl.Checked)
                 {
-                    state += "Folder";
+                    state += "Directory";
                 }
                 else
                 {
@@ -76,16 +84,37 @@ namespace MageUIComponents
             }
         }
 
-        public string SearchInSubfolders
+        [Obsolete("Use IncludeFilesOrDirectories")]
+        public string IncludeFilesOrFolders
         {
-            get => (SearchInSubfoldersCtl.Checked) ? "Yes" : "No";
-            set => SearchInSubfoldersCtl.Checked = string.Equals(value, "Yes", StringComparison.OrdinalIgnoreCase);
+            get => IncludeFilesOrDirectories;
+            set => IncludeFilesOrDirectories = value;
         }
 
+        public string SearchInSubdirectories
+        {
+            get => (SearchInSubdirectoriesCtl.Checked) ? "Yes" : "No";
+            set => SearchInSubdirectoriesCtl.Checked = string.Equals(value, "Yes", StringComparison.OrdinalIgnoreCase);
+        }
+
+        [Obsolete("Use SearchInSubdirectories")]
+        public string SearchInSubfolders
+        {
+            get => SearchInSubdirectories;
+            set => SearchInSubdirectories = value;
+        }
+
+        public string SubdirectorySearchName
+        {
+            get => SubdirectorySearchNameCtl.Text;
+            set => SubdirectorySearchNameCtl.Text = value;
+        }
+
+        [Obsolete("Use SubdirectorySearchName")]
         public string SubfolderSearchName
         {
-            get => SubfolderSearchNameCtl.Text;
-            set => SubfolderSearchNameCtl.Text = value;
+            get => SubdirectorySearchName;
+            set => SubdirectorySearchName = value;
         }
 
         #region IModuleParameters Members
@@ -96,9 +125,9 @@ namespace MageUIComponents
             {
                 { "FileSelectors", FileSelectors },
                 { "FileSelectionMode", FileSelectionMode },
-                { "IncludeFilesOrFolders", IncludeFilesOrFolders},
-                { "SearchInSubfolders", SearchInSubfolders},
-                { "SubfolderSearchName", SubfolderSearchName}
+                { "IncludeFilesOrDirectories", IncludeFilesOrDirectories},
+                { "SearchInSubdirectories", SearchInSubdirectories},
+                { "SubdirectorySearchName", SubdirectorySearchName}
             };
         }
 
@@ -114,14 +143,14 @@ namespace MageUIComponents
                     case "FileSelectionMode":
                         FileSelectionMode = paramDef.Value;
                         break;
-                    case "IncludeFilesOrFolders":
-                        IncludeFilesOrFolders = paramDef.Value;
+                    case "IncludeFilesOrDirectories":
+                        IncludeFilesOrDirectories = paramDef.Value;
                         break;
-                    case "SearchInSubfolders":
-                        SearchInSubfolders = paramDef.Value;
+                    case "SearchInSubdirectories":
+                        SearchInSubdirectories = paramDef.Value;
                         break;
-                    case "SubfolderSearchName":
-                        SubfolderSearchName = paramDef.Value;
+                    case "SubdirectorySearchName":
+                        SubdirectorySearchName = paramDef.Value;
                         break;
                 }
             }

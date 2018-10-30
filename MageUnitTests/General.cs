@@ -13,7 +13,7 @@ namespace MageUnitTests
     {
         public const string DATABASE_PATH_KEY = "Database";
 
-        private const string REMOTE_UNIT_TEST_FOLDER = @"\\proto-2\UnitTest_Files\Mage";
+        private const string REMOTE_UNIT_TEST_DIRECTORY = @"\\proto-2\UnitTest_Files\Mage";
 
         public static FileInfo GetTestFile(string testFilePath)
         {
@@ -22,45 +22,45 @@ namespace MageUnitTests
             if (localFile.Exists)
                 return localFile;
 
-            var remoteFile = new FileInfo(Path.Combine(REMOTE_UNIT_TEST_FOLDER, localFile.Name));
+            var remoteFile = new FileInfo(Path.Combine(REMOTE_UNIT_TEST_DIRECTORY, localFile.Name));
             if (remoteFile.Exists)
                 return remoteFile;
 
-            if (localFile.Directory.Parent != null)
+            if (localFile.Directory?.Parent != null)
             {
-                var parentFolderName = localFile.Directory.Parent.Name;
+                var parentDirectoryName = localFile.Directory.Parent.Name;
 
-                var remoteFileAlt = new FileInfo(Path.Combine(REMOTE_UNIT_TEST_FOLDER, parentFolderName, localFile.Name));
+                var remoteFileAlt = new FileInfo(Path.Combine(REMOTE_UNIT_TEST_DIRECTORY, parentDirectoryName, localFile.Name));
                 if (remoteFileAlt.Exists)
                     return remoteFileAlt;
             }
 
-            Assert.Fail("Test file {0} not found locally or at {1}", testFilePath, REMOTE_UNIT_TEST_FOLDER);
+            Assert.Fail("Test file {0} not found locally or at {1}", testFilePath, REMOTE_UNIT_TEST_DIRECTORY);
             return new FileInfo(localFile.Name);
         }
 
-        public static DirectoryInfo GetTestFolder(string testFolderPath)
+        public static DirectoryInfo GetTestDirectory(string testDirectoryPath)
         {
 
-            var localFolder = new DirectoryInfo(testFolderPath);
-            if (localFolder.Exists)
-                return localFolder;
+            var localDirectory = new DirectoryInfo(testDirectoryPath);
+            if (localDirectory.Exists)
+                return localDirectory;
 
-            var remoteFolder = new DirectoryInfo(Path.Combine(REMOTE_UNIT_TEST_FOLDER, localFolder.Name));
-            if (remoteFolder.Exists)
-                return remoteFolder;
+            var remoteDirectory = new DirectoryInfo(Path.Combine(REMOTE_UNIT_TEST_DIRECTORY, localDirectory.Name));
+            if (remoteDirectory.Exists)
+                return remoteDirectory;
 
-            if (localFolder.Parent != null)
+            if (localDirectory.Parent != null)
             {
-                var parentFolderName = localFolder.Parent.Name;
+                var parentDirectoryName = localDirectory.Parent.Name;
 
-                var remoteFolderAlt = new DirectoryInfo(Path.Combine(REMOTE_UNIT_TEST_FOLDER, parentFolderName, localFolder.Name));
-                if (remoteFolderAlt.Exists)
-                    return remoteFolderAlt;
+                var remoteDirectoryAlt = new DirectoryInfo(Path.Combine(REMOTE_UNIT_TEST_DIRECTORY, parentDirectoryName, localDirectory.Name));
+                if (remoteDirectoryAlt.Exists)
+                    return remoteDirectoryAlt;
             }
 
-            Assert.Fail("Test folder {0} not found locally or at {1}", testFolderPath, REMOTE_UNIT_TEST_FOLDER);
-            return new DirectoryInfo(localFolder.Name);
+            Assert.Fail("Test DIRECTORY {0} not found locally or at {1}", testDirectoryPath, REMOTE_UNIT_TEST_DIRECTORY);
+            return new DirectoryInfo(localDirectory.Name);
         }
 
         [Test]

@@ -25,7 +25,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Folder where the Mage_Temp_Files folder should be created
+        /// Directory where the Mage_Temp_Files directory should be created
         /// </summary>
         public string TempFilesContainerPath
         {
@@ -68,36 +68,38 @@ namespace Mage
             // Update the paths in mSink to point to the temporary path to which the files were downloaded
 
             var downloadMyEMSLFiles = false;
-            string downloadFolderPath;
+            string downloadDirPath;
 
             if (string.IsNullOrEmpty(TempFilesContainerPath))
             {
-                downloadFolderPath = Path.GetTempPath();
+                downloadDirPath = Path.GetTempPath();
             }
             else
             {
-                downloadFolderPath = TempFilesContainerPath;
+                downloadDirPath = TempFilesContainerPath;
             }
 
-            var fiFileCheck = new FileInfo(downloadFolderPath);
+            var fiFileCheck = new FileInfo(downloadDirPath);
             if (fiFileCheck.Exists && fiFileCheck.Directory != null)
             {
-                downloadFolderPath = fiFileCheck.Directory.FullName;
+                downloadDirPath = fiFileCheck.Directory.FullName;
             }
 
-            downloadFolderPath = Path.Combine(downloadFolderPath, MAGE_TEMP_FILES_FOLDER);
-            if (mSink.ColumnIndex.TryGetValue("Folder", out var folderColIndex) &&
+            downloadDirPath = Path.Combine(downloadDirPath, MAGE_TEMP_FILES_DIRECTORY);
+
+            if ((mSink.ColumnIndex.TryGetValue("Directory", out var directoryColIndex) ||
+                 mSink.ColumnIndex.TryGetValue("Folder", out directoryColIndex)) &&
                 mSink.ColumnIndex.TryGetValue("Name", out var filenameColIndex))
             {
                 for (var i = 0; i < mSink.Rows.Count; i++)
                 {
-                    if (UpdateSinkRowIfMyEMSLFile(i, filenameColIndex, folderColIndex, downloadFolderPath))
+                    if (UpdateSinkRowIfMyEMSLFile(i, filenameColIndex, directoryColIndex, downloadDirPath))
                         downloadMyEMSLFiles = true;
                 }
             }
             else
             {
-                folderColIndex = -1;
+                directoryColIndex = -1;
                 filenameColIndex = -1;
             }
 
@@ -106,17 +108,17 @@ namespace Mage
             {
                 for (var j = 0; j < mSink.Rows[i].Length; j++)
                 {
-                    if (j == filenameColIndex || j == folderColIndex)
+                    if (j == filenameColIndex || j == directoryColIndex)
                         continue;
 
-                    if (UpdateSinkRowIfMyEMSLFile(i, j, -1, downloadFolderPath))
+                    if (UpdateSinkRowIfMyEMSLFile(i, j, -1, downloadDirPath))
                         downloadMyEMSLFiles = true;
                 }
             }
 
             if (downloadMyEMSLFiles)
             {
-                var success = ProcessMyEMSLDownloadQueue(downloadFolderPath, Downloader.DownloadLayout.DatasetNameAndSubdirectories);
+                var success = ProcessMyEMSLDownloadQueue(downloadDirPath, Downloader.DownloadLayout.DatasetNameAndSubdirectories);
 
                 if (!success)
                 {
@@ -150,18 +152,18 @@ namespace Mage
         /// </summary>
         /// <param name="rowIndex">Index of row in mSink.Rows to examine</param>
         /// <param name="colIndex">Index of the column to examine</param>
-        /// <param name="folderColIndex">Optional index of the column that contains the folder for the file in column colIndex; -1 to ignore</param>
-        /// <param name="downloadFolderPath">Download folder path</param>
+        /// <param name="directoryColIndex">Optional index of the column that contains the directory for the file in column colIndex; -1 to ignore</param>
+        /// <param name="downloadDirectoryPath">Download directory path</param>
         /// <returns>True if a MyEMSL File was found and the row was updated</returns>
-        protected bool UpdateSinkRowIfMyEMSLFile(int rowIndex, int colIndex, int folderColIndex, string downloadFolderPath)
+        protected bool UpdateSinkRowIfMyEMSLFile(int rowIndex, int colIndex, int directoryColIndex, string downloadDirectoryPath)
         {
             var currentRow = mSink.Rows[rowIndex];
 
             if (currentRow[colIndex] == null)
                 return false;
 
-            if (folderColIndex >= 0 && currentRow[folderColIndex] == null)
-                folderColIndex = -1;
+            if (directoryColIndex >= 0 && currentRow[directoryColIndex] == null)
+                directoryColIndex = -1;
 
             var filePathWithID = currentRow[colIndex];
 
@@ -178,7 +180,7 @@ namespace Mage
             {
                 m_MyEMSLDatasetInfoCache.AddFileToDownloadQueue(cachedFileInfo.FileInfo);
 
-                var newFilePath = Path.Combine(downloadFolderPath, cachedFileInfo.FileInfo.Dataset, cachedFileInfo.FileInfo.RelativePathWindows);
+                var newFilePath = Path.Combine(downloadDirectoryPath, cachedFileInfo.FileInfo.Dataset, cachedFileInfo.FileInfo.RelativePathWindows);
 
                 if (Path.IsPathRooted(filePathWithID))
                 {
@@ -189,8 +191,8 @@ namespace Mage
                     currentRow[colIndex] = filePathClean;
                 }
 
-                if (folderColIndex >= 0)
-                    currentRow[folderColIndex] = Path.GetDirectoryName(newFilePath);
+                if (directoryColIndex >= 0)
+                    currentRow[directoryColIndex] = Path.GetDirectoryName(newFilePath);
 
                 return true;
             }

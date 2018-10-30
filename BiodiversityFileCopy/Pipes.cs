@@ -75,7 +75,7 @@ namespace BiodiversityFileCopy
             {
                 if (doCopy)
                 {
-                    // Make destination folder if necessary
+                    // Make destination directory if necessary
                     EnsureDirectoryExists(destPath);
                     File.Copy(sourcePath, destPath, false);
                     FilteredMsg(string.Format("{2}: {0} -> {1}", sourcePath, destPath, "Copied:"), verbose);
@@ -108,15 +108,15 @@ namespace BiodiversityFileCopy
         /// Get list of datasets from given data package ID list
         /// </summary>
         /// <returns></returns>
-        public static SimpleSink GetDatasetsForDataPackages(string dpkgId, Dictionary<string, string> orgLookup)
+        public static SimpleSink GetDatasetsForDataPackages(string dataPackageId, Dictionary<string, string> orgLookup)
         {
-            // var sqlTmpl = @"SELECT Dataset_ID, Dataset, State, Folder, Data_Package_ID FROM V_Mage_Data_Package_Datasets WHERE Data_Package_ID IN (@)";
-            const string sqlTmpl = @"
+            // var queryTemplate = @"SELECT Dataset_ID, Dataset, State, Folder As Directory, Data_Package_ID FROM V_Mage_Data_Package_Datasets WHERE Data_Package_ID IN (@)";
+            const string queryTemplate = @"
 SELECT 
 VMDS.Dataset_ID ,
 VMDS.Dataset ,
 VMDS.State ,
-VMDS.Folder ,
+VMDS.Folder As Directory ,
 VMDS.Data_Package_ID,
 VDFP.Dataset_Folder_Path ,
 VDFP.Archive_Folder_Path ,
@@ -126,15 +126,15 @@ FROM V_Mage_Data_Package_Datasets AS VMDS
 INNER JOIN V_Dataset_Folder_Paths AS VDFP ON VMDS.Dataset_ID = VDFP.Dataset_ID
 WHERE ( VMDS.Data_Package_ID IN ( @ ) )
 ";
-            return GetItemsForDataPackages(dpkgId, orgLookup, sqlTmpl);
+            return GetItemsForDataPackages(dataPackageId, orgLookup, queryTemplate);
         }
 
-        public static SimpleSink GetJobsForDataPackages(string dPkgId, Dictionary<string, string> orgLookup)
+        public static SimpleSink GetJobsForDataPackages(string dataPackageId, Dictionary<string, string> orgLookup)
         {
-            const string sqlTmpl = @"
+            const string queryTemplate = @"
 SELECT  Job ,
         [Results Folder] ,
-        Folder ,
+        Folder as Directory ,
         Tool ,
         [Organism DB] ,
         Dataset ,
@@ -145,12 +145,12 @@ SELECT  Job ,
 FROM    V_Mage_Data_Package_Analysis_Jobs AS VDPJ
 WHERE   ( VDPJ.Data_Package_ID IN ( @ ) )
         AND [State] in ('Complete', 'No Export')";
-            return GetItemsForDataPackages(dPkgId, orgLookup, sqlTmpl);
+            return GetItemsForDataPackages(dataPackageId, orgLookup, queryTemplate);
         }
 
-        public static SimpleSink GetFastaFilesForDataPackages(string dPkgId, Dictionary<string, string> orgLookup)
+        public static SimpleSink GetFastaFilesForDataPackages(string dataPackageId, Dictionary<string, string> orgLookup)
         {
-            const string sqlTmpl = @"
+            const string queryTemplate = @"
 SELECT Organism,
 [Organism DB],
 dbo.GetFASTAFilePath([Organism DB], Organism) AS [FASTA_Folder],
@@ -165,22 +165,23 @@ FROM(
   Data_Package_ID IN (@)
 ) TX
                     ";
-            return GetItemsForDataPackages(dPkgId, orgLookup, sqlTmpl);
+            return GetItemsForDataPackages(dataPackageId, orgLookup, queryTemplate);
         }
 
         /// <summary>
-        /// Retrieve list of items from given data packages according to given sql query templage
+        /// Retrieve list of items from given data packages according to given sql query
         /// </summary>
-        /// <param name="dPkgId"></param>
+        /// <param name="dataPackageId"></param>
         /// <param name="orgLookup"></param>
-        /// <param name="sqlTmpl"></param>
+        /// <param name="queryTemplate"></param>
         /// <returns></returns>
-        private static SimpleSink GetItemsForDataPackages(string dPkgId, Dictionary<string, string> orgLookup, string sqlTmpl)
+        private static SimpleSink GetItemsForDataPackages(string dataPackageId, Dictionary<string, string> orgLookup, string queryTemplate)
         {
-            var sql = sqlTmpl.Replace("@", dPkgId);
+            var sql = queryTemplate.Replace("@", dataPackageId);
 
             // Typically gigasax and DMS5
-            var dbr = new MSSQLReader {
+            var dbr = new MSSQLReader
+            {
                 Server = Globals.DMSServer,
                 Database = Globals.DMSDatabase,
                 SQLText = sql
@@ -225,7 +226,7 @@ FROM(
         /// </summary>
         /// <param name="dataPackageList">Sink object containing information to be extracted</param>
         /// <returns></returns>
-        public static List<string> ExtracttIdListFromSink(SimpleSink dataPackageList)
+        public static List<string> ExtractIdListFromSink(SimpleSink dataPackageList)
         {
             var idIdx = dataPackageList.ColumnIndex["Package_ID"];
             var idList = (from row in dataPackageList.Rows where !string.IsNullOrEmpty(row[idIdx]) select row[idIdx]).ToList();
@@ -256,9 +257,9 @@ FROM(
         /// Add source and destination raw file paths to given dataset list
         /// </summary>
         /// <param name="datasetList"></param>
-        /// <param name="outputRootFolderPath">Folder path at root of all output subfolders</param>
+        /// <param name="outputRootDirectoryPath">Directory path at root of all output subdirectories</param>
         /// <returns></returns>
-        public static SimpleSink AddRawFilePaths(SimpleSink datasetList, string outputRootFolderPath)
+        public static SimpleSink AddRawFilePaths(SimpleSink datasetList, string outputRootDirectoryPath)
         {
             // TBD: use file search as for mzid and mzml
 
@@ -266,39 +267,39 @@ FROM(
             var src = new SinkWrapper(datasetList);
 
             var rff = new RawFilePathsFilter();
-            rff.SetDefaultProperties(outputRootFolderPath, "RAW");
+            rff.SetDefaultProperties(outputRootDirectoryPath, "RAW");
 
             var dsl = new SimpleSink();
 
-            var pl = ProcessingPipeline.Assemble("Add output folder path", src, rff, dsl);
+            var pl = ProcessingPipeline.Assemble("Add output directory path", src, rff, dsl);
             ConnectPipelineToMessaging(pl);
             pl.RunRoot(null);
             return dsl;
         }
 
         /// <summary>
-        /// Get list of MZML files for dataset folders imputed from job results folders.
-        /// Find cache file "*mzML.gz_CacheInfo.txt" in "Mz_Refinery_*" subfolder
-        /// read path and add to dataset list .
+        /// Get list of MZML files for dataset directories imputed from job results directories
+        /// Find cache file "*mzML.gz_CacheInfo.txt" in "Mz_Refinery_*" subdirectory
+        /// Read path and add to dataset list .
         /// </summary>
         /// <param name="jobList"> </param>
-        /// <param name="outputRootFolderPath"></param>
+        /// <param name="outputRootDirectoryPath"></param>
         /// <returns></returns>
-        public static SimpleSink AddMzmlFilePathsFromJobs(SimpleSink jobList, string outputRootFolderPath)
+        public static SimpleSink AddMzmlFilePathsFromJobs(SimpleSink jobList, string outputRootDirectoryPath)
         {
-            const string datasetFolderColName = "Dataset_Folder_Path";
-            var jobs = AddParentFolderToJobList(jobList, datasetFolderColName);
+            const string datasetDirectoryColName = "Dataset_Folder_Path";
+            var jobs = AddParentDirectoryToJobList(jobList, datasetDirectoryColName);
 
             var src = new SinkWrapper(jobs);
             var lst = new SimpleSink();
 
             var flf = new FileListFilter();
             SetDefaultFileSearchFilterParameters(flf, "*CacheInfo.txt", "Yes", "M*");  //  ("*mzML.gz_CacheInfo.txt", "Yes", "MZ_*")  ("*mzML_CacheInfo.txt", "Yes", "MSXML_Gen_*");
-            flf.SourceFolderColumnName = datasetFolderColName;
+            flf.SourceDirectoryColumnName = datasetDirectoryColName;
 
             var mzf = new MzmlFilePathsFilter();
-            mzf.SetDefaultProperties(outputRootFolderPath, "MZML");
-            mzf.SourceFolderPathColName = datasetFolderColName; // Must match upstream setting
+            mzf.SetDefaultProperties(outputRootDirectoryPath, "MZML");
+            mzf.SourceDirectoryPathColName = datasetDirectoryColName; // Must match upstream setting
 
             var p1 = ProcessingPipeline.Assemble("Accumulate_File_Paths", src, flf, mzf);
             ConnectPipelineToMessaging(p1);
@@ -311,30 +312,30 @@ FROM(
         }
 
         /// <summary>
-        /// Get parent dataset folder path from job results folder path
+        /// Get parent dataset directory path from job results directory path
         /// and return a new list with it added
         /// </summary>
         /// <param name="jobList">List of jobs to process</param>
-        /// <param name="datasetFolderColName"></param>
+        /// <param name="datasetDirectoryColName"></param>
         /// <returns></returns>
-        private static SimpleSink AddParentFolderToJobList(SimpleSink jobList, string datasetFolderColName)
+        private static SimpleSink AddParentDirectoryToJobList(SimpleSink jobList, string datasetDirectoryColName)
         {
 
             // Set up pipeline source to only do rows with package IDs in whitelist
             var src = new SinkWrapper(jobList);
 
-            // New filter to impute dataset folder from job results folder
-            var dsf = new AddJobDatasetFolderFilter
+            // New filter to impute dataset directory from job results directory
+            var dsf = new AddJobDatasetDirectoryFilter
             {
-                OutputColumnList = datasetFolderColName + "|+|text, *",
-                DatasetFolderColName = datasetFolderColName,
-                JobResultsFolderColName = "Folder"
+                OutputColumnList = datasetDirectoryColName + "|+|text, *",
+                DatasetDirectoryColName = datasetDirectoryColName,
+                JobResultsDirectoryColName = "Directory"
             };
 
             var lst = new SimpleSink();
-            var p1 = ProcessingPipeline.Assemble("Add_Parent_Folder", src, dsf, lst);
-            ConnectPipelineToMessaging(p1);
-            p1.RunRoot(null);
+            var addParentDirectoryPipeline = ProcessingPipeline.Assemble("Add_Parent_Directory", src, dsf, lst);
+            ConnectPipelineToMessaging(addParentDirectoryPipeline);
+            addParentDirectoryPipeline.RunRoot(null);
             return lst;
         }
 
@@ -342,9 +343,9 @@ FROM(
         /// Get list of MSGF files for jobs in job list
         /// </summary>
         /// <param name="datasetList"></param>
-        /// <param name="outputRootFolderPath"></param>
+        /// <param name="outputRootDirectoryPath"></param>
         /// <returns></returns>
-        public static SimpleSink AddMzidfFilePaths(SimpleSink datasetList, string outputRootFolderPath)
+        public static SimpleSink AddMzidFilePaths(SimpleSink datasetList, string outputRootDirectoryPath)
         {
             var src = new SinkWrapper(datasetList);
 
@@ -352,7 +353,7 @@ FROM(
             SetDefaultFileSearchFilterParameters(flf, "*mzid.gz", "No", "");
 
             var mzf = new SimpleFilePathsFilter();
-            mzf.SetDefaultProperties(outputRootFolderPath, "MZID");
+            mzf.SetDefaultProperties(outputRootDirectoryPath, "MZID");
 
             var lst = new SimpleSink();
 
@@ -366,9 +367,9 @@ FROM(
         /// Get list of first hit files for jobs in job list
         /// </summary>
         /// <param name="datasetList"></param>
-        /// <param name="outputRootFolderPath"></param>
+        /// <param name="outputRootDirectoryPath"></param>
         /// <returns></returns>
-        public static SimpleSink AddFhtFilePaths(SimpleSink datasetList, string outputRootFolderPath)
+        public static SimpleSink AddFhtFilePaths(SimpleSink datasetList, string outputRootDirectoryPath)
         {
             var src = new SinkWrapper(datasetList);
 
@@ -376,7 +377,7 @@ FROM(
             SetDefaultFileSearchFilterParameters(flf, "*fht.txt", "No", "");
 
             var fhf = new SimpleFilePathsFilter();
-            fhf.SetDefaultProperties(outputRootFolderPath, "MSGF_txt");
+            fhf.SetDefaultProperties(outputRootDirectoryPath, "MSGF_txt");
 
             var lst = new SimpleSink();
 
@@ -390,17 +391,17 @@ FROM(
         /// Add source and destination fasta file paths to given fasta file list
         /// </summary>
         /// <param name="fastaFileList"></param>
-        /// <param name="outputRootFolderPath">Folder path at root of all output subfolders</param>
+        /// <param name="outputRootDirectoryPath">Directory path at root of all output subdirectories</param>
         /// <returns></returns>
-        public static SimpleSink AddFastaFilePaths(SimpleSink fastaFileList, string outputRootFolderPath)
+        public static SimpleSink AddFastaFilePaths(SimpleSink fastaFileList, string outputRootDirectoryPath)
         {
             var dsl = new SimpleSink();
             var src = new SinkWrapper(fastaFileList);
 
             var rff = new FastaFilePathsFilter();
-            rff.SetDefaultProperties(outputRootFolderPath, "fasta");
+            rff.SetDefaultProperties(outputRootDirectoryPath, "fasta");
 
-            var pl = ProcessingPipeline.Assemble("Add output folder path", src, rff, dsl);
+            var pl = ProcessingPipeline.Assemble("Add output directory path", src, rff, dsl);
             ConnectPipelineToMessaging(pl);
             pl.RunRoot(null);
             return dsl;
@@ -413,16 +414,16 @@ FROM(
         /// <param name="flf"></param>
         /// <param name="fileNameSelector"></param>
         /// <param name="recursiveSearch"></param>
-        /// <param name="subfolderSearchName"></param>
-        private static void SetDefaultFileSearchFilterParameters(FileListFilter flf, string fileNameSelector, string recursiveSearch, string subfolderSearchName)
+        /// <param name="subdirectorySearchName"></param>
+        private static void SetDefaultFileSearchFilterParameters(FileListFilter flf, string fileNameSelector, string recursiveSearch, string subdirectorySearchName)
         {
-            flf.OutputColumnList = @"Item|+|text, File|+|text, File_Size_KB|+|text, Folder, *";
-            flf.SourceFolderColumnName = "Folder";          // The name of the input column that contains the folder path to search for files
-            flf.FileSelectorMode = "FileSearch";            // How to use the file matching patterns ("FileSearch" or "RegEx")
-            flf.IncludeFilesOrFolders = "File";             // Include files an/or folders in results ("", "Folder", "IncludeFilesOrFolders")
+            flf.OutputColumnList = @"Item|+|text, File|+|text, File_Size_KB|+|text, Directory, *";
+            flf.SourceDirectoryColumnName = "Directory";            // The name of the input column that contains the directory path to search for files
+            flf.FileSelectorMode = "FileSearch";                    // How to use the file matching patterns ("FileSearch" or "RegEx")
+            flf.IncludeFilesOrDirectories = "File";                 // Include files an/or directories in results ("File", "Directory", "IncludeFilesOrDirectories")
             flf.RecursiveSearch = recursiveSearch;
-            flf.FileNameSelector = fileNameSelector;        // Semi-colon delimited list of file matching patterns
-            flf.SubfolderSearchName = subfolderSearchName;  // Folder name pattern used to restrict recursive search
+            flf.FileNameSelector = fileNameSelector;                // Semi-colon delimited list of file matching patterns
+            flf.SubdirectorySearchName = subdirectorySearchName;    // Directory name pattern used to restrict recursive search
         }
 
         /// <summary>

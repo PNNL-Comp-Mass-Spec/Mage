@@ -522,14 +522,14 @@
             this.EntityFilePanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.EntityFilePanel1.FileSelectionMode = "RegEx";
             this.EntityFilePanel1.FileSelectors = "log";
-            this.EntityFilePanel1.IncludeFilesOrFolders = "File";
+            this.EntityFilePanel1.IncludeFilesOrDirectories = "File";
             this.EntityFilePanel1.Location = new System.Drawing.Point(4, 4);
             this.EntityFilePanel1.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.EntityFilePanel1.Name = "EntityFilePanel1";
             this.EntityFilePanel1.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
-            this.EntityFilePanel1.SearchInSubfolders = "No";
+            this.EntityFilePanel1.SearchInSubdirectories = "No";
             this.EntityFilePanel1.Size = new System.Drawing.Size(1540, 93);
-            this.EntityFilePanel1.SubfolderSearchName = "*";
+            this.EntityFilePanel1.SubdirectorySearchName = "*";
             this.EntityFilePanel1.TabIndex = 10;
             // 
             // panel5

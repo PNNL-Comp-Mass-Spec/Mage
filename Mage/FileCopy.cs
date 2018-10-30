@@ -8,13 +8,13 @@ namespace Mage
 {
 
     /// <summary>
-    /// This module copies one or more input files to an output folder
+    /// This module copies one or more input files to an output directory
     ///
     /// Its FileContentProcessor base class provides the basic functionality
     ///
     /// The OutputMode parameter tells this module whether or not to append a prefix to
     /// each output file name to avoid name collisions when input files can come from
-    /// more than one input folder
+    /// more than one input directory
     ///
     /// If IDColumnName parameter is set, it specifies a column in the standard input data
     /// whose value should be used in the prefix.  Otherwise the prefix is generated.
@@ -81,10 +81,10 @@ namespace Mage
         /// <summary>
         /// Copy given file to output
         /// </summary>
-        /// <param name="sourceFile">name of input file</param>
-        /// <param name="sourcePath">containing folder for input file</param>
-        /// <param name="destPath">containing folder for output file</param>
-        /// <param name="context">metadata associated with input file (used for column mapping)</param>
+        /// <param name="sourceFile">Name of input file</param>
+        /// <param name="sourcePath">Directory with the input file</param>
+        /// <param name="destPath">Target directory</param>
+        /// <param name="context">Metadata associated with input file (used for column mapping)</param>
         protected override void ProcessFile(string sourceFile, string sourcePath, string destPath, Dictionary<string, string> context)
         {
             try
@@ -179,8 +179,8 @@ namespace Mage
             }
             catch (DirectoryNotFoundException)
             {
-                UpdateStatus(this, new MageStatusEventArgs("FAILED->Folder Not Found: " + sourcePath, 1));
-                OnWarningMessage(new MageStatusEventArgs("Copy failed->Folder Not Found: " + sourcePath));
+                UpdateStatus(this, new MageStatusEventArgs("FAILED->Directory Not Found: " + sourcePath, 1));
+                OnWarningMessage(new MageStatusEventArgs("Copy failed->Directory Not Found: " + sourcePath));
                 System.Threading.Thread.Sleep(250);
             }
             catch (IOException e)
@@ -198,11 +198,11 @@ namespace Mage
         }
 
         /// <summary>
-        /// Copy given folder to output
+        /// Copy contents of given directory to the target
         /// </summary>
-        /// <param name="sourcePath">input folder</param>
-        /// <param name="destPath">output folder</param>
-        protected override void ProcessFolder(string sourcePath, string destPath)
+        /// <param name="sourcePath">Source directory path</param>
+        /// <param name="destPath">Target directory path</param>
+        protected override void ProcessDirectory(string sourcePath, string destPath)
         {
 
             var source = new DirectoryInfo(sourcePath);
@@ -248,10 +248,10 @@ namespace Mage
         }
 
         /// <summary>
-        /// Copy folder given by source to target
+        /// Copy source directory to target path
         /// </summary>
-        /// <param name="source">Path to folder to be copied</param>
-        /// <param name="target">Path that folder will be copied to</param>
+        /// <param name="source">Source directory</param>
+        /// <param name="target">Target directory</param>
         private void CopyAll(DirectoryInfo source, DirectoryInfo target)
         {
 
@@ -314,8 +314,8 @@ namespace Mage
             }
             catch (DirectoryNotFoundException)
             {
-                UpdateStatus(this, new MageStatusEventArgs("FAILED->Folder Not Found: " + sourcePath, 1));
-                OnWarningMessage(new MageStatusEventArgs("Copy failed->Folder Not Found: " + sourcePath));
+                UpdateStatus(this, new MageStatusEventArgs("FAILED->Directory Not Found: " + sourcePath, 1));
+                OnWarningMessage(new MageStatusEventArgs("Copy failed->Directory Not Found: " + sourcePath));
                 System.Threading.Thread.Sleep(250);
             }
             catch (IOException e)
@@ -334,11 +334,11 @@ namespace Mage
         }
 
         /// <summary>
-        /// Copy MyEMSL folder given by source to target
+        /// Copy MyEMSL directory given by source to target
         /// </summary>
-        /// <param name="sourceFolder">Path to folder to be copied</param>
-        /// <param name="target">Path that folder will be copied to</param>
-        private void CopyAllMyEMSL(DirectoryInfo sourceFolder, DirectoryInfo target)
+        /// <param name="sourceDirectory">Source directory</param>
+        /// <param name="target">Target directory</param>
+        private void CopyAllMyEMSL(FileSystemInfo sourceDirectory, DirectoryInfo target)
         {
             if (target == null)
                 throw new ArgumentNullException(nameof(target));
@@ -361,9 +361,9 @@ namespace Mage
 
             try
             {
-                var datasetName = DetermineDatasetName(sourceFolder.FullName);
+                var datasetName = DetermineDatasetName(sourceDirectory.FullName);
 
-                GetMyEMSLParentFoldersAndSubDir(sourceFolder.FullName, datasetName, out var subDir, out var parentFolders);
+                GetMyEMSLParentDirectoriesAndSubDir(sourceDirectory.FullName, datasetName, out var subDir, out var parentDirectories);
 
                 m_RecentlyFoundMyEMSLFiles = m_MyEMSLDatasetInfoCache.FindFiles("*", subDir, datasetName, true);
 
@@ -380,7 +380,7 @@ namespace Mage
                         if (target.Parent == null)
                             throw new NullReferenceException("parent directory of " + target.FullName + " is null");
 
-                        // The downloader will append the subfolder name, thus use target.Parent
+                        // The downloader will append the subdirectory name, thus use target.Parent
                         target = target.Parent;
                     }
 
@@ -409,13 +409,13 @@ namespace Mage
 
 
         /// <summary>
-        /// Open CacheInfo.txt files, read the file pointer, and copy the target file to the destination folder
+        /// Open CacheInfo.txt files, read the file pointer, and copy the target file to the destination directory
         /// </summary>
         /// <param name="cacheInfoFilePath"></param>
         /// <param name="overwriteExistingFiles"></param>
         /// <returns>
         /// True if success, false if an error, including that the remote file was not found
-        /// Also returns false if the target file already exists in the destination folder and overwriteExistingFiles is false
+        /// Also returns false if the target file already exists in the destination directory and overwriteExistingFiles is false
         /// </returns>
         private bool ProcessCacheInfoFile(string cacheInfoFilePath, bool overwriteExistingFiles)
         {

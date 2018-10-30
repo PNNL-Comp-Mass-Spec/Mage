@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Mage
@@ -19,12 +20,12 @@ namespace Mage
     /// It expects to receive path information for files via its standard tabular input
     ///
     /// Each row of standard tabular input will contain information for a single file
-    /// (parameters SourceFileColumnName and SourceFolderColumnName) define which
-    /// columns in stardard input contain the folder and name of the input file.
+    /// (parameters SourceFileColumnName and SourceDirectoryColumnName) define which
+    /// columns in standard input contain the directory and name of the input file.
     ///
-    /// The OutputFolderPath parameter tells this module where to put results files
+    /// The OutputDirectoryPath parameter tells this module where to put results files
     ///
-    /// This module outputs a record of each file processed on stardard tabular output
+    /// This module outputs a record of each file processed on standard tabular output
     /// </summary>
     public class FileContentProcessor : FileProcessingBase
     {
@@ -52,15 +53,24 @@ namespace Mage
         #region Properties
 
         /// <summary>
-        /// Path to the folder into which the
+        /// Path to the directory into which the
         /// processed input file contents will be saved as an output file
         /// (required by subclasses that create result files)
         /// </summary>
-        public string OutputFolderPath { get; set; }
+        public string OutputDirectoryPath { get; set; }
+
+        /// <summary>
+        /// Path to the directory into which the
+        /// processed input file contents will be saved as an output file
+        /// </summary>
+        [Obsolete("Use OutputDirectoryPath")]
+        public string OutputFolderPath {
+            get => OutputDirectoryPath;
+            set => OutputDirectoryPath = value; }
 
         /// <summary>
         /// If this is not blank, it will be combined with the
-        /// OutputFolderPath to generate the output file file.
+        /// OutputDirectoryPath to generate the output file file.
         /// This will override use of any naming information
         /// from data row
         /// </summary>
@@ -68,10 +78,21 @@ namespace Mage
 
         /// <summary>
         /// Name of the column in the standard tabular input
-        /// that contains the input folder path
-        /// (optional - defaults to "Folder")
+        /// that contains the input directory path
+        /// (optional - defaults to "Directory"; previously defaulted to "Folder")
         /// </summary>
-        public string SourceFolderColumnName { get; set; }
+        public string SourceDirectoryColumnName { get; set; }
+
+        /// <summary>
+        /// Name of the column in the standard tabular input
+        /// that contains the input directory path
+        /// </summary>
+        [Obsolete("Use SourceDirectoryColumnName")]
+        public string SourceFolderColumnName
+        {
+            get => SourceDirectoryColumnName;
+            set => SourceDirectoryColumnName = value;
+        }
 
         /// <summary>
         /// Name of the column in the standard tabular input
@@ -101,13 +122,13 @@ namespace Mage
         /// </summary>
         public FileContentProcessor()
         {
-            SourceFolderColumnName = "Folder";
+            SourceDirectoryColumnName = "Directory";
             FileTypeColumnName = "";
             SourceFileColumnName = "File";
             OutputFileColumnName = "File";
             OutputFileName = "";
 
-            OutputColumnList = string.Format("{0}|+|text, {1}", OutputFileColumnName, SourceFolderColumnName);
+            OutputColumnList = string.Format("{0}|+|text, {1}", OutputFileColumnName, SourceDirectoryColumnName);
             GetOutputFileName = GetDefaultOutputFileName;
         }
 
@@ -126,52 +147,54 @@ namespace Mage
             if (args.DataAvailable)
             {
                 var concatenateOutput = !string.IsNullOrEmpty(OutputFileName);
-                var sourceFolder = args.Fields[InputColumnPos[SourceFolderColumnName]];
+                var sourceDirectory = args.Fields[InputColumnPos[SourceDirectoryColumnName]];
                 var sourceFile = args.Fields[InputColumnPos[SourceFileColumnName]];
 
                 string fileType;
-                var sourceIsFolder = false;
+                var sourceIsDirectory = false;
 
                 if (string.IsNullOrWhiteSpace(FileTypeColumnName))
                 {
-                    if (sourceFolder.StartsWith(MYEMSL_PATH_FLAG))
+                    if (sourceDirectory.StartsWith(MYEMSL_PATH_FLAG))
                     {
                         fileType = "file";
                     }
-                    else if (Directory.Exists(sourceFolder))
+                    else if (Directory.Exists(sourceDirectory))
                     {
-                        if (File.Exists(Path.Combine(sourceFolder, sourceFile)))
+                        if (File.Exists(Path.Combine(sourceDirectory, sourceFile)))
                             fileType = "file";
                         else
                         {
-                            UpdateStatus(this, new MageStatusEventArgs("FAILED->Cannot process folders with this processing mode", 1));
-                            OnWarningMessage(new MageStatusEventArgs("Cannot process folders with this processing mode"));
+                            UpdateStatus(this, new MageStatusEventArgs("FAILED->Cannot process directories with this processing mode", 1));
+                            OnWarningMessage(new MageStatusEventArgs("Cannot process directories with this processing mode"));
                             System.Threading.Thread.Sleep(500);
                             return;
                         }
                     }
                     else
                     {
-                        UpdateStatus(this, new MageStatusEventArgs("FAILED->Folder Not Found: " + sourceFolder, 1));
-                        OnWarningMessage(new MageStatusEventArgs("Copy failed->Folder Not Found: " + sourceFolder));
+                        UpdateStatus(this, new MageStatusEventArgs("FAILED->Directory Not Found: " + sourceDirectory, 1));
+                        OnWarningMessage(new MageStatusEventArgs("Copy failed->Directory Not Found: " + sourceDirectory));
                         System.Threading.Thread.Sleep(250);
                         return;
                     }
                 }
                 else
+                {
                     fileType = args.Fields[InputColumnPos[FileTypeColumnName]];
+                }
 
-                if (fileType == "folder")
-                    sourceIsFolder = true;
+                if (fileType == "directory" || fileType == "folder")
+                    sourceIsDirectory = true;
 
                 string sourcePath;
 
-                if (sourceIsFolder)
-                    sourcePath = sourceFolder;
+                if (sourceIsDirectory)
+                    sourcePath = sourceDirectory;
                 else
-                    sourcePath = Path.GetFullPath(Path.Combine(sourceFolder, sourceFile));
+                    sourcePath = Path.GetFullPath(Path.Combine(sourceDirectory, sourceFile));
 
-                var destFolder = OutputFolderPath;
+                var destDirectory = OutputDirectoryPath;
                 string destFile;
 
                 if (sourceFile == kNoFilesFound)
@@ -180,13 +203,13 @@ namespace Mage
                 }
                 else
                 {
-                    if (concatenateOutput && !sourceIsFolder)
+                    if (concatenateOutput && !sourceIsDirectory)
                         destFile = OutputFileName;
                     else
                         destFile = GetOutputFileName(sourceFile, InputColumnPos, args.Fields);
                 }
 
-                var destPath = Path.GetFullPath(Path.Combine(destFolder, destFile));
+                var destPath = Path.GetFullPath(Path.Combine(destDirectory, destFile));
 
                 // Package fields as dictionary
                 var context = new Dictionary<string, string>();
@@ -200,8 +223,7 @@ namespace Mage
                 {
                     // Skip
                 }
-                else
-                    if (string.IsNullOrEmpty(FileTypeColumnName) && fileType != "folder")
+                else if (string.IsNullOrEmpty(FileTypeColumnName) && fileType != "directory" && fileType != "folder")
                 {
                     ProcessFile(sourceFile, sourcePath, destPath, context);
                 }
@@ -211,21 +233,21 @@ namespace Mage
                     {
                         ProcessFile(sourceFile, sourcePath, destPath, context);
                     }
-                    if (fileType == "folder")
+                    if (fileType == "directory" || fileType == "folder")
                     {
-                        ProcessFolder(sourcePath, destPath);
+                        ProcessDirectory(sourcePath, destPath);
                     }
                 }
 
                 var outRow = MapDataRow(args.Fields);
 
-                var fileNameOutColIndx = OutputColumnPos[OutputFileColumnName];
-                outRow[fileNameOutColIndx] = (concatenateOutput) ? sourceFile : destFile;
+                var fileNameOutColIndex = OutputColumnPos[OutputFileColumnName];
+                outRow[fileNameOutColIndex] = (concatenateOutput) ? sourceFile : destFile;
 
-                // Strip off the MyEMSLID from the filename
-                var myEMSLFileID = MyEMSLReader.DatasetInfoBase.ExtractMyEMSLFileID(outRow[fileNameOutColIndx], out var newFilePath);
+                // Strip off the MyEMSL FileID from the filename
+                var myEMSLFileID = MyEMSLReader.DatasetInfoBase.ExtractMyEMSLFileID(outRow[fileNameOutColIndex], out var newFilePath);
                 if (myEMSLFileID > 0)
-                    outRow[fileNameOutColIndx] = newFilePath;
+                    outRow[fileNameOutColIndex] = newFilePath;
 
                 OnDataRowAvailable(new MageDataEventArgs(outRow));
             }
@@ -271,7 +293,7 @@ namespace Mage
         /// </summary>
         /// <param name="sourcePath"></param>
         /// <param name="destPath"></param>
-        protected virtual void ProcessFolder(string sourcePath, string destPath)
+        protected virtual void ProcessDirectory(string sourcePath, string destPath)
         {
         }
 

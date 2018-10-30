@@ -267,7 +267,7 @@ namespace MageDisplayLib
         }
         private void HandleListCopyColumn(object sender, EventArgs e)
         {
-            CopyColumnList("Folder", null);
+            CopyColumnList("Directory", null);
         }
 
         /// <summary>

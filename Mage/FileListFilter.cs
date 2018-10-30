@@ -9,9 +9,9 @@ namespace Mage
 {
 
     /// <summary>
-    /// This module searches a list of folder paths for files and compares the file names
+    /// This module searches a list of directory paths for files and compares the file names
     /// against a set of file selection criteria and accumulates an internal list of files that pass,
-    /// and outputs the selected files (and their folder path) via standard tabular output
+    /// and outputs the selected files (and their directory path) via standard tabular output
     /// </summary>
     public class FileListFilter : FileListInfoBase
     {
@@ -26,22 +26,22 @@ namespace Mage
         /// </summary>
         public const string FILE_SELECTOR_REGEX = "RegEx";
 
-        private enum FolderSearchMode
+        private enum DirectorySearchMode
         {
             Files,
-            Folders
+            Directories
         };
 
         #region Member Variables
 
         private bool mIncludeFiles;
-        private bool mIncludeFolders;
+        private bool mIncludeDirectories;
         private bool mRecurseMyEMSL;
 
         /// <summary>
-        /// List of subfolders to search when RecursiveSearch is enabled ("Search in subfolders")
+        /// List of subdirectories to search when RecursiveSearch is enabled ("Search in subdirectories")
         /// </summary>
-        private readonly List<string[]> mSearchSubfolders = new List<string[]>();
+        private readonly List<string[]> mSearchSubdirectories = new List<string[]>();
 
         #endregion
 
@@ -52,9 +52,9 @@ namespace Mage
         #region Properties
 
         /// <summary>
-        /// List of folder paths to which the user did not have access
+        /// List of directory paths to which the user did not have access
         /// </summary>
-        public SortedSet<string> AccessDeniedSubfolders { get; } = new SortedSet<string>();
+        public SortedSet<string> AccessDeniedSubdirectories { get; } = new SortedSet<string>();
 
         /// <summary>
         /// Semi-colon delimited list of file matching patterns
@@ -67,32 +67,52 @@ namespace Mage
         public string FileSelectorMode { get; set; }
 
         /// <summary>
-        /// Include files an/or folders in results
-        /// ("File", "Folder", "IncludeFilesOrFolders")
+        /// Include files and/or directories in results
+        /// Allowed values: "File", "Directory", "IncludeFilesOrDirectories" (previously "Folder" and "IncludeFilesOrFolders")
         /// </summary>
-        public string IncludeFilesOrFolders { get; set; }
+        public string IncludeFilesOrDirectories { get; set; }
+
+        /// <summary>
+        /// Include files and/or directories in results
+        /// </summary>
+        [Obsolete("Use IncludeFilesOrDirectories")]
+        public string IncludeFilesOrFolders
+        {
+            get => IncludeFilesOrDirectories;
+            set => IncludeFilesOrDirectories = value;
+        }
 
         /// <summary>
         /// Setting this property sets the file path to the internal file path buffer
         /// (necessary if Run will be called instead of processing via standard tabular input)
         /// </summary>
-        public string FolderPath
+        public string DirectoryPath
         {
             get => (mOutputBuffer.Count > 0) ? mOutputBuffer[0][2] : "";
             set
             {
                 mOutputBuffer.Clear();
-                AddFolderPath(value);
+                AddDirectoryPath(value);
             }
         }
 
         /// <summary>
-        /// Add a path to a folder to be searched
+        /// Setting this property sets the file path to the internal file path buffer
+        /// </summary>
+        [Obsolete("Use DirectoryPath")]
+        public string FolderPath
+        {
+            get => DirectoryPath;
+            set => DirectoryPath = value;
+        }
+
+        /// <summary>
+        /// Add a path to a directory to be searched
         /// (used when this module's "Run" method is to be called
         /// such as when it is installed as the root module in a pipeline)
         /// </summary>
         /// <param name="path"></param>
-        public void AddFolderPath(string path)
+        public void AddDirectoryPath(string path)
         {
             var bufferUpdated = false;
             if (!string.IsNullOrEmpty(OutputColumnList))
@@ -109,7 +129,7 @@ namespace Mage
                         var colSpecFields = outputColumnDefs[colIndex].Trim().Split('|');
                         var outputColName = colSpecFields[0].Trim();
 
-                        if (outputColName == SourceFolderColumnName)
+                        if (outputColName == SourceDirectoryColumnName)
                             columnHeaders[colIndex] = path;
                         else
                             columnHeaders[colIndex] = "";
@@ -127,15 +147,33 @@ namespace Mage
         }
 
         /// <summary>
+        /// Add a path to a directory to be searched
+        /// </summary>
+        [Obsolete("Use AddDirectoryPath")]
+        public void AddFolderPath(string path)
+        {
+            AddDirectoryPath(path);
+        }
+
+        /// <summary>
         /// Do recursive file search
         /// </summary>
         public string RecursiveSearch { get; set; }
 
         /// <summary>
-        /// Folder name pattern used to restrict recursive search
+        /// Directory name pattern used to restrict recursive search
         /// </summary>
-        public string SubfolderSearchName { get; set; }
+        public string SubdirectorySearchName { get; set; }
 
+        /// <summary>
+        /// Directory name pattern used to restrict recursive search
+        /// </summary>
+        [Obsolete("Use SubdirectorySearchName")]
+        public string SubfolderSearchName
+        {
+            get => SubdirectorySearchName;
+            set => SubdirectorySearchName = value;
+        }
 
         #endregion
 
@@ -147,7 +185,7 @@ namespace Mage
         public FileListFilter()
         {
             FileSelectorMode = "FileSearch";
-            IncludeFilesOrFolders = "File";
+            IncludeFilesOrDirectories = "File";
             RecursiveSearch = "No";
         }
 
@@ -160,8 +198,14 @@ namespace Mage
         /// </summary>
         protected override void SetupSearch()
         {
-            mIncludeFiles = IncludeFilesOrFolders.Contains("File");
-            mIncludeFolders = IncludeFilesOrFolders.Contains("Folder");
+            mIncludeFiles = IncludeFilesOrDirectories.Contains("File");
+
+            if (IncludeFilesOrDirectories.Contains("Subdirectory") || IncludeFilesOrDirectories.Contains("Subdirectories"))
+                mIncludeDirectories = true;
+            else if (IncludeFilesOrDirectories.Contains("Folder"))
+                mIncludeDirectories = true;
+            else
+                mIncludeDirectories = false;
 
             var filterSpec = string.Empty;
             var selectors = GetFileNameSelectors();
@@ -171,22 +215,22 @@ namespace Mage
                 filterSpec = selectors.First();
             }
 
-            // Update folder paths if the File Name Selector starts with ..\
+            // Update directory paths if the File Name Selector starts with ..\
             foreach (var searchResult in mOutputBuffer)
             {
-                var path = searchResult[mFolderPathColIndex];
+                var path = searchResult[mDirectoryPathColIndex];
                 if (path.StartsWith(MYEMSL_PATH_FLAG))
                 {
                     // MyEMSL does not support relative file name filters
                     continue;
                 }
 
-                var folderPathToSearch = HandleRelativePathFilter(path, filterSpec);
+                var directoryPathToSearch = HandleRelativePathFilter(path, filterSpec);
 
-                if (!string.Equals(folderPathToSearch, searchResult[mFolderPathColIndex]))
+                if (!string.Equals(directoryPathToSearch, searchResult[mDirectoryPathColIndex]))
                 {
                     // Update the stored path
-                    searchResult[mFolderPathColIndex] = folderPathToSearch;
+                    searchResult[mDirectoryPathColIndex] = directoryPathToSearch;
                 }
             }
 
@@ -197,43 +241,43 @@ namespace Mage
                 return;
             }
 
-            // Recursive search: add subfolders
+            // Recursive search: add subdirectories
             mRecurseMyEMSL = true;
-            if (string.IsNullOrEmpty(SubfolderSearchName))
+            if (string.IsNullOrEmpty(SubdirectorySearchName))
             {
-                SubfolderSearchName = "*";
+                SubdirectorySearchName = "*";
             }
 
             foreach (var searchResult in mOutputBuffer)
             {
-                var path = searchResult[mFolderPathColIndex];
+                var path = searchResult[mDirectoryPathColIndex];
                 if (path.StartsWith(MYEMSL_PATH_FLAG))
                 {
                     // Recursive searching is handled differently for MyEMSL
                     continue;
                 }
 
-                AddSearchSubfolders(searchResult);
+                AddSearchSubdirectories(searchResult);
             }
-            mOutputBuffer.AddRange(mSearchSubfolders);
+            mOutputBuffer.AddRange(mSearchSubdirectories);
         }
 
         /// <summary>
-        /// Search for files in the given folder
+        /// Search for files in the given directory
         /// </summary>
         /// <param name="outputBufferRowIdx">Row index in mOutputBuffer to examine</param>
         /// <param name="fileInfo">Dictionary of found files (input/output parameter)</param>
-        /// <param name="subfolderInfo">Dictionary of found folders (input/output parameter)</param>
-        /// <param name="folderPath">Folder path to examine</param>
+        /// <param name="subdirectoryInfo">Dictionary of found directories (input/output parameter)</param>
+        /// <param name="directoryPath">Directory path to examine</param>
         /// <param name="datasetName">Dataset name</param>
-        protected override void SearchOneFolder(
+        protected override void SearchOneDirectory(
             int outputBufferRowIdx,
             Dictionary<string, FileInfo> fileInfo,
-            Dictionary<string, DirectoryInfo> subfolderInfo,
-            string folderPath,
+            Dictionary<string, DirectoryInfo> subdirectoryInfo,
+            string directoryPath,
             string datasetName)
         {
-            SearchFolders(outputBufferRowIdx, fileInfo, subfolderInfo, folderPath, datasetName);
+            SearchDirectories(outputBufferRowIdx, fileInfo, subdirectoryInfo, directoryPath, datasetName);
         }
 
         #endregion
@@ -241,16 +285,16 @@ namespace Mage
         #region Private Functions
 
 
-        private void SearchFolders(
+        private void SearchDirectories(
             int outputBufferRowIdx,
             IDictionary<string, FileInfo> fileInfo,
-            IDictionary<string, DirectoryInfo> subfolderInfo,
-            string folderPath,
+            IDictionary<string, DirectoryInfo> subdirectoryInfo,
+            string directoryPath,
             string datasetName)
         {
 
             var foundFiles = new List<FileSystemInfo>();
-            var foundSubFolders = new List<FileSystemInfo>();
+            var foundSubdirectories = new List<FileSystemInfo>();
 
             try
             {
@@ -258,34 +302,34 @@ namespace Mage
                 {
                     if (mIncludeFiles)
                     {
-                        if (folderPath.StartsWith(MYEMSL_PATH_FLAG))
-                            foundFiles = GetFileOrFolderNamesFromFolderByRegExMyEMSL(folderPath, FolderSearchMode.Files, datasetName);
+                        if (directoryPath.StartsWith(MYEMSL_PATH_FLAG))
+                            foundFiles = GetFileOrDirNamesFromDirectoryByRegExMyEMSL(directoryPath, DirectorySearchMode.Files, datasetName);
                         else
-                            foundFiles = GetFileOrFolderNamesFromFolderByRegEx(folderPath, FolderSearchMode.Files);
+                            foundFiles = GetFileOrDirNamesFromDirectoryByRegEx(directoryPath, DirectorySearchMode.Files);
                     }
-                    if (mIncludeFolders)
+                    if (mIncludeDirectories)
                     {
-                        if (folderPath.StartsWith(MYEMSL_PATH_FLAG))
-                            foundSubFolders = GetFileOrFolderNamesFromFolderByRegExMyEMSL(folderPath, FolderSearchMode.Folders, datasetName);
+                        if (directoryPath.StartsWith(MYEMSL_PATH_FLAG))
+                            foundSubdirectories = GetFileOrDirNamesFromDirectoryByRegExMyEMSL(directoryPath, DirectorySearchMode.Directories, datasetName);
                         else
-                            foundSubFolders = GetFileOrFolderNamesFromFolderByRegEx(folderPath, FolderSearchMode.Folders);
+                            foundSubdirectories = GetFileOrDirNamesFromDirectoryByRegEx(directoryPath, DirectorySearchMode.Directories);
                     }
                 }
                 else
                 {
                     if (mIncludeFiles)
                     {
-                        if (folderPath.StartsWith(MYEMSL_PATH_FLAG))
-                            foundFiles = GetFileOrFolderNamesFromFolderBySearchPatternMyEMSL(folderPath, FolderSearchMode.Files, datasetName);
+                        if (directoryPath.StartsWith(MYEMSL_PATH_FLAG))
+                            foundFiles = GetFileOrDirNamesFromDirectoryBySearchPatternMyEMSL(directoryPath, DirectorySearchMode.Files, datasetName);
                         else
-                            foundFiles = GetFileOrFolderNamesFromFolderBySearchPattern(folderPath, FolderSearchMode.Files);
+                            foundFiles = GetFileOrDirNamesFromDirectoryBySearchPattern(directoryPath, DirectorySearchMode.Files);
                     }
-                    if (mIncludeFolders)
+                    if (mIncludeDirectories)
                     {
-                        if (folderPath.StartsWith(MYEMSL_PATH_FLAG))
-                            foundSubFolders = GetFileOrFolderNamesFromFolderBySearchPatternMyEMSL(folderPath, FolderSearchMode.Folders, datasetName);
+                        if (directoryPath.StartsWith(MYEMSL_PATH_FLAG))
+                            foundSubdirectories = GetFileOrDirNamesFromDirectoryBySearchPatternMyEMSL(directoryPath, DirectorySearchMode.Directories, datasetName);
                         else
-                            foundSubFolders = GetFileOrFolderNamesFromFolderBySearchPattern(folderPath, FolderSearchMode.Folders);
+                            foundSubdirectories = GetFileOrDirNamesFromDirectoryBySearchPattern(directoryPath, DirectorySearchMode.Directories);
                     }
                 }
 
@@ -299,13 +343,13 @@ namespace Mage
                     }
                 }
 
-                // Append new subFolders in fileNames to subfolderInfo
-                if (!(foundSubFolders == null || foundSubFolders.Count == 0))
+                // Append new subdirectories in fileNames to subdirectoryInfo
+                if (!(foundSubdirectories == null || foundSubdirectories.Count == 0))
                 {
-                    foreach (var entry in foundSubFolders)
+                    foreach (var entry in foundSubdirectories)
                     {
-                        if (entry is DirectoryInfo subfolderEntry && !subfolderInfo.ContainsKey(subfolderEntry.Name))
-                            subfolderInfo.Add(subfolderEntry.Name, subfolderEntry);
+                        if (entry is DirectoryInfo subdirectoryEntry && !subdirectoryInfo.ContainsKey(subdirectoryEntry.Name))
+                            subdirectoryInfo.Add(subdirectoryEntry.Name, subdirectoryEntry);
                     }
                 }
 
@@ -321,10 +365,10 @@ namespace Mage
 
                     if (pathMatch.Success)
                     {
-                        var currentFolder = pathMatch.Groups[1].Value;
-                        if (!AccessDeniedSubfolders.Contains(currentFolder))
+                        var currentDirectory = pathMatch.Groups[1].Value;
+                        if (!AccessDeniedSubdirectories.Contains(currentDirectory))
                         {
-                            AccessDeniedSubfolders.Add(currentFolder);
+                            AccessDeniedSubdirectories.Add(currentDirectory);
                             OnWarningMessage(new MageStatusEventArgs(e.Message));
                         }
                     }
@@ -348,51 +392,50 @@ namespace Mage
         /// <summary>
         /// Add subdirectories to search list (used in recursive search mode)
         /// </summary>
-        /// <param name="searchResult">Search result row. Column at index mFolderPathColIndex will have a folder path </param>
-        private void AddSearchSubfolders(string[] searchResult)
+        /// <param name="searchResult">Search result row. Column at index mDirectoryPathColIndex will have a directory path </param>
+        private void AddSearchSubdirectories(string[] searchResult)
         {
-            var path = searchResult[mFolderPathColIndex];
+            var path = searchResult[mDirectoryPathColIndex];
             if (path.StartsWith(MYEMSL_PATH_FLAG))
                 return;
 
-            var currentFolder = string.Copy(path);
+            var currentDirectoryPath = string.Copy(path);
 
             try
             {
-                var di = new DirectoryInfo(path);
-                if (!di.Exists)
+                var currentDirectory = new DirectoryInfo(path);
+                if (!currentDirectory.Exists)
                 {
                     return;
                 }
 
-                if (!string.Equals(SubfolderSearchName, "*"))
+                if (!string.Equals(SubdirectorySearchName, "*"))
                 {
-                    // Update currentFolder so it can be used in the Catch block if the user encounters access denied
-                    currentFolder = Path.Combine(path, SubfolderSearchName);
+                    // Update currentDirectory so it can be used in the Catch block if the user encounters access denied
+                    currentDirectoryPath = Path.Combine(path, SubdirectorySearchName);
                 }
 
-                foreach (var sfDi in di.GetDirectories(SubfolderSearchName))
+                foreach (var subdirectory in currentDirectory.GetDirectories(SubdirectorySearchName))
                 {
-                    currentFolder = string.Copy(sfDi.FullName);
+                    currentDirectoryPath = string.Copy(subdirectory.FullName);
 
-                    var subfolderRow = (string[])searchResult.Clone();
-                    var subfolderPath = Path.Combine(path, sfDi.Name);
-                    subfolderRow[mFolderPathColIndex] = subfolderPath;
-                    mSearchSubfolders.Add(subfolderRow);
-                    AddSearchSubfolders(subfolderRow);
+                    var subdirectoryRow = (string[])searchResult.Clone();
+                    var subdirectoryPath = Path.Combine(path, subdirectory.Name);
+                    subdirectoryRow[mDirectoryPathColIndex] = subdirectoryPath;
+                    mSearchSubdirectories.Add(subdirectoryRow);
+                    AddSearchSubdirectories(subdirectoryRow);
                 }
             }
             catch (UnauthorizedAccessException)
             {
-                if (!AccessDeniedSubfolders.Contains(currentFolder))
+                if (!AccessDeniedSubdirectories.Contains(currentDirectoryPath))
                 {
-                    AccessDeniedSubfolders.Add(currentFolder);
-                    OnWarningMessage(new MageStatusEventArgs(@"Access to the path '" + currentFolder + "' is denied."));
+                    AccessDeniedSubdirectories.Add(currentDirectoryPath);
+                    OnWarningMessage(new MageStatusEventArgs(@"Access to the path '" + currentDirectoryPath + "' is denied."));
                 }
             }
 
         }
-
 
         /// <summary>
         /// Get list of files from given directory using file selector list
@@ -401,9 +444,9 @@ namespace Mage
         /// <param name="path"></param>
         /// <param name="searchMode"></param>
         /// <returns>List of file names</returns>
-        private List<FileSystemInfo> GetFileOrFolderNamesFromFolderBySearchPattern(string path, FolderSearchMode searchMode)
+        private List<FileSystemInfo> GetFileOrDirNamesFromDirectoryBySearchPattern(string path, DirectorySearchMode searchMode)
         {
-            var filteredFilesOrFolders = new Dictionary<string, FileSystemInfo>();
+            var filteredFilesOrDirectories = new Dictionary<string, FileSystemInfo>();
 
             var selectors = GetFileNameSelectors();
 
@@ -411,7 +454,7 @@ namespace Mage
 
             if (selectors.Count == 0)
             {
-                // Get all files/subfolders in folder
+                // Get all files/subdirectories in directory
                 selectors.Add("*");
             }
 
@@ -432,19 +475,19 @@ namespace Mage
                     updatedSelector = ScrubRelativePathText(selector);
                 }
 
-                if (searchMode == FolderSearchMode.Files)
+                if (searchMode == DirectorySearchMode.Files)
                 {
                     foreach (var entry in di.GetFiles(updatedSelector))
                     {
-                        filteredFilesOrFolders[entry.Name] = entry;
+                        filteredFilesOrDirectories[entry.Name] = entry;
                     }
                 }
 
-                if (searchMode == FolderSearchMode.Folders)
+                if (searchMode == DirectorySearchMode.Directories)
                 {
                     foreach (var entry in di.GetDirectories(updatedSelector))
                     {
-                        filteredFilesOrFolders[entry.Name] = entry;
+                        filteredFilesOrDirectories[entry.Name] = entry;
                     }
                 }
 
@@ -452,38 +495,38 @@ namespace Mage
 
             // We used the dictionary keys for our file names to eliminate duplicates
             // Convert the values to a list of file system infos and return the list
-            return filteredFilesOrFolders.Values.ToList();
+            return filteredFilesOrDirectories.Values.ToList();
 
         }
 
-        private List<FileSystemInfo> GetFileOrFolderNamesFromFolderBySearchPatternMyEMSL(string folderPath, FolderSearchMode searchMode, string datasetName)
+        private List<FileSystemInfo> GetFileOrDirNamesFromDirectoryBySearchPatternMyEMSL(string directoryPath, DirectorySearchMode searchMode, string datasetName)
         {
-            GetMyEMSLParentFoldersAndSubDir(folderPath, datasetName, out var subDir, out var parentFolders);
+            GetMyEMSLParentDirectoriesAndSubDir(directoryPath, datasetName, out var subDir, out var parentDirectories);
 
-            var filteredFilesOrFolders = new Dictionary<string, FileSystemInfo>();
+            var filteredFilesOrDirectories = new Dictionary<string, FileSystemInfo>();
 
             var selectors = GetFileNameSelectors();
 
             if (selectors.Count == 0)
             {
-                // Get all files/subfolders in folder
+                // Get all files/subdirectories in directory
                 selectors.Add("*");
             }
 
             // Get list of files for each selector
             foreach (var selector in selectors)
             {
-                var fiList = GetMyEMSLFilesOrFolders(searchMode, selector, datasetName, subDir, parentFolders);
+                var fiList = GetMyEMSLFilesOrDirectories(searchMode, selector, datasetName, subDir, parentDirectories);
 
                 foreach (var entry in fiList)
                 {
-                    filteredFilesOrFolders[entry.Name] = entry;
+                    filteredFilesOrDirectories[entry.Name] = entry;
                 }
             }
 
             // We used the dictionary keys for our file names to eliminate duplicates
             // Convert the values to a list of file system infos and return the list
-            return filteredFilesOrFolders.Values.ToList();
+            return filteredFilesOrDirectories.Values.ToList();
 
         }
 
@@ -491,20 +534,20 @@ namespace Mage
         /// Get list of files from given directory using file selector list
         /// as RegEx patterns
         /// </summary>
-        /// <param name="path">Folder path to get file from</param>
+        /// <param name="path">Directory path to get file from</param>
         /// <param name="searchMode"></param>
         /// <returns>List of file names</returns>
-        private List<FileSystemInfo> GetFileOrFolderNamesFromFolderByRegEx(string path, FolderSearchMode searchMode)
+        private List<FileSystemInfo> GetFileOrDirNamesFromDirectoryByRegEx(string path, DirectorySearchMode searchMode)
         {
             var di = new DirectoryInfo(path);
 
             var fiList = new List<FileSystemInfo>();
-            if (searchMode == FolderSearchMode.Files)
+            if (searchMode == DirectorySearchMode.Files)
             {
                 fiList.AddRange(di.GetFiles().ToList());
             }
 
-            if (searchMode == FolderSearchMode.Folders)
+            if (searchMode == DirectorySearchMode.Directories)
             {
                 fiList.AddRange(di.GetDirectories().ToList());
             }
@@ -514,51 +557,51 @@ namespace Mage
             return FilterFileNamesFromList(fiList, fileNameRegExSpecs);
         }
 
-        private List<FileSystemInfo> GetFileOrFolderNamesFromFolderByRegExMyEMSL(string folderPath, FolderSearchMode searchMode, string datasetName)
+        private List<FileSystemInfo> GetFileOrDirNamesFromDirectoryByRegExMyEMSL(string directoryPath, DirectorySearchMode searchMode, string datasetName)
         {
-            GetMyEMSLParentFoldersAndSubDir(folderPath, datasetName, out var subDir, out var parentFolders);
+            GetMyEMSLParentDirectoriesAndSubDir(directoryPath, datasetName, out var subDir, out var parentDirectories);
 
             const string fileSelector = "*";
-            var fiList = GetMyEMSLFilesOrFolders(searchMode, fileSelector, datasetName, subDir, parentFolders);
+            var fiList = GetMyEMSLFilesOrDirectories(searchMode, fileSelector, datasetName, subDir, parentDirectories);
 
             var fileNameRegExSpecs = GetRegexFileSelectors(GetFileNameSelectors());
 
             return FilterFileNamesFromList(fiList, fileNameRegExSpecs);
         }
 
-        private List<FileSystemInfo> GetMyEMSLFilesOrFolders(
-            FolderSearchMode searchMode,
+        private List<FileSystemInfo> GetMyEMSLFilesOrDirectories(
+            DirectorySearchMode searchMode,
             string fileSelector,
             string datasetName,
             string subDir,
-            string parentFolders)
+            string parentDirectories)
         {
 
             var fiList = new List<FileSystemInfo>();
-            if (searchMode == FolderSearchMode.Files)
+            if (searchMode == DirectorySearchMode.Files)
             {
                 m_RecentlyFoundMyEMSLFiles = m_MyEMSLDatasetInfoCache.FindFiles(fileSelector, subDir, datasetName, mRecurseMyEMSL);
                 foreach (var archiveFile in m_RecentlyFoundMyEMSLFiles)
                 {
-                    var encodedFilePath = DatasetInfoBase.AppendMyEMSLFileID(Path.Combine(parentFolders, archiveFile.FileInfo.RelativePathWindows), archiveFile.FileID);
+                    var encodedFilePath = DatasetInfoBase.AppendMyEMSLFileID(Path.Combine(parentDirectories, archiveFile.FileInfo.RelativePathWindows), archiveFile.FileID);
                     fiList.Add(new FileInfo(encodedFilePath));
                 }
             }
 
-            if (searchMode == FolderSearchMode.Folders)
+            if (searchMode == DirectorySearchMode.Directories)
             {
                 m_RecentlyFoundMyEMSLFiles = m_MyEMSLDatasetInfoCache.FindDirectories(fileSelector, datasetName);
 
-                foreach (var archiveFolder in m_RecentlyFoundMyEMSLFiles)
+                foreach (var archiveDirectory in m_RecentlyFoundMyEMSLFiles)
                 {
-                    fiList.Add(new DirectoryInfo(Path.Combine(parentFolders, archiveFolder.FileInfo.RelativePathWindows)));
+                    fiList.Add(new DirectoryInfo(Path.Combine(parentDirectories, archiveDirectory.FileInfo.RelativePathWindows)));
                 }
             }
             return fiList;
         }
 
         /// <summary>
-        /// Search files in folder and return list of files
+        /// Search files in directory and return list of files
         /// whose names satisfy the selection criteria
         /// </summary>
         /// <param name="fileList"></param>
@@ -567,14 +610,14 @@ namespace Mage
         private static List<FileSystemInfo> FilterFileNamesFromList(IReadOnlyCollection<FileSystemInfo> fileList, IReadOnlyCollection<Regex> fileNameRegExSpecs)
         {
 
-            var filteredFilesOrFolders = new List<FileSystemInfo>(fileList.Count);
+            var filteredFilesOrDirectories = new List<FileSystemInfo>(fileList.Count);
 
-            // Find files (or folders) that meet selection criteria.
+            // Find files (or directories) that meet selection criteria.
             foreach (var fiEntry in fileList)
             {
                 if (fileNameRegExSpecs.Count == 0)
                 {
-                    filteredFilesOrFolders.Add(fiEntry);
+                    filteredFilesOrDirectories.Add(fiEntry);
                 }
                 else
                 {
@@ -583,13 +626,13 @@ namespace Mage
                         var m = rx.Match(fiEntry.Name);
                         if (m.Success)
                         {
-                            filteredFilesOrFolders.Add(fiEntry);
+                            filteredFilesOrDirectories.Add(fiEntry);
                             break;
                         }
                     }
                 }
             }
-            return filteredFilesOrFolders;
+            return filteredFilesOrDirectories;
         }
 
         /// <summary>
@@ -630,19 +673,19 @@ namespace Mage
         }
 
         /// <summary>
-        /// Return the folder to search, depending on whether filterSpec starts with ..\
+        /// Return the directory to search, depending on whether filterSpec starts with ..\
         /// </summary>
-        /// <param name="folderToSearch">Folder path from the search results</param>
+        /// <param name="directoryToSearch">Directory path from the search results</param>
         /// <param name="filterSpec">FileSelector</param>
-        /// <returns>Folder path to search</returns>
-        private string HandleRelativePathFilter(string folderToSearch, string filterSpec)
+        /// <returns>Directory path to search</returns>
+        private string HandleRelativePathFilter(string directoryToSearch, string filterSpec)
         {
             if (string.IsNullOrWhiteSpace(filterSpec) || !filterSpec.StartsWith(@"..\"))
             {
-                return folderToSearch;
+                return directoryToSearch;
             }
 
-            var di = new DirectoryInfo(folderToSearch);
+            var di = new DirectoryInfo(directoryToSearch);
 
             while (filterSpec.StartsWith(@"..\"))
             {
@@ -658,7 +701,7 @@ namespace Mage
 
         /// <summary>
         /// Remove any relative path specs in front of the selector
-        /// Those should have been used already when determining which folders to search
+        /// Those should have been used already when determining which directories to search
         /// </summary>
         /// <param name="selector"></param>
         /// <returns></returns>

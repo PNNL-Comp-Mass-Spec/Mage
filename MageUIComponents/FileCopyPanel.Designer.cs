@@ -38,9 +38,9 @@
             this.usePrefixCtl = new System.Windows.Forms.CheckBox();
             this.CopyAllCtl = new System.Windows.Forms.Button();
             this.CopySelectedCtl = new System.Windows.Forms.Button();
-            this.SelectFolderCtl = new System.Windows.Forms.Button();
+            this.SelectDirectoryCtl = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.OutputFolderCtl = new System.Windows.Forms.TextBox();
+            this.OutputDirectoryCtl = new System.Windows.Forms.TextBox();
             this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,9 +56,9 @@
             this.panel3.Controls.Add(this.usePrefixCtl);
             this.panel3.Controls.Add(this.CopyAllCtl);
             this.panel3.Controls.Add(this.CopySelectedCtl);
-            this.panel3.Controls.Add(this.SelectFolderCtl);
+            this.panel3.Controls.Add(this.SelectDirectoryCtl);
             this.panel3.Controls.Add(this.label1);
-            this.panel3.Controls.Add(this.OutputFolderCtl);
+            this.panel3.Controls.Add(this.OutputDirectoryCtl);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(7, 6);
             this.panel3.Margin = new System.Windows.Forms.Padding(4);
@@ -162,17 +162,17 @@
             this.CopySelectedCtl.UseVisualStyleBackColor = true;
             this.CopySelectedCtl.Click += new System.EventHandler(this.CopySelectedCtl_Click);
             // 
-            // SelectFolderCtl
+            // SelectDirectoryCtl
             // 
-            this.SelectFolderCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.SelectFolderCtl.Location = new System.Drawing.Point(729, 7);
-            this.SelectFolderCtl.Margin = new System.Windows.Forms.Padding(4);
-            this.SelectFolderCtl.Name = "SelectFolderCtl";
-            this.SelectFolderCtl.Size = new System.Drawing.Size(40, 28);
-            this.SelectFolderCtl.TabIndex = 6;
-            this.SelectFolderCtl.Text = "...";
-            this.SelectFolderCtl.UseVisualStyleBackColor = true;
-            this.SelectFolderCtl.Click += new System.EventHandler(this.SelectFolderCtl_Click);
+            this.SelectDirectoryCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.SelectDirectoryCtl.Location = new System.Drawing.Point(729, 7);
+            this.SelectDirectoryCtl.Margin = new System.Windows.Forms.Padding(4);
+            this.SelectDirectoryCtl.Name = "SelectDirectoryCtl";
+            this.SelectDirectoryCtl.Size = new System.Drawing.Size(40, 28);
+            this.SelectDirectoryCtl.TabIndex = 6;
+            this.SelectDirectoryCtl.Text = "...";
+            this.SelectDirectoryCtl.UseVisualStyleBackColor = true;
+            this.SelectDirectoryCtl.Click += new System.EventHandler(this.SelectDirectoryCtl_Click);
             // 
             // label1
             // 
@@ -180,20 +180,20 @@
             this.label1.Location = new System.Drawing.Point(4, 14);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(123, 17);
+            this.label1.Size = new System.Drawing.Size(140, 17);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Destination Folder";
+            this.label1.Text = "Destination Directory";
             // 
-            // OutputFolderCtl
+            // OutputDirectoryCtl
             // 
-            this.OutputFolderCtl.AcceptsReturn = true;
-            this.OutputFolderCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.OutputDirectoryCtl.AcceptsReturn = true;
+            this.OutputDirectoryCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.OutputFolderCtl.Location = new System.Drawing.Point(133, 10);
-            this.OutputFolderCtl.Margin = new System.Windows.Forms.Padding(4);
-            this.OutputFolderCtl.Name = "OutputFolderCtl";
-            this.OutputFolderCtl.Size = new System.Drawing.Size(587, 22);
-            this.OutputFolderCtl.TabIndex = 1;
+            this.OutputDirectoryCtl.Location = new System.Drawing.Point(148, 10);
+            this.OutputDirectoryCtl.Margin = new System.Windows.Forms.Padding(4);
+            this.OutputDirectoryCtl.Name = "OutputDirectoryCtl";
+            this.OutputDirectoryCtl.Size = new System.Drawing.Size(572, 22);
+            this.OutputDirectoryCtl.TabIndex = 1;
             // 
             // FileCopyPanel
             // 
@@ -213,9 +213,9 @@
         #endregion
 
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Button SelectFolderCtl;
+        private System.Windows.Forms.Button SelectDirectoryCtl;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox OutputFolderCtl;
+        private System.Windows.Forms.TextBox OutputDirectoryCtl;
         private System.Windows.Forms.Button CopyAllCtl;
         private System.Windows.Forms.Button CopySelectedCtl;
         private System.Windows.Forms.CheckBox usePrefixCtl;

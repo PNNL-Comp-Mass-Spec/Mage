@@ -22,10 +22,10 @@ namespace MageUIComponents
 
         #region Properties
 
-        public string OutputFolder
+        public string OutputDirectory
         {
-            get => OutputFolderCtl.Text;
-            set => OutputFolderCtl.Text = value;
+            get => OutputDirectoryCtl.Text;
+            set => OutputDirectoryCtl.Text = value;
         }
 
         public string OutputFile
@@ -49,8 +49,8 @@ namespace MageUIComponents
         {
             return new Dictionary<string, string>
             {
-                { "OutputFolder",   OutputFolder},
-                { "OutputFile",   OutputFile}
+                { "OutputDirectory", OutputDirectory},
+                { "OutputFile", OutputFile}
             };
         }
 
@@ -60,8 +60,9 @@ namespace MageUIComponents
             {
                 switch (paramDef.Key)
                 {
+                    case "OutputDirectory":
                     case "OutputFolder":
-                        OutputFolder = paramDef.Value;
+                        OutputDirectory = paramDef.Value;
                         break;
                     case "OutputFile":
                         OutputFile = paramDef.Value;
@@ -72,16 +73,16 @@ namespace MageUIComponents
 
         #endregion
 
-        private void SelectFolderCtl_Click(object sender, EventArgs e)
+        private void SelectDirectoryCtl_Click(object sender, EventArgs e)
         {
 
             var folderBrowser = new FolderBrowser();
 
             try
             {
-                if (OutputFolderCtl.TextLength > 0 && Directory.Exists(OutputFolderCtl.Text))
+                if (OutputDirectoryCtl.TextLength > 0 && Directory.Exists(OutputDirectoryCtl.Text))
                 {
-                    folderBrowser.FolderPath = OutputFolderCtl.Text;
+                    folderBrowser.FolderPath = OutputDirectoryCtl.Text;
                 }
             }
             catch (Exception)
@@ -91,7 +92,7 @@ namespace MageUIComponents
 
             if (folderBrowser.BrowseForFolder())
             {
-                OutputFolderCtl.Text = folderBrowser.FolderPath;
+                OutputDirectoryCtl.Text = folderBrowser.FolderPath;
             }
 
         }
@@ -109,9 +110,9 @@ namespace MageUIComponents
 
             try
             {
-                if (!string.IsNullOrEmpty(OutputFolderCtl.Text) && Directory.Exists(OutputFolderCtl.Text))
+                if (!string.IsNullOrEmpty(OutputDirectoryCtl.Text) && Directory.Exists(OutputDirectoryCtl.Text))
                 {
-                    fileDialog.InitialDirectory = OutputFolderCtl.Text;
+                    fileDialog.InitialDirectory = OutputDirectoryCtl.Text;
                 }
             }
             catch (Exception)
@@ -123,7 +124,7 @@ namespace MageUIComponents
             {
                 var filePath = fileDialog.FileName;
                 OutputFileCtl.Text = Path.GetFileName(filePath);
-                OutputFolderCtl.Text = Path.GetDirectoryName(filePath);
+                OutputDirectoryCtl.Text = Path.GetDirectoryName(filePath);
             }
         }
 

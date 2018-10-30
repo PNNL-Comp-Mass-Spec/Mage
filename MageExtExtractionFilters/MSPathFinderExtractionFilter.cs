@@ -85,7 +85,7 @@ namespace MageExtExtractionFilters
             PrecalculateFieldIndexes();
             if (mProteinMerger != null)
             {
-                mProteinMerger.GetProteinLookupData(mMergeFiles["ResultToSeqMap"], mMergeFiles["SeqToProteinMap"], mResultFolderPath);
+                mProteinMerger.GetProteinLookupData(mMergeFiles["ResultToSeqMap"], mMergeFiles["SeqToProteinMap"], mResultsDirectoryPath);
                 mProteinMerger.LookupColumn = OutputColumnPos[mExtractionType.RType.ResultIDColName];
                 mProteinMerger.SetMergeSourceColIndexes(OutputColumnPos);
             }

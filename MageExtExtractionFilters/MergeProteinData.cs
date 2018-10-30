@@ -204,7 +204,7 @@ namespace MageExtExtractionFilters
         }
 
         // FUTURE: check for missing file names before loading file.
-        public void GetProteinLookupData(ResultType.MergeFile mapMergeFile, ResultType.MergeFile protMergeFile, string resultFolderPath)
+        public void GetProteinLookupData(ResultType.MergeFile mapMergeFile, ResultType.MergeFile protMergeFile, string resultDirectoryPath)
         {
             // Get result to protein mapping data
             var mapFileName = mapMergeFile.MergeFileName;
@@ -213,7 +213,7 @@ namespace MageExtExtractionFilters
             {
                 var mapFileReader = new DelimitedFileReader
                 {
-                    FilePath = Path.Combine(resultFolderPath, mapFileName)
+                    FilePath = Path.Combine(resultDirectoryPath, mapFileName)
                 };
                 ProcessingPipeline.Assemble("Lookup Protein Map", mapFileReader, resultToSequenceMap).RunRoot(null);
             }
@@ -226,7 +226,7 @@ namespace MageExtExtractionFilters
             {
                 var protFileReader = new DelimitedFileReader
                 {
-                    FilePath = Path.Combine(resultFolderPath, protFileName)
+                    FilePath = Path.Combine(resultDirectoryPath, protFileName)
                 };
                 ProcessingPipeline.Assemble("Lookup Protein Data", protFileReader, mProteinData).RunRoot(null);
             }

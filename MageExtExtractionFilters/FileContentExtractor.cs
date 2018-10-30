@@ -41,10 +41,10 @@ namespace MageExtExtractionFilters
 
         /// <summary>
         /// Name of the column in the standard tabular input
-        /// that contains the input folder path
-        /// (optional - defaults to "Folder")
+        /// that contains the input directory path
+        /// (optional - defaults to "Directory"; previously was "Folder")
         /// </summary>
-        public string SourceFolderColumnName { get; set; }
+        public string SourceDirectoryColumnName { get; set; }
 
         /// <summary>
         /// Name of the column in the standard tabular input
@@ -59,7 +59,7 @@ namespace MageExtExtractionFilters
         /// <summary>
         /// Column indexes
         /// </summary>
-        private int mInputFolderIdx;
+        private int mInputDirectoryIdx;
         private int mInputFileIdx;
         private int mJobIdx;
 
@@ -67,7 +67,7 @@ namespace MageExtExtractionFilters
 
         private void PrecalculateColumnIndexes()
         {
-            mInputFolderIdx = GetColumnIndex(InputColumnPos, SourceFolderColumnName);
+            mInputDirectoryIdx = GetColumnIndex(InputColumnPos, SourceDirectoryColumnName);
             mInputFileIdx = GetColumnIndex(InputColumnPos, SourceFileColumnName);
             mJobIdx = GetColumnIndex(InputColumnPos, "Job");
         }
@@ -105,7 +105,7 @@ namespace MageExtExtractionFilters
         {
             if (args.DataAvailable)
             {
-                var resultFolderPath = args.Fields[mInputFolderIdx];
+                var resultsDirectoryPath = args.Fields[mInputDirectoryIdx];
                 var resultFileName = args.Fields[mInputFileIdx];
                 string inputFilePath;
 
@@ -115,7 +115,7 @@ namespace MageExtExtractionFilters
                     inputFilePath = "";
                 else
                 {
-                    inputFilePath = Path.Combine(resultFolderPath, resultFileName);
+                    inputFilePath = Path.Combine(resultsDirectoryPath, resultFileName);
 
                     if (inputFilePath.StartsWith(MYEMSL_PATH_FLAG))
                     {
@@ -149,14 +149,14 @@ namespace MageExtExtractionFilters
                             {
                                 if (i == 0)
                                 {
-                                    // Override the result folder path
-                                    resultFolderPath = Path.Combine(Path.GetTempPath(), MAGE_TEMP_FILES_FOLDER, cachedFileInfo.FileInfo.Dataset);
+                                    // Override the result directory path
+                                    resultsDirectoryPath = Path.Combine(Path.GetTempPath(), MAGE_TEMP_FILES_DIRECTORY, cachedFileInfo.FileInfo.Dataset);
 
                                     // Override the input file path
-                                    inputFilePath = Path.Combine(resultFolderPath, cachedFileInfo.FileInfo.Filename);
+                                    inputFilePath = Path.Combine(resultsDirectoryPath, cachedFileInfo.FileInfo.Filename);
                                 }
 
-                                var filePathLocal = Path.Combine(resultFolderPath, cachedFileInfo.FileInfo.Filename);
+                                var filePathLocal = Path.Combine(resultsDirectoryPath, cachedFileInfo.FileInfo.Filename);
 
                                 const bool unzipRequired = false;
                                 m_MyEMSLDatasetInfoCache.AddFileToDownloadQueue(cachedFileInfo.FileID, cachedFileInfo.FileInfo, unzipRequired, filePathLocal);
@@ -168,7 +168,7 @@ namespace MageExtExtractionFilters
 
                         }
 
-                        // Note that the target folder path will be ignored since we explicitly defined the destination file path when queuing the file
+                        // Note that the target directory path will be ignored since we explicitly defined the destination file path when queuing the file
                         var success = m_MyEMSLDatasetInfoCache.ProcessDownloadQueue(".", Downloader.DownloadLayout.SingleDataset);
                         if (!success)
                         {
@@ -215,15 +215,17 @@ namespace MageExtExtractionFilters
                         // Note that MSPathFinder jobs will not have an msgf file, but we
                         // still need to include the MSGFExtractionFilter in the pipeline so that
                         // the data gets filtered
-                        ExtractionFilter msgfFilter = new MSGFExtractionFilter();
-                        msgfFilter.Job = job;
-                        msgfFilter.ResultFolderPath = resultFolderPath;
-                        msgfFilter.MergeFiles = mMergeFiles;
-                        msgfFilter.ExtractionType = ExtractionParms;
+                        ExtractionFilter msgfFilter = new MSGFExtractionFilter
+                        {
+                            Job = job,
+                            ResultsDirectoryPath = resultsDirectoryPath,
+                            MergeFiles = mMergeFiles,
+                            ExtractionType = ExtractionParms
+                        };
 
                         var resultsFilter = ExtractionParms.RType.GetExtractionFilter(mResultsChecker);
                         resultsFilter.Job = job;
-                        resultsFilter.ResultFolderPath = resultFolderPath;
+                        resultsFilter.ResultsDirectoryPath = resultsDirectoryPath;
                         resultsFilter.MergeFiles = mMergeFiles;
                         resultsFilter.ExtractionType = ExtractionParms;
 
@@ -296,14 +298,14 @@ namespace MageExtExtractionFilters
         /// <summary>
         /// Get filter module to apply to file contents being extracted
         /// </summary>
-        /// <param name="resultsFolderPath"></param>
+        /// <param name="resultsDirectoryPath"></param>
         /// <param name="job"></param>
         /// <returns></returns>
-        private ExtractionFilter GetExtractionFilterModule(string resultsFolderPath, string job)
+        private ExtractionFilter GetExtractionFilterModule(string resultsDirectoryPath, string job)
         {
             var resultsFilter = ExtractionParms.RType.GetExtractionFilter(mResultsChecker);
             resultsFilter.Job = job;
-            resultsFilter.ResultFolderPath = resultsFolderPath;
+            resultsFilter.ResultsDirectoryPath = resultsDirectoryPath;
             resultsFilter.MergeFiles = mMergeFiles;
             resultsFilter.ExtractionType = ExtractionParms;
 

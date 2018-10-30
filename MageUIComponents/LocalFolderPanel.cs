@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Windows.Forms;
 using Mage;
 using ShFolderBrowser.FolderBrowser;
@@ -47,25 +46,54 @@ namespace MageUIComponents
             }
         }
 
-        public string Folder
+        public string Directory
         {
             get => LocalDirectoryCtl.Text;
             set => LocalDirectoryCtl.Text = value;
         }
 
-        public string MostRecentFolder { get; set; }
+        [Obsolete("Use Directory")]
+        public string Folder
+        {
+            get => Directory;
+            set => Directory = value;
+        }
 
+        public string MostRecentDirectory { get; set; }
+
+        [Obsolete("Use MostRecentDirectory")]
+        public string MostRecentFolder
+        {
+            get => MostRecentDirectory;
+            set => MostRecentDirectory = value;
+        }
+
+        public string SearchInSubdirectories
+        {
+            get => (SearchInSubdirectoriesCtl.Checked) ? "Yes" : "No";
+            set => SearchInSubdirectoriesCtl.Checked = string.Equals(value, "Yes", StringComparison.OrdinalIgnoreCase);
+        }
+
+        [Obsolete("Use SearchInSubdirectories")]
         public string SearchInSubfolders
         {
-            get => (SearchInSubfoldersCtl.Checked) ? "Yes" : "No";
-            set => SearchInSubfoldersCtl.Checked = string.Equals(value, "Yes", StringComparison.OrdinalIgnoreCase);
+            get => SearchInSubdirectories;
+            set => SearchInSubdirectories = value;
         }
 
+        public string SubdirectorySearchName
+        {
+            get => SubdirectorySearchNameCtl.Text;
+            set => SubdirectorySearchNameCtl.Text = value;
+        }
+
+        [Obsolete("Use SubdirectorySearchName")]
         public string SubfolderSearchName
         {
-            get => SubfolderSearchNameCtl.Text;
-            set => SubfolderSearchNameCtl.Text = value;
+            get => SubdirectorySearchName;
+            set => SubdirectorySearchName = value;
         }
+
 
         #endregion
 
@@ -77,9 +105,9 @@ namespace MageUIComponents
             {
                 { "FileNameFilter",  FileNameFilter },
                 { "FileSelectionMode", FileSelectionMode },
-                { "Folder",  Folder },
-                { "SearchInSubfolders", SearchInSubfolders},
-                { "SubfolderSearchName", SubfolderSearchName}
+                { "Directory",  Directory },
+                { "SearchInSubdirectories", SearchInSubdirectories},
+                { "SubdirectorySearchName", SubdirectorySearchName}
             };
         }
 
@@ -95,14 +123,15 @@ namespace MageUIComponents
                     case "FileSelectionMode":
                         FileSelectionMode = paramDef.Value;
                         break;
+                    case "Directory":
                     case "Folder":
-                        Folder = paramDef.Value;
+                        Directory = paramDef.Value;
                         break;
-                    case "SearchInSubfolders":
-                        SearchInSubfolders = paramDef.Value;
+                    case "SearchInSubdirectories":
+                        SearchInSubdirectories = paramDef.Value;
                         break;
-                    case "SubfolderSearchName":
-                        SubfolderSearchName = paramDef.Value;
+                    case "SubdirectorySearchName":
+                        SubdirectorySearchName = paramDef.Value;
                         break;
                 }
             }
@@ -110,31 +139,34 @@ namespace MageUIComponents
 
         #endregion
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public LocalFolderPanel()
         {
             InitializeComponent();
-            MostRecentFolder = string.Empty;
+            MostRecentDirectory = string.Empty;
         }
 
         private void GetFilesCtl_Click(object sender, EventArgs e)
         {
-            OnAction?.Invoke(this, new MageCommandEventArgs("get_files_from_local_folder"));
+            OnAction?.Invoke(this, new MageCommandEventArgs("get_files_from_local_directory"));
         }
 
-        private void SelectFolderCtl_Click(object sender, EventArgs e)
+        private void SelectDirectoryCtl_Click(object sender, EventArgs e)
         {
 
             var folderBrowser = new FolderBrowser();
 
             try
             {
-                if (LocalDirectoryCtl.TextLength > 0 && Directory.Exists(LocalDirectoryCtl.Text))
+                if (LocalDirectoryCtl.TextLength > 0 && System.IO.Directory.Exists(LocalDirectoryCtl.Text))
                 {
                     folderBrowser.FolderPath = LocalDirectoryCtl.Text;
                 }
-                else if (!string.IsNullOrEmpty(MostRecentFolder) && Directory.Exists(MostRecentFolder))
+                else if (!string.IsNullOrEmpty(MostRecentDirectory) && System.IO.Directory.Exists(MostRecentDirectory))
                 {
-                    folderBrowser.FolderPath = MostRecentFolder;
+                    folderBrowser.FolderPath = MostRecentDirectory;
                 }
             }
             catch (Exception)
@@ -145,7 +177,7 @@ namespace MageUIComponents
             if (folderBrowser.BrowseForFolder())
             {
                 LocalDirectoryCtl.Text = folderBrowser.FolderPath;
-                MostRecentFolder = folderBrowser.FolderPath;
+                MostRecentDirectory = folderBrowser.FolderPath;
             }
 
         }

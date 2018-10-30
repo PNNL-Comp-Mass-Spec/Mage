@@ -24,40 +24,40 @@ namespace MageFileProcessor
         /// </summary>
         /// <param name="sinkObject">External ISinkModule object that will receive list of jobs</param>
         /// <param name="queryDefXML">XML-formatted definition of query to use</param>
-        /// <param name="runtimeParms">Settings for parameters for modules in the pipeline</param>
+        /// <param name="runtimeParams">Settings for parameters for modules in the pipeline</param>
         /// <returns>Mage pipeline</returns>
-        public static ProcessingPipeline MakeJobQueryPipeline(ISinkModule sinkObject, string queryDefXML, Dictionary<string, string> runtimeParms)
+        public static ProcessingPipeline MakeJobQueryPipeline(ISinkModule sinkObject, string queryDefXML, Dictionary<string, string> runtimeParams)
         {
 
             // Make source module and initialize from query def XML and runtime parameters
-            var rdr = new MSSQLReader(queryDefXML, runtimeParms);
+            var rdr = new MSSQLReader(queryDefXML, runtimeParams);
 
             // Build and wire pipeline
             return ProcessingPipeline.Assemble("JobQueryPipeline", rdr, sinkObject);
         }
 
         /// <summary>
-        /// Pipeline to get list of files from results folders of jobs that are selected in list display
+        /// Pipeline to get list of files from results directories of jobs that are selected in list display
         /// and deliver the list to the files list display
         /// </summary>
-        /// <param name="sourceObject">Module that will supply list of folders to search</param>
+        /// <param name="sourceObject">Module that will supply list of directories to search</param>
         /// <param name="sinkObject">External ISinkModule object that will receive list of files found</param>
-        /// <param name="runtimeParms">Settings for parameters for modules in the pipeline</param>
+        /// <param name="runtimeParams">Settings for parameters for modules in the pipeline</param>
         /// <returns>Mage pipeline</returns>
-        public static ProcessingPipeline MakeFileListPipeline(IBaseModule sourceObject, ISinkModule sinkObject, Dictionary<string, string> runtimeParms)
+        public static ProcessingPipeline MakeFileListPipeline(IBaseModule sourceObject, ISinkModule sinkObject, Dictionary<string, string> runtimeParams)
         {
 
             // Create file filter module and initialize it
             var fileFilter = new FileListFilter
             {
-                SourceFolderColumnName = GetRuntimeParam(runtimeParms, "SourceFolderColumnName"),
-                FileColumnName = GetRuntimeParam(runtimeParms, "FileColumnName"),
-                OutputColumnList = GetRuntimeParam(runtimeParms, "OutputColumnList"),
-                FileNameSelector = GetRuntimeParam(runtimeParms, "FileSelectors"),
-                FileSelectorMode = GetRuntimeParam(runtimeParms, "FileSelectionMode"),
-                IncludeFilesOrFolders = GetRuntimeParam(runtimeParms, "IncludeFilesOrFolders"),
-                RecursiveSearch = GetRuntimeParam(runtimeParms, "SearchInSubfolders"),
-                SubfolderSearchName = GetRuntimeParam(runtimeParms, "SubfolderSearchName")
+                SourceDirectoryColumnName = GetRuntimeParam(runtimeParams, "SourceDirectoryColumnName"),
+                FileColumnName = GetRuntimeParam(runtimeParams, "FileColumnName"),
+                OutputColumnList = GetRuntimeParam(runtimeParams, "OutputColumnList"),
+                FileNameSelector = GetRuntimeParam(runtimeParams, "FileSelectors"),
+                FileSelectorMode = GetRuntimeParam(runtimeParams, "FileSelectionMode"),
+                IncludeFilesOrDirectories = GetRuntimeParam(runtimeParams, "IncludeFilesOrDirectories"),
+                RecursiveSearch = GetRuntimeParam(runtimeParams, "SearchInSubdirectories"),
+                SubdirectorySearchName = GetRuntimeParam(runtimeParams, "SubdirectorySearchName")
             };
 
             // Build and wire pipeline
@@ -65,35 +65,40 @@ namespace MageFileProcessor
         }
 
         /// <summary>
-        /// Pipeline to get selected list of files from local folder into list display
+        /// Pipeline to get selected list of files from local directory into list display
         /// </summary>
         /// <param name="sinkObject">External ISinkModule object that will receive list of files found</param>
-        /// <param name="runtimeParms">Settings for parameters for modules in the pipeline</param>
+        /// <param name="runtimeParams">Settings for parameters for modules in the pipeline</param>
         /// <returns>Mage pipeline</returns>
-        public static ProcessingPipeline MakePipelineToGetLocalFileList(ISinkModule sinkObject, Dictionary<string, string> runtimeParms)
+        public static ProcessingPipeline MakePipelineToGetLocalFileList(ISinkModule sinkObject, Dictionary<string, string> runtimeParams)
         {
 
             // Make source module in pipeline to get list of files in local directory
             var reader = new FileListFilter();
-            reader.AddFolderPath(GetRuntimeParam(runtimeParms, "Folder"));
-            reader.FileNameSelector = GetRuntimeParam(runtimeParms, "FileNameFilter");
 
-            if (runtimeParms.ContainsKey("FileSelectionMode"))
-                reader.FileSelectorMode = GetRuntimeParam(runtimeParms, "FileSelectionMode");
+            if (runtimeParams.ContainsKey("Directory"))
+                reader.AddDirectoryPath(GetRuntimeParam(runtimeParams, "Directory"));
+            else if (runtimeParams.ContainsKey("Folder"))
+                reader.AddDirectoryPath(GetRuntimeParam(runtimeParams, "Folder"));
 
-            if (runtimeParms.ContainsKey("SearchInSubfolders"))
-                reader.RecursiveSearch = GetRuntimeParam(runtimeParms, "SearchInSubfolders");
+            reader.FileNameSelector = GetRuntimeParam(runtimeParams, "FileNameFilter");
 
-            if (runtimeParms.ContainsKey("SubfolderSearchName"))
-                reader.SubfolderSearchName = GetRuntimeParam(runtimeParms, "SubfolderSearchName");
+            if (runtimeParams.ContainsKey("FileSelectionMode"))
+                reader.FileSelectorMode = GetRuntimeParam(runtimeParams, "FileSelectionMode");
 
-            reader.FileTypeColumnName = FileListInfoBase.COLUMN_NAME_FILE_TYPE;         // Item
-            reader.FileColumnName = FileListInfoBase.COLUMN_NAME_FILE_NAME;             // File
-            reader.SourceFolderColumnName = FileListInfoBase.COLUMN_NAME_SOURCE_FOLDER; // Folder
-            reader.FileSizeColumnName = FileListInfoBase.COLUMN_NAME_FILE_SIZE;         // File_Size_KB
-            reader.FileDateColumnName = FileListInfoBase.COLUMN_NAME_FILE_DATE;			// File_Date
-            reader.OutputColumnList = string.Format("{0}|+|text, {1}|+|text, {2}|+|text, {3}|+|text, {4}|+|text", reader.FileTypeColumnName, reader.FileColumnName, reader.FileSizeColumnName, reader.FileDateColumnName, reader.SourceFolderColumnName);
-            reader.IncludeFilesOrFolders = "File";
+            if (runtimeParams.ContainsKey("SearchInSubdirectories"))
+                reader.RecursiveSearch = GetRuntimeParam(runtimeParams, "SearchInSubdirectories");
+
+            if (runtimeParams.ContainsKey("SubdirectorySearchName"))
+                reader.SubdirectorySearchName = GetRuntimeParam(runtimeParams, "SubdirectorySearchName");
+
+            reader.FileTypeColumnName = FileListInfoBase.COLUMN_NAME_FILE_TYPE;                 // Item
+            reader.FileColumnName = FileListInfoBase.COLUMN_NAME_FILE_NAME;                     // File
+            reader.SourceDirectoryColumnName = FileListInfoBase.COLUMN_NAME_SOURCE_DIRECTORY;   // Directory
+            reader.FileSizeColumnName = FileListInfoBase.COLUMN_NAME_FILE_SIZE;                 // File_Size_KB
+            reader.FileDateColumnName = FileListInfoBase.COLUMN_NAME_FILE_DATE;			        // File_Date
+            reader.OutputColumnList = string.Format("{0}|+|text, {1}|+|text, {2}|+|text, {3}|+|text, {4}|+|text", reader.FileTypeColumnName, reader.FileColumnName, reader.FileSizeColumnName, reader.FileDateColumnName, reader.SourceDirectoryColumnName);
+            reader.IncludeFilesOrDirectories = "File";
 
             // Build and wire pipeline
             return ProcessingPipeline.Assemble(PIPELINE_GET_LOCAL_FILES, reader, sinkObject);
@@ -103,12 +108,12 @@ namespace MageFileProcessor
         /// Pipeline to read contents of manifest file
         /// </summary>
         /// <param name="sinkObject">External ISinkModule object that will receive list of files found</param>
-        /// <param name="runtimeParms">Settings for parameters for modules in the pipeline</param>
+        /// <param name="runtimeParams">Settings for parameters for modules in the pipeline</param>
         /// <returns>Mage pipeline</returns>
-        public static ProcessingPipeline MakePipelineToGetFilesFromManifest(ISinkModule sinkObject, Dictionary<string, string> runtimeParms)
+        public static ProcessingPipeline MakePipelineToGetFilesFromManifest(ISinkModule sinkObject, Dictionary<string, string> runtimeParams)
         {
-            var filePath = GetRuntimeParam(runtimeParms, "ManifestFilePath");
-            var folderPath = Path.GetDirectoryName(filePath);
+            var filePath = GetRuntimeParam(runtimeParams, "ManifestFilePath");
+            var directoryPath = Path.GetDirectoryName(filePath);
 
             // Make source module in pipeline to get list of files in local directory
             var reader = new DelimitedFileReader
@@ -116,55 +121,55 @@ namespace MageFileProcessor
                 FilePath = filePath
             };
 
-            // Filter module to add manifest file's folder as new column
+            // Filter module to add manifest file's directory as new column
             var filter = new NullFilter();
-            const string folderColName = "Manifest_Folder";
-            filter.OutputColumnList = string.Format("Name, *, {0}|+|text", folderColName);
-            filter.SetContext(new Dictionary<string, string> { { folderColName, folderPath } });
+            const string manifestDirColName = "Manifest_Directory";
+            filter.OutputColumnList = string.Format("Name, *, {0}|+|text", manifestDirColName);
+            filter.SetContext(new Dictionary<string, string> { { manifestDirColName, directoryPath } });
 
             // Build and wire pipeline
             return ProcessingPipeline.Assemble("PipelineToGetFilesFromManifest", reader, filter, sinkObject);
         }
 
         /// <summary>
-        /// Pipeline to copy files that are selected in the files list display to a local folder
+        /// Pipeline to copy files that are selected in the files list display to a local directory
         /// </summary>
         /// <param name="sourceObject">Module that will supply list of files</param>
-        /// <param name="runtimeParms">Settings for parameters for modules in the pipeline</param>
+        /// <param name="runtimeParams">Settings for parameters for modules in the pipeline</param>
         /// <returns>Mage pipeline</returns>
-        public static ProcessingPipeline MakeFileCopyPipeline(IBaseModule sourceObject, Dictionary<string, string> runtimeParms)
+        public static ProcessingPipeline MakeFileCopyPipeline(IBaseModule sourceObject, Dictionary<string, string> runtimeParams)
         {
 
             // Create file copy module and initialize it
-            var outputFolder = GetRuntimeParam(runtimeParms, "OutputFolder");
+            var outputDirectory = GetRuntimeParam(runtimeParams, "OutputDirectory");
             var copier = new FileCopy
             {
-                OutputFolderPath = outputFolder,
-                OutputColumnList = GetRuntimeParam(runtimeParms, "OutputColumnList"),
-                ApplyPrefixToFileName = GetRuntimeParam(runtimeParms, "ApplyPrefixToFileName"),
-                PrefixLeader = GetRuntimeParam(runtimeParms, "PrefixLeader"),
-                ColumnToUseForPrefix = GetRuntimeParam(runtimeParms, "ColumnToUseForPrefix")
+                OutputDirectoryPath = outputDirectory,
+                OutputColumnList = GetRuntimeParam(runtimeParams, "OutputColumnList"),
+                ApplyPrefixToFileName = GetRuntimeParam(runtimeParams, "ApplyPrefixToFileName"),
+                PrefixLeader = GetRuntimeParam(runtimeParams, "PrefixLeader"),
+                ColumnToUseForPrefix = GetRuntimeParam(runtimeParams, "ColumnToUseForPrefix")
             };
 
-            if (string.Equals(GetRuntimeParam(runtimeParms, "OverwriteExistingFiles"), "Yes", StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(GetRuntimeParam(runtimeParams, "OverwriteExistingFiles"), "Yes", StringComparison.OrdinalIgnoreCase))
                 copier.OverwriteExistingFiles = true;
             else
                 copier.OverwriteExistingFiles = false;
 
-            if (string.Equals(GetRuntimeParam(runtimeParms, "ResolveCacheInfoFiles"), "Yes", StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(GetRuntimeParam(runtimeParams, "ResolveCacheInfoFiles"), "Yes", StringComparison.OrdinalIgnoreCase))
                 copier.ResolveCacheInfoFiles = true;
             else
                 copier.ResolveCacheInfoFiles = false;
 
             copier.FileTypeColumnName = "Item";
-            copier.SourceFolderColumnName = GetRuntimeParam(runtimeParms, "SourceFolderColumnName");
-            copier.SourceFileColumnName = GetRuntimeParam(runtimeParms, "SourceFileColumnName");
-            copier.OutputFileColumnName = GetRuntimeParam(runtimeParms, "OutputFileColumnName");
+            copier.SourceDirectoryColumnName = GetRuntimeParam(runtimeParams, "SourceDirectoryColumnName");
+            copier.SourceFileColumnName = GetRuntimeParam(runtimeParams, "SourceFileColumnName");
+            copier.OutputFileColumnName = GetRuntimeParam(runtimeParams, "OutputFileColumnName");
 
             // Create a delimited file writer module to build manifest and initialize it
             var writer = new DelimitedFileWriter
             {
-                FilePath = Path.Combine(outputFolder, GetRuntimeParam(runtimeParms, "ManifestFileName"))
+                FilePath = Path.Combine(outputDirectory, GetRuntimeParam(runtimeParams, "ManifestFileName"))
             };
 
             // Build and wire pipeline
@@ -175,31 +180,31 @@ namespace MageFileProcessor
         /// Pipeline to filter contents of files that are selected in the files list display
         /// </summary>
         /// <param name="sourceObject">Module that will supply list of files</param>
-        /// <param name="runtimeParms">Settings for parameters for modules in the pipeline</param>
+        /// <param name="runtimeParams">Settings for parameters for modules in the pipeline</param>
         /// <param name="filterParms">Settings for parameters for filter module</param>
         /// <returns>Mage pipeline</returns>
-        public static ProcessingPipeline MakePipelineToFilterSelectedfiles(IBaseModule sourceObject, Dictionary<string, string> runtimeParms, Dictionary<string, string> filterParms)
+        public static ProcessingPipeline MakePipelineToFilterSelectedFiles(IBaseModule sourceObject, Dictionary<string, string> runtimeParams, Dictionary<string, string> filterParms)
         {
 
             // Set up some parameter values
-            var outputMode = GetRuntimeParam(runtimeParms, "OutputMode");
-            var outputFolderPath = GetRuntimeParam(runtimeParms, "OutputFolder") ?? "";
+            var outputMode = GetRuntimeParam(runtimeParams, "OutputMode");
+            var outputDirectoryPath = GetRuntimeParam(runtimeParams, "OutputDirectory") ?? "";
             var filterName = filterParms["SelectedFilterClassName"];
             filterParms.Remove("SelectedFilterClassName");
 
             if (string.IsNullOrEmpty(filterName))
                 filterName = "All Pass";
 
-            var reportFileName = string.Format("Runlog_{0}_{1:yyyy-MM-dd_hhmmss}.txt", filterName.Replace(" ", "_"), System.DateTime.Now);
+            var reportFileName = string.Format("RunLog_{0}_{1:yyyy-MM-dd_hhmmss}.txt", filterName.Replace(" ", "_"), DateTime.Now);
 
             // Make file sub-pipeline processing broker module
             // to run a filter pipeline against files from list
             var broker = new FileSubPipelineBroker
             {
-                OutputFileName = GetRuntimeParam(runtimeParms, "OutputFile"),
+                OutputFileName = GetRuntimeParam(runtimeParams, "OutputFile"),
                 SourceFileColumnName = "Name",
-                SourceFolderColumnName = "Folder",
-                OutputFolderPath = outputFolderPath
+                SourceDirectoryColumnName = "Directory",
+                OutputDirectoryPath = outputDirectoryPath
             };
 
             if (filterName.ToLower() == "All Pass".ToLower())
@@ -210,19 +215,19 @@ namespace MageFileProcessor
             broker.SetFileFilterParameters(filterParms);
             if (outputMode == "SQLite_Output")
             {
-                broker.DatabaseName = GetRuntimeParam(runtimeParms, "DatabaseName");
-                broker.TableName = GetRuntimeParam(runtimeParms, "TableName");
-                outputFolderPath = Path.GetDirectoryName(GetRuntimeParam(runtimeParms, "DatabaseName"));
+                broker.DatabaseName = GetRuntimeParam(runtimeParams, "DatabaseName");
+                broker.TableName = GetRuntimeParam(runtimeParams, "TableName");
+                outputDirectoryPath = Path.GetDirectoryName(GetRuntimeParam(runtimeParams, "DatabaseName"));
             }
 
             // Create a file writer module to output manifest file
             var writer = new DelimitedFileWriter
             {
-                FilePath = Path.Combine(outputFolderPath ?? "", reportFileName)
+                FilePath = Path.Combine(outputDirectoryPath ?? "", reportFileName)
             };
 
             // Build and wire pipeline
-            return ProcessingPipeline.Assemble("PipelineToFilterSelectedfiles", sourceObject, broker, writer);
+            return ProcessingPipeline.Assemble("PipelineToFilterSelectedFiles", sourceObject, broker, writer);
         }
 
 
@@ -234,33 +239,33 @@ namespace MageFileProcessor
         /// </summary>
         public static PipelineQueue MakePipelineQueueToPreProcessThenFilterFiles(
             BaseModule sourceObject,
-            Dictionary<string, string> runtimeParms,
+            Dictionary<string, string> runtimeParams,
             Dictionary<string, string> filterParms)
         {
-            var outputMode = GetRuntimeParam(runtimeParms, "OutputMode");
-            var outputFolderPath = GetRuntimeParam(runtimeParms, "OutputFolder");
+            // var outputMode = GetRuntimeParam(runtimeParams, "OutputMode");
+            var outputDirectoryPath = GetRuntimeParam(runtimeParams, "OutputDirectory");
 
             var pipelineQueue = new PipelineQueue();
 
-            // ProcessingPipeline pxjm = MakePipelineToExportJobMetadata(sourceObject, outputMode, outputFolderPath);
-            // pipelineQueue.Add(pxjm);
+            // ProcessingPipeline exportMetadataPipeline = MakePipelineToExportJobMetadata(sourceObject, outputMode, outputDirectoryPath);
+            // pipelineQueue.Add(exportMetadataPipeline);
 
             // Buffer module to accumulate aggregated file list
             var fileList = new SimpleSink();
 
-            // Search job results folders for list of results files to process
+            // Search job results directories for list of results files to process
             // and accumulate into buffer module
-            var plof = MakePipelineToGetListOfFiles(sourceObject, fileList, runtimeParms);
-            pipelineQueue.Add(plof);
+            var listOfFilesPipeline = MakePipelineToGetListOfFiles(sourceObject, fileList, runtimeParams);
+            pipelineQueue.Add(listOfFilesPipeline);
 
             var sinkWrapper = new MyEMSLSinkWrapper(fileList)
             {
-                TempFilesContainerPath = outputFolderPath,
+                TempFilesContainerPath = outputDirectoryPath,
                 PredownloadMyEMSLFiles = true
             };
 
-            var pxfl = MakePipelineToFilterSelectedfiles(sinkWrapper, runtimeParms, filterParms);
-            pipelineQueue.Add(pxfl);
+            var filterSelectedFilesPipeline = MakePipelineToFilterSelectedFiles(sinkWrapper, runtimeParams, filterParms);
+            pipelineQueue.Add(filterSelectedFilesPipeline);
 
             return pipelineQueue;
         }
@@ -272,13 +277,13 @@ namespace MageFileProcessor
         /// </summary>
         /// <param name="jobList"></param>
         /// <returns></returns>
-        public static ProcessingPipeline MakePipelineToExportJobMetadata(BaseModule jobList, string outputMode, string outputFolderPath)
+        public static ProcessingPipeline MakePipelineToExportJobMetadata(BaseModule jobList, string outputMode, string outputDirectoryPath)
         {
             if (outputMode == )
             {
-                broker.DatabaseName = GetRuntimeParam(runtimeParms, "DatabaseName");
-                broker.TableName = GetRuntimeParam(runtimeParms, "TableName");
-                outputFolderPath = Path.GetDirectoryName(GetRuntimeParam(runtimeParms, "DatabaseName"));
+                broker.DatabaseName = GetRuntimeParam(runtimeParams, "DatabaseName");
+                broker.TableName = GetRuntimeParam(runtimeParams, "TableName");
+                outputDirectoryPath = Path.GetDirectoryName(GetRuntimeParam(runtimeParams, "DatabaseName"));
             }
 
 
@@ -308,11 +313,11 @@ namespace MageFileProcessor
         /// </summary>
         /// <param name="jobListSource">Mage module that contains list of files</param>
         /// <param name="fileListSink">Mage module to accumulate list of results into</param>
-        /// <param name="runtimeParms">Runtime parameters</param>
+        /// <param name="runtimeParams">Runtime parameters</param>
         /// <returns></returns>
-        public static ProcessingPipeline MakePipelineToGetListOfFiles(BaseModule jobListSource, BaseModule fileListSink, Dictionary<string, string> runtimeParms)
+        public static ProcessingPipeline MakePipelineToGetListOfFiles(BaseModule jobListSource, BaseModule fileListSink, Dictionary<string, string> runtimeParams)
         {
-            var outputFolder = GetRuntimeParam(runtimeParms, "OutputFolder");
+            var outputDirectory = GetRuntimeParam(runtimeParams, "OutputDirectory");
 
             var modules = new Collection<object>
             {
@@ -322,20 +327,20 @@ namespace MageFileProcessor
             var fileFinder = new FileListInfoLookup
             {
                 SourceFileColumnName = "Name",
-                SourceFolderColumnName = "Folder",
+                SourceDirectoryColumnName = "Directory",
                 FileColumnName = "Name"
             };
 
-            if (runtimeParms.TryGetValue("SourceFileColumnName", out var valueOverride))
+            if (runtimeParams.TryGetValue("SourceFileColumnName", out var valueOverride))
             {
                 fileFinder.SourceFileColumnName = valueOverride;
                 fileFinder.FileColumnName = valueOverride;
             }
 
-            if (runtimeParms.TryGetValue("SourceFolderColumnName", out valueOverride))
-                fileFinder.SourceFolderColumnName = valueOverride;
+            if (runtimeParams.TryGetValue("SourceDirectoryColumnName", out valueOverride))
+                fileFinder.SourceDirectoryColumnName = valueOverride;
 
-            fileFinder.OutputColumnList = string.Format("Job, Item|{0}, Folder, Name|{1}, File_Size_KB|{2}, File_Date|{3}",
+            fileFinder.OutputColumnList = string.Format("Job, Item|{0}, Directory, Name|{1}, File_Size_KB|{2}, File_Date|{3}",
                 FileListInfoBase.COLUMN_NAME_FILE_TYPE,
                 fileFinder.FileColumnName,
                 FileListInfoBase.COLUMN_NAME_FILE_SIZE,
@@ -347,7 +352,7 @@ namespace MageFileProcessor
             // Create a delimited file writer module to build manifest and initialize it
             var writer = new DelimitedFileWriter
             {
-                FilePath = Path.Combine(outputFolder, GetRuntimeParam(runtimeParms, "ManifestFileName")),
+                FilePath = Path.Combine(outputDirectory, GetRuntimeParam(runtimeParams, "ManifestFileName")),
                 OutputColumnList = "*"
             };
             modules.Add(writer);

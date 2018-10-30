@@ -45,7 +45,7 @@ namespace MageMetadataProcessor
 
             try
             {
-                // Set up configuration folder and files
+                // Set up configuration directory and files
                 SavedState.SetupConfigFiles("MageMetadataProcessor");
             }
             catch (Exception ex)
@@ -55,7 +55,7 @@ namespace MageMetadataProcessor
 
             // Tell modules where to look for loadable module DLLs
             var fi = new FileInfo(Application.ExecutablePath);
-            ModuleDiscovery.ExternalModuleFolder = fi.DirectoryName;
+            ModuleDiscovery.ExternalModuleDirectory = fi.DirectoryName;
 
             // Configure logging
             var logFilePath = Path.Combine(SavedState.DataDirectory, "log.txt");
@@ -69,8 +69,8 @@ namespace MageMetadataProcessor
             SetupStatusPanel();
 
             // restore settings to UI component panels
-            /// SavedState.FilePath = Path.Combine(mDataDirectory, "SavedState.xml");
-            /// SavedState.RestoreSavedPanelParameters(GetParameterPanelList());
+            // SavedState.FilePath = Path.Combine(mDataDirectory, "SavedState.xml");
+            // SavedState.RestoreSavedPanelParameters(GetParameterPanelList());
 
             AdjustInitialUIState();
         }

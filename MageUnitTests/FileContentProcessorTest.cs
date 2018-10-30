@@ -18,31 +18,31 @@ namespace MageUnitTests
         {
 
             // Set up test parameters
-            var folderColName = "Folder_Col";
+            var directoryColName = "Directory_Col";
             var fileColName = "File_Col";
-            var folder = System.Environment.CurrentDirectory;
-            var file = "tab_delim.txt";
-            var destFolder = @"C:\data\";
+            var currentDir = System.Environment.CurrentDirectory;
+            var file = "tab_delimited.txt";
+            var destinationDir = @"C:\data\";
 
             // Set up data generator
             var dGen = new DataGenerator(2, 4)
             {
-                AddAdHocRow = new[] { folderColName, fileColName, "Padding" }
+                AddAdHocRow = new[] { directoryColName, fileColName, "Padding" }
             };
 
-            dGen.AddAdHocRow = new[] { folder, file, "Padding" };
+            dGen.AddAdHocRow = new[] { currentDir, file, "Padding" };
 
             // Set up test harness (subclass of file processor module)
             var target = new TestFileContentProcessorModule
             {
                 SourceFileColumnName = fileColName,
                 OutputFileColumnName = fileColName,
-                SourceFolderColumnName = folderColName,
-                OutputFolderPath = destFolder,
-                OutputColumnList = string.Format("{0}|+|text, {1}", fileColName, folderColName),
+                SourceDirectoryColumnName = directoryColName,
+                OutputDirectoryPath = destinationDir,
+                OutputColumnList = string.Format("{0}|+|text, {1}", fileColName, directoryColName),
                 ExpectedSourceFile = file,
-                ExpectedSourcePath = Path.GetFullPath(Path.Combine(folder, file)),
-                ExpectedDestPath = Path.GetFullPath(Path.Combine(destFolder, file))
+                ExpectedSourcePath = Path.GetFullPath(Path.Combine(currentDir, file)),
+                ExpectedDestPath = Path.GetFullPath(Path.Combine(destinationDir, file))
             };
 
             // Tell the test harness what to expect
@@ -69,15 +69,15 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        /// A test for OutputFolderPath
+        /// A test for OutputDirectoryPath
         /// </summary>
         [Test]
-        public void OutputFolderPathTest()
+        public void OutputDirectoryPathTest()
         {
             var target = new FileContentProcessor();
             var expected = "Test Value";
-            target.OutputFolderPath = expected;
-            var actual = target.OutputFolderPath;
+            target.OutputDirectoryPath = expected;
+            var actual = target.OutputDirectoryPath;
             Assert.AreEqual(expected, actual);
         }
 
@@ -95,15 +95,15 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        /// A test for SourceFolderColumnName
+        /// A test for SourceDirectoryColumnName
         /// </summary>
         [Test]
-        public void SourceFolderColumnNameTest()
+        public void SourceDirectoryColumnNameTest()
         {
             var target = new FileContentProcessor();
             var expected = "Test Value";
-            target.SourceFolderColumnName = expected;
-            var actual = target.SourceFolderColumnName;
+            target.SourceDirectoryColumnName = expected;
+            var actual = target.SourceDirectoryColumnName;
             Assert.AreEqual(expected, actual);
         }
     }

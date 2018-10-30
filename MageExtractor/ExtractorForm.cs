@@ -55,7 +55,7 @@ namespace MageExtractor
             InitializeComponent();
 
             const bool isBetaVersion = false;
-            SetFormTitle("2018-10-15", isBetaVersion);
+            SetFormTitle("2018-10-29", isBetaVersion);
 
             SetTags();
 
@@ -569,9 +569,9 @@ namespace MageExtractor
             switch (FilterOutputTabs.SelectedTab.Tag.ToString())
             {
                 case "File_Output":
-                    if (string.IsNullOrEmpty(FolderDestinationPanel1.OutputFolder))
+                    if (string.IsNullOrEmpty(FolderDestinationPanel1.OutputDirectory))
                     {
-                        MessageBox.Show("Destination folder cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        MessageBox.Show("Destination directory cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         return null;
                     }
 
@@ -580,7 +580,7 @@ namespace MageExtractor
                         MessageBox.Show("Destination file cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         return null;
                     }
-                    dest = new DestinationType("File_Output", FolderDestinationPanel1.OutputFolder, FolderDestinationPanel1.OutputFile);
+                    dest = new DestinationType("File_Output", FolderDestinationPanel1.OutputDirectory, FolderDestinationPanel1.OutputFile);
                     break;
 
                 case "SQLite_Output":
@@ -681,7 +681,7 @@ namespace MageExtractor
         {
             try
             {
-                var targetFolder = new DirectoryInfo(Path.Combine(folderPath, FileProcessingBase.MAGE_TEMP_FILES_FOLDER));
+                var targetFolder = new DirectoryInfo(Path.Combine(folderPath, FileProcessingBase.MAGE_TEMP_FILES_DIRECTORY));
                 if (targetFolder.Exists)
                 {
                     targetFolder.Delete(true);

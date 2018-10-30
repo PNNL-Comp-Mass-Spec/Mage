@@ -14,15 +14,13 @@ namespace MageExtractorTest
 
         public event EventHandler<MageStatusEventArgs> OnMessageUpdated;
 
-        private string mTestRootFolderPath = @"C:\Data\ExtractorTests";
+        private readonly string mTestCasesFolder = "TestCases";
 
-        private string mTestCasesFolder = "TestCases";
+        private readonly string mJobListTestFileFolder = "JobListTestFiles";
+        private readonly string mJobListTestKnownGoodFolder = "JobListTestKnownGood";
 
-        private string mJobListTestFileFolder = "JobListTestFiles";
-        private string mJobListTestKnownGoodFolder = "JobListTestKnownGood";
-
-        private string mJobInputResultsFolder = "JobResultsFolders";
-        private string mExtractionResultsFromTestFolder = "ExtractionResultsFromTest";
+        private readonly string mJobInputResultsFolder = "JobResultsFolders";
+        private readonly string mExtractionResultsFromTestFolder = "ExtractionResultsFromTest";
 
         // Test case columns
         int JobListFileIdx = 0;
@@ -38,11 +36,7 @@ namespace MageExtractorTest
 
         #region Properties
 
-        public string TestRootFolderPath
-        {
-            get => mTestRootFolderPath;
-            set => mTestRootFolderPath = value;
-        }
+        public string TestDirectoryPath { get; set; } = @"C:\Data\ExtractorTests";
 
         #endregion
 
@@ -64,10 +58,10 @@ namespace MageExtractorTest
         /// </summary>
         protected void RunAllExtractionTests()
         {
-            var testRootFolder = new DirectoryInfo(mTestRootFolderPath);
-            if (!testRootFolder.Exists)
+            var testRootDirectory = new DirectoryInfo(TestDirectoryPath);
+            if (!testRootDirectory.Exists)
             {
-                UpdateMessage("Root test folder not found; cannot run tests: " + testRootFolder.FullName);
+                UpdateMessage("Root test folder not found; cannot run tests: " + testRootDirectory.FullName);
                 return;
             }
 
@@ -76,7 +70,7 @@ namespace MageExtractorTest
             Console.WriteLine("Extraction Tests Begin");
 
             // Get test cases to run
-            var testCaseFilePath = Path.Combine(testRootFolder.FullName, Path.Combine(mTestCasesFolder, "LocalJobExtractionTestCases.txt")); // JobExtractionTestCases.txt
+            var testCaseFilePath = Path.Combine(testRootDirectory.FullName, Path.Combine(mTestCasesFolder, "LocalJobExtractionTestCases.txt")); // JobExtractionTestCases.txt
             var cases = GetFileContentsToSink(testCaseFilePath);
 
             // Run each case
@@ -86,15 +80,15 @@ namespace MageExtractorTest
 
         public void RunExtractionTestCases(SimpleSink cases)
         {
-            var testRootFolder = new DirectoryInfo(mTestRootFolderPath);
-            if (!testRootFolder.Exists)
+            var testRootDirectory = new DirectoryInfo(TestDirectoryPath);
+            if (!testRootDirectory.Exists)
             {
-                UpdateMessage("Root test folder not found; cannot run tests: " + testRootFolder.FullName);
+                UpdateMessage("Root test folder not found; cannot run tests: " + testRootDirectory.FullName);
                 return;
             }
 
             UpdateMessage("Extraction Tests Begin");
-            var testResultsPath = Path.Combine(testRootFolder.FullName, mExtractionResultsFromTestFolder);
+            var testResultsPath = Path.Combine(testRootDirectory.FullName, mExtractionResultsFromTestFolder);
 
             foreach (var file in Directory.GetFiles(testResultsPath))
             {
@@ -107,7 +101,7 @@ namespace MageExtractorTest
 
                 // Get job list to extract from
                 var jobListFileName = testCase[JobListFileIdx];
-                var jobListFilePath = Path.Combine(testRootFolder.FullName, Path.Combine(mJobListTestFileFolder, jobListFileName));
+                var jobListFilePath = Path.Combine(testRootDirectory.FullName, Path.Combine(mJobListTestFileFolder, jobListFileName));
                 var jobList = GetFileContentsToSink(jobListFilePath);
 
                 // Adjust job list for local folders
@@ -150,12 +144,12 @@ namespace MageExtractorTest
         private void AdjustFolderPathForLocalFolders(SimpleSink jobList)
         {
             // Adjust job list for local folders
-            var folderColIdx = jobList.ColumnIndex["Folder"];
-            var localPath = Path.Combine(mTestRootFolderPath, mJobInputResultsFolder);
-            for (var i = 0; i < jobList.Rows.Count; i++)
+            var folderColIdx = jobList.ColumnIndex["Directory"];
+            var localPath = Path.Combine(TestDirectoryPath, mJobInputResultsFolder);
+            foreach (var currentRow in jobList.Rows)
             {
-                var folder = jobList.Rows[i][folderColIdx];
-                jobList.Rows[i][folderColIdx] = folder.Replace("[local]", localPath);
+                var folder = currentRow[folderColIdx];
+                currentRow[folderColIdx] = folder.Replace("[local]", localPath);
             }
         }
 
@@ -165,16 +159,16 @@ namespace MageExtractorTest
 
         protected void RunAllFindFilesTests()
         {
-            var testRootFolder = new DirectoryInfo(mTestRootFolderPath);
-            if (!testRootFolder.Exists)
+            var testRootDirectory = new DirectoryInfo(TestDirectoryPath);
+            if (!testRootDirectory.Exists)
             {
-                UpdateMessage("Root test folder not found; cannot run tests: " + testRootFolder.FullName);
+                UpdateMessage("Root test folder not found; cannot run tests: " + testRootDirectory.FullName);
                 return;
             }
 
             // "Sequest Synopsis" "Sequest First Hits"  "X!Tandem First Protein"  "X!Tandem All Proteins"  "Inspect Synopsis"
 
-            var testCaseFilePath = Path.Combine(testRootFolder.FullName, Path.Combine(mTestCasesFolder, "FileListTestCases.txt"));
+            var testCaseFilePath = Path.Combine(testRootDirectory.FullName, Path.Combine(mTestCasesFolder, "FileListTestCases.txt"));
             var cases = GetFileContentsToSink(testCaseFilePath);
 
             var extractionParms = new ExtractionType();
@@ -192,14 +186,14 @@ namespace MageExtractorTest
         /// </summary>
         protected void TestFindFilesForJobList(string jobListFileName, ExtractionType extractionParms)
         {
-            var testRootFolder = new DirectoryInfo(mTestRootFolderPath);
-            if (!testRootFolder.Exists)
+            var testRootDirectory = new DirectoryInfo(TestDirectoryPath);
+            if (!testRootDirectory.Exists)
             {
-                UpdateMessage("Root test folder not found; cannot run tests: " + testRootFolder.FullName);
+                UpdateMessage("Root test folder not found; cannot run tests: " + testRootDirectory.FullName);
                 return;
             }
 
-            var jobList = GetFileContentsToSink(Path.Combine(testRootFolder.FullName, Path.Combine(mJobListTestFileFolder, jobListFileName)));
+            var jobList = GetFileContentsToSink(Path.Combine(testRootDirectory.FullName, Path.Combine(mJobListTestFileFolder, jobListFileName)));
 
             var fileListSink = new SimpleSink();
 
@@ -208,7 +202,7 @@ namespace MageExtractorTest
             p.RunRoot(null);
 
             var goodFileName = Path.GetFileNameWithoutExtension(jobListFileName) + "_file_list.txt";
-            var goodValues = GetFileContentsToSink(Path.Combine(testRootFolder.FullName, Path.Combine(mJobListTestKnownGoodFolder, goodFileName)));
+            var goodValues = GetFileContentsToSink(Path.Combine(testRootDirectory.FullName, Path.Combine(mJobListTestKnownGoodFolder, goodFileName)));
             var errorMsg = CompareSinks(fileListSink, goodValues);
             if (string.IsNullOrEmpty(errorMsg))
             {
@@ -227,8 +221,7 @@ namespace MageExtractorTest
 
         private SimpleSink GetFileContentsToSink(string path)
         {
-            var reader = new DelimitedFileReader();
-            reader.FilePath = path;
+            var reader = new DelimitedFileReader { FilePath = path };
             var sink = new SimpleSink();
             ProcessingPipeline.Assemble("FileContents", reader, sink).RunRoot(null);
             return sink;
@@ -236,8 +229,7 @@ namespace MageExtractorTest
 
         private void WriteSinkContentsToFile(SimpleSink sink, string path)
         {
-            var writer = new DelimitedFileWriter();
-            writer.FilePath = path;
+            var writer = new DelimitedFileWriter { FilePath = path };
             ProcessingPipeline.Assemble("SinkDump", sink, writer).RunRoot(null);
         }
 
@@ -301,10 +293,7 @@ namespace MageExtractorTest
 
         private void UpdateMessage(string message)
         {
-            if (OnMessageUpdated != null)
-            {
-                OnMessageUpdated(this, new MageStatusEventArgs(message));
-            }
+            OnMessageUpdated?.Invoke(this, new MageStatusEventArgs(message));
         }
 
         #endregion

@@ -13,9 +13,9 @@ namespace Mage
     public class FileProcessingBase : BaseModule
     {
         /// <summary>
-        /// Folder name to use when caching MyEMSL files locally
+        /// Directory name to use when caching MyEMSL files locally
         /// </summary>
-        public const string MAGE_TEMP_FILES_FOLDER = "Mage_Temp_Files";
+        public const string MAGE_TEMP_FILES_DIRECTORY = "Mage_Temp_Files";
 
         /// <summary>
         /// Text to look for when determining if a file is stored in MyEMSL
@@ -71,13 +71,13 @@ namespace Mage
         ///   \\adms.emsl.pnl.gov\dmsarch\VPro01\2013_3\QC_Shew_13_04a_500ng_10Sep13_Tiger_13-07-36
         ///   \\aurora.emsl.pnl.gov\archive\dmsarch\VPro01\2013_3\QC_Shew_13_04a_500ng_10Sep13_Tiger_13-07-36
         ///   \\a2.emsl.pnl.gov\dmsarch\VPro01\2013_3\QC_Shew_13_04a_500ng_10Sep13_Tiger_13-07-36
-        /// The RegEx can also be used to determine the portion of a path that includes parent folders and the dataset folder
+        /// The RegEx can also be used to determine the portion of a path that includes parent directories and the dataset directory
         /// </summary>
         private readonly Regex mDatasetMatchStrict = new Regex(@"\\\\[^\\]+(?:\\[^\\]+)?(?:\\[^\\]+)?\\[^\\]+\\2[0-9][0-9][0-9]_[1-4]\\(?<Dataset>[^\\]+)", RegexOptions.Compiled);
 
         /// <summary>
         /// RegEx to extract the dataset name from a path of the form \2013_3\QC_Shew_13_04f_500ng_10Sep13_Tiger_13-07-34
-        /// /// The RegEx can also be used to determine the portion of a path that includes parent folders and the dataset folder
+        /// he RegEx can also be used to determine the portion of a path that includes parent directories and the dataset directory
         /// </summary>
         private readonly Regex mDatasetMatchLoose = new Regex(@"(^|\\)2[0-9][0-9][0-9]_[1-4]\\(?<Dataset>[^\\]+)", RegexOptions.Compiled);
 
@@ -91,13 +91,13 @@ namespace Mage
                 // We only want to attach these events once since m_MyEMSLDatasetInfoCache is static
                 // However, I have found that if I only attach the Progress Event once, the GUI form does not display the progress messages (even though they are, in fact, being actively handled by this class)
                 m_MyEMSLEventsAttached = true;
-                m_MyEMSLDatasetInfoCache.ErrorEvent += m_MyEMSLDatasetInfoCache_ErrorEvent;
-                m_MyEMSLDatasetInfoCache.StatusEvent += m_MyEMSLDatasetInfoCache_MessageEvent;
+                m_MyEMSLDatasetInfoCache.ErrorEvent += MyEMSLDatasetInfoCache_ErrorEvent;
+                m_MyEMSLDatasetInfoCache.StatusEvent += MyEMSLDatasetInfoCache_MessageEvent;
             }
 
             // As mentioned above, we need to attach this event every time the class is instantiated
             // This will result in duplicate calls to m_MyEMSLDatasetInfoCache_ProgressEvent by m_MyEMSLDatasetInfoCache.ProgressEvent but that doesn't hurt anything
-            m_MyEMSLDatasetInfoCache.ProgressUpdate += m_MyEMSLDatasetInfoCache_ProgressEvent;
+            m_MyEMSLDatasetInfoCache.ProgressUpdate += MyEMSLDatasetInfoCache_ProgressEvent;
         }
 
         /// <summary>
@@ -184,19 +184,19 @@ namespace Mage
         }
 
         /// <summary>
-        /// Determine the name of a dataset given a folder path
+        /// Determine the name of a dataset given a directory path
         /// </summary>
-        /// <param name="folderPath">Folder path to examine</param>
+        /// <param name="directoryPath">Directory path to examine</param>
         /// <returns>The dataset name if found; empty string if the dataset name could not be determined</returns>
-        protected string DetermineDatasetName(string folderPath)
+        protected string DetermineDatasetName(string directoryPath)
         {
             var datasetName = string.Empty;
 
-            // Parse the folderPath with a RegEx to extract the dataset name
-            var reMatch = mDatasetMatchStrict.Match(folderPath);
+            // Parse the directoryPath with a RegEx to extract the dataset name
+            var reMatch = mDatasetMatchStrict.Match(directoryPath);
 
             if (!reMatch.Success)
-                reMatch = mDatasetMatchLoose.Match(folderPath);
+                reMatch = mDatasetMatchLoose.Match(directoryPath);
 
             if (reMatch.Success)
             {
@@ -210,9 +210,9 @@ namespace Mage
         /// Determine the name using the Dataset column in a given row of data
         /// </summary>
         /// <param name="bufferRow">Row of data to examine; should contain a dataset column in the OutputColumnPos object</param>
-        /// <param name="folderPath">Folder path use if bufferRow does not contain a dataset column</param>
+        /// <param name="directoryPath">Directory path use if bufferRow does not contain a dataset column</param>
         /// <returns>The dataset name if found; empty string if the dataset name could not be determined</returns>
-        protected string DetermineDatasetName(string[] bufferRow, string folderPath)
+        protected string DetermineDatasetName(string[] bufferRow, string directoryPath)
         {
             string datasetName;
 
@@ -236,7 +236,7 @@ namespace Mage
             }
             else
             {
-                datasetName = DetermineDatasetName(folderPath);
+                datasetName = DetermineDatasetName(directoryPath);
             }
 
             return datasetName;
@@ -261,7 +261,7 @@ namespace Mage
 
                 if (m_FilterPassingMyEMSLFiles.TryGetValue(myEMSLFileID, out var cachedFileInfo))
                 {
-                    filePathLocal = Path.Combine(Path.GetTempPath(), MAGE_TEMP_FILES_FOLDER, cachedFileInfo.FileInfo.Dataset, Path.GetFileName(filePathClean));
+                    filePathLocal = Path.Combine(Path.GetTempPath(), MAGE_TEMP_FILES_DIRECTORY, cachedFileInfo.FileInfo.Dataset, Path.GetFileName(filePathClean));
 
                     OnStatusMessageUpdated(new MageStatusEventArgs("Downloading file from MyEMSL: " + cachedFileInfo.FileInfo.RelativePathWindows));
 
@@ -269,7 +269,7 @@ namespace Mage
                     const bool unzipRequired = false;
                     m_MyEMSLDatasetInfoCache.AddFileToDownloadQueue(myEMSLFileID, cachedFileInfo.FileInfo, unzipRequired, filePathLocal);
 
-                    // Note that the target folder path will be ignored since we explicitly defined the destination file path when queuing the file
+                    // Note that the target directory path will be ignored since we explicitly defined the destination file path when queuing the file
                     var success = m_MyEMSLDatasetInfoCache.ProcessDownloadQueue(".", Downloader.DownloadLayout.SingleDataset);
                     if (!success)
                     {
@@ -296,28 +296,28 @@ namespace Mage
         }
 
         /// <summary>
-        /// Examines the folder path to find the parent folders, including the dataset folder
+        /// Examines the directory path to find the parent directories, including the dataset directory
         /// For example, given   \\proto-7\VOrbi05\2013_3\QC_Shew_13_02_500ng_4_HCD_26Jul13_Lynx_13-02-04\SIC201307301439_Auto965355
         /// The path returned is \\proto-7\VOrbi05\2013_3\QC_Shew_13_02_500ng_4_HCD_26Jul13_Lynx_13-02-04
         /// </summary>
-        /// <param name="folderPath">Path to examine</param>
-        /// <returns>Parent folders, including the dataset folder</returns>
-        protected string ExtractParentDatasetFolders(string folderPath)
+        /// <param name="directoryPath">Path to examine</param>
+        /// <returns>Parent directories, including the dataset directory</returns>
+        protected string ExtractParentDatasetDirectories(string directoryPath)
         {
-            var parentFolders = string.Empty;
+            var parentDirectories = string.Empty;
 
-            // Parse the folderPath with a RegEx to extract the parent folders
-            var reMatch = mDatasetMatchStrict.Match(folderPath);
+            // Parse the directoryPath with a RegEx to extract the parent directories
+            var reMatch = mDatasetMatchStrict.Match(directoryPath);
 
             if (!reMatch.Success)
-                reMatch = mDatasetMatchLoose.Match(folderPath);
+                reMatch = mDatasetMatchLoose.Match(directoryPath);
 
             if (reMatch.Success)
             {
-                parentFolders = reMatch.ToString();
+                parentDirectories = reMatch.ToString();
             }
 
-            return parentFolders;
+            return parentDirectories;
         }
 
         /// <summary>
@@ -346,29 +346,29 @@ namespace Mage
         }
 
         /// <summary>
-        /// Examines the path to determine the parent folders and possible subdirectory for a given dataset
+        /// Examines the path to determine the parent directories and possible subdirectory for a given dataset
         /// </summary>
-        /// <param name="folderPath"></param>
+        /// <param name="directoryPath"></param>
         /// <param name="datasetName"></param>
         /// <param name="subDir"></param>
-        /// <param name="parentFolders"></param>
-        protected void GetMyEMSLParentFoldersAndSubDir(string folderPath, string datasetName, out string subDir, out string parentFolders)
+        /// <param name="parentDirectories"></param>
+        protected void GetMyEMSLParentDirectoriesAndSubDir(string directoryPath, string datasetName, out string subDir, out string parentDirectories)
         {
             subDir = string.Empty;
 
-            parentFolders = ExtractParentDatasetFolders(folderPath);
-            if (string.IsNullOrEmpty(parentFolders))
+            parentDirectories = ExtractParentDatasetDirectories(directoryPath);
+            if (string.IsNullOrEmpty(parentDirectories))
             {
-                parentFolders = MYEMSL_PATH_FLAG + @"\Instrument\2013_1\" + datasetName;
+                parentDirectories = MYEMSL_PATH_FLAG + @"\Instrument\2013_1\" + datasetName;
             }
             else
             {
-                if (folderPath.Length > parentFolders.Length)
+                if (directoryPath.Length > parentDirectories.Length)
                 {
-                    subDir = folderPath.Substring(parentFolders.Length);
+                    subDir = directoryPath.Substring(parentDirectories.Length);
                     subDir = subDir.TrimStart('\\');
                 }
-                parentFolders = parentFolders.TrimEnd('\\');
+                parentDirectories = parentDirectories.TrimEnd('\\');
             }
         }
 
@@ -378,19 +378,20 @@ namespace Mage
         /// </summary>
         public override bool PostProcess()
         {
-            // Note that the target folder path will most likely be ignored since explicit destination file paths were likely used when files were added to the queue
+            // Note that the target directory path will most likely be ignored since
+            // explicit destination file paths were likely used when files were added to the queue
             var success = ProcessMyEMSLDownloadQueue(".", Downloader.DownloadLayout.SingleDataset);
             return success;
         }
 
         /// <summary>
-        /// Download queued MyEMSL files to the specified folder
+        /// Download queued MyEMSL files to the specified directory
         /// </summary>
-        /// <param name="downloadFolderPath">Target folder path to save the files in</param>
-        /// <param name="folderLayout">Folder layout to use</param>
+        /// <param name="downloadDirectoryPath">Target directory path to save the files in</param>
+        /// <param name="directoryLayout">Directory layout to use</param>
         /// <returns>True if success (including an empty queue), false if an error</returns>
-        /// <remarks>Any queued files that have explicit download paths will be downloaded to the explicit path and not downloadFolderPath</remarks>
-        protected bool ProcessMyEMSLDownloadQueue(string downloadFolderPath, Downloader.DownloadLayout folderLayout)
+        /// <remarks>Any queued files that have explicit download paths will be downloaded to the explicit path and not downloadDirectoryPath</remarks>
+        protected bool ProcessMyEMSLDownloadQueue(string downloadDirectoryPath, Downloader.DownloadLayout directoryLayout)
         {
             if (m_MyEMSLDatasetInfoCache.FilesToDownload.Count == 0)
                 return true;
@@ -400,7 +401,7 @@ namespace Mage
             else
                 OnStatusMessageUpdated(new MageStatusEventArgs("Downloading " + m_MyEMSLDatasetInfoCache.FilesToDownload.Count + " files from MyEMSL"));
 
-            var success = m_MyEMSLDatasetInfoCache.ProcessDownloadQueue(downloadFolderPath, folderLayout);
+            var success = m_MyEMSLDatasetInfoCache.ProcessDownloadQueue(downloadDirectoryPath, directoryLayout);
 
             foreach (var errorMessage in m_MyEMSLDatasetInfoCache.ErrorMessages)
             {
@@ -415,12 +416,12 @@ namespace Mage
         #region "Event Handlers"
 
 
-        void m_MyEMSLDatasetInfoCache_ErrorEvent(string message, Exception ex)
+        void MyEMSLDatasetInfoCache_ErrorEvent(string message, Exception ex)
         {
             OnWarningMessage(new MageStatusEventArgs("MyEMSL downloader: " + message));
         }
 
-        void m_MyEMSLDatasetInfoCache_MessageEvent(string message)
+        void MyEMSLDatasetInfoCache_MessageEvent(string message)
         {
             if (!message.Contains("Downloading ") && !message.Contains("Overwriting ") && !message.Contains("Skipping "))
             {
@@ -431,7 +432,7 @@ namespace Mage
             }
         }
 
-        void m_MyEMSLDatasetInfoCache_ProgressEvent(string progressMessage, float percentComplete)
+        void MyEMSLDatasetInfoCache_ProgressEvent(string progressMessage, float percentComplete)
         {
             if (percentComplete >= 100 - Single.Epsilon)
                 OnStatusMessageUpdated(new MageStatusEventArgs("Downloading files from MyEMSL: 100% complete"));

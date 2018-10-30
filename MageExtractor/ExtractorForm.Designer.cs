@@ -429,7 +429,7 @@
             this.FolderDestinationPanel1.Margin = new System.Windows.Forms.Padding(5);
             this.FolderDestinationPanel1.Name = "FolderDestinationPanel1";
             this.FolderDestinationPanel1.OutputFile = "";
-            this.FolderDestinationPanel1.OutputFolder = "C:\\Data\\Junk";
+            this.FolderDestinationPanel1.OutputDirectory = "C:\\Data\\Junk";
             this.FolderDestinationPanel1.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
             this.FolderDestinationPanel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.FolderDestinationPanel1.Size = new System.Drawing.Size(1195, 86);

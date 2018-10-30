@@ -7,7 +7,7 @@ namespace Mage
     /// <summary>
     /// Processes input rows from standard tabular input
     /// and passes only selected ones to standard tabular output
-    /// it is meant to be the base clase for subclasses that actually do the filtering
+    /// it is meant to be the base class for subclasses that actually do the filtering
     /// </summary>
     public class ContentFilter : BaseModule
     {
@@ -29,7 +29,7 @@ namespace Mage
         /// Handler for Mage standard tabular column definition
         /// (override of base class)
         ///
-        /// Let base class processess columns for us
+        /// Let base class process columns for us
         /// and pass the appropriate definitions to our listeners
         /// </summary>
         /// <param name="sender"></param>
@@ -107,11 +107,11 @@ namespace Mage
         }
 
         /// <summary>
-        /// Allows a content filter module to provide a file nane conversion
+        /// Allows a content filter module to provide a file name conversion
         /// </summary>
         /// <param name="sourceFile">name of input file</param>
         /// <param name="fieldPos">index of field in file metadata to be used for renaming</param>
-        /// <param name="fields">file metada</param>
+        /// <param name="fields">file metadata</param>
         /// <returns></returns>
         public virtual string RenameOutputFile(string sourceFile, Dictionary<string, int> fieldPos, string[] fields)
         {

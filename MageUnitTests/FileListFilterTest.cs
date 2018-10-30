@@ -17,21 +17,21 @@ namespace MageUnitTests
         /// A test for FileListFilter run as source using RegEx file selector mode
         /// </summary>
         [Test]
-        [TestCase(@"..\..\..\TestItems\TargetFolder")]
-        public void RunFileListFilterAsSourceRegEx(string testFolderPath)
+        [TestCase(@"..\..\..\TestItems\TargetDirectory")]
+        public void RunFileListFilterAsSourceRegEx(string testDirectoryPath)
         {
-            var testFolder = General.GetTestFolder(testFolderPath);
+            var testDirectory = General.GetTestDirectory(testDirectoryPath);
 
             var target = new FileListFilter
             {
                 FileColumnName = "File",
-                SourceFolderColumnName = "Folder",
+                SourceDirectoryColumnName = "Directory",
                 FileTypeColumnName = "Item"
             };
-            target.OutputColumnList = string.Format("{0}|+|text, {1}|+|text, {2}|+|text", target.FileTypeColumnName, target.FileColumnName, target.SourceFolderColumnName);
-            target.IncludeFilesOrFolders = "File";
+            target.OutputColumnList = string.Format("{0}|+|text, {1}|+|text, {2}|+|text", target.FileTypeColumnName, target.FileColumnName, target.SourceDirectoryColumnName);
+            target.IncludeFilesOrDirectories = "File";
 
-            target.AddFolderPath(testFolder.FullName);
+            target.AddDirectoryPath(testDirectory.FullName);
             target.FileNameSelector = @"2.txt;3\.txt";
             target.FileSelectorMode = "RegEx";
 
@@ -47,10 +47,10 @@ namespace MageUnitTests
             pipeline.RunRoot(null);
 
             var hits = 0;
-            var fileNameColIndx = 1;
+            var fileNameColIndex = 1;
             foreach (var item in sink.Rows)
             {
-                var s = item[fileNameColIndx];
+                var s = item[fileNameColIndex];
                 if (s == "TargetFile2.txt")
                     ++hits;
                 if (s == "TargetFile3.txt")
@@ -66,22 +66,22 @@ namespace MageUnitTests
         /// A test for FileListFilter run as source using file search selector mode
         /// </summary>
         [Test]
-        [TestCase(@"..\..\..\TestItems\TargetFolder")]
-        public void RunFileListFilterAsSourceFileSearch(string testFolderPath)
+        [TestCase(@"..\..\..\TestItems\TargetDirectory")]
+        public void RunFileListFilterAsSourceFileSearch(string testDirectoryPath)
         {
 
-            var testFolder = General.GetTestFolder(testFolderPath);
+            var testDirectory = General.GetTestDirectory(testDirectoryPath);
 
             var target = new FileListFilter
             {
                 FileColumnName = "File",
-                SourceFolderColumnName = "Folder",
+                SourceDirectoryColumnName = "Directory",
                 FileTypeColumnName = "Item"
             };
-            target.OutputColumnList = string.Format("{0}|+|text, {1}|+|text, {2}|+|text", target.FileTypeColumnName, target.FileColumnName, target.SourceFolderColumnName);
-            target.IncludeFilesOrFolders = "File";
+            target.OutputColumnList = string.Format("{0}|+|text, {1}|+|text, {2}|+|text", target.FileTypeColumnName, target.FileColumnName, target.SourceDirectoryColumnName);
+            target.IncludeFilesOrDirectories = "File";
 
-            target.AddFolderPath(testFolder.FullName);
+            target.AddDirectoryPath(testDirectory.FullName);
             target.FileNameSelector = "*2.txt;*3.txt";
             target.FileSelectorMode = "FileSearch";
 
@@ -97,10 +97,10 @@ namespace MageUnitTests
             pipeline.RunRoot(null);
 
             var hits = 0;
-            var fileNameColIndx = 1;
+            var fileNameColIndex = 1;
             foreach (var item in sink.Rows)
             {
-                var s = item[fileNameColIndx];
+                var s = item[fileNameColIndex];
                 if (s == "TargetFile2.txt")
                     ++hits;
                 if (s == "TargetFile3.txt")
@@ -118,21 +118,21 @@ namespace MageUnitTests
         /// Another option was using PrivateObject, which requires
         ///    Microsoft.VisualStudio.TestTools.UnitTesting and performs operations using reflection.
         /// </summary>
-        private class FileListFilterExtracter : FileListFilter
+        private class FileListFilterExtractor : FileListFilter
         {
             public List<string[]> OutputBuffer => mOutputBuffer;
         }
 
         /// <summary>
-        /// A test for GetFileNamesFromSourceFolder
+        /// A test for GetFileNamesFromSourceDirectory
         /// </summary>
         [Test]
-        public void GetFileNamesFromSourceFolderTest()
+        public void GetFileNamesFromSourceDirectoryTest()
         {
 
-            var target = new FileListFilterExtracter(); // TODO: Initialize to an appropriate value
+            var target = new FileListFilterExtractor(); // TODO: Initialize to an appropriate value
             var parms = new Dictionary<string, string> {
-                { "FolderPath", "TestFolderPath"}
+                { "DirectoryPath", "TestDirectoryPath"}
             };
             target.SetParameters(parms);
 
@@ -160,9 +160,9 @@ namespace MageUnitTests
 
             expected = "Test03";
             parms.Clear();
-            parms.Add("SourceFolderColumnName", expected);
+            parms.Add("SourceDirectoryColumnName", expected);
             target.SetParameters(parms);
-            actual = target.SourceFolderColumnName;
+            actual = target.SourceDirectoryColumnName;
             Assert.AreEqual(expected, actual);
         }
 
@@ -181,15 +181,15 @@ namespace MageUnitTests
         }
 
         /// <summary>
-        /// A test for SourceFolderColumnName
+        /// A test for SourceDirectoryColumnName
         /// </summary>
         [Test]
-        public void SourceFolderColumnNameTest()
+        public void SourceDirectoryColumnNameTest()
         {
             var target = new FileListFilter();
             var expected = "Test Value";
-            target.SourceFolderColumnName = expected;
-            var actual = target.SourceFolderColumnName;
+            target.SourceDirectoryColumnName = expected;
+            var actual = target.SourceDirectoryColumnName;
             Assert.AreEqual(expected, actual);
         }
 

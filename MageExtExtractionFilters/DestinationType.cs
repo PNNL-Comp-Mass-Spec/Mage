@@ -201,7 +201,7 @@ namespace MageExtExtractionFilters
                     }
                 }
             }
-            // TODO: check that dataset name is file and not folder
+            // TODO: check that dataset name is file and not directory
             return ok;
         }
 

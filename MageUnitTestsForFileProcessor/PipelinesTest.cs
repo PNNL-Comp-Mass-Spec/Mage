@@ -110,28 +110,28 @@ namespace MageUnitTestsForFileProcessor
         }
 
         /// <summary>
-        /// A test for MakePipelineToFilterSelectedfiles
+        /// A test for MakePipelineToFilterSelectedFiles
         /// </summary>
         [Test]
-        public void MakePipelineToFilterSelectedfilesTest()
+        public void MakePipelineToFilterSelectedFilesTest()
         {
 
             IBaseModule sourceObject = new DataGenerator(rows, cols);
 
             // For mode "File_Output"
 
-            runtimeParms = new Dictionary<string, string>() {
-                { "OutputFolder", "--" },
+            runtimeParms = new Dictionary<string, string> {
+                { "OutputDirectory", "--" },
                 { "OutputFile", "" },
                 { "OutputMode", ""},
                 { "ApplyPrefixToFileName", "File_Output" }
             };
 
-            var filterParms = new Dictionary<string, string>() {
+            var filterParms = new Dictionary<string, string> {
                 {"SelectedFilterClassName", "Bogus"}
             };
 
-            pipeline = Pipelines.MakePipelineToFilterSelectedfiles(sourceObject, runtimeParms, filterParms);
+            pipeline = Pipelines.MakePipelineToFilterSelectedFiles(sourceObject, runtimeParms, filterParms);
             Assert.AreNotEqual(null, pipeline);
 
             var module = pipeline.GetModule("DataGenerator1");
@@ -155,12 +155,12 @@ namespace MageUnitTestsForFileProcessor
 
             // For mode "SQLite_Output":
 
-            filterParms = new Dictionary<string, string>() {
+            filterParms = new Dictionary<string, string> {
                 {"SelectedFilterClassName", "Bogus"}
             };
 
-            runtimeParms = new Dictionary<string, string>() {
-                { "OutputFolder", "--" },
+            runtimeParms = new Dictionary<string, string> {
+                { "OutputDirectory", "--" },
                 { "OutputFile", "" },
                 { "OutputMode", "SQLite_Output"},
                 { "ApplyPrefixToFileName", "SQLite_Output" },
@@ -168,7 +168,7 @@ namespace MageUnitTestsForFileProcessor
                 { "TableName", "--" }
             };
 
-            pipeline = Pipelines.MakePipelineToFilterSelectedfiles(sourceObject, runtimeParms, filterParms);
+            pipeline = Pipelines.MakePipelineToFilterSelectedFiles(sourceObject, runtimeParms, filterParms);
             Assert.AreNotEqual(null, pipeline, "Failed to make pipeline for SQLite mode");
 
             module = pipeline.GetModule("FileSubPipelineBroker2");
@@ -192,14 +192,14 @@ namespace MageUnitTestsForFileProcessor
 
             runtimeParms = new Dictionary<string, string>() {
                 { "FileColumnName", "File" },
-                { "IncludeFilesOrFolders", "Files" },
+                { "IncludeFilesOrDirectories", "Files" },
                 { "FileSelectors", "log.txt" },
                 { "FileSelectionMode", FileListFilter.FILE_SELECTOR_NORMAL },
-                { "SearchInSubfolders", "No"},
-                { "SubfolderSearchName", "*"},
-                { "SourceFolderColumnName", "Folder" },
+                { "SearchInSubdirectories", "No"},
+                { "SubdirectorySearchName", "*"},
+                { "SourceDirectoryColumnName", "Folder" },
                 { "ResolveCacheInfoFiles", "True"},
-                { "OutputColumnList", "File|+|text, Folder, Job, Dataset, Dataset_ID, Tool, Settings_File, Parameter_File, Instrument" }
+                { "OutputColumnList", "File|+|text, Directory, Job, Dataset, Dataset_ID, Tool, Settings_File, Parameter_File, Instrument" }
             };
 
             pipeline = Pipelines.MakeFileListPipeline(sourceObject, sinkObject, runtimeParms);
@@ -215,11 +215,11 @@ namespace MageUnitTestsForFileProcessor
 
             IBaseModule sourceObject = new DataGenerator(rows, cols);
 
-            runtimeParms = new Dictionary<string, string>() {
-                { "SourceFolderColumnName", "Folder" },
+            runtimeParms = new Dictionary<string, string> {
+                { "SourceDirectoryColumnName", "Directory" },
                 { "SourceFileColumnName", "File" },
                 { "OutputFileColumnName", "File" },
-                { "OutputFolder", "--" },
+                { "OutputDirectory", "--" },
                 { "OutputColumnList", "File, Job, Dataset, Dataset_ID, Tool, Settings_File, Parameter_File, Instrument" },
                 { "ApplyPrefixToFileName", "Yes" },
                 { "PrefixLeader", "Blue" },

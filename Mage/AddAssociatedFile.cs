@@ -26,7 +26,7 @@ namespace Mage
         /// </summary>
         public AddAssociatedFile()
         {
-            SourceFolderColumnName = "Folder";
+            SourceDirectoryColumnName = "Directory";
             SourceFileColumnName = "Name";
         }
 
@@ -36,10 +36,17 @@ namespace Mage
 
         /// <summary>
         /// Name of the column in the standard tabular input
-        /// that contains the input folder path
-        /// (optional - defaults to "Folder")
+        /// that contains the input directory path
+        /// (optional - defaults to "Directory"; previously defaulted to "Folder")
         /// </summary>
-        public string SourceFolderColumnName { get; }
+        public string SourceDirectoryColumnName { get; }
+
+        /// <summary>
+        /// Name of the column in the standard tabular input
+        /// that contains the input directory path
+        /// </summary>
+        [Obsolete("Use SourceDirectoryColumnName")]
+        public string SourceFolderColumnName => SourceDirectoryColumnName;
 
         /// <summary>
         /// Name of the column in the standard tabular input
@@ -69,7 +76,7 @@ namespace Mage
 
         #endregion
 
-        private int mInputFolderIdx;
+        private int mInputDirectoryIdx;
         private int mInputFileIdx;
         private int mAssocFileIdx;
 
@@ -91,7 +98,7 @@ namespace Mage
             var columnDefs = OutputColumnDefs ?? InputColumnDefs;
             OnColumnDefAvailable(new MageColumnEventArgs(columnDefs.ToArray()));
 
-            mInputFolderIdx = InputColumnPos[SourceFolderColumnName];
+            mInputDirectoryIdx = InputColumnPos[SourceDirectoryColumnName];
             mInputFileIdx = InputColumnPos[SourceFileColumnName];
             mAssocFileIdx = InputColumnPos[ColumnToReceiveAssocFileName];
         }
@@ -105,7 +112,7 @@ namespace Mage
         {
             if (args.DataAvailable)
             {
-                var folderPathSpec = args.Fields[mInputFolderIdx];
+                var directoryPathSpec = args.Fields[mInputDirectoryIdx];
                 var resultFileName = args.Fields[mInputFileIdx];
 
                 var assocFileName = string.Empty;
@@ -137,25 +144,25 @@ namespace Mage
                 }
                 else
                 {
-                    // FolderPathSpec may contain multiple folders, separated by a vertical bar
-                    // If that is the case, then we'll search for files in each folder, preferentially using files in the folder listed first
-                    var folderPaths = new List<string>();
-                    if (folderPathSpec.Contains('|'))
+                    // directoryPathSpec may contain multiple directories, separated by a vertical bar
+                    // If that is the case, then we'll search for files in each directory, preferentially using files in the directory listed first
+                    var directoryPaths = new List<string>();
+                    if (directoryPathSpec.Contains('|'))
                     {
-                        folderPaths = folderPathSpec.Split('|').ToList();
+                        directoryPaths = directoryPathSpec.Split('|').ToList();
                     }
                     else
                     {
-                        folderPaths.Add(folderPathSpec);
+                        directoryPaths.Add(directoryPathSpec);
                     }
 
-                    foreach (var resultFolderPath in folderPaths)
+                    foreach (var resultsDirectoryPath in directoryPaths)
                     {
-                        if (resultFolderPath.StartsWith(MYEMSL_PATH_FLAG))
+                        if (resultsDirectoryPath.StartsWith(MYEMSL_PATH_FLAG))
                         {
-                            var datasetName = DetermineDatasetName(resultFolderPath);
+                            var datasetName = DetermineDatasetName(resultsDirectoryPath);
 
-                            GetMyEMSLParentFoldersAndSubDir(resultFolderPath, datasetName, out var subDir, out _);
+                            GetMyEMSLParentDirectoriesAndSubDir(resultsDirectoryPath, datasetName, out var subDir, out _);
 
                             DatasetInfoBase.ExtractMyEMSLFileID(assocFileName, out var assocFileNameClean);
 
@@ -170,7 +177,7 @@ namespace Mage
 
                             }
                         }
-                        else if (File.Exists(Path.Combine(resultFolderPath, assocFileName)))
+                        else if (File.Exists(Path.Combine(resultsDirectoryPath, assocFileName)))
                         {
                             args.Fields[mAssocFileIdx] = assocFileName;
                             break;

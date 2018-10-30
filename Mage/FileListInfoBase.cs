@@ -10,13 +10,13 @@ namespace Mage
     /// <summary>
     /// This module serves as the base class for either FileListFilter or FileListInfoLookup
     ///
-    /// If using FileListFilter, then pass in a list of folder paths to be searched
-    /// If using FileListInfoLookup, then pass in a list of file paths whose file information should be determined
+    /// If using FileListFilter, pass in a list of directory paths to be searched
+    /// If using FileListInfoLookup, pass in a list of file paths whose file information should be determined
     ///
-    /// This module can receive the list of source folders either via its HandleDataRow listener
+    /// This module can receive the list of source directories via either its HandleDataRow listener
     /// (it will accumulate the list into an internal file path buffer and then use it to look for files)
-    /// or it may be run as a source module after one or more source folders are specified by
-    /// setting the "FolderPath" property/parameter
+    /// or it may be run as a source module after one or more source directories are specified by
+    /// setting the "DirectoryPath" property/parameter
     ///
     /// This module uses output column definitions
     /// the internal defaults will provide a functional minimum even if the
@@ -34,18 +34,18 @@ namespace Mage
 
         /// <summary>
         /// Buffer that accumulates a row of output fields for each input row
-        /// received via standard tabular input or via the "FolderPath" property
-        /// It includes the folder path column to be searched for files
+        /// received via standard tabular input or via the "DirectoryPath" property
+        /// It includes the directory path column to be searched for files
         /// so it also functions as an internal file path buffer
         /// </summary>
         protected readonly List<string[]> mOutputBuffer = new List<string[]>();
 
-        // these are used by the file/subfolder search logic
+        // these are used by the file/subdirectory search logic
 
         /// <summary>
-        /// Column index that has the folder path
+        /// Column index that has the directory path
         /// </summary>
-        protected int mFolderPathColIndex = -1;
+        protected int mDirectoryPathColIndex = -1;
 
         private int mFileNameOutColIndex = -1;
         private int mFileSizeOutColIndex = -1;
@@ -77,18 +77,29 @@ namespace Mage
         public const string COLUMN_NAME_FILE_DATE = "File_Date";
 
         /// <summary>
-        /// Default column name for the source folder column
+        /// Default column name for the source directory column
         /// </summary>
-        public const string COLUMN_NAME_SOURCE_FOLDER = "Folder";
+
+        public const string COLUMN_NAME_SOURCE_DIRECTORY = "Directory";
 
         #endregion
 
         #region Properties
 
         /// <summary>
-        /// The name of the input column that contains the folder path to search for files
+        /// The name of the input column that contains the directory path to search for files
         /// </summary>
-        public string SourceFolderColumnName { get; set; }
+        public string SourceDirectoryColumnName { get; set; }
+
+        /// <summary>
+        /// The name of the input column that contains the directory path to search for files
+        /// </summary>
+        [Obsolete("Use SourceDirectoryColumnName")]
+        public string SourceFolderColumnName
+        {
+            get => SourceDirectoryColumnName;
+            set => SourceDirectoryColumnName = value;
+        }
 
         /// <summary>
         /// Name of output column that will receive filename
@@ -119,12 +130,12 @@ namespace Mage
         /// </summary>
         protected FileListInfoBase()
         {
-            FileTypeColumnName = COLUMN_NAME_FILE_TYPE;             // Item
-            FileColumnName = COLUMN_NAME_FILE_NAME;                 // File
-            FileSizeColumnName = COLUMN_NAME_FILE_SIZE;             // File_Size_KB
-            FileDateColumnName = COLUMN_NAME_FILE_DATE;             // File_Date
-            SourceFolderColumnName = COLUMN_NAME_SOURCE_FOLDER;     // Folder
-            OutputColumnList = string.Format("{0}|+|text, {1}|+|text, {2}|+|text, {3}|+|text, {4}|+|text", FileTypeColumnName, FileColumnName, FileSizeColumnName, FileDateColumnName, SourceFolderColumnName);
+            FileTypeColumnName = COLUMN_NAME_FILE_TYPE;                     // Item
+            FileColumnName = COLUMN_NAME_FILE_NAME;                         // File
+            FileSizeColumnName = COLUMN_NAME_FILE_SIZE;                     // File_Size_KB
+            FileDateColumnName = COLUMN_NAME_FILE_DATE;                     // File_Date
+            SourceDirectoryColumnName = COLUMN_NAME_SOURCE_DIRECTORY;       // Directory
+            OutputColumnList = string.Format("{0}|+|text, {1}|+|text, {2}|+|text, {3}|+|text, {4}|+|text", FileTypeColumnName, FileColumnName, FileSizeColumnName, FileDateColumnName, SourceDirectoryColumnName);
         }
 
         #endregion
@@ -133,14 +144,14 @@ namespace Mage
 
         /// <summary>
         /// Called when this module functions as source module
-        /// (requires that optional property FolderPath be set)
+        /// (requires that optional property DirectoryPath be set)
         /// </summary>
         /// <param name="state"></param>
         public override void Run(object state)
         {
             SetupOutputColumns();
             ExportColumnDefs();
-            SearchFoldersAndOutputFiles();
+            SearchDirectoriesAndOutputFiles();
         }
 
 
@@ -148,8 +159,8 @@ namespace Mage
         /// Handler for Mage standard tabular input data rows
         /// (override of base class)
         ///
-        /// Receive storage folder path as column in data row,
-        /// and save it and the ID column value to our local folder path buffer
+        /// Receive storage directory path as column in data row,
+        /// and save it and the ID column value to our local directory path buffer
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -162,7 +173,7 @@ namespace Mage
             else
             {
                 // If we have subscribers, do the file lookup and tell them about it
-                SearchFoldersAndOutputFiles();
+                SearchDirectoriesAndOutputFiles();
             }
         }
 
@@ -206,29 +217,39 @@ namespace Mage
         protected abstract void SetupSearch();
 
         /// <summary>
-        /// Search for files in the given folder
+        /// Search for files in the given directory
         /// </summary>
         /// <param name="outputBufferRowIdx">Row index in mOutputBuffer to examine</param>
         /// <param name="fileInfo">Dictionary of found files (input/output parameter)</param>
-        /// <param name="subfolderInfo">Dictionary of found folders (input/output parameter)</param>
-        /// <param name="folderPath">Folder path to examine</param>
+        /// <param name="subdirectoryInfo">Dictionary of found directories (input/output parameter)</param>
+        /// <param name="directoryPath">Directory path to examine</param>
         /// <param name="datasetName">Dataset name</param>
-        protected abstract void SearchOneFolder(
+        protected abstract void SearchOneDirectory(
             int outputBufferRowIdx,
             Dictionary<string, FileInfo> fileInfo,
-            Dictionary<string, DirectoryInfo> subfolderInfo,
-            string folderPath,
+            Dictionary<string, DirectoryInfo> subdirectoryInfo,
+            string directoryPath,
             string datasetName);
 
         #endregion
 
         #region Private Functions
 
-        private void SearchFoldersAndOutputFiles()
+        private void SearchDirectoriesAndOutputFiles()
         {
 
             // Set up indexes for row columns
-            TryGetOutputColumnPos(SourceFolderColumnName, out mFolderPathColIndex);
+            var directoryColDefined = TryGetOutputColumnPos(SourceDirectoryColumnName, out mDirectoryPathColIndex);
+            if (!directoryColDefined && SourceDirectoryColumnName == "Directory")
+            {
+                TryGetOutputColumnPos("Folder", out mDirectoryPathColIndex);
+            }
+
+            if (mDirectoryPathColIndex < 0)
+            {
+                throw new MageException("SearchDirectoriesAndOutputFiles: Unable to determine the directory column index");
+            }
+
             TryGetOutputColumnPos(FileColumnName, out mFileNameOutColIndex);
             TryGetOutputColumnPos(FileSizeColumnName, out mFileSizeOutColIndex);
             TryGetOutputColumnPos(FileDateColumnName, out mFileDateOutColIndex);
@@ -246,18 +267,18 @@ namespace Mage
             // Determine the dataset name to use for each row in mOutputBuffer
             for (var outputBufferRowIdx = 0; outputBufferRowIdx < mOutputBuffer.Count; outputBufferRowIdx++)
             {
-                var folderPathSpec = string.Empty;
-                if (mFolderPathColIndex < mOutputBuffer[outputBufferRowIdx].Length)
-                    folderPathSpec = mOutputBuffer[outputBufferRowIdx][mFolderPathColIndex];
+                var directoryPathSpec = string.Empty;
+                if (mDirectoryPathColIndex < mOutputBuffer[outputBufferRowIdx].Length)
+                    directoryPathSpec = mOutputBuffer[outputBufferRowIdx][mDirectoryPathColIndex];
 
-                var datasetName = DetermineDatasetName(mOutputBuffer[outputBufferRowIdx], folderPathSpec);
+                var datasetName = DetermineDatasetName(mOutputBuffer[outputBufferRowIdx], directoryPathSpec);
 
-                if (folderPathSpec.Contains(MYEMSL_PATH_FLAG))
+                if (directoryPathSpec.Contains(MYEMSL_PATH_FLAG))
                 {
                     searchMyEMSL = true;
 
                     if (string.IsNullOrEmpty(datasetName))
-                        throw new MageException("Unable to determine dataset name for row " + (outputBufferRowIdx + 1) + ", file " + folderPathSpec);
+                        throw new MageException("Unable to determine dataset name for row " + (outputBufferRowIdx + 1) + ", file " + directoryPathSpec);
                 }
 
                 dctRowDatasets.Add(outputBufferRowIdx, datasetName);
@@ -270,7 +291,7 @@ namespace Mage
             }
 
 
-            // Go through each folder that we accumulated in our internal buffer
+            // Go through each directory that we accumulated in our internal buffer
             for (var outputBufferRowIdx = 0; outputBufferRowIdx < mOutputBuffer.Count; outputBufferRowIdx++)
             {
                 if (Abort)
@@ -279,29 +300,29 @@ namespace Mage
                     break;
                 }
 
-                var folderPathSpec = mOutputBuffer[outputBufferRowIdx][mFolderPathColIndex];
-                var folderPaths = new List<string>();
+                var directoryPathSpec = mOutputBuffer[outputBufferRowIdx][mDirectoryPathColIndex];
+                List<string> directoryPaths;
 
-                // FolderPathSpec may contain multiple folders, separated by a vertical bar
-                // If that is the case, then we'll search for files in each folder, preferentially using files in the folder listed first
-                if (folderPathSpec.Contains('|'))
+                // directoryPathSpec may contain multiple directories, separated by a vertical bar
+                // If that is the case, then we'll search for files in each directory, preferentially using files in the directory listed first
+                if (directoryPathSpec.Contains('|'))
                 {
-                    folderPaths = folderPathSpec.Split('|').ToList();
+                    directoryPaths = directoryPathSpec.Split('|').ToList();
                 }
                 else
                 {
-                    folderPaths.Add(folderPathSpec);
+                    directoryPaths = new List<string> {directoryPathSpec};
                 }
 
                 // This dictionary holds filename and file system info for each file that is found
                 var fileInfo = new Dictionary<string, FileInfo>(StringComparer.CurrentCultureIgnoreCase);
 
-                // This dictionary holds subfolder name file system info for each subfolder that is found
-                var subfolderInfo = new Dictionary<string, DirectoryInfo>(StringComparer.CurrentCultureIgnoreCase);
+                // This dictionary holds subdirectory name file system info for each subdirectory that is found
+                var subdirectoryInfo = new Dictionary<string, DirectoryInfo>(StringComparer.CurrentCultureIgnoreCase);
 
                 var datasetName = dctRowDatasets[outputBufferRowIdx];
 
-                foreach (var folderPath in folderPaths)
+                foreach (var directoryPath in directoryPaths)
                 {
                     if (Abort)
                     {
@@ -309,15 +330,15 @@ namespace Mage
                         break;
                     }
 
-                    traceLogFileList.Debug("FileListFilter: Searching folder " + folderPath);
-                    UpdateStatus("FileListFilter: Searching folder " + folderPath);
+                    traceLogFileList.Debug("FileListFilter: Searching directory " + directoryPath);
+                    UpdateStatus("FileListFilter: Searching directory " + directoryPath);
 
-                    SearchOneFolder(outputBufferRowIdx, fileInfo, subfolderInfo, folderPath, datasetName);
+                    SearchOneDirectory(outputBufferRowIdx, fileInfo, subdirectoryInfo, directoryPath, datasetName);
 
                 }
 
                 // Inform our subscribers of what we found
-                if ((fileInfo.Count == 0) && (subfolderInfo.Count == 0))
+                if ((fileInfo.Count == 0) && (subdirectoryInfo.Count == 0))
                 {
                     ReportNothingFound(outputBufferRowIdx);
                 }
@@ -344,11 +365,11 @@ namespace Mage
                     foreach (var entry in fileInfo)
                     {
                         string fileName;
-                        string folderPath;
+                        string directoryPath;
                         string fileSizeKB;
                         string fileDate;
 
-                        if (entry.Value.DirectoryName.StartsWith(MYEMSL_PATH_FLAG))
+                        if (entry.Value.DirectoryName != null && entry.Value.DirectoryName.StartsWith(MYEMSL_PATH_FLAG))
                         {
                             var myEMSLFileID = DatasetInfoBase.ExtractMyEMSLFileID(entry.Value.FullName);
 
@@ -360,7 +381,12 @@ namespace Mage
 
                             fileName = DatasetInfoBase.AppendMyEMSLFileID(archiveFileInfo.Filename, myEMSLFileID);
                             var fiMyEMSLFile = new FileInfo(MYEMSL_PATH_FLAG + "\\" + archiveFileInfo.PathWithInstrumentAndDatasetWindows);
-                            folderPath = fiMyEMSLFile.Directory.FullName;
+                            if (fiMyEMSLFile.Directory != null)
+                                directoryPath = fiMyEMSLFile.Directory.FullName;
+                            else
+                            {
+                                directoryPath = string.Empty;
+                            }
                             fileSizeKB = FileSizeBytesToString(archiveFileInfo.FileSizeBytes);
                             fileDate = archiveFileInfo.SubmissionTimeODBC12hr;
 
@@ -369,17 +395,18 @@ namespace Mage
                         else
                         {
                             fileName = entry.Key;
-                            folderPath = entry.Value.DirectoryName;
+                            directoryPath = entry.Value.DirectoryName;
                             fileSizeKB = FileSizeBytesToString(entry.Value.Length);
                             fileDate = entry.Value.LastWriteTime.ToString("yyyy-MM-dd hh:mm:ss tt");
                         }
-                        ReportFileFound(outputBufferRowIdx, folderPath, fileName, fileSizeKB, fileDate);
+                        ReportFileFound(outputBufferRowIdx, directoryPath, fileName, fileSizeKB, fileDate);
                     }
-                    foreach (var entry in subfolderInfo)
+
+                    foreach (var entry in subdirectoryInfo)
                     {
-                        var subfolderName = entry.Key;
-                        var folderPath = entry.Value.FullName;
-                        ReportSubfolderFound(outputBufferRowIdx, folderPath, subfolderName);
+                        var subdirectoryName = entry.Key;
+                        var directoryPath = entry.Value.FullName;
+                        ReportSubdirectoryFound(outputBufferRowIdx, directoryPath, subdirectoryName);
                     }
                 }
             }
@@ -415,23 +442,23 @@ namespace Mage
 
         #endregion
 
-        #region File/Subfolder Result Reporting
+        #region File/Subdirectory Result Reporting
 
         /// <summary>
-        /// Report a found subfolder to output
+        /// Report a found subdirectory to output
         /// </summary>
         /// <param name="outputBufferRowIdx">Index to row in mOutputBuffer</param>
-        /// <param name="folderPath"></param>
-        /// <param name="subfolderName"></param>
-        private void ReportSubfolderFound(int outputBufferRowIdx, string folderPath, string subfolderName)
+        /// <param name="directoryPath"></param>
+        /// <param name="subdirectoryName"></param>
+        private void ReportSubdirectoryFound(int outputBufferRowIdx, string directoryPath, string subdirectoryName)
         {
             var outRow = (string[])mOutputBuffer[outputBufferRowIdx].Clone(); // yes, we do want a shallow copy
             if (mFileTypeOutColIndex > -1)
             {
-                outRow[mFileTypeOutColIndex] = "folder";
-                outRow[mFolderPathColIndex] = folderPath;
+                outRow[mFileTypeOutColIndex] = "directory";
+                outRow[mDirectoryPathColIndex] = directoryPath;
             }
-            outRow[mFileNameOutColIndex] = subfolderName;
+            outRow[mFileNameOutColIndex] = subdirectoryName;
             // if (mFileSizeOutColIndex > -1)
             //    outRow[mFileSizeOutColIndex] = 0;
             OnDataRowAvailable(new MageDataEventArgs(outRow));
@@ -441,17 +468,17 @@ namespace Mage
         /// Report a found file to output
         /// </summary>
         /// <param name="outputBufferRowIdx">Index to row in mOutputBuffer</param>
-        /// <param name="folderPath"></param>
+        /// <param name="directoryPath"></param>
         /// <param name="fileName"></param>
         /// <param name="fileSizeKB"></param>
         /// /// <param name="fileDate"></param>
-        private void ReportFileFound(int outputBufferRowIdx, string folderPath, string fileName, string fileSizeKB, string fileDate)
+        private void ReportFileFound(int outputBufferRowIdx, string directoryPath, string fileName, string fileSizeKB, string fileDate)
         {
             var outRow = (string[])mOutputBuffer[outputBufferRowIdx].Clone(); // yes, we do want a shallow copy
             if (mFileTypeOutColIndex > -1)
             {
                 outRow[mFileTypeOutColIndex] = "file";
-                outRow[mFolderPathColIndex] = folderPath;
+                outRow[mDirectoryPathColIndex] = directoryPath;
             }
             outRow[mFileNameOutColIndex] = fileName;
             if (mFileSizeOutColIndex > -1)

@@ -52,7 +52,7 @@ namespace MageConcatenator
 
             try
             {
-                // Set up configuration folder and files
+                // Set up configuration directory and files
                 SavedState.SetupConfigFiles("MageConcatenator");
             }
             catch (Exception ex)
@@ -168,7 +168,7 @@ namespace MageConcatenator
         }
 
         /// <summary>
-        /// Construnct and run a Mage pipeline for the given command
+        /// Construct and run a Mage pipeline for the given command
         /// </summary>
         /// <param name="command"></param>
         private void BuildAndRunPipeline(MageCommandEventArgs command)
@@ -181,12 +181,20 @@ namespace MageConcatenator
 
                 switch (command.Action)
                 {
-                    case "get_files_from_local_folder":
-                        var runtimeParms = GetRuntimeParamsForLocalFolder();
-                        var sFolder = runtimeParms["Folder"];
-                        if (!Directory.Exists(sFolder))
+                    case "get_files_from_local_directory":
+                        var runtimeParms = GetRuntimeParamsForLocalDirectory();
+                        string sourceDirectory;
+
+                        if (runtimeParms.ContainsKey("Directory"))
+                            sourceDirectory = runtimeParms["Directory"];
+                        else if (runtimeParms.ContainsKey("Folder"))
+                            sourceDirectory = runtimeParms["Folder"];
+                        else
+                            throw new Exception("MageConcatenator.BuildAndRunPipeline: runtimeParms must contain Directory or Folder");
+
+                        if (!Directory.Exists(sourceDirectory))
                         {
-                            MessageBox.Show("Folder not found: " + sFolder, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            MessageBox.Show("Directory not found: " + sourceDirectory, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             return;
                         }
                         var sink = FileListDisplayControl.MakeSink("Files", 15);
@@ -264,9 +272,9 @@ namespace MageConcatenator
             {
                 var runtimeParms = GetRuntimeParamsForFileProcessing();
 
-                if (string.IsNullOrWhiteSpace(runtimeParms["OutputFolder"]))
+                if (string.IsNullOrWhiteSpace(runtimeParms["OutputDirectory"]))
                 {
-                    MessageBox.Show("Destination folder cannot be empty", "Error", MessageBoxButtons.OK,
+                    MessageBox.Show("Destination directory cannot be empty", "Error", MessageBoxButtons.OK,
                                     MessageBoxIcon.Exclamation);
                     return;
                 }
@@ -278,7 +286,7 @@ namespace MageConcatenator
                     return;
                 }
 
-                mCombineFilesTargetFilePath = Path.Combine(runtimeParms["OutputFolder"], runtimeParms["OutputFile"]);
+                mCombineFilesTargetFilePath = Path.Combine(runtimeParms["OutputDirectory"], runtimeParms["OutputFile"]);
 
                 if (processAllFiles)
                 {
@@ -497,7 +505,7 @@ namespace MageConcatenator
         }
 
         /// <summary>
-        /// Adjust the labelling and status of various UI components
+        /// Adjust the labeling and status of various UI components
         /// (called when a command pipeline completes via cross-thread invoke from HandleStatusMessageUpdated)
         /// </summary>
         /// <param name="status"></param>
@@ -532,42 +540,43 @@ namespace MageConcatenator
         }
         /// <summary>
         /// Since the list of files can be derived from different sources,
-        /// adjust the labelling to inform the user about which one was used
+        /// adjust the labeling to inform the user about which one was used
         /// </summary>
         private void AdjustFileListLabels()
         {
             switch (mCurrentCmd.Action)
             {
-                case "get_files_from_local_folder":
-                    FileListDisplayControl.PageTitle = mFileListLabelPrefix + "Local Folder";
+                case "get_files_from_local_directory":
+                    FileListDisplayControl.PageTitle = mFileListLabelPrefix + "Local Directory";
                     break;
             }
         }
 
-        private Dictionary<string, string> GetRuntimeParamsForLocalFolder()
+        private Dictionary<string, string> GetRuntimeParamsForLocalDirectory()
         {
-            var rp = new Dictionary<string, string>
+            var runtimeParams = new Dictionary<string, string>
             {
                 {"FileNameFilter", LocalFolderPanel1.FileNameFilter},
                 {"FileSelectionMode", LocalFolderPanel1.FileSelectionMode},
-                {"Folder", LocalFolderPanel1.Folder},
-                {"SearchInSubfolders", LocalFolderPanel1.SearchInSubfolders},
-                {"SubfolderSearchName", LocalFolderPanel1.SubfolderSearchName}
+                {"Directory", LocalFolderPanel1.Directory},
+                {"SearchInSubdirectories", LocalFolderPanel1.SearchInSubdirectories},
+                {"SubdirectorySearchName", LocalFolderPanel1.SubdirectorySearchName}
             };
-            return rp;
+            return runtimeParams;
         }
+
         private Dictionary<string, string> GetRuntimeParamsForFileProcessing()
         {
-            var rp = new Dictionary<string, string>
+            var runtimeParams = new Dictionary<string, string>
             {
-                {"OutputFolder", FolderDestinationPanel1.OutputFolder},
+                {"OutputDirectory", FolderDestinationPanel1.OutputDirectory},
                 {"OutputFile", FolderDestinationPanel1.OutputFile},
                 {"OutputMode", "File_Output"},
                 {"ManifestFileName", string.Format("Manifest_{0:yyyy-MM-dd_hhmmss}.txt", DateTime.Now)},
                 {"SourceFileColumnName", "File"}
             };
 
-            return rp;
+            return runtimeParams;
         }
         #endregion
 

@@ -47,8 +47,8 @@ namespace MageExtExtractionFilters
             OutputColumnList = "Job, Passed_Filter|+|text, *";
             base.HandleColumnDef(sender, args);
 
-            /// List<MageColumnDef> cd = (OutputColumnDefs != null) ? OutputColumnDefs : InputColumnDefs;
-            /// OnColumnDefAvailable(new MageColumnEventArgs(cd.ToArray()));
+            // List<MageColumnDef> cd = (OutputColumnDefs != null) ? OutputColumnDefs : InputColumnDefs;
+            // OnColumnDefAvailable(new MageColumnEventArgs(cd.ToArray()));
             OnColumnDefAvailable(new MageColumnEventArgs(OutputColumnDefs.ToArray()));
             PrecalculateFieldIndexes();
         }

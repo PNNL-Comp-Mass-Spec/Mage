@@ -23,7 +23,7 @@ namespace Mage
         private readonly Dictionary<string, string> mEntityList = new Dictionary<string, string>();
 
         // Accumulator list of factors
-        // It is a dictionary, keyed by entity ID, of dictionares of name/value pairs for the crosstab fields
+        // It is a dictionary, keyed by entity ID, of dictionaries of name/value pairs for the crosstab fields
         private readonly Dictionary<string, Dictionary<string, string>> mFactorList = new Dictionary<string, Dictionary<string, string>>();
 
         #endregion
@@ -123,7 +123,7 @@ namespace Mage
         private void RememberFactorData(MageDataEventArgs args)
         {
 
-            // Get values of critical fields using precalculated indexes
+            // Get values of critical fields using pre-calculated indexes
             var entityName = args.Fields[mEntityIdx];
             var entityID = args.Fields[mEntityIDIdx];
             var factor = args.Fields[mFactorIdx];

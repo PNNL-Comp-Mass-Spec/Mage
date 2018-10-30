@@ -30,11 +30,11 @@
         {
             this.panel3 = new System.Windows.Forms.Panel();
             this.DefineDestinationFileCtl = new System.Windows.Forms.Button();
-            this.SelectFolderCtl = new System.Windows.Forms.Button();
+            this.SelectDirectoryCtl = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.OutputFileCtl = new System.Windows.Forms.TextBox();
-            this.OutputFolderCtl = new System.Windows.Forms.TextBox();
+            this.OutputDirectoryCtl = new System.Windows.Forms.TextBox();
             this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -42,11 +42,11 @@
             // 
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel3.Controls.Add(this.DefineDestinationFileCtl);
-            this.panel3.Controls.Add(this.SelectFolderCtl);
+            this.panel3.Controls.Add(this.SelectDirectoryCtl);
             this.panel3.Controls.Add(this.label2);
             this.panel3.Controls.Add(this.label1);
             this.panel3.Controls.Add(this.OutputFileCtl);
-            this.panel3.Controls.Add(this.OutputFolderCtl);
+            this.panel3.Controls.Add(this.OutputDirectoryCtl);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(7, 6);
             this.panel3.Margin = new System.Windows.Forms.Padding(4);
@@ -66,17 +66,17 @@
             this.DefineDestinationFileCtl.UseVisualStyleBackColor = true;
             this.DefineDestinationFileCtl.Click += new System.EventHandler(this.DefineDestinationFileCtl_Click);
             // 
-            // SelectFolderCtl
+            // SelectDirectoryCtl
             // 
-            this.SelectFolderCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.SelectFolderCtl.Location = new System.Drawing.Point(861, 7);
-            this.SelectFolderCtl.Margin = new System.Windows.Forms.Padding(4);
-            this.SelectFolderCtl.Name = "SelectFolderCtl";
-            this.SelectFolderCtl.Size = new System.Drawing.Size(40, 28);
-            this.SelectFolderCtl.TabIndex = 2;
-            this.SelectFolderCtl.Text = "...";
-            this.SelectFolderCtl.UseVisualStyleBackColor = true;
-            this.SelectFolderCtl.Click += new System.EventHandler(this.SelectFolderCtl_Click);
+            this.SelectDirectoryCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.SelectDirectoryCtl.Location = new System.Drawing.Point(861, 7);
+            this.SelectDirectoryCtl.Margin = new System.Windows.Forms.Padding(4);
+            this.SelectDirectoryCtl.Name = "SelectDirectoryCtl";
+            this.SelectDirectoryCtl.Size = new System.Drawing.Size(40, 28);
+            this.SelectDirectoryCtl.TabIndex = 2;
+            this.SelectDirectoryCtl.Text = "...";
+            this.SelectDirectoryCtl.UseVisualStyleBackColor = true;
+            this.SelectDirectoryCtl.Click += new System.EventHandler(this.SelectDirectoryCtl_Click);
             // 
             // label2
             // 
@@ -94,31 +94,31 @@
             this.label1.Location = new System.Drawing.Point(4, 11);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(123, 17);
+            this.label1.Size = new System.Drawing.Size(140, 17);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Destination Folder";
+            this.label1.Text = "Destination Directory";
             // 
             // OutputFileCtl
             // 
             this.OutputFileCtl.AcceptsReturn = true;
-            this.OutputFileCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.OutputFileCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.OutputFileCtl.Location = new System.Drawing.Point(133, 40);
+            this.OutputFileCtl.Location = new System.Drawing.Point(144, 40);
             this.OutputFileCtl.Margin = new System.Windows.Forms.Padding(4);
             this.OutputFileCtl.Name = "OutputFileCtl";
-            this.OutputFileCtl.Size = new System.Drawing.Size(720, 22);
+            this.OutputFileCtl.Size = new System.Drawing.Size(709, 22);
             this.OutputFileCtl.TabIndex = 4;
             // 
-            // OutputFolderCtl
+            // OutputDirectoryCtl
             // 
-            this.OutputFolderCtl.AcceptsReturn = true;
-            this.OutputFolderCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.OutputDirectoryCtl.AcceptsReturn = true;
+            this.OutputDirectoryCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.OutputFolderCtl.Location = new System.Drawing.Point(133, 10);
-            this.OutputFolderCtl.Margin = new System.Windows.Forms.Padding(4);
-            this.OutputFolderCtl.Name = "OutputFolderCtl";
-            this.OutputFolderCtl.Size = new System.Drawing.Size(720, 22);
-            this.OutputFolderCtl.TabIndex = 1;
+            this.OutputDirectoryCtl.Location = new System.Drawing.Point(144, 10);
+            this.OutputDirectoryCtl.Margin = new System.Windows.Forms.Padding(4);
+            this.OutputDirectoryCtl.Name = "OutputDirectoryCtl";
+            this.OutputDirectoryCtl.Size = new System.Drawing.Size(709, 22);
+            this.OutputDirectoryCtl.TabIndex = 1;
             // 
             // FolderDestinationPanel
             // 
@@ -138,9 +138,9 @@
         #endregion
 
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Button SelectFolderCtl;
+        private System.Windows.Forms.Button SelectDirectoryCtl;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox OutputFolderCtl;
+        private System.Windows.Forms.TextBox OutputDirectoryCtl;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox OutputFileCtl;
         private System.Windows.Forms.Button DefineDestinationFileCtl;

@@ -61,7 +61,7 @@ namespace MageFileProcessor
             InitializeComponent();
 
             const bool isBetaVersion = false;
-            SetFormTitle("2018-10-15", isBetaVersion);
+            SetFormTitle("2018-10-29", isBetaVersion);
 
             SetTags();
 
@@ -79,7 +79,7 @@ namespace MageFileProcessor
 
             try
             {
-                // Set up configuration folder and files
+                // Set up configuration directory and files
                 SavedState.SetupConfigFiles("MageFileProcessor");
             }
             catch (Exception ex)
@@ -321,12 +321,12 @@ namespace MageFileProcessor
                         mFileSourcePipelineName = pipeline.PipelineName;
                         break;
 
-                    case "get_files_from_local_folder":
-                        runtimeParams = GetRuntimeParamsForLocalFolder();
-                        var sFolder = GetRuntimeParam(runtimeParams, "Folder");
-                        if (!Directory.Exists(sFolder))
+                    case "get_files_from_local_directory":
+                        runtimeParams = GetRuntimeParamsForLocalDirectory();
+                        var directoryPath = GetRuntimeParam(runtimeParams, "Directory");
+                        if (!Directory.Exists(directoryPath))
                         {
-                            MessageBox.Show("Folder not found: " + sFolder, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            MessageBox.Show("Directory not found: " + directoryPath, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             return;
                         }
                         sink = FileListDisplayControl.MakeSink("Files", 15);
@@ -355,9 +355,9 @@ namespace MageFileProcessor
 
                     case "copy_files":
                         runtimeParams = GetRuntimeParamsForCopyFiles();
-                        if (string.IsNullOrEmpty(GetRuntimeParam(runtimeParams, "OutputFolder")))
+                        if (string.IsNullOrEmpty(GetRuntimeParam(runtimeParams, "OutputDirectory")))
                         {
-                            MessageBox.Show("Destination folder cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            MessageBox.Show("Destination directory cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             return;
                         }
 
@@ -375,9 +375,9 @@ namespace MageFileProcessor
                         switch (FilterOutputTabs.SelectedTab.Tag.ToString())
                         {
                             case "File_Output":
-                                if (string.IsNullOrEmpty(GetRuntimeParam(runtimeParams, "OutputFolder")))
+                                if (string.IsNullOrEmpty(GetRuntimeParam(runtimeParams, "OutputDirectory")))
                                 {
-                                    MessageBox.Show("Destination folder cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                    MessageBox.Show("Destination directory cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                                     return;
                                 }
 
@@ -639,8 +639,8 @@ namespace MageFileProcessor
                     // FileCopyPanel1.ApplyPrefixToFileName = "Yes";
                     FileCopyPanel1.PrefixColumnName = GetBestPrefixIDColumnName(FileListDisplayControl.ColumnDefs);
                     break;
-                case "get_files_from_local_folder":
-                    FileListDisplayControl.PageTitle = mFileListLabelPrefix + "Local Folder";
+                case "get_files_from_local_directory":
+                    FileListDisplayControl.PageTitle = mFileListLabelPrefix + "Local Directory";
                     FileCopyPanel1.ApplyPrefixToFileName = "No";
                     FileCopyPanel1.PrefixColumnName = "";
                     break;
@@ -772,33 +772,33 @@ namespace MageFileProcessor
             return panel.GetParameters();
         }
 
-        private Dictionary<string, string> GetRuntimeParamsForLocalFolder()
+        private Dictionary<string, string> GetRuntimeParamsForLocalDirectory()
         {
-            var rp = new Dictionary<string, string>
+            var runtimeParams = new Dictionary<string, string>
             {
                 {"FileNameFilter", LocalFolderPanel1.FileNameFilter},
                 {"FileSelectionMode", LocalFolderPanel1.FileSelectionMode},
-                {"Folder", LocalFolderPanel1.Folder},
-                {"SearchInSubfolders", LocalFolderPanel1.SearchInSubfolders},
-                {"SubfolderSearchName", LocalFolderPanel1.SubfolderSearchName}
+                {"Directory", LocalFolderPanel1.Directory},
+                {"SearchInSubdirectories", LocalFolderPanel1.SearchInSubdirectories},
+                {"SubdirectorySearchName", LocalFolderPanel1.SubdirectorySearchName}
             };
-            return rp;
+            return runtimeParams;
         }
 
         private Dictionary<string, string> GetRuntimeParamsForManifestFile()
         {
-            var rp = new Dictionary<string, string>
+            var runtimeParams = new Dictionary<string, string>
             {
                 {"ManifestFilePath", LocalManifestPanel1.ManifestFilePath}
             };
-            return rp;
+            return runtimeParams;
         }
 
         private Dictionary<string, string> GetRuntimeParamsForFileProcessing()
         {
-            var rp = new Dictionary<string, string>
+            var runtimeParams = new Dictionary<string, string>
             {
-                {"OutputFolder", FolderDestinationPanel1.OutputFolder},
+                {"OutputDirectory", FolderDestinationPanel1.OutputDirectory},
                 {"OutputFile", FolderDestinationPanel1.OutputFile},
                 {"DatabaseName", SQLiteDestinationPanel1.DatabaseName},
                 {"TableName", SQLiteDestinationPanel1.TableName},
@@ -808,68 +808,68 @@ namespace MageFileProcessor
 
             if (mFileSourcePipelineName == Pipelines.PIPELINE_GET_LOCAL_FILES)
             {
-                rp.Add("SourceFileColumnName", "File");
+                runtimeParams.Add("SourceFileColumnName", "File");
             }
             else
             {
-                rp.Add("SourceFileColumnName", "Name");
+                runtimeParams.Add("SourceFileColumnName", "Name");
             }
 
-            return rp;
+            return runtimeParams;
         }
 
         private Dictionary<string, string> GetRuntimeParamsForCopyFiles()
         {
-            var rp = new Dictionary<string, string>
+            var runtimeParams = new Dictionary<string, string>
             {
-                {"OutputFolder", FileCopyPanel1.OutputFolder},
+                {"OutputDirectory", FileCopyPanel1.OutputDirectory},
                 {"ManifestFileName", string.Format("Manifest_{0:yyyy-MM-dd_hhmmss}.txt", DateTime.Now)},
                 {"ApplyPrefixToFileName", FileCopyPanel1.ApplyPrefixToFileName},
                 {"PrefixLeader", FileCopyPanel1.PrefixLeader},
                 {"ColumnToUseForPrefix", FileCopyPanel1.PrefixColumnName},
                 {"OverwriteExistingFiles", FileCopyPanel1.OverwriteExistingFiles},
-                {"SourceFolderColumnName", "Folder"},
+                {"SourceDirectoryColumnName", "Directory"},
                 {"ResolveCacheInfoFiles", FileCopyPanel1.ResolveCacheInfoFiles}
             };
 
             if (mFileSourcePipelineName == Pipelines.PIPELINE_GET_LOCAL_FILES)
             {
-                rp.Add("SourceFileColumnName", "File");
-                rp.Add("OutputColumnList", "File, *");
-                rp.Add("OutputFileColumnName", "File");
+                runtimeParams.Add("SourceFileColumnName", "File");
+                runtimeParams.Add("OutputColumnList", "File, *");
+                runtimeParams.Add("OutputFileColumnName", "File");
             }
             else
             {
-                rp.Add("SourceFileColumnName", "Name");
-                rp.Add("OutputColumnList", "Name, *");
-                rp.Add("OutputFileColumnName", "Name");
+                runtimeParams.Add("SourceFileColumnName", "Name");
+                runtimeParams.Add("OutputColumnList", "Name, *");
+                runtimeParams.Add("OutputFileColumnName", "Name");
             }
 
-            return rp;
+            return runtimeParams;
         }
 
         private Dictionary<string, string> GetRuntimeParamsForEntityFileType(string entityType)
         {
-            var rp = new Dictionary<string, string>
+            var runtimeParams = new Dictionary<string, string>
             {
                 {"FileSelectors", EntityFilePanel1.FileSelectors},
                 {"FileSelectionMode", EntityFilePanel1.FileSelectionMode},
-                {"IncludeFilesOrFolders", EntityFilePanel1.IncludeFilesOrFolders},
-                {"SearchInSubfolders", EntityFilePanel1.SearchInSubfolders},
-                {"SubfolderSearchName", EntityFilePanel1.SubfolderSearchName},
-                {"SourceFolderColumnName", "Folder"},
+                {"IncludeFilesOrDirectories", EntityFilePanel1.IncludeFilesOrDirectories},
+                {"SearchInSubdirectories", EntityFilePanel1.SearchInSubdirectories},
+                {"SubdirectorySearchName", EntityFilePanel1.SubdirectorySearchName},
+                {"SourceDirectoryColumnName", "Directory"},
                 {"FileColumnName", "Name"}
             };
             switch (entityType)
             {
                 case "Jobs":
-                    rp.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_DATE + "|+|text, Folder, Job, Dataset, Dataset_ID, Tool, Settings_File, Parameter_File, Instrument");
+                    runtimeParams.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_DATE + "|+|text, Directory, Job, Dataset, Dataset_ID, Tool, Settings_File, Parameter_File, Instrument");
                     break;
                 case "Datasets":
-                    rp.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_DATE + "|+|text, Folder, Dataset, Dataset_ID, Experiment, Campaign, State, Instrument, Created, Type, Comment");
+                    runtimeParams.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_DATE + "|+|text, Directory, Dataset, Dataset_ID, Experiment, Campaign, State, Instrument, Created, Type, Comment");
                     break;
             }
-            return rp;
+            return runtimeParams;
         }
 
         /// <summary>
@@ -1056,7 +1056,7 @@ namespace MageFileProcessor
         /// <returns></returns>
         private Dictionary<string, string> GetSelectedFileItem()
         {
-            return FileListDisplayControl.SeletedItemFields;
+            return FileListDisplayControl.SelectedItemFields;
         }
 
         private Dictionary<string, string> GetSelectedOutputItem()

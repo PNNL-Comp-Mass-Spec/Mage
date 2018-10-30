@@ -29,11 +29,12 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.SearchGroupBoxCtl = new System.Windows.Forms.GroupBox();
-            this.SubfolderSearchNameCtl = new System.Windows.Forms.TextBox();
-            this.SearchInSubfoldersCtl = new System.Windows.Forms.CheckBox();
+            this.SubdirectorySearchNameCtl = new System.Windows.Forms.TextBox();
+            this.SearchInSubdirectoriesCtl = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.IncludeFoldersCtl = new System.Windows.Forms.CheckBox();
+            this.IncludeDirectoriesCtl = new System.Windows.Forms.CheckBox();
             this.IncludefilesCtl = new System.Windows.Forms.CheckBox();
             this.FileSelectorRadioGroupBoxCtl = new System.Windows.Forms.GroupBox();
             this.FileSearchRadioBtn = new System.Windows.Forms.RadioButton();
@@ -42,7 +43,6 @@
             this.GetFilesForSelectedEntriesCtl = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.FileSelectorsCtl = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.SearchGroupBoxCtl.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -67,11 +67,23 @@
             this.panel1.Size = new System.Drawing.Size(1157, 80);
             this.panel1.TabIndex = 1;
             // 
+            // textBox1
+            // 
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox1.Location = new System.Drawing.Point(19, 37);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(418, 39);
+            this.textBox1.TabIndex = 14;
+            this.textBox1.Text = "Multiple file filters can be used (separate with a semicolon)\r\nRelative paths are" +
+    " supported, for example ..\\*CacheInfo.txt";
+            // 
             // SearchGroupBoxCtl
             // 
             this.SearchGroupBoxCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.SearchGroupBoxCtl.Controls.Add(this.SubfolderSearchNameCtl);
-            this.SearchGroupBoxCtl.Controls.Add(this.SearchInSubfoldersCtl);
+            this.SearchGroupBoxCtl.Controls.Add(this.SubdirectorySearchNameCtl);
+            this.SearchGroupBoxCtl.Controls.Add(this.SearchInSubdirectoriesCtl);
             this.SearchGroupBoxCtl.Location = new System.Drawing.Point(456, 1);
             this.SearchGroupBoxCtl.Margin = new System.Windows.Forms.Padding(4);
             this.SearchGroupBoxCtl.Name = "SearchGroupBoxCtl";
@@ -80,31 +92,31 @@
             this.SearchGroupBoxCtl.TabIndex = 13;
             this.SearchGroupBoxCtl.TabStop = false;
             // 
-            // SubfolderSearchNameCtl
+            // SubdirectorySearchNameCtl
             // 
-            this.SubfolderSearchNameCtl.Location = new System.Drawing.Point(13, 36);
-            this.SubfolderSearchNameCtl.Margin = new System.Windows.Forms.Padding(4);
-            this.SubfolderSearchNameCtl.Name = "SubfolderSearchNameCtl";
-            this.SubfolderSearchNameCtl.Size = new System.Drawing.Size(151, 22);
-            this.SubfolderSearchNameCtl.TabIndex = 1;
-            this.SubfolderSearchNameCtl.Text = "*";
+            this.SubdirectorySearchNameCtl.Location = new System.Drawing.Point(13, 36);
+            this.SubdirectorySearchNameCtl.Margin = new System.Windows.Forms.Padding(4);
+            this.SubdirectorySearchNameCtl.Name = "SubdirectorySearchNameCtl";
+            this.SubdirectorySearchNameCtl.Size = new System.Drawing.Size(151, 22);
+            this.SubdirectorySearchNameCtl.TabIndex = 1;
+            this.SubdirectorySearchNameCtl.Text = "*";
             // 
-            // SearchInSubfoldersCtl
+            // SearchInSubdirectoriesCtl
             // 
-            this.SearchInSubfoldersCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.SearchInSubfoldersCtl.AutoSize = true;
-            this.SearchInSubfoldersCtl.Location = new System.Drawing.Point(13, 12);
-            this.SearchInSubfoldersCtl.Margin = new System.Windows.Forms.Padding(4);
-            this.SearchInSubfoldersCtl.Name = "SearchInSubfoldersCtl";
-            this.SearchInSubfoldersCtl.Size = new System.Drawing.Size(160, 21);
-            this.SearchInSubfoldersCtl.TabIndex = 0;
-            this.SearchInSubfoldersCtl.Text = "Search in subfolders";
-            this.SearchInSubfoldersCtl.UseVisualStyleBackColor = true;
+            this.SearchInSubdirectoriesCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.SearchInSubdirectoriesCtl.AutoSize = true;
+            this.SearchInSubdirectoriesCtl.Location = new System.Drawing.Point(13, 12);
+            this.SearchInSubdirectoriesCtl.Margin = new System.Windows.Forms.Padding(4);
+            this.SearchInSubdirectoriesCtl.Name = "SearchInSubdirectoriesCtl";
+            this.SearchInSubdirectoriesCtl.Size = new System.Drawing.Size(168, 21);
+            this.SearchInSubdirectoriesCtl.TabIndex = 0;
+            this.SearchInSubdirectoriesCtl.Text = "Search subdirectories";
+            this.SearchInSubdirectoriesCtl.UseVisualStyleBackColor = true;
             // 
             // groupBox1
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.IncludeFoldersCtl);
+            this.groupBox1.Controls.Add(this.IncludeDirectoriesCtl);
             this.groupBox1.Controls.Add(this.IncludefilesCtl);
             this.groupBox1.Location = new System.Drawing.Point(639, 1);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
@@ -114,16 +126,16 @@
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             // 
-            // IncludeFoldersCtl
+            // IncludeDirectoriesCtl
             // 
-            this.IncludeFoldersCtl.AutoSize = true;
-            this.IncludeFoldersCtl.Location = new System.Drawing.Point(13, 41);
-            this.IncludeFoldersCtl.Margin = new System.Windows.Forms.Padding(4);
-            this.IncludeFoldersCtl.Name = "IncludeFoldersCtl";
-            this.IncludeFoldersCtl.Size = new System.Drawing.Size(126, 21);
-            this.IncludeFoldersCtl.TabIndex = 1;
-            this.IncludeFoldersCtl.Text = "Include Folders";
-            this.IncludeFoldersCtl.UseVisualStyleBackColor = true;
+            this.IncludeDirectoriesCtl.AutoSize = true;
+            this.IncludeDirectoriesCtl.Location = new System.Drawing.Point(13, 41);
+            this.IncludeDirectoriesCtl.Margin = new System.Windows.Forms.Padding(4);
+            this.IncludeDirectoriesCtl.Name = "IncludeDirectoriesCtl";
+            this.IncludeDirectoriesCtl.Size = new System.Drawing.Size(147, 21);
+            this.IncludeDirectoriesCtl.TabIndex = 1;
+            this.IncludeDirectoriesCtl.Text = "Include Directories";
+            this.IncludeDirectoriesCtl.UseVisualStyleBackColor = true;
             // 
             // IncludefilesCtl
             // 
@@ -221,18 +233,6 @@
             this.FileSelectorsCtl.Size = new System.Drawing.Size(329, 22);
             this.FileSelectorsCtl.TabIndex = 6;
             // 
-            // textBox1
-            // 
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox1.Location = new System.Drawing.Point(19, 37);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(418, 39);
-            this.textBox1.TabIndex = 14;
-            this.textBox1.Text = "Multiple file filters can be used (separate with a semicolon)\r\nRelative paths are" +
-    " supported, for example ..\\*CacheInfo.txt";
-            // 
             // EntityFilePanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -266,10 +266,10 @@
         private System.Windows.Forms.RadioButton RegExRadioBtn;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckBox IncludefilesCtl;
-        private System.Windows.Forms.CheckBox IncludeFoldersCtl;
+        private System.Windows.Forms.CheckBox IncludeDirectoriesCtl;
         private System.Windows.Forms.GroupBox SearchGroupBoxCtl;
-        private System.Windows.Forms.CheckBox SearchInSubfoldersCtl;
-        private System.Windows.Forms.TextBox SubfolderSearchNameCtl;
+        private System.Windows.Forms.CheckBox SearchInSubdirectoriesCtl;
+        private System.Windows.Forms.TextBox SubdirectorySearchNameCtl;
         private System.Windows.Forms.TextBox textBox1;
     }
 }
