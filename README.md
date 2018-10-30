@@ -26,7 +26,7 @@ combined into a single, tab-delimited output file.
 
 The following graphic illustrates the steps required to use the Flex Query tab of Mage Extractor to select a series of analysis jobs and obtain the data
 * Define filters and click "Get Jobs"
-* Define the destination folder and file
+* Define the destination directory and file
 * Choose the file type to process
 * Choose a filter set (optional) or MSGF cutoff (optional)
 * Click the desired "Extract Results" button
@@ -36,13 +36,13 @@ The following graphic illustrates the steps required to use the Flex Query tab o
 ## Mage File Processor
 
 Mage File Processor can be used to copy files from a series of 
-analysis job or dataset folders to your local computer.  The program
+analysis job or dataset directories to your local computer.  The program
 can either copy each file individually, or it can combine a series of
 files into a single file.
 
-An alternative mode of operation is to search a local folder on
+An alternative mode of operation is to search a local directory on
 your computer to find matching files, then either copy those files
-to a new folder, or process those files to combine the data into a
+to a new directory, or process those files to combine the data into a
 single file.
 
 When combining MSGF+, X!Tandem, or SEQUEST result files together, you can 
@@ -57,11 +57,11 @@ to select a series of analysis jobs and obtain the associated _isos.csv files
 * Define filters and click "Get Jobs"
 * Define the filename filter, for example: *_Isos.csv
 * Customize the search options
-* Whether or not to search subfolders
-* Search for files, folders, or both (typically search for files)
+* Whether or not to search subdirectories
+* Search for files, directories, or both (typically search for files)
 * Whether to use RegEx matching or "File Search" matching
 * Note that "File Search" matching supports an asterisk as a wildcard symbol: *
-* Define the destination folder
+* Define the destination directory
 * Optionally apply a prefix to each file, for example the Job number
 
 ![Mage File Processor Directions](https://github.com/PNNL-Comp-Mass-Spec/Mage/blob/master/Docs/Mage_FileProcessor_StepByStep_Directions.png)
@@ -78,7 +78,7 @@ Iterates through a range of values to create all possible combinations of the va
 
 Written by Gary Kiebel and Matthew Monroe for the Department of Energy (PNNL, Richland, WA) \
 E-mail: proteomics@pnnl.gov \
-Website: https://panomics.pnl.gov/ or https://omics.pnl.gov
+Website: https://omics.pnl.gov or https://panomics.pnl.gov
 
 ## License
 
