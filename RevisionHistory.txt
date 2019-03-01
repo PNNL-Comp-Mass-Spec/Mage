@@ -1,5 +1,14 @@
 Mage Revision History
 
+Version 1.5.6999; March 1, 2019
+	- Obtain SharpZipLib from NuGet
+
+Version 1.5.6877; October 30, 2018
+	- In Mage Concatenator, warn the user before overwriting an existing file
+
+Version 1.5.6871; October 24, 2018
+	- Use renamed class names, properties, methods, and enums in MyEMSLReader
+
 Version 1.5.6838; September 21, 2018
 	- Updated MyEMSLReader.dll, Pacifica.Core.dll, and PRISM.dll
 
