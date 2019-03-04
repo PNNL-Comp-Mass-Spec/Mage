@@ -49,7 +49,9 @@ namespace MageUIComponents
                 if (value.Contains("File"))
                 {
                     IncludefilesCtl.Checked = true;
-                } else if (value.Contains("Directory") || value.Contains("Directories"))
+                }
+
+                if (value.Contains("Directory") || value.Contains("Directories"))
                 {
                     IncludeDirectoriesCtl.Checked = true;
                 }
@@ -58,7 +60,7 @@ namespace MageUIComponents
                     IncludeDirectoriesCtl.Checked = true;
                 }
 
-                else
+                if (!IncludefilesCtl.Checked && !IncludeDirectoriesCtl.Checked)
                 {
                     // Search for files by default
                     IncludefilesCtl.Checked = true;
@@ -70,11 +72,14 @@ namespace MageUIComponents
                 if (IncludefilesCtl.Checked)
                 {
                     state += "File";
-                } else if (IncludeDirectoriesCtl.Checked)
+                }
+
+                if (IncludeDirectoriesCtl.Checked)
                 {
                     state += "Directory";
                 }
-                else
+
+                if (string.IsNullOrWhiteSpace(state))
                 {
                     // Search for files by default
                     state = "File";

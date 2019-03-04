@@ -200,7 +200,7 @@ namespace Mage
         {
             mIncludeFiles = IncludeFilesOrDirectories.Contains("File");
 
-            if (IncludeFilesOrDirectories.Contains("Subdirectory") || IncludeFilesOrDirectories.Contains("Subdirectories"))
+            if (IncludeFilesOrDirectories.Contains("Directory") || IncludeFilesOrDirectories.Contains("Directories"))
                 mIncludeDirectories = true;
             else if (IncludeFilesOrDirectories.Contains("Folder"))
                 mIncludeDirectories = true;
