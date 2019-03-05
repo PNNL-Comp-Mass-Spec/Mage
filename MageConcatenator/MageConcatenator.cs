@@ -15,7 +15,7 @@ namespace MageConcatenator
     {
         #region Member Variables
 
-        public const string PROGRAM_DATE = "March 1, 2019";
+        public const string PROGRAM_DATE = "March 4, 2019";
 
         /// <summary>
         /// Pipeline queue for running the multiple pipelines that make up the workflows for this module
