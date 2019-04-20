@@ -318,7 +318,7 @@ namespace MageDisplayLib
             TryOpenWindowsExplorer(columnName, itemList);
         }
 
-        private static void TryLaunchWebBrowser(string url, string columnName, IReadOnlyList<string> itemList)
+        private static void TryLaunchWebBrowser(string url, string columnName, IList<string> itemList)
         {
             if (itemList.Count == 0)
             {
@@ -331,7 +331,7 @@ namespace MageDisplayLib
 
         }
 
-        private static void TryOpenWindowsExplorer(string columnName, IReadOnlyList<string> itemList)
+        private static void TryOpenWindowsExplorer(string columnName, IList<string> itemList)
         {
             if (itemList.Count == 0)
             {

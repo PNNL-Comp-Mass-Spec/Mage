@@ -607,7 +607,7 @@ namespace Mage
         /// <param name="fileList"></param>
         /// <param name="fileNameRegExSpecs"></param>
         /// <returns></returns>
-        private static List<FileSystemInfo> FilterFileNamesFromList(IReadOnlyCollection<FileSystemInfo> fileList, IReadOnlyCollection<Regex> fileNameRegExSpecs)
+        private static List<FileSystemInfo> FilterFileNamesFromList(ICollection<FileSystemInfo> fileList, ICollection<Regex> fileNameRegExSpecs)
         {
 
             var filteredFilesOrDirectories = new List<FileSystemInfo>(fileList.Count);

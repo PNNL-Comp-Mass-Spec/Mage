@@ -167,7 +167,7 @@ namespace BiodiversityFileCopy
         /// <param name="fileList">Sink object containing file list</param>
         /// <param name="datasetIDColName">Column in file list that contains dataset ID</param>
         /// <param name="fileLabel">File type label</param>
-        private static void CheckFileCoverage(IReadOnlyCollection<string> packageDatasetIDs, SimpleSink fileList, string datasetIDColName, string fileLabel)
+        private static void CheckFileCoverage(ICollection<string> packageDatasetIDs, SimpleSink fileList, string datasetIDColName, string fileLabel)
         {
             var fileDatasetIDs = new HashSet<string>(Pipes.ExtractColumnFromSink(datasetIDColName, fileList));
             var missingFileDatasetIDs = packageDatasetIDs.Except(fileDatasetIDs).ToList();

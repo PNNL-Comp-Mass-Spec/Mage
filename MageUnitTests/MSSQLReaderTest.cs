@@ -534,7 +534,7 @@ namespace MageUnitTests
         private static void CheckRowsetResults(
             SimpleSink sink,
             int maxRows,
-            IReadOnlyList<string> colList,
+            IList<string> colList,
             string username,
             string expectedSqlOrSProc)
         {

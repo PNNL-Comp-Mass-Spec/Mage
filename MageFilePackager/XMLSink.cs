@@ -86,7 +86,7 @@ namespace MageFilePackager
         {
         }
 
-        private void OutputDataRow(IReadOnlyList<string> vals)
+        private void OutputDataRow(IList<string> vals)
         {
             _text.Append("<path ");
             for (var i = 0; i < InputColumnDefs.Count; i++)

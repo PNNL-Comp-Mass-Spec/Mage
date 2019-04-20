@@ -368,7 +368,7 @@ namespace MageFileProcessor
         /// <param name="keyName">Parameter to find</param>
         /// <returns>The value for the parameter</returns>
         /// <remarks>Raises an exception if the runtimeParams dictionary does not have the desired key</remarks>
-        private static string GetRuntimeParam(IReadOnlyDictionary<string, string> runtimeParams, string keyName)
+        private static string GetRuntimeParam(IDictionary<string, string> runtimeParams, string keyName)
         {
             if (!runtimeParams.ContainsKey(keyName))
                 throw new Exception("runtimeParams does not contain key " + keyName);

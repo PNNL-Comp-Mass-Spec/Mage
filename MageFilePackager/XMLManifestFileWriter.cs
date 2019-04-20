@@ -156,7 +156,7 @@ namespace MageFilePackager
             // _mOutFile.WriteLine("</paths>");
         }
 
-        private void OutputDataRow(IReadOnlyList<string> vals)
+        private void OutputDataRow(IList<string> vals)
         {
             var sb = new StringBuilder();
             sb.Append("<path ");

@@ -408,7 +408,7 @@ namespace Mage
         /// <param name="myReader">DataReader object from which to get data rows</param>
         /// <param name="columnDefs">Column definitions (used to find date/time columns)</param>
         /// <param name="totalRows">Total rows delivered</param>
-        private void OutputDataRows(IDataReader myReader, IReadOnlyList<MageColumnDef> columnDefs, ref int totalRows)
+        private void OutputDataRows(IDataReader myReader, IList<MageColumnDef> columnDefs, ref int totalRows)
         {
             // Now do all the rows - if anyone is registered as wanting them
             startTime = DateTime.UtcNow;
@@ -552,7 +552,7 @@ namespace Mage
         /// <param name="sprocName"></param>
         /// <param name="parms"></param>
         /// <returns></returns>
-        private SqlCommand GetSprocCmd(string sprocName, IReadOnlyDictionary<string, string> parms)
+        private SqlCommand GetSprocCmd(string sprocName, IDictionary<string, string> parms)
         {
 
             // Start the SqlCommand that we are building up for the sproc
