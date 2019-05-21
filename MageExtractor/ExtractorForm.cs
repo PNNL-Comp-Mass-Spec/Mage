@@ -55,7 +55,7 @@ namespace MageExtractor
             InitializeComponent();
 
             const bool isBetaVersion = false;
-            SetFormTitle("2019-05-09", isBetaVersion);
+            SetFormTitle("2019-05-21", isBetaVersion);
 
             SetTags();
 
