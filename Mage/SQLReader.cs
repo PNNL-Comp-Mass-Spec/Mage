@@ -8,10 +8,10 @@ namespace Mage
 {
 
     /// <summary>
-    /// Module than can query an MS SQL Server database and deliver
-    /// results of query via its standard tabular output events
+    /// Module than can query a database and deliver
+    /// results of the query via its standard tabular output events
     /// </summary>
-    public sealed class MSSQLReader : BaseModule, IDisposable
+    public sealed class SQLReader : BaseModule, IDisposable
     {
 
         /// <summary>

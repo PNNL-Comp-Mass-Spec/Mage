@@ -136,7 +136,7 @@
     <Compile Include="MageCommandEventArgs.cs" />
     <Compile Include="MageEvents.cs" />
     <Compile Include="ModuleDiscovery.cs" />
-    <Compile Include="MSSSQLReader.cs" />
+    <Compile Include="SQLReader.cs" />
     <Compile Include="PermutationGenerator.cs" />
     <Compile Include="PipelineQueue.cs" />
     <Compile Include="ProcessingPipeline.cs" />
