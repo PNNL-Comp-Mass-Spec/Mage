@@ -294,13 +294,13 @@ namespace Mage
         /// <param name="parameters">List of key/value pairs for parameters (duplicate keys allowed)</param>
         public virtual void SetParameters(Dictionary<string, string> parameters)
         {
-            if (parameters != null)
+            if (parameters == null)
+                return;
+
+            // set properties (of subclasses) from parameters
+            foreach (var paramDef in parameters)
             {
-                // set properties (of subclasses) from parameters
-                foreach (var paramDef in parameters)
-                {
-                    SetPropertyByName(paramDef.Key, paramDef.Value);
-                }
+                SetPropertyByName(paramDef.Key, paramDef.Value);
             }
         }
 
@@ -339,7 +339,7 @@ namespace Mage
                     // Rename column if it has same name as previously handled column
                     if (InputColumnPos.ContainsKey(columnDef.Name))
                     {
-                        columnDef.Name = columnDef.Name + (++mNameDisambiguatorCount);
+                        columnDef.Name += (++mNameDisambiguatorCount);
                     }
                     InputColumnPos.Add(columnDef.Name, InputColumnIndex++);
                     InputColumnDefs.Add(columnDef);
@@ -567,15 +567,15 @@ namespace Mage
         /// </summary>
         protected void SetupOutputColumnToContextMapping()
         {
-            if (Context != null && NewOutputColumnPos != null)
+            if (Context == null || NewOutputColumnPos == null)
+                return;
+
+            ContextColPos = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+            foreach (var colPos in NewOutputColumnPos)
             {
-                ContextColPos = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
-                foreach (var colPos in NewOutputColumnPos)
+                if (Context.ContainsKey(colPos.Key))
                 {
-                    if (Context.ContainsKey(colPos.Key))
-                    {
-                        ContextColPos.Add(colPos.Key, colPos.Value);
-                    }
+                    ContextColPos.Add(colPos.Key, colPos.Value);
                 }
             }
         }
@@ -760,7 +760,7 @@ namespace Mage
         /// <returns></returns>
         protected string[] MapDataRow(string[] vals)
         {
-            // remap results according to our output column definitions
+            // Remap results according to our output column definitions
             var outRow = new string[OutputColumnDefs.Count];
 
             var actualCount = vals.Length;
