@@ -109,7 +109,6 @@
     <Compile Include="FileListFilterTest.cs" />
     <Compile Include="FileSubPipelineBrokerTest.cs" />
     <Compile Include="General.cs" />
-    <Compile Include="MSSQLReaderTest.cs" />
     <Compile Include="PermutationGeneratorTest.cs" />
     <Compile Include="ProcessingPipelineTest.cs" />
     <Compile Include="QueryDefinitionTest.cs" />
@@ -119,6 +118,7 @@
     </Compile>
     <Compile Include="SQLiteReaderTest.cs" />
     <Compile Include="SQLiteWriterTest.cs" />
+    <Compile Include="SQLReaderTest.cs" />
     <Compile Include="TestFileContentProcessorModule.cs" />
     <Compile Include="TestModule.cs" />
   </ItemGroup>

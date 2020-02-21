@@ -10,7 +10,7 @@ namespace MageUnitTests
     /// to contain all MSSQLReaderTest Unit Tests
     /// </summary>
     [TestFixture]
-    public class MSSQLReaderTest
+    public class SQLReaderTest
     {
         private const string DMS_READER = "dmsreader";
         private const string DMS_READER_PASSWORD = "dms4fun";
