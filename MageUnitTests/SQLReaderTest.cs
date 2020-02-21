@@ -591,11 +591,63 @@ namespace MageUnitTests
             // on its standard tabular input?
             var rows = sink.Rows;
 
+            const int COL_COUNT_TO_SHOW = 6;
+
+            // Keys in this dictionary are column index; values are the maximum length of the data in that column
+            var columnWidths = new Dictionary<int, int>();
+
+            var headerNames = (from item in cols.Take(COL_COUNT_TO_SHOW) select item.Name).ToList();
+            for (var i = 0; i < headerNames.Count; i++)
+            {
+                columnWidths.Add(i, headerNames[i].Length);
+            }
+
+            // Display the first 10 rows of results (limiting to the first 6 columns)
+            // Determine the optimal column width for each column
+            foreach (var currentRow in rows.Take(10))
+            {
+                for (var i = 0; i < currentRow.Length; i++)
+                {
+                    if (i >= COL_COUNT_TO_SHOW)
+                        break;
+
+                    var dataLength = currentRow[i].Length;
+                    if (dataLength > columnWidths[i])
+                        columnWidths[i] = dataLength;
+                }
+            }
+
+            // Show the column headers
+            var paddedHeaderNames = PadData(headerNames, columnWidths);
+            Console.WriteLine(string.Join("  ", paddedHeaderNames));
+
+            // Show the column values
+            foreach (var currentRow in rows.Take(10))
+            {
+                var dataValues = PadData(currentRow.Take(COL_COUNT_TO_SHOW).ToList(), columnWidths);
+                Console.WriteLine(string.Join("  ", dataValues));
+            }
+
             Assert.AreEqual(maxRows, rows.Count, "Did not get get the expected number of data rows " + errorMessage);
 
             // Are there the expected number of fields in the data row?
             Assert.AreEqual(colList.Count, rows[0].Length, "Data rows do not have the expected number of fields " + errorMessage);
         }
 
+        private static List<string> PadData(IReadOnlyList<string> dataValues, IReadOnlyDictionary<int, int> columnWidths)
+        {
+            var paddedData = new List<string>();
+
+            for (var i = 0; i < dataValues.Count; i++)
+            {
+                if (i >= columnWidths.Count)
+                    break;
+
+                var columnWidth = columnWidths[i];
+                paddedData.Add(dataValues[i].PadRight(columnWidth));
+            }
+
+            return paddedData;
+        }
     }
 }
