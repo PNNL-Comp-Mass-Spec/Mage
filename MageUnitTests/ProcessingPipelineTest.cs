@@ -46,7 +46,7 @@ namespace MageUnitTests
         [TestCase("FileCopy", true)]
         [TestCase("FileListFilter", true)]
         [TestCase("FileSubPipelineBroker", true)]
-        [TestCase("MSSQLReader", true)]
+        [TestCase("SQLReader", true)]
         [TestCase("PermutationGenerator", true)]
         [TestCase("SimpleSink", true)]
         [TestCase("SQLiteReader", true)]
@@ -203,7 +203,7 @@ namespace MageUnitTests
         // Default server info: gigasax and DMS5
         readonly string pipelineXML = @"
 <pipeline name='Test_Pipeline' >
-    <module name='Reader' type='MSSQLReader'>
+    <module name='Reader' type='SQLReader'>
         <param name='Server' >" + Globals.DMSServer + "</param>" +
         "<param name='Database' >" + Globals.DMSDatabase + "</param>" +
         "<param name='SQLText' >SELECT * FROM T_Campaign</param>" +
@@ -220,7 +220,7 @@ namespace MageUnitTests
             var pipeline = ProcessingPipeline.Assemble(pipelineXML);
 
             var mod = pipeline.GetModule("Reader");
-            var target = mod as MSSQLReader;
+            var target = mod as SQLReader;
             Assert.IsTrue(target != null);
             Assert.AreEqual(target.Server, Globals.DMSServer);
             Assert.AreEqual(pipeline.PipelineName, "Test_Pipeline");

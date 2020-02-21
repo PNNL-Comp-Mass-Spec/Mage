@@ -30,7 +30,7 @@ namespace MageFileProcessor
         {
 
             // Make source module and initialize from query def XML and runtime parameters
-            var rdr = new MSSQLReader(queryDefXML, runtimeParams);
+            var rdr = new SQLReader(queryDefXML, runtimeParams);
 
             // Build and wire pipeline
             return ProcessingPipeline.Assemble("JobQueryPipeline", rdr, sinkObject);

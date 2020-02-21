@@ -47,7 +47,7 @@ namespace MageExtContentFilters {
         private void GetFilterSetList() {
 
             // Create Mage module to query DMS (typically on gigasax)
-            var reader = new MSSQLReader
+            var reader = new SQLReader
             {
                 Database = Globals.DMSDatabase,
                 Server = Globals.DMSServer,

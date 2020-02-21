@@ -429,7 +429,7 @@ namespace MageExtractor
                 }
             }
 
-            if (args.Message.StartsWith(MSSQLReader.SQL_COMMAND_ERROR))
+            if (args.Message.StartsWith(SQLReader.SQL_COMMAND_ERROR))
                 MessageBox.Show(args.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
         }
@@ -520,7 +520,7 @@ namespace MageExtractor
             if (builder.HasPredicate)
             {
                 result = true;
-                var reader = new MSSQLReader(builder);
+                var reader = new SQLReader(builder);
                 var pipeline = ProcessingPipeline.Assemble("Get Jobs", reader, JobListDisplayCtl);
                 ConnectPipelineToStatusDisplay(pipeline);
                 JobListDisplayCtl.Clear();
@@ -544,7 +544,7 @@ namespace MageExtractor
         /// <param name="queryParameters">Key/Value pairs (column/value)</param>
         private void GetJobList(string queryTemplate, Dictionary<string, string> queryParameters)
         {
-            var reader = new MSSQLReader(queryTemplate, queryParameters);
+            var reader = new SQLReader(queryTemplate, queryParameters);
             JobListDisplayCtl.Clear();
             var pipeline = ProcessingPipeline.Assemble("Get Jobs", reader, JobListDisplayCtl);
             ConnectPipelineToStatusDisplay(pipeline);

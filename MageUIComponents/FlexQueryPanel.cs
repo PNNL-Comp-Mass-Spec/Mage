@@ -157,7 +157,7 @@ namespace MageUIComponents
                 /// <param name="queryTemplate"></param>
                 /// <param name="queryItems"></param>
                 /// <returns></returns>
-                public static MSSQLReader GetMSSQLReaderFromFlexQuery(string queryTemplate, string[] queryItems) {
+                public static SQLReader GetMSSQLReaderFromFlexQuery(string queryTemplate, string[] queryItems) {
                     Dictionary<string, string> args = new Dictionary<string, string>();
                     SQLBuilder builder = new SQLBuilder(queryTemplate, ref args);
                     foreach (string item in queryItems) {
@@ -166,7 +166,7 @@ namespace MageUIComponents
                             builder.AddPredicateItem(flds[0], flds[1], flds[2], flds[3]);
                         }
                     }
-                    MSSQLReader reader = new MSSQLReader();
+                    SQLReader reader = new SQLReader();
                     reader.Server = builder.SpecialArgs[SQLBuilder.SERVER_NAME_KEY];
                     reader.Database = builder.SpecialArgs[SQLBuilder.DATABASE_NAME_KEY];
                     reader.SQLText = builder.BuildQuerySQL();

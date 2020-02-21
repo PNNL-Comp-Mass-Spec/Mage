@@ -172,7 +172,7 @@ namespace MageUnitTests
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("Factors");
             Assert.AreNotEqual("", queryDefXML);
 
-            // Create MSSQLReader module initialized from XML definition
+            // Create SQLReader module initialized from XML definition
             var reader = new SQLiteReader(queryDefXML, runtimeParameters);
             Assert.AreNotEqual(null, reader);
 

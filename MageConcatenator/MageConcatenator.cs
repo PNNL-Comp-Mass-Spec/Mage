@@ -624,7 +624,7 @@ namespace MageConcatenator
                 }
             }
 
-            if (args.Message.StartsWith(MSSQLReader.SQL_COMMAND_ERROR))
+            if (args.Message.StartsWith(SQLReader.SQL_COMMAND_ERROR))
                 MessageBox.Show(args.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
         }

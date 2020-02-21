@@ -267,7 +267,7 @@ namespace MageFilePackager
                         var builder = JobFlexQueryPanel.GetSQLBuilder(queryDefXML);
                         if (builder.HasPredicate)
                         {
-                            var reader = new MSSQLReader(builder);
+                            var reader = new SQLReader(builder);
                             sink = JobListDisplayControl.MakeSink("Jobs", 15);
                             _mCurrentPipeline = ProcessingPipeline.Assemble("Get Jobs", reader, sink);
                         }
@@ -627,7 +627,7 @@ namespace MageFilePackager
             CompletionStateUpdated csu = AdjustPostCommandUIState;
             Invoke(csu, new object[] { null });
 
-            if (args.Message.StartsWith(MSSQLReader.SQL_COMMAND_ERROR))
+            if (args.Message.StartsWith(SQLReader.SQL_COMMAND_ERROR))
                 MessageBox.Show(args.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
             // Must use a delegate and Invoke to avoid "cross-thread operation not valid" exceptions

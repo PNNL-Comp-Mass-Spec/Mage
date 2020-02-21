@@ -300,7 +300,7 @@ namespace MageMetadataProcessor
 
         private ProcessingPipeline MakeRawQueryPipeline(ISinkModule display, string server, string database, string sql)
         {
-            var reader = new MSSQLReader
+            var reader = new SQLReader
             {
                 Server = server,
                 Database = database,
@@ -312,7 +312,7 @@ namespace MageMetadataProcessor
 
         private ProcessingPipeline MakeCrosstabQueryPipeline(ISinkModule display, string server, string database, string sql)
         {
-            var reader = new MSSQLReader
+            var reader = new SQLReader
             {
                 Server = server,
                 Database = database,

@@ -48,9 +48,9 @@ namespace MageUnitTestsForFileProcessor
 
             var source = pipeline.GetModule("MSSQLReader1");
             Assert.AreNotEqual(null, source);
-            Assert.IsInstanceOf(typeof(MSSQLReader), source);
+            Assert.IsInstanceOf(typeof(SQLReader), source);
 
-            var target = (MSSQLReader)source;
+            var target = (SQLReader)source;
             Assert.AreEqual(Globals.DMSDatabase.ToLower(), target.Database.ToLower());
             Assert.AreEqual(Globals.DMSServer.ToLower(), target.Server.ToLower());
             Assert.AreEqual("SELECT * FROM V_Mage_Analysis_Jobs WHERE [Dataset] LIKE '%sarc_ms%' ORDER BY [Job] ASC", target.SQLText);

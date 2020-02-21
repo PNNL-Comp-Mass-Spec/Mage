@@ -18,7 +18,7 @@ namespace MageFilePackager
         {
 
             // Make source module and initialize from query def XML and runtime parameters
-            var rdr = new MSSQLReader(queryDefXML, runtimeParms);
+            var rdr = new SQLReader(queryDefXML, runtimeParms);
 
             // Build and wire pipeline
             return ProcessingPipeline.Assemble("JobQueryPipeline", rdr, sinkObject);

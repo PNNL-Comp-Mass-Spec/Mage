@@ -177,7 +177,7 @@ FROM (
             var sql = queryTemplate.Replace("@", dataPackageId);
 
             // Typically gigasax and DMS5
-            var dbr = new MSSQLReader
+            var dbr = new SQLReader
             {
                 Server = Globals.DMSServer,
                 Database = Globals.DMSDatabase,

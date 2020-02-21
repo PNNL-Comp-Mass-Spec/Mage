@@ -301,7 +301,7 @@ namespace MageFileProcessor
                             return;
                         }
 
-                        var reader = new MSSQLReader(builder);
+                        var reader = new SQLReader(builder);
                         sink = JobListDisplayControl.MakeSink("Jobs", 15);
 
                         pipeline = ProcessingPipeline.Assemble("Get Jobs", reader, sink);
@@ -950,7 +950,7 @@ namespace MageFileProcessor
                 }
             }
 
-            if (args.Message.StartsWith(MSSQLReader.SQL_COMMAND_ERROR))
+            if (args.Message.StartsWith(SQLReader.SQL_COMMAND_ERROR))
                 MessageBox.Show(args.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
         }
