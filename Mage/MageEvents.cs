@@ -32,7 +32,7 @@ namespace Mage
         public bool Hidden { get; set; }
 
         /// <summary>
-        /// Construct an empty Mage standard tabular input/outpu column definition object
+        /// Construct an empty Mage standard tabular input/output column definition object
         /// </summary>
         public MageColumnDef()
         {
@@ -70,12 +70,12 @@ namespace Mage
     /// </summary>
     public class MageColumnEventArgs : EventArgs
     {
-        private readonly List<MageColumnDef> columDefs;
+        private readonly List<MageColumnDef> columnDefs;
 
         /// <summary>
         /// List of column definitions
         /// </summary>
-        public Collection<MageColumnDef> ColumnDefs => new Collection<MageColumnDef>(columDefs);
+        public Collection<MageColumnDef> ColumnDefs => new Collection<MageColumnDef>(columnDefs);
 
         /// <summary>
         /// Construct new MageColumnEventArgs object
@@ -84,7 +84,7 @@ namespace Mage
         /// <param name="colDefs">Column definition list</param>
         public MageColumnEventArgs(IEnumerable<MageColumnDef> colDefs)
         {
-            columDefs = new List<MageColumnDef>(colDefs);
+            columnDefs = new List<MageColumnDef>(colDefs);
         }
     }
 

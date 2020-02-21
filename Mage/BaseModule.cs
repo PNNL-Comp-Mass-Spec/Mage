@@ -471,7 +471,6 @@ namespace Mage
         /// <param name="pattern">Text to find</param>
         /// <param name="replacement">Replacement text</param>
         /// <returns>The updated string</returns>
-        /// <remarks>From "http://www.codeproject.com/KB/string/fastestcscaseinsstringrep.aspx" using Michael Epner's </remarks>
         protected string ReplaceEx(string original, string pattern, string replacement)
         {
             return ReplaceEx(original, pattern, replacement, StringComparison.OrdinalIgnoreCase, -1);
@@ -485,7 +484,6 @@ namespace Mage
         /// <param name="replacement">Replacement text</param>
         /// <param name="comparisonType">Comparison type; use StringComparison.OrdinalIgnoreCase for case-insensitive</param>
         /// <returns>The updated string</returns>
-        /// <remarks>From "http://www.codeproject.com/KB/string/fastestcscaseinsstringrep.aspx" using Michael Epner's </remarks>
         public string ReplaceEx(string original, string pattern, string replacement, StringComparison comparisonType)
         {
             return ReplaceEx(original, pattern, replacement, comparisonType, -1);
@@ -500,7 +498,6 @@ namespace Mage
         /// <param name="comparisonType">Comparison type; use StringComparison.OrdinalIgnoreCase for case-insensitive</param>
         /// <param name="stringBuilderInitialSize">Initial size of the string builder</param>
         /// <returns>The updated string</returns>
-        /// <remarks>From "http://www.codeproject.com/KB/string/fastestcscaseinsstringrep.aspx" using Michael Epner's </remarks>
         public string ReplaceEx(string original, string pattern, string replacement, StringComparison comparisonType, int stringBuilderInitialSize)
         {
             if (original == null)
@@ -532,7 +529,6 @@ namespace Mage
 
             return result.ToString();
         }
-
 
         /// <summary>
         /// Setup position map list of new output columns that have

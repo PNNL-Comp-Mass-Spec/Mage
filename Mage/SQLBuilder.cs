@@ -7,7 +7,7 @@ namespace Mage
 {
 
     /// <summary>
-    /// Constucts SQL query from templates and run-time parameters
+    /// Constructs SQL query from templates and run-time parameters
     /// </summary>
     public class SQLBuilder
     {
@@ -140,7 +140,7 @@ namespace Mage
         {
 
             /// <summary>
-            /// Soring column
+            /// Sorting column
             /// </summary>
             public string col { get; set; }
 

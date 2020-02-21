@@ -296,7 +296,7 @@ namespace Mage
             var columnDef = new MageColumnDef
             {
                 Name = drField["ColumnName"].ToString(),
-                DataType = drField["DataTypeName"].ToString(),
+                DataType = drField["DataTypeName"].ToString(),  // SQLite DataType name
                 Size = drField["ColumnSize"].ToString()
             };
 
