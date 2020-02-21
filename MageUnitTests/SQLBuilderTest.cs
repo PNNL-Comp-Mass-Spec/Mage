@@ -24,14 +24,14 @@ namespace MageUnitTests
             target.SetColumnDefaultPredicate("AND", "Bob", "MatchesText", "");
             target.SetColumnDefaultPredicate("OR", "Paul", "Equals", "");
             target.SetColumnDefaultPredicate("OR", "John", "NotEqual", "");
-            target.SetColumnDefaultPredicate("AND", "Sue", "ContainsText", "");
+            target.SetColumnDefaultPredicate("AND", "Peggy Sue", "ContainsText", "");
 
             target.AddPredicateItem("Bob", "Your uncle");
             target.AddPredicateItem("Paul", "42");
             target.AddPredicateItem("John", "0");
-            target.AddPredicateItem("Sue", "Your aunt");
+            target.AddPredicateItem("Peggy Sue", "Your aunt");
 
-            var expected = "SELECT * FROM T_X WHERE [Bob] = 'Your uncle' AND [Sue] LIKE '%Your aunt%' AND ([Paul] = 42 OR NOT [John] = 0)";
+            var expected = "SELECT * FROM T_X WHERE Bob = 'Your uncle' AND [Peggy Sue] LIKE '%Your aunt%' AND (Paul = 42 OR NOT John = 0)";
             var actual = target.BuildQuerySQL();
             Assert.AreEqual(expected, actual);
         }
@@ -77,7 +77,7 @@ namespace MageUnitTests
             var dir = "ASC";
             target.AddSortingItem(col, dir);
             target.Table = "T_X";
-            var expected = "SELECT * FROM T_X ORDER BY [Bob] ASC";
+            var expected = "SELECT * FROM T_X ORDER BY Bob ASC";
             var actual = target.BuildQuerySQL();
             Assert.AreEqual(expected, actual);
         }
@@ -92,19 +92,19 @@ namespace MageUnitTests
 
 
             target.AddPredicateItem("AND", "Bob", "MatchesText", "Your uncle");
-            var expected = "SELECT * FROM T_X WHERE [Bob] = 'Your uncle'";
+            var expected = "SELECT * FROM T_X WHERE Bob = 'Your uncle'";
             var actual = target.BuildQuerySQL();
             Assert.AreEqual(expected, actual);
 
             target.AddPredicateItem("AND", "Sue", "ContainsText", "Your aunt");
-            expected = "SELECT * FROM T_X WHERE [Bob] = 'Your uncle' AND [Sue] LIKE '%Your aunt%'";
+            expected = "SELECT * FROM T_X WHERE Bob = 'Your uncle' AND Sue LIKE '%Your aunt%'";
             actual = target.BuildQuerySQL();
             Assert.AreEqual(expected, actual);
 
             target.AddPredicateItem("OR", "Paul", "Equals", "42");
             target.AddPredicateItem("OR", "John", "NotEqual", "0");
 
-            expected = "SELECT * FROM T_X WHERE [Bob] = 'Your uncle' AND [Sue] LIKE '%Your aunt%' AND ([Paul] = 42 OR NOT [John] = 0)";
+            expected = "SELECT * FROM T_X WHERE Bob = 'Your uncle' AND Sue LIKE '%Your aunt%' AND (Paul = 42 OR NOT John = 0)";
             actual = target.BuildQuerySQL();
             Assert.AreEqual(expected, actual);
         }
@@ -136,7 +136,7 @@ namespace MageUnitTests
             Assert.AreEqual("", target.SprocName);
 
 
-            var expected = "SELECT Dataset, Dataset_ID, Factor, Value FROM V_Custom_Factors_List_Report WHERE [Dataset] LIKE '%sarc%'";
+            var expected = "SELECT Dataset, Dataset_ID, Factor, Value FROM V_Custom_Factors_List_Report WHERE Dataset LIKE '%sarc%'";
             var actual = target.BuildQuerySQL();
             Assert.AreEqual(expected, actual);
         }
