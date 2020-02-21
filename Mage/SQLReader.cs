@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Data;
+using System.Data.Common;
+using System.Data.SqlClient;
+using NpgsqlTypes;
 using PRISM.Logging;
+using PRISMDatabaseUtils;
 
 namespace Mage
 {
@@ -11,7 +14,7 @@ namespace Mage
     /// Module than can query a database and deliver
     /// results of the query via its standard tabular output events
     /// </summary>
-    public sealed class SQLReader : BaseModule, IDisposable
+    public sealed class SQLReader : BaseModule
     {
 
         /// <summary>
@@ -23,7 +26,7 @@ namespace Mage
 
         #region member variables
 
-        private SqlConnection mConnection;
+        private IDBTools mDbTools;
 
         private const int CommandTimeoutSeconds = 15;
 
@@ -31,6 +34,10 @@ namespace Mage
         private DateTime stopTime;
         private TimeSpan duration;
 
+        /// <summary>
+        /// This dictionary tracks stored procedure parameter names and values
+        /// </summary>
+        /// <remarks>Keys are stored procedure argument names, values are the value for each argument</remarks>
         private readonly Dictionary<string, string> mStoredProcParameters = new Dictionary<string, string>();
 
         #endregion
@@ -42,12 +49,17 @@ namespace Mage
         /// </summary>
         /// <remarks>
         /// Auto-defined using Server and Database, plus optionally Username and Password
-        /// Alternatively, use the MSSQLReader constructor that takes a connection string
+        /// Alternatively, use the SQLReader constructor that takes a connection string
         /// </remarks>
         public string ConnectionString { get; private set; } = string.Empty;
 
         /// <summary>
-        /// MS SQL Server instance to connect to
+        /// True when the server is a PostgreSQL server
+        /// </summary>
+        public bool IsPostgres { get; set; }
+
+        /// <summary>
+        /// Database Server to connect to
         /// </summary>
         public string Server { get; set; } = string.Empty;
 
@@ -65,6 +77,11 @@ namespace Mage
         /// <summary>
         /// Password to use when Username is defined
         /// </summary>
+        /// <remarks>
+        /// The password is optional for PostgreSQL connections, since it can be defined in a PgPass file
+        /// On Linux use ~/.pgpass
+        /// On Windows use C:\Users\Username\AppData\Roaming\postgresql\pgpass.conf
+        /// </remarks>
         public string Password { get; set; } = string.Empty;
 
         /// <summary>
@@ -80,7 +97,7 @@ namespace Mage
 
         /// <summary>
         /// If stored procedure is being used for query,
-        /// set the given argument to the given value
+        /// store the value to associate with the given argument
         /// </summary>
         /// <param name="name">Stored procedure argument name (must include "@"))</param>
         /// <param name="value">Value for argument</param>
@@ -94,107 +111,99 @@ namespace Mage
         #region Constructors
 
         /// <summary>
-        /// Construct a new Mage SQL Server reader module
+        /// Construct a new SQL Reader module
         /// </summary>
-        public MSSQLReader()
+        public SQLReader()
         {
-            SprocName = string.Empty;
-            Username = string.Empty;
-            Password = string.Empty;
             ConnectionString = string.Empty;
         }
 
         /// <summary>
-        /// Construct a new Mage SQL Server reader module, using the given SQL Server user
+        /// Construct a new SQL Reader module, using the given database user
         /// </summary>
-        /// <param name="username">SQL Server Username; leave blank (or null) to use integrated authentication</param>
+        /// <param name="username">Database username; leave blank (or null) to use integrated authentication</param>
         /// <param name="password">Password if username is non-blank</param>
-        public MSSQLReader(string username, string password)
+        [Obsolete("Use the Constructor that accepts server name, database name, etc.")]
+        public SQLReader(string username, string password)
         {
-            SprocName = string.Empty;
             Username = username;
             Password = password;
+
             ConnectionString = string.Empty;
         }
 
         /// <summary>
         /// Constructor that initialize values from xml specs and args
         /// </summary>
-        /// <param name="xml"></param>
-        /// <param name="args"></param>
-        /// <param name="username">SQL Server Username; leave blank (or null) to use integrated authentication</param>
+        /// <param name="xml">XML template with specifications for the query</param>
+        /// <param name="args">Key/Value parameter that will be mixed into query</param>
+        /// <param name="username">Username; leave blank (or null) to use integrated authentication</param>
         /// <param name="password">Password if username is non-blank</param>
-        public MSSQLReader(string xml, Dictionary<string, string> args, string username = "", string password = "")
+        /// <param name="isPostgres">True if a PostgreSQL server</param>
+        public SQLReader(string xml, Dictionary<string, string> args, string username = "", string password = "", bool isPostgres = false)
         {
-            SprocName = string.Empty;
             var builder = new SQLBuilder(xml, ref args);
-            SetPropertiesFromBuilder(builder, username, password);
+            SetPropertiesFromBuilder(builder, username, password, isPostgres);
         }
 
         /// <summary>
         /// Constructor that accepts a SQLBuilder, plus optionally a SQL Server username and password
         /// </summary>
         /// <param name="builder"></param>
-        /// <param name="username">SQL Server Username; leave blank (or null) to use integrated authentication</param>
+        /// <param name="username">Username; leave blank (or null) to use integrated authentication</param>
         /// <param name="password">Password if username is non-blank</param>
-        public MSSQLReader(SQLBuilder builder, string username = "", string password = "")
+        /// <param name="isPostgres">True if a PostgreSQL server</param>
+        public SQLReader(SQLBuilder builder, string username = "", string password = "", bool isPostgres = false)
         {
-            SetPropertiesFromBuilder(builder, username, password);
+            SetPropertiesFromBuilder(builder, username, password, isPostgres);
         }
 
         /// <summary>
         /// Constructor that accepts a server name, database name, and SQL query
         /// </summary>
-        /// <param name="server"></param>
-        /// <param name="database"></param>
-        /// <param name="sql"></param>
-        public MSSQLReader(string server, string database, string sql)
+        /// <param name="server">Database server name</param>
+        /// <param name="database">Database name</param>
+        /// <param name="sql">SQL Query</param>
+        /// <remarks>The connection string will be auto-defined</remarks>
+        [Obsolete("Use the Constructor that accepts a username and includes the isPostgres argument")]
+        public SQLReader(string server, string database, string sql)
         {
             Server = server;
             Database = database;
+
             SQLText = sql;
+            ConnectionString = string.Empty;
+        }
+
+        /// <summary>
+        /// Constructor that accepts a server name, database name, and SQL query
+        /// </summary>
+        /// <param name="server">Database server name</param>
+        /// <param name="database">Database name</param>
+        /// <param name="username">Username; leave blank (or null) to use integrated authentication</param>
+        /// <param name="password">Password if username is non-blank</param>
+        /// <param name="isPostgres">True if a PostgreSQL server</param>
+        /// <remarks>The connection string will be auto-defined</remarks>
+        public SQLReader(string server, string database, string username, string password, bool isPostgres = false)
+        {
+            Server = server;
+            Database = database;
+            Username = username;
+            Password = password;
+            IsPostgres = isPostgres;
+
+            SQLText = string.Empty;
             ConnectionString = string.Empty;
         }
 
         /// <summary>
         /// Constructor that accepts a connection string
         /// </summary>
-        /// <param name="connectionString">SQL Server connection string</param>
+        /// <param name="connectionString">Database server connection string</param>
         /// <remarks>Use property SQLText to define the query to use</remarks>
-        public MSSQLReader(string connectionString)
+        public SQLReader(string connectionString)
         {
-            SprocName = string.Empty;
-            Username = string.Empty;
-            Password = string.Empty;
             ConnectionString = connectionString;
-        }
-        #endregion
-
-        #region IDisposable Members
-
-        /// <summary>
-        /// Dispose of held resources
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        /// Dispose of held resources
-        /// </summary>
-        /// <param name="disposing"></param>
-        private void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                // Code to dispose the managed resources of the class
-            }
-            // Code to dispose the un-managed resources of the class
-            mConnection?.Dispose();
-
-            // isDisposed = true;
         }
 
         #endregion
@@ -205,17 +214,19 @@ namespace Mage
         /// Set this module's properties using initialized SQLBuilder
         /// </summary>
         /// <param name="builder">SQL builder</param>
-        /// <param name="username">SQL Server Username; leave blank (or null) to use integrated authentication</param>
+        /// <param name="username">Username; leave blank (or null) to use integrated authentication</param>
         /// <param name="password">Password if username is non-blank</param>
-        private void SetPropertiesFromBuilder(SQLBuilder builder, string username, string password)
+        /// <param name="isPostgres">True if a PostgreSQL server</param>
+        private void SetPropertiesFromBuilder(SQLBuilder builder, string username, string password, bool isPostgres)
         {
 
             Username = username;
             Password = password;
             ConnectionString = string.Empty;
+            IsPostgres = isPostgres;
 
             // Set this module's properties from builder's special arguments list
-            // This should update Server and Database
+            // This should update Server and Database, plus optionally Username, Password, and IsPostgres
             SetParameters(builder.SpecialArgs);
 
             if (!string.IsNullOrEmpty(builder.SprocName))
@@ -244,21 +255,21 @@ namespace Mage
         /// (override of base class)
         /// </summary>
         /// <param name="state">Mage ProcessingPipeline object that contains the module (if there is one)</param>
-        public override void Run(Object state)
+        public override void Run(object state)
         {
             try
             {
-                Connect();
+                var dbTools = Connect();
 
                 try
                 {
                     if (!string.IsNullOrEmpty(SprocName))
                     {
-                        GetDataFromDatabaseSproc();
+                        GetDataFromDatabaseSproc(dbTools);
                     }
                     else
                     {
-                        GetDataFromDatabaseQuery();
+                        GetDataFromDatabaseQuery(dbTools);
                     }
                 }
                 catch (Exception ex)
@@ -271,10 +282,6 @@ namespace Mage
             {
                 OnWarningMessage(new MageStatusEventArgs("Error connecting to database: " + ex.Message));
             }
-            finally
-            {
-                Close();
-            }
         }
 
         #endregion
@@ -284,76 +291,96 @@ namespace Mage
         /// <summary>
         /// Establish connection to the database server
         /// </summary>
-        private void Connect()
+        private IDBTools Connect()
         {
-            var cnStr = GetConnectionString(Server, Database, Username, Password);
-            mConnection = new SqlConnection
+            if (!string.IsNullOrWhiteSpace(ConnectionString))
             {
-                ConnectionString = cnStr
-            };
-            mConnection.Open();
-        }
+                if (mDbTools != null)
+                    return mDbTools;
 
-        /// <summary>
-        /// Close the connection to the database
-        /// </summary>
-        private void Close()
-        {
-            mConnection.Close();
-        }
+                mDbTools = DbToolsFactory.GetDBTools(ConnectionString);
+                IsPostgres = mDbTools.DbServerType == DbServerTypes.PostgreSQL;
 
-        private string GetConnectionString(string server, string database, string username, string password)
-        {
-
-            if (string.IsNullOrWhiteSpace(server) && string.IsNullOrWhiteSpace(database))
-            {
-                if (!string.IsNullOrWhiteSpace(ConnectionString))
-                    return ConnectionString;
-
-                throw new Exception(
-                    "ConnectionString not defined in MSSQLReader. " +
-                    "Either set it via the ConnectionString property or " +
-                    "instantiate this class with a specific server name and database name");
+                return mDbTools;
             }
 
-            if (!string.IsNullOrWhiteSpace(server) && string.IsNullOrWhiteSpace(database))
+            string connectionString;
+            if (IsPostgres)
             {
-                throw new Exception(
-                    "Server name is defined, but database name is not defined; cannot construct the connection string in MSSQLReader");
+                connectionString = GetPgSqlConnectionString(Server, Database, Username, Password);
+            }
+            else
+            {
+                connectionString = GetMSSqlConnectionString(Server, Database, Username, Password);
             }
 
-            if (string.IsNullOrWhiteSpace(server) && !string.IsNullOrWhiteSpace(database))
+            if (string.IsNullOrWhiteSpace(connectionString))
             {
-                throw new Exception(
-                    "Database name is defined, but server name is not defined; cannot construct the connection string in MSSQLReader");
+                throw new MageException("Unable to determine the connection string in the Connect() method");
+            }
+
+            if (ConnectionString.Equals(connectionString) && mDbTools != null)
+                return mDbTools;
+
+            ConnectionString = connectionString;
+
+            mDbTools = DbToolsFactory.GetDBTools(connectionString);
+
+            return mDbTools;
+        }
+
+        private string GetMSSqlConnectionString(string server, string database, string username, string password)
+        {
+            var cachedConnectionString = ValidateDatabaseInfo(server, database);
+            if (!string.IsNullOrWhiteSpace(cachedConnectionString))
+            {
+                return cachedConnectionString;
             }
 
             if (string.IsNullOrWhiteSpace(username))
-                ConnectionString = string.Format("Data Source={0};Initial Catalog={1};Integrated Security=SSPI;", server, database);
-            else if (string.IsNullOrWhiteSpace(password))
-                ConnectionString = string.Format("Data Source={0};Initial Catalog={1};User={2};", server, database, username);
-            else
-                ConnectionString = string.Format("Data Source={0};Initial Catalog={1};User={2};Password={3};", server, database, username, password);
+                return string.Format("Data Source={0};Initial Catalog={1};Integrated Security=SSPI;", server, database);
 
-            return ConnectionString;
+            if (string.IsNullOrWhiteSpace(password))
+                return string.Format("Data Source={0};Initial Catalog={1};User={2};", server, database, username);
+
+            return string.Format("Data Source={0};Initial Catalog={1};User={2};Password={3};", server, database, username, password);
+
+        }
+
+        private string GetPgSqlConnectionString(string server, string database, string username, string password)
+        {
+            var cachedConnectionString = ValidateDatabaseInfo(server, database);
+            if (!string.IsNullOrWhiteSpace(cachedConnectionString))
+            {
+                return cachedConnectionString;
+            }
+
+            if (string.IsNullOrWhiteSpace(username))
+                return string.Format("Host={0};Database={1}", server, database);
+
+            if (string.IsNullOrWhiteSpace(password))
+                return string.Format("Host={0};Database={1};Username={2}", server, database, username);
+
+            return string.Format("Host={0};Database={1};Username={2};Password={3}", server, database, username, password);
         }
 
         /// <summary>
         /// Run SQL query against database and deliver data rows via standard tabular output
         /// </summary>
-        private void GetDataFromDatabaseQuery()
+        private void GetDataFromDatabaseQuery(IDBTools dbTools)
         {
-            var cmd = new SqlCommand
-            {
-                Connection = mConnection,
-                CommandText = SQLText,
-                CommandTimeout = CommandTimeoutSeconds
-            };
+            var cmd = dbTools.CreateCommand(SQLText);
+            cmd.CommandTimeout = CommandTimeoutSeconds;
 
             try
             {
-                var myReader = cmd.ExecuteReader();
-                GetData(myReader);
+                var success = dbTools.GetQueryResultsDataTable(cmd, out var queryResults);
+                if (!success)
+                {
+                    throw new MageException("GetQueryResultsDataTable returned false running query " + SQLText);
+                }
+
+                GetData(queryResults);
             }
             catch (Exception e)
             {
@@ -369,76 +396,116 @@ namespace Mage
         /// <summary>
         /// Run stored procedure and deliver data rows via standard tabular output
         /// </summary>
-        private void GetDataFromDatabaseSproc()
+        private void GetDataFromDatabaseSproc(IDBTools dbTools)
         {
-            var myCmd = GetSprocCmd(SprocName, mStoredProcParameters);
-            var myReader = myCmd.ExecuteReader();
-            GetData(myReader);
+            var cmd = GetSprocCmd(dbTools, SprocName, mStoredProcParameters);
+
+            var success = dbTools.GetQueryResultsDataTable(cmd, out var queryResults);
+            if (!success)
+            {
+                throw new MageException("GetQueryResultsDataTable returned false calling stored procedure " + SprocName);
+            }
+
+            GetData(queryResults);
         }
 
         /// <summary>
         /// Deliver data from query via standard tabular output
         /// </summary>
-        /// <param name="myReader"></param>
-        private void GetData(IDataReader myReader)
+        /// <param name="queryResults"></param>
+        private void GetData(DataTable queryResults)
         {
-            if (myReader == null)
+            if (queryResults == null)
             {
                 // Something went wrong
-                UpdateStatusMessage("Error: SqlDataReader object is null");
+                UpdateStatusMessage("Error: DataTable object is null");
                 return;
             }
 
-            OutputColumnDefinitions(myReader, out var columnDefs);
+            OutputColumnDefinitions(queryResults, out var columnDefs);
 
             var totalRows = 0;
-            OutputDataRows(myReader, columnDefs, ref totalRows);
+            OutputDataRows(queryResults, columnDefs, ref totalRows);
 
             stopTime = DateTime.UtcNow;
             duration = stopTime - startTime;
-            traceLogReader.Info("MSSQLReader.GetData --> Get data finish (" + duration + ") [" + totalRows + "]:" + SQLText);
+            traceLogReader.Info("SQLReader.GetData --> Get data finish (" + duration + ") [" + totalRows + "]:" + SQLText);
 
-            // Always close the DataReader
-            myReader.Close();
         }
 
         /// <summary>
         /// Deliver data rows via standard tabular output
         /// </summary>
-        /// <param name="myReader">DataReader object from which to get data rows</param>
+        /// <param name="queryResults">DataTable object from which to get data rows</param>
         /// <param name="columnDefs">Column definitions (used to find date/time columns)</param>
         /// <param name="totalRows">Total rows delivered</param>
-        private void OutputDataRows(IDataReader myReader, IReadOnlyList<MageColumnDef> columnDefs, ref int totalRows)
+        private void OutputDataRows(DataTable queryResults, IReadOnlyList<MageColumnDef> columnDefs, ref int totalRows)
         {
             // Now do all the rows - if anyone is registered as wanting them
             startTime = DateTime.UtcNow;
-            traceLogReader.Debug("MSSQLReader.GetData --> Get data start:" + SQLText);
-            while (myReader.Read())
+            traceLogReader.Debug("SQLReader.GetData --> Get data start:" + SQLText);
+
+            var dateTimeColumns = new SortedSet<int>();
+            var timeColumns = new SortedSet<int>();
+
+            for (var i = 0; i < columnDefs.Count; i++)
             {
-                var a = new object[myReader.FieldCount];
-                myReader.GetValues(a);
+                if (columnDefs[i].DataType.StartsWith("date", StringComparison.OrdinalIgnoreCase) ||
+                    columnDefs[i].DataType.StartsWith("smalldate", StringComparison.OrdinalIgnoreCase) ||
+                    columnDefs[i].DataType.StartsWith("timestamp", StringComparison.OrdinalIgnoreCase))
+                {
+                    dateTimeColumns.Add(i);
+                    continue;
+                }
 
-                var dataVals = new string[a.Length];
+                if (columnDefs[i].DataType == "time" ||
+                    columnDefs[i].DataType.StartsWith("time with", StringComparison.OrdinalIgnoreCase))
+                {
+                    timeColumns.Add(i);
+                }
+            }
+            foreach (DataRow row in queryResults.Rows)
+            {
+                var dataVals = new string[row.ItemArray.Length];
 
-                for (var i = 0; i < a.Length; i++)
+                for (var i = 0; i < dataVals.Length; i++)
                 {
                     var valProcessed = false;
 
                     if (i < columnDefs.Count)
                     {
-                        if ((columnDefs[i].DataType.StartsWith("date") ||
-                             columnDefs[i].DataType.StartsWith("smalldate")
-                            ) && DateTime.TryParse(a[i].ToString(), out var dateValue))
+                        if (dateTimeColumns.Contains(i))
                         {
-                            dataVals[i] = dateValue.ToString("yyyy-MM-dd hh:mm:ss tt");
-                            valProcessed = true;
-                        }
-                        else
-                        {
-                            if (columnDefs[i].DataType == "time" && DateTime.TryParse(a[i].ToString(), out var timeValue))
+                            try
                             {
-                                dataVals[i] = timeValue.ToString("hh:mm:ss tt");
+                                var dateValueViaCast = row.ItemArray[i].CastDBVal<DateTime>();
+                                dataVals[i] = dateValueViaCast.ToString("yyyy-MM-dd hh:mm:ss tt");
                                 valProcessed = true;
+                            }
+                            catch (Exception)
+                            {
+                                if (DateTime.TryParse(row.ItemArray[i].ToString(), out var dateValue))
+                                {
+                                    dataVals[i] = dateValue.ToString("yyyy-MM-dd hh:mm:ss tt");
+                                    valProcessed = true;
+                                }
+                            }
+                        }
+                        else if (timeColumns.Contains(i))
+                        {
+                            try
+                            {
+                                var timeValueViaCast = row.ItemArray[i].CastDBVal<DateTime>();
+                                dataVals[i] = timeValueViaCast.ToString("hh:mm:ss tt");
+                                valProcessed = true;
+                            }
+                            catch (Exception)
+                            {
+                                if (DateTime.TryParse(row.ItemArray[i].ToString(), out var timeValue))
+                                {
+                                    dataVals[i] = timeValue.ToString("hh:mm:ss tt");
+                                    valProcessed = true;
+                                }
                             }
                         }
 
@@ -446,7 +513,7 @@ namespace Mage
 
                     if (!valProcessed)
                     {
-                        dataVals[i] = a[i].ToString();
+                        dataVals[i] = row.ItemArray[i].ToString();
                     }
                 }
 
@@ -471,36 +538,32 @@ namespace Mage
         /// <summary>
         /// Deliver column definitions via standard tabular output
         /// </summary>
-        /// <param name="myReader">DataReader object from which to get data rows</param>
+        /// <param name="queryResults">DataTable object from which to get data rows</param>
         /// <param name="columnDefs">Column definitions</param>
-        private void OutputColumnDefinitions(IDataReader myReader, out List<MageColumnDef> columnDefs)
+        private void OutputColumnDefinitions(DataTable queryResults, out List<MageColumnDef> columnDefs)
         {
             // If anyone is registered as listening for ColumnDefAvailable events, make it happen for them
             startTime = DateTime.UtcNow;
-            traceLogReader.Debug("MSSQLReader.GetData --> Get column info start:" + SQLText);
+            traceLogReader.Debug("SQLReader.GetData --> Get column info start:" + SQLText);
 
             // Determine the column names and column data types (
 
             // Get list of fields in result set and process each field
             columnDefs = new List<MageColumnDef>();
 
-            var schemaTable = myReader.GetSchemaTable();
-            if (schemaTable != null)
+            foreach (DataColumn column in queryResults.Columns)
             {
-                foreach (DataRow drField in schemaTable.Rows)
+                // Initialize column definition with canonical fields
+                var columnDef = GetColumnInfo(column);
+                if (!columnDef.Hidden)
                 {
-                    // Initialize column definition with canonical fields
-                    var columnDef = GetColumnInfo(drField);
-                    if (!columnDef.Hidden)
-                    {
-                        // Pass information about this column to the listeners
-                        columnDefs.Add(columnDef);
-                    }
-                    else
-                    {
-                        // Column is marked as hidden; do not process it
-                        UpdateStatusMessage("Skipping hidden column [" + columnDef.Name + "]");
-                    }
+                    // Pass information about this column to the listeners
+                    columnDefs.Add(columnDef);
+                }
+                else
+                {
+                    // Column is marked as hidden; do not process it
+                    UpdateStatusMessage("Skipping hidden column [" + columnDef.Name + "]");
                 }
             }
 
@@ -508,28 +571,66 @@ namespace Mage
             OnColumnDefAvailable(new MageColumnEventArgs(columnDefs.ToArray()));
             stopTime = DateTime.UtcNow;
             duration = stopTime - startTime;
-            traceLogReader.Info("MSSQLReader.GetData --> Get column info finish (" + duration + "):" + SQLText);
+            traceLogReader.Info("SQLReader.GetData --> Get column info finish (" + duration + "):" + SQLText);
         }
 
         /// <summary>
-        /// Get canonical column definition fields from MSSQL TableSchema row
+        /// Get canonical column definition fields for a DataColumn
         /// </summary>
-        /// <param name="drField">MSSQL TableSchema row containing definition for a column</param>
+        /// <param name="column">DataColumn instance</param>
         /// <returns></returns>
-        private static MageColumnDef GetColumnInfo(DataRow drField)
+        private static MageColumnDef GetColumnInfo(DataColumn column)
         {
             // Add the canonical column definition fields to column definition
 
             var columnDef = new MageColumnDef
             {
-                Name = drField["ColumnName"].ToString(),
-                DataType = drField["DataTypeName"].ToString(),
-                Size = drField["ColumnSize"].ToString()
+                Name = column.ColumnName,
+                DataType = column.DataType.Name,
+                Size = column.MaxLength.ToString(),
+                Hidden = false
             };
 
-            var colHidden = drField["IsHidden"].ToString();
-            columnDef.Hidden = !(string.IsNullOrEmpty(colHidden) || colHidden.ToLower() == "false");
+            // Hidden columns were deprecated in February 2020 when we switched from MSSql TableSchema to DataColumn
+            //var colHidden = drField["IsHidden"].ToString();
+            //columnDef.Hidden = !(string.IsNullOrEmpty(colHidden) || colHidden.ToLower() == "false");
+
             return columnDef;
+        }
+
+        /// <summary>
+        /// Validate that either ConnectionString is defined, or both server and database are defined
+        /// </summary>
+        /// <param name="server"></param>
+        /// <param name="database"></param>
+        /// <returns>Cached connection string, or an empty string</returns>
+        private string ValidateDatabaseInfo(string server, string database)
+        {
+
+            if (string.IsNullOrWhiteSpace(server) && string.IsNullOrWhiteSpace(database))
+            {
+                if (!string.IsNullOrWhiteSpace(ConnectionString))
+                    return ConnectionString;
+
+                throw new MageException(
+                    "ConnectionString not defined in SQLReader. " +
+                    "Either set it via the ConnectionString property or " +
+                    "instantiate this class with a specific server name and database name");
+            }
+
+            if (!string.IsNullOrWhiteSpace(server) && string.IsNullOrWhiteSpace(database))
+            {
+                throw new MageException(
+                    "Server name is defined, but database name is not defined; cannot construct the connection string in SQLReader");
+            }
+
+            if (string.IsNullOrWhiteSpace(server) && !string.IsNullOrWhiteSpace(database))
+            {
+                throw new MageException(
+                    "Database name is defined, but server name is not defined; cannot construct the connection string in SQLReader");
+            }
+
+            return string.Empty;
         }
 
         /// <summary>
@@ -545,98 +646,250 @@ namespace Mage
 
         #region Code for stored procedures
 
+        private DbParameter AddParameter(
+            IDBTools dbTools,
+            DbCommand cmd, string argName,
+            SqlType argType,
+            ParameterDirection paramDirection,
+            IReadOnlyDictionary<string, string> sprocParams,
+            int argSize = 0)
+        {
+            var newParam = dbTools.AddParameter(cmd, argName, argType, argSize, paramDirection);
+
+            if (sprocParams.ContainsKey(argName))
+            {
+                newParam.Value = sprocParams[argName];
+            }
+
+            return newParam;
+        }
+
+        private void AddPgSqlParameter(
+            IDBTools dbTools,
+            DbCommand cmd, string argName,
+            NpgsqlDbType argType,
+            ParameterDirection paramDirection,
+            IReadOnlyDictionary<string, string> sprocParams,
+            int argSize = 0)
+        {
+            var newParam = dbTools.AddPgSqlParameter(cmd, argName, argType, argSize, paramDirection);
+
+            if (sprocParams.ContainsKey(argName))
+            {
+                newParam.Value = sprocParams[argName];
+            }
+        }
+
+        private object GetProcedureNameWithoutSchema(string sprocName, out string schemaName, bool isPostgres)
+        {
+            if (isPostgres)
+            {
+                schemaName = "public";
+            }
+            else
+            {
+                schemaName = "dbo";
+            }
+
+            var periodIndex = sprocName.IndexOf('.');
+            if (periodIndex < 0)
+            {
+                return sprocName;
+            }
+
+            if (periodIndex > 0)
+            {
+                schemaName = sprocName.Substring(0, periodIndex);
+            }
+
+            return sprocName.Substring(1);
+        }
+
         /// <summary>
         /// Return a SqlCommand suitable for calling the given stored procedure
         /// with the given argument values
         /// </summary>
-        /// <param name="sprocName"></param>
-        /// <param name="parms"></param>
+        /// <param name="dbTools"></param>
+        /// <param name="sprocName">Stored procedure name; can optionally contain a schema name, e.g. mc.GetManagerParameters</param>
+        /// <param name="sprocParams">Dictionary where keys are stored procedure argument names and values are the value for each argument</param>
         /// <returns></returns>
-        private SqlCommand GetSprocCmd(string sprocName, IReadOnlyDictionary<string, string> parms)
+        private DbCommand GetSprocCmd(IDBTools dbTools, string sprocName, IReadOnlyDictionary<string, string> sprocParams)
         {
+            var isPostgres = dbTools.DbServerType == DbServerTypes.PostgreSQL;
 
-            // Start the SqlCommand that we are building up for the sproc
-            var builtCmd = new SqlCommand
-            {
-                Connection = mConnection
-            };
+            var builtCmd = dbTools.CreateCommand(sprocName, CommandType.StoredProcedure);
 
             try
             {
                 // Query the database to get argument definitions for the given stored procedure
-                var cmd = new SqlCommand
+                var columnNames = new List<string>
                 {
-                    Connection = mConnection
+                    "parameter_name",
+                    "data_type",
+                    "parameter_mode",
+                    "character_maximum_length",
+                    "numeric_precision",
+                    "numeric_scale"
                 };
 
-                var sqlText = string.Format("SELECT * FROM INFORMATION_SCHEMA.PARAMETERS WHERE SPECIFIC_NAME = '{0}'", sprocName);
-                cmd.CommandText = sqlText;
+                // Map from column name to column index
+                var columnIndexMap = new Dictionary<string, int>();
 
-                var rdr = cmd.ExecuteReader();
+                for (var i = 0; i < columnNames.Count; i++)
+                {
+                    columnIndexMap.Add(columnNames[i], i);
+                }
 
-                // Column positions for the argument data we need
-                var namIdx = rdr.GetOrdinal("PARAMETER_NAME");
-                var typIdx = rdr.GetOrdinal("DATA_TYPE");
-                var modIdx = rdr.GetOrdinal("PARAMETER_MODE");
-                var sizIdx = rdr.GetOrdinal("CHARACTER_MAXIMUM_LENGTH");
+                var baseQuery = "SELECT " + string.Join(", ", columnNames) + " " +
+                                "FROM information_schema.parameters";
+                string sqlQuery;
 
-                // More stuff for the SqlCommand being built
-                builtCmd.CommandType = CommandType.StoredProcedure;
-                builtCmd.CommandText = sprocName;
-                builtCmd.Parameters.Add(new SqlParameter("@Return", SqlDbType.Int));
-                builtCmd.Parameters["@Return"].Direction = ParameterDirection.ReturnValue;
+                // Extract the schema from the stored procedure name
+                var sprocNameWithoutSchema = GetProcedureNameWithoutSchema(sprocName, out var schemaName, isPostgres);
+
+                if (isPostgres)
+                {
+                    // ReSharper disable CommentTypo
+
+                    // Procedure and function names in PostgreSQL have an integer appended to them, for example:
+                    //   postlogentry_20837
+                    //   udf_append_to_text_30864
+                    //   getmanagerparameters_29338
+
+                    // ReSharper restore CommentTypo
+
+                    // Match the procedure using SIMILAR TO
+                    sqlQuery = string.Format(
+                        "{0} WHERE specific_schema = '{1}' AND specific_name::citext SIMILAR TO '{2}[_]%'",
+                        baseQuery, schemaName, sprocNameWithoutSchema);
+                }
+                else
+                {
+                    sqlQuery = string.Format(
+                        "{0} WHERE specific_schema = '{1}' AND specific_name = '{2}'",
+                        baseQuery, schemaName, sprocNameWithoutSchema);
+                }
+
+                var cmd = dbTools.CreateCommand(sqlQuery);
+
+                var success = dbTools.GetQueryResults(cmd, out var queryResults, 1);
+                if (!success)
+                {
+                    throw new MageException("GetQueryResults returns false querying information_schema.parameters for procedure " + sprocName);
+                }
+
+                // Add the @Return parameter
+
+                // Note that for Postgres databases, the DBTools object will auto-update @Return parameters to have:
+                //   parameter.ParameterName = "_returnCode";
+                //   parameter.DbType = DbType.String;
+                //   parameter.Direction = ParameterDirection.InputOutput;
+                // See UpdateSqlServerParameterNames in https://github.com/PNNL-Comp-Mass-Spec/PRISM-Class-Library/blob/master/PRISMDatabaseUtils/PostgreSQL/PostgresDBTools.cs
+
+                dbTools.AddParameter(builtCmd, "@Return", SqlType.Int, ParameterDirection.ReturnValue);
 
                 // Loop through all the arguments and add a parameter for each one
                 // the the SqlCommand being built
-                while (rdr.Read())
+                foreach (var resultRow in queryResults)
                 {
-                    var a = new object[rdr.FieldCount];
-                    rdr.GetValues(a);
-                    var argName = a[namIdx].ToString();
-                    var argType = a[typIdx].ToString();
-                    var argMode = a[modIdx].ToString();
+                    var argName = resultRow[columnIndexMap["parameter_name"]];
+                    var argType = resultRow[columnIndexMap["data_type"]];
+                    var argMode = resultRow[columnIndexMap["parameter_mode"]];
+                    var argSize = resultRow[columnIndexMap["character_maximum_length"]];
+
+                    var argSizeValue = int.TryParse(argSize, out var parsedArgSize) ? parsedArgSize : 0;
+
+                    var paramDirection = ParamDirection(argMode);
+
                     switch (argType)
                     {
+
+                        case "bit":
                         case "tinyint":
-                        case "float":
-                        case "real":
+                            if (isPostgres && argType.Equals("bit"))
+                            {
+                                AddPgSqlParameter(dbTools, builtCmd, argName, NpgsqlDbType.Bit, paramDirection, sprocParams);
+                            }
+                            else
+                            {
+                                AddParameter(dbTools, builtCmd, argName, SqlType.TinyInt, paramDirection, sprocParams);
+                            }
+
+                            break;
+
+                        case "smallint":
+                        case "int2":
+                            AddParameter(dbTools, builtCmd, argName, SqlType.SmallInt, paramDirection, sprocParams);
+                            break;
+
                         case "int":
-                            builtCmd.Parameters.Add(new SqlParameter(argName, SqlDbType.Int));
-                            builtCmd.Parameters[argName].Direction = ParamDirection(argMode);
-                            if (parms.ContainsKey(argName))
-                            {
-                                builtCmd.Parameters[argName].Value = parms[argName];
-                            }
+                        case "integer":
+                        case "int4":
+                            AddParameter(dbTools, builtCmd, argName, SqlType.Int, paramDirection, sprocParams);
                             break;
+
+                        case "bigint":
+                        case "int8":
+                            AddParameter(dbTools, builtCmd, argName, SqlType.BigInt, paramDirection, sprocParams);
+                            break;
+
+                        case "float":
+                            AddParameter(dbTools, builtCmd, argName, SqlType.Float, paramDirection, sprocParams);
+                            break;
+
+                        case "real":
+                            AddParameter(dbTools, builtCmd, argName, SqlType.Real, paramDirection, sprocParams);
+                            break;
+
+                        case "citext":
+                            if (isPostgres)
+                            {
+                                AddPgSqlParameter(dbTools, builtCmd, argName, NpgsqlDbType.Citext, paramDirection, sprocParams);
+                            }
+                            else
+                            {
+                                AddParameter(dbTools, builtCmd, argName, SqlType.VarChar, paramDirection, sprocParams);
+                            }
+
+                            break;
+
+                        case "text":
                         case "varchar":
-                            var size = (Int32)a[sizIdx];
-                            builtCmd.Parameters.Add(new SqlParameter(argName, SqlDbType.VarChar, size));
-                            builtCmd.Parameters[argName].Direction = ParamDirection(argMode);
-                            if (parms.ContainsKey(argName))
-                            {
-                                builtCmd.Parameters[argName].Value = parms[argName];
-                            }
+                        case "nvarchar":
+                        case "name":
+                            AddParameter(dbTools, builtCmd, argName, SqlType.VarChar, paramDirection, sprocParams, argSizeValue);
                             break;
+
+                        case "char":
+                        case "character":
+                            AddParameter(dbTools, builtCmd, argName, SqlType.Char, paramDirection, sprocParams, argSizeValue);
+                            break;
+
                         case "decimal":
-                            var preIdx = rdr.GetOrdinal("NUMERIC_PRECISION");
-                            var scaIdx = rdr.GetOrdinal("NUMERIC_SCALE");
-                            builtCmd.Parameters.Add(new SqlParameter(argName, SqlDbType.Decimal));
-                            builtCmd.Parameters[argName].Direction = ParamDirection(argMode);
-                            builtCmd.Parameters[argName].Precision = (byte)a[preIdx];
-                            var obj = a[scaIdx];
-                            builtCmd.Parameters[argName].Scale = Convert.ToByte(obj);
-                            if (parms.ContainsKey(argName))
+                            var decimalParam = AddParameter(dbTools, builtCmd, argName, SqlType.Float, paramDirection, sprocParams);
+
+                            if (decimalParam is SqlParameter sqlParam)
                             {
-                                builtCmd.Parameters[argName].Value = parms[argName];
+                                var argPrecision = resultRow[columnIndexMap["numeric_precision"]];
+                                var argScale = resultRow[columnIndexMap["numeric_scale"]];
+
+                                if (byte.TryParse(argPrecision, out var precision) &&
+                                    byte.TryParse(argScale, out var scale))
+                                {
+                                    sqlParam.DbType = DbType.Decimal;
+                                    sqlParam.Precision = precision;
+                                    sqlParam.Scale = scale;
+                                }
                             }
                             break;
+
                         // FUTURE: Add code for more data types
                         default:
                             Console.WriteLine("Couldn't figure out " + argName);
                             break;
                     }
                 }
-                rdr.Close();
+
             }
             catch (Exception e)
             {
@@ -647,6 +900,7 @@ namespace Mage
 
                 throw;
             }
+
             return builtCmd;
         }
 
@@ -657,7 +911,7 @@ namespace Mage
         /// <returns></returns>
         private static ParameterDirection ParamDirection(string argMode)
         {
-            return (argMode == "INOUT") ? ParameterDirection.Output : ParameterDirection.Input;
+            return (argMode == "INOUT" || argMode == "OUT") ? ParameterDirection.Output : ParameterDirection.Input;
         }
 
         #endregion
@@ -665,10 +919,32 @@ namespace Mage
     }
 }
 
-// Numeric types:   bit, tinyint, smallint, int, bigint, decimal, real, float, numeric, smallmoney, money
-// String types:    char, varchar, text, nchar, nvarchar, ntext, uniqueidentifier, xml
-// Datetime types:  date, datetime, datetime2, smalldatetime, time, datetimeoffset
-// Binary types:    binary, varbinary, image
+// ReSharper disable CommentTypo
+
+// SQL Server data types
+
+// Numeric types:          bit, tinyint, smallint, int, bigint, decimal, real, float, numeric, smallmoney, money
+// String types:           char, varchar, text, nchar, nvarchar, ntext, uniqueidentifier, xml
+// Datetime types:         date, datetime, datetime2, smalldatetime, time, datetimeoffset
+// Binary types:           binary, varbinary, image
+
+
+// PostgreSQL data types
+
+// Numeric types:          bit, smallint, integer, bigint, double, numeric, real, money
+// String types:           text, varchar, name, citext, char(n)
+// Datetime Types:         date, time, timestamp, timestamptz, interval, timetz
+// Binary Types:           bytea
+
+// Boolean type:           boolean, bool
+// Bit String types:       bit, varbit
+
+// Geometric types:        box, circle, line, lseg, path, point, polygon
+// Network Address Types:  inet, cidr, macaddr, macaddr8
+// Text Search Types:      tsvector, tsquery, tsquery
+// Additional Types:       array, hstore, json, jsonb, range, uuid, xml
+
+// ReSharper restore CommentTypo
 
 /*
 ---column def object ---
