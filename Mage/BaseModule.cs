@@ -251,7 +251,38 @@ namespace Mage
         public virtual void SetPropertyByName(string key, string val)
         {
             var pi = GetType().GetProperty(key);
-            pi?.SetValue(this, val, null);
+            if (pi == null)
+                return;
+
+            if (pi.PropertyType == typeof(bool))
+            {
+                if (bool.TryParse(val, out var parsedValue))
+                {
+                    pi.SetValue(this, parsedValue, null);
+                }
+                else
+                {
+                    var message = string.Format("Cannot convert value \"{0}\" to type bool for property \"{1}\"", val ?? "NULL", key);
+                    OnWarningMessage(new MageStatusEventArgs(message));
+                }
+            }
+            else if (pi.PropertyType == typeof(DateTime))
+            {
+                if (DateTime.TryParse(val, out var parsedValue))
+                {
+                    pi.SetValue(this, parsedValue, null);
+                }
+                else
+                {
+                    var message = string.Format("Cannot convert value \"{0}\" to type DateTime for property \"{1}\"", val ?? "NULL", key);
+                    OnWarningMessage(new MageStatusEventArgs(message));
+                }
+            }
+            else
+            {
+                pi.SetValue(this, val, null);
+            }
+
         }
 
         /// <summary>
