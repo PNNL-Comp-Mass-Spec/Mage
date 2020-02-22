@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
-using NpgsqlTypes;
 using PRISM.Logging;
 using PRISMDatabaseUtils;
 
@@ -651,6 +650,7 @@ namespace Mage
             DbCommand cmd, string argName,
             SqlType argType,
             ParameterDirection paramDirection,
+            SortedSet<string> paramNames,
             IReadOnlyDictionary<string, string> sprocParams,
             int argSize = 0)
         {
@@ -662,22 +662,6 @@ namespace Mage
             }
 
             return newParam;
-        }
-
-        private void AddPgSqlParameter(
-            IDBTools dbTools,
-            DbCommand cmd, string argName,
-            NpgsqlDbType argType,
-            ParameterDirection paramDirection,
-            IReadOnlyDictionary<string, string> sprocParams,
-            int argSize = 0)
-        {
-            var newParam = dbTools.AddPgSqlParameter(cmd, argName, argType, argSize, paramDirection);
-
-            if (sprocParams.ContainsKey(argName))
-            {
-                newParam.Value = sprocParams[argName];
-            }
         }
 
         private object GetProcedureNameWithoutSchema(string sprocName, out string schemaName, bool isPostgres)
@@ -788,12 +772,14 @@ namespace Mage
 
                 dbTools.AddParameter(builtCmd, "@Return", SqlType.Int, ParameterDirection.ReturnValue);
 
+                var paramNames = new SortedSet<string>();
+
                 // Loop through all the arguments and add a parameter for each one
                 // the the SqlCommand being built
                 foreach (var resultRow in queryResults)
                 {
                     var argName = resultRow[columnIndexMap["parameter_name"]];
-                    var argType = resultRow[columnIndexMap["data_type"]];
+                    var argType = resultRow[columnIndexMap["data_type"]].ToLower();
                     var argMode = resultRow[columnIndexMap["parameter_mode"]];
                     var argSize = resultRow[columnIndexMap["character_maximum_length"]];
 
@@ -803,85 +789,104 @@ namespace Mage
 
                     switch (argType)
                     {
-
                         case "bit":
+                            AddParameter(dbTools, builtCmd, argName, SqlType.Bit, paramDirection, paramNames, sprocParams);
+                            break;
+
+                        case "bool":
+                        case "boolean":
+                            AddParameter(dbTools, builtCmd, argName, SqlType.Boolean, paramDirection, paramNames, sprocParams);
+                            break;
+
                         case "tinyint":
-                            if (isPostgres && argType.Equals("bit"))
-                            {
-                                AddPgSqlParameter(dbTools, builtCmd, argName, NpgsqlDbType.Bit, paramDirection, sprocParams);
-                            }
-                            else
-                            {
-                                AddParameter(dbTools, builtCmd, argName, SqlType.TinyInt, paramDirection, sprocParams);
-                            }
+                            AddParameter(dbTools, builtCmd, argName, SqlType.TinyInt, paramDirection, paramNames, sprocParams);
 
                             break;
 
                         case "smallint":
                         case "int2":
-                            AddParameter(dbTools, builtCmd, argName, SqlType.SmallInt, paramDirection, sprocParams);
+                            AddParameter(dbTools, builtCmd, argName, SqlType.SmallInt, paramDirection, paramNames, sprocParams);
                             break;
 
                         case "int":
                         case "integer":
                         case "int4":
-                            AddParameter(dbTools, builtCmd, argName, SqlType.Int, paramDirection, sprocParams);
+                            AddParameter(dbTools, builtCmd, argName, SqlType.Int, paramDirection, paramNames, sprocParams);
                             break;
 
                         case "bigint":
                         case "int8":
-                            AddParameter(dbTools, builtCmd, argName, SqlType.BigInt, paramDirection, sprocParams);
-                            break;
-
-                        case "float":
-                            AddParameter(dbTools, builtCmd, argName, SqlType.Float, paramDirection, sprocParams);
+                            AddParameter(dbTools, builtCmd, argName, SqlType.BigInt, paramDirection, paramNames, sprocParams);
                             break;
 
                         case "real":
-                            AddParameter(dbTools, builtCmd, argName, SqlType.Real, paramDirection, sprocParams);
+                            AddParameter(dbTools, builtCmd, argName, SqlType.Real, paramDirection, paramNames, sprocParams);
                             break;
 
-                        case "citext":
-                            if (isPostgres)
-                            {
-                                AddPgSqlParameter(dbTools, builtCmd, argName, NpgsqlDbType.Citext, paramDirection, sprocParams);
-                            }
-                            else
-                            {
-                                AddParameter(dbTools, builtCmd, argName, SqlType.VarChar, paramDirection, sprocParams);
-                            }
-
+                        case "float":
+                        case "double":
+                            AddParameter(dbTools, builtCmd, argName, SqlType.Float, paramDirection, paramNames, sprocParams);
                             break;
 
-                        case "text":
-                        case "varchar":
-                        case "nvarchar":
-                        case "name":
-                            AddParameter(dbTools, builtCmd, argName, SqlType.VarChar, paramDirection, sprocParams, argSizeValue);
+                        case "decimal":
+                            var decimalParam = AddParameter(dbTools, builtCmd, argName, SqlType.Decimal, paramDirection, paramNames, sprocParams);
+
+                            var argPrecision = resultRow[columnIndexMap["numeric_precision"]];
+                            var argScale = resultRow[columnIndexMap["numeric_scale"]];
+
+                            if (byte.TryParse(argPrecision, out var precision) &&
+                                byte.TryParse(argScale, out var scale))
+                            {
+                                decimalParam.Precision = precision;
+                                decimalParam.Scale = scale;
+                            }
+                            break;
+
+                        case "money":
+                            AddParameter(dbTools, builtCmd, argName, SqlType.Money, paramDirection, paramNames, sprocParams);
                             break;
 
                         case "char":
                         case "character":
-                            AddParameter(dbTools, builtCmd, argName, SqlType.Char, paramDirection, sprocParams, argSizeValue);
+                        case "nchar":
+                            AddParameter(dbTools, builtCmd, argName, SqlType.Char, paramDirection, paramNames, sprocParams, argSizeValue);
                             break;
 
-                        case "decimal":
-                            var decimalParam = AddParameter(dbTools, builtCmd, argName, SqlType.Float, paramDirection, sprocParams);
-
-                            if (decimalParam is SqlParameter sqlParam)
-                            {
-                                var argPrecision = resultRow[columnIndexMap["numeric_precision"]];
-                                var argScale = resultRow[columnIndexMap["numeric_scale"]];
-
-                                if (byte.TryParse(argPrecision, out var precision) &&
-                                    byte.TryParse(argScale, out var scale))
-                                {
-                                    sqlParam.DbType = DbType.Decimal;
-                                    sqlParam.Precision = precision;
-                                    sqlParam.Scale = scale;
-                                }
-                            }
+                        case "varchar":
+                        case "nvarchar":
+                            AddParameter(dbTools, builtCmd, argName, SqlType.VarChar, paramDirection, paramNames, sprocParams);
                             break;
+
+                        case "text":
+                            AddParameter(dbTools, builtCmd, argName, SqlType.Text, paramDirection, paramNames, sprocParams);
+                            break;
+
+                        case "citext":
+                            AddParameter(dbTools, builtCmd, argName, SqlType.Citext, paramDirection, paramNames, sprocParams);
+                            break;
+
+                        case "name":
+                            AddParameter(dbTools, builtCmd, argName, SqlType.Name, paramDirection, paramNames, sprocParams, argSizeValue);
+                            break;
+
+                        case "date":
+                            AddParameter(dbTools, builtCmd, argName, SqlType.Date, paramDirection, paramNames, sprocParams, argSizeValue);
+                            break;
+
+                        case "time":
+                            AddParameter(dbTools, builtCmd, argName, SqlType.Time, paramDirection, paramNames, sprocParams, argSizeValue);
+                            break;
+
+                        case "datetime":
+                        case "timestamp":
+                            AddParameter(dbTools, builtCmd, argName, SqlType.DateTime, paramDirection, paramNames, sprocParams, argSizeValue);
+                            break;
+
+                        case "datetimeoffset":
+                        case "timestamptz":
+                            AddParameter(dbTools, builtCmd, argName, SqlType.TimestampTz, paramDirection, paramNames, sprocParams, argSizeValue);
+                            break;
+
 
                         // FUTURE: Add code for more data types
                         default:
