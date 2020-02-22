@@ -3,6 +3,8 @@ using Mage;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using PRISM;
+using PRISM.Logging;
 
 namespace MageUnitTests
 {
@@ -27,6 +29,8 @@ namespace MageUnitTests
         public void SQLTextPropertyTest()
         {
             var target = new SQLReader();
+            RegisterEvents(target);
+
             var expected = "Test Value";
             target.SQLText = expected;
             var actual = target.SQLText;
@@ -40,6 +44,8 @@ namespace MageUnitTests
         public void SprocNamePropertyTest()
         {
             var target = new SQLReader();
+            RegisterEvents(target);
+
             var expected = "Test Value";
             target.SprocName = expected;
             var actual = target.SprocName;
@@ -53,6 +59,8 @@ namespace MageUnitTests
         public void ServerPropertyTest()
         {
             var target = new SQLReader();
+            RegisterEvents(target);
+
             var expected = "Test Value";
             target.Server = expected;
             var actual = target.Server;
@@ -66,6 +74,8 @@ namespace MageUnitTests
         public void DatabasePropertyTest()
         {
             var target = new SQLReader();
+            RegisterEvents(target);
+
             var expected = "Test Value";
             target.Database = expected;
             var actual = target.Database;
@@ -107,6 +117,7 @@ namespace MageUnitTests
             // Create SQLReader module initialized from XML definition
             var target = new SQLReader(queryDefXML, runtimeParameters, username, password);
             Assert.AreNotEqual(null, target);
+            RegisterEvents(target);
 
             var expectedSql = "SELECT Dataset, Dataset_ID, Factor, Value FROM V_Custom_Factors_List_Report WHERE Dataset LIKE '%sarc%'";
             Assert.AreEqual(expectedSql, target.SQLText);
@@ -163,6 +174,7 @@ namespace MageUnitTests
             // Create SQLReader module and test sink module
             // and connect together
             var reader = new SQLReader(serverName, databaseName, username, password, isPostgres);
+            RegisterEvents(reader);
 
             var maxRows = 7;
             var sink = new SimpleSink(maxRows);
@@ -220,6 +232,8 @@ namespace MageUnitTests
             // Create SQLReader module and test sink module
             // and connect together (no pipeline object used)
             var target = new SQLReader(serverName, databaseName, username, password);
+            RegisterEvents(target);
+
             var maxRows = 7;
             var sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
@@ -280,6 +294,8 @@ namespace MageUnitTests
             // Create SQLReader module and test sink module
             // and connect together (no pipeline object used)
             var target = new SQLReader(serverName, databaseName, username, password);
+            RegisterEvents(target);
+
             var maxRows = 5;
             var sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
@@ -335,6 +351,8 @@ namespace MageUnitTests
             // Create SQLReader module and test sink module
             // and connect together (no pipeline object used)
             var target = new SQLReader(serverName, databaseName, username, password);
+            RegisterEvents(target);
+
             var maxRows = 7;
             var sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
@@ -375,6 +393,8 @@ namespace MageUnitTests
             // Create SQLReader module and test sink module
             // and connect together (no pipeline object used)
             var target = new SQLReader(serverName, databaseName, username, password);
+            RegisterEvents(target);
+
             var maxRows = 4;
             var sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
@@ -428,6 +448,7 @@ namespace MageUnitTests
             // Create SQLReader module initialized from XML definition
             var target = new SQLReader(queryDefXML, runtimeParameters, username, password);
             Assert.AreNotEqual(null, target);
+            RegisterEvents(target);
 
             var expected = "GetMassTagsPlusPepProphetStats";
             Assert.AreEqual(expected, target.SprocName);
@@ -475,6 +496,8 @@ namespace MageUnitTests
             // Create SQLReader module and test sink module
             // and connect together (no pipeline object used)
             var target = new SQLReader(serverName, databaseName, username, password);
+            RegisterEvents(target);
+
             var maxRows = 4;
             var sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
@@ -531,6 +554,8 @@ namespace MageUnitTests
 
             // Create SQLReader module and test sink module and connect together
             var target = new SQLReader(serverName, databaseName, username, password);
+            RegisterEvents(target);
+
             var maxRows = 4;
             var sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
@@ -649,5 +674,29 @@ namespace MageUnitTests
 
             return paddedData;
         }
+
+
+        private static void RegisterEvents(IBaseModule mageModule)
+        {
+            mageModule.StatusMessageUpdated += MageModule_StatusMessageUpdated;
+            mageModule.MageExceptionReported += MageModule_ErrorMessageUpdated;
+            mageModule.WarningMessageUpdated += MageModule_WarningMessageUpdated;
+        }
+
+        private static void MageModule_StatusMessageUpdated(object sender, MageStatusEventArgs e)
+        {
+            Console.WriteLine(e.Message);
+        }
+
+        private static void MageModule_ErrorMessageUpdated(object sender, MageExceptionEventArgs e)
+        {
+            ConsoleMsgUtils.ShowError(e.Message, e.Exception);
+        }
+
+        private static void MageModule_WarningMessageUpdated(object sender, MageStatusEventArgs e)
+        {
+            ConsoleMsgUtils.ShowWarning(e.Message);
+        }
+
     }
 }
