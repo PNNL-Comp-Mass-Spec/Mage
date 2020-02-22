@@ -893,11 +893,12 @@ namespace Mage
                             AddParameter(dbTools, builtCmd, argName, SqlType.DateTime, paramDirection, paramNames, sprocParams, argSizeValue);
                             break;
 
+                        // ReSharper disable StringLiteralTypo
                         case "datetimeoffset":
                         case "timestamptz":
                             AddParameter(dbTools, builtCmd, argName, SqlType.TimestampTz, paramDirection, paramNames, sprocParams, argSizeValue);
                             break;
-
+                        // ReSharper restore StringLiteralTypo
 
                         // FUTURE: Add code for more data types
                         default:

@@ -135,7 +135,6 @@ namespace MageUnitTests
             Assert.AreEqual(testDB, specialArgs[SQLBuilder.DATABASE_NAME_KEY]);
             Assert.AreEqual("", target.SprocName);
 
-
             var expected = "SELECT Dataset, Dataset_ID, Factor, Value FROM V_Custom_Factors_List_Report WHERE Dataset LIKE '%sarc%'";
             var actual = target.BuildQuerySQL();
             Assert.AreEqual(expected, actual);
