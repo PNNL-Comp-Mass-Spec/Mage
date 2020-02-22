@@ -460,6 +460,7 @@ namespace Mage
 
             for (var i = 0; i < columnDefs.Count; i++)
             {
+                // ReSharper disable once StringLiteralTypo
                 if (columnDefs[i].DataType.StartsWith("date", StringComparison.OrdinalIgnoreCase) ||
                     columnDefs[i].DataType.StartsWith("smalldate", StringComparison.OrdinalIgnoreCase) ||
                     columnDefs[i].DataType.StartsWith("timestamp", StringComparison.OrdinalIgnoreCase))
@@ -608,6 +609,8 @@ namespace Mage
             return columnDef;
         }
 
+        // ReSharper disable ParameterOnlyUsedForPreconditionCheck.Local
+
         /// <summary>
         /// Validate that either ConnectionString is defined, or both server and database are defined
         /// </summary>
@@ -616,6 +619,7 @@ namespace Mage
         /// <returns>Cached connection string, or an empty string</returns>
         private string ValidateDatabaseInfo(string server, string database)
         {
+            // ReSharper restore ParameterOnlyUsedForPreconditionCheck.Local
 
             if (string.IsNullOrWhiteSpace(server) && string.IsNullOrWhiteSpace(database))
             {
