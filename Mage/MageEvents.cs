@@ -121,7 +121,6 @@ namespace Mage
     /// </summary>
     public class MageStatusEventArgs : EventArgs
     {
-
         /// <summary>
         /// Message text
         /// </summary>
@@ -130,13 +129,13 @@ namespace Mage
         /// <summary>
         /// Error code
         /// </summary>
-        public int ErrorCode { get; set; }
+        public int ErrorCode { get; }
 
         /// <summary>
         /// Construct a new MageStatusEventArgs object
         /// with given message text
         /// </summary>
-        /// <param name="msg"></param>
+        /// <param name="msg">Message</param>
         public MageStatusEventArgs(string msg)
         {
             Message = msg;
@@ -147,12 +146,47 @@ namespace Mage
         /// Construct a new MageStatusEventArgs object
         /// with given message text and error code
         /// </summary>
-        /// <param name="msg"></param>
-        /// <param name="errorCode"></param>
+        /// <param name="msg">Message</param>
+        /// <param name="errorCode">Error code</param>
         public MageStatusEventArgs(string msg, int errorCode)
         {
             Message = msg;
             ErrorCode = errorCode;
+        }
+    }
+
+    /// <summary>
+    /// Argument for an Exception
+    /// </summary>
+    public class MageExceptionEventArgs : MageStatusEventArgs
+    {
+
+        /// <summary>
+        /// Message text
+        /// </summary>
+        public Exception Exception { get; }
+
+        /// <summary>
+        /// Construct a new MageStatusEventArgs object
+        /// with given message text
+        /// </summary>
+        /// <param name="msg">Message</param>
+        /// <param name="ex">Exception</param>
+        public MageExceptionEventArgs(string msg, Exception ex) : base(msg)
+        {
+            Exception = ex;
+        }
+
+        /// <summary>
+        /// Construct a new MageStatusEventArgs object
+        /// with given message text and error code
+        /// </summary>
+        /// <param name="msg">Message</param>
+        /// <param name="ex">Exception</param>
+        /// <param name="errorCode">Error code</param>
+        public MageExceptionEventArgs(string msg, int errorCode, Exception ex) : base(msg, errorCode)
+        {
+            Exception = ex;
         }
     }
 

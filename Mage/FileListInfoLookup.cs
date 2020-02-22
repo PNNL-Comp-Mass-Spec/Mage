@@ -111,10 +111,13 @@ namespace Mage
                 }
                 else if (e is IOException)
                 {
-                    throw new MageException("Process aborted:" + e.Message);
+                    var errorMessage = "Process aborted:" + e.Message;
+                    var ex = ReportMageException(errorMessage, e);
+                    throw ex;
                 }
                 else
                 {
+                    ReportMageException("Exception in GetFileInfo", e);
                     throw;
                 }
             }

@@ -122,10 +122,14 @@ namespace Mage
 
                 if (!success)
                 {
+                    string errorMessage;
                     if (m_MyEMSLDatasetInfoCache.ErrorMessages.Count > 0)
-                        throw new MageException("Error downloading files using MyEMSL: " + m_MyEMSLDatasetInfoCache.ErrorMessages.First());
+                        errorMessage ="Error downloading files using MyEMSL: " + m_MyEMSLDatasetInfoCache.ErrorMessages.First();
                     else
-                        throw new MageException("Unknown error downloading files using MyEMSL");
+                        errorMessage = "Unknown error downloading files using MyEMSL";
+
+                    var ex = ReportMageException(errorMessage);
+                    throw ex;
                 }
             }
 

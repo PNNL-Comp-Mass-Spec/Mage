@@ -156,9 +156,11 @@ namespace Mage
                     DeleteFileIfLowDiskSpace(delimitedFilePathLocal);
 
             }
-            catch (IOException ex)
+            catch (IOException e)
             {
-                throw new MageException("Cannot access " + Path.GetFileName(delimitedFilePathLocal) + ": " + ex.Message, ex);
+                var errorMessage = "Cannot access " + Path.GetFileName(delimitedFilePathLocal) + ": " + e.Message;
+                var ex = ReportMageException(errorMessage, e);
+                throw ex;
             }
         }
 

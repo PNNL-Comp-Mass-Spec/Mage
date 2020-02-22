@@ -51,11 +51,15 @@ namespace Mage
         /// </summary>
         event EventHandler<MageDataEventArgs> DataRowAvailable;
 
-
         /// <summary>
         /// Event that is fired to send column definitions out via the module's standard tabular output
         /// </summary>
         event EventHandler<MageColumnEventArgs> ColumnDefAvailable;
+
+        /// <summary>
+        /// Event that is fired to pass a MageException to a calling class
+        /// </summary>
+        event EventHandler<MageExceptionEventArgs> MageExceptionReported;
 
         /// <summary>
         /// Event that is fired to send a status update message

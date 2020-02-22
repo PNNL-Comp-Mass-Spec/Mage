@@ -151,6 +151,11 @@ namespace Mage
         public event EventHandler<MageColumnEventArgs> ColumnDefAvailable;
 
         /// <summary>
+        /// Event that is fired to pass a MageException to a calling class
+        /// </summary>
+        public event EventHandler<MageExceptionEventArgs> MageExceptionReported;
+
+        /// <summary>
         /// Event that is fired to send a status update message
         /// </summary>
         public event EventHandler<MageStatusEventArgs> StatusMessageUpdated;
@@ -205,6 +210,31 @@ namespace Mage
             // Make a temporary copy of the event to avoid possibility of a race condition
             var handler = WarningMessageUpdated;
             handler?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Event-invoking method for exceptions
+        /// </summary>
+        /// <param name="e"></param>
+        protected void OnMageException(MageExceptionEventArgs e)
+        {
+            // Make a temporary copy of the event to avoid possibility of a race condition
+            var handler = MageExceptionReported;
+            handler?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Create a new MageException instance and return it
+        /// Also call OnMageException
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="ex"></param>
+        /// <returns></returns>
+        protected Exception ReportMageException(string message, Exception ex = null)
+        {
+            var mageException = new MageException(message, ex);
+            OnMageException(new MageExceptionEventArgs(message, ex));
+            return mageException;
         }
 
         /// <summary>
@@ -346,8 +376,10 @@ namespace Mage
                 }
                 catch (Exception e)
                 {
-                    traceLogBase.Error("HandleColumnDef:" + e.Message);
-                    throw new MageException("HandleColumnDef:" + e.Message);
+                    var errorMessage = "HandleColumnDef:" + e.Message;
+                    traceLogBase.Error(errorMessage);
+                    var ex = ReportMageException(errorMessage, e);
+                    throw ex;
                 }
             }
             SetupOutputColumns();
@@ -649,8 +681,10 @@ namespace Mage
             }
             catch (Exception e)
             {
-                traceLogBase.Error(e.Message);
-                throw new MageException("Problem with defining output columns:" + e.Message);
+                var errorMessage = "Problem with defining output columns:" + e.Message;
+                traceLogBase.Error(errorMessage);
+                var ex = ReportMageException(errorMessage, e);
+                throw ex;
             }
         }
 

@@ -315,7 +315,8 @@ namespace Mage
 
             if (string.IsNullOrWhiteSpace(connectionString))
             {
-                throw new MageException("Unable to determine the connection string in the Connect() method");
+                var ex = ReportMageException("Unable to determine the connection string in the Connect() method");
+                throw ex;
             }
 
             if (ConnectionString.Equals(connectionString) && mDbTools != null)
@@ -376,7 +377,8 @@ namespace Mage
                 var success = dbTools.GetQueryResultsDataTable(cmd, out var queryResults);
                 if (!success)
                 {
-                    throw new MageException("GetQueryResultsDataTable returned false running query " + SQLText);
+                    var ex = ReportMageException("GetQueryResultsDataTable returned false running query " + SQLText);
+                    throw ex;
                 }
 
                 GetData(queryResults);
@@ -385,7 +387,8 @@ namespace Mage
             {
                 if (e is InvalidOperationException || e is SqlException)
                 {
-                    throw new MageException(SQL_COMMAND_ERROR + ": " + e.Message + ";    " + SQLText);
+                    var ex = ReportMageException(SQL_COMMAND_ERROR + ": " + e.Message + ";    " + SQLText, e);
+                    throw ex;
                 }
 
                 throw;
@@ -402,7 +405,8 @@ namespace Mage
             var success = dbTools.GetQueryResultsDataTable(cmd, out var queryResults);
             if (!success)
             {
-                throw new MageException("GetQueryResultsDataTable returned false calling stored procedure " + SprocName);
+                var ex = ReportMageException("GetQueryResultsDataTable returned false calling stored procedure " + SprocName);
+                throw ex;
             }
 
             GetData(queryResults);
@@ -611,22 +615,28 @@ namespace Mage
                 if (!string.IsNullOrWhiteSpace(ConnectionString))
                     return ConnectionString;
 
-                throw new MageException(
+                var ex = ReportMageException(
                     "ConnectionString not defined in SQLReader. " +
                     "Either set it via the ConnectionString property or " +
                     "instantiate this class with a specific server name and database name");
+
+                throw ex;
             }
 
             if (!string.IsNullOrWhiteSpace(server) && string.IsNullOrWhiteSpace(database))
             {
-                throw new MageException(
+                var ex = ReportMageException(
                     "Server name is defined, but database name is not defined; cannot construct the connection string in SQLReader");
+
+                throw ex;
             }
 
             if (string.IsNullOrWhiteSpace(server) && !string.IsNullOrWhiteSpace(database))
             {
-                throw new MageException(
+                var ex = ReportMageException(
                     "Database name is defined, but server name is not defined; cannot construct the connection string in SQLReader");
+
+                throw ex;
             }
 
             return string.Empty;
@@ -770,7 +780,8 @@ namespace Mage
                 var success = dbTools.GetQueryResults(cmd, out var queryResults, 1);
                 if (!success)
                 {
-                    throw new MageException("GetQueryResults returns false querying information_schema.parameters for procedure " + sprocName);
+                    var ex = ReportMageException("GetQueryResults returns false querying information_schema.parameters for procedure " + sprocName);
+                    throw ex;
                 }
 
                 // Add the @Return parameter
@@ -912,7 +923,8 @@ namespace Mage
             {
                 if (e is InvalidOperationException || e is SqlException)
                 {
-                    throw new MageException("Problem forming SQL command:" + e.Message);
+                    var ex = ReportMageException("Problem forming SQL command:" + e.Message, e);
+                    throw ex;
                 }
 
                 throw;

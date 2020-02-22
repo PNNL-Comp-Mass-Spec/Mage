@@ -211,6 +211,8 @@ namespace Mage
                 // Sub-pipeline encountered fatal error, interrupt the main pipeline
                 if (!string.IsNullOrEmpty(mPipeline.CompletionCode))
                 {
+                    var errorMessage = "Pipeline execution in FileSubPipelineBroker reported completion code " + mPipeline.CompletionCode;
+                    ReportMageException(errorMessage);
                     throw new MageException(mPipeline.CompletionCode);
                 }
                 mFileCount++;

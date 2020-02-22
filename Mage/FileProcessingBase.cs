@@ -257,7 +257,11 @@ namespace Mage
                 var myEMSLFileID = DatasetInfoBase.ExtractMyEMSLFileID(filePathRemote, out var filePathClean);
 
                 if (myEMSLFileID <= 0)
-                    throw new MageException("MyEMSL File does not have the MyEMSL FileID tag (" + MyEMSLReader.DatasetInfoBase.MYEMSL_FILE_ID_TAG + "): " + filePathRemote);
+                {
+                    var errorMessage = "MyEMSL File does not have the MyEMSL FileID tag (" + DatasetInfoBase.MYEMSL_FILE_ID_TAG + "): " + filePathRemote;
+                    var ex = ReportMageException(errorMessage);
+                    throw ex;
+                }
 
                 if (m_FilterPassingMyEMSLFiles.TryGetValue(myEMSLFileID, out var cachedFileInfo))
                 {
@@ -273,18 +277,21 @@ namespace Mage
                     var success = m_MyEMSLDatasetInfoCache.ProcessDownloadQueue(".", Downloader.DownloadLayout.SingleDataset);
                     if (!success)
                     {
-                        var msg = "Failed to download file " + cachedFileInfo.FileInfo.RelativePathWindows + " from MyEMSL";
+                        var errorMessage = "Failed to download file " + cachedFileInfo.FileInfo.RelativePathWindows + " from MyEMSL";
                         if (m_MyEMSLDatasetInfoCache.ErrorMessages.Count > 0)
-                            msg += ": " + m_MyEMSLDatasetInfoCache.ErrorMessages.First();
+                            errorMessage += ": " + m_MyEMSLDatasetInfoCache.ErrorMessages.First();
                         else
-                            msg += ": Unknown Error";
+                            errorMessage += ": Unknown Error";
 
-                        throw new MageException(msg);
+                        var ex = ReportMageException(errorMessage);
+                        throw ex;
                     }
                 }
                 else
                 {
-                    throw new MageException("Cannot download file since not in MyEMSL Memory Cache: " + filePathRemote);
+                    var errorMessage = "Cannot download file since not in MyEMSL Memory Cache: " + filePathRemote;
+                    var ex = ReportMageException(errorMessage);
+                    throw ex;
                 }
             }
             else

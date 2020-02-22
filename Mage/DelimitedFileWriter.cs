@@ -100,7 +100,11 @@ namespace Mage
         public override void Prepare()
         {
             if (string.IsNullOrWhiteSpace(FilePath))
-                throw new MageException("FilePath must be defined before calling Prepare in DelimitedFileWriter");
+            {
+                var errorMessage = "FilePath must be defined before calling Prepare in DelimitedFileWriter";
+                var ex = ReportMageException(errorMessage);
+                throw ex;
+            }
 
             var dirPath = Path.GetDirectoryName(FilePath);
             if (!string.IsNullOrEmpty(dirPath) && !Directory.Exists(dirPath))
@@ -120,9 +124,11 @@ namespace Mage
             {
                 mOutFile = new StreamWriter(FilePath, mAppendFlag);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                throw new MageException("Error initializing file " + FilePath + ": " + ex.Message);
+                var errorMessage = "Error initializing file " + FilePath + ": " + e.Message;
+                var ex = ReportMageException(errorMessage, e);
+                throw ex;
             }
 
         }

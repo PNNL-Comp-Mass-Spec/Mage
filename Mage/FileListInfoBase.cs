@@ -249,7 +249,9 @@ namespace Mage
 
             if (mDirectoryPathColIndex < 0)
             {
-                throw new MageException("SearchDirectoriesAndOutputFiles: Unable to determine the index of the Directory column");
+                var errorMessage = "SearchDirectoriesAndOutputFiles: Unable to determine the index of the Directory column";
+                var ex = ReportMageException(errorMessage);
+                throw ex;
             }
 
             TryGetOutputColumnPos(FileColumnName, out mFileNameOutColIndex);
@@ -280,7 +282,11 @@ namespace Mage
                     searchMyEMSL = true;
 
                     if (string.IsNullOrEmpty(datasetName))
-                        throw new MageException("Unable to determine dataset name for row " + (outputBufferRowIdx + 1) + ", file " + directoryPathSpec);
+                    {
+                        var errorMessage = "Unable to determine dataset name for row " + (outputBufferRowIdx + 1) + ", file " + directoryPathSpec;
+                        var ex = ReportMageException(errorMessage);
+                        throw ex;
+                    }
                 }
 
                 dctRowDatasets.Add(outputBufferRowIdx, datasetName);
@@ -376,10 +382,18 @@ namespace Mage
                             var myEMSLFileID = DatasetInfoBase.ExtractMyEMSLFileID(entry.Value.FullName);
 
                             if (myEMSLFileID == 0)
-                                throw new MageException("Encoded MyEMSL File ID not found in " + entry.Value.FullName);
+                            {
+                                var errorMessage = "Encoded MyEMSL File ID not found in " + entry.Value.FullName;
+                                var ex = ReportMageException(errorMessage);
+                                throw ex;
+                            }
 
                             if (!GetCachedArchivedFileInfo(myEMSLFileID, out var archiveFileInfo))
-                                throw new MageException("Cached ArchiveFileInfo does not contain MyEMSL File ID " + myEMSLFileID);
+                            {
+                                var errorMessage = "Cached ArchiveFileInfo does not contain MyEMSL File ID " + myEMSLFileID;
+                                var ex = ReportMageException(errorMessage);
+                                throw ex;
+                            }
 
                             fileName = DatasetInfoBase.AppendMyEMSLFileID(archiveFileInfo.Filename, myEMSLFileID);
                             var fiMyEMSLFile = new FileInfo(MYEMSL_PATH_FLAG + "\\" + archiveFileInfo.PathWithInstrumentAndDatasetWindows);
