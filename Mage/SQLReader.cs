@@ -243,6 +243,13 @@ namespace Mage
                 SprocName = string.Empty;
                 SQLText = builder.BuildQuerySQL();
             }
+
+            if (!string.IsNullOrWhiteSpace(username))
+            {
+                // Override any username defined in builder.SpecialArgs
+                Username = username;
+                Password = password;
+            }
         }
 
         #endregion
