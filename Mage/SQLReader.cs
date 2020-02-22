@@ -647,13 +647,24 @@ namespace Mage
 
         private DbParameter AddParameter(
             IDBTools dbTools,
-            DbCommand cmd, string argName,
+            DbCommand cmd,
+            string argName,
             SqlType argType,
             ParameterDirection paramDirection,
-            SortedSet<string> paramNames,
+            ISet<string> paramNames,
             IReadOnlyDictionary<string, string> sprocParams,
             int argSize = 0)
         {
+            if (paramNames.Contains(argName))
+            {
+                OnWarningMessage(new MageStatusEventArgs(string.Format(
+                    "Skipping duplicate stored procedure parameter {0} for procedure {1}",
+                    argName, cmd.CommandText)));
+                return null;
+            }
+
+            paramNames.Add(argName);
+
             var newParam = dbTools.AddParameter(cmd, argName, argType, argSize, paramDirection);
 
             if (sprocParams.ContainsKey(argName))
