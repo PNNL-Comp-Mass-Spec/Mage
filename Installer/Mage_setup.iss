@@ -23,6 +23,17 @@ Source: ..\DeployedFiles\MageConcatenator\PRISM.dll                     ; DestDi
 Source: ..\DeployedFiles\MageConcatenator\ShFolderBrowser.dll           ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\System.Data.SQLite.dll        ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\MageConcatenator.exe          ; DestDir: {app}\MageConcatenator
+Source: ..\DeployedFiles\MageConcatenator\Microsoft.Bcl.AsyncInterfaces.dll           ; DestDir: {app}\MageConcatenator
+Source: ..\DeployedFiles\MageConcatenator\Npgsql.dll                                  ; DestDir: {app}\MageConcatenator
+Source: ..\DeployedFiles\MageConcatenator\PRISMDatabaseUtils.dll                      ; DestDir: {app}\MageConcatenator
+Source: ..\DeployedFiles\MageConcatenator\System.Buffers.dll                          ; DestDir: {app}\MageConcatenator
+Source: ..\DeployedFiles\MageConcatenator\System.Memory.dll                           ; DestDir: {app}\MageConcatenator
+Source: ..\DeployedFiles\MageConcatenator\System.Numerics.Vectors.dll                 ; DestDir: {app}\MageConcatenator
+Source: ..\DeployedFiles\MageConcatenator\System.Runtime.CompilerServices.Unsafe.dll  ; DestDir: {app}\MageConcatenator
+Source: ..\DeployedFiles\MageConcatenator\System.Text.Encodings.Web.dll               ; DestDir: {app}\MageConcatenator
+Source: ..\DeployedFiles\MageConcatenator\System.Text.Json.dll                        ; DestDir: {app}\MageConcatenator
+Source: ..\DeployedFiles\MageConcatenator\System.Threading.Tasks.Extensions.dll       ; DestDir: {app}\MageConcatenator
+Source: ..\DeployedFiles\MageConcatenator\System.ValueTuple.dll                       ; DestDir: {app}\MageConcatenator
 
 Source: ..\DeployedFiles\MageConcatenator\ReadMe.txt                    ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\QueryDefinitions.xml          ; DestDir: {app}\MageConcatenator
@@ -43,11 +54,21 @@ Source: ..\DeployedFiles\MageExtractor\PRISM.dll                        ; DestDi
 Source: ..\DeployedFiles\MageExtractor\ShFolderBrowser.dll              ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\System.Data.SQLite.dll           ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\MageExtractor.exe                ; DestDir: {app}\MageExtractor
-
 Source: ..\DeployedFiles\MageExtractor\ReadMe.txt                       ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\QueryDefinitions.xml             ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\x64\SQLite.Interop.dll           ; DestDir: {app}\MageExtractor\x64
 Source: ..\DeployedFiles\MageExtractor\x86\SQLite.Interop.dll           ; DestDir: {app}\MageExtractor\x86
+Source: ..\DeployedFiles\MageExtractor\Microsoft.Bcl.AsyncInterfaces.dll           ; DestDir: {app}\MageExtractor
+Source: ..\DeployedFiles\MageExtractor\Npgsql.dll                                  ; DestDir: {app}\MageExtractor
+Source: ..\DeployedFiles\MageExtractor\PRISMDatabaseUtils.dll                      ; DestDir: {app}\MageExtractor
+Source: ..\DeployedFiles\MageExtractor\System.Buffers.dll                          ; DestDir: {app}\MageExtractor
+Source: ..\DeployedFiles\MageExtractor\System.Memory.dll                           ; DestDir: {app}\MageExtractor
+Source: ..\DeployedFiles\MageExtractor\System.Numerics.Vectors.dll                 ; DestDir: {app}\MageExtractor
+Source: ..\DeployedFiles\MageExtractor\System.Runtime.CompilerServices.Unsafe.dll  ; DestDir: {app}\MageExtractor
+Source: ..\DeployedFiles\MageExtractor\System.Text.Encodings.Web.dll               ; DestDir: {app}\MageExtractor
+Source: ..\DeployedFiles\MageExtractor\System.Text.Json.dll                        ; DestDir: {app}\MageExtractor
+Source: ..\DeployedFiles\MageExtractor\System.Threading.Tasks.Extensions.dll       ; DestDir: {app}\MageExtractor
+Source: ..\DeployedFiles\MageExtractor\System.ValueTuple.dll                       ; DestDir: {app}\MageExtractor
 
 Source: ..\DeployedFiles\MageFilePackager\MageFilePackager.exe.config   ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\ICSharpCode.SharpZipLib.dll   ; DestDir: {app}\MageFilePackager
@@ -81,7 +102,18 @@ Source: ..\DeployedFiles\MageFileProcessor\PRISM.dll                    ; DestDi
 Source: ..\DeployedFiles\MageFileProcessor\ShFolderBrowser.dll          ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\System.Data.SQLite.dll       ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\MageFileProcessor.exe        ; DestDir: {app}\MageFileProcessor
-
+Source: ..\DeployedFiles\MageFileProcessor\Microsoft.Bcl.AsyncInterfaces.dll           ; DestDir: {app}\MageFileProcessor
+Source: ..\DeployedFiles\MageFileProcessor\Npgsql.dll                                  ; DestDir: {app}\MageFileProcessor
+Source: ..\DeployedFiles\MageFileProcessor\PRISMDatabaseUtils.dll                      ; DestDir: {app}\MageFileProcessor
+Source: ..\DeployedFiles\MageFileProcessor\System.Buffers.dll                          ; DestDir: {app}\MageFileProcessor
+Source: ..\DeployedFiles\MageFileProcessor\System.Memory.dll                           ; DestDir: {app}\MageFileProcessor
+Source: ..\DeployedFiles\MageFileProcessor\System.Numerics.Vectors.dll                 ; DestDir: {app}\MageFileProcessor
+Source: ..\DeployedFiles\MageFileProcessor\System.Runtime.CompilerServices.Unsafe.dll  ; DestDir: {app}\MageFileProcessor
+Source: ..\DeployedFiles\MageFileProcessor\System.Text.Encodings.Web.dll               ; DestDir: {app}\MageFileProcessor
+Source: ..\DeployedFiles\MageFileProcessor\System.Text.Json.dll                        ; DestDir: {app}\MageFileProcessor
+Source: ..\DeployedFiles\MageFileProcessor\System.Threading.Tasks.Extensions.dll       ; DestDir: {app}\MageFileProcessor
+Source: ..\DeployedFiles\MageFileProcessor\System.ValueTuple.dll                       ; DestDir: {app}\MageFileProcessor
+                               
 Source: ..\DeployedFiles\MageFileProcessor\ReadMe.txt                   ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\QueryDefinitions.xml         ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\ColumnMapping.txt            ; DestDir: {app}\MageFileProcessor
