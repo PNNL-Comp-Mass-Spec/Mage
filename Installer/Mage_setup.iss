@@ -1,5 +1,5 @@
 ; This is an Inno Setup configuration file
-; http://www.jrsoftware.org/isinfo.php
+; https://jrsoftware.org/isinfo.php
 
 #define ApplicationVersion GetFileVersion('..\DeployedFiles\MageFileProcessor\Mage.dll')
 
@@ -186,11 +186,13 @@ AppPublisher=Pacific Northwest National Laboratory
 AppPublisherURL=http://omics.pnl.gov/software
 AppSupportURL=http://omics.pnl.gov/software
 AppUpdatesURL=http://omics.pnl.gov/software
-DefaultDirName={pf}\Mage
+ArchitecturesAllowed=x64 x86
+ArchitecturesInstallIn64BitMode=x64
+DefaultDirName={autopf}\Mage
 DefaultGroupName=Mage
 AppCopyright=© PNNL
 ;LicenseFile=.\License.rtf
-PrivilegesRequired=poweruser
+PrivilegesRequired=admin
 OutputBaseFilename=MageInstaller
 ;VersionInfoVersion=1.57
 VersionInfoVersion={#ApplicationVersion}
@@ -198,12 +200,14 @@ VersionInfoCompany=PNNL
 VersionInfoDescription=Mage
 VersionInfoCopyright=PNNL
 DisableFinishedPage=true
+DisableWelcomePage=no
 ShowLanguageDialog=no
 SetupIconFile=..\MageFileProcessor\wand.ico
 InfoBeforeFile=.\readme.rtf
 ChangesAssociations=false
 ;WizardImageFile=..\Deploy\Images\MageSetupSideImage.bmp
 ;WizardSmallImageFile=..\Deploy\Images\MageSetupSmallImage.bmp
+WizardStyle=modern
 InfoAfterFile=.\postinstall.rtf
 EnableDirDoesntExistWarning=false
 AlwaysShowDirOnReadyPage=true
