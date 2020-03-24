@@ -1,5 +1,16 @@
 Mage Revision History
 
+Version 1.5.7388; March 24, 2020
+	- Build the installer using InnoSetup 6
+
+Version 1.5.7356; February 21, 2020
+	- Update SQLReader to use PRISMDatabaseUtils
+	- Update SQLBuilder to work with the updated SQLReader class
+	- Update to .NET 4.7.2
+
+Version 1.5.7180; August 29, 2019
+	- Update to System.Data.SQLite v1.0.111
+
 Version 1.5.6999; March 1, 2019
 	- Obtain SharpZipLib from NuGet
 

@@ -4,7 +4,7 @@ The Mage suite of tools provide access to DMS files and metadata.
 
 ## Mage Extractor
 
-Mage Extractor can extract MS/MS search results from MSGF+, X!Tandem, 
+Mage Extractor can extract MS/MS search results from MS-GF+, X!Tandem, 
 Inspect, or SEQUEST analysis jobs and combine the results into a single 
 tab-delimited text file or a single SQLite database.
 
@@ -45,7 +45,7 @@ your computer to find matching files, then either copy those files
 to a new directory, or process those files to combine the data into a
 single file.
 
-When combining MSGF+, X!Tandem, or SEQUEST result files together, you can 
+When combining MS-GF+, X!Tandem, or SEQUEST result files together, you can 
 optionally filter the data using one of the standard DMS Filter Sets.
 Another useful feature is to automatically add the Job column as the
 first column in each row of data in the combined file.
