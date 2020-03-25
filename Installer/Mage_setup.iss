@@ -1,4 +1,4 @@
-; This is an Inno Setup configuration file
+﻿; This is an Inno Setup configuration file
 ; https://jrsoftware.org/isinfo.php
 
 #define ApplicationVersion GetFileVersion('..\DeployedFiles\MageFileProcessor\Mage.dll')
@@ -190,7 +190,7 @@ ArchitecturesAllowed=x64 x86
 ArchitecturesInstallIn64BitMode=x64
 DefaultDirName={autopf}\Mage
 DefaultGroupName=Mage
-AppCopyright=� PNNL
+AppCopyright=© PNNL
 ;LicenseFile=.\License.rtf
 PrivilegesRequired=admin
 OutputBaseFilename=MageInstaller
