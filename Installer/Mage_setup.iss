@@ -199,20 +199,20 @@ VersionInfoVersion={#ApplicationVersion}
 VersionInfoCompany=PNNL
 VersionInfoDescription=Mage
 VersionInfoCopyright=PNNL
-DisableFinishedPage=true
+DisableFinishedPage=yes
 DisableWelcomePage=no
 ShowLanguageDialog=no
 SetupIconFile=..\MageFileProcessor\wand.ico
 InfoBeforeFile=.\readme.rtf
-ChangesAssociations=false
+ChangesAssociations=no
 ;WizardImageFile=..\Deploy\Images\MageSetupSideImage.bmp
 ;WizardSmallImageFile=..\Deploy\Images\MageSetupSmallImage.bmp
 WizardStyle=modern
 InfoAfterFile=.\postinstall.rtf
-EnableDirDoesntExistWarning=false
-AlwaysShowDirOnReadyPage=true
+EnableDirDoesntExistWarning=no
+AlwaysShowDirOnReadyPage=yes
 UninstallDisplayIcon={app}\delete_16x.ico
-ShowTasksTreeLines=true
+ShowTasksTreeLines=yes
 OutputDir=.\Output
 [Registry]
 ;Root: HKCR; Subkey: MageFile; ValueType: string; ValueName: ; ValueData:Mage File; Flags: uninsdeletekey
