@@ -76,7 +76,7 @@ namespace Mage
         /// (for example, module that gets its data from a database)
         /// </summary>
         /// <param name="state">Mage ProcessingPipeline object that contains the module (if there is one)</param>
-        void Run(Object state);
+        void Run(object state);
 
         /// <summary>
         /// Stop processing at clean break point

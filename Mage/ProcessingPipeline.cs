@@ -120,7 +120,7 @@ namespace Mage
         /// Call the Run method on the root module of pipeline (execution will be in caller's thread)
         /// </summary>
         /// <param name="state">Provided so that this function has necessary signature to be target of ThreadPool.QueueUserWorkItem</param>
-        public void RunRoot(Object state)
+        public void RunRoot(object state)
         {
             var bError = false;
 

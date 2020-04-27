@@ -140,7 +140,7 @@ namespace Mage
         /// (override of base class)
         /// </summary>
         /// <param name="state">Mage ProcessingPipeline object that contains the module (if there is one)</param>
-        public override void Run(Object state)
+        public override void Run(object state)
         {
             try
             {
