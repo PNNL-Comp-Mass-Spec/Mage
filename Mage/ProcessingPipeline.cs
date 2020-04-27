@@ -149,59 +149,10 @@ namespace Mage
 
             if (!bError)
             {
-                try
-                {
-                    RootModule.Run(this);
 
-                    // Give all modules in pipeline a chance to run post-processing
-                    // In particular, FileProcessingBase will call m_MyEMSLDatasetInfoCache.ProcessDownloadQueue
-                    foreach (var modDef in mModuleIndex)
-                    {
-                        var postProcessSuccess = modDef.Value.PostProcess();
+                RootModule.Run(this);
 
-                        if (!postProcessSuccess)
-                        {
-                            bError = true;
-                        }
-                    }
-
-                    if (bError)
-                    {
-                        throw new MageException("Post processing error; see warnings for details");
-                    }
-
-                    if (string.IsNullOrEmpty(CompletionCode))
-                    {
-                        if (Globals.AbortRequested)
-                        {
-                            HandleStatusMessageUpdated(this, new MageStatusEventArgs("Processing Aborted"));
-                            traceLogPipeline.Info(string.Format("Pipeline {0} aborted...", PipelineName));
-                        }
-                        else
-                        {
-                            HandleStatusMessageUpdated(this, new MageStatusEventArgs("Process Complete"));
-                            traceLogPipeline.Info(string.Format("Pipeline {0} completed...", PipelineName));
-                        }
-                    }
-                    else
-                    {
-                        HandleStatusMessageUpdated(this, new MageStatusEventArgs(CompletionCode, 1));
-                        traceLogPipeline.Info(string.Format("Pipeline {0} completed... " + CompletionCode, PipelineName));
-                    }
-
-                }
-                catch (MageException e)
-                {
-                    CompletionCode = e.Message;
-                    HandleStatusMessageUpdated(this, new MageStatusEventArgs(e.Message, 2));
-                    traceLogPipeline.Error(string.Format("Pipeline {0} failed: {1}", PipelineName, e.Message));
-                }
-                catch (NotImplementedException e)
-                {
-                    CompletionCode = e.Message;
-                    HandleStatusMessageUpdated(this, new MageStatusEventArgs(e.Message, 2));
-                    traceLogPipeline.Error(string.Format("Pipeline {0} failed: {1}", PipelineName, e.Message));
-                }
+                RunPostProcess();
             }
 
             // Give all modules in pipeline a chance to clean up after themselves
@@ -214,6 +165,62 @@ namespace Mage
             OnRunCompleted?.Invoke(this, new MageStatusEventArgs(CompletionCode));
         }
 
+        private void RunPostProcess()
+        {
+            try
+            {
+                var processingError = false;
+
+                // Give all modules in pipeline a chance to run post-processing
+                // In particular, FileProcessingBase will call m_MyEMSLDatasetInfoCache.ProcessDownloadQueue
+                foreach (var modDef in mModuleIndex)
+                {
+                    var postProcessSuccess = modDef.Value.PostProcess();
+
+                    if (!postProcessSuccess)
+                    {
+                        processingError = true;
+                    }
+                }
+
+                if (processingError)
+                {
+                    throw new MageException("Post processing error; see warnings for details");
+                }
+
+                if (string.IsNullOrEmpty(CompletionCode))
+                {
+                    if (Globals.AbortRequested)
+                    {
+                        HandleStatusMessageUpdated(this, new MageStatusEventArgs("Processing Aborted"));
+                        traceLogPipeline.Info(string.Format("Pipeline {0} aborted...", PipelineName));
+                    }
+                    else
+                    {
+                        HandleStatusMessageUpdated(this, new MageStatusEventArgs("Process Complete"));
+                        traceLogPipeline.Info(string.Format("Pipeline {0} completed...", PipelineName));
+                    }
+                }
+                else
+                {
+                    HandleStatusMessageUpdated(this, new MageStatusEventArgs(CompletionCode, 1));
+                    traceLogPipeline.Info(string.Format("Pipeline {0} completed... " + CompletionCode, PipelineName));
+                }
+
+            }
+            catch (MageException e)
+            {
+                CompletionCode = e.Message;
+                HandleStatusMessageUpdated(this, new MageStatusEventArgs(e.Message, 2));
+                traceLogPipeline.Error(string.Format("Pipeline {0} failed: {1}", PipelineName, e.Message));
+            }
+            catch (NotImplementedException e)
+            {
+                CompletionCode = e.Message;
+                HandleStatusMessageUpdated(this, new MageStatusEventArgs(e.Message, 2));
+                traceLogPipeline.Error(string.Format("Pipeline {0} failed: {1}", PipelineName, e.Message));
+            }
+        }
 
         /// <summary>
         /// Terminate execution of pipeline
