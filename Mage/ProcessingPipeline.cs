@@ -122,7 +122,7 @@ namespace Mage
         /// <param name="state">Provided so that this function has necessary signature to be target of ThreadPool.QueueUserWorkItem</param>
         public void RunRoot(object state)
         {
-            var bError = false;
+            var processingError = false;
 
             Running = true;
             CompletionCode = "";
@@ -143,11 +143,11 @@ namespace Mage
                     var msg = string.Format("Pipeline {0} failed: {1}", PipelineName, e.Message);
                     traceLogPipeline.Error(msg);
                     HandleWarningMessageUpdated(this, new MageStatusEventArgs(msg));
-                    bError = true;
+                    processingError = true;
                 }
             }
 
-            if (!bError)
+            if (!processingError)
             {
 
                 RootModule.Run(this);

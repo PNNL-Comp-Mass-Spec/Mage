@@ -477,9 +477,9 @@ namespace Mage
             }
             foreach (DataRow row in queryResults.Rows)
             {
-                var dataVals = new string[row.ItemArray.Length];
+                var dataValues = new string[row.ItemArray.Length];
 
-                for (var i = 0; i < dataVals.Length; i++)
+                for (var i = 0; i < dataValues.Length; i++)
                 {
                     var valProcessed = false;
 
@@ -490,14 +490,14 @@ namespace Mage
                             try
                             {
                                 var dateValueViaCast = row.ItemArray[i].CastDBVal<DateTime>();
-                                dataVals[i] = dateValueViaCast.ToString("yyyy-MM-dd hh:mm:ss tt");
+                                dataValues[i] = dateValueViaCast.ToString("yyyy-MM-dd hh:mm:ss tt");
                                 valProcessed = true;
                             }
                             catch (Exception)
                             {
                                 if (DateTime.TryParse(row.ItemArray[i].ToString(), out var dateValue))
                                 {
-                                    dataVals[i] = dateValue.ToString("yyyy-MM-dd hh:mm:ss tt");
+                                    dataValues[i] = dateValue.ToString("yyyy-MM-dd hh:mm:ss tt");
                                     valProcessed = true;
                                 }
                             }
@@ -507,14 +507,14 @@ namespace Mage
                             try
                             {
                                 var timeValueViaCast = row.ItemArray[i].CastDBVal<DateTime>();
-                                dataVals[i] = timeValueViaCast.ToString("hh:mm:ss tt");
+                                dataValues[i] = timeValueViaCast.ToString("hh:mm:ss tt");
                                 valProcessed = true;
                             }
                             catch (Exception)
                             {
                                 if (DateTime.TryParse(row.ItemArray[i].ToString(), out var timeValue))
                                 {
-                                    dataVals[i] = timeValue.ToString("hh:mm:ss tt");
+                                    dataValues[i] = timeValue.ToString("hh:mm:ss tt");
                                     valProcessed = true;
                                 }
                             }
@@ -524,11 +524,11 @@ namespace Mage
 
                     if (!valProcessed)
                     {
-                        dataVals[i] = row.ItemArray[i].ToString();
+                        dataValues[i] = row.ItemArray[i].ToString();
                     }
                 }
 
-                OnDataRowAvailable(new MageDataEventArgs(dataVals));
+                OnDataRowAvailable(new MageDataEventArgs(dataValues));
                 totalRows++;
                 if (Abort)
                 {

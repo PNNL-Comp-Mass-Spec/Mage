@@ -446,9 +446,9 @@ namespace Mage
             }
             // builder.PageSize = 4096
             // builder.UseUTF16Encoding = True
-            var connstring = builder.ConnectionString;
+            var connectionString = builder.ConnectionString;
 
-            return connstring;
+            return connectionString;
         }
 
         // Creates the SQLite database from the schema read from the SQL Server.
