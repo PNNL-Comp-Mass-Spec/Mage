@@ -66,8 +66,8 @@ namespace BiodiversityFileCopy
             if (OutputColumnDefs != null)
             {
                 var outRow = MapDataRow(vals);
-                var destFilepath = "";
-                var srcFilePath = "";
+                var destFilepath = string.Empty;
+                var srcFilePath = string.Empty;
 
                 var go = BuildPaths(outRow, ref srcFilePath, ref destFilepath);
                 if (go)

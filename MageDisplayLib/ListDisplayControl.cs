@@ -272,7 +272,7 @@ namespace MageDisplayLib
             lvQueryResults.Items.Clear();
             lvQueryResults.Columns.Clear();
             lvQueryResults.Update();
-            lblNotice.Text = "";
+            lblNotice.Text = string.Empty;
         }
 
         /// <summary>

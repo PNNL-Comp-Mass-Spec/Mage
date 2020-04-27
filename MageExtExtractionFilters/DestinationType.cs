@@ -30,7 +30,7 @@ namespace MageExtExtractionFilters
         {
             get
             {
-                var destName = "";
+                var destName = string.Empty;
                 switch (Type)
                 {
                     case DestinationType.Types.SQLite_Output:
@@ -59,7 +59,7 @@ namespace MageExtExtractionFilters
         {
             get
             {
-                var destName = "";
+                var destName = string.Empty;
                 switch (Type)
                 {
                     case DestinationType.Types.SQLite_Output:
@@ -88,7 +88,7 @@ namespace MageExtExtractionFilters
         {
             get
             {
-                var destName = "";
+                var destName = string.Empty;
                 switch (Type)
                 {
                     case DestinationType.Types.SQLite_Output:
@@ -143,7 +143,7 @@ namespace MageExtExtractionFilters
         {
             get
             {
-                var filePath = "";
+                var filePath = string.Empty;
                 if (Type == Types.File_Output && !string.IsNullOrEmpty(Name))
                 {
                     filePath = Path.Combine(ContainerPath, Name);

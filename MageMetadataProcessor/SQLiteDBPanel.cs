@@ -82,7 +82,7 @@ namespace MageMetadataProcessor {
 
         private void ClearColMapBtn_Click(object sender, EventArgs e) {
             ColumnMapping = "(automatic)";
-            OutputColumnList = "";
+            OutputColumnList = string.Empty;
         }
 
         private void SelectColMapBtn_Click(object sender, EventArgs e) {

@@ -81,7 +81,7 @@ namespace MageUIComponents
                 var items = new Collection<string>();
                 foreach (var pnl in QueryItemPanels)
                 {
-                    if (pnl.Value != "")
+                    if (!string.IsNullOrWhiteSpace(pnl.Value))
                     {
                         var item = EncodeQueryItem(pnl);
                         items.Add(item);

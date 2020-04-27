@@ -35,7 +35,7 @@ namespace Ranger {
                 }
             }
 
-            StatusCtl.Text = "";
+            StatusCtl.Text = string.Empty;
         }
 
         private void InitializeParameterSubpanels() {

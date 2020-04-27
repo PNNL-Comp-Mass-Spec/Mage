@@ -514,7 +514,7 @@ namespace Mage
         {
             if (mFileTypeOutColIndex > -1)
             {
-                mOutputBuffer[outputBufferRowIdx][mFileTypeOutColIndex] = "";
+                mOutputBuffer[outputBufferRowIdx][mFileTypeOutColIndex] = string.Empty;
             }
             // Output record that says we didn't find any files
             mOutputBuffer[outputBufferRowIdx][mFileNameOutColIndex] = kNoFilesFound;

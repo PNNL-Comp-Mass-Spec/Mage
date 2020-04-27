@@ -60,7 +60,7 @@ namespace Mage
 
         private Dictionary<string, string> mFileFilterParameters = new Dictionary<string, string>();
 
-        private string mTableName = "";
+        private string mTableName = string.Empty;
 
         #endregion
 
@@ -158,9 +158,9 @@ namespace Mage
         {
             // Set up to use our own default sub-pipeline maker
             // in case the client doesn't give us another one
-            FileFilterModuleName = ""; // Client must set this property to use internally defined sub-pipelines
-            DatabaseName = ""; // Client must set these properties to user internally-defined SQLiteWriter sub-pipeline
-            TableName = "";
+            FileFilterModuleName = string.Empty; // Client must set this property to use internally defined sub-pipelines
+            DatabaseName = string.Empty; // Client must set these properties to user internally-defined SQLiteWriter sub-pipeline
+            TableName = string.Empty;
         }
 
         #endregion

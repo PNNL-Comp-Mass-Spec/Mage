@@ -31,8 +31,8 @@ namespace Mage
         /// </summary>
         public MageCommandEventArgs()
         {
-            Action = "";
-            Mode = "";
+            Action = string.Empty;
+            Mode = string.Empty;
             Pipeline = null;
         }
 
@@ -43,7 +43,7 @@ namespace Mage
         public MageCommandEventArgs(string action)
         {
             Action = action;
-            Mode = "";
+            Mode = string.Empty;
             Pipeline = null;
         }
 

@@ -38,11 +38,11 @@ namespace MageExtExtractionFilters
 
         protected Dictionary<string, ResultType.MergeFile> mMergeFiles;
 
-        protected string mResultsDirectoryPath = "";
+        protected string mResultsDirectoryPath = string.Empty;
 
 
         // Output column that will receive message about whether filter passed or failed
-        protected string mFilterResultsColumnName = "";
+        protected string mFilterResultsColumnName = string.Empty;
         protected int mFilterResultsColIdx = -1;
 
         protected int mTotalRowsCounter;

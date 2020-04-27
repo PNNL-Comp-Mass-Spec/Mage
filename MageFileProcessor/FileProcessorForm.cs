@@ -639,15 +639,17 @@ namespace MageFileProcessor
                     // FileCopyPanel1.ApplyPrefixToFileName = "Yes";
                     FileCopyPanel1.PrefixColumnName = GetBestPrefixIDColumnName(FileListDisplayControl.ColumnDefs);
                     break;
+
                 case "get_files_from_local_directory":
                     FileListDisplayControl.PageTitle = mFileListLabelPrefix + "Local Directory";
                     FileCopyPanel1.ApplyPrefixToFileName = "No";
-                    FileCopyPanel1.PrefixColumnName = "";
+                    FileCopyPanel1.PrefixColumnName = string.Empty;
                     break;
+
                 case "get_files_from_local_manifest":
                     FileListDisplayControl.PageTitle = mFileListLabelPrefix + "Manifest";
                     FileCopyPanel1.ApplyPrefixToFileName = "No";
-                    FileCopyPanel1.PrefixColumnName = "";
+                    FileCopyPanel1.PrefixColumnName = string.Empty;
                     break;
             }
         }
@@ -878,7 +880,7 @@ namespace MageFileProcessor
         /// <returns></returns>
         private static string GetBestPrefixIDColumnName(IEnumerable<MageColumnDef> colDefs)
         {
-            var IDColumnName = "";
+            var IDColumnName = string.Empty;
 
             // Define list of potential candidate names in order of precedence
             var candidateIDColumnNames = new Dictionary<string, bool>

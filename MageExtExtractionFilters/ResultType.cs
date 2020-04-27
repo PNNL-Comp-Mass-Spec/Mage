@@ -154,7 +154,7 @@ namespace MageExtExtractionFilters
                 KeyCol = keyCol;
                 FileNameTag = tag;
                 ColumnIndx = -1;
-                MergeFileName = "";
+                MergeFileName = string.Empty;
             }
         }
 

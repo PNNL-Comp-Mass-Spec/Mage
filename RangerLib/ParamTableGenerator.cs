@@ -39,9 +39,9 @@ namespace RangerLib
         /// </summary>
         public ParamTableGenerator()
         {
-            FilePath = "";
-            DBPath = "";
-            TableName = "";
+            FilePath = string.Empty;
+            DBPath = string.Empty;
+            TableName = string.Empty;
         }
 
         /// <summary>

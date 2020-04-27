@@ -806,17 +806,28 @@ namespace Mage
 
         private class ColumnSchema
         {
-            public string ColumnName = "";
-            public string ColumnType = "";
+            public string ColumnName = string.Empty;
+            public string ColumnType = string.Empty;
             public readonly bool IsNullable = true;
-            public readonly string DefaultValue = "";
+            public readonly string DefaultValue = string.Empty;
             // public bool IsIdentity = false;
-            // public bool IsCaseSensitivite = false; // null??
+            // public bool IsCaseSensitive = false; // null??
+
+            public override string ToString()
+            {
+                if (string.IsNullOrWhiteSpace(ColumnName))
+                    return "Unnamed column";
+
+                if (string.IsNullOrWhiteSpace(ColumnType))
+                    return ColumnName;
+
+                return string.Format("{0}: {1}", ColumnName, ColumnType);
+            }
         }
 
         private class TableSchema
         {
-            public string TableName = "";
+            public string TableName = string.Empty;
             public List<ColumnSchema> Columns;
         }
         #endregion

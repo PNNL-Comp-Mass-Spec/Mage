@@ -66,10 +66,10 @@ namespace Mage
         /// </summary>
         public FileCopy()
         {
-            ColumnToUseForPrefix = "";
-            ApplyPrefixToFileName = "";
+            ColumnToUseForPrefix = string.Empty;
+            ApplyPrefixToFileName = string.Empty;
             SetOutputFileNamer(GetDestFile);
-            PrefixLeader = "";
+            PrefixLeader = string.Empty;
             OverwriteExistingFiles = false;
             ResolveCacheInfoFiles = false;
         }

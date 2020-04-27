@@ -14,10 +14,10 @@ namespace MageExtExtractionFilters
         private MergeMSGFData mMSGFMerger;
 
         // Input column that contains key for looking up score to merge
-        private string mMatchColumnName = "";
+        private string mMatchColumnName = string.Empty;
 
         // Output column in which merged score will be placed
-        private string mMergeColumnName = "";
+        private string mMergeColumnName = string.Empty;
 
         #endregion
 

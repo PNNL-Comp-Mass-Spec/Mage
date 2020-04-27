@@ -132,7 +132,7 @@ namespace Mage
                         if (outputColName == SourceDirectoryColumnName)
                             columnHeaders[colIndex] = path;
                         else
-                            columnHeaders[colIndex] = "";
+                            columnHeaders[colIndex] = string.Empty;
 
                     }
 

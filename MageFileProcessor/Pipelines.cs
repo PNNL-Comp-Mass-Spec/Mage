@@ -188,7 +188,7 @@ namespace MageFileProcessor
 
             // Set up some parameter values
             var outputMode = GetRuntimeParam(runtimeParams, "OutputMode");
-            var outputDirectoryPath = GetRuntimeParam(runtimeParams, "OutputDirectory") ?? "";
+            var outputDirectoryPath = GetRuntimeParam(runtimeParams, "OutputDirectory") ?? string.Empty;
             var filterName = filterParms["SelectedFilterClassName"];
             filterParms.Remove("SelectedFilterClassName");
 
@@ -223,7 +223,7 @@ namespace MageFileProcessor
             // Create a file writer module to output manifest file
             var writer = new DelimitedFileWriter
             {
-                FilePath = Path.Combine(outputDirectoryPath ?? "", reportFileName)
+                FilePath = Path.Combine(outputDirectoryPath ?? string.Empty, reportFileName)
             };
 
             // Build and wire pipeline

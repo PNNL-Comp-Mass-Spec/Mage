@@ -138,7 +138,7 @@ namespace MageExtExtractionFilters
         /// <returns></returns>
         public static string CheckJobResultType(BaseModule jobList, string toolCol, ExtractionType extractionParams)
         {
-            var msg = "";
+            var msg = string.Empty;
             var toolList = new SimpleSink();
             ProcessingPipeline.Assemble("GetToolList", jobList, toolList).RunRoot(null);
             var tools = new Dictionary<string, int>();

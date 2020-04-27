@@ -160,16 +160,17 @@ namespace MageExtractorTest {
             // Output extracted filed contents
             // to SQLite or delimited file(s)
             if (destinationType == "database") {
-                broker.OutputDirectoryPath = "";
-                broker.OutputFileName = "";
+                broker.OutputDirectoryPath = string.Empty;
+                broker.OutputFileName = string.Empty;
                 broker.DatabaseName = containerPath;
                 broker.TableName = name;
             }
+
             if (destinationType == "file") {
                 broker.OutputDirectoryPath = containerPath;
                 broker.OutputFileName = name;
-                broker.DatabaseName = "";
-                broker.TableName = "";
+                broker.DatabaseName = string.Empty;
+                broker.TableName = string.Empty;
             }
 
             // Build pipeline from modules

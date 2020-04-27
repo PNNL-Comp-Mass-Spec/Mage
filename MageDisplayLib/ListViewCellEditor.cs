@@ -179,7 +179,7 @@ namespace MageDisplayLib
             // editBox.BackColor = Color.LightYellow;
             editBox.BorderStyle = BorderStyle.Fixed3D;
             editBox.Hide();
-            editBox.Text = "";
+            editBox.Text = string.Empty;
             editBox.ReadOnly = true;
         }
 

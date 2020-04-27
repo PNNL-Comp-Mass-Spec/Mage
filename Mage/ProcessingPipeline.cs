@@ -125,7 +125,7 @@ namespace Mage
             var processingError = false;
 
             Running = true;
-            CompletionCode = "";
+            CompletionCode = string.Empty;
             HandleStatusMessageUpdated(this, new MageStatusEventArgs("Running..."));
             traceLogPipeline.Info(string.Format("Pipeline {0} started...", PipelineName));
 
@@ -670,7 +670,7 @@ namespace Mage
         {
             var pipeline = new ProcessingPipeline(name);
 
-            var currentModName = "";
+            var currentModName = string.Empty;
             foreach (var mod in namedModuleList)
             {
                 var precedingModName = currentModName;

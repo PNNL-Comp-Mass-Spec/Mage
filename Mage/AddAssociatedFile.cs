@@ -84,8 +84,8 @@ namespace Mage
         /// Source file name that we are matching
         /// </summary>
         /// <remarks>May have a series of suffixes, separated by semicolons</remarks>
-        private string mSourceFileNameFragment = "";
-        private string mAssociatedFileNameFragment = "";
+        private string mSourceFileNameFragment = string.Empty;
+        private string mAssociatedFileNameFragment = string.Empty;
 
         /// <summary>
         /// Handle the column defs defined by args
@@ -140,7 +140,7 @@ namespace Mage
 
                 if (assocFileName == kNoFilesFound)
                 {
-                    args.Fields[mAssocFileIdx] = "";
+                    args.Fields[mAssocFileIdx] = string.Empty;
                 }
                 else
                 {
@@ -184,7 +184,7 @@ namespace Mage
                         }
                         else
                         {
-                            args.Fields[mAssocFileIdx] = "";
+                            args.Fields[mAssocFileIdx] = string.Empty;
                         }
                     }
                 }

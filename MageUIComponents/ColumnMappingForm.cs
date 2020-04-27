@@ -79,13 +79,12 @@ namespace MageUIComponents
         {
             get
             {
-                var result = "";
                 var selectedColMapping = ColumnMappingDisplayList.SelectedItemFields;
                 if (selectedColMapping != null && selectedColMapping.ContainsKey("name"))
                 {
-                    result = selectedColMapping["name"];
+                    return selectedColMapping["name"];
                 }
-                return result;
+                return string.Empty;
             }
         }
 
@@ -96,13 +95,12 @@ namespace MageUIComponents
         {
             get
             {
-                var result = "";
                 var selectedColMapping = ColumnMappingDisplayList.SelectedItemFields;
                 if (selectedColMapping != null && selectedColMapping.ContainsKey("column_list"))
                 {
-                    result = selectedColMapping["column_list"];
+                    return selectedColMapping["column_list"];
                 }
-                return result;
+                return string.Empty;
             }
         }
 
@@ -588,7 +586,7 @@ namespace MageUIComponents
             if (r == DialogResult.OK)
             {
                 MappingName = "New Column Map";
-                MappingDescription = "";
+                MappingDescription = string.Empty;
                 ColumnSpecEditingDisplayList.List.Rows.Clear();
             }
         }
@@ -718,7 +716,7 @@ namespace MageUIComponents
                     case "text":
                     case "int":
                     case "float":
-                        colDef.Size = "";
+                        colDef.Size = string.Empty;
                         break;
                 }
             }
@@ -750,7 +748,7 @@ namespace MageUIComponents
             return rdr;
         }
 
-        private string mPreviewSourceLabel = "";
+        private string mPreviewSourceLabel = string.Empty;
 
         /// <summary>
         /// Return a Mage reader module that is set up
@@ -846,7 +844,8 @@ namespace MageUIComponents
                         floatType = false;
                     }
                 }
-                sink.Columns[i].Size = "";
+
+                sink.Columns[i].Size = string.Empty;
                 if (intType)
                 {
                     sink.Columns[i].DataType = "integer";

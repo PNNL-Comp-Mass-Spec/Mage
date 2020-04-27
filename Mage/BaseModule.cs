@@ -819,7 +819,7 @@ namespace Mage
                 }
                 else
                 {
-                    outRow[colMap.Key] = "";
+                    outRow[colMap.Key] = string.Empty;
                 }
             }
 

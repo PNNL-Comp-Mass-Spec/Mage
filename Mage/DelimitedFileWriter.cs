@@ -205,7 +205,7 @@ namespace Mage
 
         private void OutputDataRow(string[] vals)
         {
-            var delimiter = "";
+            var delimiter = string.Empty;
 
             // Remap results according to our output column definitions, if we have them
             // Otherwise just use the as-delivered format
@@ -214,9 +214,10 @@ namespace Mage
             {
                 outRow = MapDataRow(vals);
             }
+
             foreach (var item in outRow)
             {
-                mOutFile.Write(delimiter + (item ?? ""));
+                mOutFile.Write(delimiter + (item ?? string.Empty));
                 delimiter = Delimiter;
             }
             mOutFile.WriteLine();

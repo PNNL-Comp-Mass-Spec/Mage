@@ -573,7 +573,7 @@ namespace MageFilePackager
             // Find query node by name
             var xpath = string.Format(".//query[@name='{0}']", queryName);
             var queryNode = doc.SelectSingleNode(xpath);
-            return queryNode?.OuterXml ?? "";
+            return queryNode?.OuterXml ?? string.Empty;
             //--            return ModuleDiscovery.GetQueryXMLDef(queryName);
         }
 

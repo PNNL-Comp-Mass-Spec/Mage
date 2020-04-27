@@ -95,7 +95,7 @@ namespace MageFilePackager
             if (result == DialogResult.Yes)
             {
                 packageListDisplayControl1.Clear();
-                TotalSizeDisplay = "";
+                TotalSizeDisplay = string.Empty;
             }
         }
 
@@ -231,6 +231,7 @@ namespace MageFilePackager
                 FileName = _outputPath,
                 RestoreDirectory = true
             };
+
             if (saveFileDialog.ShowDialog() != DialogResult.OK)
             {
                 return;

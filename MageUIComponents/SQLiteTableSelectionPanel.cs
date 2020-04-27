@@ -23,7 +23,7 @@ namespace MageUIComponents {
 
         public SQLiteTableSelectionPanel() {
             InitializeComponent();
-            TableName = "";
+            TableName = string.Empty;
             TableListCtl.List.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 

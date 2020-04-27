@@ -38,7 +38,7 @@ namespace MageUIComponents
         /// <summary>
         /// Output column list from seleted column mapping (if any)
         /// </summary>
-        private string mOutputColumnList = "";
+        private string mOutputColumnList = string.Empty;
 
         #endregion
 
@@ -224,7 +224,7 @@ namespace MageUIComponents
         private void ClearColMapBtn_Click(object sender, EventArgs e)
         {
             ColumnMapSelectionCtl.Text = "(automatic)";
-            mOutputColumnList = "";
+            mOutputColumnList = string.Empty;
         }
 
         #endregion

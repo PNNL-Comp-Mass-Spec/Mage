@@ -22,7 +22,7 @@ namespace MageExtExtractionFilters
 
         private FilterResultsBase mResultsChecker;
 
-        private string mCurrentProgressText = "";
+        private string mCurrentProgressText = string.Empty;
 
         #endregion
 
@@ -112,7 +112,7 @@ namespace MageExtExtractionFilters
                 var filesDownloadedFromMyEMSL = new List<string>();
 
                 if (resultFileName == kNoFilesFound)
-                    inputFilePath = "";
+                    inputFilePath = string.Empty;
                 else
                 {
                     inputFilePath = Path.Combine(resultsDirectoryPath, resultFileName);

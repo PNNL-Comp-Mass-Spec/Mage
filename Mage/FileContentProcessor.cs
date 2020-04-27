@@ -123,10 +123,10 @@ namespace Mage
         public FileContentProcessor()
         {
             SourceDirectoryColumnName = "Directory";
-            FileTypeColumnName = "";
+            FileTypeColumnName = string.Empty;
             SourceFileColumnName = "File";
             OutputFileColumnName = "File";
-            OutputFileName = "";
+            OutputFileName = string.Empty;
 
             OutputColumnList = string.Format("{0}|+|text, {1}", OutputFileColumnName, SourceDirectoryColumnName);
             GetOutputFileName = GetDefaultOutputFileName;

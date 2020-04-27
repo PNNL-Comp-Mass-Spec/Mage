@@ -68,7 +68,7 @@ namespace MageUIComponents
             }
             get
             {
-                var state = "";
+                var state = string.Empty;
                 if (IncludefilesCtl.Checked)
                 {
                     state += "File";

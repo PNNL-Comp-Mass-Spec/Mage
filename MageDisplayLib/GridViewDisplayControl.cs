@@ -376,7 +376,7 @@ namespace MageDisplayLib
             gvQueryResults.Rows.Clear();
             gvQueryResults.Columns.Clear();
             gvQueryResults.Update();
-            lblNotice.Text = "";
+            lblNotice.Text = string.Empty;
         }
 
         /// <summary>

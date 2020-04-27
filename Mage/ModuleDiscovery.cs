@@ -220,12 +220,11 @@ namespace Mage
         /// <returns></returns>
         public static string SelectedFilterClassName(string filterLabel)
         {
-            var sel = "";
             if (mFiltersByLabel.ContainsKey(filterLabel))
             {
-                sel = mFiltersByLabel[filterLabel].ModClassName;
+                return mFiltersByLabel[filterLabel].ModClassName;
             }
-            return sel;
+            return string.Empty;
         }
 
         /// <summary>
@@ -235,16 +234,15 @@ namespace Mage
         /// <returns></returns>
         public static string GetParameterPanelForFilter(string filterLabel)
         {
-            var panelClass = "";
             if (mFiltersByLabel.ContainsKey(filterLabel))
             {
                 var ID = mFiltersByLabel[filterLabel].ModID;
                 if (mPanels.ContainsKey(ID))
                 {
-                    panelClass = mPanels[ID].ModClassName;
+                    return mPanels[ID].ModClassName;
                 }
             }
-            return panelClass;
+            return string.Empty;
         }
 
         /// <summary>

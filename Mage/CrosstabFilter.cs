@@ -166,11 +166,16 @@ namespace Mage
                 // and set field values for factors that the entity has vales for
                 foreach (var factor in mFactorList.Keys)
                 {
-                    var fieldValue = "";
+                    string fieldValue;
                     if (mFactorList[factor].ContainsKey(entityID))
                     {
                         fieldValue = mFactorList[factor][entityID];
                     }
+                    else
+                    {
+                        fieldValue = string.Empty;
+                    }
+
                     outputRow.Add(fieldValue);
                 }
                 OnDataRowAvailable(new MageDataEventArgs(outputRow.ToArray()));

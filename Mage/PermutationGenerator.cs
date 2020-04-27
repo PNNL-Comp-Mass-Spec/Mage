@@ -85,7 +85,7 @@ namespace Mage
         public PermutationGenerator()
         {
             IncludeHeaderInOutput = true;
-            AutoColumnName = "";
+            AutoColumnName = string.Empty;
             AutoColumnFormat = "ParamSet{0:000000}";
             AutoColumnSeed = 1;
         }
@@ -234,7 +234,7 @@ namespace Mage
                 {
                     if (outRow[i] == null)
                     {
-                        outRow[i] = "";
+                        outRow[i] = string.Empty;
                     }
                 }
                 if (mAutoColumnIndex > -1)
@@ -305,12 +305,12 @@ namespace Mage
 
             private void Initialize()
             {
-                ParamName = "";
+                ParamName = string.Empty;
                 UpperBound = 0;
                 LowerBound = 0;
                 Step = 0;
                 RowCycle = 1;
-                IncrementList = "";
+                IncrementList = string.Empty;
             }
 
             // Constructor

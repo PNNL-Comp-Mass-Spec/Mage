@@ -154,7 +154,7 @@ namespace Mage
             /// </summary>
             public QuerySort()
             {
-                col = "";
+                col = string.Empty;
                 dir = "ASC";
             }
         }
@@ -168,8 +168,8 @@ namespace Mage
         /// </summary>
         public SQLBuilder()
         {
-            SprocName = "";
-            Table = "";
+            SprocName = string.Empty;
+            Table = string.Empty;
             Columns = "*";
             QueryType = "filtered_and_sorted";
         }
@@ -199,8 +199,8 @@ namespace Mage
         public void InitializeFromXML(string xml, ref Dictionary<string, string> args)
         {
             Columns = "*";
-            SprocName = "";
-            Table = "";
+            SprocName = string.Empty;
+            Table = string.Empty;
             SpecialArgs.Clear();
             SprocParameters.Clear();
 
@@ -613,7 +613,7 @@ namespace Mage
             var cmp = predicate.cmp;
             var val = predicate.val;
 
-            var str = "";
+            var str = string.Empty;
             switch (cmp)
             {
                 case "wildcards":

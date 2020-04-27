@@ -16,10 +16,10 @@ namespace MageUnitTests
 
         #region Member Variables
 
-        string mPipelineResults = "";
-        string mPipelineInputFilePath = "";
-        string mPipelineOutputFilePath = "";
-        static string mPipelineDummyModuleResults = "";
+        string mPipelineResults = string.Empty;
+        string mPipelineInputFilePath = string.Empty;
+        string mPipelineOutputFilePath = string.Empty;
+        static string mPipelineDummyModuleResults = string.Empty;
 
         #endregion
 

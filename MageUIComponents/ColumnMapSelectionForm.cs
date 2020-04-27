@@ -47,15 +47,14 @@ namespace MageUIComponents
         {
             get
             {
-                var outputColList = "";
                 foreach (DataGridViewRow lvi in gridViewDisplayControl1.List.Rows)
                 {
                     if (lvi.Cells[0].Value.ToString() == ColumnMapping)
                     {
-                        outputColList = lvi.Cells[2].Value.ToString();
+                        return lvi.Cells[2].Value.ToString();
                     }
                 }
-                return outputColList;
+                return string.Empty;
             }
         }
 
