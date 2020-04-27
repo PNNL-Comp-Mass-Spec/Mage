@@ -669,76 +669,97 @@ namespace Mage
             return val;
         }
 
-        /// Matches SQL Server types to general DB types
+        /// <summary>
+        /// Matches database data types to .NET types
+        /// </summary>
+        /// <param name="cs"></param>
+        /// <returns></returns>
         private static DbType GetDbTypeOfColumn(ColumnSchema cs)
         {
-            if (cs.ColumnType == "tinyint")
+
+            switch (cs.ColumnType.ToLower())
             {
-                return DbType.Byte;
-            }
-            if (cs.ColumnType == "int")
-            {
-                return DbType.Int32;
-            }
-            if (cs.ColumnType == "smallint")
-            {
-                return DbType.Int16;
-            }
-            if (cs.ColumnType == "bigint")
-            {
-                return DbType.Int64;
-            }
-            if (cs.ColumnType == "bit")
-            {
-                return DbType.Boolean;
-            }
-            if (cs.ColumnType == "nvarchar" || cs.ColumnType == "varchar" || cs.ColumnType == "text" || cs.ColumnType == "ntext")
-            {
-                return DbType.String;
-            }
-            if (cs.ColumnType == "float")
-            {
-                return DbType.Double;
-            }
-            if (cs.ColumnType == "real")
-            {
-                return DbType.Single;
-            }
-            if (cs.ColumnType == "blob")
-            {
-                return DbType.Binary;
-            }
-            if (cs.ColumnType == "numeric")
-            {
-                return DbType.Double;
-            }
-            if (cs.ColumnType == "timestamp" || cs.ColumnType == "datetime")
-            {
-                return DbType.DateTime;
-            }
-            if (cs.ColumnType == "nchar" || cs.ColumnType == "char")
-            {
-                return DbType.String;
-            }
-            if (cs.ColumnType == "uniqueidentifier")
-            {
-                return DbType.String;
-            }
-            if (cs.ColumnType == "xml")
-            {
-                return DbType.String;
-            }
-            if (cs.ColumnType == "sql_variant")
-            {
-                return DbType.Object;
-            }
-            if (cs.ColumnType == "integer")
-            {
-                return DbType.Int64;
-            }
-            if (cs.ColumnType == "double")
-            {
-                return DbType.Double;
+                case "bit":
+                case "bool":
+                case "boolean":
+                    return DbType.Boolean;
+
+                case "tinyint":
+                case "byte":
+                    return DbType.Byte;
+
+                case "smallint":
+                case "int16":
+                case "int2":
+                    return DbType.Int16;
+
+                case "int":
+                case "int32":
+                case "integer":
+                case "int4":
+                    return DbType.Int32;
+
+                case "bigint":
+                case "int64":
+                case "long":
+                case "int8":
+                    return DbType.Int64;
+
+                case "real":
+                case "single":
+                    return DbType.Single;
+
+                case "float":
+                case "double":
+                    return DbType.Double;
+
+                case "numeric":
+                case "decimal":
+                case "money":
+                    return DbType.Double;
+
+                case "char":
+                case "character":
+                case "nchar":
+                    return DbType.String;
+
+                // ReSharper disable StringLiteralTypo
+                case "varchar":
+                case "nvarchar":
+                case "text":
+                case "citext":
+                case "ntext":
+                case "name":
+                case "string":
+                    return DbType.String;
+                // ReSharper restore StringLiteralTypo
+
+                case "date":
+                case "time":
+                case "datetime":
+                case "timestamp":
+                    return DbType.DateTime;
+
+                // ReSharper disable StringLiteralTypo
+                case "datetimeoffset":
+                case "timestamptz":
+                    return DbType.DateTimeOffset;
+                // ReSharper restore StringLiteralTypo
+
+                case "blob":
+                case "binary":
+                    return DbType.Binary;
+
+                // ReSharper disable once StringLiteralTypo
+                case "uniqueidentifier":
+                    return DbType.String;
+
+                case "xml":
+                    return DbType.String;
+
+                case "sql_variant":
+                    return DbType.Object;
+
             }
 
             traceLogWriter.Error("GetDbTypeOfColumn: illegal db type found");
