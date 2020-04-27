@@ -669,28 +669,28 @@ namespace Mage
         private DbParameter AddParameter(
             IDBTools dbTools,
             DbCommand cmd,
-            string argName,
-            SqlType argType,
+            string parameterName,
+            string dataTypeName,
             ParameterDirection paramDirection,
             ISet<string> paramNames,
             IReadOnlyDictionary<string, string> sprocParams,
             int argSize = 0)
         {
-            if (paramNames.Contains(argName))
+            if (paramNames.Contains(parameterName))
             {
                 ReportMageWarning(string.Format(
                     "Skipping duplicate stored procedure parameter {0} for procedure {1}",
-                    argName, cmd.CommandText));
+                    parameterName, cmd.CommandText));
                 return null;
             }
 
-            paramNames.Add(argName);
+            paramNames.Add(parameterName);
 
             var newParam = dbTools.AddParameter(cmd, argName, argType, argSize, paramDirection);
 
-            if (sprocParams.ContainsKey(argName))
+            if (sprocParams.ContainsKey(parameterName))
             {
-                newParam.Value = sprocParams[argName];
+                newParam.Value = sprocParams[parameterName];
             }
 
             return newParam;
@@ -733,7 +733,7 @@ namespace Mage
         {
             var isPostgres = dbTools.DbServerType == DbServerTypes.PostgreSQL;
 
-            var builtCmd = dbTools.CreateCommand(sprocName, CommandType.StoredProcedure);
+            var command = dbTools.CreateCommand(sprocName, CommandType.StoredProcedure);
 
             try
             {
@@ -803,7 +803,7 @@ namespace Mage
                 //   parameter.Direction = ParameterDirection.InputOutput;
                 // See UpdateSqlServerParameterNames in https://github.com/PNNL-Comp-Mass-Spec/PRISM-Class-Library/blob/master/PRISMDatabaseUtils/PostgreSQL/PostgresDBTools.cs
 
-                dbTools.AddParameter(builtCmd, "@Return", SqlType.Int, ParameterDirection.ReturnValue);
+                dbTools.AddParameter(command, "@Return", SqlType.Int, ParameterDirection.ReturnValue);
 
                 var paramNames = new SortedSet<string>();
 
@@ -941,7 +941,7 @@ namespace Mage
                 throw;
             }
 
-            return builtCmd;
+            return command;
         }
 
         /// <summary>
