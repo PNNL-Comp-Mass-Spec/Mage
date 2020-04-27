@@ -63,10 +63,14 @@ namespace MageMetadataProcessor {
         #endregion
 
         private void BrowseForFileBtn_Click(object sender, EventArgs e) {
-            var saveFileDialog1 = new SaveFileDialog {Title = "Save display to file"};
-            saveFileDialog1.ShowDialog();
-            if (saveFileDialog1.FileName != "") {
-                DBFilePathCtl.Text = saveFileDialog1.FileName;
+            var saveDialog = new SaveFileDialog
+            {
+                Title = "Save display to file"
+            };
+
+            saveDialog.ShowDialog();
+            if (!string.IsNullOrWhiteSpace(saveDialog.FileName)) {
+                DBFilePathCtl.Text = saveDialog.FileName;
             }
         }
 

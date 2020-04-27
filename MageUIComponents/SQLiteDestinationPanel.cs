@@ -5,19 +5,25 @@ using System.IO;
 using System.Windows.Forms;
 using Mage;
 
-namespace MageUIComponents {
+namespace MageUIComponents
+{
 
-    public partial class SQLiteDestinationPanel : UserControl, IModuleParameters {
+    public partial class SQLiteDestinationPanel : UserControl, IModuleParameters
+    {
 
-        public SQLiteDestinationPanel() {
+        public SQLiteDestinationPanel()
+        {
             InitializeComponent();
         }
 
         #region Properties
 
-        public string DatabaseName {
-            get {
-                if (!string.IsNullOrEmpty(DatabaseNameCtl.Text) && !Path.HasExtension(DatabaseNameCtl.Text)) {
+        public string DatabaseName
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(DatabaseNameCtl.Text) && !Path.HasExtension(DatabaseNameCtl.Text))
+                {
                     if (DatabaseNameCtl.Text.EndsWith("\\"))
                         DatabaseNameCtl.Text += "Output";
 
@@ -28,7 +34,8 @@ namespace MageUIComponents {
             set => DatabaseNameCtl.Text = value;
         }
 
-        public string TableName {
+        public string TableName
+        {
             get => TableNameCtl.Text;
             set => TableNameCtl.Text = value;
         }
@@ -37,7 +44,8 @@ namespace MageUIComponents {
 
         #region IModuleParameters Members
 
-        public Dictionary<string, string> GetParameters() {
+        public Dictionary<string, string> GetParameters()
+        {
             return new Dictionary<string, string>
             {
                 { "DatabaseName",   DatabaseName},
@@ -45,9 +53,12 @@ namespace MageUIComponents {
             };
         }
 
-        public void SetParameters(Dictionary<string, string> paramList) {
-            foreach (var paramDef in paramList) {
-                switch (paramDef.Key) {
+        public void SetParameters(Dictionary<string, string> paramList)
+        {
+            foreach (var paramDef in paramList)
+            {
+                switch (paramDef.Key)
+                {
                     case "DatabaseName":
                         DatabaseName = paramDef.Value;
                         break;
@@ -60,8 +71,9 @@ namespace MageUIComponents {
 
         #endregion
 
-        private void SelectSqLiteDbCtl_Click(object sender, EventArgs e) {
-            var openFileDialog1 = new OpenFileDialog
+        private void SelectSqLiteDbCtl_Click(object sender, EventArgs e)
+        {
+            var fileDialog = new OpenFileDialog
             {
                 RestoreDirectory = true,
                 AddExtension = true,
@@ -69,14 +81,18 @@ namespace MageUIComponents {
                 DefaultExt = "db3",
                 Filter = "SQLite3|*.db;*.db3|All files (*.*)|*.*"
             };
-            if (openFileDialog1.ShowDialog() == DialogResult.OK) {
-                DatabaseName = ValidateFileExtension(openFileDialog1.FileName);
+
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                DatabaseName = ValidateFileExtension(fileDialog.FileName);
             }
         }
 
-        private void DefineSqLiteTableCtl_Click(object sender, EventArgs e) {
-            var selectionForm = new SQLiteTableSelectionPanel {DatabasePath = DatabaseName};
-            if (selectionForm.ShowDialog() == DialogResult.OK) {
+        private void DefineSqLiteTableCtl_Click(object sender, EventArgs e)
+        {
+            var selectionForm = new SQLiteTableSelectionPanel { DatabasePath = DatabaseName };
+            if (selectionForm.ShowDialog() == DialogResult.OK)
+            {
                 TableName = selectionForm.TableName;
             }
         }

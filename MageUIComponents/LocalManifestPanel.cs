@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using Mage;
 
-namespace MageUIComponents {
+namespace MageUIComponents
+{
 
-    public partial class LocalManifestPanel : UserControl, IModuleParameters {
+    public partial class LocalManifestPanel : UserControl, IModuleParameters
+    {
 
         public event EventHandler<MageCommandEventArgs> OnAction;
 
-        public LocalManifestPanel() {
+        public LocalManifestPanel()
+        {
             InitializeComponent();
         }
 
@@ -19,7 +22,8 @@ namespace MageUIComponents {
 
         #region Properties
 
-        public string ManifestFilePath {
+        public string ManifestFilePath
+        {
             get => LocalManifestFileCtl.Text;
             set => LocalManifestFileCtl.Text = value;
         }
@@ -28,16 +32,20 @@ namespace MageUIComponents {
 
         #region IModuleParameters Members
 
-        public Dictionary<string, string> GetParameters() {
+        public Dictionary<string, string> GetParameters()
+        {
             return new Dictionary<string, string>
             {
                 { "ManifestFilePath",  ManifestFilePath }
             };
         }
 
-        public void SetParameters(Dictionary<string, string> paramList) {
-            foreach (var paramDef in paramList) {
-                switch (paramDef.Key) {
+        public void SetParameters(Dictionary<string, string> paramList)
+        {
+            foreach (var paramDef in paramList)
+            {
+                switch (paramDef.Key)
+                {
                     case "ManifestFilePath":
                         ManifestFilePath = paramDef.Value;
                         break;
@@ -47,14 +55,17 @@ namespace MageUIComponents {
 
         #endregion
 
-        private void DefineManifestFileCtl_Click(object sender, EventArgs e) {
-            var openFileDialog1 = new OpenFileDialog {
+        private void DefineManifestFileCtl_Click(object sender, EventArgs e)
+        {
+            var fileDialog = new OpenFileDialog
+            {
                 RestoreDirectory = true
             };
 
-            if (openFileDialog1.ShowDialog() == DialogResult.OK) {
-                LocalManifestFileCtl.Text = openFileDialog1.FileName;
-                // string dirName = Path.GetDirectoryName(openFileDialog1.FileName);
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                LocalManifestFileCtl.Text = fileDialog.FileName;
+                // string dirName = Path.GetDirectoryName(fileDialog.FileName);
             }
         }
 

@@ -14,13 +14,14 @@ namespace MageUIComponents {
         }
 
         private void BrowseForFileBtn_Click(object sender, EventArgs e) {
-            var saveFileDialog1 = new SaveFileDialog {
+            var saveDialog = new SaveFileDialog 
+            {
                 Title = "Save to file"
             };
-            saveFileDialog1.ShowDialog();
+            saveDialog.ShowDialog();
 
-            if (!string.IsNullOrEmpty(saveFileDialog1.FileName)) {
-                DBFilePathCtl.Text = saveFileDialog1.FileName;
+            if (!string.IsNullOrWhiteSpace(saveDialog.FileName)) {
+                DBFilePathCtl.Text = saveDialog.FileName;
             }
         }
     }

@@ -1,10 +1,13 @@
 ﻿using System.Windows.Forms;
 
-namespace MageFilePackager {
+namespace MageFilePackager
+{
 
-    public partial class SubmissionForm : Form {
+    public partial class SubmissionForm : Form
+    {
 
-        public SubmissionForm() {
+        public SubmissionForm()
+        {
             InitializeComponent();
         }
 
@@ -22,15 +25,19 @@ namespace MageFilePackager {
 
         public string ManifestFilePath => manifestFilePathCtl.Text;
 
-        private void SetFilePathBtnClick(object sender, System.EventArgs e) {
-            var openFileDialog = new OpenFileDialog {
+        private void SetFilePathBtnClick(object sender, System.EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog
+            {
                 RestoreDirectory = true,
                 AddExtension = true,
                 CheckFileExists = false,
                 DefaultExt = "xml",
                 Filter = "XML|*.xml;|All files (*.*)|*.*"
             };
-            if (openFileDialog.ShowDialog() == DialogResult.OK) {
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
                 manifestFilePathCtl.Text = openFileDialog.FileName;
             }
         }

@@ -563,8 +563,8 @@ namespace Mage
         {
             GetMyEMSLParentDirectoriesAndSubDir(directoryPath, datasetName, out var subDir, out var parentDirectories);
 
-            const string fileSelector = "*";
-            var fiList = GetMyEMSLFilesOrDirectories(searchMode, fileSelector, datasetName, subDir, parentDirectories);
+            const string fileDialog = "*";
+            var fiList = GetMyEMSLFilesOrDirectories(searchMode, fileDialog, datasetName, subDir, parentDirectories);
 
             var fileNameRegExSpecs = GetRegexFileSelectors(GetFileNameSelectors());
 
@@ -573,7 +573,7 @@ namespace Mage
 
         private List<FileSystemInfo> GetMyEMSLFilesOrDirectories(
             DirectorySearchMode searchMode,
-            string fileSelector,
+            string fileDialog,
             string datasetName,
             string subDir,
             string parentDirectories)
@@ -582,7 +582,7 @@ namespace Mage
             var fiList = new List<FileSystemInfo>();
             if (searchMode == DirectorySearchMode.Files)
             {
-                m_RecentlyFoundMyEMSLFiles = m_MyEMSLDatasetInfoCache.FindFiles(fileSelector, subDir, datasetName, mRecurseMyEMSL);
+                m_RecentlyFoundMyEMSLFiles = m_MyEMSLDatasetInfoCache.FindFiles(fileDialog, subDir, datasetName, mRecurseMyEMSL);
                 foreach (var archiveFile in m_RecentlyFoundMyEMSLFiles)
                 {
                     var encodedFilePath = DatasetInfoBase.AppendMyEMSLFileID(Path.Combine(parentDirectories, archiveFile.FileInfo.RelativePathWindows), archiveFile.FileID);
@@ -592,7 +592,7 @@ namespace Mage
 
             if (searchMode == DirectorySearchMode.Directories)
             {
-                m_RecentlyFoundMyEMSLFiles = m_MyEMSLDatasetInfoCache.FindDirectories(fileSelector, datasetName);
+                m_RecentlyFoundMyEMSLFiles = m_MyEMSLDatasetInfoCache.FindDirectories(fileDialog, datasetName);
 
                 foreach (var archiveDirectory in m_RecentlyFoundMyEMSLFiles)
                 {

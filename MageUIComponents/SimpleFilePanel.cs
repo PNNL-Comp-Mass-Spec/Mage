@@ -15,11 +15,14 @@ namespace MageUIComponents {
         }
 
         private void SelectFileBtn_Click(object sender, EventArgs e) {
-            var saveFileDialog1 = new SaveFileDialog {Title = "Save to file"};
-            saveFileDialog1.ShowDialog();
+            var saveDialog = new SaveFileDialog
+            {
+                Title = "Save to file"
+            };
+            saveDialog.ShowDialog();
 
-            if (!string.IsNullOrEmpty(saveFileDialog1.FileName)) {
-                outputfilePathCtl.Text = saveFileDialog1.FileName;
+            if (!string.IsNullOrWhiteSpace(saveDialog.FileName)) {
+                outputfilePathCtl.Text = saveDialog.FileName;
             }
         }
     }

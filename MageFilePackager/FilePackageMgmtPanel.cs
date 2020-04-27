@@ -236,7 +236,9 @@ namespace MageFilePackager
             {
                 return;
             }
+
             OutputFilePath = saveFileDialog.FileName;
+
             try
             {
                 IBaseModule source = new GVPipelineSource(packageListDisplayControl1, "All");
@@ -254,7 +256,7 @@ namespace MageFilePackager
         /// </summary>
         private void LoadPackageListFromFile()
         {
-            var openFileDialog1 = new OpenFileDialog
+            var fileDialog = new OpenFileDialog
             {
                 RestoreDirectory = true,
                 AddExtension = true,
@@ -262,11 +264,13 @@ namespace MageFilePackager
                 DefaultExt = "txt",
                 Filter = "Text|*.txt;|All files (*.*)|*.*"
             };
-            if (openFileDialog1.ShowDialog() != DialogResult.OK)
+
+            if (fileDialog.ShowDialog() != DialogResult.OK)
             {
                 return;
             }
-            OutputFilePath = openFileDialog1.FileName;
+
+            OutputFilePath = fileDialog.FileName;
             try
             {
                 var reader = new DelimitedFileReader { FilePath = _outputPath };

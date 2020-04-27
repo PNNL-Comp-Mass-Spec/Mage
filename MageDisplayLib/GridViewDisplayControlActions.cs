@@ -238,28 +238,28 @@ namespace MageDisplayLib
         /// <param name="args">(ignored)</param>
         private void HandleSaveListDisplay(object sender, EventArgs args)
         {
-            var saveFileDialog1 = new SaveFileDialog
+            var saveDialog = new SaveFileDialog
             {
                 Title = "Save display to file",
                 AddExtension = true,
                 DefaultExt = "txt",
                 Filter = "Text (tab delimited)|*.txt"
             };
-            saveFileDialog1.ShowDialog();
+            saveDialog.ShowDialog();
 
-            if (saveFileDialog1.FileName != "")
+            if (string.IsNullOrWhiteSpace(saveDialog.FileName))
+                return;
+
+            try
             {
-                try
-                {
-                    IBaseModule source = new GVPipelineSource(this, "All");
-                    var filePath = saveFileDialog1.FileName;
-                    var pipeline = SaveListDisplay(source, filePath);
-                    pipeline.RunRoot(null);
-                }
-                catch (MageException ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+                IBaseModule source = new GVPipelineSource(this, "All");
+                var filePath = saveDialog.FileName;
+                var pipeline = SaveListDisplay(source, filePath);
+                pipeline.RunRoot(null);
+            }
+            catch (MageException ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -274,7 +274,7 @@ namespace MageDisplayLib
         /// <param name="args">(ignored)</param>
         private void HandleReloadListDisplay(object sender, EventArgs args)
         {
-            var openFileDialog1 = new OpenFileDialog
+            var fileDialog = new OpenFileDialog
             {
                 RestoreDirectory = true,
                 AddExtension = true,
@@ -282,21 +282,24 @@ namespace MageDisplayLib
                 DefaultExt = "txt",
                 Filter = "Text (Tab delimited)|*.txt|All files (*.*)|*.*"
             };
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+
+            if (fileDialog.ShowDialog() != DialogResult.OK)
             {
-                try
-                {
-                    var filePath = openFileDialog1.FileName;
-                    // var fileName = Path.GetFileName(filePath);
-                    // var title = string.Format("Reloaded File {0}", fileName);
-                    var pipeline = ReloadListDisplay(this, filePath);
-                    pipeline.RunRoot(null);
-                    OnAction?.Invoke(this, new MageCommandEventArgs("display_reloaded"));
-                }
-                catch (MageException ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+                return;
+            }
+
+            try
+            {
+                var filePath = fileDialog.FileName;
+                // var fileName = Path.GetFileName(filePath);
+                // var title = string.Format("Reloaded File {0}", fileName);
+                var pipeline = ReloadListDisplay(this, filePath);
+                pipeline.RunRoot(null);
+                OnAction?.Invoke(this, new MageCommandEventArgs("display_reloaded"));
+            }
+            catch (MageException ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
