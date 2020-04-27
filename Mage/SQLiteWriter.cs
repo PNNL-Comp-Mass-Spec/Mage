@@ -23,13 +23,19 @@ namespace Mage
 
         #region Member Variables
 
-        // Buffer for accumulating rows into output block
+        /// <summary>
+        /// Buffer for accumulating rows into output block
+        /// </summary>
         private readonly List<string[]> mRows = new List<string[]>();
 
-        // Description of table we will be inserting rows into
+        /// <summary>
+        /// Description of table we will be inserting rows into
+        /// </summary>
         private TableSchema mSchema;
 
-        // Connection to SQLite database
+        /// <summary>
+        /// Connection to SQLite database
+        /// </summary>
         private SQLiteConnection mConnection;
 
         private int mRowsAccumulated;
@@ -99,6 +105,7 @@ namespace Mage
             {
                 // Code to dispose the managed resources of the class
             }
+
             // Code to dispose the un-managed resources of the class
             mConnection?.Dispose();
 
@@ -195,6 +202,7 @@ namespace Mage
                 TableName = TableName,
                 Columns = new List<ColumnSchema>()
             };
+
             foreach (var colDef in colDefs)
             {
                 var cs = new ColumnSchema
@@ -236,7 +244,9 @@ namespace Mage
 
         #region "Top level SQLite Stuff"
 
-        // Create the target file if it doesn't exist.
+        /// <summary>
+        /// Create the target file if it doesn't exist.
+        /// </summary>
         private void AssureDBExists()
         {
             if (!File.Exists(DbPath))

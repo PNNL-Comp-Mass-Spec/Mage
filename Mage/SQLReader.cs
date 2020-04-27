@@ -833,7 +833,6 @@ namespace Mage
 
                         case "tinyint":
                             AddParameter(dbTools, builtCmd, argName, SqlType.TinyInt, paramDirection, paramNames, sprocParams);
-
                             break;
 
                         case "smallint":
@@ -894,6 +893,7 @@ namespace Mage
                             AddParameter(dbTools, builtCmd, argName, SqlType.Text, paramDirection, paramNames, sprocParams);
                             break;
 
+                        // ReSharper disable once StringLiteralTypo
                         case "citext":
                             AddParameter(dbTools, builtCmd, argName, SqlType.Citext, paramDirection, paramNames, sprocParams);
                             break;
