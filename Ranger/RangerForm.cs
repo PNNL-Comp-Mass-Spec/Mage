@@ -151,7 +151,7 @@ namespace Ranger {
                 args.Message = "Process completed normally";
             }
 
-            // The current pipleline will call this function from its own thread
+            // The current pipeline will call this function from its own thread
             // We need to do the cross-thread thing to update the GUI
             MessageHandler ncb = SetStatusMessage;
             Invoke(ncb, args.Message);

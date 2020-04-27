@@ -27,7 +27,7 @@ namespace Mage
         public ProcessingPipeline Pipeline { get; set; }
 
         /// <summary>
-        /// Contstruct an empty commant event arg object
+        /// Construct an empty command event arg object
         /// </summary>
         public MageCommandEventArgs()
         {
@@ -37,9 +37,9 @@ namespace Mage
         }
 
         /// <summary>
-        /// Contstruct a commant event arg object with given action name
+        /// Construct a command event arg object with given action name
         /// </summary>
-        /// <param name="action">name of the command acion</param>
+        /// <param name="action">name of the command action</param>
         public MageCommandEventArgs(string action)
         {
             Action = action;
@@ -48,9 +48,9 @@ namespace Mage
         }
 
         /// <summary>
-        /// Contstruct a commant event arg object with given action name and mode
+        /// Construct a command event arg object with given action name and mode
         /// </summary>
-        /// <param name="action">name of the command acion</param>
+        /// <param name="action">name of the command action</param>
         /// <param name="mode">modifier for command action</param>
         public MageCommandEventArgs(string action, string mode)
         {
@@ -60,9 +60,9 @@ namespace Mage
         }
 
         /// <summary>
-        /// Contstruct a commant event arg object with given action name, mode, and Mage pipeline to process
+        /// Construct a command event arg object with given action name, mode, and Mage pipeline to process
         /// </summary>
-        /// <param name="action">name of the command acion</param>
+        /// <param name="action">name of the command action</param>
         /// <param name="mode">modifier for command action</param>
         /// <param name="pipeline">Mage pipeline object that can be run to execute command action</param>
         public MageCommandEventArgs(string action, string mode, ProcessingPipeline pipeline)
