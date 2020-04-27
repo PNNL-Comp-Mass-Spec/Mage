@@ -99,7 +99,7 @@ namespace Mage
                     if (!OverwriteExistingFiles && File.Exists(destPathClean))
                     {
                         UpdateStatus(this, new MageStatusEventArgs("WARNING->Skipping existing file: " + destPathClean, 0));
-                        OnWarningMessage(new MageStatusEventArgs("WARNING->Skipping existing file: " + destPathClean));
+                        ReportMageWarning("WARNING->Skipping existing file: " + destPathClean);
                         System.Threading.Thread.Sleep(1);
                         bShowDoneMsg = false;
                     }
@@ -116,7 +116,7 @@ namespace Mage
                         else
                         {
                             UpdateStatus(this, new MageStatusEventArgs("WARNING->Skipping file since not in MyEMSL Memory Cache: " + destPathClean, 0));
-                            OnWarningMessage(new MageStatusEventArgs("WARNING->Skipping file since not in MyEMSL Memory Cache: " + destPathClean));
+                            ReportMageWarning("WARNING->Skipping file since not in MyEMSL Memory Cache: " + destPathClean);
                             System.Threading.Thread.Sleep(1);
                             bShowDoneMsg = false;
                         }
@@ -149,7 +149,7 @@ namespace Mage
                         if (File.Exists(destPath))
                         {
                             UpdateStatus(this, new MageStatusEventArgs("WARNING->Skipping existing file: " + destPath, 0));
-                            OnWarningMessage(new MageStatusEventArgs("WARNING->Skipping existing file: " + destPath));
+                            ReportMageWarning("WARNING->Skipping existing file: " + destPath);
                             System.Threading.Thread.Sleep(1);
                             bShowDoneMsg = false;
                         }
@@ -174,25 +174,25 @@ namespace Mage
             catch (FileNotFoundException)
             {
                 UpdateStatus(this, new MageStatusEventArgs("FAILED->File Not Found: " + sourceFile, 1));
-                OnWarningMessage(new MageStatusEventArgs("Copy failed->File Not Found: " + sourcePath));
+                ReportMageWarning("Copy failed->File Not Found: " + sourcePath);
                 System.Threading.Thread.Sleep(250);
             }
             catch (DirectoryNotFoundException)
             {
                 UpdateStatus(this, new MageStatusEventArgs("FAILED->Directory Not Found: " + sourcePath, 1));
-                OnWarningMessage(new MageStatusEventArgs("Copy failed->Directory Not Found: " + sourcePath));
+                ReportMageWarning("Copy failed->Directory Not Found: " + sourcePath);
                 System.Threading.Thread.Sleep(250);
             }
             catch (IOException e)
             {
                 UpdateStatus(this, new MageStatusEventArgs("FAILED->I/O Exception: " + e.Message + " -- " + sourceFile, 1));
-                OnWarningMessage(new MageStatusEventArgs("Copy failed->I/O Exception: " + e.Message + " -- " + sourceFile));
+                ReportMageWarning("Copy failed->I/O Exception: " + e.Message + " -- " + sourceFile);
                 System.Threading.Thread.Sleep(250);
             }
             catch (Exception e)
             {
                 UpdateStatus(this, new MageStatusEventArgs("FAILED->" + e.Message + " -- " + sourceFile, 1));
-                OnWarningMessage(new MageStatusEventArgs("Copy failed->" + e.Message + " -- " + sourceFile));
+                ReportMageWarning("Copy failed->" + e.Message + " -- " + sourceFile);
                 System.Threading.Thread.Sleep(250);
             }
         }
@@ -269,7 +269,7 @@ namespace Mage
             catch (Exception e)
             {
                 UpdateStatus(this, new MageStatusEventArgs("FAILED->" + e.Message + " -- " + target.Name, 1));
-                OnWarningMessage(new MageStatusEventArgs("Directory copy failed->" + e.Message + " -- " + target.FullName));
+                ReportMageWarning("Directory copy failed->" + e.Message + " -- " + target.FullName);
                 System.Threading.Thread.Sleep(250);
                 return;
             }
@@ -299,7 +299,7 @@ namespace Mage
                     catch (Exception e)
                     {
                         UpdateStatus(this, new MageStatusEventArgs("FAILED->" + e.Message + " -- " + diSourceSubDir.Name, 1));
-                        OnWarningMessage(new MageStatusEventArgs("Subdirectory copy failed->" + e.Message + " -- " + diSourceSubDir.FullName));
+                        ReportMageWarning("Subdirectory copy failed->" + e.Message + " -- " + diSourceSubDir.FullName);
                         System.Threading.Thread.Sleep(250);
                     }
 
@@ -309,25 +309,25 @@ namespace Mage
             catch (FileNotFoundException)
             {
                 UpdateStatus(this, new MageStatusEventArgs("FAILED->File Not Found: " + sourceFile, 1));
-                OnWarningMessage(new MageStatusEventArgs("Copy failed->File Not Found: " + sourcePath));
+                ReportMageWarning("Copy failed->File Not Found: " + sourcePath);
                 System.Threading.Thread.Sleep(250);
             }
             catch (DirectoryNotFoundException)
             {
                 UpdateStatus(this, new MageStatusEventArgs("FAILED->Directory Not Found: " + sourcePath, 1));
-                OnWarningMessage(new MageStatusEventArgs("Copy failed->Directory Not Found: " + sourcePath));
+                ReportMageWarning("Copy failed->Directory Not Found: " + sourcePath);
                 System.Threading.Thread.Sleep(250);
             }
             catch (IOException e)
             {
                 UpdateStatus(this, new MageStatusEventArgs("FAILED->I/O Exception: " + e.Message + " -- " + sourceFile, 1));
-                OnWarningMessage(new MageStatusEventArgs("Copy failed->I/O Exception: " + e.Message + " -- " + sourceFile));
+                ReportMageWarning("Copy failed->I/O Exception: " + e.Message + " -- " + sourceFile);
                 System.Threading.Thread.Sleep(250);
             }
             catch (Exception e)
             {
                 UpdateStatus(this, new MageStatusEventArgs("FAILED->" + e.Message + " -- " + sourceFile, 1));
-                OnWarningMessage(new MageStatusEventArgs("Copy failed->" + e.Message + " -- " + sourceFile));
+                ReportMageWarning("Copy failed->" + e.Message + " -- " + sourceFile);
                 System.Threading.Thread.Sleep(250);
             }
 
@@ -354,7 +354,7 @@ namespace Mage
             catch (Exception e)
             {
                 UpdateStatus(this, new MageStatusEventArgs("FAILED->" + e.Message + " -- " + target.Name, 1));
-                OnWarningMessage(new MageStatusEventArgs("Directory copy failed->" + e.Message + " -- " + target.FullName));
+                ReportMageWarning("Directory copy failed->" + e.Message + " -- " + target.FullName);
                 System.Threading.Thread.Sleep(250);
                 return;
             }
@@ -395,14 +395,14 @@ namespace Mage
                     }
 
                     UpdateStatus(this, new MageStatusEventArgs("FAILED->" + message, 1));
-                    OnWarningMessage(new MageStatusEventArgs(message));
+                    ReportMageWarning(message);
                 }
 
             }
             catch (Exception e)
             {
                 UpdateStatus(this, new MageStatusEventArgs("FAILED->" + e.Message, 1));
-                OnWarningMessage(new MageStatusEventArgs("MyEMSL download failed->" + e.Message));
+                ReportMageWarning("MyEMSL download failed->" + e.Message);
                 System.Threading.Thread.Sleep(250);
             }
         }
@@ -425,14 +425,14 @@ namespace Mage
                 if (!cacheInfoFile.Exists)
                 {
                     UpdateStatus(this, new MageStatusEventArgs("WARNING->CacheInfo file not found: " + cacheInfoFilePath, 0));
-                    OnWarningMessage(new MageStatusEventArgs("WARNING->CacheInfo file not found: " + cacheInfoFilePath));
+                    ReportMageWarning("WARNING->CacheInfo file not found: " + cacheInfoFilePath);
                     return false;
                 }
 
                 if (cacheInfoFile.DirectoryName == null)
                 {
                     UpdateStatus(this, new MageStatusEventArgs("WARNING->CacheInfo file directory is null: " + cacheInfoFilePath, 0));
-                    OnWarningMessage(new MageStatusEventArgs("WARNING->CacheInfo file directory is null: " + cacheInfoFilePath));
+                    ReportMageWarning("WARNING->CacheInfo file directory is null: " + cacheInfoFilePath);
                     return false;
                 }
 
@@ -441,7 +441,7 @@ namespace Mage
                     if (reader.EndOfStream)
                     {
                         UpdateStatus(this, new MageStatusEventArgs("WARNING->CacheInfo file is empty: " + cacheInfoFilePath, 0));
-                        OnWarningMessage(new MageStatusEventArgs("WARNING->CacheInfo file is empty: " + cacheInfoFilePath));
+                        ReportMageWarning("WARNING->CacheInfo file is empty: " + cacheInfoFilePath);
                         return false;
                     }
 
@@ -450,7 +450,7 @@ namespace Mage
                     if (string.IsNullOrWhiteSpace(remoteFilePath))
                     {
                         UpdateStatus(this, new MageStatusEventArgs("WARNING->CacheInfo file is empty: " + cacheInfoFilePath, 0));
-                        OnWarningMessage(new MageStatusEventArgs("WARNING->CacheInfo file is empty: " + cacheInfoFilePath));
+                        ReportMageWarning("WARNING->CacheInfo file is empty: " + cacheInfoFilePath);
                         return false;
                     }
 
@@ -458,7 +458,7 @@ namespace Mage
                     if (!remoteFile.Exists)
                     {
                         UpdateStatus(this, new MageStatusEventArgs("Remote file not found: " + remoteFilePath, 1));
-                        OnWarningMessage(new MageStatusEventArgs("Remote file not found: " + remoteFilePath));
+                        ReportMageWarning("Remote file not found: " + remoteFilePath);
                         return false;
                     }
 
@@ -473,7 +473,7 @@ namespace Mage
                         else
                         {
                             UpdateStatus(this, new MageStatusEventArgs("WARNING->Skipping existing file: " + destPath, 0));
-                            OnWarningMessage(new MageStatusEventArgs("WARNING->Skipping existing file: " + destPath));
+                            ReportMageWarning("WARNING->Skipping existing file: " + destPath);
                             return false;
                         }
                         UpdateStatus(this, new MageStatusEventArgs("Start Copy->" + remoteFile.Name));
@@ -492,7 +492,7 @@ namespace Mage
             catch (Exception e)
             {
                 UpdateStatus(this, new MageStatusEventArgs("FAILED->" + e.Message + " -- " + cacheInfoFilePath, 1));
-                OnWarningMessage(new MageStatusEventArgs("Cache info processing failed->" + e.Message + " -- " + cacheInfoFilePath));
+                ReportMageWarning("Cache info processing failed->" + e.Message + " -- " + cacheInfoFilePath);
                 System.Threading.Thread.Sleep(250);
                 return false;
             }

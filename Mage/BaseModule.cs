@@ -238,6 +238,16 @@ namespace Mage
         }
 
         /// <summary>
+        /// Raise event OnWarningMessage
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        protected void ReportMageWarning(string message)
+        {
+            OnWarningMessage(new MageStatusEventArgs(message));
+        }
+
+        /// <summary>
         /// Arbitrary name for a particular module object.
         /// This will be the same name that the pipeline has for this object.
         /// </summary>
@@ -293,7 +303,7 @@ namespace Mage
                 else
                 {
                     var message = string.Format("Cannot convert value \"{0}\" to type bool for property \"{1}\"", val ?? "NULL", key);
-                    OnWarningMessage(new MageStatusEventArgs(message));
+                    ReportMageWarning(message);
                 }
             }
             else if (pi.PropertyType == typeof(DateTime))
@@ -305,7 +315,7 @@ namespace Mage
                 else
                 {
                     var message = string.Format("Cannot convert value \"{0}\" to type DateTime for property \"{1}\"", val ?? "NULL", key);
-                    OnWarningMessage(new MageStatusEventArgs(message));
+                    ReportMageWarning(message);
                 }
             }
             else
@@ -760,6 +770,7 @@ namespace Mage
                     throw new Exception($"Tried to map input column '{inputColName}' which does not exist");
                 }
             }
+
             var inputColIdx = InputColumnPos[inputColName];
             var colDef = InputColumnDefs[inputColIdx];
             AddOutputColumnDefinition(colDef, outColIdx, inputColIdx);

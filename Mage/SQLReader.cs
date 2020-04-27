@@ -280,13 +280,13 @@ namespace Mage
                 }
                 catch (Exception ex)
                 {
-                    OnWarningMessage(new MageStatusEventArgs("Error retrieving data from database: " + ex.Message));
+                    ReportMageWarning("Error retrieving data from database: " + ex.Message);
                 }
 
             }
             catch (Exception ex)
             {
-                OnWarningMessage(new MageStatusEventArgs("Error connecting to database: " + ex.Message));
+                ReportMageWarning("Error connecting to database: " + ex.Message);
             }
         }
 
@@ -678,9 +678,9 @@ namespace Mage
         {
             if (paramNames.Contains(argName))
             {
-                OnWarningMessage(new MageStatusEventArgs(string.Format(
+                ReportMageWarning(string.Format(
                     "Skipping duplicate stored procedure parameter {0} for procedure {1}",
-                    argName, cmd.CommandText)));
+                    argName, cmd.CommandText));
                 return null;
             }
 
@@ -924,7 +924,7 @@ namespace Mage
 
                         // FUTURE: Add code for more data types
                         default:
-                            Console.WriteLine("Couldn't figure out " + argName);
+                            ReportMageWarning(string.Format("GetSprocCmd: Data type {0} not recognized for argument {1}",  argType, argName));
                             break;
                     }
                 }

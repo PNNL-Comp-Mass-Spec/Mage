@@ -166,7 +166,7 @@ namespace Mage
                         else
                         {
                             UpdateStatus(this, new MageStatusEventArgs("FAILED->Cannot process directories with this processing mode", 1));
-                            OnWarningMessage(new MageStatusEventArgs("Cannot process directories with this processing mode"));
+                            ReportMageWarning("Cannot process directories with this processing mode");
                             System.Threading.Thread.Sleep(500);
                             return;
                         }
@@ -174,7 +174,7 @@ namespace Mage
                     else
                     {
                         UpdateStatus(this, new MageStatusEventArgs("FAILED->Directory Not Found: " + sourceDirectory, 1));
-                        OnWarningMessage(new MageStatusEventArgs("Copy failed->Directory Not Found: " + sourceDirectory));
+                        ReportMageWarning("Copy failed->Directory Not Found: " + sourceDirectory);
                         System.Threading.Thread.Sleep(250);
                         return;
                     }

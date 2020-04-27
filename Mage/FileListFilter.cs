@@ -369,12 +369,12 @@ namespace Mage
                         if (!AccessDeniedSubdirectories.Contains(currentDirectory))
                         {
                             AccessDeniedSubdirectories.Add(currentDirectory);
-                            OnWarningMessage(new MageStatusEventArgs(e.Message));
+                            ReportMageWarning(e.Message);
                         }
                     }
                     else
                     {
-                        OnWarningMessage(new MageStatusEventArgs(e.Message));
+                        ReportMageWarning(e.Message);
                     }
                     ReportSearchErrorToOutput(outputBufferRowIdx, msg);
                 }
@@ -433,7 +433,7 @@ namespace Mage
                 if (!AccessDeniedSubdirectories.Contains(currentDirectoryPath))
                 {
                     AccessDeniedSubdirectories.Add(currentDirectoryPath);
-                    OnWarningMessage(new MageStatusEventArgs(@"Access to the path '" + currentDirectoryPath + "' is denied."));
+                    ReportMageWarning(@"Access to the path '" + currentDirectoryPath + "' is denied.");
                 }
             }
 

@@ -412,7 +412,7 @@ namespace Mage
 
             foreach (var errorMessage in m_MyEMSLDatasetInfoCache.ErrorMessages)
             {
-                OnWarningMessage(new MageStatusEventArgs(errorMessage));
+                ReportMageWarning(errorMessage);
             }
 
             System.Threading.Thread.Sleep(10);
@@ -425,7 +425,7 @@ namespace Mage
 
         void MyEMSLDatasetInfoCache_ErrorEvent(string message, Exception ex)
         {
-            OnWarningMessage(new MageStatusEventArgs("MyEMSL downloader: " + message));
+            ReportMageWarning("MyEMSL downloader: " + message);
         }
 
         void MyEMSLDatasetInfoCache_MessageEvent(string message)
@@ -433,7 +433,7 @@ namespace Mage
             if (!message.Contains("Downloading ") && !message.Contains("Overwriting ") && !message.Contains("Skipping "))
             {
                 if (message.Contains("Warning,") || message.Contains("Error ") || message.Contains("Failure downloading") || message.Contains("Failed to"))
-                    OnWarningMessage(new MageStatusEventArgs("MyEMSL downloader: " + message));
+                    ReportMageWarning("MyEMSL downloader: " + message);
                 else
                     OnStatusMessageUpdated(new MageStatusEventArgs("MyEMSL downloader: " + message));
             }
