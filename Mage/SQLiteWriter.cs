@@ -426,9 +426,9 @@ namespace Mage
                 sb.Append(" NOT NULL");
             }
 
-            var defaultValue = StripParens(col.DefaultValue);
-            defaultValue = DiscardNational(defaultValue);
-            // traceLogWriter.Debug(("DEFAULT VALUE BEFORE [" & col.DefaultValue & "] AFTER [") + defval & "]")
+            var defaultValue = DiscardUnicodePrefix(StripParens(col.DefaultValue));
+
+            // traceLogWriter.Debug(("DEFAULT VALUE BEFORE [" & col.DefaultValue & "] AFTER [") + defaultValue & "]")
             if (!string.IsNullOrEmpty(defaultValue) && defaultValue.ToUpper().Contains("GETDATE"))
             {
                 traceLogWriter.Debug("converted SQL Server GETDATE() to CURRENT_TIMESTAMP for column [" + col.ColumnName + "]");
@@ -783,10 +783,14 @@ namespace Mage
             return false;
         }
 
-        // Discards the national prefix if exists (e.g., N'sometext') which is not supported in SQLite.
-        private static string DiscardNational(string value)
+        /// <summary>
+        /// Discards the Unicode prefix if it exists (e.g., N'sometext') which is not supported in SQLite.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        private static string DiscardUnicodePrefix(string value)
         {
-            var rx = new Regex("N\\'([^\\']*)\\'");
+            var rx = new Regex(@"N\'([^\']*)\'");
             var m = rx.Match(value);
             if (m.Success)
             {
