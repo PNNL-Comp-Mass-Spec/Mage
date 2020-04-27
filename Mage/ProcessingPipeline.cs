@@ -643,9 +643,9 @@ namespace Mage
             foreach (var moduleObject in moduleList)
             {
                 string moduleName;
-                if (moduleObject is string)
+                if (moduleObject is string stringValue)
                 {
-                    moduleName = moduleObject as string + (++seq);
+                    moduleName = stringValue + (++seq);
                 }
                 else
                 {
@@ -677,16 +677,17 @@ namespace Mage
                 currentModName = mod.ModuleName;
 
                 var moduleObject = mod.ModuleObject;
-                if (moduleObject is string)
+                if (moduleObject is string stringValue)
                 {
-                    moduleObject = MakeModule(moduleObject as string);
+                    moduleObject = MakeModule(stringValue);
                 }
-                if (moduleObject is IBaseModule)
+
+                if (moduleObject is IBaseModule baseModule)
                 {
-                    pipeline.AddModule(currentModName, moduleObject as IBaseModule);
+                    pipeline.AddModule(currentModName, baseModule);
                     if (pipeline.RootModule == null)
                     {
-                        pipeline.RootModule = moduleObject as IBaseModule;
+                        pipeline.RootModule = baseModule;
                     }
                     if (!string.IsNullOrEmpty(precedingModName))
                     {
@@ -695,9 +696,9 @@ namespace Mage
                 }
                 else
                 {
-                    if (moduleObject is ISinkModule && !string.IsNullOrEmpty(precedingModName))
+                    if (moduleObject is ISinkModule module && !string.IsNullOrEmpty(precedingModName))
                     {
-                        pipeline.ConnectExternalModule(precedingModName, moduleObject as ISinkModule);
+                        pipeline.ConnectExternalModule(precedingModName, module);
                     }
                 }
             }
