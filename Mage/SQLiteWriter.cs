@@ -680,8 +680,10 @@ namespace Mage
             if (success)
                 return dataType;
 
-            traceLogWriter.Error("GetDbTypeOfColumn: illegal db type found");
-            throw new MageException("GetDbTypeOfColumn: Illegal DB type found (" + cs.ColumnType + ")");
+            var errorMessage = string.Format("GetDbTypeOfColumn: invalid DB type found for column {0}: {1}", cs.ColumnName, cs.ColumnType);
+
+            traceLogWriter.Error(errorMessage);
+            throw new MageException(errorMessage);
         }
 
         // Strip any parentheses from the string.
