@@ -1,5 +1,8 @@
 Mage Revision History
 
+Version 1.5.7422; March 24, 2020
+	- Updated PRISMDatabaseUtils.dll with expanded data type name synonyms
+
 Version 1.5.7388; March 24, 2020
 	- Build the installer using InnoSetup 6
 
