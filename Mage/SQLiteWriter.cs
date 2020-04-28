@@ -676,91 +676,9 @@ namespace Mage
         /// <returns></returns>
         private static DbType GetDbTypeOfColumn(ColumnSchema cs)
         {
-
-            switch (cs.ColumnType.ToLower())
-            {
-                case "bit":
-                case "bool":
-                case "boolean":
-                    return DbType.Boolean;
-
-                case "tinyint":
-                case "byte":
-                    return DbType.Byte;
-
-                case "smallint":
-                case "int16":
-                case "int2":
-                    return DbType.Int16;
-
-                case "int":
-                case "int32":
-                case "integer":
-                case "int4":
-                    return DbType.Int32;
-
-                case "bigint":
-                case "int64":
-                case "long":
-                case "int8":
-                    return DbType.Int64;
-
-                case "real":
-                case "single":
-                    return DbType.Single;
-
-                case "float":
-                case "double":
-                    return DbType.Double;
-
-                case "numeric":
-                case "decimal":
-                case "money":
-                    return DbType.Double;
-
-                case "char":
-                case "character":
-                case "nchar":
-                    return DbType.String;
-
-                // ReSharper disable StringLiteralTypo
-                case "varchar":
-                case "nvarchar":
-                case "text":
-                case "citext":
-                case "ntext":
-                case "name":
-                case "string":
-                    return DbType.String;
-                // ReSharper restore StringLiteralTypo
-
-                case "date":
-                case "time":
-                case "datetime":
-                case "timestamp":
-                    return DbType.DateTime;
-
-                // ReSharper disable StringLiteralTypo
-                case "datetimeoffset":
-                case "timestamptz":
-                    return DbType.DateTimeOffset;
-                // ReSharper restore StringLiteralTypo
-
-                case "blob":
-                case "binary":
-                    return DbType.Binary;
-
-                // ReSharper disable once StringLiteralTypo
-                case "uniqueidentifier":
-                    return DbType.String;
-
-                case "xml":
-                    return DbType.String;
-
-                case "sql_variant":
-                    return DbType.Object;
-
-            }
+            var success = PRISMDatabaseUtils.DBToolsBase.GetDbTypeByDataTypeName(cs.ColumnType, out var dataType, out _);
+            if (success)
+                return dataType;
 
             traceLogWriter.Error("GetDbTypeOfColumn: illegal db type found");
             throw new MageException("GetDbTypeOfColumn: Illegal DB type found (" + cs.ColumnType + ")");
