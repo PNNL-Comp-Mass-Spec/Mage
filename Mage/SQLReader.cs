@@ -686,7 +686,14 @@ namespace Mage
 
             paramNames.Add(parameterName);
 
-            var newParam = dbTools.AddParameter(cmd, argName, argType, argSize, paramDirection);
+            var newParam = dbTools.AddParameter(cmd, parameterName, dataTypeName, argSize, paramDirection);
+            if (newParam == null)
+            {
+                ReportMageWarning(string.Format(
+                    "Error adding stored procedure parameter {0} for procedure {1}; dbTools.AddParameter returned null",
+                    parameterName, cmd.CommandText));
+                return null;
+            }
 
             if (sprocParams.ContainsKey(parameterName))
             {
@@ -811,122 +818,30 @@ namespace Mage
                 // the the SqlCommand being built
                 foreach (var resultRow in queryResults)
                 {
-                    var argName = resultRow[columnIndexMap["parameter_name"]];
-                    var argType = resultRow[columnIndexMap["data_type"]].ToLower();
-                    var argMode = resultRow[columnIndexMap["parameter_mode"]];
-                    var argSize = resultRow[columnIndexMap["character_maximum_length"]];
+                    var parameterName = resultRow[columnIndexMap["parameter_name"]];
+                    var dataTypeName = resultRow[columnIndexMap["data_type"]].ToLower();
+                    var parameterMode = resultRow[columnIndexMap["parameter_mode"]];
+                    var parameterSizeText = resultRow[columnIndexMap["character_maximum_length"]];
 
-                    var argSizeValue = int.TryParse(argSize, out var parsedArgSize) ? parsedArgSize : 0;
+                    var parameterSize = int.TryParse(parameterSizeText, out var parsedArgSize) ? parsedArgSize : 0;
 
-                    var paramDirection = ParamDirection(argMode);
+                    var direction = ParamDirection(parameterMode);
 
-                    switch (argType)
+                    var parameter = AddParameter(dbTools, command, parameterName, dataTypeName, direction, paramNames, sprocParams, parameterSize);
+
+                    if (parameter.DbType != DbType.Decimal)
+                        continue;
+
+                    var argPrecision = resultRow[columnIndexMap["numeric_precision"]];
+                    var argScale = resultRow[columnIndexMap["numeric_scale"]];
+
+                    if (byte.TryParse(argPrecision, out var precision) &&
+                        byte.TryParse(argScale, out var scale))
                     {
-                        case "bit":
-                            AddParameter(dbTools, builtCmd, argName, SqlType.Bit, paramDirection, paramNames, sprocParams);
-                            break;
-
-                        case "bool":
-                        case "boolean":
-                            AddParameter(dbTools, builtCmd, argName, SqlType.Boolean, paramDirection, paramNames, sprocParams);
-                            break;
-
-                        case "tinyint":
-                            AddParameter(dbTools, builtCmd, argName, SqlType.TinyInt, paramDirection, paramNames, sprocParams);
-                            break;
-
-                        case "smallint":
-                        case "int2":
-                            AddParameter(dbTools, builtCmd, argName, SqlType.SmallInt, paramDirection, paramNames, sprocParams);
-                            break;
-
-                        case "int":
-                        case "integer":
-                        case "int4":
-                            AddParameter(dbTools, builtCmd, argName, SqlType.Int, paramDirection, paramNames, sprocParams);
-                            break;
-
-                        case "bigint":
-                        case "int8":
-                            AddParameter(dbTools, builtCmd, argName, SqlType.BigInt, paramDirection, paramNames, sprocParams);
-                            break;
-
-                        case "real":
-                            AddParameter(dbTools, builtCmd, argName, SqlType.Real, paramDirection, paramNames, sprocParams);
-                            break;
-
-                        case "float":
-                        case "double":
-                            AddParameter(dbTools, builtCmd, argName, SqlType.Float, paramDirection, paramNames, sprocParams);
-                            break;
-
-                        case "decimal":
-                            var decimalParam = AddParameter(dbTools, builtCmd, argName, SqlType.Decimal, paramDirection, paramNames, sprocParams);
-
-                            var argPrecision = resultRow[columnIndexMap["numeric_precision"]];
-                            var argScale = resultRow[columnIndexMap["numeric_scale"]];
-
-                            if (byte.TryParse(argPrecision, out var precision) &&
-                                byte.TryParse(argScale, out var scale))
-                            {
-                                decimalParam.Precision = precision;
-                                decimalParam.Scale = scale;
-                            }
-                            break;
-
-                        case "money":
-                            AddParameter(dbTools, builtCmd, argName, SqlType.Money, paramDirection, paramNames, sprocParams);
-                            break;
-
-                        case "char":
-                        case "character":
-                        case "nchar":
-                            AddParameter(dbTools, builtCmd, argName, SqlType.Char, paramDirection, paramNames, sprocParams, argSizeValue);
-                            break;
-
-                        case "varchar":
-                        case "nvarchar":
-                            AddParameter(dbTools, builtCmd, argName, SqlType.VarChar, paramDirection, paramNames, sprocParams);
-                            break;
-
-                        case "text":
-                            AddParameter(dbTools, builtCmd, argName, SqlType.Text, paramDirection, paramNames, sprocParams);
-                            break;
-
-                        // ReSharper disable once StringLiteralTypo
-                        case "citext":
-                            AddParameter(dbTools, builtCmd, argName, SqlType.Citext, paramDirection, paramNames, sprocParams);
-                            break;
-
-                        case "name":
-                            AddParameter(dbTools, builtCmd, argName, SqlType.Name, paramDirection, paramNames, sprocParams, argSizeValue);
-                            break;
-
-                        case "date":
-                            AddParameter(dbTools, builtCmd, argName, SqlType.Date, paramDirection, paramNames, sprocParams, argSizeValue);
-                            break;
-
-                        case "time":
-                            AddParameter(dbTools, builtCmd, argName, SqlType.Time, paramDirection, paramNames, sprocParams, argSizeValue);
-                            break;
-
-                        case "datetime":
-                        case "timestamp":
-                            AddParameter(dbTools, builtCmd, argName, SqlType.DateTime, paramDirection, paramNames, sprocParams, argSizeValue);
-                            break;
-
-                        // ReSharper disable StringLiteralTypo
-                        case "datetimeoffset":
-                        case "timestamptz":
-                            AddParameter(dbTools, builtCmd, argName, SqlType.TimestampTz, paramDirection, paramNames, sprocParams, argSizeValue);
-                            break;
-                        // ReSharper restore StringLiteralTypo
-
-                        // FUTURE: Add code for more data types
-                        default:
-                            ReportMageWarning(string.Format("GetSprocCmd: Data type {0} not recognized for argument {1}",  argType, argName));
-                            break;
+                        parameter.Precision = precision;
+                        parameter.Scale = scale;
                     }
+
                 }
 
             }
