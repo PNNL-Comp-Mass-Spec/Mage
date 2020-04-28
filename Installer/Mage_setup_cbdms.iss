@@ -10,8 +10,8 @@ AppName=Mage_CBDMS
 WelcomeLabel2=This will install [name/ver] on your computer.
 ; Example with multiple lines:
 ; WelcomeLabel2=Welcome message%n%nAdditional sentence
-[Files]
 
+[Files]
 Source: ..\DeployedFiles\CBDMS\MageConcatenator.exe.config              ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\ICSharpCode.SharpZipLib.dll   ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\Jayrock.Json.dll              ; DestDir: {app}\MageConcatenator
@@ -225,4 +225,3 @@ Name: {app}\MageExtractor; Type: filesandordirs
 Name: {app}\MageFileProcessor; Type: filesandordirs
 Name: {app}\MageMetadataProcessor; Type: filesandordirs
 Name: {app}\Ranger; Type: filesandordirs
-
