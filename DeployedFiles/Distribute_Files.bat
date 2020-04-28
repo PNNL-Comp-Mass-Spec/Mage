@@ -1,6 +1,7 @@
 @echo on
 
 xcopy MageExtractor\Mage.dll                      F:\Documents\Projects\DataMining\DMS_Managers\Analysis_Manager\AM_Common\ /D /Y
+xcopy MageExtractor\Mage.pdb                      F:\Documents\Projects\DataMining\DMS_Managers\Analysis_Manager\AM_Common\ /D /Y
 xcopy MageExtractor\MageDisplayLib.dll            F:\Documents\Projects\DataMining\DMS_Managers\Analysis_Manager\AM_Common\ /D /Y
 xcopy MageExtractor\MageExtContentFilters.dll     F:\Documents\Projects\DataMining\DMS_Managers\Analysis_Manager\AM_Common\ /D /Y
 xcopy MageExtractor\MageExtExtractionFilters.dll  F:\Documents\Projects\DataMining\DMS_Managers\Analysis_Manager\AM_Common\ /D /Y
