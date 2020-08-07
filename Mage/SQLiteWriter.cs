@@ -429,7 +429,7 @@ namespace Mage
             var defaultValue = DiscardUnicodePrefix(StripParens(col.DefaultValue));
 
             // traceLogWriter.Debug(("DEFAULT VALUE BEFORE [" & col.DefaultValue & "] AFTER [") + defaultValue & "]")
-            if (!string.IsNullOrEmpty(defaultValue) && defaultValue.ToUpper().Contains("GETDATE"))
+            if (!string.IsNullOrEmpty(defaultValue) && defaultValue.IndexOf("GETDATE", StringComparison.OrdinalIgnoreCase) >= 0)
             {
                 traceLogWriter.Debug("converted SQL Server GETDATE() to CURRENT_TIMESTAMP for column [" + col.ColumnName + "]");
                 sb.Append(" DEFAULT (CURRENT_TIMESTAMP)");
