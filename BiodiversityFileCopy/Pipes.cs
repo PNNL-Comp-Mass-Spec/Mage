@@ -5,7 +5,7 @@ using Mage;
 
 namespace BiodiversityFileCopy
 {
-    class Pipes
+    static class Pipes
     {
         private static void ConnectPipelineToMessaging(ProcessingPipeline pl)
         {
