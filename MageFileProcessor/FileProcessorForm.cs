@@ -38,7 +38,7 @@ namespace MageFileProcessor
         private string mFinalPipelineName = string.Empty;
 
         /// <summary>
-        ///
+        /// Source pipeline name
         /// </summary>
         /// <remarks>Used to determine which field names to use for source files when copying files or processing files</remarks>
         private string mFileSourcePipelineName = string.Empty;
