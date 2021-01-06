@@ -56,7 +56,7 @@ namespace MageFilePackager
             InitializeComponent();
 
             const bool isBetaVersion = true;
-            SetFormTitle("2020-04-27", isBetaVersion);
+            SetFormTitle("2021-01-05", isBetaVersion);
 
             SetTags();
 
