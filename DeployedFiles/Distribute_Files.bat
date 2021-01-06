@@ -15,5 +15,4 @@ xcopy MageExtractor\Mage.dll                      F:\Documents\projects\JoshAldr
 xcopy MageExtractor\Mage.dll                      F:\Documents\projects\JoshAldrich\ProteinParsimony\SetCover\Lib\ /D /Y
 
 @echo off
-sleep 1
-@echo on
+pause
