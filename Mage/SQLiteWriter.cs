@@ -391,14 +391,13 @@ namespace Mage
                 sb.Append(columnLine);
                 if (i < ts.Columns.Count - 1)
                 {
-                    sb.Append("," + Environment.NewLine);
+                    sb.AppendLine(",");
                 }
             }
-            sb.Append(Environment.NewLine);
-            sb.Append(");" + Environment.NewLine);
+            sb.AppendLine();
+            sb.AppendLine(");");
 
-            var query = sb.ToString();
-            return query;
+            return sb.ToString();
         }
 
         /// <summary>
@@ -408,7 +407,7 @@ namespace Mage
         private string BuildColumnStatement(ColumnSchema col)
         {
             var sb = new StringBuilder();
-            sb.Append("\t" + "\"" + col.ColumnName + "\"" + "\t" + "\t");
+            sb.AppendFormat("\t\"{0}\"\t\t", col.ColumnName);
 
             if (col.ColumnType == "int")
             {
@@ -434,7 +433,7 @@ namespace Mage
             }
             else if (string.IsNullOrEmpty(defaultValue) && IsValidDefaultValue(defaultValue))
             {
-                sb.Append(" DEFAULT " + defaultValue);
+                sb.AppendFormat(" DEFAULT {0}", defaultValue);
             }
 
             return sb.ToString();
