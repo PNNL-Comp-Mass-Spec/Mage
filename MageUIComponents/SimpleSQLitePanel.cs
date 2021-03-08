@@ -2,9 +2,7 @@
 using System.Windows.Forms;
 
 namespace MageUIComponents {
-
     public partial class SimpleSQLitePanel : UserControl {
-
         public string FilePath => DBFilePathCtl.Text;
 
         public string TableName => TableNameCtl.Text;

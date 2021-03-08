@@ -5,13 +5,11 @@ using System.Xml;
 
 namespace Mage
 {
-
     /// <summary>
     /// Constructs SQL query from templates and run-time parameters
     /// </summary>
     public class SQLBuilder
     {
-
         /// <summary>
         /// Name in mPredicates of the key that specifies whether the server is a PostgreSQL server
         /// </summary>
@@ -102,7 +100,6 @@ namespace Mage
         /// </summary>
         protected class QueryPredicate
         {
-
             /// <summary>
             /// Relationship with other predicate items ("AND" or "OR")
             /// </summary>
@@ -117,7 +114,6 @@ namespace Mage
             /// Comparison
             /// </summary>
             public string cmp { get; set; }
-
 
             /// <summary>
             /// Value to compare
@@ -138,7 +134,6 @@ namespace Mage
         /// </summary>
         protected class QuerySort
         {
-
             /// <summary>
             /// Sorting column
             /// </summary>
@@ -258,7 +253,6 @@ namespace Mage
                             SprocParameters[key] = value;
                         }
                         break;
-
                 }
             }
 
@@ -296,7 +290,6 @@ namespace Mage
             {
                 SprocParameters[arg.Key] = arg.Value;
             }
-
         }
 
         #endregion
@@ -343,12 +336,10 @@ namespace Mage
                             descriptions[col] = itemNode.InnerText;
                         }
                         break;
-
                 }
             }
             return descriptions;
         }
-
 
         /// <summary>
         /// Set default values to use when adding predicate clause for a column
@@ -493,7 +484,6 @@ namespace Mage
         /// <returns>SQL string</returns>
         public string BuildQuerySQL()
         {
-
             // Process the predicate list
             var p_and = new List<string>();
             var p_or = new List<string>();
@@ -512,7 +502,6 @@ namespace Mage
                         case "or":
                             p_or.Add(sWhereItem);
                             break;
-
                     }
                 }
             }
@@ -562,7 +551,6 @@ namespace Mage
                     var orderBy = MakeOrderBy(mSortingItems, IsPostgres);
                     sql.Append(!string.IsNullOrEmpty(orderBy) ? string.Format(" ORDER BY {0}", orderBy) : "");
                     break;
-
             }
             return sql.ToString();
         }
@@ -628,7 +616,6 @@ namespace Mage
                     val = (val.Substring(0, 1) == "`") ? val.Replace("`", "") + "%" : "%" + val + "%";
                     str += string.Format("{0} LIKE '{1}'", col, val);
                     break;
-
 
                 case "DoesNotContainText":
                 case "DNCTx":
@@ -736,7 +723,6 @@ namespace Mage
                 default:
                     str += " unrecognized";
                     break;
-
             }
             return str;
         }

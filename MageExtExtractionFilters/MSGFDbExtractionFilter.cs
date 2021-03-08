@@ -4,10 +4,8 @@ using MageExtContentFilters;
 
 namespace MageExtExtractionFilters
 {
-
     public class MSGFDbExtractionFilter : ExtractionFilter
     {
-
         #region "Enums"
         public enum MSGFDBColumns
         {
@@ -111,7 +109,6 @@ namespace MageExtExtractionFilters
         {
             if (args.DataAvailable)
             {
-
                 var outRow = MapDataRow(args.Fields);
 
                 if (!mOutputAllProteins)
@@ -149,7 +146,6 @@ namespace MageExtExtractionFilters
                 }
                 else
                 {
-
                     var rows = mProteinMerger.MergeAllProteins(outRow, out var matchFound);
                     if (rows == null)
                     {
@@ -182,7 +178,6 @@ namespace MageExtExtractionFilters
 
                 ++mTotalRowsCounter;
                 ReportProgress();
-
             }
             else
             {
@@ -283,7 +278,6 @@ namespace MageExtExtractionFilters
 
         public static int GetMSGFDBColumnIndex(Dictionary<MSGFDBColumns, int> columnPos, MSGFDBColumns columnName)
         {
-
             if (columnPos.TryGetValue(columnName, out var value))
                 return value;
 
@@ -308,8 +302,6 @@ namespace MageExtExtractionFilters
 
         private void PrecalculateFieldIndexes(Dictionary<string, int> columnPos)
         {
-
-
             DetermineFieldIndexes(columnPos, out var dctColumnMapping);
 
             mColumnIndices.ScanNumber = GetMSGFDBColumnIndex(dctColumnMapping, MSGFDBColumns.Scan);
@@ -328,7 +320,6 @@ namespace MageExtExtractionFilters
             pepFDRIndex = GetMSGFDBColumnIndex(dctColumnMapping, MSGFDBColumns.PepFDROrPepQValue);
 
             msgfSpecProbIndex = GetMSGFDBColumnIndex(dctColumnMapping, MSGFDBColumns.MSGF_SpecProb);
-
         }
 
         /// <summary>
@@ -337,7 +328,6 @@ namespace MageExtExtractionFilters
         /// </summary>
         public static FilterMSGFDbResults MakeMSGFDbResultChecker(string FilterSetID)
         {
-
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("Extraction_Filter_Set_List");
             var runtimeParms = new Dictionary<string, string>() { { "Filter_Set_ID", FilterSetID } };
             var reader = new SQLReader(queryDefXML, runtimeParms);
@@ -352,6 +342,5 @@ namespace MageExtExtractionFilters
             // Create new MSGF+ filter object with retrieved filter criteria
             return new FilterMSGFDbResults(filterCriteria.Rows, FilterSetID);
         }
-
     }
 }

@@ -2,14 +2,11 @@
 
 namespace Mage
 {
-
-
     /// <summary>
     /// Process input rows into key/value store
     /// </summary>
     public class KVSink : BaseModule
     {
-
         #region Member Variables
 
         private int mKeyColIdx;
@@ -26,12 +23,10 @@ namespace Mage
         /// </summary>
         public string KeyColumnName { get; set; }
 
-
         /// <summary>
         /// Name of input column that contains value
         /// </summary>
         public string ValueColumnName { get; set; }
-
 
         /// <summary>
         /// Get accumulated key/value store
@@ -63,6 +58,5 @@ namespace Mage
                 }
             }
         }
-
     }
 }

@@ -6,7 +6,6 @@ using MyEMSLReader;
 
 namespace Mage
 {
-
     /// <summary>
     /// This modules accepts a list of files on standard tabular input
     /// looks for an associated file for each one and adds that file's
@@ -14,7 +13,6 @@ namespace Mage
     /// </summary>
     public class AddAssociatedFile : FileProcessingBase
     {
-
         #region Member Variables
 
         #endregion
@@ -174,7 +172,6 @@ namespace Mage
                                 args.Fields[mAssocFileIdx] = encodedFilePath;
 
                                 CacheFilterPassingFile(archiveFileInfo.FileInfo);
-
                             }
                         }
                         else if (File.Exists(Path.Combine(resultsDirectoryPath, assocFileName)))
@@ -192,6 +189,5 @@ namespace Mage
                 OnDataRowAvailable(args);
             }
         }
-
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace Mage
 {
-
     /// <summary>
     /// Mage filter module that merges a value from a lookup dictionary
     /// into a specified column in the output using a lookup key
@@ -84,5 +83,4 @@ namespace Mage
             return true;
         }
     }
-
 }

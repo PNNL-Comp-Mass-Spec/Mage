@@ -11,10 +11,8 @@ using PRISM.Logging;
 
 namespace MageFilePackager
 {
-
     public partial class FilePackagerForm : Form
     {
-
         #region Constants
 
         private const string TagJobIDs = "Job_ID_List";
@@ -201,7 +199,6 @@ namespace MageFilePackager
         /// <param name="command">Command to execute</param>
         public void DoCommand(object sender, MageCommandEventArgs command)
         {
-
             // Remember who sent us the command
             _mCurrentCmdSender = sender;
 
@@ -331,7 +328,6 @@ namespace MageFilePackager
 
             if (!bFilterDefined)
             {
-
                 switch (queryName)
                 {
                     case TagJobIDs:
@@ -520,7 +516,6 @@ namespace MageFilePackager
                         if (colNames.Contains("Job"))
                     {
                         type = "Jobs";
-
                     }
                     else
                             if (colNames.Contains("Dataset_ID"))
@@ -551,7 +546,6 @@ namespace MageFilePackager
         #endregion
 
         #region Support functions for building runtime parameter lists from component panels
-
 
         /// <summary>
         /// Get XML definition for query with given name

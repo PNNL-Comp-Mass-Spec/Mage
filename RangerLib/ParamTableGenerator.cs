@@ -3,10 +3,8 @@ using Mage;
 
 namespace RangerLib
 {
-
     public class ParamTableGenerator
     {
-
         private PermutationGenerator mPGenModule = new PermutationGenerator();
 
         /// <summary>
@@ -69,7 +67,6 @@ namespace RangerLib
 
         public ProcessingPipeline GetPipeline()
         {
-
             // Build column lists and column overwrite specs
             var allCols = new List<string>();
             var operatorColOverwrites = new Dictionary<string, string>();
@@ -118,6 +115,5 @@ namespace RangerLib
             }
             return ProcessingPipeline.Assemble("ParamGen", mPGenModule, filter, writer);
         }
-
     }
 }

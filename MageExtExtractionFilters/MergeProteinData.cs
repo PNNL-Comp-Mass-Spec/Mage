@@ -6,13 +6,11 @@ using Mage;
 
 namespace MageExtExtractionFilters
 {
-
     /// <summary>
     /// This class handles merging protein data into the result data
     /// </summary>
     class MergeProteinData
     {
-
         public enum MergeModeConstants
         {
             XTandem = 0,
@@ -78,7 +76,6 @@ namespace MageExtExtractionFilters
                 // We are replacing the protein name listed with the name from the _msgfplus_syn_SeqToProteinMap.txt file
                 ODX_Protein_Name = colPos["ProteinName"];
             }
-
         }
 
         // Lookup index relating Unique_Seq_ID
@@ -109,7 +106,6 @@ namespace MageExtExtractionFilters
             outRow[ODX_Terminus_State] = string.Empty;
             outRow[ODX_Protein_Name] = string.Empty;
 
-
             if (!mFirstOccurrenceIndex.TryGetValue(sequenceID, out var rowIdx))
             {
                 warningMessage = "sequenceID " + sequenceID + " not found in the FirstOccurrence dictionary";
@@ -128,7 +124,6 @@ namespace MageExtExtractionFilters
             warningMessage = string.Empty;
 
             return true;
-
         }
 
         /// <summary>
@@ -248,7 +243,6 @@ namespace MageExtExtractionFilters
             mProteinDataSorted.Clear();
             for (var rowIdx = 0; rowIdx < mProteinData.Rows.Count; rowIdx++)
             {
-
                 var bValidProteinInfo = false;
                 var oProteinInfo = new ProteinInfo();
 
@@ -308,7 +302,6 @@ namespace MageExtExtractionFilters
 
         protected class ProteinInfo
         {
-
             public int Unique_Seq_ID { get; set; }
             public int Cleavage_State { get; set; }
             public int Terminus_State { get; set; }
@@ -329,12 +322,10 @@ namespace MageExtExtractionFilters
 
         protected class ProteinDataSorter : IComparer<ProteinInfo>
         {
-
             int IComparer<ProteinInfo>.Compare(ProteinInfo x, ProteinInfo y)
             {
                 return x.Unique_Seq_ID.CompareTo(y.Unique_Seq_ID);
             }
         }
     }
-
 }

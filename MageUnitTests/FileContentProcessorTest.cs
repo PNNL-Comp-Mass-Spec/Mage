@@ -4,7 +4,6 @@ using System.IO;
 
 namespace MageUnitTests
 {
-
     /// <summary>
     /// This is a test class for FileContentProcessorTest and is intended
     /// to contain all FileContentProcessorTest Unit Tests
@@ -12,11 +11,9 @@ namespace MageUnitTests
     [TestFixture]
     public class FileContentProcessorTest
     {
-
         [Test]
         public void FileColumnProcessorTest()
         {
-
             // Set up test parameters
             var directoryColName = "Directory_Col";
             var fileColName = "File_Col";

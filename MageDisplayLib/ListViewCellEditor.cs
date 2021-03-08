@@ -5,13 +5,11 @@ using System.Windows.Forms;
 
 namespace MageDisplayLib
 {
-
     /// <summary>
     /// Implements a floating entry field editor that overlays display cells
     /// </summary>
     public class ListViewCellEditor
     {
-
         #region Member Variables
 
         /// <summary>
@@ -306,5 +304,4 @@ namespace MageDisplayLib
         #endregion
 
     }
-
 }

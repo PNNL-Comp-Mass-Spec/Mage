@@ -2,7 +2,6 @@
 using NUnit.Framework;
 namespace MageUnitTests
 {
-
     /// <summary>
     /// This is a test class for ProcessingPipelineTest and is intended
     /// to contain all ProcessingPipelineTest Unit Tests
@@ -10,7 +9,6 @@ namespace MageUnitTests
     [TestFixture]
     public class QueryDefinitionTest
     {
-
         /// <summary>
         /// A test for GetQueryXMLDef
         /// </summary>

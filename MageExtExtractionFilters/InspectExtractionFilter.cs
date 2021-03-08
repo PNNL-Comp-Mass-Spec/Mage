@@ -4,10 +4,8 @@ using MageExtContentFilters;
 
 namespace MageExtExtractionFilters
 {
-
     public class InspectExtractionFilter : ExtractionFilter
     {
-
         #region Member Variables
 
         // Working copy of Inspect filter object
@@ -26,7 +24,6 @@ namespace MageExtExtractionFilters
 
         private MergeProteinData mProteinMerger;
         private bool mOutputAllProteins;
-
 
         #endregion
 
@@ -90,7 +87,6 @@ namespace MageExtExtractionFilters
         {
             if (args.DataAvailable)
             {
-
                 var outRow = MapDataRow(args.Fields);
 
                 if (!mOutputAllProteins)
@@ -123,7 +119,6 @@ namespace MageExtExtractionFilters
 
                 ++mTotalRowsCounter;
                 ReportProgress();
-
             }
             else
             {
@@ -217,7 +212,6 @@ namespace MageExtExtractionFilters
         /// </summary>
         public static FilterInspectResults MakeInspectResultChecker(string FilterSetID)
         {
-
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("Extraction_Filter_Set_List");
             var runtimeParms = new Dictionary<string, string>() { { "Filter_Set_ID", FilterSetID } };
             var reader = new SQLReader(queryDefXML, runtimeParms);
@@ -232,6 +226,5 @@ namespace MageExtExtractionFilters
             // Create new Inspect filter object with retrieved filter criteria
             return new FilterInspectResults(filterCriteria.Rows, FilterSetID);
         }
-
     }
 }

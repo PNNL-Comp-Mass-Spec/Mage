@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 
-
 namespace BiodiversityFileCopy
 {
     /// <summary>
@@ -21,5 +20,4 @@ namespace BiodiversityFileCopy
             return true;
         }
     }
-
 }

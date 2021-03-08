@@ -79,7 +79,6 @@ namespace Mage
         /// <summary>
         /// Default column name for the source directory column
         /// </summary>
-
         public const string COLUMN_NAME_SOURCE_DIRECTORY = "Directory";
 
         #endregion
@@ -153,7 +152,6 @@ namespace Mage
             ExportColumnDefs();
             SearchDirectoriesAndOutputFiles();
         }
-
 
         /// <summary>
         /// Handler for Mage standard tabular input data rows
@@ -237,7 +235,6 @@ namespace Mage
 
         private void SearchDirectoriesAndOutputFiles()
         {
-
             // Set up indexes for row columns
             var directoryColDefined = TryGetOutputColumnPos(SourceDirectoryColumnName, out mDirectoryPathColIndex);
             if (!directoryColDefined && SourceDirectoryColumnName.Equals("Directory", StringComparison.OrdinalIgnoreCase))
@@ -298,7 +295,6 @@ namespace Mage
                     m_MyEMSLDatasetInfoCache.AddDataset(datasetName);
             }
 
-
             // Go through each directory that we accumulated in our internal buffer
             for (var outputBufferRowIdx = 0; outputBufferRowIdx < mOutputBuffer.Count; outputBufferRowIdx++)
             {
@@ -342,7 +338,6 @@ namespace Mage
                     UpdateStatus("FileListFilter: Searching directory " + directoryPath);
 
                     SearchOneDirectory(outputBufferRowIdx, fileInfo, subdirectoryInfo, directoryPath, datasetName);
-
                 }
 
                 // Inform our subscribers of what we found
@@ -448,7 +443,6 @@ namespace Mage
                 return fileSizeKB.ToString("0.0");
 
             return fileSizeKB.ToString("0");
-
         }
 
         private void UpdateStatus(string message)

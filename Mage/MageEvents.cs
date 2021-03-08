@@ -5,7 +5,6 @@ using System.Runtime.Serialization;
 
 namespace Mage
 {
-
     /// <summary>
     /// Definition for a single column for standard tabular output
     /// </summary>
@@ -160,7 +159,6 @@ namespace Mage
     /// </summary>
     public class MageExceptionEventArgs : MageStatusEventArgs
     {
-
         /// <summary>
         /// Message text
         /// </summary>
@@ -196,7 +194,6 @@ namespace Mage
     [Serializable]
     public class MageException : Exception
     {
-
         /// <summary>
         /// Construct a new MageException object
         /// with the given exception message
@@ -226,7 +223,5 @@ namespace Mage
             : base(info, context)
         {
         }
-
     }
-
 }

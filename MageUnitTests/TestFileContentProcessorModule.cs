@@ -4,14 +4,11 @@ using NUnit.Framework;
 
 namespace MageUnitTests
 {
-
     class TestFileContentProcessorModule : FileContentProcessor
     {
-
         public string ExpectedSourceFile { get; set; }
         public string ExpectedSourcePath { get; set; }
         public string ExpectedDestPath { get; set; }
-
 
         protected override void ProcessFile(string sourceFile, string sourcePath, string destPath, Dictionary<string, string> context)
         {
@@ -19,6 +16,5 @@ namespace MageUnitTests
             Assert.AreEqual(ExpectedSourcePath, sourcePath);
             Assert.AreEqual(ExpectedDestPath, destPath);
         }
-
     }
 }

@@ -2,10 +2,8 @@
 
 namespace MageFilePackager
 {
-
     public partial class SubmissionForm : Form
     {
-
         public SubmissionForm()
         {
             InitializeComponent();
@@ -41,6 +39,5 @@ namespace MageFilePackager
                 manifestFilePathCtl.Text = openFileDialog.FileName;
             }
         }
-
     }
 }

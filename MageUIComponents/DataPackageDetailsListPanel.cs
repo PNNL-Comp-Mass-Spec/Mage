@@ -6,10 +6,8 @@ using MageDisplayLib;
 
 namespace MageUIComponents
 {
-
     public partial class DataPackageDetailsListPanel : UserControl, IModuleParameters
     {
-
         public event EventHandler<MageCommandEventArgs> OnAction;
 
         #region IModuleParameters Members
@@ -60,15 +58,11 @@ namespace MageUIComponents
             {
                 // Ctrl+A pressed
                 ItemListCtl.SelectAll();
-
             }
-
         }
 
         private void LegendCtlClick(object sender, EventArgs e)
         {
-
         }
-
     }
 }

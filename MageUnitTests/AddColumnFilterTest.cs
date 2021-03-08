@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 namespace MageUnitTests
 {
-
     /// <summary>
     /// This is a test class for AddColumnFilterTest and is intended
     /// to contain all AddColumnFilterTest Unit Tests
@@ -12,14 +11,12 @@ namespace MageUnitTests
     [TestFixture]
     public class AddColumnFilterTest
     {
-
         /// <summary>
         /// A test for AddColumnFilter
         /// </summary>
         [Test]
         public void AddColumnFilterConstructorTest()
         {
-
             var initialColumns = new[] { "Alpha", "Beta", "Gamma" };
             string[] expectedColumns = { "Alpha", "Added1|+|text", "Beta", "Added2|+|text", "Gamma" };
 

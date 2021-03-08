@@ -5,9 +5,7 @@ using Mage;
 using MageUIComponents;
 
 namespace MageMetadataProcessor {
-
     public partial class SQLiteDBPanel : UserControl, IModuleParameters {
-
         public event EventHandler<MageCommandEventArgs> OnAction;
 
         public SQLiteDBPanel() {
@@ -96,6 +94,5 @@ namespace MageMetadataProcessor {
                 OutputColumnList = selectionForm.OutputColumnList;
             }
         }
-
     }
 }

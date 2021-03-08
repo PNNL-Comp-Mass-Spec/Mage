@@ -6,10 +6,8 @@ using System.Xml;
 using System.Collections.ObjectModel;
 using PRISM.Logging;
 
-
 namespace Mage
 {
-
     /// <summary>
     /// Container that builds and operates chain of modules
     /// Allows client to:
@@ -102,7 +100,6 @@ namespace Mage
 
         #region Private Functions
 
-
         #endregion
 
         #region Functions Available to Clients
@@ -149,7 +146,6 @@ namespace Mage
 
             if (!processingError)
             {
-
                 RootModule.Run(this);
 
                 RunPostProcess();
@@ -206,7 +202,6 @@ namespace Mage
                     HandleStatusMessageUpdated(this, new MageStatusEventArgs(CompletionCode, 1));
                     traceLogPipeline.Info(string.Format("Pipeline {0} completed... " + CompletionCode, PipelineName));
                 }
-
             }
             catch (MageException e)
             {
@@ -790,7 +785,6 @@ namespace Mage
     /// </summary>
     public class ModuleDef
     {
-
         /// <summary>
         /// Pipeline name of Mage module object
         /// </summary>
@@ -813,5 +807,4 @@ namespace Mage
             ModuleObject = module;
         }
     }
-
 }

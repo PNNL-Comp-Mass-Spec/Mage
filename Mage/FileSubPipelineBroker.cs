@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 
-
 namespace Mage
 {
-
     /// <summary>
     /// Delegate for a client-supplied function that this module can call to build its sub-pipeline
     /// </summary>
@@ -46,7 +44,6 @@ namespace Mage
     /// </summary>
     public class FileSubPipelineBroker : FileContentProcessor
     {
-
         #region Member Variables
 
         // Running count of number of files processed
@@ -265,7 +262,6 @@ namespace Mage
         }
 
         #endregion
-
 
         /// <summary>
         /// Wire the filter module's file renaming method to this broker module's delegate

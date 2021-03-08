@@ -9,10 +9,8 @@ using System.Windows.Forms;
 using Mage;
 
 namespace MageExtContentFilters {
-
     [MageAttribute("FilterPanel", "SEQUEST", "SEQUEST Filter", "Parameters for SEQUEST Filter")]
     public partial class SequestFilterPanel : Form, IModuleParameters {
-
         #region Member Variables
 
         Dictionary<string, string> mParameters = new Dictionary<string, string>();
@@ -45,7 +43,6 @@ namespace MageExtContentFilters {
         }
 
         private void GetFilterSetList() {
-
             // Create Mage module to query DMS (typically on gigasax)
             var reader = new SQLReader
             {
@@ -75,7 +72,6 @@ namespace MageExtContentFilters {
 
         private void UpdateFilterSetID() {
             if (!string.IsNullOrEmpty(mFilterSetIDToAutoSelect)) {
-
                 var toSelect = new List<DataGridViewRow>(1);
 
                 // Find the row with the given filter set ID

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 namespace MageUnitTests
 {
-
     /// <summary>
     /// This is a test class for FileCopyTest and is intended
     /// to contain all FileCopyTest Unit Tests
@@ -12,7 +11,6 @@ namespace MageUnitTests
     [TestFixture]
     public class FileCopyTest
     {
-
         /// <summary>
         /// A class to provide access to private member variables of FileCopy.
         /// Original method was using private accessors, deprecated starting in 2010

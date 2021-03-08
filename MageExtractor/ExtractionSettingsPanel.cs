@@ -6,7 +6,6 @@ using MageExtExtractionFilters;
 
 namespace MageExtractor
 {
-
     public partial class ExtractionSettingsPanel : UserControl, IModuleParameters
     {
         public event EventHandler<MageCommandEventArgs> OnAction;
@@ -61,7 +60,6 @@ namespace MageExtractor
 
         public void SetParameters(Dictionary<string, string> paramList)
         {
-
             foreach (var paramDef in paramList)
             {
                 try
@@ -86,9 +84,7 @@ namespace MageExtractor
                 {
                     // Ignore errors setting this parameter
                 }
-
             }
-
         }
 
         #endregion
@@ -113,7 +109,6 @@ namespace MageExtractor
 
             MSGFCutoffCtl.Items.AddRange(new object[] {ExtractionFilter.ALL_PASS_CUTOFF, "1E-8", "1E-9", "5E-9", "1E-10", "5E-10", "1E-11" });
             MSGFCutoffCtl.Text = "1E-10";
-
         }
 
         private void ExtractFromSelectedBtn_Click(object sender, EventArgs e)
@@ -134,7 +129,6 @@ namespace MageExtractor
                     MessageBox.Show("Error extracting results: " + ex.Message + "; " + ex.StackTrace, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
-
         }
 
         private void ExtractFromAllBtn_Click(object sender, EventArgs e)
@@ -148,7 +142,6 @@ namespace MageExtractor
                 };
                 OnAction(this, command);
             }
-
         }
 
         private void SelectFilterBtn_Click(object sender, EventArgs e)
@@ -167,14 +160,11 @@ namespace MageExtractor
             selectionForm.Hide();
             selectionForm.InitializeFilterSetList();
 
-
             if (selectionForm.ShowDialog() == DialogResult.OK)
             {
                 var parms = selectionForm.GetParameters();
                 ResultFilterSetID = parms["FilterSetID"];
             }
-
-
         }
 
         private void ClearFilterBtn_Click(object sender, EventArgs e)
@@ -186,6 +176,5 @@ namespace MageExtractor
         {
             fraMSGFCutoff.Visible = !ResultTypeNameCtl.Text.StartsWith("MSPathFinder");
         }
-
     }
 }

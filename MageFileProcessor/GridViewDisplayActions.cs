@@ -7,14 +7,12 @@ using MageDisplayLib;
 
 namespace MageFileProcessor
 {
-
     /// <summary>
     /// Builds an extension to the context menu for a GridViewDisplayControl object,
     /// and provides the code to handle the extension functions.
     /// </summary>
     class GridViewDisplayActions
     {
-
         #region "Properties"
 
         public string BaseDmsUrl
@@ -29,7 +27,6 @@ namespace MageFileProcessor
                         // Includes gigasax
                         return "https://dms2.pnl.gov";
                 }
-
             }
         }
 
@@ -88,7 +85,6 @@ namespace MageFileProcessor
         /// </summary>
         private void SetupContextMenus()
         {
-
             var toolStripItems = new List<ToolStripItem> { new ToolStripSeparator() };
             toolStripItems.AddRange(GetDirectoryMenuItems().ToArray());
             toolStripItems.AddRange(GetWebActionMenuItems().ToArray());
@@ -202,7 +198,6 @@ namespace MageFileProcessor
         /// <param name="args"></param>
         private void HandleSelectionChanged(object sender, EventArgs args)
         {
-
             // Whole context menu enabled/disabled based on whether there are any rows selected or not
             if (mDisplayUserControl.SelectedItemCount == 0)
             {

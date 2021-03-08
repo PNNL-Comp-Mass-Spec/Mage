@@ -6,14 +6,12 @@ using Mage;
 
 namespace MageFileProcessor
 {
-
     /// <summary>
     /// This class contains several functions that build Mage pipelines
     /// that supply data to the UI in response to user commands
     /// </summary>
     public static class Pipelines
     {
-
         public const string PIPELINE_GET_DMS_FILES = "FileListPipeline";
         public const string PIPELINE_GET_LOCAL_FILES = "PipelineToGetLocalFileList";
 
@@ -28,7 +26,6 @@ namespace MageFileProcessor
         /// <returns>Mage pipeline</returns>
         public static ProcessingPipeline MakeJobQueryPipeline(ISinkModule sinkObject, string queryDefXML, Dictionary<string, string> runtimeParams)
         {
-
             // Make source module and initialize from query def XML and runtime parameters
             var rdr = new SQLReader(queryDefXML, runtimeParams);
 
@@ -46,7 +43,6 @@ namespace MageFileProcessor
         /// <returns>Mage pipeline</returns>
         public static ProcessingPipeline MakeFileListPipeline(IBaseModule sourceObject, ISinkModule sinkObject, Dictionary<string, string> runtimeParams)
         {
-
             // Create file filter module and initialize it
             var fileFilter = new FileListFilter
             {
@@ -72,7 +68,6 @@ namespace MageFileProcessor
         /// <returns>Mage pipeline</returns>
         public static ProcessingPipeline MakePipelineToGetLocalFileList(ISinkModule sinkObject, Dictionary<string, string> runtimeParams)
         {
-
             // Make source module in pipeline to get list of files in local directory
             var reader = new FileListFilter();
 
@@ -139,7 +134,6 @@ namespace MageFileProcessor
         /// <returns>Mage pipeline</returns>
         public static ProcessingPipeline MakeFileCopyPipeline(IBaseModule sourceObject, Dictionary<string, string> runtimeParams)
         {
-
             // Create file copy module and initialize it
             var outputDirectory = GetRuntimeParam(runtimeParams, "OutputDirectory");
             var copier = new FileCopy
@@ -185,7 +179,6 @@ namespace MageFileProcessor
         /// <returns>Mage pipeline</returns>
         public static ProcessingPipeline MakePipelineToFilterSelectedFiles(IBaseModule sourceObject, Dictionary<string, string> runtimeParams, Dictionary<string, string> filterParms)
         {
-
             // Set up some parameter values
             var outputMode = GetRuntimeParam(runtimeParams, "OutputMode");
             var outputDirectoryPath = GetRuntimeParam(runtimeParams, "OutputDirectory") ?? string.Empty;
@@ -229,8 +222,6 @@ namespace MageFileProcessor
             // Build and wire pipeline
             return ProcessingPipeline.Assemble("PipelineToFilterSelectedFiles", sourceObject, broker, writer);
         }
-
-
 
         /// <summary>
         /// Build and return Mage pipeline queue to extract contents of results files
@@ -375,6 +366,5 @@ namespace MageFileProcessor
 
             return runtimeParams[keyName];
         }
-
     }
 }

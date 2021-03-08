@@ -5,10 +5,8 @@ using Mage;
 
 namespace MageUIComponents
 {
-
     public partial class DatasetQueryPanel : UserControl, IModuleParameters
     {
-
         public event EventHandler<MageCommandEventArgs> OnAction;
 
         public DatasetQueryPanel()

@@ -4,13 +4,11 @@ using MageExtContentFilters;
 
 namespace MageExtExtractionFilters
 {
-
     /// <summary>
     /// MSGFDb Extraction Filter
     /// </summary>
     public class MSGFDbFHTExtractionFilter : ExtractionFilter
     {
-
         #region Member Variables
 
         // Working copy of MSGFDB filter object
@@ -62,7 +60,6 @@ namespace MageExtExtractionFilters
         {
             if (args.DataAvailable)
             {
-
                 var outRow = MapDataRow(args.Fields);
 
                 var accepted = CheckFilter(outRow);
@@ -75,7 +72,6 @@ namespace MageExtExtractionFilters
 
                 ++mTotalRowsCounter;
                 ReportProgress();
-
             }
             else
             {
@@ -141,7 +137,6 @@ namespace MageExtExtractionFilters
 
         private void PrecalculateFieldIndexes(Dictionary<string, int> columnPos)
         {
-
             MSGFDbExtractionFilter.DetermineFieldIndexes(columnPos, out var dctColumnMapping);
 
             peptideSequenceIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.Peptide);
@@ -166,7 +161,6 @@ namespace MageExtExtractionFilters
         /// </summary>
         public static FilterMSGFDbResults MakeMSGFDbResultChecker(string FilterSetID)
         {
-
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("Extraction_Filter_Set_List");
             var runtimeParms = new Dictionary<string, string>() { { "Filter_Set_ID", FilterSetID } };
             var reader = new SQLReader(queryDefXML, runtimeParms);

@@ -6,10 +6,8 @@ using MageDisplayLib;
 
 namespace MageUIComponents
 {
-
     public partial class DatasetIDListPanel : UserControl, IModuleParameters
     {
-
         public event EventHandler<MageCommandEventArgs> OnAction;
 
         #region IModuleParameters Members
@@ -52,7 +50,6 @@ namespace MageUIComponents
             DatasetListCtl.Text = PanelSupport.CleanUpDelimitedList(DatasetListCtl.Text);
         }
 
-
         private void DatasetListCtl_KeyDown(object sender, EventArgs e)
         {
             var args = (KeyEventArgs)e;
@@ -61,10 +58,7 @@ namespace MageUIComponents
             {
                 // Ctrl+A pressed
                 DatasetListCtl.SelectAll();
-
             }
-
         }
-
     }
 }

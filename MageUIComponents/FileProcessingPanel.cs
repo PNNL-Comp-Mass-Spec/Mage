@@ -5,10 +5,8 @@ using Mage;
 
 namespace MageUIComponents
 {
-
     public partial class FileProcessingPanel : UserControl
     {
-
         public FileProcessingPanel()
         {
             InitializeComponent();
@@ -112,7 +110,6 @@ namespace MageUIComponents
 
         #region Support functions
 
-
         /// <summary>
         /// See if there is a parameter panel associated with the currently selected filter
         /// and, if there is one, present it to the user and save its returned parameter values
@@ -142,7 +139,6 @@ namespace MageUIComponents
                 }
             }
         }
-
 
         #endregion
 
@@ -262,6 +258,5 @@ namespace MageUIComponents
         {
             FilterSelectionCtl.Text = "All Pass";
         }
-
     }
 }

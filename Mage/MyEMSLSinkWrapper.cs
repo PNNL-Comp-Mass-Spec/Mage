@@ -11,7 +11,6 @@ namespace Mage
     /// </summary>
     public class MyEMSLSinkWrapper : FileProcessingBase
     {
-
         private readonly SimpleSink mSink;
 
         /// <summary>
@@ -132,7 +131,6 @@ namespace Mage
                     throw ex;
                 }
             }
-
         }
 
         /// <summary>
@@ -174,7 +172,6 @@ namespace Mage
             if (filePathWithID == kNoFilesFound)
                 return false;
 
-
             var myEMSLFileID = DatasetInfoBase.ExtractMyEMSLFileID(filePathWithID, out var filePathClean);
 
             if (myEMSLFileID <= 0)
@@ -203,6 +200,5 @@ namespace Mage
 
             return false;
         }
-
     }
 }

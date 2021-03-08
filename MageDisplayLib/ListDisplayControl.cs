@@ -44,7 +44,6 @@ namespace MageDisplayLib
     /// </summary>
     public partial class ListDisplayControl : UserControl
     {
-
         /// <summary>
         /// This event fires to send command to external handler(s)
         /// </summary>
@@ -165,7 +164,6 @@ namespace MageDisplayLib
         /// Get the current cell editor for the ListView of this object
         /// </summary>
         public ListViewCellEditor CellEditor => mCellEditor;
-
 
         /// <summary>
         /// The list view control used by this object
@@ -370,7 +368,6 @@ namespace MageDisplayLib
             // Parse out the data type from the .Tag member of each column
             for (var i = 0; i < lvQueryResults.Columns.Count; i++)
             {
-
                 mListViewColNames.Add(lvQueryResults.Columns[i].Name);
 
                 var colType = lvQueryResults.Columns[i].Tag.ToString();
@@ -434,7 +431,6 @@ namespace MageDisplayLib
                             mListViewColTypes.Add(eSqlDataColType.text);
                         break;
                 }
-
             }
         }
 
@@ -511,7 +507,6 @@ namespace MageDisplayLib
                     break;
             }
 
-
             strSortInfo = "Sort " + lvQueryResults.Columns[intColIndex].Text;
 
             if (!mListViewSortAscending)
@@ -528,7 +523,6 @@ namespace MageDisplayLib
             lvQueryResults.ListViewItemSorter = new ListViewItemComparer(e.Column, mListViewSortAscending, SortNumeric, SortDate);
 
             lvQueryResults.Update();
-
         }
 
         /// <summary>
@@ -628,7 +622,6 @@ namespace MageDisplayLib
             return lva;
         }
 
-
         #endregion
 
         #region Move Items
@@ -689,5 +682,4 @@ namespace MageDisplayLib
         #endregion
 
     }
-
 }

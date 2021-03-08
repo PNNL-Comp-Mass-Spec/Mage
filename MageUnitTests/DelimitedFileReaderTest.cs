@@ -3,7 +3,6 @@ using NUnit.Framework;
 
 namespace MageUnitTests
 {
-
     /// <summary>
     /// This is a test class for DelimitedFileReaderTest and is intended
     /// to contain all DelimitedFileReaderTest Unit Tests
@@ -11,7 +10,6 @@ namespace MageUnitTests
     [TestFixture]
     public class DelimitedFileReaderTest
     {
-
         /// <summary>
         /// A test for Header
         /// </summary>
@@ -50,7 +48,6 @@ namespace MageUnitTests
             var actual = target.Delimiter;
             Assert.AreEqual(expected, actual);
         }
-
 
         /// <summary>
         /// A test for Run
@@ -104,7 +101,6 @@ namespace MageUnitTests
             Assert.AreEqual(4, result.Columns.Count);
             Assert.AreEqual(17, result.Rows.Count);
         }
-
 
         public static SimpleSink ReadDelimitedFile(string filePath)
         {

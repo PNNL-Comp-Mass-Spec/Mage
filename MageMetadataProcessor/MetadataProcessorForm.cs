@@ -9,10 +9,8 @@ using PRISM.Logging;
 
 namespace MageMetadataProcessor
 {
-
     public partial class MetadataProcessorForm : Form
     {
-
         #region Member Variables
 
         // Current Mage pipeline that is running or has most recently run
@@ -88,7 +86,6 @@ namespace MageMetadataProcessor
         /// <param name="command">Command to execute</param>
         public void DoCommand(object sender, MageCommandEventArgs command)
         {
-
             // Remember who sent us the command
             mCurrentCmdSender = sender;
 
@@ -265,7 +262,6 @@ namespace MageMetadataProcessor
         }
 
         #endregion
-
 
         #region Mage Pipelines
 

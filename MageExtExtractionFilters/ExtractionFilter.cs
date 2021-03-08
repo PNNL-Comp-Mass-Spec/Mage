@@ -4,14 +4,12 @@ using Mage;
 
 namespace MageExtExtractionFilters
 {
-
     /// <summary>
     /// Bases class for extraction filters
     /// Handles merging associated results (MSGF)
     /// </summary>
     public class ExtractionFilter : BaseModule
     {
-
         #region Constants
 
         public const string ALL_PASS_CUTOFF = "All Pass";
@@ -39,7 +37,6 @@ namespace MageExtExtractionFilters
         protected Dictionary<string, ResultType.MergeFile> mMergeFiles;
 
         protected string mResultsDirectoryPath = string.Empty;
-
 
         // Output column that will receive message about whether filter passed or failed
         protected string mFilterResultsColumnName = string.Empty;
@@ -199,7 +196,6 @@ namespace MageExtExtractionFilters
                     OnStatusMessageUpdated(new MageStatusEventArgs(msg));
                     mLastReportTimeUTC = DateTime.UtcNow;
                 }
-
             }
         }
     }

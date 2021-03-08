@@ -17,7 +17,6 @@ namespace Mage
 
         #endregion
 
-
         #region Properties
 
         /// <summary>
@@ -38,9 +37,7 @@ namespace Mage
 
         #endregion
 
-
         #region Search Functions
-
 
         /// <summary>
         /// Set up indexes for row columns
@@ -84,7 +81,6 @@ namespace Mage
             string fileName,
             string datasetName)
         {
-
             try
             {
                 FileInfo fiFile;
@@ -100,7 +96,6 @@ namespace Mage
                     if (!fileInfo.ContainsKey(fiFile.Name))
                         fileInfo.Add(fiFile.Name, fiFile);
                 }
-
             }
             catch (Exception e)
             {
@@ -135,7 +130,6 @@ namespace Mage
 
         private FileInfo GetFileInfoMyEMSL(string directoryPath, string fileName, string datasetName)
         {
-
             GetMyEMSLParentDirectoriesAndSubDir(directoryPath, datasetName, out var subDir, out var parentDirectories);
 
             DatasetInfoBase.ExtractMyEMSLFileID(fileName, out var fileNameClean);

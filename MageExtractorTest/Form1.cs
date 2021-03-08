@@ -5,12 +5,8 @@ using Mage;
 using MageDisplayLib;
 using PRISM.Logging;
 
-
 namespace MageExtractorTest {
-
     public partial class Form1 : Form {
-
-
         #region Initialization
 
         public Form1() {

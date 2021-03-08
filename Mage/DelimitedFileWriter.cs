@@ -4,14 +4,12 @@ using System.IO;
 
 namespace Mage
 {
-
     /// <summary>
     /// Mage module that writes that data that it receives via its
     /// Mage standard tabular input to a delimited text file
     /// </summary>
     public class DelimitedFileWriter : BaseModule, IDisposable
     {
-
         #region Member Variables
 
         private StreamWriter mOutFile;
@@ -90,7 +88,6 @@ namespace Mage
 
         #endregion
 
-
         #region IBaseModule Members
 
         /// <summary>
@@ -130,7 +127,6 @@ namespace Mage
                 var ex = ReportMageException(errorMessage, e);
                 throw ex;
             }
-
         }
 
         /// <summary>

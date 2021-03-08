@@ -8,13 +8,11 @@ using MageDisplayLib;
 
 namespace MageUIComponents
 {
-
     /// <summary>
     /// Dialog that allows column mappings to be created, edited, and saved
     /// </summary>
     public partial class ColumnMappingForm : Form
     {
-
         #region Member Variables
 
         /// <summary>
@@ -403,13 +401,11 @@ namespace MageUIComponents
             AddMissingInputColumns(rows, mInputColumnDefs);
             foreach (var row in rows)
             {
-
                 // Auto-fix data type int to integer
                 if (row.Length > 3 && row[2].ToLower() == "int")
                     row[2] = "integer";
 
                 ColumnSpecEditingDisplayList.List.Rows.Add((object)row);
-
             }
 
             mAddingMapping = false;
@@ -533,7 +529,6 @@ namespace MageUIComponents
         /// <param name="e"></param>
         private void AddNewColumnMappingBtn_Click(object sender, EventArgs e)
         {
-
             if (!IsColumnMappingNameUnique(MappingName))
             {
                 MessageBox.Show("There is already a column mapping with the same name");
@@ -627,7 +622,6 @@ namespace MageUIComponents
             var newColData = new[] { "New_Column", "", "text", "" };
             return newColData;
         }
-
 
         #endregion
 
@@ -938,8 +932,6 @@ namespace MageUIComponents
         }
 
         #endregion
-
-
 
     }
 }

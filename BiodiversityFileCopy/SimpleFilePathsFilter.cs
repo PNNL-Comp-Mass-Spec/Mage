@@ -28,6 +28,5 @@ namespace BiodiversityFileCopy
             }
             return false;
         }
-
     }
 }

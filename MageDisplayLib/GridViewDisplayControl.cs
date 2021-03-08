@@ -7,10 +7,8 @@ using Mage;
 
 namespace MageDisplayLib
 {
-
     public partial class GridViewDisplayControl : UserControl, IMageDisplayControl, ISinkModule, IModuleParameters
     {
-
         /// <summary>
         /// Signals anyone interested that row selection has changed
         /// </summary>
@@ -42,7 +40,6 @@ namespace MageDisplayLib
                     chkShiftClickMode.Checked = isChecked;
             }
         }
-
 
         #endregion
 
@@ -85,7 +82,6 @@ namespace MageDisplayLib
         /// Set to True to automatically set column widths after populating the grid
         /// </summary>
         public bool AutoSizeColumnWidths { get; set; }
-
 
         /// <summary>
         /// Defines whether or not multiple items can be selected in the data grid view
@@ -461,7 +457,6 @@ namespace MageDisplayLib
         /// </summary>
         private readonly Collection<string[]> mRowBuffer = new Collection<string[]>();
 
-
         #endregion
 
         #region STI Properties
@@ -554,7 +549,6 @@ namespace MageDisplayLib
             return this;
         }
 
-
         #endregion
 
         #region Public Functions
@@ -564,12 +558,10 @@ namespace MageDisplayLib
         /// </summary>
         public void AutoSizeColumnWidthsNow()
         {
-
             foreach (DataGridViewColumn item in gvQueryResults.Columns)
             {
                 item.DataGridView.AutoResizeColumns();
             }
-
         }
 
         /// <summary>
@@ -630,7 +622,6 @@ namespace MageDisplayLib
         /// </summary>
         public class MyDataGridView : DataGridView
         {
-
             private readonly Hashtable myHashTable = new Hashtable();
 
             /// <summary>
@@ -695,7 +686,6 @@ namespace MageDisplayLib
             /// </summary>
             public void DeleteSelectedItems()
             {
-
                 if (SelectedRows.Count > 0 && AllowDelete)
                 {
                     SuspendLayout();
@@ -720,7 +710,6 @@ namespace MageDisplayLib
 
                     Update();
                 }
-
             }
 
             /// <summary>
@@ -728,13 +717,11 @@ namespace MageDisplayLib
             /// </summary>
             protected void HighlightSelectedRows()
             {
-
                 // Select all rows clicked
                 foreach (DataGridViewRow SelectedRow in myHashTable.Values)
                 {
                     SelectedRow.Selected = true;
                 }
-
             }
 
             /// <summary>
@@ -766,14 +753,12 @@ namespace MageDisplayLib
             /// </summary>
             protected void SynchronizeHashTableWithSelectedRows()
             {
-
                 myHashTable.Clear();
 
                 foreach (DataGridViewRow SelectedRow in SelectedRows)
                 {
                     myHashTable.Add(SelectedRow.Index.ToString(), SelectedRow);
                 }
-
             }
 
             /// <summary>
@@ -786,7 +771,6 @@ namespace MageDisplayLib
                 AllowUserToResizeColumns = true;
                 AllowUserToOrderColumns = false;
                 ReadOnly = true;
-
             }
 
             /// <summary>
@@ -859,10 +843,7 @@ namespace MageDisplayLib
                         base.OnCellMouseDown(e);
                     }
                 }
-
             }
-
         }
-
     }
 }

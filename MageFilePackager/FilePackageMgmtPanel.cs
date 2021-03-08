@@ -7,10 +7,8 @@ using MageDisplayLib;
 
 namespace MageFilePackager
 {
-
     public partial class FilePackageMgmtPanel : UserControl, IModuleParameters
     {
-
         // public event EventHandler<MageCommandEventArgs> OnAction;
 
         #region Member Variables
@@ -283,7 +281,6 @@ namespace MageFilePackager
             }
         }
 
-
         #endregion
 
         #region Make Manifiest Actions
@@ -459,8 +456,6 @@ namespace MageFilePackager
         }
 
         #endregion
-
-
 
     }
 }

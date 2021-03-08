@@ -7,7 +7,6 @@ using RangerLib;
 
 namespace Ranger {
     public partial class RangerForm : Form {
-
         private readonly List<IModuleParameters> mParamPanels = new List<IModuleParameters>();
 
         public RangerForm() {
@@ -120,8 +119,6 @@ namespace Ranger {
             }
             return ran;
         }
-
-
 
         #region Functions for handling status updates
 

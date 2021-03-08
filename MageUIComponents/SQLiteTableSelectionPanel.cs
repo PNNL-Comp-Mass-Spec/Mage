@@ -3,9 +3,7 @@ using System.Windows.Forms;
 using Mage;
 
 namespace MageUIComponents {
-
     public partial class SQLiteTableSelectionPanel : Form {
-
         #region Properties
 
         public string DatabasePath {
@@ -17,7 +15,6 @@ namespace MageUIComponents {
             get => TableNameCtl.Text;
             set => TableNameCtl.Text = value;
         }
-
 
         #endregion
 

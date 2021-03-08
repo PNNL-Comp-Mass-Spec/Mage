@@ -2,14 +2,12 @@
 
 namespace Mage
 {
-
     /// <summary>
     /// This class is a thin wrapper around a Mage SimpleSink object
     /// and acts as a source module to serve it content
     /// </summary>
     public class SinkWrapper : BaseModule
     {
-
         private readonly SimpleSink mSink;
 
         /// <summary>
@@ -43,6 +41,5 @@ namespace Mage
             }
             OnDataRowAvailable(new MageDataEventArgs(null));
         }
-
     }
 }

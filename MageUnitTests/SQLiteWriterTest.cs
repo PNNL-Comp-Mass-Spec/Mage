@@ -3,7 +3,6 @@ using NUnit.Framework;
 
 namespace MageUnitTests
 {
-
     /// <summary>
     /// This is a test class for SQLiteWriterTest and is intended
     /// to contain all SQLiteWriterTest Unit Tests
@@ -11,7 +10,6 @@ namespace MageUnitTests
     [TestFixture]
     public class SQLiteWriterTest
     {
-
         [Test]
         public void DoubleTap()
         {
@@ -51,7 +49,6 @@ namespace MageUnitTests
             //            General.CompareSinks(source2, result2);
 
         }
-
 
         [Test]
         public void WriteTest()

@@ -4,7 +4,6 @@ using Mage;
 
 namespace MageDisplayLib
 {
-
     /// <summary>
     /// This is a pipeline module
     /// that can serve the contents of a ListDisplayControl to standard tabular output
@@ -14,7 +13,6 @@ namespace MageDisplayLib
     /// </summary>
     public class LVPipelineSource : BaseModule
     {
-
         #region Member Variables
 
         // Object whose data we are serving
@@ -49,7 +47,6 @@ namespace MageDisplayLib
             GetColumnDefs();
             GetRowsFromList(mode);
         }
-
 
         #endregion
 

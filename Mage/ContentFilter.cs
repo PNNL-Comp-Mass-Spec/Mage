@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace Mage
 {
-
     /// <summary>
     /// Processes input rows from standard tabular input
     /// and passes only selected ones to standard tabular output
@@ -11,7 +10,6 @@ namespace Mage
     /// </summary>
     public class ContentFilter : BaseModule
     {
-
         #region Member Variables
 
         private int totalRowsCounter;
@@ -103,7 +101,6 @@ namespace Mage
         /// </summary>
         protected virtual void ColumnDefsFinished()
         {
-
         }
 
         /// <summary>
@@ -121,6 +118,4 @@ namespace Mage
         #endregion
 
     }
-
-
 }

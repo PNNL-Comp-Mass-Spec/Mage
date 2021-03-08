@@ -4,14 +4,12 @@ using Mage;
 
 namespace MageConcatenator
 {
-
     /// <summary>
     /// This class contains several functions that build Mage pipelines
     /// that supply data to the UI in response to user commands
     /// </summary>
     public class Pipelines
     {
-
         public const string PIPELINE_GET_LOCAL_FILES = "PipelineToGetLocalFileList";
 
         // Class is not instantiated
@@ -27,7 +25,6 @@ namespace MageConcatenator
         /// <returns>Mage pipeline</returns>
         public static ProcessingPipeline MakePipelineToGetLocalFileList(ISinkModule sinkObject, Dictionary<string, string> runtimeParams)
         {
-
             // Make source module in pipeline to get list of files in local directory
             var reader = new FileListFilter();
 
@@ -60,6 +57,5 @@ namespace MageConcatenator
             // Build and wire pipeline
             return ProcessingPipeline.Assemble(PIPELINE_GET_LOCAL_FILES, reader, sinkObject);
         }
-
     }
 }

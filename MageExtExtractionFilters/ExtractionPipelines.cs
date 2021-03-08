@@ -7,14 +7,12 @@ using Mage;
 
 namespace MageExtExtractionFilters
 {
-
     /// <summary>
     /// Builds Mage pipelines and pipeline queues for extracting DMS analysis job
     /// results file content
     /// </summary>
     public static class ExtractionPipelines
     {
-
         public static PipelineQueue MakePipelineQueueToExtractFromFileList(SimpleSink fileList, ExtractionType extractionParms, DestinationType destination)
         {
             var pipelineQueue = new PipelineQueue();
@@ -280,6 +278,5 @@ namespace MageExtExtractionFilters
             var filePipeline = ProcessingPipeline.Assemble("Job Metadata", fileList, writer);
             return filePipeline;
         }
-
     }
 }

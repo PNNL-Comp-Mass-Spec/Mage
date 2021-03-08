@@ -8,14 +8,12 @@ using System.Collections.ObjectModel;
 
 namespace Mage
 {
-
     /// <summary>
     /// Supports discovery and dynamic loading of Mage pipeline modules
     /// with special support for filters and their associated parameter panels
     /// </summary>
     public sealed class ModuleDiscovery
     {
-
         /// <summary>
         /// Static Constructor
         /// </summary>
@@ -343,7 +341,6 @@ namespace Mage
                 return nodeXML;
             }
 
-
             return UpdateQueryXMLConnectionInfo(queryNode, DMSServerOverride, DMSDatabaseOverride);
         }
 
@@ -375,7 +372,6 @@ namespace Mage
             }
 
             return queryNode.OuterXml;
-
         }
 
         #endregion

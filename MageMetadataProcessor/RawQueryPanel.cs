@@ -5,10 +5,8 @@ using Mage;
 
 namespace MageMetadataProcessor
 {
-
     public partial class RawQueryPanel : UserControl, IModuleParameters
     {
-
         public event EventHandler<MageCommandEventArgs> OnAction;
 
         public RawQueryPanel()
@@ -25,7 +23,6 @@ namespace MageMetadataProcessor
         }
 
         #endregion
-
 
         #region IModuleParameters Members
 
@@ -59,7 +56,5 @@ namespace MageMetadataProcessor
         private void GetResultsCrosstabBtn_Click(object sender, EventArgs e)
         {
         }
-
-
     }
 }

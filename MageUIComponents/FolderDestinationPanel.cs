@@ -7,10 +7,8 @@ using ShFolderBrowser.FolderBrowser;
 
 namespace MageUIComponents
 {
-
     public partial class FolderDestinationPanel : UserControl, IModuleParameters
     {
-
         public FolderDestinationPanel()
         {
             InitializeComponent();
@@ -75,7 +73,6 @@ namespace MageUIComponents
 
         private void SelectDirectoryCtl_Click(object sender, EventArgs e)
         {
-
             var folderBrowser = new FolderBrowser();
 
             try
@@ -94,7 +91,6 @@ namespace MageUIComponents
             {
                 OutputDirectoryCtl.Text = folderBrowser.FolderPath;
             }
-
         }
 
         private void DefineDestinationFileCtl_Click(object sender, EventArgs e)
@@ -127,6 +123,5 @@ namespace MageUIComponents
                 OutputDirectoryCtl.Text = Path.GetDirectoryName(filePath);
             }
         }
-
     }
 }

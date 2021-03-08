@@ -2,7 +2,6 @@
 using NUnit.Framework;
 namespace MageUnitTests
 {
-
     /// <summary>
     /// This is a test class for PermutationGeneratorTest and is intended
     /// to contain all PermutationGeneratorTest Unit Tests
@@ -10,7 +9,6 @@ namespace MageUnitTests
     [TestFixture]
     public class PermutationGeneratorTest
     {
-
         /// <summary>
         /// A test for AddParamColumn
         /// </summary>
@@ -121,7 +119,6 @@ namespace MageUnitTests
         [Test]
         public void PermutationGeneratorWriteSQLite()
         {
-
             var PGen = new PermutationGenerator();
             PGen.AddParamColumn("one", "1", "5", "1");
             PGen.AddParamColumn("two", "0", "2", "1");
@@ -151,7 +148,6 @@ namespace MageUnitTests
         [Test]
         public void PermutationGeneratorWriteFile()
         {
-
             var PGen = new PermutationGenerator();
             PGen.AddParamColumn("one", "1", "5", "1");
             PGen.AddParamColumn("two", "0", "2", "1");
@@ -173,6 +169,5 @@ namespace MageUnitTests
 
             Assert.AreEqual("", pipeline.CompletionCode, "Completion code did not match");
         }
-
     }
 }

@@ -3,14 +3,11 @@ using System.Collections.ObjectModel;
 
 namespace MageExtContentFilters
 {
-
     public class FilterSequestResults : FilterResultsBase
     {
-
         public FilterSequestResults(Collection<string[]> filterCriteria, string filterSetID)
             : base(filterCriteria, filterSetID)
         {
-
         }
 
         public bool EvaluateSequest(string peptideSequence, double xCorrValue, double delCNValue, double delCN2Value, int chargeState, double peptideMass, int cleavageState)
@@ -19,7 +16,6 @@ namespace MageExtContentFilters
 
             return EvaluateSequest(peptideSequence, xCorrValue, delCNValue, delCN2Value, chargeState, peptideMass, -1, -1, -1, -1, -1, -1);
         }
-
 
         public bool EvaluateSequest(string peptideSequence, double xCorrValue, double delCNValue, double delCN2Value, int chargeState, double peptideMass, int spectrumCount, double discriminantScore, double NETAbsoluteDifference, int cleavageState, double msgfSpecProb, int rankXc)
         {
@@ -171,7 +167,6 @@ namespace MageExtContentFilters
 
                     if (currEval == false)
                         break;                       // Subject didn't pass a criterion value, so move on to the next group
-
                 }
 
                 if (currEval)
@@ -179,8 +174,6 @@ namespace MageExtContentFilters
             }
 
             return currEval;
-
         }
-
     }
 }

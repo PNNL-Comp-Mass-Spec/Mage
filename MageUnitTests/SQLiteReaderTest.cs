@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 namespace MageUnitTests
 {
-
     /// <summary>
     /// This is a test class for SQLiteReaderTest and is intended
     /// to contain all SQLiteReaderTest Unit Tests
@@ -163,7 +162,6 @@ namespace MageUnitTests
         /// <returns></returns>
         public SimpleSink QueryFromConfig(int maxRows)
         {
-
             // Runtime parameters for query (probably pass this in as an argument)
             var runtimeParameters = new Dictionary<string, string> {["Factor"] = "Group"};
 

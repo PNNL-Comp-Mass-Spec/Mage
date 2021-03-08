@@ -8,14 +8,12 @@ using MyEMSLReader;
 
 namespace MageExtExtractionFilters
 {
-
     /// <summary>
     /// Receives list of results files (and associated files) on standard tabular input
     /// and processes each one to individual or concatenated results
     /// </summary>
     public class FileContentExtractor : FileProcessingBase
     {
-
         #region Member Variables
 
         private int mCurrentFileCount;
@@ -52,7 +50,6 @@ namespace MageExtExtractionFilters
         /// optional - defaults to "Name")
         /// </summary>
         public string SourceFileColumnName { get; set; }
-
 
         #endregion
 
@@ -128,7 +125,6 @@ namespace MageExtExtractionFilters
                             resultFileName
                         };
 
-
                         foreach (var mf in mMergeFiles.Values)
                         {
                             if (mf.ColumnIndx >= 0)
@@ -161,11 +157,9 @@ namespace MageExtExtractionFilters
                                 const bool unzipRequired = false;
                                 m_MyEMSLDatasetInfoCache.AddFileToDownloadQueue(cachedFileInfo.FileID, cachedFileInfo.FileInfo, unzipRequired, filePathLocal);
                                 filesDownloadedFromMyEMSL.Add(filePathLocal);
-
                             }
                             else
                                 throw new MageException("Cannot download file since not in MyEMSL Memory Cache: " + filesToDownload[i]);
-
                         }
 
                         // Note that the target directory path will be ignored since we explicitly defined the destination file path when queuing the file
@@ -180,7 +174,6 @@ namespace MageExtExtractionFilters
 
                             throw new MageException(msg);
                         }
-
                     }
                 }
 
@@ -247,8 +240,6 @@ namespace MageExtExtractionFilters
                     foreach (var localFile in filesDownloadedFromMyEMSL)
                         DeleteFileIfLowDiskSpace(localFile);
                 }
-
-
             }
             OnDataRowAvailable(args);
         }
@@ -267,7 +258,6 @@ namespace MageExtExtractionFilters
                 OnWarningMessage(e);
         }
 
-
         private void SendProgressUpdate(string job)
         {
             var cur = (++mCurrentFileCount).ToString();
@@ -279,7 +269,6 @@ namespace MageExtExtractionFilters
         {
             OnStatusMessageUpdated(new MageStatusEventArgs(string.Format("{3} stats for job {0} Total:{1} Passed:{2}", job, total, passed, type)));
         }
-
 
         /// <summary>
         /// Set up an appropriate filter checker based on current result type
@@ -311,6 +300,5 @@ namespace MageExtExtractionFilters
 
             return resultsFilter;
         }
-
     }
 }

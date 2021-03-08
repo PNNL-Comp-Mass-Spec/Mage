@@ -6,10 +6,8 @@ using System.IO;
 
 namespace MageExtractorTest
 {
-
     class ExtractorTests
     {
-
         #region Member Variables
 
         public event EventHandler<MageStatusEventArgs> OnMessageUpdated;
@@ -41,7 +39,6 @@ namespace MageExtractorTest
         #endregion
 
         #region Initialization
-
 
         #endregion
 
@@ -105,7 +102,6 @@ namespace MageExtractorTest
             var extractionParms = new ExtractionType();
             foreach (var testCase in cases.Rows)
             {
-
                 // Get job list to extract from
                 var jobListFileName = testCase[JobListFileIdx];
                 var jobListFilePath = Path.Combine(testRootDirectory.FullName, Path.Combine(mJobListTestFileFolder, jobListFileName));
@@ -131,7 +127,6 @@ namespace MageExtractorTest
             }
             UpdateMessage("Extraction Tests Complete");
         }
-
 
         protected void TestExtractFromJobList(BaseModule jobList, ExtractionType extractionParms, DestinationType destination)
         {
@@ -277,7 +272,6 @@ namespace MageExtractorTest
             }
             return mb.ToString();
         }
-
 
         #endregion
 

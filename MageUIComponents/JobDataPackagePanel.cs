@@ -5,10 +5,8 @@ using Mage;
 
 namespace MageUIComponents
 {
-
     public partial class JobDataPackagePanel : UserControl, IModuleParameters
     {
-
         public event EventHandler<MageCommandEventArgs> OnAction;
 
         protected bool mShowGetDatasets = true;
@@ -53,7 +51,6 @@ namespace MageUIComponents
                 UpdateButtonPosition();
             }
         }
-
 
         public Dictionary<string, string> GetParameters()
         {
@@ -108,6 +105,5 @@ namespace MageUIComponents
             }
             GetDatasetsCtl.Location = pLocation;
         }
-
     }
 }

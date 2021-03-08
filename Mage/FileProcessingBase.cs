@@ -113,7 +113,6 @@ namespace Mage
             if (m_FilterPassingMyEMSLFiles == null)
                 m_FilterPassingMyEMSLFiles = new Dictionary<long, DatasetDirectoryOrFileInfo>();
 
-
             if (!m_FilterPassingMyEMSLFiles.TryGetValue(fileInfo.FileID, out var fileInfoCached))
             {
                 m_FilterPassingMyEMSLFiles.Add(fileInfo.FileID, new DatasetDirectoryOrFileInfo(fileInfo.FileID, false, fileInfo));
@@ -128,7 +127,6 @@ namespace Mage
 
                 foreach (var fileID in fileIDsToRemove)
                     m_FilterPassingMyEMSLFiles.Remove(fileID);
-
             }
         }
 
@@ -175,7 +173,6 @@ namespace Mage
 
                 if (freeSpaceMB < freeSpaceThresholdMB)
                     fiFile.Delete();
-
             }
             catch
             {
@@ -422,7 +419,6 @@ namespace Mage
 
         #region "Event Handlers"
 
-
         void MyEMSLDatasetInfoCache_ErrorEvent(string message, Exception ex)
         {
             ReportMageWarning("MyEMSL downloader: " + message);
@@ -449,6 +445,4 @@ namespace Mage
         #endregion
 
     }
-
-
 }

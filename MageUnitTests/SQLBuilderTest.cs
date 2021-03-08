@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 namespace MageUnitTests
 {
-
     /// <summary>
     /// This is a test class for SQLBuilderTest and is intended
     /// to contain all SQLBuilderTest Unit Tests
@@ -12,7 +11,6 @@ namespace MageUnitTests
     [TestFixture]
     public class SQLBuilderTest
     {
-
         /// <summary>
         /// Demonstrates use of column default predicate settings
         /// </summary>
@@ -35,7 +33,6 @@ namespace MageUnitTests
             var actual = target.BuildQuerySQL();
             Assert.AreEqual(expected, actual);
         }
-
 
         /// <summary>
         /// A test for Table
@@ -89,7 +86,6 @@ namespace MageUnitTests
         public void AddPredicateItemTest()
         {
             var target = new SQLBuilder {Table = "T_X"};
-
 
             target.AddPredicateItem("AND", "Bob", "MatchesText", "Your uncle");
             var expected = "SELECT * FROM T_X WHERE Bob = 'Your uncle'";
@@ -193,8 +189,6 @@ namespace MageUnitTests
             Assert.AreEqual("", descriptions["Dataset_ID"]);
             Assert.AreEqual("Descriptive text for Dataset", descriptions["Dataset"]);
             Assert.AreEqual("Get factors for selected datasets", descriptions[":Description:"]);
-
         }
-
     }
 }

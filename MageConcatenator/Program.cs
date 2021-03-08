@@ -27,7 +27,6 @@ namespace MageConcatenator
         [STAThread]
         static void Main()
         {
-
             try
             {
                 Application.EnableVisualStyles();

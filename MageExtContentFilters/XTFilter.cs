@@ -2,7 +2,6 @@
 
 namespace MageExtContentFilters
 {
-
     /// <summary>
     /// Filter X!Tandem results using the FilterSetID defined by the base class
     /// </summary>
@@ -13,7 +12,6 @@ namespace MageExtContentFilters
     [MageAttribute("Filter", "XTFilter", "XT filter", "Uses filter criteria defined in DMS")]
     class XTFilter : ContentFilter
     {
-
         #region Member Variables
 
         // Working copy of SEQUEST filter object
@@ -93,7 +91,6 @@ namespace MageExtContentFilters
         /// </summary>
         private void SetupXTFilter()
         {
-
             // Create Mage module to query DMS (typically on gigasax)
             var reader = new SQLReader
             {

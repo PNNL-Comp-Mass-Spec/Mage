@@ -6,7 +6,6 @@ using PRISM.Logging;
 
 namespace Mage
 {
-
     /// <summary>
     /// Module that can query a SQLite database and deliver
     /// results of query via its standard tabular output events
@@ -79,7 +78,6 @@ namespace Mage
             SetPropertiesFromBuilder(builder);
         }
 
-
         #endregion
 
         #region IDisposable Members
@@ -119,7 +117,6 @@ namespace Mage
         /// <param name="builder">SQL builder</param>
         private void SetPropertiesFromBuilder(SQLBuilder builder)
         {
-
             // Set this module's properties from builder's special arguments list
             SetParameters(builder.SpecialArgs);
 
@@ -216,7 +213,6 @@ namespace Mage
 
             // Always close the DataReader
             myReader.Close();
-
         }
 
         private void OutputDataRows(IDataReader myReader, ref int totalRows)

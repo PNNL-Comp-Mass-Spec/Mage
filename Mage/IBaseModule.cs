@@ -3,13 +3,11 @@ using System.Collections.Generic;
 
 namespace Mage
 {
-
     /// <summary>
     /// Interface for Mage pipeline module
     /// </summary>
     public interface IBaseModule : ISinkModule
     {
-
         /// <summary>
         /// Name of this module in pipeline
         /// </summary>

@@ -7,10 +7,8 @@ using Mage;
 
 namespace MageUIComponents
 {
-
     public partial class FlexQueryPanel : UserControl, IModuleParameters
     {
-
         public event EventHandler<MageCommandEventArgs> OnAction;
 
         #region Member Variables
@@ -28,7 +26,6 @@ namespace MageUIComponents
             QueryItemPanels.Add(flexQueryItemPanel2);
             QueryItemPanels.Add(flexQueryItemPanel3);
             QueryItemPanels.Add(flexQueryItemPanel4);
-
         }
 
         #endregion

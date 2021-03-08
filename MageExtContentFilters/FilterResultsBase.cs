@@ -9,10 +9,8 @@ using System.Text.RegularExpressions;
 
 namespace MageExtContentFilters
 {
-
     public class FilterResultsBase
     {
-
         protected static int CriteriaGroupIDIndex = 0;
         protected static int CriteriaNameIndex = 1;
         protected static int CriteriaOperatorIndex = 2;
@@ -57,7 +55,6 @@ namespace MageExtContentFilters
                         return CriteriaName + " " + CriteriaOperator + " " + CriteriaValueFloat.ToString("0.000");
                 }
             }
-
         }
 
         protected Dictionary<string, List<FilterCriteriaDef>> m_FilterGroups = new Dictionary<string, List<FilterCriteriaDef>>();
@@ -108,10 +105,8 @@ namespace MageExtContentFilters
 
                 foreach (var filterGroupID in m_FilterGroups.Keys)
                 {
-
                     foreach (var filterRow in m_FilterGroups[filterGroupID])
                     {
-
                         swOutfile.Write(m_filterSetID + "\t" + filterGroupID + "\t" + filterRow.CriteriaName + "\t" +
                                         filterRow.CriteriaOperator + "\t");
 
@@ -123,7 +118,6 @@ namespace MageExtContentFilters
                         swOutfile.WriteLine("\t" + filterRow.CriterionID);
                     }
                 }
-
             }
         }
 
@@ -135,7 +129,6 @@ namespace MageExtContentFilters
 
         protected bool CompareDouble(double valueToCompare, string operatorSymbol, double criterionValue, double thresholdNearlyEqual)
         {
-
             var tmpvalue = false;
             var tmpDelta = Math.Abs(valueToCompare - criterionValue);
 
@@ -169,12 +162,10 @@ namespace MageExtContentFilters
             }
 
             return tmpvalue;
-
         }
 
         protected bool CompareInteger(int valueToCompare, string operatorSymbol, int criterionValue)
         {
-
             var tmpvalue = false;
 
             switch (operatorSymbol)
@@ -207,7 +198,6 @@ namespace MageExtContentFilters
             }
 
             return tmpvalue;
-
         }
 
         protected ArrayList GetGroupList(DataTable filterCriteria)
@@ -312,7 +302,6 @@ namespace MageExtContentFilters
 
         protected int GetPeptideLength(string dirtySequence)
         {
-
             var matches = m_CleanSeqRegex.Matches(dirtySequence);
 
             var intermedSeq = new StringBuilder();
@@ -331,10 +320,6 @@ namespace MageExtContentFilters
             {
                 return intermedSeq.Length;
             }
-
-
-
         }
-
     }
 }

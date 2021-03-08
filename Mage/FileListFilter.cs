@@ -7,7 +7,6 @@ using MyEMSLReader;
 
 namespace Mage
 {
-
     /// <summary>
     /// This module searches a list of directory paths for files and compares the file names
     /// against a set of file selection criteria and accumulates an internal list of files that pass,
@@ -15,7 +14,6 @@ namespace Mage
     /// </summary>
     public class FileListFilter : FileListInfoBase
     {
-
         /// <summary>
         /// Normal file search (glob-based)
         /// </summary>
@@ -133,7 +131,6 @@ namespace Mage
                             columnHeaders[colIndex] = path;
                         else
                             columnHeaders[colIndex] = string.Empty;
-
                     }
 
                     mOutputBuffer.Add(columnHeaders);
@@ -143,7 +140,6 @@ namespace Mage
 
             if (!bufferUpdated)
                 mOutputBuffer.Add(new[] { "", "", "", "", path });  // Note: needs to have the same number of columns as OutputColumnList
-
         }
 
         /// <summary>
@@ -284,7 +280,6 @@ namespace Mage
 
         #region Private Functions
 
-
         private void SearchDirectories(
             int outputBufferRowIdx,
             IDictionary<string, FileInfo> fileInfo,
@@ -292,7 +287,6 @@ namespace Mage
             string directoryPath,
             string datasetName)
         {
-
             var foundFiles = new List<FileSystemInfo>();
             var foundSubdirectories = new List<FileSystemInfo>();
 
@@ -352,7 +346,6 @@ namespace Mage
                             subdirectoryInfo.Add(subdirectoryEntry.Name, subdirectoryEntry);
                     }
                 }
-
             }
             catch (Exception e)
             {
@@ -436,7 +429,6 @@ namespace Mage
                     ReportMageWarning(@"Access to the path '" + currentDirectoryPath + "' is denied.");
                 }
             }
-
         }
 
         /// <summary>
@@ -492,13 +484,11 @@ namespace Mage
                         filteredFilesOrDirectories[entry.Name] = entry;
                     }
                 }
-
             }
 
             // We used the dictionary keys for our file names to eliminate duplicates
             // Convert the values to a list of file system infos and return the list
             return filteredFilesOrDirectories.Values.ToList();
-
         }
 
         private List<FileSystemInfo> GetFileOrDirNamesFromDirectoryBySearchPatternMyEMSL(string directoryPath, DirectorySearchMode searchMode, string datasetName)
@@ -529,7 +519,6 @@ namespace Mage
             // We used the dictionary keys for our file names to eliminate duplicates
             // Convert the values to a list of file system infos and return the list
             return filteredFilesOrDirectories.Values.ToList();
-
         }
 
         /// <summary>
@@ -578,7 +567,6 @@ namespace Mage
             string subDir,
             string parentDirectories)
         {
-
             var fiList = new List<FileSystemInfo>();
             if (searchMode == DirectorySearchMode.Files)
             {
@@ -611,7 +599,6 @@ namespace Mage
         /// <returns></returns>
         private static List<FileSystemInfo> FilterFileNamesFromList(IReadOnlyCollection<FileSystemInfo> fileList, IReadOnlyCollection<Regex> fileNameRegExSpecs)
         {
-
             var filteredFilesOrDirectories = new List<FileSystemInfo>(fileList.Count);
 
             // Find files (or directories) that meet selection criteria.
@@ -709,7 +696,6 @@ namespace Mage
         /// <returns></returns>
         private string ScrubRelativePathText(string selector)
         {
-
             if (!selector.StartsWith(@"..\"))
             {
                 return selector;
@@ -723,7 +709,6 @@ namespace Mage
         }
 
         #endregion
-
 
     }
 }

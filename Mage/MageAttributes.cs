@@ -2,7 +2,6 @@
 
 namespace Mage
 {
-
     /// <summary>
     /// Definition of custom attribute than can be used to decorate
     /// Mage modules and associated GUI parameter panels to allow discovery
@@ -11,7 +10,6 @@ namespace Mage
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public sealed class MageAttribute : Attribute
     {
-
         /// <summary>
         /// Type of module
         /// </summary>

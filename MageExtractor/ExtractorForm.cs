@@ -10,9 +10,9 @@ using PRISM.Logging;
 
 namespace MageExtractor
 {
-
     public partial class ExtractorForm : Form
     {
+        // Ignore Spelling: workflows, cmd
 
         #region Constants
 
@@ -150,7 +150,6 @@ namespace MageExtractor
 
             if (beta)
                 Text += " (beta)";
-
         }
 
         private void SetTags()
@@ -267,27 +266,22 @@ namespace MageExtractor
                     BaseModule jobList = new GVPipelineSource(JobListDisplayCtl, mode);
                     ExtractFileContents(jobList);
                     SavedState.SaveParameters(PanelSupport.GetParameterPanelList(this));
-
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("Error extracting results: " + ex.Message + "; " + ex.StackTrace, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
-
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error initializing extraction: " + ex.Message + "; " + ex.StackTrace, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-
-
         }
 
         private bool ValidateThreshold(string cutoff, string cutoffDescription)
         {
             if (!string.Equals(cutoff, ExtractionFilter.ALL_PASS_CUTOFF, StringComparison.OrdinalIgnoreCase))
             {
-
                 if (cutoff.EndsWith("%"))
                 {
                     // FDR Cutoff, like 5%
@@ -313,7 +307,6 @@ namespace MageExtractor
             }
 
             return true;
-
         }
 
         private void HandleCancelCommand(object sender, MageCommandEventArgs command)
@@ -340,7 +333,6 @@ namespace MageExtractor
 
             if (!bFilterDefined)
             {
-
                 switch (queryName)
                 {
                     case TAG_JOB_IDs:
@@ -431,7 +423,6 @@ namespace MageExtractor
 
             if (args.Message.StartsWith(SQLReader.SQL_COMMAND_ERROR))
                 MessageBox.Show(args.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-
         }
 
         private void HandlePipelineQueueUpdate(object sender, MageStatusEventArgs args)
@@ -486,7 +477,6 @@ namespace MageExtractor
 
             pipelineQueue.OnRunCompleted += HandlePipelineQueueCompletion;
             pipelineQueue.OnPipelineStarted += HandlePipelineQueueUpdate;
-
         }
 
         /// <summary>
@@ -601,25 +591,22 @@ namespace MageExtractor
                 default:
                     MessageBox.Show("Programming bug in GetDestinationParameters: control FilterOutputTabs has an unrecognized tab with tag " + FilterOutputTabs.SelectedTab.Tag, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return null;
-
             }
             return dest;
         }
 
         /// <summary>
-        ///
+        ///Get extraction parameters
         /// </summary>
-        /// <returns></returns>
         private ExtractionType GetExtractionParameters()
         {
-            var et = new ExtractionType
+            return new ExtractionType
             {
                 RType = extractionSettingsPanel1.ResultTypeDescription,
                 ResultFilterSetID = extractionSettingsPanel1.ResultFilterSetID,
                 KeepAllResults = extractionSettingsPanel1.KeepAllResults,
                 MSGFCutoff = extractionSettingsPanel1.MSGFCutoff
             };
-            return et;
         }
 
         // private bool LoadDataIntoAccess(PipelineQueue oPipelineQueue, DestinationType oDestination) {
@@ -628,7 +615,7 @@ namespace MageExtractor
         //    {
 
         //        using (System.Data.OleDb.OleDbConnection conn =
-        //            new System.Data.OleDb.OleDbConnection(@"provider=microsoft.jet.oledb.4.0;data source=F:\temp\Database1.mdb"))
+        //            new System.Data.OleDb.OleDbConnection(@"provider=microsoft.jet.oledb.4.0;data source=F:\Temp\Database1.mdb"))
         //        {
         //            conn.Open();
         //            using (System.Data.OleDb.OleDbCommand cmd = conn.CreateCommand())
@@ -653,7 +640,6 @@ namespace MageExtractor
         //    {
         //        MessageBox.Show(ex.Message);
         //    }
-
 
         //    return true;
         //}

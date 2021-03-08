@@ -4,7 +4,6 @@ using Mage;
 
 namespace MageDisplayLib
 {
-
     /// <summary>
     /// This is a pipeline module
     /// that can serve the contents of a GridViewDisplayControl to standard tabular output
@@ -14,7 +13,6 @@ namespace MageDisplayLib
     /// </summary>
     public class GVPipelineSource : BaseModule
     {
-
         #region Member Variables
 
         // Data grid view display whose data we are serving
@@ -192,5 +190,4 @@ namespace MageDisplayLib
 
         #endregion
     }
-
 }

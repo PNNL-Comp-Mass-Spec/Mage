@@ -4,14 +4,12 @@ using Mage;
 
 namespace MageDisplayLib
 {
-
     /// <summary>
     /// UI panel that provides a display area for status update messages
     /// and a cancel button
     /// </summary>
     public partial class StatusPanel : UserControl
     {
-
         /// <summary>
         /// This event fires to send command to external command handler(s)
         /// </summary>
@@ -95,7 +93,6 @@ namespace MageDisplayLib
             UpdateStatusMessage(args.Message);
         }
 
-
         /// <summary>
         /// Handle a warning message update that arrives from a different
         /// thread than our owner control's thread
@@ -142,7 +139,6 @@ namespace MageDisplayLib
                     // Ignore this exception
                     // May occur if user closes application while a pipeline is running
                 }
-
             }
             else
             {
@@ -168,7 +164,6 @@ namespace MageDisplayLib
                 WarningsCtl.Text = mWarningMessages.Count + " warnings";
             }
             WarningsCtl.Visible = true;
-
         }
 
         /// <summary>
@@ -190,8 +185,6 @@ namespace MageDisplayLib
                     // Occurs if user closes application while a pipeline is running
                     // The pipeline thread tries to post a status message, but the GUI panel is disposed, and thus the control cannot be updated
                 }
-
-
             }
             else
             {

@@ -5,13 +5,11 @@ using PRISM.Logging;
 
 namespace Mage
 {
-
     /// <summary>
     /// This class provides basic functions that are of use to most pipeline module classes.
     /// </summary>
     public class BaseModule : IBaseModule
     {
-
         private static readonly FileLogger traceLogBase = new FileLogger(FileLogger.BaseLogFileName, BaseLogger.LogLevels.INFO, FileLogger.AppendDateToBaseFileName);
 
         /// <summary>
@@ -111,7 +109,6 @@ namespace Mage
         /// <param name="context">Set of parameters</param>
         public void SetContext(Dictionary<string, string> context)
         {
-
             if (Context == null)
                 Context = context;
             else
@@ -322,7 +319,6 @@ namespace Mage
             {
                 pi.SetValue(this, val, null);
             }
-
         }
 
         /// <summary>
@@ -453,7 +449,6 @@ namespace Mage
         }
 
         #endregion
-
 
         #region helper functions
 
@@ -842,7 +837,6 @@ namespace Mage
         /// <returns>True if successful, otherwise false</returns>
         protected bool TryGetOutputColumnPos(string columnName, out int colIndex)
         {
-
             if (OutputColumnPos != null)
             {
                 if (OutputColumnPos.TryGetValue(columnName, out colIndex))

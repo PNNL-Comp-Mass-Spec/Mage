@@ -4,7 +4,6 @@ using NUnit.Framework;
 using System.Collections.ObjectModel;
 namespace MageUnitTests
 {
-
     /// <summary>
     /// This is a test class for ProcessingPipelineTest and is intended
     /// to contain all ProcessingPipelineTest Unit Tests
@@ -12,7 +11,6 @@ namespace MageUnitTests
     [TestFixture]
     public class ProcessingPipelineTest
     {
-
         /// <summary>
         /// A test for SetModuleParameter
         /// </summary>
@@ -74,7 +72,6 @@ namespace MageUnitTests
                     Assert.Fail("A module was created, even though the module name should be unrecognized: " + moduleName);
                 }
             }
-
         }
 
         /// <summary>
@@ -267,7 +264,6 @@ namespace MageUnitTests
 
             Console.WriteLine("Pipeline returned {0} rows of data", rows.Count);
             Assert.AreEqual(maxRows, rows.Count, "Sink did not receive the expected number of rows");
-
         }
 
         readonly string pipelineXML3 = @"<?xml version='1.0' encoding='UTF-8'?><!-- to get filtered list of files in local directory -->

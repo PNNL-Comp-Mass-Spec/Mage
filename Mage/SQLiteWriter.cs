@@ -10,7 +10,6 @@ using PRISM.Logging;
 
 namespace Mage
 {
-
     /// <summary>
     /// Insert data received on standard tabular input
     /// into the specified SQLite database and table.
@@ -294,7 +293,6 @@ namespace Mage
             }
             traceLogWriter.Debug("added schema for SQLite table [" + mSchema.TableName + "]");
         }
-
 
         private void CopyTabularDataRowsToSQLiteDB()
         {
@@ -774,6 +772,4 @@ namespace Mage
         #endregion
 
     }
-
-
 }

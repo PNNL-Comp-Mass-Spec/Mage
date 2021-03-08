@@ -1,10 +1,8 @@
 ﻿
 namespace MageExtExtractionFilters
 {
-
     public class ExtractionType
     {
-
         public ResultType RType { get; set; }
 
         /// <summary>
@@ -22,6 +20,5 @@ namespace MageExtExtractionFilters
         /// This filter is used when merging search engine results with the _syn_MSGF.txt or _fht_MSGF.txt file
         /// </summary>
         public string MSGFCutoff { get; set; }
-
     }
 }

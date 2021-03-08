@@ -128,7 +128,6 @@ namespace MageConcatenator
 
             pipelineQueue.OnRunCompleted += HandlePipelineQueueCompletion;
             pipelineQueue.OnPipelineStarted += HandlePipelineQueueUpdate;
-
         }
 
         /// <summary>
@@ -140,7 +139,6 @@ namespace MageConcatenator
         /// <param name="command">Command to execute</param>
         public void DoCommand(object sender, MageCommandEventArgs command)
         {
-
             if (command.Action == "display_reloaded")
             {
                 mCurrentCmd = command;
@@ -264,7 +262,6 @@ namespace MageConcatenator
 
         private void CombineFiles(bool processAllFiles)
         {
-
             try
             {
                 var runtimeParms = GetRuntimeParamsForFileProcessing();
@@ -304,7 +301,6 @@ namespace MageConcatenator
 
                 foreach (var selectedFileRow in FileListDisplayControl.SelectedItemRowsDictionaryList)
                 {
-
                     var sourceFilePath = Path.Combine(selectedFileRow["Directory"], selectedFileRow["File"]);
 
                     // Make sure the target file is not in the source file list
@@ -323,7 +319,6 @@ namespace MageConcatenator
                                          Path.GetExtension(mCombineFilesTargetFilePath);
 
                         mCombineFilesTargetFilePath = Path.Combine(fiTargetFile.Directory.FullName, mCombineFilesTargetFilePath);
-
                     }
                     mCombineFilesPaths.Add(sourceFilePath);
                 }
@@ -333,7 +328,6 @@ namespace MageConcatenator
                     statusPanel1.HandleStatusMessageUpdated(this, new MageStatusEventArgs("No files are selected; nothing to do"));
                     return;
                 }
-
 
                 // Clear any warnings
                 statusPanel1.ClearWarnings();
@@ -353,12 +347,10 @@ namespace MageConcatenator
                 const bool USE_THREADING = true;
                 StartConcatenatingFiles(USE_THREADING);
             }
-
             catch (Exception ex)
             {
                 MessageBox.Show("Error in CombineFiles: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-
         }
 
         /// <summary>
@@ -372,7 +364,6 @@ namespace MageConcatenator
 
             foreach (var selectedFileRow in FileListDisplayControl.SelectedItemRowsDictionaryList)
             {
-
                 selectedFileRow.TryGetValue("Directory", out var directoryPath);
                 selectedFileRow.TryGetValue("File", out var filename);
                 selectedFileRow.TryGetValue("File_Size_KB", out var fileSizeKB);
@@ -409,7 +400,6 @@ namespace MageConcatenator
         {
             try
             {
-
                 FileListDisplayControl.SelectAllRows();
 
                 // Construct the list of the file paths in the FileListDisplay
@@ -460,16 +450,12 @@ namespace MageConcatenator
 
                     FileListDisplayControl.HandleDataRow(this, new MageDataEventArgs(null));
                     FileListDisplayControl.SelectAllRows();
-
                 }
-
             }
-
             catch (Exception ex)
             {
                 MessageBox.Show("Error in UpdateFileInformation: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-
         }
 
         #endregion
@@ -617,16 +603,13 @@ namespace MageConcatenator
             {
                 if (pipeline.PipelineName == mFinalPipelineName)
                 {
-
                     CompletionStateUpdated csu = AdjustPostCommandUIState;
                     Invoke(csu, new object[] { null });
-
                 }
             }
 
             if (args.Message.StartsWith(SQLReader.SQL_COMMAND_ERROR))
                 MessageBox.Show(args.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-
         }
 
         private void HandlePipelineQueueUpdate(object sender, MageStatusEventArgs args)
@@ -638,7 +621,6 @@ namespace MageConcatenator
         {
             mFileInfoUpdateRequired = true;
         }
-
 
         private void mFileInfoUpdater_Tick(object sender, EventArgs e)
         {

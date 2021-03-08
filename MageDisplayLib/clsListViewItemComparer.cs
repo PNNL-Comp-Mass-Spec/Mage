@@ -107,7 +107,6 @@ namespace MageDisplayLib
                     // Enable string sorting
                     stringSort = true;
                 }
-
             }
             else
             {
@@ -157,7 +156,6 @@ namespace MageDisplayLib
                         // Enable string sorting
                         stringSort = true;
                     }
-
                 }
             }
 
@@ -175,6 +173,5 @@ namespace MageDisplayLib
 
             return comparisonResult;
         }
-
     }
 }

@@ -2,14 +2,12 @@
 
 namespace Mage
 {
-
     /// <summary>
     /// This Mage filter builds a crosstab from the input data flow
     /// and outputs it when input data flow is complete
     /// </summary>
     public class CrosstabFilter : BaseModule
     {
-
         #region Member Variables
 
         // Indexes to critical columns
@@ -122,7 +120,6 @@ namespace Mage
         /// <param name="args"></param>
         private void RememberFactorData(MageDataEventArgs args)
         {
-
             // Get values of critical fields using pre-calculated indexes
             var entityName = args.Fields[mEntityIdx];
             var entityID = args.Fields[mEntityIDIdx];
@@ -151,7 +148,6 @@ namespace Mage
             // and create an output row for each one
             foreach (var entityID in mEntityList.Keys)
             {
-
                 // Create list to hold output row fields
                 // Add entity name and entity ID fields
                 var outputRow = new List<string>
@@ -190,7 +186,6 @@ namespace Mage
         /// </summary>
         private void OutputColumnDefinitions()
         {
-
             // Start with empty column definition list
             // Add the entity name and id columns
             var outCols = new List<MageColumnDef>
@@ -198,7 +193,6 @@ namespace Mage
                 InputColumnDefs[mEntityIDIdx],
                 InputColumnDefs[mEntityIdx]
             };
-
 
             // Add a column for each factor
             foreach (var fac in mFactorList.Keys)

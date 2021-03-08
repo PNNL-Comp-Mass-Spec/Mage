@@ -4,7 +4,6 @@ using NUnit.Framework;
 
 namespace MageUnitTests
 {
-
     /// <summary>
     /// Summary description for General
     /// </summary>
@@ -17,7 +16,6 @@ namespace MageUnitTests
 
         public static FileInfo GetTestFile(string testFilePath)
         {
-
             var localFile = new FileInfo(testFilePath);
             if (localFile.Exists)
                 return localFile;
@@ -41,7 +39,6 @@ namespace MageUnitTests
 
         public static DirectoryInfo GetTestDirectory(string testDirectoryPath)
         {
-
             var localDirectory = new DirectoryInfo(testDirectoryPath);
             if (localDirectory.Exists)
                 return localDirectory;

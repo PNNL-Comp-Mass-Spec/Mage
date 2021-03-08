@@ -3,14 +3,12 @@ using Mage;
 
 namespace MageDisplayLib
 {
-
     /// <summary>
     /// This is a pipeline module
     /// that can serve the contents of a TextDisplayControl to standard tabular output
     /// </summary>
     public class TDPipelineSource : BaseModule
     {
-
         #region Member Variables
 
         // Object whose data we are serving
@@ -54,7 +52,6 @@ namespace MageDisplayLib
         /// There is a header line ("Yes" or "No")
         /// </summary>
         public string Header { get; }
-
 
         #endregion
 
@@ -113,5 +110,4 @@ namespace MageDisplayLib
         #endregion
 
     }
-
 }

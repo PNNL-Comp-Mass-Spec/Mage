@@ -7,7 +7,6 @@ namespace MageFilePackager
 {
     internal static class DMSHttp
     {
-
         /// <summary>
         /// Post web service request and receive response
         /// </summary>
@@ -16,7 +15,6 @@ namespace MageFilePackager
         /// <returns></returns>
         public static string Post(string url, Dictionary<string, string> postDataList)
         {
-
             // Format the data to be posted
             var postData = FormatPostData(postDataList);
 
@@ -86,6 +84,5 @@ namespace MageFilePackager
             }
             return sb.ToString();
         }
-
     }
 }

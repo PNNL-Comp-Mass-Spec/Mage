@@ -1,13 +1,11 @@
 ﻿
 namespace Mage
 {
-
     /// <summary>
     /// Interface for object that provides handlers for Sinks
     /// </summary>
     public interface ISinkModule
     {
-
         // Module receives standard tabular input via these handlers
 
         /// <summary>
@@ -23,6 +21,5 @@ namespace Mage
         /// <param name="sender"></param>
         /// <param name="args"></param>
         void HandleColumnDef(object sender, MageColumnEventArgs args);
-
     }
 }

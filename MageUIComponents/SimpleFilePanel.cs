@@ -2,9 +2,7 @@
 using System.Windows.Forms;
 
 namespace MageUIComponents {
-
     public partial class SimpleFilePanel : UserControl {
-
         public string FilePath {
             get => outputfilePathCtl.Text;
             set => outputfilePathCtl.Text = value;

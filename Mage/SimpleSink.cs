@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 
 namespace Mage
 {
-
     /// <summary>
     /// This Mage module can receive data over its standard tabular input
     /// and perform several actions useful for testing other Mage modules
@@ -23,7 +22,6 @@ namespace Mage
     /// </summary>
     public class SimpleSink : BaseModule
     {
-
         #region Member Variables
 
         /// <summary>

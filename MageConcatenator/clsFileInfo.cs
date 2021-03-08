@@ -51,6 +51,5 @@ namespace MageConcatenator
             DirectoryPath = directoryPath;
             Name = filename;
         }
-
     }
 }

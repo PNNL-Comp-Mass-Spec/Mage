@@ -28,7 +28,6 @@ namespace BiodiversityFileCopy
             OrganismNameColumn = "OG_Name";
         }
     }
-
 }
 
 

@@ -1,13 +1,11 @@
 ﻿
 namespace Mage
 {
-
     /// <summary>
     /// Global, static class for informing threads that they should abort processing
     /// </summary>
     public static class Globals
     {
-
         /// <summary>
         /// Default DMS server
         /// </summary>

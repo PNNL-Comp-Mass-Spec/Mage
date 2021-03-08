@@ -3,13 +3,11 @@ using Mage;
 
 namespace MageUnitTests
 {
-
     /// <summary>
     /// Test harness for getting access to BaseModule stuff
     /// </summary>
     public class TestModule : BaseModule
     {
-
         #region Member Variables
 
         // An internal buffer for accumulating rows passed in via the standard tabular input handler
@@ -84,7 +82,6 @@ namespace MageUnitTests
         }
 
         #endregion
-
 
     }
 }

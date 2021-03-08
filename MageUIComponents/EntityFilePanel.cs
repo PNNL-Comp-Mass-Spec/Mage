@@ -5,7 +5,6 @@ using Mage;
 
 namespace MageUIComponents
 {
-
     public partial class EntityFilePanel : UserControl, IModuleParameters
     {
         public event EventHandler<MageCommandEventArgs> OnAction;

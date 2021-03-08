@@ -16,7 +16,6 @@ namespace MageFilePackager
         /// <returns>Mage pipeline</returns>
         public static ProcessingPipeline MakeJobQueryPipeline(ISinkModule sinkObject, string queryDefXML, Dictionary<string, string> runtimeParms)
         {
-
             // Make source module and initialize from query def XML and runtime parameters
             var rdr = new SQLReader(queryDefXML, runtimeParms);
 
@@ -34,7 +33,6 @@ namespace MageFilePackager
         /// <returns>Mage pipeline</returns>
         public static ProcessingPipeline MakeFileListPipeline(IBaseModule sourceObject, ISinkModule sinkObject, Dictionary<string, string> runtimeParms)
         {
-
             // Create file filter module and initialize it
             var fileFilter = new FileListFilter
             {
@@ -54,6 +52,5 @@ namespace MageFilePackager
             // Build and wire pipeline
             return ProcessingPipeline.Assemble("FileListPipeline", sourceObject, fileFilter, cleanupFilter, sinkObject);
         }
-
     }
 }

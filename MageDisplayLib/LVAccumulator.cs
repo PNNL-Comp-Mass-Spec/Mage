@@ -7,7 +7,6 @@ using Mage;
 
 namespace MageDisplayLib
 {
-
     /// <summary>
     /// Provides column definition and data row event handlers
     /// that can be wired into a Mage pipeline to receive data.
@@ -19,7 +18,6 @@ namespace MageDisplayLib
     /// </summary>
     public class LVAccumulator : ISinkModule
     {
-
         #region Events for ListDisplay listeners to register for
 
         /// <summary>

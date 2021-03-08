@@ -5,7 +5,6 @@ using System;
 
 namespace MageUnitTests
 {
-
     /// <summary>
     /// This is a test class for BaseModuleTest and is intended
     /// to contain all BaseModuleTest Unit Tests
@@ -13,7 +12,6 @@ namespace MageUnitTests
     [TestFixture]
     public class BaseModuleTest
     {
-
         /// <summary>
         /// A test for OutputColumnList
         /// </summary>
@@ -60,7 +58,6 @@ namespace MageUnitTests
         [Test]
         public void MappedOutputColumnsOverrideColTypeTest()
         {
-
             var dGen = new DataGenerator
             {
                 AddAdHocRow = new[] { "Larry", "Moe", "Curly" }
@@ -211,7 +208,6 @@ namespace MageUnitTests
                     Assert.AreEqual(mappedRows[i][colMap.Key], inputRows[i][colMap.Value], "Mapped data does not match");
                 }
             }
-
         }
 
         // Rearrange the order of items in the List
@@ -228,6 +224,5 @@ namespace MageUnitTests
                 list[n] = value;
             }
         }
-
     }
 }

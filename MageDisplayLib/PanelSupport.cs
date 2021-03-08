@@ -7,13 +7,11 @@ using Mage;
 
 namespace MageDisplayLib
 {
-
     /// <summary>
     /// Utility functions for common tasks in support of user command UI panels
     /// </summary>
     public static class PanelSupport
     {
-
         /// <summary>
         /// Return control that implements Mage IModuleParameters interface
         /// that is contained in the given control or its descendent control hierarchy
@@ -328,7 +326,6 @@ namespace MageDisplayLib
             {
                 Process.Start(url + itemList[0]);
             }
-
         }
 
         private static void TryOpenWindowsExplorer(string columnName, IReadOnlyList<string> itemList)
@@ -342,8 +339,6 @@ namespace MageDisplayLib
                 var directoryPath = itemList[0];
                 Process.Start("explorer.exe", directoryPath);
             }
-
         }
     }
-
 }

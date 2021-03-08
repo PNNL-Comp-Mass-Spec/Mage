@@ -3,13 +3,11 @@ using Mage;
 
 namespace MageFilePackager
 {
-
     /// <summary>
     /// Cleans up input file search data and normalizes it for inclusion in manifest
     /// </summary>
     class FilePackageFilter : ContentFilter
     {
-
         // Indexes into the row field data array
         private int _sourceIdx;
         private int _pathIdx;
@@ -50,7 +48,6 @@ namespace MageFilePackager
         /// <returns></returns>
         protected override bool CheckFilter(ref string[] vals)
         {
-
             // Apply field mapping to output
             if (OutputColumnDefs != null)
             {
@@ -91,6 +88,5 @@ namespace MageFilePackager
             }
             return true;
         }
-
     }
 }

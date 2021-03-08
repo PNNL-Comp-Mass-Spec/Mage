@@ -4,13 +4,11 @@ using System.Windows.Forms;
 
 namespace MageDisplayLib
 {
-
     /// <summary>
     /// Intercepts horizontal scrollbar events, gets X position of scroll, and fires onScroll event
     /// </summary>
     public class ListViewEx : ListView
     {
-
         /// <summary>
         /// Event that is fired to simulate a .Net scroll event
         /// </summary>
@@ -38,7 +36,6 @@ namespace MageDisplayLib
                 var hargs = new ScrollEventArgs(ScrollEventType.EndScroll, GetScrollPos(Handle, SB_HORZ));
                 onScroll?.Invoke(this, hargs);
             }
-
         }
 
         /// <summary>
@@ -46,8 +43,5 @@ namespace MageDisplayLib
         /// </summary>
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         static extern int GetScrollPos(IntPtr hWnd, int nBar);
-
     }
-
-
 }

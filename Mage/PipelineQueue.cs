@@ -4,14 +4,12 @@ using System.Threading;
 
 namespace Mage
 {
-
     /// <summary>
     /// Runs one or more Mage pipelines from a queue
     /// in a worker thread.
     /// </summary>
     public sealed class PipelineQueue
     {
-
         /// <summary>
         /// Event that is fired when next pipeline in queue begins procession
         /// </summary>
@@ -21,7 +19,6 @@ namespace Mage
         /// Event that is fired when pipeline queue terminates (normally or abnormally)
         /// </summary>
         public event EventHandler<MageStatusEventArgs> OnRunCompleted;
-
 
         #region Member Variables
 

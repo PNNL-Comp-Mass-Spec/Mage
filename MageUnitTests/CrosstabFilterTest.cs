@@ -3,7 +3,6 @@ using NUnit.Framework;
 
 namespace MageUnitTests
 {
-
     /// <summary>
     /// This is a test class for CrosstabFilterTest and is intended
     /// to contain all CrosstabFilterTest Unit Tests
@@ -11,7 +10,6 @@ namespace MageUnitTests
     [TestFixture]
     public class CrosstabFilterTest
     {
-
         /// <summary>
         /// A test for FactorValueCol
         /// </summary>
@@ -49,7 +47,6 @@ namespace MageUnitTests
             Assert.AreEqual(151, sink.Rows.Count, "Expected row count did not match");
             Assert.AreEqual(10, sink.Rows[0].Length, "Expected column count did not match");
         }
-
 
         /// <summary>
         /// A test for FactorValueCol

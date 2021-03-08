@@ -5,7 +5,6 @@ using NUnit.Framework;
 
 namespace MageUnitTestsForFileProcessor
 {
-
     /// <summary>
     /// This is a test class for PipelinesTest and is intended
     /// to contain all PipelinesTest Unit Tests
@@ -13,7 +12,6 @@ namespace MageUnitTestsForFileProcessor
     [TestFixture]
     public class PipelinesTest
     {
-
         private readonly int maxRows = 5;
         private readonly int rows = 3;
         private readonly int cols = 5;
@@ -26,7 +24,6 @@ namespace MageUnitTestsForFileProcessor
         [Test]
         public void MakeJobQueryPipelineTest()
         {
-
             ISinkModule sinkObject = new SimpleSink(maxRows);
 
             // Default server info: gigasax and DMS5
@@ -62,7 +59,6 @@ namespace MageUnitTestsForFileProcessor
         [Test]
         public void MakePipelineToGetLocalFileListTest()
         {
-
             ISinkModule sinkObject = new SimpleSink(maxRows);
 
             runtimeParms = new Dictionary<string, string>() {
@@ -87,7 +83,6 @@ namespace MageUnitTestsForFileProcessor
         [Test]
         public void MakePipelineToGetFilesFromManifestTest()
         {
-
             ISinkModule sinkObject = new SimpleSink(maxRows);
 
             runtimeParms = new Dictionary<string, string>() {
@@ -115,7 +110,6 @@ namespace MageUnitTestsForFileProcessor
         [Test]
         public void MakePipelineToFilterSelectedFilesTest()
         {
-
             IBaseModule sourceObject = new DataGenerator(rows, cols);
 
             // For mode "File_Output"
@@ -185,7 +179,6 @@ namespace MageUnitTestsForFileProcessor
         [Test]
         public void MakeFileListPipelineTest()
         {
-
             IBaseModule sourceObject = new DataGenerator(rows, cols);
 
             ISinkModule sinkObject = new SimpleSink(maxRows);
@@ -212,7 +205,6 @@ namespace MageUnitTestsForFileProcessor
         [Test]
         public void MakeFileCopyPipelineTest()
         {
-
             IBaseModule sourceObject = new DataGenerator(rows, cols);
 
             runtimeParms = new Dictionary<string, string> {
@@ -232,6 +224,5 @@ namespace MageUnitTestsForFileProcessor
             pipeline = Pipelines.MakeFileCopyPipeline(sourceObject, runtimeParms);
             Assert.AreNotEqual(null, pipeline);
         }
-
     }
 }

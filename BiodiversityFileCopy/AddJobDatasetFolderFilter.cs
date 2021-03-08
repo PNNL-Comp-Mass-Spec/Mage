@@ -35,5 +35,4 @@ namespace BiodiversityFileCopy
             return true;
         }
     }
-
 }

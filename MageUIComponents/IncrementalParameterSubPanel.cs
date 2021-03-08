@@ -4,10 +4,8 @@ using Mage;
 
 namespace MageUIComponents
 {
-
     public partial class IncrementalParameterSubPanel : UserControl, IModuleParameters
     {
-
         #region IModuleParameters Members
 
         public Dictionary<string, string> GetParameters()
@@ -52,7 +50,6 @@ namespace MageUIComponents
         }
 
         #endregion
-
 
         public bool Active
         {

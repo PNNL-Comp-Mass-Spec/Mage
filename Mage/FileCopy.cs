@@ -6,7 +6,6 @@ using MyEMSLReader;
 
 namespace Mage
 {
-
     /// <summary>
     /// This module copies one or more input files to an output directory
     ///
@@ -21,7 +20,6 @@ namespace Mage
     /// </summary>
     public class FileCopy : FileContentProcessor
     {
-
         #region Member Variables
 
         // Used to provide unique prefix for duplicate file names
@@ -30,7 +28,6 @@ namespace Mage
         #endregion
 
         #region Properties
-
 
         /// <summary>
         /// Name of column to be used for output file name prefix (optional)
@@ -120,7 +117,6 @@ namespace Mage
                             System.Threading.Thread.Sleep(1);
                             bShowDoneMsg = false;
                         }
-
                     }
 
                     if (ResolveCacheInfoFiles && destPathClean.EndsWith("CacheInfo.txt", StringComparison.OrdinalIgnoreCase))
@@ -169,7 +165,6 @@ namespace Mage
 
                 if (bShowDoneMsg)
                     UpdateStatus(this, new MageStatusEventArgs("Done->" + sourceFile));
-
             }
             catch (FileNotFoundException)
             {
@@ -204,7 +199,6 @@ namespace Mage
         /// <param name="destPath">Target directory path</param>
         protected override void ProcessDirectory(string sourcePath, string destPath)
         {
-
             var source = new DirectoryInfo(sourcePath);
             var target = new DirectoryInfo(destPath);
 
@@ -212,7 +206,6 @@ namespace Mage
                 CopyAllMyEMSL(source, target);
             else
                 CopyAll(source, target);
-
         }
 
         /// <summary>
@@ -235,7 +228,6 @@ namespace Mage
                     // Replace any invalid characters with an underscore
                     foreach (var chInvalidChar in Path.GetInvalidFileNameChars())
                         prefix = prefix.Replace(chInvalidChar, '_');
-
                 }
                 else
                 {
@@ -254,7 +246,6 @@ namespace Mage
         /// <param name="target">Target directory</param>
         private void CopyAll(DirectoryInfo source, DirectoryInfo target)
         {
-
             var sourceFile = "??";
             var sourcePath = "??";
 
@@ -294,7 +285,6 @@ namespace Mage
                     {
                         var nextTargetSubDir = target.CreateSubdirectory(diSourceSubDir.Name);
                         CopyAll(diSourceSubDir, nextTargetSubDir);
-
                     }
                     catch (Exception e)
                     {
@@ -302,9 +292,7 @@ namespace Mage
                         ReportMageWarning("Subdirectory copy failed->" + e.Message + " -- " + diSourceSubDir.FullName);
                         System.Threading.Thread.Sleep(250);
                     }
-
                 }
-
             }
             catch (FileNotFoundException)
             {
@@ -330,7 +318,6 @@ namespace Mage
                 ReportMageWarning("Copy failed->" + e.Message + " -- " + sourceFile);
                 System.Threading.Thread.Sleep(250);
             }
-
         }
 
         /// <summary>
@@ -397,7 +384,6 @@ namespace Mage
                     UpdateStatus(this, new MageStatusEventArgs("FAILED->" + message, 1));
                     ReportMageWarning(message);
                 }
-
             }
             catch (Exception e)
             {
@@ -406,7 +392,6 @@ namespace Mage
                 System.Threading.Thread.Sleep(250);
             }
         }
-
 
         /// <summary>
         /// Open CacheInfo.txt files, read the file pointer, and copy the target file to the destination directory
@@ -478,7 +463,6 @@ namespace Mage
                         }
                         UpdateStatus(this, new MageStatusEventArgs("Start Copy->" + remoteFile.Name));
                         File.Copy(remoteFile.FullName, destPath, true);
-
                     }
                     else
                     {

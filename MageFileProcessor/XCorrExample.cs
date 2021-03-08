@@ -2,11 +2,9 @@
 
 namespace MageFileProcessor
 {
-
     [MageAttribute("Filter", "XCorr", "XCorr Example", "Simple filter for SEQUEST results (XCorr > 2.0)")]
     class XCorrExample : ContentFilter
     {
-
         // Indexes into the row field data array
         private int xCorrIdx;
 

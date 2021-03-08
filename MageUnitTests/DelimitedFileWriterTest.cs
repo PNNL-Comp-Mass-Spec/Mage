@@ -3,7 +3,6 @@ using NUnit.Framework;
 
 namespace MageUnitTests
 {
-
     /// <summary>
     /// This is a test class for DelimitedFileWriterTest and is intended
     /// to contain all DelimitedFileWriterTest Unit Tests
@@ -11,7 +10,6 @@ namespace MageUnitTests
     [TestFixture]
     public class DelimitedFileWriterTest
     {
-
         [Test]
         public void WriteTest()
         {
@@ -54,8 +52,6 @@ namespace MageUnitTests
             var result = (SimpleSink)pipeline.GetModule("Results");
             return result;
         }
-
-
 
         /// <summary>
         /// A test for Header

@@ -2,7 +2,6 @@
 
 namespace MageExtContentFilters
 {
-
     /// <summary>
     /// Filter Sequest results using the FilterSetID defined by the base class
     /// </summary>
@@ -13,7 +12,6 @@ namespace MageExtContentFilters
     [MageAttribute("Filter", "SEQUEST", "SEQUEST filter", "Uses filter criteria defined in DMS")]
     class SequestFilter : ContentFilter
     {
-
         #region Member Variables
 
         // Working copy of SEQUEST filter object
@@ -104,7 +102,6 @@ namespace MageExtContentFilters
         /// </summary>
         private void SetupSequestFilter()
         {
-
             // Create Mage module to query DMS (typically on gigasax)
             var reader = new SQLReader
             {
@@ -141,9 +138,6 @@ namespace MageExtContentFilters
             cleavageStateIndex = GetColumnIndex(InputColumnPos, "NumTrypticEnds");
             msgfSpecProbIndex = GetColumnIndex(InputColumnPos, "MSGF_SpecProb");
             rankXcIndex = GetColumnIndex(InputColumnPos, "RankXc");
-
         }
-
     }
-
 }

@@ -4,13 +4,11 @@ using MageExtContentFilters;
 
 namespace MageExtExtractionFilters
 {
-
     /// <summary>
     /// Sequest Extraction Filter
     /// </summary>
     public class SequestExtractionFilter : ExtractionFilter
     {
-
         #region Member Variables
 
         // Working copy of SEQUEST hit checker object
@@ -72,7 +70,6 @@ namespace MageExtExtractionFilters
 
                 ++mTotalRowsCounter;
                 ReportProgress();
-
             }
             else
             {
@@ -161,7 +158,6 @@ namespace MageExtExtractionFilters
         /// <returns></returns>
         public static FilterSequestResults MakeSequestResultChecker(string FilterSetID)
         {
-
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("Extraction_Filter_Set_List");
             var runtimeParms = new Dictionary<string, string>() { { "Filter_Set_ID", FilterSetID } };
             var reader = new SQLReader(queryDefXML, runtimeParms);

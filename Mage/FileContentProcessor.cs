@@ -4,7 +4,6 @@ using System.IO;
 
 namespace Mage
 {
-
     /// <summary>
     /// Delegate for a function that returns an output file name for a given input file name and parameters
     /// </summary>
@@ -29,7 +28,6 @@ namespace Mage
     /// </summary>
     public class FileContentProcessor : FileProcessingBase
     {
-
         #region Member Variables
 
         // Delegate that this module calls to get output file name

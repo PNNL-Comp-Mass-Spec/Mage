@@ -8,14 +8,12 @@ using PRISMDatabaseUtils;
 
 namespace Mage
 {
-
     /// <summary>
     /// Module than can query a database and deliver
     /// results of the query via its standard tabular output events
     /// </summary>
     public sealed class SQLReader : BaseModule
     {
-
         /// <summary>
         /// SQL Command error constant
         /// </summary>
@@ -218,7 +216,6 @@ namespace Mage
         /// <param name="isPostgres">True if a PostgreSQL server</param>
         private void SetPropertiesFromBuilder(SQLBuilder builder, string username, string password, bool isPostgres)
         {
-
             Username = username;
             Password = password;
             ConnectionString = string.Empty;
@@ -282,7 +279,6 @@ namespace Mage
                 {
                     ReportMageWarning("Error retrieving data from database: " + ex.Message);
                 }
-
             }
             catch (Exception ex)
             {
@@ -351,7 +347,6 @@ namespace Mage
                 return string.Format("Data Source={0};Initial Catalog={1};User={2};", server, database, username);
 
             return string.Format("Data Source={0};Initial Catalog={1};User={2};Password={3};", server, database, username, password);
-
         }
 
         private string GetPgSqlConnectionString(string server, string database, string username, string password)
@@ -440,7 +435,6 @@ namespace Mage
             stopTime = DateTime.UtcNow;
             duration = stopTime - startTime;
             traceLogReader.Info("SQLReader.GetData --> Get data finish (" + duration + ") [" + totalRows + "]:" + SQLText);
-
         }
 
         /// <summary>
@@ -519,7 +513,6 @@ namespace Mage
                                 }
                             }
                         }
-
                     }
 
                     if (!valProcessed)
@@ -841,9 +834,7 @@ namespace Mage
                         parameter.Precision = precision;
                         parameter.Scale = scale;
                     }
-
                 }
-
             }
             catch (Exception e)
             {
@@ -882,7 +873,6 @@ namespace Mage
 // String types:           char, varchar, text, nchar, nvarchar, ntext, uniqueidentifier, xml
 // Datetime types:         date, datetime, datetime2, smalldatetime, time, datetimeoffset
 // Binary types:           binary, varbinary, image
-
 
 // PostgreSQL data types
 

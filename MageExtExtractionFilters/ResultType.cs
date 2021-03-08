@@ -4,14 +4,12 @@ using System.Collections.ObjectModel;
 
 namespace MageExtExtractionFilters
 {
-
     /// <summary>
     /// Describes key parameters for result files (and their associated files)
     /// that extractor can handle
     /// </summary>
     public class ResultType
     {
-
         #region Constants
 
         public const string XTANDEM_ALL_PROTEINS = "X!Tandem All Proteins";
@@ -83,7 +81,6 @@ namespace MageExtExtractionFilters
 
             new MergeFile(MSPATHFINDER_SYN_ALL_PROTEINS,   "ResultToSeqMap",  "Result_ID",     "_mspath_syn_ResultToSeqMap.txt"),
             new MergeFile(MSPATHFINDER_SYN_ALL_PROTEINS,   "SeqToProteinMap", "Unique_Seq_ID", "_mspath_syn_SeqToProteinMap.txt")
-
         };
 
         #endregion
@@ -256,5 +253,4 @@ namespace MageExtExtractionFilters
             return frb;
         }
     }
-
 }

@@ -7,8 +7,6 @@ using Mage;
 
 namespace MageDisplayLib
 {
-
-
     /// <summary>
     /// This class provides support for saving and restoring configuration files
     /// and the state of UI fields for UI component panels
@@ -29,7 +27,6 @@ namespace MageDisplayLib
         /// </summary>
         public static string FilePath { get; set; }
 
-
         /// <summary>
         /// Set global paths to reference where config files live
         /// and assure that valid directory exists and valid copies
@@ -37,7 +34,6 @@ namespace MageDisplayLib
         /// </summary>
         public static void SetupConfigFiles(string configDirectoryName)
         {
-
             DataDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), configDirectoryName);
 
             // Make sure application data directory exists

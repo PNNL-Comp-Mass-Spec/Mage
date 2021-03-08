@@ -9,14 +9,12 @@ using Mage;
 
 namespace MageDisplayLib
 {
-
     /// <summary>
     /// This partial class implements the context menu functions
     /// for the ListDisplayControl class
     /// </summary>
     public partial class ListDisplayControl
     {
-
         #region Member Variables
 
         /// <summary>
@@ -353,7 +351,6 @@ namespace MageDisplayLib
         /// <param name="args"></param>
         private void HandleSelectionChanged(object sender, EventArgs args)
         {
-
             // Whole context menu enabled/disabled based on whether there are any rows selected or not
             if (SelectedItemCount == 0)
             {
@@ -363,7 +360,6 @@ namespace MageDisplayLib
                     lstAlwaysActive = mSelectAllMenuItems;
 
                 AdjustMenuItemsFromNameList(mAllMenuItems, false, lstAlwaysActive);
-
             }
             else
             {

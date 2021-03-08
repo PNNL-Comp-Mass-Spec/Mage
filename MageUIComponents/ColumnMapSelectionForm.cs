@@ -4,10 +4,8 @@ using Mage;
 
 namespace MageUIComponents
 {
-
     public partial class ColumnMapSelectionForm : Form
     {
-
         #region Member Variables
 
         private string mColumnMapToAutoSelect = string.Empty;
@@ -95,7 +93,6 @@ namespace MageUIComponents
                 ColumnMapping = gridViewDisplayControl1.List.SelectedRows[0].Cells[0].Value.ToString();
             }
         }
-
 
         private void UpdateSelectedColumnMapping()
         {

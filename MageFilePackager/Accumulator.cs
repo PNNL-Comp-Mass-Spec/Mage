@@ -2,7 +2,6 @@
 
 namespace MageFilePackager
 {
-
     /// <summary>
     /// A variation on a Mage sink module
     /// that can accumulate rows from multiple pipeline runs
@@ -10,7 +9,6 @@ namespace MageFilePackager
     /// </summary>
     class Accumulator : SimpleSink
     {
-
         public Accumulator()
         {
             RetainColumnDefs = false;
@@ -33,6 +31,5 @@ namespace MageFilePackager
                 base.HandleColumnDef(sender, args);
             }
         }
-
     }
 }

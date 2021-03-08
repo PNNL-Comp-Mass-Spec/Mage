@@ -4,14 +4,12 @@ using System.Text.RegularExpressions;
 
 namespace Mage
 {
-
     /// <summary>
     /// Mage module that reads content of a delimited files
     /// and streams it to Mage standard tabular output
     /// </summary>
     public class DelimitedFileReader : FileProcessingBase
     {
-
         #region Member Variables
 
         private bool doHeaderLine = true;
@@ -110,7 +108,6 @@ namespace Mage
             {
                 using (var fileReader = new StreamReader(new FileStream(delimitedFilePathLocal, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
                 {
-
                     string line;
                     while ((line = fileReader.ReadLine()) != null)
                     {
@@ -154,7 +151,6 @@ namespace Mage
 
                 if (downloadedMyEMSLFile)
                     DeleteFileIfLowDiskSpace(delimitedFilePathLocal);
-
             }
             catch (IOException e)
             {
@@ -170,7 +166,6 @@ namespace Mage
             var commas = line.Contains(",");
             return commas && !tabs;
         }
-
 
         private void OutputFileContents()
         {

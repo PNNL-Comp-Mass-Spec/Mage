@@ -6,10 +6,8 @@ using MageDisplayLib;
 
 namespace MageUIComponents
 {
-
     public partial class JobIDListPanel : UserControl, IModuleParameters
     {
-
         public event EventHandler<MageCommandEventArgs> OnAction;
 
         #region Member Variables
@@ -57,7 +55,6 @@ namespace MageUIComponents
             ListName = "Job";
         }
 
-
         private void GetJobsCtl_Click(object sender, EventArgs e)
         {
             OnAction?.Invoke(this, new MageCommandEventArgs("get_entities_from_query", "Jobs"));
@@ -76,10 +73,7 @@ namespace MageUIComponents
             {
                 // Ctrl+A pressed
                 JobListCtl.SelectAll();
-
             }
-
         }
-
     }
 }

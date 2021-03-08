@@ -2,7 +2,6 @@
 
 namespace MageExtContentFilters
 {
-
     /// <summary>
     /// A filter that passes all rows, but applies any column mapping
     /// </summary>
@@ -13,7 +12,6 @@ namespace MageExtContentFilters
     [MageAttribute("Filter", "AllPassFilter", "All Pass", "Pass everything and apply output column mapping")]
     public class AllPassFilter : ContentFilter
     {
-
         /// <summary>
         /// Pass all rows and apply column mapping
         /// </summary>
@@ -27,5 +25,4 @@ namespace MageExtContentFilters
             return true;
         }
     }
-
 }

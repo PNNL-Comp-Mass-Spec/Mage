@@ -5,10 +5,8 @@ using Mage;
 
 namespace MageExtExtractionFilters
 {
-
     class MSGFExtractionFilter : ExtractionFilter
     {
-
         #region Member Variables
 
         private MergeMSGFData mMSGFMerger;
@@ -25,7 +23,6 @@ namespace MageExtExtractionFilters
 
         private void InitializeParameters()
         {
-
             mMatchColumnName = mExtractionType.RType.ResultIDColName;
             mMergeColumnName = "MSGF_SpecProb";
 
@@ -80,7 +77,6 @@ namespace MageExtExtractionFilters
         {
             if (args.DataAvailable)
             {
-
                 var accepted = false;
                 var outRow = MapDataRow(args.Fields);
                 if (mMSGFMerger != null)
@@ -96,7 +92,6 @@ namespace MageExtExtractionFilters
 
                 ++mTotalRowsCounter;
                 ReportProgress();
-
             }
             else
             {
@@ -104,12 +99,10 @@ namespace MageExtExtractionFilters
             }
         }
 
-
         #region Internal Classes
 
         protected class MergeMSGFData
         {
-
             #region Member Variables
 
             private Dictionary<string, string> mMergeValueLookup;

@@ -3,10 +3,8 @@ using System.Collections.ObjectModel;
 
 namespace MageExtContentFilters
 {
-
     public class FilterMSGFDbResults : FilterResultsBase
     {
-
         public FilterMSGFDbResults(Collection<string[]> filterCriteria, string filterSetID)
             : base(filterCriteria, filterSetID)
         {
@@ -137,7 +135,6 @@ namespace MageExtContentFilters
 
                     if (currEval == false)
                         break;                       // Subject didn't pass a criterion value, so move on to the next group
-
                 }
 
                 if (currEval)
@@ -145,8 +142,6 @@ namespace MageExtContentFilters
             }
 
             return currEval;
-
         }
-
     }
 }

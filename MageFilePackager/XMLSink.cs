@@ -4,10 +4,8 @@ using Mage;
 
 namespace MageFilePackager
 {
-
     class XMLSink : BaseModule
     {
-
         #region Member Variables
 
         readonly StringBuilder _text = new StringBuilder();
@@ -27,7 +25,6 @@ namespace MageFilePackager
         #region Constructors
 
         #endregion
-
 
         #region IBaseModule Members
 

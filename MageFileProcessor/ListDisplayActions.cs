@@ -6,14 +6,12 @@ using MageDisplayLib;
 
 namespace MageFileProcessor
 {
-
     /// <summary>
     /// Builds an extension to the context menu for a ListDisplayControl object,
     /// and provides the code to handle the extension functions.
     /// </summary>
     class ListDisplayActions
     {
-
         #region Member Variables
 
         /// <summary>
@@ -67,7 +65,6 @@ namespace MageFileProcessor
         /// </summary>
         private void SetupContextMenus()
         {
-
             var toolStripItems = new List<ToolStripItem> { new ToolStripSeparator() };
             toolStripItems.AddRange(GetDirectoryMenuItems().ToArray());
             toolStripItems.AddRange(GetWebActionMenuItems().ToArray());
@@ -178,7 +175,6 @@ namespace MageFileProcessor
         /// <param name="args"></param>
         private void HandleSelectionChanged(object sender, EventArgs args)
         {
-
             // Whole context menu enabled/disabled based on whether there are any rows selected or not
             if (mListDisplay.SelectedItemCount == 0)
             {

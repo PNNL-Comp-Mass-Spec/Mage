@@ -7,7 +7,6 @@ using PRISM;
 
 namespace MageUnitTests
 {
-
     /// <summary>
     /// This is a test class for MSSQLReaderTest and is intended
     /// to contain all MSSQLReaderTest Unit Tests
@@ -157,7 +156,6 @@ namespace MageUnitTests
 
         private void QueryDatasetFactors(string serverName, string databaseName, string username, string password, bool isPostgres)
         {
-
             // Default server is gigasax
             if (string.IsNullOrWhiteSpace(serverName))
             {
@@ -586,7 +584,6 @@ namespace MageUnitTests
             string username,
             string expectedSqlOrSProc)
         {
-
             string errorMessage;
             if (string.IsNullOrWhiteSpace(username))
             {
@@ -674,7 +671,6 @@ namespace MageUnitTests
             return paddedData;
         }
 
-
         private static void RegisterEvents(IBaseModule mageModule)
         {
             mageModule.StatusMessageUpdated += MageModule_StatusMessageUpdated;
@@ -696,6 +692,5 @@ namespace MageUnitTests
         {
             ConsoleMsgUtils.ShowWarning(e.Message);
         }
-
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 
 namespace MageDisplayLib
 {
-
     /// <summary>
     /// How data rows will be served from display list
     /// </summary>
@@ -24,7 +23,6 @@ namespace MageDisplayLib
     /// </summary>
     public interface IMageDisplayControl
     {
-
         /// <summary>
         /// Get or set the visible title field for this control
         /// </summary>
@@ -51,12 +49,9 @@ namespace MageDisplayLib
         /// </summary>
         Dictionary<string, string> SelectedItemFields { get; }
 
-
         /// <summary>
         /// Get collection of columnn names
         /// </summary>
         Collection<string> ColumnNames { get; }
-
     }
-
 }

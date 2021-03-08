@@ -9,7 +9,6 @@ namespace MageFilePackager
     [Obsolete("Unused")]
     class XMLManifestFileWriter : BaseModule, IDisposable
     {
-
         #region Member Variables
 
         private StreamWriter _mOutFile;
@@ -65,7 +64,6 @@ namespace MageFilePackager
 
         #endregion
 
-
         #region IBaseModule Members
 
         /// <summary>
@@ -87,7 +85,6 @@ namespace MageFilePackager
             {
                 throw new MageException("Error initializing file " + FilePath + ": " + ex.Message);
             }
-
         }
 
         /// <summary>

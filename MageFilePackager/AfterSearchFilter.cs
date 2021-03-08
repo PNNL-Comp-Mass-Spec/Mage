@@ -2,13 +2,11 @@
 
 namespace MageFilePackager
 {
-
     /// <summary>
     /// Remove unwanted rows from entity file searches
     /// </summary>
     class AfterSearchFilter : ContentFilter
     {
-
         // Indexes into the row field data array
         private int _itemIdx;
 
@@ -20,7 +18,6 @@ namespace MageFilePackager
                 _itemIdx = -1;
         }
 
-
         /// <summary>
         /// Filter each row
         /// </summary>
@@ -28,7 +25,6 @@ namespace MageFilePackager
         /// <returns></returns>
         protected override bool CheckFilter(ref string[] vals)
         {
-
             // Reject any "file not found" rows
             if (string.IsNullOrEmpty(vals[_itemIdx]))
                 return false;
@@ -41,7 +37,5 @@ namespace MageFilePackager
             }
             return true;
         }
-
     }
-
 }

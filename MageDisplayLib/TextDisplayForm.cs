@@ -3,13 +3,11 @@ using System.Windows.Forms;
 
 namespace MageDisplayLib
 {
-
     /// <summary>
     /// Displays a textbox
     /// </summary>
     public partial class TextDisplayForm : Form
     {
-
         /// <summary>
         /// Get complete contents of text display
         /// </summary>

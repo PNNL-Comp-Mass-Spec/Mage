@@ -6,10 +6,8 @@ using MageDisplayLib;
 
 namespace MageFilePackager
 {
-
     public partial class FileTreeForm : Form
     {
-
         public FileTreeForm()
         {
             InitializeComponent();
@@ -104,7 +102,6 @@ namespace MageFilePackager
                 _checkedSizeTotal += sizeKB;
                 _numChecked++;
                 myTally += sizeKB;
-
             }
 
             // Otherwise recursively call this method for all nodes in its nodes collection
@@ -135,7 +132,6 @@ namespace MageFilePackager
             int.TryParse(label, out var level);
             ExpandToLevel(level);
         }
-
 
         // Expand all nodes to given level
         private void ExpandToLevel(int level)
@@ -204,7 +200,6 @@ namespace MageFilePackager
         /// </summary>
         public class TreeBuilder : ContentFilter
         {
-
             private int _pathIdx;
             private int _nameIdx;
             private int _kbIdx;
@@ -269,7 +264,6 @@ namespace MageFilePackager
         /// </summary>
         public class TreeSource : BaseModule
         {
-
             public List<MageColumnDef> ColumnDefs;
             public TreeView FileTree;
 
@@ -283,7 +277,6 @@ namespace MageFilePackager
                     OutputCheckedItems(node);
                 }
                 OnDataRowAvailable(new MageDataEventArgs(null));
-
             }
 
             private void OutputCheckedItems(TreeNode node)
@@ -308,7 +301,6 @@ namespace MageFilePackager
         }
 
         #endregion
-
 
     }
 }

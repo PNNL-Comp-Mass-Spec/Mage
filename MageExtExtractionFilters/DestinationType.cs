@@ -6,13 +6,11 @@ using Mage;
 
 namespace MageExtExtractionFilters
 {
-
     /// <summary>
     /// Provides information about where processed results are to be delivered
     /// </summary>
     public class DestinationType
     {
-
         public enum Types { Unknown, File_Output, SQLite_Output }
 
         #region Properties
@@ -134,7 +132,6 @@ namespace MageExtExtractionFilters
 
         #endregion
 
-
         /// <summary>
         /// If destination is file, return its full path
         /// otherwise return blank
@@ -244,7 +241,5 @@ namespace MageExtExtractionFilters
             }
             return writer;
         }
-
-
     }
 }

@@ -3,14 +3,12 @@ using System.Collections.ObjectModel;
 
 namespace MageDisplayLib
 {
-
     /// <summary>
     /// Very simple multiline text display.
     /// Exists to be a target for TDPipelineSource class.
     /// </summary>
     public partial class TextDisplayControl : UserControl
     {
-
         #region Properties
 
         /// <summary>

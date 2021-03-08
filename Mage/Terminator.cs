@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 
 namespace Mage
 {
-
     /// <summary>
     /// This module provides simple pass through of standard tabular input
     /// to standard tabular output and provides the ability to termainate
@@ -11,7 +10,6 @@ namespace Mage
     /// </summary>
     public class Terminator : BaseModule
     {
-
         #region Member Variables
 
         int mRowsProcessed;
@@ -92,5 +90,4 @@ namespace Mage
         #endregion
 
     }
-
 }

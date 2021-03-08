@@ -13,10 +13,8 @@ using PRISM.Logging;
 
 namespace MageFileProcessor
 {
-
     public partial class FileProcessorForm : Form
     {
-
         #region Constants
         protected const string TAG_JOB_IDs = "Job_ID_List";
         protected const string TAG_JOB_IDs_FROM_DATASETS = "Jobs_From_Dataset_List";
@@ -173,7 +171,6 @@ namespace MageFileProcessor
 
             if (beta)
                 Text += " (beta)";
-
         }
 
         private void SetTags()
@@ -186,7 +183,6 @@ namespace MageFileProcessor
             DataPackageJobsTabPage.Tag = TAG_DATA_PACKAGE_ID;
             DataPackageDatasetsTabPage.Tag = TAG_DATA_PACKAGE_DS_IDs;
         }
-
 
         #endregion
 
@@ -209,7 +205,6 @@ namespace MageFileProcessor
 
             pipelineQueue.OnRunCompleted += HandlePipelineQueueCompletion;
             pipelineQueue.OnPipelineStarted += HandlePipelineQueueUpdate;
-
         }
 
         /// <summary>
@@ -221,7 +216,6 @@ namespace MageFileProcessor
         /// <param name="command">Command to execute</param>
         public void DoCommand(object sender, MageCommandEventArgs command)
         {
-
             // Remember who sent us the command
             mCurrentCmdSender = sender;
 
@@ -414,7 +408,6 @@ namespace MageFileProcessor
 
                         break;
 
-
                     default:
                         return;
                 }
@@ -467,7 +460,6 @@ namespace MageFileProcessor
 
             if (!bFilterDefined)
             {
-
                 switch (queryName)
                 {
                     case TAG_JOB_IDs:
@@ -698,7 +690,6 @@ namespace MageFileProcessor
                 if (colNames.Contains("Job"))
                 {
                     type = "Jobs";
-
                 }
                 else if (colNames.Contains("Dataset_ID"))
                 {
@@ -942,7 +933,6 @@ namespace MageFileProcessor
             {
                 if (pipeline.PipelineName == mFinalPipelineName)
                 {
-
                     CompletionStateUpdated csu = AdjustPostCommandUIState;
                     Invoke(csu, new object[] { null });
 
@@ -954,7 +944,6 @@ namespace MageFileProcessor
 
             if (args.Message.StartsWith(SQLReader.SQL_COMMAND_ERROR))
                 MessageBox.Show(args.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-
         }
 
         private void HandlePipelineQueueUpdate(object sender, MageStatusEventArgs args)
@@ -1073,5 +1062,4 @@ namespace MageFileProcessor
 
         #endregion
     }
-
 }

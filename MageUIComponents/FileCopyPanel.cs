@@ -7,10 +7,8 @@ using ShFolderBrowser.FolderBrowser;
 
 namespace MageUIComponents
 {
-
     public partial class FileCopyPanel : UserControl, IModuleParameters
     {
-
         public event EventHandler<MageCommandEventArgs> OnAction;
 
         #region Member Variables
@@ -144,7 +142,6 @@ namespace MageUIComponents
 
         private void SelectDirectoryCtl_Click(object sender, EventArgs e)
         {
-
             var folderBrowser = new FolderBrowser();
 
             try
@@ -163,7 +160,6 @@ namespace MageUIComponents
             {
                 OutputDirectoryCtl.Text = folderBrowser.FolderPath;
             }
-
         }
 
         private void usePrefixCtl_CheckedChanged(object sender, EventArgs e)
@@ -188,7 +184,5 @@ namespace MageUIComponents
                 prefixLeaderLabelCtl.Visible = false;
             }
         }
-
-
     }
 }

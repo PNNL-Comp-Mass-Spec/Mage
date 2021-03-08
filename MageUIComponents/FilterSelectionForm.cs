@@ -5,10 +5,8 @@ using Mage;
 
 namespace MageUIComponents
 {
-
     public partial class FilterSelectionForm : Form
     {
-
         #region Member Variables
 
         string mFilterNameToAutoSelect = string.Empty;

@@ -8,14 +8,12 @@ using Mage;
 
 namespace MageDisplayLib
 {
-
     /// <summary>
     /// User control that provides a display list based on a DataGridView
     /// that can be used with Mage pipeline infrastructure
     /// </summary>
     public partial class GridViewDisplayControl
     {
-
         #region Constants
         const string MENU_SELECT_ALL = "SelectAll";
         const string MENU_SELECT_NONE = "SelectNone";
@@ -115,7 +113,6 @@ namespace MageDisplayLib
         /// <param name="args"></param>
         private void HandleSelectionChanged(object sender, EventArgs args)
         {
-
             if (!gvQueryResults.LayoutSuspended)
             {
                 // Whole context menu enabled/disabled based on whether there are any rows selected or not
@@ -127,14 +124,12 @@ namespace MageDisplayLib
                         lstAlwaysActive = mSelectAllOrNoneMenuItems;
 
                     AdjustMenuItemsFromNameList(mAllMenuItems, false, lstAlwaysActive);
-
                 }
                 else
                 {
                     AdjustMenuItemsFromNameList(mAllMenuItems, true, null);
                 }
             }
-
         }
 
         /// <summary>
@@ -167,7 +162,6 @@ namespace MageDisplayLib
         }
 
         #endregion
-
 
         #region Basic Housekeeping Menus
 
@@ -212,7 +206,6 @@ namespace MageDisplayLib
         }
 
         #endregion
-
 
         #region List Persistence Functions
 
@@ -336,7 +329,6 @@ namespace MageDisplayLib
         }
 
         #endregion
-
 
         #region Copy Menus
 

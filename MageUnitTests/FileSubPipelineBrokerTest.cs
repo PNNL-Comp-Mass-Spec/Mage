@@ -5,7 +5,6 @@ using System.IO;
 
 namespace MageUnitTests
 {
-
     /// <summary>
     /// This is a test class for FileSubPipelineBrokerTest and is intended
     /// to contain all FileSubPipelineBrokerTest Unit Tests
@@ -13,7 +12,6 @@ namespace MageUnitTests
     [TestFixture]
     public class FileSubPipelineBrokerTest
     {
-
         #region Member Variables
 
         string mPipelineResults = string.Empty;
@@ -26,7 +24,6 @@ namespace MageUnitTests
         [Test]
         public void FileSubPipelineBrokerBasicTest()
         {
-
             // Set up test parameters
             var idColumnName = "Padding";
             var idColContents = "Example Contents";
@@ -174,7 +171,6 @@ namespace MageUnitTests
         /// </summary>
         private class DummyModule : BaseModule
         {
-
             /// <summary>
             /// Test
             /// </summary>
@@ -184,6 +180,5 @@ namespace MageUnitTests
                 mPipelineDummyModuleResults = "Kilroy was here too";
             }
         }
-
     }
 }

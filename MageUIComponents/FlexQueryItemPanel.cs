@@ -3,10 +3,8 @@ using System.Windows.Forms;
 
 namespace MageUIComponents
 {
-
     public partial class FlexQueryItemPanel : UserControl
     {
-
         public FlexQueryItemPanel()
         {
             InitializeComponent();
@@ -38,7 +36,6 @@ namespace MageUIComponents
             get => (RelationCtl.Text != "(off)") ? RelationCtl.Text : "";
             set => RelationCtl.Text = value;
         }
-
 
         public void SetColumnPickList(string[] items)
         {

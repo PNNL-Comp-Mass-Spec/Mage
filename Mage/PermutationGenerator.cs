@@ -5,14 +5,12 @@ using System.Globalization;
 
 namespace Mage
 {
-
     /// <summary>
     /// Generates all possible permutations of a set of parameters
     /// as standard tabular output
     /// </summary>
     public class PermutationGenerator : BaseModule
     {
-
         #region Member Variables
 
         /// <summary>
@@ -351,7 +349,6 @@ namespace Mage
                 CalculateIncrements();
             }
 
-
             // Constructor
             public ParameterDef(string name, string lower, string upper, string step)
             {
@@ -372,7 +369,6 @@ namespace Mage
                 }
                 CalculateIncrements();
             }
-
 
             // Set up list of increment values based on increment range parameters
             // or list of increment values
@@ -395,10 +391,8 @@ namespace Mage
                     }
                 }
             }
-
         }
 
         #endregion
     }
-
 }

@@ -4,7 +4,6 @@ using NUnit.Framework;
 
 namespace MageUnitTests
 {
-
     /// <summary>
     /// This is a test class for FileListFilterTest and is intended
     /// to contain all FileListFilterTest Unit Tests
@@ -12,7 +11,6 @@ namespace MageUnitTests
     [TestFixture]
     public class FileListFilterTest
     {
-
         /// <summary>
         /// A test for FileListFilter run as source using RegEx file selector mode
         /// </summary>
@@ -59,7 +57,6 @@ namespace MageUnitTests
 
             Assert.AreEqual(2, sink.Rows.Count, "Expected total of files found did not match");
             Assert.AreEqual(2, hits, "Expected specific files found did not match");
-
         }
 
         /// <summary>
@@ -69,7 +66,6 @@ namespace MageUnitTests
         [TestCase(@"..\..\..\TestItems\TargetDirectory")]
         public void RunFileListFilterAsSourceFileSearch(string testDirectoryPath)
         {
-
             var testDirectory = General.GetTestDirectory(testDirectoryPath);
 
             var target = new FileListFilter
@@ -109,7 +105,6 @@ namespace MageUnitTests
 
             Assert.AreEqual(2, sink.Rows.Count, "Expected total of files found did not match");
             Assert.AreEqual(2, hits, "Expected specific files found did not match");
-
         }
 
         /// <summary>
@@ -129,7 +124,6 @@ namespace MageUnitTests
         [Test]
         public void GetFileNamesFromSourceDirectoryTest()
         {
-
             var target = new FileListFilterExtractor(); // TODO: Initialize to an appropriate value
             var parms = new Dictionary<string, string> {
                 { "DirectoryPath", "TestDirectoryPath"}
@@ -166,7 +160,6 @@ namespace MageUnitTests
             Assert.AreEqual(expected, actual);
         }
 
-
         /// <summary>
         /// A test for FileColumnName
         /// </summary>
@@ -192,7 +185,5 @@ namespace MageUnitTests
             var actual = target.SourceDirectoryColumnName;
             Assert.AreEqual(expected, actual);
         }
-
-
     }
 }

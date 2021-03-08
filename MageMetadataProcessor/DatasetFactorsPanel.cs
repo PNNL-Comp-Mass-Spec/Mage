@@ -5,10 +5,8 @@ using Mage;
 
 namespace MageMetadataProcessor
 {
-
     public partial class DatasetFactorsPanel : UserControl, IModuleParameters
     {
-
         public event EventHandler<MageCommandEventArgs> OnAction;
 
         #region Properties
@@ -25,7 +23,6 @@ namespace MageMetadataProcessor
         }
 
         #endregion
-
 
         #region IModuleParameters Members
 

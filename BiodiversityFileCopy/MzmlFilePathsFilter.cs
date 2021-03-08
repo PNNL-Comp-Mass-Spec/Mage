@@ -35,7 +35,6 @@ namespace BiodiversityFileCopy
             // Skip input rows that don't actually specify a file
             if (outRow[ItemIdx] == "file")
             {
-
                 // Save mzML cache file path for dataset based on tool
                 // to internal buffer
                 var datasetId = outRow[_datasetIdIdx];
@@ -130,6 +129,4 @@ namespace BiodiversityFileCopy
             public string[] RefRow { get; set; }
         }
     }
-
-
 }

@@ -2,14 +2,12 @@
 
 namespace Mage
 {
-
     /// <summary>
     /// This class contains a canonical Mage command that can
     /// be sent between application components
     /// </summary>
     public class MageCommandEventArgs : EventArgs
     {
-
         /// <summary>
         /// Name of the action that the command is calling for
         /// </summary>

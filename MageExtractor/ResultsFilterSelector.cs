@@ -5,8 +5,6 @@ using Mage;
 
 namespace MageExtractor {
     public partial class ResultsFilterSelector : Form , IModuleParameters {
-
-
         #region Member Variables
 
         readonly Dictionary<string, string> mParameters = new Dictionary<string, string>();
@@ -91,7 +89,6 @@ namespace MageExtractor {
 
         private void UpdateSelectedFilterSetID() {
             if (!string.IsNullOrEmpty(mFilterSetIDToAutoSelect)) {
-
                 // Find the row with the given filter set ID
                 foreach (DataGridViewRow item in gridViewDisplayControl1.List.Rows) {
                     if (item.Cells[0].Value.ToString() == mFilterSetIDToAutoSelect) {
@@ -103,7 +100,6 @@ namespace MageExtractor {
                 }
             }
         }
-
 
         #region Functions for handling status updates
 

@@ -6,10 +6,8 @@ using ShFolderBrowser.FolderBrowser;
 
 namespace MageUIComponents
 {
-
     public partial class LocalFolderPanel : UserControl, IModuleParameters
     {
-
         public event EventHandler<MageCommandEventArgs> OnAction;
 
         #region Member Variables
@@ -94,7 +92,6 @@ namespace MageUIComponents
             set => SubdirectorySearchName = value;
         }
 
-
         #endregion
 
         #region IModuleParameters Members
@@ -155,7 +152,6 @@ namespace MageUIComponents
 
         private void SelectDirectoryCtl_Click(object sender, EventArgs e)
         {
-
             var folderBrowser = new FolderBrowser();
 
             try
@@ -179,7 +175,6 @@ namespace MageUIComponents
                 LocalDirectoryCtl.Text = folderBrowser.FolderPath;
                 MostRecentDirectory = folderBrowser.FolderPath;
             }
-
         }
 
         private void RegExRadioBtn_CheckedChanged(object sender, EventArgs e)
@@ -191,6 +186,5 @@ namespace MageUIComponents
         {
             mSelectionMode = FileListFilter.FILE_SELECTOR_NORMAL;
         }
-
     }
 }

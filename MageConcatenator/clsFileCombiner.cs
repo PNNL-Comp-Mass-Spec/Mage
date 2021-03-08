@@ -7,7 +7,6 @@ namespace MageConcatenator
 {
     class clsFileCombiner
     {
-
         #region Constants and Classwide Variables
 
         public const int MAX_ROWS_TO_TRACK = 100000;
@@ -108,7 +107,6 @@ namespace MageConcatenator
 
                             while (reader.Peek() > -1)
                             {
-
                                 var currentRow = reader.ReadLine();
 
                                 if (string.IsNullOrWhiteSpace(currentRow))
@@ -141,11 +139,9 @@ namespace MageConcatenator
                                         ReportStatus(percentCompleteOverall.ToString("0") + "% complete, processing " + filePath);
                                     }
                                 }
-
                             }
                         }
                     }
-
                 }
 
                 if (mCancelProcessingRequested)
@@ -168,7 +164,6 @@ namespace MageConcatenator
                 return false;
             }
         }
-
 
         private char GetDelimiter(FileSystemInfo fiFile)
         {
@@ -197,7 +192,6 @@ namespace MageConcatenator
             }
             else
             {
-
                 // Compare this file's header to the first file's header
                 if (headerLine.Equals(currentRow, StringComparison.OrdinalIgnoreCase))
                 {
@@ -222,7 +216,6 @@ namespace MageConcatenator
                 else
                     writer.WriteLine(currentHeader);
             }
-
         }
 
         public bool UpdateFileRowColCounts(List<clsFileInfo> lstFiles)
@@ -284,7 +277,6 @@ namespace MageConcatenator
                             {
                                 colCount = columns.Length;
                             }
-
                         }
                     }
 
@@ -326,7 +318,6 @@ namespace MageConcatenator
             }
 
             return delimiter;
-
         }
 
         protected void ReportProcessingComplete(string message)

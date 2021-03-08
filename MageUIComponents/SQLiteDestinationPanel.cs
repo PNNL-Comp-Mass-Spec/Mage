@@ -7,10 +7,8 @@ using Mage;
 
 namespace MageUIComponents
 {
-
     public partial class SQLiteDestinationPanel : UserControl, IModuleParameters
     {
-
         public SQLiteDestinationPanel()
         {
             InitializeComponent();
@@ -124,6 +122,5 @@ namespace MageUIComponents
         {
             DatabaseNameCtl.Text = ValidateFileExtension(DatabaseNameCtl.Text);
         }
-
     }
 }

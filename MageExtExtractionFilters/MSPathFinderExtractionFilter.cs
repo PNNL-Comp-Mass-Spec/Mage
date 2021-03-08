@@ -6,7 +6,6 @@ namespace MageExtExtractionFilters
 {
     class MSPathFinderExtractionFilter : ExtractionFilter
     {
-
         #region "Enums"
         public enum MSPathFinderColumns
         {
@@ -100,7 +99,6 @@ namespace MageExtExtractionFilters
         {
             if (args.DataAvailable)
             {
-
                 var outRow = MapDataRow(args.Fields);
 
                 if (!mOutputAllProteins)
@@ -120,7 +118,6 @@ namespace MageExtExtractionFilters
                 }
                 else
                 {
-
                     var rows = mProteinMerger.MergeAllProteins(outRow, out var matchFound);
                     if (rows == null)
                     {
@@ -155,7 +152,6 @@ namespace MageExtExtractionFilters
 
                 ++mTotalRowsCounter;
                 ReportProgress();
-
             }
             else
             {
@@ -210,7 +206,6 @@ namespace MageExtExtractionFilters
 
         public static void DetermineFieldIndexes(Dictionary<string, int> columnHeaders, out Dictionary<MSPathFinderColumns, int> dctColumnMapping)
         {
-
             dctColumnMapping = new Dictionary<MSPathFinderColumns, int>
             {
                 {MSPathFinderColumns.Scan, GetColumnIndex(columnHeaders, "Scan")},
@@ -223,12 +218,10 @@ namespace MageExtExtractionFilters
                 {MSPathFinderColumns.QValue, GetColumnIndex(columnHeaders, "QValue")},
                 {MSPathFinderColumns.PepQValue, GetColumnIndex(columnHeaders, "PepQValue")}
             };
-
         }
 
         public static int GetColumnIndex(Dictionary<MSPathFinderColumns, int> columnPos, MSPathFinderColumns columnName)
         {
-
             if (columnPos.TryGetValue(columnName, out var value))
                 return value;
 
@@ -253,8 +246,6 @@ namespace MageExtExtractionFilters
 
         private void PrecalculateFieldIndexes(Dictionary<string, int> columnPos)
         {
-
-
             DetermineFieldIndexes(columnPos, out var dctColumnMapping);
 
             mColumnIndices.ScanNumber = GetColumnIndex(dctColumnMapping, MSPathFinderColumns.Scan);
@@ -268,7 +259,6 @@ namespace MageExtExtractionFilters
 
             qValueIndex = GetColumnIndex(dctColumnMapping, MSPathFinderColumns.QValue);
             pepqValueIndex = GetColumnIndex(dctColumnMapping, MSPathFinderColumns.PepQValue);
-
         }
 
         /// <summary>
@@ -277,7 +267,6 @@ namespace MageExtExtractionFilters
         /// </summary>
         public static FilterMSPathFinderResults MakeMSPathFinderResultChecker(string FilterSetID)
         {
-
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("Extraction_Filter_Set_List");
             var runtimeParms = new Dictionary<string, string>() { { "Filter_Set_ID", FilterSetID } };
             var reader = new SQLReader(queryDefXML, runtimeParms);
@@ -292,6 +281,5 @@ namespace MageExtExtractionFilters
             // Create new MSGF+ filter object with retrieved filter criteria
             return new FilterMSPathFinderResults(filterCriteria.Rows, FilterSetID);
         }
-
     }
 }

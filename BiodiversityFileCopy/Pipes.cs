@@ -317,7 +317,6 @@ FROM (
         /// <returns></returns>
         private static SimpleSink AddParentDirectoryToJobList(SimpleSink jobList, string datasetDirectoryColName)
         {
-
             // Set up pipeline source to only do rows with package IDs in whitelist
             var src = new SinkWrapper(jobList);
 
@@ -433,6 +432,5 @@ FROM (
         {
             return datasetList.Rows.Select(row => row[datasetList.ColumnIndex[colName]]);
         }
-
     }
 }

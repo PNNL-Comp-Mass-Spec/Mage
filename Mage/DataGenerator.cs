@@ -3,14 +3,12 @@ using System.Collections.ObjectModel;
 
 namespace Mage
 {
-
     /// <summary>
     /// Mage module that can generate a simulated data stream on Mage standard tabular output
     /// or accept a set of data that it will stream to ouput
     /// </summary>
     public class DataGenerator : BaseModule
     {
-
         #region Member Variables
 
         private readonly List<string[]> mAdHocRows = new List<string[]>();
@@ -95,7 +93,6 @@ namespace Mage
             Cols = 5;
         }
         #endregion
-
 
         #region IBaseModule Members
 
@@ -201,5 +198,4 @@ namespace Mage
         #endregion
 
     }
-
 }
