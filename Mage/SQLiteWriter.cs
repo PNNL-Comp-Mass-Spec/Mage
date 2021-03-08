@@ -277,10 +277,6 @@ namespace Mage
             // Create the target file if it doesn't exist.
             AssureDBExists();
 
-            // Prepare a CREATE TABLE DDL statement
-            var query = BuildCreateTableQuery(mSchema);
-            traceLogWriter.Info(Environment.NewLine + Environment.NewLine + query + Environment.NewLine + Environment.NewLine);
-
             try
             {
                 // Check whether the table already exists
@@ -288,19 +284,24 @@ namespace Mage
 
                 if (TableExists(mSchema.TableName))
                 {
-                    traceLogWriter.Debug("SQLite table already exists: [" + mSchema.TableName + "]");
+                    traceLogWriter.Info("SQLite table already exists: [" + mSchema.TableName + "]");
                     return;
                 }
+
+                // Prepare a CREATE TABLE DDL statement
+                var query = BuildCreateTableQuery(mSchema);
+                traceLogWriter.Info(Environment.NewLine + Environment.NewLine + query + Environment.NewLine + Environment.NewLine);
 
                 // Execute the query in order to actually create the table.
                 var cmd = new SQLiteCommand(query, mConnection);
                 cmd.ExecuteNonQuery();
+
+                traceLogWriter.Debug("added schema for SQLite table [" + mSchema.TableName + "]");
             }
             catch (SQLiteException ex)
             {
                 traceLogWriter.Error("CreateTableInDatabase failed: " + ex.Message);
             }
-            traceLogWriter.Debug("added schema for SQLite table [" + mSchema.TableName + "]");
         }
 
         private void CopyTabularDataRowsToSQLiteDB()
@@ -371,12 +372,13 @@ namespace Mage
                 AssureDBConnection();
                 var cmd = new SQLiteCommand(query, mConnection);
                 cmd.ExecuteNonQuery();
+
+                traceLogWriter.Debug("Executed raw SQL");
             }
             catch (SQLiteException ex)
             {
                 traceLogWriter.Error("ExecuteSQLInDatabase failed: " + ex.Message);
             }
-            traceLogWriter.Debug("Executed raw SQL");
         }
 
         #endregion
