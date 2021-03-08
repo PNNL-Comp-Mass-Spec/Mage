@@ -278,14 +278,13 @@ namespace Mage
             AssureDBExists();
 
             // Prepare a CREATE TABLE DDL statement
-            var stmt = BuildCreateTableQuery(mSchema);
-            traceLogWriter.Info(Environment.NewLine + Environment.NewLine + stmt + Environment.NewLine + Environment.NewLine);
+            var query = BuildCreateTableQuery(mSchema);
+            traceLogWriter.Info(Environment.NewLine + Environment.NewLine + query + Environment.NewLine + Environment.NewLine);
 
             try
             {
                 // Execute the query in order to actually create the table.
-                AssureDBConnection();
-                var cmd = new SQLiteCommand(stmt, mConnection);
+                var cmd = new SQLiteCommand(query, mConnection);
                 cmd.ExecuteNonQuery();
             }
             catch (SQLiteException ex)
@@ -352,16 +351,16 @@ namespace Mage
             }
         }
 
-        private void ExecuteSQLInDatabase(string stmt)
+        private void ExecuteSQLInDatabase(string query)
         {
             AssureDBExists();
 
-            traceLogWriter.Info(Environment.NewLine + Environment.NewLine + stmt + Environment.NewLine + Environment.NewLine);
+            traceLogWriter.Info(Environment.NewLine + Environment.NewLine + query + Environment.NewLine + Environment.NewLine);
 
             try
             {
                 AssureDBConnection();
-                var cmd = new SQLiteCommand(stmt, mConnection);
+                var cmd = new SQLiteCommand(query, mConnection);
                 cmd.ExecuteNonQuery();
             }
             catch (SQLiteException ex)
@@ -388,8 +387,8 @@ namespace Mage
             for (var i = 0; i <= ts.Columns.Count - 1; i++)
             {
                 var col = ts.Columns[i];
-                var cline = BuildColumnStatement(col);
-                sb.Append(cline);
+                var columnLine = BuildColumnStatement(col);
+                sb.Append(columnLine);
                 if (i < ts.Columns.Count - 1)
                 {
                     sb.Append("," + Environment.NewLine);
