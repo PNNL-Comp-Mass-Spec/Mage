@@ -283,6 +283,15 @@ namespace Mage
 
             try
             {
+                // Check whether the table already exists
+                // Note that this will call AssureDBConnection();
+
+                if (TableExists(mSchema.TableName))
+                {
+                    traceLogWriter.Debug("SQLite table already exists: [" + mSchema.TableName + "]");
+                    return;
+                }
+
                 // Execute the query in order to actually create the table.
                 var cmd = new SQLiteCommand(query, mConnection);
                 cmd.ExecuteNonQuery();
@@ -699,6 +708,25 @@ namespace Mage
             return StripParens(m.Groups[1].Value);
         }
 
+        private bool TableExists(string tableName)
+        {
+            try
+            {
+                AssureDBConnection();
+
+                var query = string.Format("SELECT count(*) as Items FROM sqlite_master WHERE type='table' AND name='{0}' COLLATE NOCASE;", tableName);
+
+                var cmd = new SQLiteCommand(query, mConnection);
+                var result = cmd.ExecuteScalar();
+
+                return Convert.ToInt32(result) > 0;
+            }
+            catch (SQLiteException ex)
+            {
+                traceLogWriter.Error("TableExists check failed: " + ex.Message);
+                return false;
+            }
+        }
 
         /// <summary>
         /// Check if the DEFAULT clause is valid by SQLite standards
