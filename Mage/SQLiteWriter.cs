@@ -17,6 +17,7 @@ namespace Mage
     /// </summary>
     public sealed class SQLiteWriter : BaseModule, IDisposable
     {
+        // Ignore Spelling: yyyy-MM-dd, HH:mm:ss, sqlite
 
         private static readonly FileLogger traceLogWriter = new FileLogger(FileLogger.BaseLogFileName, BaseLogger.LogLevels.INFO, FileLogger.AppendDateToBaseFileName);
 
@@ -51,7 +52,7 @@ namespace Mage
         public string TableName { get; set; }
 
         /// <summary>
-        /// Optional list of column defs that will be used when creating the target table in the SqLite database
+        /// Optional list of column definitions that will be used when creating the target table in the SqLite database
         /// </summary>
         /// <remarks>This list does not need to contain all of the columns; only those for which the data type is not text (e.g. integer or real)</remarks>
         public List<MageColumnDef> ColDefOverride { get; set; }
@@ -105,7 +106,7 @@ namespace Mage
                 // Code to dispose the managed resources of the class
             }
 
-            // Code to dispose the un-managed resources of the class
+            // Code to dispose the unmanaged resources of the class
             mConnection?.Dispose();
 
             // isDisposed = true;
@@ -261,7 +262,7 @@ namespace Mage
             {
                 var sqliteConnString = CreateSQLiteConnectionString(DbPath, DbPassword);
 
-                // Note: providing true for parseViaFramework as a workaround for reading SqLite files located on UNC or in readonly directories
+                // Note: providing true for parseViaFramework as a workaround for reading SqLite files located on UNC or in read only directories
                 mConnection = new SQLiteConnection(sqliteConnString, true);
                 mConnection.Open();
             }
@@ -459,7 +460,10 @@ namespace Mage
             return connectionString;
         }
 
-        // Creates the SQLite database from the schema read from the SQL Server.
+        /// <summary>
+        /// Creates a SQLite database
+        /// </summary>
+        /// <param name="sqlitePath"></param>
         private static void CreateSQLiteDatabaseOnly(string sqlitePath)
         {
             traceLogWriter.Debug("Creating SQLite database...");
@@ -697,7 +701,12 @@ namespace Mage
             return StripParens(m.Groups[1].Value);
         }
 
-        // Check if the DEFAULT clause is valid by SQLite standards
+
+        /// <summary>
+        /// Check if the DEFAULT clause is valid by SQLite standards
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         private static bool IsValidDefaultValue(string value)
         {
             if (IsSingleQuoted(value))
@@ -723,7 +732,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Discards the Unicode prefix if it exists (e.g., N'sometext') which is not supported in SQLite.
+        /// Discards the Unicode prefix if it exists (e.g., N'SomeText') which is not supported in SQLite.
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
