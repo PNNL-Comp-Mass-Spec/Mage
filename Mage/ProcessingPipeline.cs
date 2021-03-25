@@ -22,7 +22,7 @@ namespace Mage
     /// </summary>
     public class ProcessingPipeline
     {
-        private static readonly FileLogger traceLogPipeline = new FileLogger(FileLogger.BaseLogFileName, BaseLogger.LogLevels.INFO, FileLogger.AppendDateToBaseFileName);
+        private static readonly FileLogger traceLogPipeline = new(FileLogger.BaseLogFileName, BaseLogger.LogLevels.INFO, FileLogger.AppendDateToBaseFileName);
 
         /// <summary>
         /// Event that is fired during execution of pipeline
@@ -46,12 +46,12 @@ namespace Mage
         /// <summary>
         /// Ordered list of modules managed by this pipeline object
         /// </summary>
-        private readonly List<IBaseModule> mModuleList = new List<IBaseModule>();
+        private readonly List<IBaseModule> mModuleList = new();
 
         /// <summary>
         /// Lookup reference for modules managed by this pipeline object (indexed by module name)
         /// </summary>
-        private readonly Dictionary<string, IBaseModule> mModuleIndex = new Dictionary<string, IBaseModule>();
+        private readonly Dictionary<string, IBaseModule> mModuleIndex = new();
 
         #endregion
 
@@ -80,7 +80,7 @@ namespace Mage
         /// <summary>
         /// Return list of module in pipeline
         /// </summary>
-        public Collection<IBaseModule> ModuleList => new Collection<IBaseModule>(mModuleList);
+        public Collection<IBaseModule> ModuleList => new(mModuleList);
 
         #endregion
 
@@ -474,12 +474,12 @@ namespace Mage
         /// <summary>
         /// Buffer to accumulate error messages from status update stream
         /// </summary>
-        private readonly List<string> mErrorMessages = new List<string>();
+        private readonly List<string> mErrorMessages = new();
 
         /// <summary>
         /// Get error messages
         /// </summary>
-        public Collection<string> ErrorMessages => new Collection<string>(mErrorMessages);
+        public Collection<string> ErrorMessages => new(mErrorMessages);
 
         #endregion
 

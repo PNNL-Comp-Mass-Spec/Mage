@@ -31,7 +31,7 @@ namespace MageExtExtractionFilters
 
         public static Dictionary<string, ResultType> TypeList { get; } = new Dictionary<string, ResultType>();
 
-        private static readonly List<ResultType> Types = new List<ResultType>() {
+        private static readonly List<ResultType> Types = new() {
             //                 Name                         Tag           Filter           resultsFileTag                       IDColumnName
             new ResultType("Sequest Synopsis",              "syn",        "sequest",       "_syn.txt",                          "HitNum"),
             new ResultType("Sequest First Hits",            "fht",        "sequest",       "_fht.txt",                          "HitNum"),
@@ -45,7 +45,7 @@ namespace MageExtExtractionFilters
             new ResultType(MSPATHFINDER_SYN_ALL_PROTEINS,   "mspath_syn", "mspathfinder",  "_mspath_syn.txt",                   "ResultID")
         };
 
-        private static readonly List<MergeFile> mMergeTypes = new List<MergeFile>() {
+        private static readonly List<MergeFile> mMergeTypes = new() {
             //                 ResultName              NameColumn        KeyCol           FileNameTag
             new MergeFile("X!Tandem First Protein", "ResultToSeqMap",  "Result_ID",     "_xt_ResultToSeqMap.txt"),
             new MergeFile("X!Tandem First Protein", "SeqToProteinMap", "Unique_Seq_ID", "_xt_SeqToProteinMap.txt"),

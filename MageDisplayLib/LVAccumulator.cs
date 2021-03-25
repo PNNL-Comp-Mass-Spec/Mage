@@ -34,9 +34,9 @@ namespace MageDisplayLib
 
         #region Member Variables
 
-        private readonly List<ListViewItem> itemAccumulator = new List<ListViewItem>();
-        private readonly List<ColumnHeader> columnAccumulator = new List<ColumnHeader>();
-        private List<MageColumnDef> mColumnDefs = new List<MageColumnDef>();
+        private readonly List<ListViewItem> itemAccumulator = new();
+        private readonly List<ColumnHeader> columnAccumulator = new();
+        private List<MageColumnDef> mColumnDefs = new();
 
         #endregion
 
@@ -50,12 +50,12 @@ namespace MageDisplayLib
         /// <summary>
         /// Definition of columns
         /// </summary>
-        public Collection<MageColumnDef> ColumnDefs => new Collection<MageColumnDef>(mColumnDefs);
+        public Collection<MageColumnDef> ColumnDefs => new(mColumnDefs);
 
         /// <summary>
         /// Get the column definitions
         /// </summary>
-        public Collection<MageColumnDef> Columns => new Collection<MageColumnDef>(mColumnDefs);
+        public Collection<MageColumnDef> Columns => new(mColumnDefs);
 
         #endregion
 

@@ -12,7 +12,7 @@ namespace Mage
     /// </summary>
     public sealed class SQLiteReader : BaseModule, IDisposable
     {
-        private static readonly FileLogger traceLogReader = new FileLogger(FileLogger.BaseLogFileName, BaseLogger.LogLevels.INFO, FileLogger.AppendDateToBaseFileName);
+        private static readonly FileLogger traceLogReader = new(FileLogger.BaseLogFileName, BaseLogger.LogLevels.INFO, FileLogger.AppendDateToBaseFileName);
 
         #region Member Variables
 

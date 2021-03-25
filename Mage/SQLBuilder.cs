@@ -36,11 +36,11 @@ namespace Mage
 
         #region Member Variables
 
-        private readonly List<QueryPredicate> mPredicates = new List<QueryPredicate>();
+        private readonly List<QueryPredicate> mPredicates = new();
 
-        private readonly Dictionary<string, QueryPredicate> mDefaultPredicates = new Dictionary<string, QueryPredicate>();
+        private readonly Dictionary<string, QueryPredicate> mDefaultPredicates = new();
 
-        private readonly List<QuerySort> mSortingItems = new List<QuerySort>();
+        private readonly List<QuerySort> mSortingItems = new();
 
         #endregion
 

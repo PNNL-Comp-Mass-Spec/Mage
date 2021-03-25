@@ -20,7 +20,7 @@ namespace MageConcatenator
         /// <summary>
         /// Pipeline queue for running the multiple pipelines that make up the workflows for this module
         /// </summary>
-        private readonly PipelineQueue mPipelineQueue = new PipelineQueue();
+        private readonly PipelineQueue mPipelineQueue = new();
 
         private string mFinalPipelineName = string.Empty;
 

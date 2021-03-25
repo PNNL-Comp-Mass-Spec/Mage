@@ -29,15 +29,15 @@ namespace MageConcatenator
         /// <summary>
         /// List of names of all menu items created by this class
         /// </summary>
-        private readonly List<string> mAllMenuItems = new List<string>();
+        private readonly List<string> mAllMenuItems = new();
 
         /// <summary>
         /// Lists of names of menu items
         /// that are sensitive to presence of certain columns in list display
         /// </summary>
-        private readonly List<string> mDirectorySensitiveMenuItems = new List<string>();
-        private readonly List<string> mJobSensitiveMenuItems = new List<string>();
-        private readonly List<string> mDatasetSensitiveMenuItems = new List<string>();
+        private readonly List<string> mDirectorySensitiveMenuItems = new();
+        private readonly List<string> mJobSensitiveMenuItems = new();
+        private readonly List<string> mDatasetSensitiveMenuItems = new();
 
         #endregion
 

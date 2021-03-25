@@ -23,7 +23,7 @@ namespace MageDisplayLib
         /// <summary>
         /// Get contents of text display as list of lines
         /// </summary>
-        public Collection<string> Lines => new Collection<string>(MainTextCtl.Lines);
+        public Collection<string> Lines => new(MainTextCtl.Lines);
 
         /// <summary>
         /// Control whether text can be edited

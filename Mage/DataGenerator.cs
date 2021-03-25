@@ -11,7 +11,7 @@ namespace Mage
     {
         #region Member Variables
 
-        private readonly List<string[]> mAdHocRows = new List<string[]>();
+        private readonly List<string[]> mAdHocRows = new();
 
         #endregion
 
@@ -25,7 +25,7 @@ namespace Mage
         /// <summary>
         /// Get the contents of the internal row buffer
         /// </summary>
-        public Collection<string[]> AdHocRows => new Collection<string[]>(mAdHocRows);
+        public Collection<string[]> AdHocRows => new(mAdHocRows);
 
         /// <summary>
         /// Include header row in generated data

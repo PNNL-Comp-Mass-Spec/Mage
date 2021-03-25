@@ -18,7 +18,8 @@ namespace MageFilePackager
 
         public static readonly string DataPackageShareRoot = @"\\protoapps\DataPkgs\";
 
-        public static readonly Dictionary<string, string> PrefixList = new Dictionary<string, string> {
+        public static readonly Dictionary<string, string> PrefixList = new()
+        {
                                                                       { "Job", @"\\agate.emsl.pnl.gov\dmsarch\"},
                                                                       { "Data_Package", @"\\agate.emsl.pnl.gov\archive\prismarch\DataPkgs\" },
                                                                       { "Dataset", @"\\agate.emsl.pnl.gov\dmsarch\" }

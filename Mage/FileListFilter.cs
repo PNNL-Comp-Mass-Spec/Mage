@@ -39,7 +39,7 @@ namespace Mage
         /// <summary>
         /// List of subdirectories to search when RecursiveSearch is enabled ("Search in subdirectories")
         /// </summary>
-        private readonly List<string[]> mSearchSubdirectories = new List<string[]>();
+        private readonly List<string[]> mSearchSubdirectories = new();
 
         #endregion
 

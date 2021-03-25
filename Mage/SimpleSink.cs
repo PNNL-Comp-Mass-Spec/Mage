@@ -27,7 +27,7 @@ namespace Mage
         /// <summary>
         /// An internal buffer for accumulating rows passed in via the standard tabular input handler
         /// </summary>
-        private readonly List<string[]> SavedRows = new List<string[]>();
+        private readonly List<string[]> SavedRows = new();
 
         #endregion
 
@@ -46,7 +46,7 @@ namespace Mage
         /// <summary>
         /// Get the column definitions
         /// </summary>
-        public Collection<MageColumnDef> Columns => new Collection<MageColumnDef>(InputColumnDefs);
+        public Collection<MageColumnDef> Columns => new(InputColumnDefs);
 
         /// <summary>
         /// Association of name of input column with its column position index
@@ -57,7 +57,7 @@ namespace Mage
         /// <summary>
         /// Get rows that were accumulated in the internal row buffer
         /// </summary>
-        public Collection<string[]> Rows => new Collection<string[]>(SavedRows);
+        public Collection<string[]> Rows => new(SavedRows);
 
         #endregion
 

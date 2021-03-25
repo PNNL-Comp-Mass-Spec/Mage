@@ -18,11 +18,11 @@ namespace Mage
 
         // Master list of entities to build crosstab against.
         // It is a dictionary of entity ID/entity name key/value pairs
-        private readonly Dictionary<string, string> mEntityList = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> mEntityList = new();
 
         // Accumulator list of factors
         // It is a dictionary, keyed by entity ID, of dictionaries of name/value pairs for the crosstab fields
-        private readonly Dictionary<string, Dictionary<string, string>> mFactorList = new Dictionary<string, Dictionary<string, string>>();
+        private readonly Dictionary<string, Dictionary<string, string>> mFactorList = new();
 
         #endregion
 

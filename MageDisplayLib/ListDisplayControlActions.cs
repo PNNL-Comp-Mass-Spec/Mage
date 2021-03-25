@@ -20,8 +20,8 @@ namespace MageDisplayLib
         /// <summary>
         /// List of names of all menu items created by this class
         /// </summary>
-        private readonly List<string> mAllMenuItems = new List<string>();
-        private readonly List<string> mSelectAllMenuItems = new List<string>();
+        private readonly List<string> mAllMenuItems = new();
+        private readonly List<string> mSelectAllMenuItems = new();
 
         #endregion
 

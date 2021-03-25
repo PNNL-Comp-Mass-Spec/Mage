@@ -94,12 +94,12 @@ namespace MageDisplayLib
         /// <summary>
         /// Generic data type of each column
         /// </summary>
-        private readonly List<eSqlDataColType> mListViewColTypes = new List<eSqlDataColType>();
+        private readonly List<eSqlDataColType> mListViewColTypes = new();
 
         /// <summary>
         /// Convenience array listing column names
         /// </summary>
-        private readonly List<string> mListViewColNames = new List<string>();
+        private readonly List<string> mListViewColNames = new();
 
         /// <summary>
         /// Sort info
@@ -142,7 +142,7 @@ namespace MageDisplayLib
         /// <summary>
         /// Get collection of definitions of columns
         /// </summary>
-        public Collection<MageColumnDef> ColumnDefs => new Collection<MageColumnDef>(Accumulator.ColumnDefs);
+        public Collection<MageColumnDef> ColumnDefs => new(Accumulator.ColumnDefs);
 
         /// <summary>
         /// Get collection of columnn names

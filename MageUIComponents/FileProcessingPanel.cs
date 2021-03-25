@@ -31,7 +31,7 @@ namespace MageUIComponents
         /// <summary>
         /// Stores parameter sets for filters, keyed by filter name.
         /// </summary>
-        private readonly Dictionary<string, Dictionary<string, string>> mParameters = new Dictionary<string, Dictionary<string, string>>();
+        private readonly Dictionary<string, Dictionary<string, string>> mParameters = new();
 
         /// <summary>
         /// Output column list from seleted column mapping (if any)

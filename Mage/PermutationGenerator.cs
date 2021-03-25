@@ -17,7 +17,7 @@ namespace Mage
         /// List of definitions for the parameters that will be permutated
         /// and included in the standard tabular output as columns
         /// </summary>
-        private readonly List<ParameterDef> mParamColDefinitions = new List<ParameterDef>();
+        private readonly List<ParameterDef> mParamColDefinitions = new();
 
         private int mTotalRows = 1;
 
@@ -279,7 +279,7 @@ namespace Mage
             // List of increment values that this parameter object will cycle through.
             // Increment values are either calculated from increment range parameters
             // or supplied as an explicit list
-            private readonly List<string> increments = new List<string>();
+            private readonly List<string> increments = new();
             public int NumberOfIncrements => increments.Count;
 
             // Number of output rows that must pass before this object's

@@ -28,7 +28,7 @@ namespace Mage
         /// <summary>
         /// Trace logger
         /// </summary>
-        protected static readonly FileLogger traceLogFileList = new FileLogger(FileLogger.BaseLogFileName, BaseLogger.LogLevels.INFO, FileLogger.AppendDateToBaseFileName);
+        protected static readonly FileLogger traceLogFileList = new(FileLogger.BaseLogFileName, BaseLogger.LogLevels.INFO, FileLogger.AppendDateToBaseFileName);
 
         #region Member Variables
 
@@ -38,7 +38,7 @@ namespace Mage
         /// It includes the directory path column to be searched for files
         /// so it also functions as an internal file path buffer
         /// </summary>
-        protected readonly List<string[]> mOutputBuffer = new List<string[]>();
+        protected readonly List<string[]> mOutputBuffer = new();
 
         // these are used by the file/subdirectory search logic
 

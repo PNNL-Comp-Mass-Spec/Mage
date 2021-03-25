@@ -18,7 +18,7 @@ namespace MageUIComponents
         /// <summary>
         /// Definition of columns that was read from input file
         /// </summary>
-        private Collection<MageColumnDef> mInputColumnDefs = new Collection<MageColumnDef>();
+        private Collection<MageColumnDef> mInputColumnDefs = new();
 
         private bool mAddingMapping;
 

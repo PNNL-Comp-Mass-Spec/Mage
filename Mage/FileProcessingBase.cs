@@ -45,7 +45,7 @@ namespace Mage
         /// Cache of files stored in MyEMSL for datasets that the user searches for
         /// </summary>
         /// <remarks>Initially does not have any datasets; add them as data is processed</remarks>
-        protected static readonly DatasetListInfo m_MyEMSLDatasetInfoCache = new DatasetListInfo();
+        protected static readonly DatasetListInfo m_MyEMSLDatasetInfoCache = new();
 
         /// <summary>
         /// Set to true once events have been attached to m_MyEMSLDatasetInfoCache
@@ -73,13 +73,13 @@ namespace Mage
         ///   \\a2.emsl.pnl.gov\dmsarch\VPro01\2013_3\QC_Shew_13_04a_500ng_10Sep13_Tiger_13-07-36
         /// The RegEx can also be used to determine the portion of a path that includes parent directories and the dataset directory
         /// </summary>
-        private readonly Regex mDatasetMatchStrict = new Regex(@"\\\\[^\\]+(?:\\[^\\]+)?(?:\\[^\\]+)?\\[^\\]+\\2[0-9][0-9][0-9]_[1-4]\\(?<Dataset>[^\\]+)", RegexOptions.Compiled);
+        private readonly Regex mDatasetMatchStrict = new(@"\\\\[^\\]+(?:\\[^\\]+)?(?:\\[^\\]+)?\\[^\\]+\\2[0-9][0-9][0-9]_[1-4]\\(?<Dataset>[^\\]+)", RegexOptions.Compiled);
 
         /// <summary>
         /// RegEx to extract the dataset name from a path of the form \2013_3\QC_Shew_13_04f_500ng_10Sep13_Tiger_13-07-34
         /// he RegEx can also be used to determine the portion of a path that includes parent directories and the dataset directory
         /// </summary>
-        private readonly Regex mDatasetMatchLoose = new Regex(@"(^|\\)2[0-9][0-9][0-9]_[1-4]\\(?<Dataset>[^\\]+)", RegexOptions.Compiled);
+        private readonly Regex mDatasetMatchLoose = new(@"(^|\\)2[0-9][0-9][0-9]_[1-4]\\(?<Dataset>[^\\]+)", RegexOptions.Compiled);
 
         /// <summary>
         /// Constructor

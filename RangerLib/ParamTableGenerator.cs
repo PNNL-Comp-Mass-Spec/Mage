@@ -5,12 +5,12 @@ namespace RangerLib
 {
     public class ParamTableGenerator
     {
-        private PermutationGenerator mPGenModule = new PermutationGenerator();
+        private PermutationGenerator mPGenModule = new();
 
         /// <summary>
         /// Lookup for operator associated with a parameter name
         /// </summary>
-        private readonly Dictionary<string, string> mParamOperatorLookup = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> mParamOperatorLookup = new();
 
         /// <summary>
         /// Inform user of how many rows will be generated (after parameters are set)

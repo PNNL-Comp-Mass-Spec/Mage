@@ -13,7 +13,7 @@ namespace MageExtContentFilters {
     public partial class XTFilterPanel : Form, IModuleParameters {
         #region Member Variables
 
-        Dictionary<string, string> mParameters = new Dictionary<string, string>();
+        Dictionary<string, string> mParameters = new();
 
         string mFilterSetIDToAutoSelect = string.Empty;
 

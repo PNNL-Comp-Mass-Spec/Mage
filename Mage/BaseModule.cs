@@ -10,7 +10,7 @@ namespace Mage
     /// </summary>
     public class BaseModule : IBaseModule
     {
-        private static readonly FileLogger traceLogBase = new FileLogger(FileLogger.BaseLogFileName, BaseLogger.LogLevels.INFO, FileLogger.AppendDateToBaseFileName);
+        private static readonly FileLogger traceLogBase = new(FileLogger.BaseLogFileName, BaseLogger.LogLevels.INFO, FileLogger.AppendDateToBaseFileName);
 
         /// <summary>
         /// Constant used when no files are found
@@ -41,13 +41,13 @@ namespace Mage
         /// Master list of input column definitions
         /// (default HandleColumnDef will build this)
         /// </summary>
-        protected readonly List<MageColumnDef> InputColumnDefs = new List<MageColumnDef>();
+        protected readonly List<MageColumnDef> InputColumnDefs = new();
 
         /// <summary>
         /// Master list of input column position keyed to column name (for lookup of column index by column name)
         /// (default HandleColumnDef will build this)
         /// </summary>
-        protected Dictionary<string, int> InputColumnPos = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+        protected Dictionary<string, int> InputColumnPos = new(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
         /// Temporary working reference to input column field used during output column mapping

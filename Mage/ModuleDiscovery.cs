@@ -167,18 +167,18 @@ namespace Mage
         /// <summary>
         /// List of attributes for filters and parameter panels
         /// </summary>
-        private static Collection<MageAttribute> mFilterList = new Collection<MageAttribute>();
+        private static Collection<MageAttribute> mFilterList = new();
 
         /// <summary>
         /// List of attributes for filters, and filter panels, indexed by ID
         /// </summary>
-        private static readonly Dictionary<string, MageAttribute> mFilters = new Dictionary<string, MageAttribute>();
-        private static readonly Dictionary<string, MageAttribute> mPanels = new Dictionary<string, MageAttribute>();
+        private static readonly Dictionary<string, MageAttribute> mFilters = new();
+        private static readonly Dictionary<string, MageAttribute> mPanels = new();
 
         /// <summary>
         /// List of attributes for filters, indexed by label
         /// </summary>
-        private static readonly Dictionary<string, MageAttribute> mFiltersByLabel = new Dictionary<string, MageAttribute>();
+        private static readonly Dictionary<string, MageAttribute> mFiltersByLabel = new();
 
         /// <summary>
         /// Get list of filter labels (for display)

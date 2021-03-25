@@ -11,8 +11,8 @@ namespace MageUnitTests
         #region Member Variables
 
         // An internal buffer for accumulating rows passed in via the standard tabular input handler
-        protected readonly List<string[]> SavedRows = new List<string[]>();
-        protected readonly List<string[]> SavedMappedRows = new List<string[]>();
+        protected readonly List<string[]> SavedRows = new();
+        protected readonly List<string[]> SavedMappedRows = new();
 
         #endregion
 

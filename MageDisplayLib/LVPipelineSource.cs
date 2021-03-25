@@ -18,9 +18,9 @@ namespace MageDisplayLib
         // Object whose data we are serving
         private readonly ListDisplayControl myListControl;
 
-        private readonly List<MageColumnDef> mColumnDefs = new List<MageColumnDef>();
+        private readonly List<MageColumnDef> mColumnDefs = new();
 
-        private readonly List<List<string>> RowBuffer = new List<List<string>>();
+        private readonly List<List<string>> RowBuffer = new();
 
         #endregion
 

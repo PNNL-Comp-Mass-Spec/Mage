@@ -19,14 +19,14 @@ namespace Mage
     {
         // Ignore Spelling: yyyy-MM-dd, HH:mm:ss, sqlite
 
-        private static readonly FileLogger traceLogWriter = new FileLogger(FileLogger.BaseLogFileName, BaseLogger.LogLevels.INFO, FileLogger.AppendDateToBaseFileName);
+        private static readonly FileLogger traceLogWriter = new(FileLogger.BaseLogFileName, BaseLogger.LogLevels.INFO, FileLogger.AppendDateToBaseFileName);
 
         #region Member Variables
 
         /// <summary>
         /// Buffer for accumulating rows into output block
         /// </summary>
-        private readonly List<string[]> mRows = new List<string[]>();
+        private readonly List<string[]> mRows = new();
 
         /// <summary>
         /// Description of table we will be inserting rows into

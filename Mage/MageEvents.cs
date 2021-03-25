@@ -74,7 +74,7 @@ namespace Mage
         /// <summary>
         /// List of column definitions
         /// </summary>
-        public Collection<MageColumnDef> ColumnDefs => new Collection<MageColumnDef>(columnDefs);
+        public Collection<MageColumnDef> ColumnDefs => new(columnDefs);
 
         /// <summary>
         /// Construct new MageColumnEventArgs object

@@ -31,7 +31,7 @@ namespace MageFileProcessor
         /// <summary>
         /// Pipeline queue for running the multiple pipelines that make up the workflows for this module
         /// </summary>
-        private PipelineQueue mPipelineQueue = new PipelineQueue();
+        private PipelineQueue mPipelineQueue = new();
 
         private string mFinalPipelineName = string.Empty;
 
@@ -59,7 +59,7 @@ namespace MageFileProcessor
             InitializeComponent();
 
             const bool isBetaVersion = false;
-            SetFormTitle("2021-03-08", isBetaVersion);
+            SetFormTitle("2021-03-25", isBetaVersion);
 
             SetTags();
 

@@ -47,12 +47,12 @@ namespace MageDisplayLib
         /// <summary>
         /// List of ComboBox cell editors
         /// </summary>
-        private readonly List<Control> mPickers = new List<Control>();
+        private readonly List<Control> mPickers = new();
 
         /// <summary>
         /// Association between column index and its ComboBox cell editor
         /// </summary>
-        private readonly Dictionary<int, int> mColumnPickers = new Dictionary<int, int>();
+        private readonly Dictionary<int, int> mColumnPickers = new();
 
         #endregion
 

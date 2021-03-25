@@ -58,7 +58,7 @@ namespace Mage
         /// <summary>
         /// Internal queue of pipelines to be run
         /// </summary>
-        private readonly Queue<ProcessingPipeline> mPipelineQueue = new Queue<ProcessingPipeline>();
+        private readonly Queue<ProcessingPipeline> mPipelineQueue = new();
 
         /// <summary>
         /// Adds a pipeline to the queue

@@ -27,12 +27,12 @@ namespace MageDisplayLib
 
         /// <summary>
         /// </summary>
-        private List<MageColumnDef> mColumnDefs = new List<MageColumnDef>();
+        private List<MageColumnDef> mColumnDefs = new();
 
         /// <summary>
         /// Internal buffer for cell contents from our associated GridViewDisplayControl
         /// </summary>
-        private readonly List<string[]> mRowBuffer = new List<string[]>();
+        private readonly List<string[]> mRowBuffer = new();
 
         #endregion
 

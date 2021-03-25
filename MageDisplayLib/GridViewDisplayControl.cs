@@ -14,7 +14,7 @@ namespace MageDisplayLib
         /// </summary>
         public event EventHandler<EventArgs> SelectionChanged;
 
-        readonly Dictionary<string, string> mParameters = new Dictionary<string, string>();
+        readonly Dictionary<string, string> mParameters = new();
 
         #region IModuleParameters Members
 
@@ -455,7 +455,7 @@ namespace MageDisplayLib
         /// <summary>
         /// Internal buffer to accumulate data rows from standard tabular input
         /// </summary>
-        private readonly Collection<string[]> mRowBuffer = new Collection<string[]>();
+        private readonly Collection<string[]> mRowBuffer = new();
 
         #endregion
 
@@ -622,7 +622,7 @@ namespace MageDisplayLib
         /// </summary>
         public class MyDataGridView : DataGridView
         {
-            private readonly Hashtable myHashTable = new Hashtable();
+            private readonly Hashtable myHashTable = new();
 
             /// <summary>
             /// Defines whether or not user can delete rows using the right-click menu

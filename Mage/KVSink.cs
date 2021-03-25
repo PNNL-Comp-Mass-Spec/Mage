@@ -12,7 +12,7 @@ namespace Mage
         private int mKeyColIdx;
         private int mValColIdx;
 
-        private readonly Dictionary<string, string> mKV = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> mKV = new();
 
         #endregion
 

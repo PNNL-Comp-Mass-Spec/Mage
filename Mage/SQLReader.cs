@@ -19,7 +19,7 @@ namespace Mage
         /// </summary>
         public const string SQL_COMMAND_ERROR = "Problem forming SQL command";
 
-        private static readonly FileLogger traceLogReader = new FileLogger(FileLogger.BaseLogFileName, BaseLogger.LogLevels.INFO, FileLogger.AppendDateToBaseFileName);
+        private static readonly FileLogger traceLogReader = new(FileLogger.BaseLogFileName, BaseLogger.LogLevels.INFO, FileLogger.AppendDateToBaseFileName);
 
         #region member variables
 
@@ -35,7 +35,7 @@ namespace Mage
         /// This dictionary tracks stored procedure parameter names and values
         /// </summary>
         /// <remarks>Keys are stored procedure argument names, values are the value for each argument</remarks>
-        private readonly Dictionary<string, string> mStoredProcParameters = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> mStoredProcParameters = new();
 
         #endregion
 

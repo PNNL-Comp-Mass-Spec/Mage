@@ -83,7 +83,7 @@ namespace MageExtExtractionFilters
         Dictionary<int, int> mFirstOccurrenceIndex;
 
         // Protein data buffer
-        readonly List<ProteinInfo> mProteinDataSorted = new List<ProteinInfo>();
+        readonly List<ProteinInfo> mProteinDataSorted = new();
 
         /// <summary>
         /// Look up first protein identified for result

@@ -57,7 +57,7 @@ namespace MageExtContentFilters
             }
         }
 
-        protected Dictionary<string, List<FilterCriteriaDef>> m_FilterGroups = new Dictionary<string, List<FilterCriteriaDef>>();
+        protected Dictionary<string, List<FilterCriteriaDef>> m_FilterGroups = new();
         protected int m_filterSetID;
         protected Regex m_CleanSeqRegex;
         protected Regex m_CleavageStateRegex;

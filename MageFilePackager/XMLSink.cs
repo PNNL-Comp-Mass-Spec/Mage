@@ -8,7 +8,7 @@ namespace MageFilePackager
     {
         #region Member Variables
 
-        readonly StringBuilder _text = new StringBuilder();
+        readonly StringBuilder _text = new();
 
         #endregion
 

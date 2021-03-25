@@ -55,7 +55,7 @@ namespace Mage
         // Delegate that this module calls to build sub-pipeline
         private FileProcessingPipelineGenerator ProcessingPipelineMaker;
 
-        private Dictionary<string, string> mFileFilterParameters = new Dictionary<string, string>();
+        private Dictionary<string, string> mFileFilterParameters = new();
 
         private string mTableName = string.Empty;
 

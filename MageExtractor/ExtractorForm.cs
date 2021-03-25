@@ -27,7 +27,7 @@ namespace MageExtractor
         /// <summary>
         /// Pipeline queue for running the multiple pipelines that make up the workflows for this module
         /// </summary>
-        private PipelineQueue mPipelineQueue = new PipelineQueue();
+        private PipelineQueue mPipelineQueue = new();
 
         /// <summary>
         /// The parameters for the slated extraction
@@ -42,7 +42,7 @@ namespace MageExtractor
         /// <summary>
         /// Keeps track of the target directories to which files were saved; used by ClearTempFiles
         /// </summary>
-        private readonly SortedSet<string> mOutputDirectoryPaths = new SortedSet<string>();
+        private readonly SortedSet<string> mOutputDirectoryPaths = new();
 
         private string mFinalPipelineName = string.Empty;
 
@@ -55,7 +55,7 @@ namespace MageExtractor
             InitializeComponent();
 
             const bool isBetaVersion = false;
-            SetFormTitle("2021-03-08", isBetaVersion);
+            SetFormTitle("2021-03-25", isBetaVersion);
 
             SetTags();
 
