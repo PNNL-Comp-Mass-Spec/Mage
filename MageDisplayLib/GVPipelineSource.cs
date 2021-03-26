@@ -26,6 +26,7 @@ namespace MageDisplayLib
         private readonly DisplaySourceMode mInputMode;
 
         /// <summary>
+        /// Mage column definitions
         /// </summary>
         private List<MageColumnDef> mColumnDefs = new();
 

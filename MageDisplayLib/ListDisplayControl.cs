@@ -65,28 +65,28 @@ namespace MageDisplayLib
         #region "Member Variables"
 
         /// <summary>
-        /// SQL data type
+        /// SQL data types
         /// </summary>
         protected enum eSqlDataColType
         {
             /// <summary>
-            ///
+            /// Text
             /// </summary>
             text,
             /// <summary>
-            ///
+            /// Integer
             /// </summary>
             numInt,
             /// <summary>
-            ///
+            /// Float
             /// </summary>
             numFloat,
             /// <summary>
-            ///
+            /// Date
             /// </summary>
             date,
             /// <summary>
-            ///
+            /// Binary
             /// </summary>
             binary
         }

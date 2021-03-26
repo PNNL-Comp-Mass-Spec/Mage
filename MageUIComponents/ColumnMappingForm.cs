@@ -720,9 +720,6 @@ namespace MageUIComponents
 
         #region Import Column Definitions
 
-        /// <summary>
-        /// </summary>
-        /// <returns></returns>
         private BaseModule GetReaderForInputPreview()
         {
             BaseModule rdr = null;

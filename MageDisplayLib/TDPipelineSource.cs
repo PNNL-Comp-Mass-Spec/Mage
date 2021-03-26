@@ -57,9 +57,11 @@ namespace MageDisplayLib
 
         #region IBaseModule Members
 
+        /// <summary>
         /// Output each row in associated TextDisplayList object
         /// to Mage standard tabular output, one row at a time.
         /// (override of base class)
+        /// </summary>
         public override void Run(object state)
         {
             doHeaderLine = OptionEnabled(Header);

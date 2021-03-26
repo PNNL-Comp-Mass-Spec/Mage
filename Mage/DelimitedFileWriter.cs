@@ -31,6 +31,7 @@ namespace Mage
         public string FilePath { get; set; }
 
         /// <summary>
+        /// Set to "Yes", "True", or "1" to include a header line in the output file
         /// </summary>
         public string Header { get; set; }
 

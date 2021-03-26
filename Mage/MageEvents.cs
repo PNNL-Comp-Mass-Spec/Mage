@@ -215,7 +215,7 @@ namespace Mage
         }
 
         /// <summary>
-        ///
+        /// Construct a new MageException object
         /// </summary>
         /// <param name="info"></param>
         /// <param name="context"></param>

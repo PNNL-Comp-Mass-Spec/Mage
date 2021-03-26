@@ -7,26 +7,30 @@ namespace MageExtContentFilters
     /// </summary>
     /// <remarks>
     /// This class will be auto-discovered by the ModuleDiscovery class in Mage
-    /// The list of auto-discovered filters is then used to populate the gridview on form FilterSelectionForm.cs
+    /// The list of auto-discovered filters is then used to populate the grid view on form FilterSelectionForm.cs
     /// </remarks>
     [MageAttribute("Filter", "SEQUEST", "SEQUEST filter", "Uses filter criteria defined in DMS")]
     class SequestFilter : ContentFilter
     {
         #region Member Variables
 
-        // Working copy of SEQUEST filter object
+        /// <summary>
+        /// Working copy of SEQUEST filter object
+        /// </summary>
         private FilterSequestResults mSeqFilter;
 
-        // Indexes into the synopsis row field array
+        /// <summary>
+        /// Indexes into the synopsis row field array
+        /// </summary>
         private int peptideSequenceIndex;
         private int xCorrValueIndex;
         private int delCNValueIndex;
         private int delCN2ValueIndex;
         private int chargeStateIndex;
         private int peptideMassIndex;
-        /// private int spectrumCountIndex = 0;
-        /// private int discriminantScoreIndex = 0;
-        /// private int NETAbsoluteDifferenceIndex = 0;
+        // private int spectrumCountIndex = 0;
+        // private int discriminantScoreIndex = 0;
+        // private int NETAbsoluteDifferenceIndex = 0;
         private int cleavageStateIndex;
         private int msgfSpecProbIndex;
         private int rankXcIndex;
