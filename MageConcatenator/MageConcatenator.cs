@@ -418,12 +418,12 @@ namespace MageConcatenator
 
                     var colDefs = new List<MageColumnDef>
                     {
-                        new MageColumnDef("File", "text", "128"),
-                        new MageColumnDef("File_Size_KB", "float", "32"),
-                        new MageColumnDef("File_Date", "string", "128"),
-                        new MageColumnDef("Directory", "string", "255"),
-                        new MageColumnDef("Rows", "string", "32"),
-                        new MageColumnDef("Columns", "string", "32")
+                        new("File", "text", "128"),
+                        new("File_Size_KB", "float", "32"),
+                        new("File_Date", "string", "128"),
+                        new("Directory", "string", "255"),
+                        new("Rows", "string", "32"),
+                        new("Columns", "string", "32")
                     };
 
                     var colDefArgs = new MageColumnEventArgs(colDefs);

@@ -139,9 +139,9 @@ namespace MageUnitTests
 
             var namedModuleList = new Collection<ModuleDef>
             {
-                new ModuleDef("Larry", "DelimitedFileReader"),
-                new ModuleDef("Moe", "NullFilter"),
-                new ModuleDef("Curly", "SimpleSink")
+                new("Larry", "DelimitedFileReader"),
+                new("Moe", "NullFilter"),
+                new("Curly", "SimpleSink")
             };
             var pipeline = ProcessingPipeline.Assemble(pipelineName, namedModuleList);
 
@@ -174,9 +174,9 @@ namespace MageUnitTests
 
             var namedModuleList = new Collection<ModuleDef>
             {
-                new ModuleDef("Larry", reader),
-                new ModuleDef("Moe", "NullFilter"),
-                new ModuleDef("Curly", writer)
+                new("Larry", reader),
+                new("Moe", "NullFilter"),
+                new("Curly", writer)
             };
             var pipeline = ProcessingPipeline.Assemble(pipelineName, namedModuleList);
 

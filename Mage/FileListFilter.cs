@@ -52,7 +52,7 @@ namespace Mage
         /// <summary>
         /// List of directory paths to which the user did not have access
         /// </summary>
-        public SortedSet<string> AccessDeniedSubdirectories { get; } = new SortedSet<string>();
+        public SortedSet<string> AccessDeniedSubdirectories { get; } = new();
 
         /// <summary>
         /// Semi-colon delimited list of file matching patterns

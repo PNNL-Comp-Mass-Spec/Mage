@@ -40,7 +40,7 @@ namespace MageUIComponents
         /// <remarks>
         /// Set of key/value parameters
         /// </remarks>
-        public Dictionary<string, string> InputFileInfo { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> InputFileInfo { get; set; } = new();
 
         /// <summary>
         /// Information about output file or database
@@ -48,7 +48,7 @@ namespace MageUIComponents
         /// <remarks>
         /// Set of key/value parameters
         /// </remarks>
-        public Dictionary<string, string> OutputInfo { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> OutputInfo { get; set; } = new();
 
         /// <summary>
         /// Editing field for the column mapping name

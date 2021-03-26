@@ -39,7 +39,7 @@ namespace MageMetadataProcessor {
         #region IModuleParameters Members
 
         public Dictionary<string, string> GetParameters() {
-            return new Dictionary<string, string>() {
+            return new() {
                 { "TableName",  TableName },
                 { "DBFilePath",  DBFilePath }
             };

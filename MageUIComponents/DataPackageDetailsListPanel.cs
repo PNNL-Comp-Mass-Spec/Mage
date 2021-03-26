@@ -14,8 +14,8 @@ namespace MageUIComponents
 
         public Dictionary<string, string> GetParameters()
         {
-            return new Dictionary<string, string>
-                       {
+            return new()
+            {
                 { "ID", ItemListCtl.Text }
             };
         }

@@ -600,7 +600,7 @@ namespace MageExtractor
         /// </summary>
         private ExtractionType GetExtractionParameters()
         {
-            return new ExtractionType
+            return new()
             {
                 RType = extractionSettingsPanel1.ResultTypeDescription,
                 ResultFilterSetID = extractionSettingsPanel1.ResultFilterSetID,

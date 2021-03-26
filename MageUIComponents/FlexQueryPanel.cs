@@ -13,7 +13,7 @@ namespace MageUIComponents
 
         #region Member Variables
 
-        private readonly List<FlexQueryItemPanel> QueryItemPanels = new List<FlexQueryItemPanel>();
+        private readonly List<FlexQueryItemPanel> QueryItemPanels = new();
 
         #endregion
 
@@ -34,7 +34,7 @@ namespace MageUIComponents
 
         public Dictionary<string, string> GetParameters()
         {
-            return new Dictionary<string, string>
+            return new()
             {
                 { "QueryItem0",   EncodeQueryItem(QueryItemPanels[0])},
                 { "QueryItem1",   EncodeQueryItem(QueryItemPanels[1])},

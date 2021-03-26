@@ -27,8 +27,8 @@ namespace MageFilePackager
 
         public Dictionary<string, string> GetParameters()
         {
-            return new Dictionary<string, string>
-                       {
+            return new()
+            {
                 { "OutputFilePath",   OutputFilePath}
             };
         }

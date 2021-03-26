@@ -10,7 +10,7 @@ namespace MageUIComponents
 
         public Dictionary<string, string> GetParameters()
         {
-            return new Dictionary<string, string>
+            return new()
             {
                 { "ParamName", ParamNameCtl.Text },
                 { "Operator", OperationCtl.Text },

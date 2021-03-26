@@ -29,7 +29,7 @@ namespace MageExtExtractionFilters
             }
         }
 
-        public static Dictionary<string, ResultType> TypeList { get; } = new Dictionary<string, ResultType>();
+        public static Dictionary<string, ResultType> TypeList { get; } = new();
 
         private static readonly List<ResultType> Types = new() {
             //                 Name                         Tag           Filter           resultsFileTag                       IDColumnName

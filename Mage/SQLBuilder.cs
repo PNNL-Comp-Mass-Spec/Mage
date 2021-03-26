@@ -79,12 +79,12 @@ namespace Mage
         /// <summary>
         /// SpecialArgs are used to pass module properties in the collection of query parameters
         /// </summary>
-        public Dictionary<string, string> SpecialArgs { get; } = new Dictionary<string, string>();
+        public Dictionary<string, string> SpecialArgs { get; } = new();
 
         /// <summary>
         /// Get list of stored procedure arguments
         /// </summary>
-        public Dictionary<string, string> SprocParameters { get; } = new Dictionary<string, string>();
+        public Dictionary<string, string> SprocParameters { get; } = new();
 
         /// <summary>
         /// Are there any predicate clauses?
