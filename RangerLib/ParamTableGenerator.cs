@@ -18,7 +18,7 @@ namespace RangerLib
         public int GeneratedParameterCount => mPGenModule.PredictedOutputRowCount;
 
         /// <summary>
-        ///  If output is delivered to file, set the path here if not, leave it blank
+        /// If output is delivered to file, set the path here if not, leave it blank
         /// </summary>
         public string FilePath { get; set; }
 

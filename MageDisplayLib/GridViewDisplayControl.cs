@@ -774,8 +774,8 @@ namespace MageDisplayLib
             }
 
             /// <summary>
-            ///  Raises the System.Windows.Forms.DataGridView.RowsAdded event
-            ///  Updates myHashTable with the currently selected rows
+            /// Raises the System.Windows.Forms.DataGridView.RowsAdded event
+            /// Updates myHashTable with the currently selected rows
             /// </summary>
             /// <param name="e"></param>
             protected override void OnRowsAdded(DataGridViewRowsAddedEventArgs e)
@@ -786,7 +786,7 @@ namespace MageDisplayLib
 
             /// <summary>
             /// Raises the System.Windows.Forms.DataGridView.RowsRemoved event.
-            /// ///  Updates myHashTable with the currently selected rows
+            /// Updates myHashTable with the currently selected rows
             /// </summary>
             /// <param name="e"></param>
             protected override void OnRowsRemoved(DataGridViewRowsRemovedEventArgs e)

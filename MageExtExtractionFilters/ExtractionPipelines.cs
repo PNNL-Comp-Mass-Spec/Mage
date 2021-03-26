@@ -127,8 +127,8 @@ namespace MageExtExtractionFilters
         }
 
         /// <summary>
-        ///  Check that the tool type for jobs selected for extraction
-        ///  are correct and consistent with extraction type
+        /// Check that the tool type for jobs selected for extraction
+        /// are correct and consistent with extraction type
         /// </summary>
         /// <param name="jobList"></param>
         /// <param name="toolCol"></param>

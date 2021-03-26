@@ -12,10 +12,14 @@ namespace MageUnitTests
     public class FileCopyTest
     {
         /// <summary>
+        /// <para>
         /// A class to provide access to private member variables of FileCopy.
-        /// Original method was using private accessors, deprecated starting in 2010
-        /// Another option was using PrivateObject, which requires
-        ///    Microsoft.VisualStudio.TestTools.UnitTesting and performs operations using reflection.
+        /// The original method, using private accessors, was deprecated in 2010
+        /// </para>
+        /// <para>
+        /// Another option is to use PrivateObject, which requires
+        /// Microsoft.VisualStudio.TestTools.UnitTesting and performs operations using reflection.
+        /// </para>
         /// </summary>
         private class FileCopyExtractor : FileCopy
         {

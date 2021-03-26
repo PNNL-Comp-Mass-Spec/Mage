@@ -112,7 +112,7 @@ namespace MageDisplayLib
         private bool mListViewSortAscending = true;
 
         /// <summary>
-        ///  Cell editor for ListView for this object
+        /// Cell editor for ListView for this object
         /// </summary>
         private readonly ListViewCellEditor mCellEditor;
 
