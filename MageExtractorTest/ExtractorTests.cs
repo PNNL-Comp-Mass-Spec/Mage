@@ -6,7 +6,7 @@ using System.IO;
 
 namespace MageExtractorTest
 {
-    class ExtractorTests
+    internal class ExtractorTests
     {
         #region Member Variables
 
@@ -21,14 +21,14 @@ namespace MageExtractorTest
         private readonly string mExtractionResultsFromTestFolder = "ExtractionResultsFromTest";
 
         // Test case columns
-        int JobListFileIdx = 0;
-        int ExtractionTypeIdx = 1;
-        int FilterSetIDIdx = 2;
-        int MSGFCutoffIdx = 3;
-        int KeepAllIdx = 4;
-        int DestinationTypeIdx = 5;
-        int ContainerIdx = 6;
-        int NameIdx = 7;
+        private int JobListFileIdx = 0;
+        private int ExtractionTypeIdx = 1;
+        private int FilterSetIDIdx = 2;
+        private int MSGFCutoffIdx = 3;
+        private int KeepAllIdx = 4;
+        private int DestinationTypeIdx = 5;
+        private int ContainerIdx = 6;
+        private int NameIdx = 7;
 
         #endregion
 

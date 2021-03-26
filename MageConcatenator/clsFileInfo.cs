@@ -3,7 +3,7 @@ using System.IO;
 
 namespace MageConcatenator
 {
-    class clsFileInfo
+    internal class clsFileInfo
     {
         public string Name { get; set; }
         public string SizeKB { get; set; }

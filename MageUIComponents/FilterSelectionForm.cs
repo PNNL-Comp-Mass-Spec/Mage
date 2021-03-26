@@ -9,9 +9,9 @@ namespace MageUIComponents
     {
         #region Member Variables
 
-        string mFilterNameToAutoSelect = string.Empty;
+        private string mFilterNameToAutoSelect = string.Empty;
 
-        ProcessingPipeline mGetFilterListPipeline;
+        private ProcessingPipeline mGetFilterListPipeline;
 
         #endregion
 

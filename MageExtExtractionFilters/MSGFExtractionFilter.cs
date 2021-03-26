@@ -5,7 +5,7 @@ using Mage;
 
 namespace MageExtExtractionFilters
 {
-    class MSGFExtractionFilter : ExtractionFilter
+    internal class MSGFExtractionFilter : ExtractionFilter
     {
         #region Member Variables
 
@@ -107,7 +107,7 @@ namespace MageExtExtractionFilters
 
             private Dictionary<string, string> mMergeValueLookup;
 
-            ProcessingPipeline mMSGFReaderPipeline;
+            private ProcessingPipeline mMSGFReaderPipeline;
 
             private double mCutoffThreshold;
             private bool mCheckCutoff;

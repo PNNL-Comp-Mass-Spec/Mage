@@ -244,7 +244,7 @@ namespace MageExtExtractionFilters
             OnDataRowAvailable(args);
         }
 
-        void pipeline_OnStatusMessageUpdated(object sender, MageStatusEventArgs e)
+        private void pipeline_OnStatusMessageUpdated(object sender, MageStatusEventArgs e)
         {
             if (string.IsNullOrEmpty(mCurrentProgressText))
                 OnStatusMessageUpdated(e);
@@ -252,7 +252,7 @@ namespace MageExtExtractionFilters
                 OnStatusMessageUpdated(new MageStatusEventArgs(mCurrentProgressText + ": " + e.Message));
         }
 
-        void pipeline_OnWarningMessageUpdated(object sender, MageStatusEventArgs e)
+        private void pipeline_OnWarningMessageUpdated(object sender, MageStatusEventArgs e)
         {
             if (!e.Message.StartsWith("ProteinMerger did not find a match for row"))
                 OnWarningMessage(e);

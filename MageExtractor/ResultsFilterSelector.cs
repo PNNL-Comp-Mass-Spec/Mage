@@ -7,11 +7,11 @@ namespace MageExtractor {
     public partial class ResultsFilterSelector : Form , IModuleParameters {
         #region Member Variables
 
-        readonly Dictionary<string, string> mParameters = new();
+        private readonly Dictionary<string, string> mParameters = new();
 
-        string mFilterSetIDToAutoSelect = string.Empty;
+        private string mFilterSetIDToAutoSelect = string.Empty;
 
-        ProcessingPipeline mGetFilterSetsPipeline;
+        private ProcessingPipeline mGetFilterSetsPipeline;
 
         #endregion
 

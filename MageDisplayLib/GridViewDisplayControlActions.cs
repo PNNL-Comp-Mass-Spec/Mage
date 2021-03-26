@@ -15,10 +15,10 @@ namespace MageDisplayLib
     public partial class GridViewDisplayControl
     {
         #region Constants
-        const string MENU_SELECT_ALL = "SelectAll";
-        const string MENU_SELECT_NONE = "SelectNone";
-        const string MENU_DELETE_SELECTED = "DeleteSelectedRows";
-        const string MENU_DELETE_NON_SELECTED = "DeleteNonSelectedRows";
+        private const string MENU_SELECT_ALL = "SelectAll";
+        private const string MENU_SELECT_NONE = "SelectNone";
+        private const string MENU_DELETE_SELECTED = "DeleteSelectedRows";
+        private const string MENU_DELETE_NON_SELECTED = "DeleteNonSelectedRows";
         #endregion
 
         #region Member Variables

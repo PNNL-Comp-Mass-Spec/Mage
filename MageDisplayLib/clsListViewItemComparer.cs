@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace MageDisplayLib
 {
-    class ListViewItemComparer : IComparer
+    internal class ListViewItemComparer : IComparer
     {
         private readonly int m_SortCol;
         private readonly bool m_SortAscending = true;

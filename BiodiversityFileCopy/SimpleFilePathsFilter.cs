@@ -3,7 +3,7 @@ using Mage;
 
 namespace BiodiversityFileCopy
 {
-    class SimpleFilePathsFilter : BaseFilePathsFilter
+    internal class SimpleFilePathsFilter : BaseFilePathsFilter
     {
         protected int ItemIdx;
         protected int FileIdx;

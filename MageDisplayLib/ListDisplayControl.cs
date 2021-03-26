@@ -104,8 +104,8 @@ namespace MageDisplayLib
         /// <summary>
         /// Sort info
         /// </summary>
-        int mListViewSortColIndex = -1;
-        bool mListViewSortAscending = true;
+        private int mListViewSortColIndex = -1;
+        private bool mListViewSortAscending = true;
 
         /// <summary>
         ///  Cell editor for ListView for this object

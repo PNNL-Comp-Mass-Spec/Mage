@@ -12,7 +12,7 @@ namespace Mage
     {
         #region Member Variables
 
-        int mRowsProcessed;
+        private int mRowsProcessed;
 
         #endregion
 

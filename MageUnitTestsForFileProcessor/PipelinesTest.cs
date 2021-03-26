@@ -15,8 +15,8 @@ namespace MageUnitTestsForFileProcessor
         private readonly int maxRows = 5;
         private readonly int rows = 3;
         private readonly int cols = 5;
-        ProcessingPipeline pipeline;
-        Dictionary<string, string> runtimeParms;
+        private ProcessingPipeline pipeline;
+        private Dictionary<string, string> runtimeParms;
 
         /// <summary>
         /// A test for MakeJobQueryPipeline

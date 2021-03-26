@@ -10,7 +10,7 @@ namespace MageFileProcessor
     /// Builds an extension to the context menu for a ListDisplayControl object,
     /// and provides the code to handle the extension functions.
     /// </summary>
-    class ListDisplayActions
+    internal class ListDisplayActions
     {
         #region Member Variables
 

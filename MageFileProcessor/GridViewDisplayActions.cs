@@ -11,7 +11,7 @@ namespace MageFileProcessor
     /// Builds an extension to the context menu for a GridViewDisplayControl object,
     /// and provides the code to handle the extension functions.
     /// </summary>
-    class GridViewDisplayActions
+    internal class GridViewDisplayActions
     {
         #region "Properties"
 

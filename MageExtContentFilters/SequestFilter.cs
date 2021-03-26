@@ -10,7 +10,7 @@ namespace MageExtContentFilters
     /// The list of auto-discovered filters is then used to populate the grid view on form FilterSelectionForm.cs
     /// </remarks>
     [MageAttribute("Filter", "SEQUEST", "SEQUEST filter", "Uses filter criteria defined in DMS")]
-    class SequestFilter : ContentFilter
+    internal class SequestFilter : ContentFilter
     {
         #region Member Variables
 

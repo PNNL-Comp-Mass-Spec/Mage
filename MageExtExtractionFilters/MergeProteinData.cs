@@ -9,7 +9,7 @@ namespace MageExtExtractionFilters
     /// <summary>
     /// This class handles merging protein data into the result data
     /// </summary>
-    class MergeProteinData
+    internal class MergeProteinData
     {
         public enum MergeModeConstants
         {
@@ -80,10 +80,10 @@ namespace MageExtExtractionFilters
 
         // Lookup index relating Unique_Seq_ID
         // to index of first occurrence row in proteinData
-        Dictionary<int, int> mFirstOccurrenceIndex;
+        private Dictionary<int, int> mFirstOccurrenceIndex;
 
         // Protein data buffer
-        readonly List<ProteinInfo> mProteinDataSorted = new();
+        private readonly List<ProteinInfo> mProteinDataSorted = new();
 
         /// <summary>
         /// Look up first protein identified for result

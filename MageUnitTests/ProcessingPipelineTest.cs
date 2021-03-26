@@ -198,7 +198,7 @@ namespace MageUnitTests
         }
 
         // Default server info: gigasax and DMS5
-        readonly string pipelineXML = @"
+        private readonly string pipelineXML = @"
 <pipeline name='Test_Pipeline' >
     <module name='Reader' type='SQLReader'>
         <param name='Server' >" + Globals.DMSServer + "</param>" +
@@ -223,7 +223,7 @@ namespace MageUnitTests
             Assert.AreEqual(pipeline.PipelineName, "Test_Pipeline");
         }
 
-        readonly string pipelineXML2 = @"
+        private readonly string pipelineXML2 = @"
 <pipeline name='Test_Pipeline' >
     <module type='DelimitedFileReader'>
         <param name='FilePath'>Sarc_MS_Filtered_isos.csv</param>
@@ -266,7 +266,7 @@ namespace MageUnitTests
             Assert.AreEqual(maxRows, rows.Count, "Sink did not receive the expected number of rows");
         }
 
-        readonly string pipelineXML3 = @"<?xml version='1.0' encoding='UTF-8'?><!-- to get filtered list of files in local directory -->
+        private readonly string pipelineXML3 = @"<?xml version='1.0' encoding='UTF-8'?><!-- to get filtered list of files in local directory -->
 <pipeline name='Test_Pipeline'>
     <module type='FileListFilter'>
         <param name='DirectoryPath'><![CDATA[\\proto-2\unitTest_Files\Mage\SynopsisFiles]]></param>

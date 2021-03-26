@@ -30,13 +30,13 @@ namespace MageFilePackager
         #region Member Variables
 
         // Current Mage pipeline that is running or has most recently run
-        ProcessingPipeline _mCurrentPipeline;
+        private ProcessingPipeline _mCurrentPipeline;
 
         // Current command that is being executed or has most recently been executed
-        MageCommandEventArgs _mCurrentCmd;
+        private MageCommandEventArgs _mCurrentCmd;
 
         // Object that sent the current command
-        object _mCurrentCmdSender;
+        private object _mCurrentCmdSender;
 
         #endregion
 

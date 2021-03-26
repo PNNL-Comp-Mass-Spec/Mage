@@ -6,7 +6,7 @@ namespace MageFilePackager
     /// <summary>
     /// Cleans up input file search data and normalizes it for inclusion in manifest
     /// </summary>
-    class FilePackageFilter : ContentFilter
+    internal class FilePackageFilter : ContentFilter
     {
         // Indexes into the row field data array
         private int _sourceIdx;

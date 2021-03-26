@@ -7,7 +7,7 @@ using Mage;
 
 namespace BiodiversityFileCopy
 {
-    class Processing
+    internal class Processing
     {
         public bool DoRawCopy { get; set; }
         public bool DoMZMLCopy { get; set; }

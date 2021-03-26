@@ -419,12 +419,12 @@ namespace Mage
 
         #region "Event Handlers"
 
-        void MyEMSLDatasetInfoCache_ErrorEvent(string message, Exception ex)
+        private void MyEMSLDatasetInfoCache_ErrorEvent(string message, Exception ex)
         {
             ReportMageWarning("MyEMSL downloader: " + message);
         }
 
-        void MyEMSLDatasetInfoCache_MessageEvent(string message)
+        private void MyEMSLDatasetInfoCache_MessageEvent(string message)
         {
             if (!message.Contains("Downloading ") && !message.Contains("Overwriting ") && !message.Contains("Skipping "))
             {
@@ -435,7 +435,7 @@ namespace Mage
             }
         }
 
-        void MyEMSLDatasetInfoCache_ProgressEvent(string progressMessage, float percentComplete)
+        private void MyEMSLDatasetInfoCache_ProgressEvent(string progressMessage, float percentComplete)
         {
             if (percentComplete >= 100 - Single.Epsilon)
                 OnStatusMessageUpdated(new MageStatusEventArgs("Downloading files from MyEMSL: 100% complete"));

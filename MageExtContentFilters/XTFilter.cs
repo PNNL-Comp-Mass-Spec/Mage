@@ -10,7 +10,7 @@ namespace MageExtContentFilters
     /// The list of auto-discovered filters is then used to populate the gridview on form FilterSelectionForm.cs
     /// </remarks>
     [MageAttribute("Filter", "XTFilter", "XT filter", "Uses filter criteria defined in DMS")]
-    class XTFilter : ContentFilter
+    internal class XTFilter : ContentFilter
     {
         #region Member Variables
 

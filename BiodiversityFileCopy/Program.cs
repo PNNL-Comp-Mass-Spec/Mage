@@ -4,7 +4,7 @@ namespace BiodiversityFileCopy
 {
     internal static class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             var proc = new Processing();
 

@@ -10,7 +10,7 @@ namespace MageUIComponents
 
         private string mColumnMapToAutoSelect = string.Empty;
 
-        ProcessingPipeline mGetColumnMappingPipeline;
+        private ProcessingPipeline mGetColumnMappingPipeline;
 
         #endregion
 

@@ -42,6 +42,6 @@ namespace MageDisplayLib
         /// Call to raw WinAPI function to get position of horizontal scroll bar
         /// </summary>
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        static extern int GetScrollPos(IntPtr hWnd, int nBar);
+        private static extern int GetScrollPos(IntPtr hWnd, int nBar);
     }
 }

@@ -5,7 +5,7 @@ namespace MageFilePackager
     /// <summary>
     /// Remove unwanted rows from entity file searches
     /// </summary>
-    class AfterSearchFilter : ContentFilter
+    internal class AfterSearchFilter : ContentFilter
     {
         // Indexes into the row field data array
         private int _itemIdx;

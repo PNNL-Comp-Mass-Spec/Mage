@@ -14,10 +14,10 @@ namespace MageMetadataProcessor
         #region Member Variables
 
         // Current Mage pipeline that is running or has most recently run
-        ProcessingPipeline mCurrentPipeline;
+        private ProcessingPipeline mCurrentPipeline;
 
         // Current command that is being executed or has most recently been executed
-        MageCommandEventArgs mCurrentCmd;
+        private MageCommandEventArgs mCurrentCmd;
 
         // Object that sent the current command
         private object mCurrentCmdSender;

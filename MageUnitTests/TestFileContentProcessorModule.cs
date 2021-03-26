@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace MageUnitTests
 {
-    class TestFileContentProcessorModule : FileContentProcessor
+    internal class TestFileContentProcessorModule : FileContentProcessor
     {
         public string ExpectedSourceFile { get; set; }
         public string ExpectedSourcePath { get; set; }

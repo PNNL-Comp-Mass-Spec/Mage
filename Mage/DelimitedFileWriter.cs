@@ -14,7 +14,7 @@ namespace Mage
 
         private StreamWriter mOutFile;
 
-        bool mAppendFlag;
+        private bool mAppendFlag;
 
         #endregion
 

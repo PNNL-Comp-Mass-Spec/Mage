@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace BiodiversityFileCopy
 {
-    static class CommandOptions
+    internal static class CommandOptions
     {
         public static bool InterpretCommandLineOptions(Processing proc, string[] args)
         {

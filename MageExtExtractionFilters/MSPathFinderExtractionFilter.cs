@@ -4,7 +4,7 @@ using MageExtContentFilters;
 
 namespace MageExtExtractionFilters
 {
-    class MSPathFinderExtractionFilter : ExtractionFilter
+    internal class MSPathFinderExtractionFilter : ExtractionFilter
     {
         #region "Enums"
         public enum MSPathFinderColumns

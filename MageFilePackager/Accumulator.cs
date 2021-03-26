@@ -7,7 +7,7 @@ namespace MageFilePackager
     /// that can accumulate rows from multiple pipeline runs
     /// Using initial column definitions
     /// </summary>
-    class Accumulator : SimpleSink
+    internal class Accumulator : SimpleSink
     {
         public Accumulator()
         {

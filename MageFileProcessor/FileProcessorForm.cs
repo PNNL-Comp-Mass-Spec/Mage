@@ -42,10 +42,10 @@ namespace MageFileProcessor
         private string mFileSourcePipelineName = string.Empty;
 
         // Current command that is being executed or has most recently been executed
-        MageCommandEventArgs mCurrentCmd;
+        private MageCommandEventArgs mCurrentCmd;
 
         // Object that sent the current command
-        object mCurrentCmdSender;
+        private object mCurrentCmdSender;
 
         #endregion
 
@@ -523,7 +523,7 @@ namespace MageFileProcessor
 
         #region Functions for setting UI state
 
-        const string mFileListLabelPrefix = "Files From ";
+        private const string mFileListLabelPrefix = "Files From ";
 
         /// <summary>
         /// Set initial conditions for display components

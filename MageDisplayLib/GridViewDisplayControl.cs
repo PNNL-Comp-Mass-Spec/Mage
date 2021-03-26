@@ -14,7 +14,7 @@ namespace MageDisplayLib
         /// </summary>
         public event EventHandler<EventArgs> SelectionChanged;
 
-        readonly Dictionary<string, string> mParameters = new();
+        private readonly Dictionary<string, string> mParameters = new();
 
         #region IModuleParameters Members
 

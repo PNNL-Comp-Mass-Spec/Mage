@@ -7,7 +7,7 @@ using Mage;
 namespace MageFilePackager
 {
     [Obsolete("Unused")]
-    class XMLManifestFileWriter : BaseModule, IDisposable
+    internal class XMLManifestFileWriter : BaseModule, IDisposable
     {
         #region Member Variables
 

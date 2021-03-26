@@ -5,7 +5,7 @@ using Mage;
 
 namespace MageConcatenator
 {
-    class clsFileCombiner
+    internal class clsFileCombiner
     {
         #region Constants and Classwide Variables
 
