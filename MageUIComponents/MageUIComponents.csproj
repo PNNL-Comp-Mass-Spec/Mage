@@ -159,6 +159,7 @@
     <Compile Include="FlexQueryPanel.designer.cs">
       <DependentUpon>FlexQueryPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IncrementalParameterLitSubPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
