@@ -32,7 +32,7 @@ namespace BiodiversityFileCopy
             };
 
             // Dump usage
-            if (args.Length == 0 || args[0].ToLower() == "-help" || args[0].ToLower() == "/help")
+            if (args.Length == 0 || string.Equals(args[0], "-help", StringComparison.OrdinalIgnoreCase) || string.Equals(args[0], "/help", StringComparison.OrdinalIgnoreCase))
             {
                 Console.WriteLine("BiodiversityFileCopy: {0}\n", proc.GetProgramVersionNumber());
 

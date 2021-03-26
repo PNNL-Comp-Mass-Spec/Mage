@@ -402,7 +402,7 @@ namespace MageUIComponents
             foreach (var row in rows)
             {
                 // Auto-fix data type int to integer
-                if (row.Length > 3 && row[2].ToLower() == "int")
+                if (row.Length > 3 && string.Equals(row[2], "int", StringComparison.OrdinalIgnoreCase))
                     row[2] = "integer";
 
                 ColumnSpecEditingDisplayList.List.Rows.Add((object)row);

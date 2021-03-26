@@ -297,7 +297,7 @@ namespace Mage
             };
 
             var colHidden = drField["IsHidden"].ToString();
-            columnDef.Hidden = !(string.IsNullOrEmpty(colHidden) || colHidden.ToLower() == "false");
+            columnDef.Hidden = !(string.IsNullOrEmpty(colHidden) || string.Equals(colHidden, "false", StringComparison.OrdinalIgnoreCase));
             return columnDef;
         }
 

@@ -168,7 +168,7 @@ namespace MageConcatenator
         private char GetDelimiter(FileSystemInfo fiFile)
         {
             var delimiter = '\t';
-            if (fiFile.Extension.ToLower() == ".csv")
+            if (string.Equals(fiFile.Extension, ".csv", StringComparison.OrdinalIgnoreCase))
                 delimiter = ',';
 
             return delimiter;

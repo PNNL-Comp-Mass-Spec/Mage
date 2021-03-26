@@ -168,7 +168,7 @@ namespace MageExtExtractionFilters
                     return msg;
                 }
 
-                if (toolName.ToLower() == "msgfplus" && filterName.ToLower().StartsWith("msgfplus"))
+                if (string.Equals(toolName, "msgfplus", StringComparison.OrdinalIgnoreCase) && filterName.StartsWith("msgfplus", StringComparison.OrdinalIgnoreCase))
                 {
                     // MSGF+ results can be processed by two different extractors: msgfdb and msgfdbFHT
                     return msg;
@@ -200,7 +200,7 @@ namespace MageExtExtractionFilters
         private static string GetContainerDirectory(DestinationType destination)
         {
             var containerPath = destination.ContainerPath;
-            if (containerPath.ToLower().EndsWith(".db3"))
+            if (containerPath.EndsWith(".db3", StringComparison.OrdinalIgnoreCase))
             {
                 var containerFile = new FileInfo(containerPath);
                 if (containerFile.Directory != null)

@@ -200,7 +200,7 @@ namespace MageFileProcessor
                 OutputDirectoryPath = outputDirectoryPath
             };
 
-            if (filterName.ToLower() == "All Pass".ToLower())
+            if (string.Equals(filterName, "All Pass", StringComparison.OrdinalIgnoreCase))
                 broker.FileFilterModuleName = "NullFilter";
             else
                 broker.FileFilterModuleName = filterName;
