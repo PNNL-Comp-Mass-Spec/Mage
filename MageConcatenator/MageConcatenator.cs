@@ -28,7 +28,7 @@ namespace MageConcatenator
         private bool mFileInfoUpdateRequired;
 
         // Current command that is being executed or has most recently been executed
-        MageCommandEventArgs mCurrentCmd;
+        private MageCommandEventArgs mCurrentCmd;
 
         private clsFileCombiner mFileCombiner;
         private List<string> mCombineFilesPaths;
@@ -462,7 +462,7 @@ namespace MageConcatenator
 
         #region Functions for setting UI state
 
-        const string mFileListLabelPrefix = "Files From ";
+        private const string mFileListLabelPrefix = "Files From ";
 
         /// <summary>
         /// Set initial conditions for display components
@@ -644,7 +644,7 @@ namespace MageConcatenator
             statusPanel1.OnAction += statusPanel1_OnAction;
         }
 
-        void statusPanel1_OnAction(object sender, MageCommandEventArgs e)
+        private void statusPanel1_OnAction(object sender, MageCommandEventArgs e)
         {
             if (e.Action == "cancel_operation")
             {

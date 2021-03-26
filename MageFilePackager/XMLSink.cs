@@ -4,11 +4,11 @@ using Mage;
 
 namespace MageFilePackager
 {
-    class XMLSink : BaseModule
+    internal class XMLSink : BaseModule
     {
         #region Member Variables
 
-        readonly StringBuilder _text = new();
+        private readonly StringBuilder _text = new();
 
         #endregion
 

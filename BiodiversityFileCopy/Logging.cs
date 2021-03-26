@@ -2,10 +2,9 @@
 using System.IO;
 using Mage;
 
-
 namespace BiodiversityFileCopy
 {
-    static class Logging
+    internal static class Logging
     {
         public static string LogRootFolder { get; set; }
         public static string LogFileLabel { get; set; } = string.Empty;
