@@ -223,5 +223,12 @@ namespace Mage
             : base(info, context)
         {
         }
+
+        /// <summary>
+        /// Construct a new MageException object
+        /// </summary>
+        public MageException() : base()
+        {
+        }
     }
 }
