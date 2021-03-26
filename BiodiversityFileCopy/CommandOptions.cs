@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace BiodiversityFileCopy
 {
-    class CommandOptions
+    static class CommandOptions
     {
-        public static Boolean InterpretCommandLineOptions(Processing proc, string[] args)
+        public static bool InterpretCommandLineOptions(Processing proc, string[] args)
         {
             // Explanation of command options
             var optionDocs = new Dictionary<string, string> {
