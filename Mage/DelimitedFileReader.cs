@@ -171,57 +171,56 @@ namespace Mage
         {
             var delimiter = Delimiter.ToCharArray();
 
-            using (var fileReader = new StreamReader(new FileStream(FilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
+            using var fileReader = new StreamReader(new FileStream(FilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+
+            string line;
+            while ((line = fileReader.ReadLine()) != null)
             {
-                string line;
-                while ((line = fileReader.ReadLine()) != null)
+                if (Abort)
                 {
-                    if (Abort)
-                    {
-                        ReportProcessingAborted();
-                        break;
-                    }
-                    var fields = line.Split(delimiter);
-                    if (doHeaderLine)
-                    {
-                        doHeaderLine = false;
-                        OutputHeaderLine(fields);
-                    }
-                    else
-                    {
-                        OutputDataLine(fields);
-                    }
+                    ReportProcessingAborted();
+                    break;
                 }
-                OutputDataLine(null);
+                var fields = line.Split(delimiter);
+                if (doHeaderLine)
+                {
+                    doHeaderLine = false;
+                    OutputHeaderLine(fields);
+                }
+                else
+                {
+                    OutputDataLine(fields);
+                }
             }
+            OutputDataLine(null);
         }
 
         private void OutputFileContentsFromCSV()
         {
             var r = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
-            using (var fileReader = new StreamReader(new FileStream(FilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
+
+            using var fileReader = new StreamReader(new FileStream(FilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+
+            string line;
+            while ((line = fileReader.ReadLine()) != null)
             {
-                string line;
-                while ((line = fileReader.ReadLine()) != null)
+                if (Abort)
                 {
-                    if (Abort)
-                    {
-                        ReportProcessingAborted();
-                        break;
-                    }
-                    var fields = r.Split(line);
-                    if (doHeaderLine)
-                    {
-                        doHeaderLine = false;
-                        OutputHeaderLine(fields);
-                    }
-                    else
-                    {
-                        OutputDataLine(fields);
-                    }
+                    ReportProcessingAborted();
+                    break;
                 }
-                OutputDataLine(null);
+                var fields = r.Split(line);
+                if (doHeaderLine)
+                {
+                    doHeaderLine = false;
+                    OutputHeaderLine(fields);
+                }
+                else
+                {
+                    OutputDataLine(fields);
+                }
             }
+            OutputDataLine(null);
         }
 
         private void OutputHeaderLine(IEnumerable<string> fields)

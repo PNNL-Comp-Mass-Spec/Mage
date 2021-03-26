@@ -96,48 +96,44 @@ namespace MageConcatenator
 
                         var fileSizeBytes = fiFile.Length;
 
-                        using (
-                            var reader =
-                                new StreamReader(new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-                            )
+                        using var reader = new StreamReader(new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+
+                        var headerParsed = false;
+                        var rowCount = 0;
+                        long bytesRead = 0;
+
+                        while (reader.Peek() > -1)
                         {
-                            var headerParsed = false;
-                            var rowCount = 0;
-                            Int64 bytesRead = 0;
+                            var currentRow = reader.ReadLine();
 
-                            while (reader.Peek() > -1)
+                            if (string.IsNullOrWhiteSpace(currentRow))
+                                continue;
+
+                            if (!headerParsed)
                             {
-                                var currentRow = reader.ReadLine();
+                                ParseHeaderLine(currentRow, writer, filePath, ref headerWritten, ref headerLine, ref headerDelimiter);
+                                headerParsed = true;
+                                continue;
+                            }
 
-                                if (string.IsNullOrWhiteSpace(currentRow))
-                                    continue;
+                            if (AddFileNameFirstColumn)
+                                writer.WriteLine(sourceFileName + delimiter + currentRow);
+                            else
+                                writer.WriteLine(currentRow);
 
-                                if (!headerParsed)
+                            rowCount++;
+                            bytesRead += currentRow.Length + 1;
+
+                            if (rowCount % 10000 == 0)
+                            {
+                                if (mCancelProcessingRequested)
+                                    break;
+
+                                if (DateTime.UtcNow.Subtract(dtLastStatus).TotalSeconds >= 0.5)
                                 {
-                                    ParseHeaderLine(currentRow, writer, filePath, ref headerWritten, ref headerLine, ref headerDelimiter);
-                                    headerParsed = true;
-                                    continue;
-                                }
-
-                                if (AddFileNameFirstColumn)
-                                    writer.WriteLine(sourceFileName + delimiter + currentRow);
-                                else
-                                    writer.WriteLine(currentRow);
-
-                                rowCount++;
-                                bytesRead += currentRow.Length + 1;
-
-                                if (rowCount % 10000 == 0)
-                                {
-                                    if (mCancelProcessingRequested)
-                                        break;
-
-                                    if (DateTime.UtcNow.Subtract(dtLastStatus).TotalSeconds >= 0.5)
-                                    {
-                                        dtLastStatus = DateTime.UtcNow;
-                                        var percentCompleteOverall = percentComplete + bytesRead / (float)fileSizeBytes / lstFilePaths.Count * 100;
-                                        ReportStatus(percentCompleteOverall.ToString("0") + "% complete, processing " + filePath);
-                                    }
+                                    dtLastStatus = DateTime.UtcNow;
+                                    var percentCompleteOverall = percentComplete + bytesRead / (float)fileSizeBytes / lstFilePaths.Count * 100;
+                                    ReportStatus(percentCompleteOverall.ToString("0") + "% complete, processing " + filePath);
                                 }
                             }
                         }
@@ -251,38 +247,37 @@ namespace MageConcatenator
 
                 var delimiter = GetDelimiter(fiFile);
 
-                using (var reader = new StreamReader(new FileStream(fiFile.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
+                using var reader = new StreamReader(new FileStream(fiFile.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+
+                var rowCount = 0;
+                var colCount = -1;
+
+                while (reader.Peek() > -1)
                 {
-                    var rowCount = 0;
-                    var colCount = -1;
+                    var currentRow = reader.ReadLine();
+                    rowCount++;
 
-                    while (reader.Peek() > -1)
+                    if (rowCount == MAX_ROWS_TO_TRACK)
+                        break;
+
+                    if (string.IsNullOrWhiteSpace(currentRow))
+                        continue;
+
+                    if (colCount < 0)
                     {
-                        var currentRow = reader.ReadLine();
-                        rowCount++;
+                        delimiter = VerifyDelimiter(currentRow, delimiter);
 
-                        if (rowCount == MAX_ROWS_TO_TRACK)
-                            break;
+                        var columns = currentRow.Split(delimiter);
 
-                        if (string.IsNullOrWhiteSpace(currentRow))
-                            continue;
-
-                        if (colCount < 0)
+                        if (columns.Length > 0)
                         {
-                            delimiter = VerifyDelimiter(currentRow, delimiter);
-
-                            var columns = currentRow.Split(delimiter);
-
-                            if (columns.Length > 0)
-                            {
-                                colCount = columns.Length;
-                            }
+                            colCount = columns.Length;
                         }
                     }
-
-                    item.Columns = colCount;
-                    item.Rows = rowCount;
                 }
+
+                item.Columns = colCount;
+                item.Rows = rowCount;
             }
             catch (Exception ex)
             {

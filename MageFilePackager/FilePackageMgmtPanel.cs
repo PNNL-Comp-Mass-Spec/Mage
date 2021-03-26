@@ -319,10 +319,8 @@ namespace MageFilePackager
 
             if (submissionForm.SaveToFile)
             {
-                using (var writer = new StreamWriter(submissionForm.ManifestFilePath))
-                {
-                    writer.Write(xmlSink.Text);
-                }
+                using var writer = new StreamWriter(submissionForm.ManifestFilePath);
+                writer.Write(xmlSink.Text);
             }
 
             if (submissionForm.SendToServer)
