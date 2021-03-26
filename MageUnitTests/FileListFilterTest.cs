@@ -36,8 +36,8 @@ namespace MageUnitTests
             var sink = new SimpleSink();
 
             var pipeline = new ProcessingPipeline("RunAsSource");
-            var sourceModName = "Source";
-            var sinkModName = "Sink";
+            const string sourceModName = "Source";
+            const string sinkModName = "Sink";
             pipeline.RootModule = pipeline.AddModule(sourceModName, target);
             pipeline.AddModule(sinkModName, sink);
             pipeline.ConnectModules(sourceModName, sinkModName);
@@ -45,7 +45,7 @@ namespace MageUnitTests
             pipeline.RunRoot(null);
 
             var hits = 0;
-            var fileNameColIndex = 1;
+            const int fileNameColIndex = 1;
             foreach (var item in sink.Rows)
             {
                 var s = item[fileNameColIndex];
@@ -84,8 +84,8 @@ namespace MageUnitTests
             var sink = new SimpleSink();
 
             var pipeline = new ProcessingPipeline("RunAsSource");
-            var sourceModName = "Source";
-            var sinkModName = "Sink";
+            const string sourceModName = "Source";
+            const string sinkModName = "Sink";
             pipeline.RootModule = pipeline.AddModule(sourceModName, target);
             pipeline.AddModule(sinkModName, sink);
             pipeline.ConnectModules(sourceModName, sinkModName);
@@ -93,7 +93,7 @@ namespace MageUnitTests
             pipeline.RunRoot(null);
 
             var hits = 0;
-            var fileNameColIndex = 1;
+            const int fileNameColIndex = 1;
             foreach (var item in sink.Rows)
             {
                 var s = item[fileNameColIndex];
@@ -167,7 +167,7 @@ namespace MageUnitTests
         public void FileColumnNameTest()
         {
             var target = new FileListFilter();
-            var expected = "Test Value";
+            const string expected = "Test Value";
             target.FileColumnName = expected;
             var actual = target.FileColumnName;
             Assert.AreEqual(expected, actual);
@@ -180,7 +180,7 @@ namespace MageUnitTests
         public void SourceDirectoryColumnNameTest()
         {
             var target = new FileListFilter();
-            var expected = "Test Value";
+            const string expected = "Test Value";
             target.SourceDirectoryColumnName = expected;
             var actual = target.SourceDirectoryColumnName;
             Assert.AreEqual(expected, actual);

@@ -22,7 +22,7 @@ namespace MageUnitTests
         {
             var dataFile = General.GetTestFile(filePath);
 
-            var maxRows = 7;
+            const int maxRows = 7;
             var colList = new[] { "Dataset", "Dataset_ID", "Factor", "Value" };
             var colNames = string.Join(", ", colList);
             var sql = string.Format("SELECT {0} FROM factors", colNames);
@@ -71,7 +71,7 @@ namespace MageUnitTests
             var dbFile = General.GetTestFile(filePath);
             var queryDefsFile = General.GetTestFile(queryDefinitionsPath);
 
-            var maxRows = 5;
+            const int maxRows = 5;
 
             // Runtime parameters for query
             var runtimeParameters = new Dictionary<string, string>
@@ -174,7 +174,7 @@ namespace MageUnitTests
             var reader = new SQLiteReader(queryDefXML, runtimeParameters);
             Assert.AreNotEqual(null, reader);
 
-            var expected = "SELECT * FROM factors WHERE \"Factor\" = 'Group'";
+            const string expected = "SELECT * FROM factors WHERE \"Factor\" = 'Group'";
             Assert.AreEqual(expected, reader.SQLText);
 
             // Create sink module to accumulate columns and rows
@@ -198,7 +198,7 @@ namespace MageUnitTests
         public void DatabasePropertyTest()
         {
             var target = new SQLiteReader();
-            var expected = "Test Value";
+            const string expected = "Test Value";
             target.Database = expected;
             var actual = target.Database;
             Assert.AreEqual(expected, actual);
@@ -211,7 +211,7 @@ namespace MageUnitTests
         public void SQLTextPropertyTest()
         {
             var target = new SQLiteReader();
-            var expected = "Test Value";
+            const string expected = "Test Value";
             target.SQLText = expected;
             var actual = target.SQLText;
             Assert.AreEqual(expected, actual);

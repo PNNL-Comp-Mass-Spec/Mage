@@ -346,7 +346,7 @@ namespace Mage
 
         private static string UpdateQueryXMLConnectionInfo(XmlNode queryNode, string dmsServerOverride, string dmsDatabaseOverride)
         {
-            var xpathConnection = "//queries/query/connection";
+            const string xpathConnection = "//queries/query/connection";
             var nodeList = queryNode.SelectNodes(xpathConnection);
 
             if (nodeList == null || nodeList.Count == 0)

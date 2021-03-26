@@ -25,12 +25,12 @@ namespace MageUnitTests
         public void FileSubPipelineBrokerBasicTest()
         {
             // Set up test parameters
-            var idColumnName = "Padding";
-            var idColContents = "Example Contents";
-            var directoryColName = "Directory_Col";
-            var fileColName = "File_Col";
+            const string idColumnName = "Padding";
+            const string idColContents = "Example Contents";
+            const string directoryColName = "Directory_Col";
+            const string fileColName = "File_Col";
             var testDirectoryPath = System.Environment.CurrentDirectory;
-            var testInputFileName = "victim.txt";
+            const string testInputFileName = "victim.txt";
             var destDirectory = System.Environment.CurrentDirectory;
 
             // Set up data generator
@@ -112,7 +112,7 @@ namespace MageUnitTests
         public void DatabaseNameTest()
         {
             var target = new FileSubPipelineBroker(); // TODO: Initialize to an appropriate value
-            var expected = "Test Value";
+            const string expected = "Test Value";
             target.DatabaseName = expected;
             var actual = target.DatabaseName;
             Assert.AreEqual(expected, actual);
@@ -125,7 +125,7 @@ namespace MageUnitTests
         public void FileFilterModuleNameTest()
         {
             var target = new FileSubPipelineBroker(); // TODO: Initialize to an appropriate value
-            var expected = "Test Value";
+            const string expected = "Test Value";
             target.FileFilterModuleName = expected;
             var actual = target.FileFilterModuleName;
             Assert.AreEqual(expected, actual);
@@ -158,7 +158,7 @@ namespace MageUnitTests
         public void TableNameTest()
         {
             var target = new FileSubPipelineBroker();
-            var expected = "Test TableName";
+            const string expected = "Test TableName";
             target.TableName = expected;
 
             var actual = target.TableName;

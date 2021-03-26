@@ -7,6 +7,8 @@ namespace MageConcatenator
 {
     internal class clsFileCombiner
     {
+        // Ignore Spelling: Cancelled
+
         #region Constants and Classwide Variables
 
         public const int MAX_ROWS_TO_TRACK = 100000;
@@ -90,8 +92,10 @@ namespace MageConcatenator
                         else
                         {
                             if (headerDelimiter != delimiter)
+                            {
                                 ReportWarning("First file has column delimiter '" + headerDelimiter + "' but file " +
                                               filesProcessed + " has delimiter '" + delimiter + "'");
+                            }
                         }
 
                         var fileSizeBytes = fiFile.Length;

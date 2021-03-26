@@ -15,11 +15,11 @@ namespace MageUnitTests
         public void FileColumnProcessorTest()
         {
             // Set up test parameters
-            var directoryColName = "Directory_Col";
-            var fileColName = "File_Col";
+            const string directoryColName = "Directory_Col";
+            const string fileColName = "File_Col";
             var currentDir = System.Environment.CurrentDirectory;
-            var file = "tab_delimited.txt";
-            var destinationDir = @"C:\data\";
+            const string file = "tab_delimited.txt";
+            const string destinationDir = @"C:\data\";
 
             // Set up data generator
             var dGen = new DataGenerator(2, 4)
@@ -59,7 +59,7 @@ namespace MageUnitTests
         public void OutputFileColumnNameTest()
         {
             var target = new FileContentProcessor();
-            var expected = "Test Value";
+            const string expected = "Test Value";
             target.OutputFileColumnName = expected;
             var actual = target.OutputFileColumnName;
             Assert.AreEqual(expected, actual);
@@ -72,7 +72,7 @@ namespace MageUnitTests
         public void OutputDirectoryPathTest()
         {
             var target = new FileContentProcessor();
-            var expected = "Test Value";
+            const string expected = "Test Value";
             target.OutputDirectoryPath = expected;
             var actual = target.OutputDirectoryPath;
             Assert.AreEqual(expected, actual);
@@ -85,7 +85,7 @@ namespace MageUnitTests
         public void SourceFileColumnNameTest()
         {
             var target = new FileContentProcessor();
-            var expected = "Test Value";
+            const string expected = "Test Value";
             target.SourceFileColumnName = expected;
             var actual = target.SourceFileColumnName;
             Assert.AreEqual(expected, actual);
@@ -98,7 +98,7 @@ namespace MageUnitTests
         public void SourceDirectoryColumnNameTest()
         {
             var target = new FileContentProcessor();
-            var expected = "Test Value";
+            const string expected = "Test Value";
             target.SourceDirectoryColumnName = expected;
             var actual = target.SourceDirectoryColumnName;
             Assert.AreEqual(expected, actual);

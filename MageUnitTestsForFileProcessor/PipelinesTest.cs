@@ -131,6 +131,8 @@ namespace MageUnitTestsForFileProcessor
             var module = pipeline.GetModule("DataGenerator1");
             Assert.AreNotEqual(null, module);
             Assert.IsInstanceOf(typeof(DataGenerator), module);
+
+            // ReSharper disable once UnusedVariable
             var target = (DataGenerator)module;
 
             module = pipeline.GetModule("FileSubPipelineBroker2");

@@ -12,20 +12,20 @@ namespace BiodiversityFileCopy
             // Explanation of command options
             var optionDocs = new Dictionary<string, string> {
                 {"-OutputFolder", @"Root folder path for output files to be copied |[Default: \\proto-11\BiodiversityLibrary]"},
-                {"-AssignedOrganisms", @"TSV file that contains list of data package IDs |and their corresponding assigned organism. |[Default: DMS_Organism_Stats_Annotated_MICROBES.txt]"},
-                {"-DataPackages", @"Comma delimited list of data package IDs to process |(Ids must be in 'AssignedOrganisms' file)"},
-                {"-ProcessFiles", @"Allowed values: raw,mzid,fht,mzml,fasta. [Default: (process all file types)]|Comma delimited list of file categories to process"},
-                {"-Copy", @"Allowed values: 'on'/'off' [Default: 'on']|If 'off', no files will actually be copied |and log file names will have 'check' suffix.|If 'on', files will be copied"},
-                {"-Verbose", @"Allowed values: 'on'/'off' [Default: 'off']|If 'on', details for each file will be included in log."},
-                {"-SourceCheck", @"Allowed values: 'on'/'off' [Default: 'on']|If 'on', check existence of source files to be copied.|If 'off', do not check.|Automatically sets '-Copy' to 'off'."}
+                {"-AssignedOrganisms", "TSV file that contains list of data package IDs |and their corresponding assigned organism. |[Default: DMS_Organism_Stats_Annotated_MICROBES.txt]"},
+                {"-DataPackages", "Comma delimited list of data package IDs to process |(Ids must be in 'AssignedOrganisms' file)"},
+                {"-ProcessFiles", "Allowed values: raw,mzid,fht,mzml,fasta. [Default: (process all file types)]|Comma delimited list of file categories to process"},
+                {"-Copy", "Allowed values: 'on'/'off' [Default: 'on']|If 'off', no files will actually be copied |and log file names will have 'check' suffix.|If 'on', files will be copied"},
+                {"-Verbose", "Allowed values: 'on'/'off' [Default: 'off']|If 'on', details for each file will be included in log."},
+                {"-SourceCheck", "Allowed values: 'on'/'off' [Default: 'on']|If 'on', check existence of source files to be copied.|If 'off', do not check.|Automatically sets '-Copy' to 'off'."}
             };
             // Option keyword-to-internal code map
             var optionKeywords = new Dictionary<string, string>
             {
-                {"-OutputFolder", @"output_folder"},
-                {"-AssignedOrganisms", @"assigned_organisms"},
-                {"-ProcessFiles", @"process_files"},
-                {"-DataPackages", @"data_packages"},
+                {"-OutputFolder", "output_folder"},
+                {"-AssignedOrganisms", "assigned_organisms"},
+                {"-ProcessFiles", "process_files"},
+                {"-DataPackages", "data_packages"},
                 {"-Copy", "copy_files"},
                 {"-Verbose", "verbose_logging"},
                 {"-SourceCheck", "source_check"}

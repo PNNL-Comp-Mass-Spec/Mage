@@ -20,11 +20,11 @@ namespace MageExtractorTest {
         #endregion
 
         private void button1_Click(object sender, EventArgs e) {
-            var mode = DisplaySourceMode.Selected;
+            const DisplaySourceMode mode = DisplaySourceMode.Selected;
             RunTests(mode);
         }
         private void button2_Click(object sender, EventArgs e) {
-            var mode = DisplaySourceMode.All;
+            const DisplaySourceMode mode = DisplaySourceMode.All;
             RunTests(mode);
         }
         private void RunTests(DisplaySourceMode mode) {
@@ -66,8 +66,7 @@ namespace MageExtractorTest {
  //           TestCodeBuiltImportPipelines();
         }
 
-        private
-        string mXMLForPipelineToImportToFile = @"
+        private readonly string mXMLForPipelineToImportToFile = @"
 <pipeline name='Test_Pipeline'>
     <module type='FileListFilter'>
         <param name='DirectoryPath'><![CDATA[C:\Data\syn2]]></param>
@@ -90,8 +89,7 @@ namespace MageExtractorTest {
     </module>
 </pipeline>
 ";
-        private
-        string mXMLForPipelineToImportToSQLite = @"
+        private readonly string mXMLForPipelineToImportToSQLite = @"
 <pipeline name='Test_Pipeline'>
     <module type='FileListFilter'>
         <param name='DirectoryPath'><![CDATA[C:\Data\syn2]]></param>

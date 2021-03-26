@@ -20,14 +20,7 @@ namespace MageUIComponents
             set
             {
                 mShowGetDatasets = value;
-                if (value)
-                {
-                    GetDatasetsCtl.Visible = true;
-                }
-                else
-                {
-                    GetDatasetsCtl.Visible = false;
-                }
+                GetDatasetsCtl.Visible = value;
 
                 UpdateButtonPosition();
             }
@@ -39,14 +32,7 @@ namespace MageUIComponents
             set
             {
                 mShowGetJobs = value;
-                if (value)
-                {
-                    GetJobsCtl.Visible = true;
-                }
-                else
-                {
-                    GetJobsCtl.Visible = false;
-                }
+                GetJobsCtl.Visible = value;
 
                 UpdateButtonPosition();
             }

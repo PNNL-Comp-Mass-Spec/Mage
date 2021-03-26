@@ -21,14 +21,14 @@ namespace MageExtractorTest
         private readonly string mExtractionResultsFromTestFolder = "ExtractionResultsFromTest";
 
         // Test case columns
-        private int JobListFileIdx = 0;
-        private int ExtractionTypeIdx = 1;
-        private int FilterSetIDIdx = 2;
-        private int MSGFCutoffIdx = 3;
-        private int KeepAllIdx = 4;
-        private int DestinationTypeIdx = 5;
-        private int ContainerIdx = 6;
-        private int NameIdx = 7;
+        private readonly int JobListFileIdx = 0;
+        private readonly int ExtractionTypeIdx = 1;
+        private readonly int FilterSetIDIdx = 2;
+        private readonly int MSGFCutoffIdx = 3;
+        private readonly int KeepAllIdx = 4;
+        private readonly int DestinationTypeIdx = 5;
+        private readonly int ContainerIdx = 6;
+        private readonly int NameIdx = 7;
 
         #endregion
 
@@ -266,7 +266,7 @@ namespace MageExtractorTest
                 {
                     if (sourceRows[i][j] != resultRows[i][j])
                     {
-                        mb.AppendLine(string.Format("Row {0} cell {1} content does not match", i, j));
+                        mb.AppendFormat("Row {0} cell {1} content does not match\n", i, j);
                     }
                 }
             }

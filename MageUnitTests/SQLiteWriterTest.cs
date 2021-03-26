@@ -13,10 +13,10 @@ namespace MageUnitTests
         [Test]
         public void DoubleTap()
         {
-            var cols = 5;
-            var rows = 21;
-            var dbPath = "write_test_2.db";
-            var tableName = "t_test";
+            const int cols = 5;
+            const int rows = 21;
+            const string dbPath = "write_test_2.db";
+            const string tableName = "t_test";
             var sqlText = string.Format("SELECT * FROM {0}", tableName);
 
             var dGen = new DataGenerator
@@ -53,10 +53,10 @@ namespace MageUnitTests
         [Test]
         public void WriteTest()
         {
-            var cols = 5;
-            var rows = 21;
-            var dbPath = "write_test.db";
-            var tableName = "t_test";
+            const int cols = 5;
+            const int rows = 21;
+            const string dbPath = "write_test.db";
+            const string tableName = "t_test";
             var sqlText = string.Format("SELECT * FROM {0}", tableName);
 
             var dGen = new DataGenerator
@@ -106,7 +106,7 @@ namespace MageUnitTests
         public void BlockSizeTest()
         {
             var target = new SQLiteWriter();
-            var expected = "42";
+            const string expected = "42";
             target.BlockSize = expected;
             var actual = target.BlockSize;
             Assert.AreEqual(expected, actual);
@@ -119,7 +119,7 @@ namespace MageUnitTests
         public void DbPasswordTest()
         {
             var target = new SQLiteWriter();
-            var expected = "Test Value";
+            const string expected = "Test Value";
             target.DbPassword = expected;
             var actual = target.DbPassword;
             Assert.AreEqual(expected, actual);
@@ -132,7 +132,7 @@ namespace MageUnitTests
         public void DbPathTest()
         {
             var target = new SQLiteWriter();
-            var expected = "Test Value";
+            const string expected = "Test Value";
             target.DbPath = expected;
             var actual = target.DbPath;
             Assert.AreEqual(expected, actual);
@@ -145,7 +145,7 @@ namespace MageUnitTests
         public void TableNameTest()
         {
             var target = new SQLiteWriter();
-            var expected = "Test Value";
+            const string expected = "Test Value";
             target.TableName = expected;
             var actual = target.TableName;
             Assert.AreEqual(expected, actual);

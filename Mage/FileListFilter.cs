@@ -426,7 +426,7 @@ namespace Mage
                 if (!AccessDeniedSubdirectories.Contains(currentDirectoryPath))
                 {
                     AccessDeniedSubdirectories.Add(currentDirectoryPath);
-                    ReportMageWarning(@"Access to the path '" + currentDirectoryPath + "' is denied.");
+                    ReportMageWarning("Access to the path '" + currentDirectoryPath + "' is denied.");
                 }
             }
         }

@@ -22,15 +22,19 @@ namespace MageDisplayLib
     public delegate void NoticeCallback(string text);
 
     /// <summary>
+    /// <para>
     /// Encapsulates a Windows.Forms.ListView and provides supplementary
     /// functions to handle column definition and sorting.
-    ///
+    /// </para>
+    /// <para>
     /// When combined with an LVAccumulator object, it can be populated
     /// from a Mage pipeline.
-    ///
+    /// </para>
+    /// <para>
     /// When combined with a LVPipelineSource object, it can supply
     /// data rows to a Mage pipeline.
-    ///
+    /// </para>
+    /// <para>
     /// An external module (usually an LVAccumulator objet) provides
     /// a block of column definitions and blocks of row items for the
     /// List view at the heart of this user control.
@@ -40,7 +44,7 @@ namespace MageDisplayLib
     /// own thread, there are appropriate helper functions to handle the
     /// transfer of received objects to the actual list view control
     /// running in the UI thread.
-    ///
+    /// </para>
     /// </summary>
     public partial class ListDisplayControl : UserControl
     {
@@ -425,10 +429,15 @@ namespace MageDisplayLib
                         // Unknown data type
                         // If the data type contains "date" or "time", then treat as datetime
                         if (colType.Contains("date") || colType.Contains("time"))
+                        {
                             mListViewColTypes.Add(eSqlDataColType.date);
+                        }
                         else
+                        {
                             // Assume text
                             mListViewColTypes.Add(eSqlDataColType.text);
+                        }
+
                         break;
                 }
             }
@@ -485,42 +494,47 @@ namespace MageDisplayLib
         private void lvQueryResults_ColumnClicked(object sender, ColumnClickEventArgs e)
         {
             var intColIndex = e.Column;
-            string strSortInfo;
-            var SortNumeric = false;
-            var SortDate = false;
+
+            var sortNumeric = false;
+            var sortDate = false;
 
             if (mListViewSortColIndex == intColIndex)
+            {
                 // User clicked the same column; reverse the sort order
                 mListViewSortAscending = !mListViewSortAscending;
+            }
             else
+            {
                 // User clicked a new column, change the column sort index
                 mListViewSortColIndex = intColIndex;
+            }
 
             switch (mListViewColTypes[intColIndex])
             {
                 case eSqlDataColType.numInt:
                 case eSqlDataColType.numFloat:
-                    SortNumeric = true;
+                    sortNumeric = true;
                     break;
                 case eSqlDataColType.date:
-                    SortDate = true;
+                    sortDate = true;
                     break;
             }
 
-            strSortInfo = "Sort " + lvQueryResults.Columns[intColIndex].Text;
+            // ReSharper disable once NotAccessedVariable
+            var sortInfo = "Sort " + lvQueryResults.Columns[intColIndex].Text;
 
             if (!mListViewSortAscending)
-                strSortInfo += " desc";
+                sortInfo += " desc";
 
-            if (SortNumeric)
-                strSortInfo += " (numeric)";
+            if (sortNumeric)
+                sortInfo += " (numeric)";
 
-            if (SortDate)
-                strSortInfo += " (date)";
+            if (sortDate)
+                sortInfo += " (date)";
 
             //--           AddToMessageQueue(strSortInfo, (float)0.1);
 
-            lvQueryResults.ListViewItemSorter = new ListViewItemComparer(e.Column, mListViewSortAscending, SortNumeric, SortDate);
+            lvQueryResults.ListViewItemSorter = new ListViewItemComparer(e.Column, mListViewSortAscending, sortNumeric, sortDate);
 
             lvQueryResults.Update();
         }
@@ -533,7 +547,7 @@ namespace MageDisplayLib
         private void lvQueryResults_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateNoticeFieldWithRowInfo();
-            SelectionChanged?.Invoke(this, new EventArgs());
+            SelectionChanged?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>

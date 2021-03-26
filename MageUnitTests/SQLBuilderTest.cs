@@ -29,7 +29,7 @@ namespace MageUnitTests
             target.AddPredicateItem("John", "0");
             target.AddPredicateItem("Peggy Sue", "Your aunt");
 
-            var expected = "SELECT * FROM T_X WHERE Bob = 'Your uncle' AND [Peggy Sue] LIKE '%Your aunt%' AND (Paul = 42 OR NOT John = 0)";
+            const string expected = "SELECT * FROM T_X WHERE Bob = 'Your uncle' AND [Peggy Sue] LIKE '%Your aunt%' AND (Paul = 42 OR NOT John = 0)";
             var actual = target.BuildQuerySQL();
             Assert.AreEqual(expected, actual);
         }
@@ -41,7 +41,7 @@ namespace MageUnitTests
         public void TableTest()
         {
             var target = new SQLBuilder {Table = "T_X"};
-            var expected = "SELECT * FROM T_X";
+            const string expected = "SELECT * FROM T_X";
             var actual = target.BuildQuerySQL();
             Assert.AreEqual(expected, actual);
         }
@@ -57,7 +57,7 @@ namespace MageUnitTests
             Assert.IsNotNull(target);
             target.Table = "T_X";
             target.Columns = "Uno, Dos, Tres";
-            var expected = "SELECT Uno, Dos, Tres FROM T_X";
+            const string expected = "SELECT Uno, Dos, Tres FROM T_X";
             var actual = target.BuildQuerySQL();
             Assert.AreEqual(expected, actual);
         }
@@ -70,11 +70,11 @@ namespace MageUnitTests
         {
             var target = new SQLBuilder();
 
-            var col = "Bob";
-            var dir = "ASC";
+            const string col = "Bob";
+            const string dir = "ASC";
             target.AddSortingItem(col, dir);
             target.Table = "T_X";
-            var expected = "SELECT * FROM T_X ORDER BY Bob ASC";
+            const string expected = "SELECT * FROM T_X ORDER BY Bob ASC";
             var actual = target.BuildQuerySQL();
             Assert.AreEqual(expected, actual);
         }
@@ -113,7 +113,7 @@ namespace MageUnitTests
 
             // Runtime parameters for query
             var runtimeParameters = new Dictionary<string, string>();
-            var testDB = "DMS5_T3";
+            const string testDB = "DMS5_T3";
             runtimeParameters[":Database"] = testDB;
             runtimeParameters["Dataset"] = "sarc";
 
@@ -131,7 +131,7 @@ namespace MageUnitTests
             Assert.AreEqual(testDB, specialArgs[SQLBuilder.DATABASE_NAME_KEY]);
             Assert.AreEqual("", target.SprocName);
 
-            var expected = "SELECT Dataset, Dataset_ID, Factor, Value FROM V_Custom_Factors_List_Report WHERE Dataset LIKE '%sarc%'";
+            const string expected = "SELECT Dataset, Dataset_ID, Factor, Value FROM V_Custom_Factors_List_Report WHERE Dataset LIKE '%sarc%'";
             var actual = target.BuildQuerySQL();
             Assert.AreEqual(expected, actual);
         }
@@ -143,12 +143,12 @@ namespace MageUnitTests
             var queryDefsFile = General.GetTestFile(queryDefinitionsPath);
 
             // Expected predefined parameter
-            var defParam = "@MinimumPMTQualityScore";
-            var defValue = "4";
+            const string defParam = "@MinimumPMTQualityScore";
+            const string defValue = "4";
 
             // Runtime parameters for query
-            var testParam = "@ExperimentFilter";
-            var testValue = "borked";
+            const string testParam = "@ExperimentFilter";
+            const string testValue = "borked";
             var runtimeParameters = new Dictionary<string, string> {[testParam] = testValue};
 
             // Get XML query definition by name

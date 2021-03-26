@@ -64,8 +64,8 @@ namespace MageUnitTests
         public void DataGeneratorTest()
         {
             var dGen = new DataGenerator();
-            var cols = 4;
-            var rows = 17;
+            const int cols = 4;
+            const int rows = 17;
             dGen.Rows = rows;
             dGen.Cols = cols;
             var sink = new SimpleSink();

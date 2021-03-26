@@ -38,12 +38,12 @@ namespace MageUnitTests
         public void GetDestFileTest()
         {
             var target = new FileCopyExtractor();
-            var sourceFile = "SourceFile";
+            const string sourceFile = "SourceFile";
 
             var fields = new[] { "FirstField", "SecondField", "ThirdField" };
 
             // Typical usage - ID column in column list and ApplyPrefixToFileName set to "Yes"
-            var idColNameTest1 = "Third";
+            const string idColNameTest1 = "Third";
             target.InputColumnPosAccessor = new Dictionary<string, int> { { "First", 0 }, { "Second", 1 }, { idColNameTest1, 2 } };
             target.ColumnToUseForPrefix = idColNameTest1;
             target.ApplyPrefixToFileName = "Yes";
@@ -54,7 +54,7 @@ namespace MageUnitTests
             Assert.AreEqual(expectedTest1, actualTest1, "Typical usage");
 
             // ID column in column list and ApplyPrefixToFileName set to "No"
-            var idColNameTest2 = "Third";
+            const string idColNameTest2 = "Third";
             target.InputColumnPosAccessor = new Dictionary<string, int> { { "First", 0 }, { "Second", 1 }, { idColNameTest2, 2 } };
             target.ColumnToUseForPrefix = idColNameTest2;
             target.ApplyPrefixToFileName = "No";
@@ -64,7 +64,7 @@ namespace MageUnitTests
             Assert.AreEqual(expectedTest2, actualTest2, "No prefix");
 
             // ID column NOT in column list and ApplyPrefixToFileName set to "Yes"
-            var idColNameTest3 = "Third";
+            const string idColNameTest3 = "Third";
             target.InputColumnPosAccessor = new Dictionary<string, int> { { "First", 0 }, { "Second", 1 }, { "ChoppedLiver", 2 } };
             target.ColumnToUseForPrefix = idColNameTest3;
             target.ApplyPrefixToFileName = "Yes";
@@ -81,7 +81,7 @@ namespace MageUnitTests
         public void ColumnToUseForPrefixText()
         {
             var target = new FileCopy();
-            var expected = "Test Value";
+            const string expected = "Test Value";
             target.ColumnToUseForPrefix = expected;
             var actual = target.ColumnToUseForPrefix;
             Assert.AreEqual(expected, actual);
@@ -94,7 +94,7 @@ namespace MageUnitTests
         public void OutputModeTest()
         {
             var target = new FileCopy();
-            var expected = "Test Value";
+            const string expected = "Test Value";
             target.ApplyPrefixToFileName = expected;
             var actual = target.ApplyPrefixToFileName;
             Assert.AreEqual(expected, actual);

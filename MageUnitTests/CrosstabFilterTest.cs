@@ -55,7 +55,7 @@ namespace MageUnitTests
         public void FactorValueColTest()
         {
             var target = new CrosstabFilter();
-            var expected = "Test Value";
+            const string expected = "Test Value";
             target.FactorValueCol = expected;
             var actual = target.FactorValueCol;
             Assert.AreEqual(expected, actual);
@@ -68,7 +68,7 @@ namespace MageUnitTests
         public void FactorNameColTest()
         {
             var target = new CrosstabFilter();
-            var expected = "Test Value";
+            const string expected = "Test Value";
             target.FactorNameCol = expected;
             var actual = target.FactorNameCol;
             Assert.AreEqual(expected, actual);
@@ -81,7 +81,7 @@ namespace MageUnitTests
         public void EntityNameColTest()
         {
             var target = new CrosstabFilter();
-            var expected = "Test Value";
+            const string expected = "Test Value";
             target.EntityNameCol = expected;
             var actual = target.EntityNameCol;
             Assert.AreEqual(expected, actual);
@@ -94,7 +94,7 @@ namespace MageUnitTests
         public void EntityIDColTest()
         {
             var target = new CrosstabFilter();
-            var expected = "Test Value";
+            const string expected = "Test Value";
             target.EntityIDCol = expected;
             var actual = target.EntityIDCol;
             Assert.AreEqual(expected, actual);

@@ -5,11 +5,14 @@ using Mage;
 namespace MageDisplayLib
 {
     /// <summary>
+    /// <para>
     /// This is a pipeline module
     /// that can serve the contents of a GridViewDisplayControl to standard tabular output
-    ///
+    ///</para>
+    /// <para>
     /// It is an adapter for making rows in a GridViewDisplayControl object
     /// available via Mage pipeline data source module connections
+    /// </para>
     /// </summary>
     public class GVPipelineSource : BaseModule
     {

@@ -413,7 +413,7 @@ FROM (
         /// <param name="subdirectorySearchName"></param>
         private static void SetDefaultFileSearchFilterParameters(FileListFilter flf, string fileNameSelector, string recursiveSearch, string subdirectorySearchName)
         {
-            flf.OutputColumnList = @"Item|+|text, File|+|text, File_Size_KB|+|text, Directory, *";
+            flf.OutputColumnList = "Item|+|text, File|+|text, File_Size_KB|+|text, Directory, *";
             flf.SourceDirectoryColumnName = "Directory";            // The name of the input column that contains the directory path to search for files
             flf.FileSelectorMode = "FileSearch";                    // How to use the file matching patterns ("FileSearch" or "RegEx")
             flf.IncludeFilesOrDirectories = "File";                 // Include files an/or directories in results ("File", "Directory", "IncludeFilesOrDirectories")

@@ -246,7 +246,7 @@ namespace Mage
 
             if (mDirectoryPathColIndex < 0)
             {
-                var errorMessage = "SearchDirectoriesAndOutputFiles: Unable to determine the index of the Directory column";
+                const string errorMessage = "SearchDirectoriesAndOutputFiles: Unable to determine the index of the Directory column";
                 var ex = ReportMageException(errorMessage);
                 throw ex;
             }

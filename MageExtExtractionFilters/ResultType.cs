@@ -137,11 +137,11 @@ namespace MageExtExtractionFilters
 
         public class MergeFile
         {
-            public string ResultName { get; private set; }
-            public string NameColumn { get; private set; }
+            public string ResultName { get; }
+            public string NameColumn { get; }
             public int ColumnIndx { get; set; }
-            public string KeyCol { get; private set; }
-            public string FileNameTag { get; private set; }
+            public string KeyCol { get; }
+            public string FileNameTag { get; }
             public string MergeFileName { get; set; }
 
             public MergeFile(string resultName, string name, string keyCol, string tag)
@@ -184,38 +184,16 @@ namespace MageExtExtractionFilters
         /// <returns></returns>
         public ExtractionFilter GetExtractionFilter(FilterResultsBase resultsChecker)
         {
-            ExtractionFilter exf;
-            switch (Filter)
+            return Filter switch
             {
-                case "sequest":
-                    var sxf = new SequestExtractionFilter { ResultChecker = resultsChecker as FilterSequestResults };
-                    exf = sxf;
-                    break;
-                case "xtandem":
-                    var xxf = new XTandemExtractionFilter { ResultChecker = resultsChecker as FilterXTResults };
-                    exf = xxf;
-                    break;
-                case "inspect":
-                    var ixf = new InspectExtractionFilter { ResultChecker = resultsChecker as FilterInspectResults };
-                    exf = ixf;
-                    break;
-                case "msgfplusFHT":
-                    var mxf1 = new MSGFDbFHTExtractionFilter { ResultChecker = resultsChecker as FilterMSGFDbResults };
-                    exf = mxf1;
-                    break;
-                case "msgfplus":
-                    var mxf2 = new MSGFDbExtractionFilter { ResultChecker = resultsChecker as FilterMSGFDbResults };
-                    exf = mxf2;
-                    break;
-                case "mspathfinder":
-                    var mspathxf = new MSPathFinderExtractionFilter { ResultChecker = resultsChecker as FilterMSPathFinderResults };
-                    exf = mspathxf;
-                    break;
-                default:
-                    exf = new ExtractionFilter();
-                    break;
-            }
-            return exf;
+                "sequest" => new SequestExtractionFilter { ResultChecker = resultsChecker as FilterSequestResults },
+                "xtandem" => new XTandemExtractionFilter { ResultChecker = resultsChecker as FilterXTResults },
+                "inspect" => new InspectExtractionFilter { ResultChecker = resultsChecker as FilterInspectResults },
+                "msgfplusFHT" => new MSGFDbFHTExtractionFilter { ResultChecker = resultsChecker as FilterMSGFDbResults },
+                "msgfplus" => new MSGFDbExtractionFilter { ResultChecker = resultsChecker as FilterMSGFDbResults },
+                "mspathfinder" => new MSPathFinderExtractionFilter { ResultChecker = resultsChecker as FilterMSPathFinderResults },
+                _ => new ExtractionFilter(),
+            };
         }
 
         /// <summary>
@@ -226,31 +204,16 @@ namespace MageExtExtractionFilters
         /// <returns></returns>
         public FilterResultsBase GetResultsChecker(string filterSetID)
         {
-            FilterResultsBase frb = null;
-            switch (Filter)
+            return Filter switch
             {
-                case "sequest":
-                    frb = SequestExtractionFilter.MakeSequestResultChecker(filterSetID);
-                    break;
-                case "xtandem":
-                    frb = XTandemExtractionFilter.MakeXTandemResultChecker(filterSetID);
-                    break;
-                case "inspect":
-                    frb = InspectExtractionFilter.MakeInspectResultChecker(filterSetID);
-                    break;
-                case "msgfplusFHT":
-                    frb = MSGFDbFHTExtractionFilter.MakeMSGFDbResultChecker(filterSetID);
-                    break;
-                case "msgfplus":
-                    frb = MSGFDbExtractionFilter.MakeMSGFDbResultChecker(filterSetID);
-                    break;
-                case "mspathfinder":
-                    frb = MSPathFinderExtractionFilter.MakeMSPathFinderResultChecker(filterSetID);
-                    break;
-                default:
-                    break;
-            }
-            return frb;
+                "sequest" => SequestExtractionFilter.MakeSequestResultChecker(filterSetID),
+                "xtandem" => XTandemExtractionFilter.MakeXTandemResultChecker(filterSetID),
+                "inspect" => InspectExtractionFilter.MakeInspectResultChecker(filterSetID),
+                "msgfplusFHT" => MSGFDbFHTExtractionFilter.MakeMSGFDbResultChecker(filterSetID),
+                "msgfplus" => MSGFDbExtractionFilter.MakeMSGFDbResultChecker(filterSetID),
+                "mspathfinder" => MSPathFinderExtractionFilter.MakeMSPathFinderResultChecker(filterSetID),
+                _ => null
+            };
         }
     }
 }

@@ -123,7 +123,7 @@ namespace MageExtContentFilters
 
         protected bool CompareDouble(double valueToCompare, string operatorSymbol, double criterionValue)
         {
-            double thresholdNearlyEqual = float.Epsilon * 10;
+            const double thresholdNearlyEqual = float.Epsilon * 10;
             return CompareDouble(valueToCompare, operatorSymbol, criterionValue, thresholdNearlyEqual);
         }
 

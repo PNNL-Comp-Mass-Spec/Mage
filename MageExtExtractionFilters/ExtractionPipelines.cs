@@ -147,41 +147,39 @@ namespace MageExtExtractionFilters
                 var tool = GetBaseTool(row[idx]);
                 if (tools.ContainsKey(tool))
                 {
-                    tools[tool] = tools[tool] + 1;
+                    tools[tool]++;
                 }
                 else
                 {
                     tools[tool] = 1;
                 }
             }
+
             if (tools.Count > 1)
             {
                 var toolRollup = "(" + string.Join(", ", tools.Keys) + ")";
-                msg = "Cannot work on a mix of job types " + toolRollup + Environment.NewLine + "Select only Sequest, X!Tandem, Inspect, or MSGFPlus jobs";
+               return "Cannot work on a mix of job types " + toolRollup + Environment.NewLine + "Select only Sequest, X!Tandem, Inspect, or MSGFPlus jobs";
             }
-            else
+
+            var filterName = extractionParams.RType.Filter;
+            var toolName = tools.Keys.ElementAt(0);
+            if (string.Equals(filterName, toolName, StringComparison.OrdinalIgnoreCase))
             {
-                var filterName = extractionParams.RType.Filter;
-                var toolName = tools.Keys.ElementAt(0);
-                if (string.Equals(filterName, toolName, StringComparison.OrdinalIgnoreCase))
-                {
-                    return msg;
-                }
-
-                if (string.Equals(toolName, "msgfplus", StringComparison.OrdinalIgnoreCase) && filterName.StartsWith("msgfplus", StringComparison.OrdinalIgnoreCase))
-                {
-                    // MSGF+ results can be processed by two different extractors: msgfdb and msgfdbFHT
-                    return msg;
-                }
-
-                msg = string.Format("Result type chosen for extraction ({0}) is not correct for selected jobs ({1})", filterName, toolName);
+                return msg;
             }
-            return msg;
+
+            if (string.Equals(toolName, "msgfplus", StringComparison.OrdinalIgnoreCase) && filterName.StartsWith("msgfplus", StringComparison.OrdinalIgnoreCase))
+            {
+                // MSGF+ results can be processed by two different extractors: msgfdb and msgfdbFHT
+                return msg;
+            }
+
+            return string.Format("Result type chosen for extraction ({0}) is not correct for selected jobs ({1})", filterName, toolName);
         }
 
         /// <summary>
         /// Get base tool name from raw tool name.
-        /// Uses hueristic that all common tools begin
+        /// Uses heuristic that all common tools begin
         /// with the same prefix set off by underscore character.
         /// </summary>
         /// <param name="rawTool"></param>

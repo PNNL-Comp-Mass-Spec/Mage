@@ -85,9 +85,9 @@ namespace MageExtContentFilters
             var msgfSpecProb = GetColumnValue(fields, msgfSpecProbIndex, -1d);
             var rankXc = GetColumnValue(fields, rankXcIndex, -1);
 
-            var spectrumCount = -1;
-            double discriminantScore = -1;
-            double NETAbsoluteDifference = -1;
+            const int spectrumCount = -1;
+            const double discriminantScore = -1;
+            const double NETAbsoluteDifference = -1;
 
             var accepted = mSeqFilter.EvaluateSequest(peptideSequence, xCorrValue, delCNValue, delCN2Value, chargeState, peptideMass, spectrumCount, discriminantScore, NETAbsoluteDifference, cleavageState, msgfSpecProb, rankXc);
 

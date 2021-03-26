@@ -21,9 +21,9 @@ namespace MageUnitTests
             var tm = new TestModule();
 
             target.AddModule("TM", tm);
-            var tVal1 = "Test Value1";
+            const string tVal1 = "Test Value1";
             target.SetModuleParameter("TM", "OutputColumnList", tVal1);
-            var tVal2 = "Dummy Value";
+            const string tVal2 = "Dummy Value";
             target.SetModuleParameter("TM", "Dummy", tVal2);
 
             Assert.AreEqual(tVal1, tm.OutputColumnList);
@@ -80,7 +80,7 @@ namespace MageUnitTests
         [Test]
         public void PipelineFromModuleListTest()
         {
-            var pipelineName = "Test Pipeline";
+            const string pipelineName = "Test Pipeline";
 
             var reader = new DelimitedFileReader();
             var filter = new NullFilter();
@@ -109,7 +109,7 @@ namespace MageUnitTests
         [Test]
         public void PipelineFromNamesListTest()
         {
-            var pipelineName = "Test Pipeline";
+            const string pipelineName = "Test Pipeline";
 
             var moduleList = new Collection<object> { "DelimitedFileReader", "NullFilter", "SimpleSink" };
             var pipeline = ProcessingPipeline.Assemble(pipelineName, moduleList);
@@ -135,7 +135,7 @@ namespace MageUnitTests
         [Test]
         public void PipelineFromNamedModuleListTest1()
         {
-            var pipelineName = "Test Pipeline";
+            const string pipelineName = "Test Pipeline";
 
             var namedModuleList = new Collection<ModuleDef>
             {
@@ -167,7 +167,7 @@ namespace MageUnitTests
         [Test]
         public void PipelineFromNamedModuleListTest2()
         {
-            var pipelineName = "Test Pipeline";
+            const string pipelineName = "Test Pipeline";
 
             var reader = new DelimitedFileReader();
             var writer = new SQLiteWriter();
@@ -240,7 +240,7 @@ namespace MageUnitTests
         {
             const string dataFileName = "Sarc_MS_Filtered_isos.csv";
 
-            var maxRows = 7;
+            const int maxRows = 7;
 
             var dataFile = General.GetTestFile(dataFileName);
 

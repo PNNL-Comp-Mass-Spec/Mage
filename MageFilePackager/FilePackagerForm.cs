@@ -210,14 +210,14 @@ namespace MageFilePackager
             }
 
             // Cancel the currently running pipeline
-            if (command.Action == "cancel_operation" && _mCurrentPipeline != null && _mCurrentPipeline.Running)
+            if (command.Action == "cancel_operation" && _mCurrentPipeline?.Running == true)
             {
                 _mCurrentPipeline.Cancel();
                 return;
             }
 
             // Don't allow another pipeline if one is currently running
-            if (_mCurrentPipeline != null && _mCurrentPipeline.Running)
+            if (_mCurrentPipeline?.Running == true)
             {
                 MessageBox.Show("Pipeline is already active", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -310,7 +310,7 @@ namespace MageFilePackager
         private bool ValidQueryParameters(string queryName, Dictionary<string, string> queryParameters)
         {
             var msg = string.Empty;
-            var bFilterDefined = false;
+            var filterDefined = false;
 
             // ReSharper disable LoopCanBeConvertedToQuery
             foreach (var entry in queryParameters)
@@ -320,36 +320,23 @@ namespace MageFilePackager
                 {
                     if (entry.Value.Trim().Length > 0)
                     {
-                        bFilterDefined = true;
+                        filterDefined = true;
                         break;
                     }
                 }
             }
 
-            if (!bFilterDefined)
+            if (!filterDefined)
             {
-                switch (queryName)
+                msg = queryName switch
                 {
-                    case TagJobIDs:
-                        msg = "Job ID list cannot be empty";
-                        break;
-                    case TagJobIDsFromDatasets:
-                        msg = "Dataset list cannot be empty";
-                        break;
-                    case TagDatasetIDList:
-                        msg = "Dataset ID list cannot be empty";
-                        break;
-                    case TagDataPackageID:
-                    case TagDataPackageDsIDs:
-                        msg = "Please enter a data package ID";
-                        break;
-                    case TagDataPackageDetails:
-                        msg = "Please enter one or more data package IDs";
-                        break;
-                    default:
-                        msg = "You must define one or more search criteria before searching for jobs";
-                        break;
-                }
+                    TagJobIDs => "Job ID list cannot be empty",
+                    TagJobIDsFromDatasets => "Dataset list cannot be empty",
+                    TagDatasetIDList => "Dataset ID list cannot be empty",
+                    TagDataPackageID or TagDataPackageDsIDs => "Please enter a data package ID",
+                    TagDataPackageDetails => "Please enter one or more data package IDs",
+                    _ => "You must define one or more search criteria before searching for jobs",
+                };
             }
 
             // FUTURE: validation for TagDataPackageDetails??

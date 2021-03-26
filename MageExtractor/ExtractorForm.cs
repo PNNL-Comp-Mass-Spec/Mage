@@ -215,8 +215,7 @@ namespace MageExtractor
             var queryName = EntityListSourceTabs.SelectedTab.Tag.ToString();
             var queryTemplate = ModuleDiscovery.GetQueryXMLDef(queryName);
 
-            var paramSource = sender as IModuleParameters;
-            if (paramSource == null)
+            if (sender is not IModuleParameters paramSource)
             {
                 return;
             }
@@ -333,21 +332,13 @@ namespace MageExtractor
 
             if (!bFilterDefined)
             {
-                switch (queryName)
+                msg = queryName switch
                 {
-                    case TAG_JOB_IDs:
-                        msg = "Job ID list cannot be empty";
-                        break;
-                    case TAG_JOB_IDs_FROM_DATASETS:
-                        msg = "Dataset ID list cannot be empty";
-                        break;
-                    case TAG_DATA_PACKAGE_ID:
-                        msg = "Please enter a data package ID";
-                        break;
-                    default:
-                        msg = "You must define one or more search criteria before searching for jobs";
-                        break;
-                }
+                    TAG_JOB_IDs => "Job ID list cannot be empty",
+                    TAG_JOB_IDs_FROM_DATASETS => "Dataset ID list cannot be empty",
+                    TAG_DATA_PACKAGE_ID => "Please enter a data package ID",
+                    _ => "You must define one or more search criteria before searching for jobs"
+                };
             }
 
             if (string.IsNullOrEmpty(msg) && (queryName == TAG_JOB_IDs || queryName == TAG_JOB_IDs_FROM_DATASETS))

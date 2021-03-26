@@ -79,7 +79,7 @@ namespace MageConcatenator
             SetupFilterSelectionListForFileProcessor();
 
             // Setup context menus for list displays
-            var dummy = new GridViewDisplayActions(FileListDisplayControl);
+            _ = new GridViewDisplayActions(FileListDisplayControl);
 
             // Connect the pipeline queue to message handlers
             ConnectPipelineQueueToStatusDisplay(mPipelineQueue);
@@ -147,14 +147,14 @@ namespace MageConcatenator
             }
 
             // Cancel the currently running pipeline
-            if (command.Action == "cancel_operation" && mPipelineQueue != null && mPipelineQueue.IsRunning)
+            if (command.Action == "cancel_operation" && mPipelineQueue?.IsRunning == true)
             {
                 mPipelineQueue.Cancel();
                 return;
             }
 
             // Don't allow another pipeline if one is currently running
-            if (mPipelineQueue != null && mPipelineQueue.IsRunning)
+            if (mPipelineQueue?.IsRunning == true)
             {
                 MessageBox.Show("Pipeline is already active", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -304,7 +304,7 @@ namespace MageConcatenator
                     var sourceFilePath = Path.Combine(selectedFileRow["Directory"], selectedFileRow["File"]);
 
                     // Make sure the target file is not in the source file list
-                    if (string.Compare(sourceFilePath, mCombineFilesTargetFilePath, StringComparison.OrdinalIgnoreCase) == 0)
+                    if (string.Equals(sourceFilePath, mCombineFilesTargetFilePath, StringComparison.OrdinalIgnoreCase))
                     {
                         // Auto-rename the target file
                         var fiTargetFile = new FileInfo(mCombineFilesTargetFilePath);
@@ -521,14 +521,7 @@ namespace MageConcatenator
         private void AdjustFileProcessingPanels()
         {
             var fileCount = FileListDisplayControl.ItemCount;
-            if (fileCount == 0)
-            {
-                FolderDestinationPanel1.Enabled = false;
-            }
-            else
-            {
-                FolderDestinationPanel1.Enabled = true;
-            }
+            FolderDestinationPanel1.Enabled = fileCount != 0;
         }
         /// <summary>
         /// Since the list of files can be derived from different sources,

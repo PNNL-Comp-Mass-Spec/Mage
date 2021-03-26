@@ -89,7 +89,7 @@ namespace Mage
         /// <summary>
         /// Are there any predicate clauses?
         /// </summary>
-        public bool HasPredicate => (mPredicates.Count > 0);
+        public bool HasPredicate => mPredicates.Count > 0;
 
         #endregion
 
@@ -346,8 +346,8 @@ namespace Mage
         /// </summary>
         /// <param name="rel">Relationship ("AND" or "OR")</param>
         /// <param name="col">Column name</param>
-        /// <param name="cmp">Comparision type</param>
-        /// <param name="val">Comparision value</param>
+        /// <param name="cmp">Comparison type</param>
+        /// <param name="val">Comparison value</param>
         public void SetColumnDefaultPredicate(string rel, string col, string cmp, string val)
         {
             var p = new QueryPredicate
@@ -365,13 +365,13 @@ namespace Mage
         /// default predicate items for column
         /// </summary>
         /// <param name="col">Column name</param>
-        /// <param name="val">Comparision value</param>
+        /// <param name="val">Comparison value</param>
         public void AddPredicateItem(string col, string val)
         {
             if (mDefaultPredicates.ContainsKey(col))
             {
                 var p = mDefaultPredicates[col];
-                val = val ?? p.val;
+                val ??= p.val;
                 AddPredicateItem(p.rel, p.col, p.cmp, val);
             }
             else if (val != null)
@@ -384,8 +384,8 @@ namespace Mage
         /// Add an item for building the query predicate (with automatic "AND" relationship)
         /// </summary>
         /// <param name="col">Column name</param>
-        /// <param name="cmp">Comparision type</param>
-        /// <param name="val">Comparision value</param>
+        /// <param name="cmp">Comparison type</param>
+        /// <param name="val">Comparison value</param>
         public void AddPredicateItem(string col, string cmp, string val)
         {
             AddPredicateItem("AND", col, cmp, val);
@@ -396,8 +396,8 @@ namespace Mage
         /// </summary>
         /// <param name="rel">Relationship ("AND" or "OR")</param>
         /// <param name="col">Column name</param>
-        /// <param name="cmp">Comparision type</param>
-        /// <param name="val">Comparision value</param>
+        /// <param name="cmp">Comparison type</param>
+        /// <param name="val">Comparison value</param>
         public void AddPredicateItem(string rel, string col, string cmp, string val)
         {
             if (!string.IsNullOrEmpty(val))
@@ -630,7 +630,7 @@ namespace Mage
 
                 case "StartsWithText":
                 case "SWTx":
-                    val = val + "%";
+                    val += "%";
                     str += string.Format("{0} LIKE '{1}'", col, val);
                     break;
 
@@ -767,7 +767,7 @@ namespace Mage
                 if (quotedList.Length > 0)
                     quotedList.Append(",");
 
-                quotedList.Append("'" + value.Trim() + "'");
+                quotedList.AppendFormat("'{0}'", value.Trim());
             }
 
             return quotedList.ToString();

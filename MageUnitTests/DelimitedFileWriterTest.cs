@@ -13,9 +13,9 @@ namespace MageUnitTests
         [Test]
         public void WriteTest()
         {
-            var cols = 5;
-            var rows = 21;
-            var testFile = "delim_test.txt";
+            const int cols = 5;
+            const int rows = 21;
+            const string testFile = "delim_test.txt";
 
             var dGen = new DataGenerator
             {
@@ -60,7 +60,7 @@ namespace MageUnitTests
         public void HeaderTest()
         {
             var target = new DelimitedFileWriter();
-            var expected = "Test Value";
+            const string expected = "Test Value";
             target.Header = expected;
             var actual = target.Header;
             Assert.AreEqual(expected, actual);
@@ -73,7 +73,7 @@ namespace MageUnitTests
         public void FilePathTest()
         {
             var target = new DelimitedFileWriter();
-            var expected = "Test Value";
+            const string expected = "Test Value";
             target.FilePath = expected;
             var actual = target.FilePath;
             Assert.AreEqual(expected, actual);
@@ -86,7 +86,7 @@ namespace MageUnitTests
         public void DelimiterTest()
         {
             var target = new DelimitedFileWriter();
-            var expected = ",";
+            const string expected = ",";
             target.Delimiter = expected;
             var actual = target.Delimiter;
             Assert.AreEqual(expected, actual);

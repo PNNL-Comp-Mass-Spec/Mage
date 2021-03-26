@@ -99,7 +99,7 @@ namespace Mage
         {
             if (string.IsNullOrWhiteSpace(FilePath))
             {
-                var errorMessage = "FilePath must be defined before calling Prepare in DelimitedFileWriter";
+                const string errorMessage = "FilePath must be defined before calling Prepare in DelimitedFileWriter";
                 var ex = ReportMageException(errorMessage);
                 throw ex;
             }

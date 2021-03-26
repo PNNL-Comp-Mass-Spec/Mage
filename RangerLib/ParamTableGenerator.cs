@@ -5,7 +5,7 @@ namespace RangerLib
 {
     public class ParamTableGenerator
     {
-        private PermutationGenerator mPGenModule = new();
+        private readonly PermutationGenerator mPGenModule = new();
 
         /// <summary>
         /// Lookup for operator associated with a parameter name
@@ -18,7 +18,7 @@ namespace RangerLib
         public int GeneratedParameterCount { get { return mPGenModule.PredictedOutputRowCount; } }
 
         /// <summary>
-        ///  If ouput is delivered to file, set the path here if not, leave it blank
+        ///  If output is delivered to file, set the path here if not, leave it blank
         /// </summary>
         public string FilePath { get; set; }
 
@@ -59,12 +59,6 @@ namespace RangerLib
             mParamOperatorLookup.Add(parms["ParamName"], parms["Operator"]);
         }
 
-        private void Clear()
-        {
-            mPGenModule = new PermutationGenerator();
-            mParamOperatorLookup.Clear();
-        }
-
         public ProcessingPipeline GetPipeline()
         {
             // Build column lists and column overwrite specs
@@ -78,18 +72,18 @@ namespace RangerLib
                 allCols.Add(operatorColName + "|+|text");
                 operatorColOverwrites.Add(operatorColName, mParamOperatorLookup[paramName]);
             }
-            var genColspec = string.Join(", ", mPGenModule.ParamNames);
-            var allColspec = string.Join(", ", allCols.ToArray());
+            var genColSpec = string.Join(", ", mPGenModule.ParamNames);
+            var allColSpec = string.Join(", ", allCols.ToArray());
 
             // Set output column parameters for permutation generator module
             mPGenModule.AutoColumnName = "ref";
-            mPGenModule.OutputColumnList = string.Format("{0}|+|text, {1}", mPGenModule.AutoColumnName, genColspec);
+            mPGenModule.OutputColumnList = string.Format("{0}|+|text, {1}", mPGenModule.AutoColumnName, genColSpec);
             mPGenModule.AutoColumnFormat = "ParamSet_{0:000000}";
 
             // Create module to add columns for operators
             var filter = new NullFilter
             {
-                OutputColumnList = mPGenModule.AutoColumnName + ", " + allColspec
+                OutputColumnList = mPGenModule.AutoColumnName + ", " + allColSpec
             };
             filter.SetContext(operatorColOverwrites);
 

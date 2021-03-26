@@ -37,9 +37,9 @@ namespace MageUnitTests
             var sink = new SimpleSink();
 
             var pipeline = new ProcessingPipeline("AddColumnFilterConstructorTest");
-            var sourceModName = "Generator";
-            var filterModName = "Filter";
-            var sinkModName = "Sink";
+            const string sourceModName = "Generator";
+            const string filterModName = "Filter";
+            const string sinkModName = "Sink";
             pipeline.RootModule = pipeline.AddModule(sourceModName, gen);
             pipeline.AddModule(filterModName, target);
             pipeline.AddModule(sinkModName, sink);

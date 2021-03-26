@@ -17,7 +17,7 @@ namespace MageUnitTests
         public void HeaderTest()
         {
             var target = new DelimitedFileReader();
-            var expected = "Test Value";
+            const string expected = "Test Value";
             target.Header = expected;
             var actual = target.Header;
             Assert.AreEqual(expected, actual);
@@ -30,7 +30,7 @@ namespace MageUnitTests
         public void FilePathTest()
         {
             var target = new DelimitedFileReader();
-            var expected = "Test Value";
+            const string expected = "Test Value";
             target.FilePath = expected;
             var actual = target.FilePath;
             Assert.AreEqual(expected, actual);
@@ -43,7 +43,7 @@ namespace MageUnitTests
         public void DelimiterTest()
         {
             var target = new DelimitedFileReader();
-            var expected = "Test Value";
+            const string expected = "Test Value";
             target.Delimiter = expected;
             var actual = target.Delimiter;
             Assert.AreEqual(expected, actual);
@@ -61,7 +61,7 @@ namespace MageUnitTests
             // Create DelimitedFileReader object and test sink object
             // and connect together
             var target = new DelimitedFileReader();
-            var maxRows = 7;
+            const int maxRows = 7;
             var sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
             target.DataRowAvailable += sink.HandleDataRow;

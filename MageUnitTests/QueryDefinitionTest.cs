@@ -18,7 +18,7 @@ namespace MageUnitTests
         {
             var queryDefsFile = General.GetTestFile(queryDefinitionsPath);
 
-            var queryName = "Mage_Analysis_Jobs";
+            const string queryName = "Mage_Analysis_Jobs";
             ModuleDiscovery.QueryDefinitionFileName = queryDefsFile.FullName;
 
             var actual = ModuleDiscovery.GetQueryXMLDef(queryName);

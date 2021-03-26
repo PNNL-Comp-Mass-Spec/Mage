@@ -28,13 +28,7 @@ namespace Mage
         protected bool Abort
         {
             get => Globals.AbortRequested;
-            set
-            {
-                if (value)
-                    Globals.AbortRequested = true;
-                else
-                    Globals.AbortRequested = false;
-            }
+            set => Globals.AbortRequested = value;
         }
 
         /// <summary>
@@ -110,29 +104,30 @@ namespace Mage
         public void SetContext(Dictionary<string, string> context)
         {
             if (Context == null)
-                Context = context;
-            else
             {
-                var mergedContext = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-
-                // Update existing values
-                foreach (var setting in Context)
-                {
-                    if (context.TryGetValue(setting.Key, out var newValue))
-                        mergedContext.Add(setting.Key, newValue);
-                    else
-                        mergedContext.Add(setting.Key, setting.Value);
-                }
-
-                // Add new values
-                foreach (var setting in context)
-                {
-                    if (!Context.ContainsKey(setting.Key))
-                        mergedContext.Add(setting.Key, setting.Value);
-                }
-
-                Context = mergedContext;
+                Context = context;
+                return;
             }
+
+            var mergedContext = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+            // Update existing values
+            foreach (var setting in Context)
+            {
+                if (context.TryGetValue(setting.Key, out var newValue))
+                    mergedContext.Add(setting.Key, newValue);
+                else
+                    mergedContext.Add(setting.Key, setting.Value);
+            }
+
+            // Add new values
+            foreach (var setting in context)
+            {
+                if (!Context.ContainsKey(setting.Key))
+                    mergedContext.Add(setting.Key, setting.Value);
+            }
+
+            Context = mergedContext;
         }
 
         #region IBaseModule Members
@@ -341,28 +336,35 @@ namespace Mage
         }
 
         /// <summary>
+        /// <para>
         /// Handler for Mage standard tabular input data rows
         /// (override of base class)
-        ///
+        ///</para>
+        /// <para>
         /// This event handler receives row events from upstream module, one event per row.
-        /// on the module's standard tabular input, one event per row
-        /// and a null vals object signalling the end of row events.
+        /// on the module's standard tabular input, one event per row,
+        /// using a null object signaling the end of row events
+        /// </para>
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
+        /// <exception cref="NotImplementedException"></exception>
         public virtual void HandleDataRow(object sender, MageDataEventArgs args)
         {
             throw new NotImplementedException();
         }
 
         /// <summary>
+        /// <para>
         /// Handler for Mage standard tabular column definition
         /// (override of base class)
-        ///
+        /// </para>
+        /// <para>
         /// This event handler receives a column definition event
         /// on the module's standard tabular input.
         /// Subclasses should override this for any specialized column def handling
         /// that they need, but should be sure to also call the this base class function.
+        /// </para>
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -397,6 +399,7 @@ namespace Mage
         /// </summary>
         /// <param name="state">Provided so that this function has necessary signature
         /// to be target of ThreadPool.QueueUserWorkItem</param>
+        /// <exception cref="NotImplementedException"></exception>
         public virtual void Run(object state)
         {
             throw new NotImplementedException();
@@ -514,10 +517,7 @@ namespace Mage
             if (columnIndex < 0)
                 return defaultValue;
 
-            if (columnVals[columnIndex] != null)
-                return columnVals[columnIndex];
-
-            return string.Empty;
+            return columnVals[columnIndex] ?? string.Empty;
         }
 
         /// <summary>

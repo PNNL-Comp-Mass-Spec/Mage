@@ -27,7 +27,7 @@ namespace MageUIComponents
         #region Properties
 
         /// <summary>
-        /// Path the the SQLite configuration database
+        /// Path to the SQLite configuration database
         /// that provides persistent storage for column mapping definitions
         /// </summary>
         public static string MappingConfigFilePath { get; set; }
@@ -78,7 +78,7 @@ namespace MageUIComponents
             get
             {
                 var selectedColMapping = ColumnMappingDisplayList.SelectedItemFields;
-                if (selectedColMapping != null && selectedColMapping.ContainsKey("name"))
+                if (selectedColMapping?.ContainsKey("name") == true)
                 {
                     return selectedColMapping["name"];
                 }
@@ -94,7 +94,7 @@ namespace MageUIComponents
             get
             {
                 var selectedColMapping = ColumnMappingDisplayList.SelectedItemFields;
-                if (selectedColMapping != null && selectedColMapping.ContainsKey("column_list"))
+                if (selectedColMapping?.ContainsKey("column_list") == true)
                 {
                     return selectedColMapping["column_list"];
                 }

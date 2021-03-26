@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using PRISM;
 
 namespace Ranger
 {
@@ -19,17 +20,20 @@ namespace Ranger
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception caught: " + ex.Message);
-                Console.WriteLine(ex.StackTrace.ToString());
-                MessageBox.Show("Critical error: " + ex.Message + "\n" + ex.StackTrace.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                ConsoleMsgUtils.ShowWarning("Exception caught: " + ex.Message);
 
-                var fiExe = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location);
-                if (fiExe.FullName.StartsWith(@"\\") && fiExe.Directory != null)
+                var stackTrace = StackTraceFormatter.GetExceptionStackTraceMultiLine(ex);
+                ConsoleMsgUtils.ShowWarning(stackTrace);
+
+                MessageBox.Show("Critical error: " + ex.Message + "\n" + stackTrace, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+                var exeInfo = new System.IO.FileInfo(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                if (exeInfo.FullName.StartsWith(@"\\") && exeInfo.Directory != null)
                 {
                     MessageBox.Show(string.Format(
                                         "You are running this program from a network share. " +
                                         "Try copying directory {0} to your local computer and then re-running {1}",
-                                        fiExe.Directory.Name, fiExe.Name),
+                                        exeInfo.Directory.Name, exeInfo.Name),
                                     "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }

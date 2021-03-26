@@ -10,6 +10,8 @@ namespace Mage
     /// </summary>
     public class MageColumnDef
     {
+        // Ignore Spelling: Args
+
         /// <summary>
         /// Name of the column
         /// </summary>
@@ -92,18 +94,16 @@ namespace Mage
     /// </summary>
     public class MageDataEventArgs : EventArgs
     {
-        private readonly string[] fields;
-
         /// <summary>
         /// The event contains a data row to process
         /// (false signals end of input data stream)
         /// </summary>
-        public bool DataAvailable => fields != null;
+        public bool DataAvailable => Fields != null;
 
         /// <summary>
         /// Data row
         /// </summary>
-        public string[] Fields => fields;
+        public string[] Fields { get; }
 
         /// <summary>
         /// Construct new MageDataEventArgs object with given data row
@@ -111,7 +111,7 @@ namespace Mage
         /// <param name="data"></param>
         public MageDataEventArgs(string[] data)
         {
-            fields = data;
+            Fields = data;
         }
     }
 
@@ -180,8 +180,8 @@ namespace Mage
         /// with given message text and error code
         /// </summary>
         /// <param name="msg">Message</param>
-        /// <param name="ex">Exception</param>
         /// <param name="errorCode">Error code</param>
+        /// <param name="ex">Exception</param>
         public MageExceptionEventArgs(string msg, int errorCode, Exception ex) : base(msg, errorCode)
         {
             Exception = ex;

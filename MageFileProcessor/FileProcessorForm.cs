@@ -227,14 +227,14 @@ namespace MageFileProcessor
             }
 
             // Cancel the currently running pipeline
-            if (command.Action == "cancel_operation" && mPipelineQueue != null && mPipelineQueue.IsRunning)
+            if (command.Action == "cancel_operation" && mPipelineQueue?.IsRunning == true)
             {
                 mPipelineQueue.Cancel();
                 return;
             }
 
             // Don't allow another pipeline if one is currently running
-            if (mPipelineQueue != null && mPipelineQueue.IsRunning)
+            if (mPipelineQueue?.IsRunning == true)
             {
                 MessageBox.Show("Pipeline is already active", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -444,7 +444,7 @@ namespace MageFileProcessor
         private bool ValidQueryParameters(string queryName, Dictionary<string, string> queryParameters)
         {
             var msg = string.Empty;
-            var bFilterDefined = false;
+            var filterDefined = false;
 
             foreach (var entry in queryParameters)
             {
@@ -452,33 +452,22 @@ namespace MageFileProcessor
                 {
                     if (entry.Value.Trim().Length > 0)
                     {
-                        bFilterDefined = true;
+                        filterDefined = true;
                         break;
                     }
                 }
             }
 
-            if (!bFilterDefined)
+            if (!filterDefined)
             {
-                switch (queryName)
+                msg = queryName switch
                 {
-                    case TAG_JOB_IDs:
-                        msg = "Job ID list cannot be empty";
-                        break;
-                    case TAG_JOB_IDs_FROM_DATASETS:
-                        msg = "Dataset list cannot be empty";
-                        break;
-                    case TAG_DATASET_ID_LIST:
-                        msg = "Dataset ID list cannot be empty";
-                        break;
-                    case TAG_DATA_PACKAGE_ID:
-                    case TAG_DATA_PACKAGE_DS_IDs:
-                        msg = "Please enter a data package ID";
-                        break;
-                    default:
-                        msg = "You must define one or more search criteria before searching for jobs";
-                        break;
-                }
+                    TAG_JOB_IDs => "Job ID list cannot be empty",
+                    TAG_JOB_IDs_FROM_DATASETS => "Dataset list cannot be empty",
+                    TAG_DATASET_ID_LIST => "Dataset ID list cannot be empty",
+                    TAG_DATA_PACKAGE_ID or TAG_DATA_PACKAGE_DS_IDs => "Please enter a data package ID",
+                    _ => "You must define one or more search criteria before searching for jobs",
+                };
             }
 
             if (string.IsNullOrEmpty(msg) && (queryName == TAG_JOB_IDs || queryName == TAG_JOB_IDs_FROM_DATASETS || queryName == TAG_DATASET_ID_LIST))
@@ -608,14 +597,7 @@ namespace MageFileProcessor
         private void AdjustFileExtractionPanel()
         {
             var entityCount = JobListDisplayControl.ItemCount;
-            if (entityCount == 0)
-            {
-                EntityFilePanel1.Enabled = false;
-            }
-            else
-            {
-                EntityFilePanel1.Enabled = true;
-            }
+            EntityFilePanel1.Enabled = entityCount != 0;
         }
 
         /// <summary>
@@ -1052,7 +1034,7 @@ namespace MageFileProcessor
 
         private Dictionary<string, string> GetSelectedOutputItem()
         {
-            if ("SQLite_Output" == FilterOutputTabs.SelectedTab.Tag.ToString())
+            if (FilterOutputTabs.SelectedTab.Tag.ToString().Equals("SQLite_Output"))
             {
                 return SQLiteDestinationPanel1.GetParameters();
             }

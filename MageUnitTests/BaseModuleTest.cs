@@ -19,7 +19,7 @@ namespace MageUnitTests
         public void OutputColumnListTest()
         {
             var target = new BaseModule(); // TODO: Initialize to an appropriate value
-            var expected = "Test Value";
+            const string expected = "Test Value";
             target.OutputColumnList = expected;
             var actual = target.OutputColumnList;
             Assert.AreEqual(expected, actual);
@@ -32,7 +32,7 @@ namespace MageUnitTests
         public void ModuleNameTest()
         {
             var target = new BaseModule(); // TODO: Initialize to an appropriate value
-            var expected = "Test Value";
+            const string expected = "Test Value";
             target.ModuleName = expected;
             var actual = target.ModuleName;
             Assert.AreEqual(expected, actual);
@@ -45,8 +45,8 @@ namespace MageUnitTests
         public void SetParametersTest()
         {
             var target = new BaseModule(); // TODO: Initialize to an appropriate value
-            var key = "OutputColumnList";
-            var val = "Test Value";
+            const string key = "OutputColumnList";
+            const string val = "Test Value";
             var parameters = new Dictionary<string, string> { { key, val } };
             target.SetParameters(parameters);
             Assert.AreEqual(val, target.OutputColumnList);
@@ -92,9 +92,9 @@ namespace MageUnitTests
         [Test]
         public void MappedOutputColumnsWildcardTest()
         {
-            var rows = 11;
-            var cols = 7;
-            var insertedColumnName = "NewColName";
+            const int rows = 11;
+            const int cols = 7;
+            const string insertedColumnName = "NewColName";
             var dGen = new DataGenerator(rows, cols);
 
             var target = new TestModule();
@@ -156,8 +156,8 @@ namespace MageUnitTests
         [Test]
         public void MappedOutputColumnsTest()
         {
-            var rows = 11;
-            var cols = 7;
+            const int rows = 11;
+            const int cols = 7;
             var dGen = new DataGenerator(rows, cols);
 
             var target = new TestModule();

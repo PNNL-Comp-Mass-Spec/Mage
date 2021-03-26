@@ -29,7 +29,7 @@ namespace MageUnitTests
             var target = new SQLReader();
             RegisterEvents(target);
 
-            var expected = "Test Value";
+            const string expected = "Test Value";
             target.SQLText = expected;
             var actual = target.SQLText;
             Assert.AreEqual(expected, actual);
@@ -44,7 +44,7 @@ namespace MageUnitTests
             var target = new SQLReader();
             RegisterEvents(target);
 
-            var expected = "Test Value";
+            const string expected = "Test Value";
             target.SprocName = expected;
             var actual = target.SprocName;
             Assert.AreEqual(expected, actual);
@@ -59,7 +59,7 @@ namespace MageUnitTests
             var target = new SQLReader();
             RegisterEvents(target);
 
-            var expected = "Test Value";
+            const string expected = "Test Value";
             target.Server = expected;
             var actual = target.Server;
             Assert.AreEqual(expected, actual);
@@ -74,7 +74,7 @@ namespace MageUnitTests
             var target = new SQLReader();
             RegisterEvents(target);
 
-            var expected = "Test Value";
+            const string expected = "Test Value";
             target.Database = expected;
             var actual = target.Database;
             Assert.AreEqual(expected, actual);
@@ -117,11 +117,11 @@ namespace MageUnitTests
             Assert.AreNotEqual(null, target);
             RegisterEvents(target);
 
-            var expectedSql = "SELECT Dataset, Dataset_ID, Factor, Value FROM V_Custom_Factors_List_Report WHERE Dataset LIKE '%sarc%'";
+            const string expectedSql = "SELECT Dataset, Dataset_ID, Factor, Value FROM V_Custom_Factors_List_Report WHERE Dataset LIKE '%sarc%'";
             Assert.AreEqual(expectedSql, target.SQLText);
 
             // Create test sink module and connect to SQLReader module
-            var maxRows = 7;
+            const int maxRows = 7;
             var sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
             target.DataRowAvailable += sink.HandleDataRow;
@@ -173,7 +173,7 @@ namespace MageUnitTests
             var reader = new SQLReader(serverName, databaseName, username, password, isPostgres);
             RegisterEvents(reader);
 
-            var maxRows = 7;
+            const int maxRows = 7;
             var sink = new SimpleSink(maxRows);
             reader.ColumnDefAvailable += sink.HandleColumnDef;
             reader.DataRowAvailable += sink.HandleDataRow;
@@ -231,7 +231,7 @@ namespace MageUnitTests
             var target = new SQLReader(serverName, databaseName, username, password);
             RegisterEvents(target);
 
-            var maxRows = 7;
+            const int maxRows = 7;
             var sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
             target.DataRowAvailable += sink.HandleDataRow;
@@ -285,15 +285,15 @@ namespace MageUnitTests
 
         private void QueryAllMTDBs(string username, string password)
         {
-            var serverName = "Pogo";
-            var databaseName = "MTS_Master";
+            const string serverName = "Pogo";
+            const string databaseName = "MTS_Master";
 
             // Create SQLReader module and test sink module
             // and connect together (no pipeline object used)
             var target = new SQLReader(serverName, databaseName, username, password);
             RegisterEvents(target);
 
-            var maxRows = 5;
+            const int maxRows = 5;
             var sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
             target.DataRowAvailable += sink.HandleDataRow;
@@ -350,7 +350,7 @@ namespace MageUnitTests
             var target = new SQLReader(serverName, databaseName, username, password);
             RegisterEvents(target);
 
-            var maxRows = 7;
+            const int maxRows = 7;
             var sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
             target.DataRowAvailable += sink.HandleDataRow;
@@ -392,7 +392,7 @@ namespace MageUnitTests
             var target = new SQLReader(serverName, databaseName, username, password);
             RegisterEvents(target);
 
-            var maxRows = 4;
+            const int maxRows = 4;
             var sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
             target.DataRowAvailable += sink.HandleDataRow;
@@ -447,11 +447,11 @@ namespace MageUnitTests
             Assert.AreNotEqual(null, target);
             RegisterEvents(target);
 
-            var expected = "GetMassTagsPlusPepProphetStats";
+            const string expected = "GetMassTagsPlusPepProphetStats";
             Assert.AreEqual(expected, target.SprocName);
 
             // Create test sink module and connect to SQLReader module
-            var maxRows = 7;
+            const int maxRows = 7;
             var sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
             target.DataRowAvailable += sink.HandleDataRow;
@@ -487,15 +487,15 @@ namespace MageUnitTests
 
         private void MTSSprocReadTest(string username, string password)
         {
-            var serverName = "Pogo";
-            var databaseName = "MT_Shewanella_ProdTest_Formic_P1385";
+            const string serverName = "Pogo";
+            const string databaseName = "MT_Shewanella_ProdTest_Formic_P1385";
 
             // Create SQLReader module and test sink module
             // and connect together (no pipeline object used)
             var target = new SQLReader(serverName, databaseName, username, password);
             RegisterEvents(target);
 
-            var maxRows = 4;
+            const int maxRows = 4;
             var sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
             target.DataRowAvailable += sink.HandleDataRow;
@@ -546,14 +546,14 @@ namespace MageUnitTests
 
         private void MTSDatabaseListReadTest(string username, string password)
         {
-            var serverName = "Pogo";
-            var databaseName = "PRISM_IFC";
+            const string serverName = "Pogo";
+            const string databaseName = "PRISM_IFC";
 
             // Create SQLReader module and test sink module and connect together
             var target = new SQLReader(serverName, databaseName, username, password);
             RegisterEvents(target);
 
-            var maxRows = 4;
+            const int maxRows = 4;
             var sink = new SimpleSink(maxRows);
             target.ColumnDefAvailable += sink.HandleColumnDef;
             target.DataRowAvailable += sink.HandleDataRow;

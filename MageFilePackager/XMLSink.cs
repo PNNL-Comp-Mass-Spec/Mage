@@ -63,7 +63,7 @@ namespace MageFilePackager
             {
                 foreach (var kv in Parameters)
                 {
-                    _text.Append(string.Format("<parameter name='{0}' value='{1}' />\n", kv.Key, kv.Value));
+                    _text.AppendFormat("<parameter name='{0}' value='{1}' />\n", kv.Key, kv.Value);
                 }
             }
         }
@@ -74,7 +74,7 @@ namespace MageFilePackager
             {
                 foreach (var kv in Prefixes)
                 {
-                    _text.Append(string.Format("<prefix source='{0}' value='{1}' />\n", kv.Key, kv.Value));
+                    _text.AppendFormat("<prefix source='{0}' value='{1}' />\n", kv.Key, kv.Value);
                 }
             }
         }
@@ -88,7 +88,7 @@ namespace MageFilePackager
             _text.Append("<path ");
             for (var i = 0; i < InputColumnDefs.Count; i++)
             {
-                _text.Append(string.Format("{0}='{1}' ", InputColumnDefs[i].Name, vals[i]));
+                _text.AppendFormat("{0}='{1}' ", InputColumnDefs[i].Name, vals[i]);
             }
             _text.Append(" />\n");
         }
