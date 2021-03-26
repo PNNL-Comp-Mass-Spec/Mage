@@ -92,6 +92,7 @@
   <ItemGroup>
     <Compile Include="clsFileCombiner.cs" />
     <Compile Include="clsFileInfo.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GridViewDisplayActions.cs" />
     <Compile Include="MageConcatenator.cs">
       <SubType>Form</SubType>
