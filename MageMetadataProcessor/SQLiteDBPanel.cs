@@ -15,18 +15,18 @@ namespace MageMetadataProcessor {
         #region Properties
 
         public string TableName {
-            get { return TableNameCtl.Text; }
-            set { TableNameCtl.Text = value; }
+            get => TableNameCtl.Text;
+            set => TableNameCtl.Text = value;
         }
 
         public string DBFilePath {
-            get { return DBFilePathCtl.Text; }
-            set { DBFilePathCtl.Text = value; }
+            get => DBFilePathCtl.Text;
+            set => DBFilePathCtl.Text = value;
         }
 
         public string ColumnMapping {
-            get { return ColumnMapSelectionCtl.Text; }
-            set { ColumnMapSelectionCtl.Text = value; }
+            get => ColumnMapSelectionCtl.Text;
+            set => ColumnMapSelectionCtl.Text = value;
         }
 
         public string OutputColumnList { get; set; }

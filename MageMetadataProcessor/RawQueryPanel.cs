@@ -18,8 +18,8 @@ namespace MageMetadataProcessor
 
         public string RawSQL
         {
-            get { return RawSQLCtl.Text; }
-            set { RawSQLCtl.Text = value; }
+            get => RawSQLCtl.Text;
+            set => RawSQLCtl.Text = value;
         }
 
         #endregion

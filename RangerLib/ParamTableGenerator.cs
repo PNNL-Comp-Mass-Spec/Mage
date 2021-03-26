@@ -15,7 +15,7 @@ namespace RangerLib
         /// <summary>
         /// Inform user of how many rows will be generated (after parameters are set)
         /// </summary>
-        public int GeneratedParameterCount { get { return mPGenModule.PredictedOutputRowCount; } }
+        public int GeneratedParameterCount => mPGenModule.PredictedOutputRowCount;
 
         /// <summary>
         ///  If output is delivered to file, set the path here if not, leave it blank

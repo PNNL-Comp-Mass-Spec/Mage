@@ -13,13 +13,13 @@ namespace MageMetadataProcessor
 
         public string DatasetName
         {
-            get { return DatasetNameCtl.Text; }
-            set { DatasetNameCtl.Text = value; }
+            get => DatasetNameCtl.Text;
+            set => DatasetNameCtl.Text = value;
         }
         public string DataPackageNumber
         {
-            get { return DataPackageNumberCtl.Text; }
-            set { DataPackageNumberCtl.Text = value; }
+            get => DataPackageNumberCtl.Text;
+            set => DataPackageNumberCtl.Text = value;
         }
 
         #endregion
