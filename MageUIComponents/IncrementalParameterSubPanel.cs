@@ -17,7 +17,7 @@ namespace MageUIComponents
                 { "Upper", ParamUpperCtl.Text },
                 { "Increment", ParamIncrementCtl.Text },
                 { "Operator", OperationCtl.Text },
-                { "Active", (ActiveCtl.Checked)?"On":"Off" }
+                { "Active", ActiveCtl.Checked?"On":"Off" }
             };
         }
 
@@ -43,7 +43,7 @@ namespace MageUIComponents
                         OperationCtl.Text = paramDef.Value;
                         break;
                     case "Active":
-                        ActiveCtl.Checked = (paramDef.Value == "On");
+                        ActiveCtl.Checked = paramDef.Value == "On";
                         break;
                 }
             }

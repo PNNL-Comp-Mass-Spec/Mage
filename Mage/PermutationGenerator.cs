@@ -381,7 +381,7 @@ namespace Mage
                 else
                 {
                     var current = LowerBound;
-                    for (var j = 0; (current <= UpperBound); j++)
+                    for (var j = 0; current <= UpperBound; j++)
                     {
                         current = LowerBound + j * Step;
                         if (current > UpperBound)

@@ -451,7 +451,7 @@ namespace Mage
         {
             // Look for wildcard characters
 
-            var exact_match = (val.Substring(0, 1) == "~");
+            var exact_match = val.Substring(0, 1) == "~";
             var regex_all = val.Contains("*");
             var regex_one = val.Contains("?");
             var sql_any = val.Contains("%");

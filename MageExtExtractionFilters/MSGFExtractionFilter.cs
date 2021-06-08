@@ -187,7 +187,7 @@ namespace MageExtExtractionFilters
 
                     if (double.TryParse(score, out var msgf))
                     {
-                        accepted = (msgf <= mCutoffThreshold);
+                        accepted = msgf <= mCutoffThreshold;
                     }
                 }
                 else

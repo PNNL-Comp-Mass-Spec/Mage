@@ -97,7 +97,7 @@ namespace MageUIComponents
 
         public string SearchInSubdirectories
         {
-            get => (SearchInSubdirectoriesCtl.Checked) ? "Yes" : "No";
+            get => SearchInSubdirectoriesCtl.Checked ? "Yes" : "No";
             set => SearchInSubdirectoriesCtl.Checked = string.Equals(value, "Yes", StringComparison.OrdinalIgnoreCase);
         }
 

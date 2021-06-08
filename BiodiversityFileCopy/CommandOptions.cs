@@ -110,13 +110,13 @@ namespace BiodiversityFileCopy
                         proc.DataPackagesToProcess = sa.Pop();
                         break;
                     case "copy_files":
-                        proc.DoCopyFiles = (sa.Pop() == "on");
+                        proc.DoCopyFiles = sa.Pop() == "on";
                         break;
                     case "verbose_logging":
-                        proc.Verbose = (sa.Pop() == "on");
+                        proc.Verbose = sa.Pop() == "on";
                         break;
                     case "source_check":
-                        proc.DoSourceCheck = (sa.Pop() == "on");
+                        proc.DoSourceCheck = sa.Pop() == "on";
                         break;
                 }
             }

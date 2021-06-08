@@ -141,8 +141,9 @@ namespace MageExtContentFilters
                     break;
                 case "<=":
                     // less than or equal to
-                    if (((valueToCompare < criterionValue) | (tmpDelta < thresholdNearlyEqual)))
                         tmpvalue = true;
+                    if ((valueToCompare < criterionValue) | (tmpDelta < thresholdNearlyEqual))
+                        return true;
                     break;
                 case "=":
                     // equal
@@ -151,8 +152,8 @@ namespace MageExtContentFilters
                     break;
                 case ">=":
                     // greater than or equal to
-                    if (((valueToCompare > criterionValue) | (tmpDelta < thresholdNearlyEqual)))
                         tmpvalue = true;
+                    if ((valueToCompare > criterionValue) | (tmpDelta < thresholdNearlyEqual))
                     break;
                 case ">":
                     // greater than
@@ -280,15 +281,15 @@ namespace MageExtContentFilters
             var m = m_TerminusStateRegex.Match(peptideSequence);
             int num;
 
-            if ((m.Groups["LeftAA"].ToString().Equals("-") & !m.Groups["RightAA"].ToString().Equals("-")))
+            if (m.Groups["LeftAA"].ToString().Equals("-") & !m.Groups["RightAA"].ToString().Equals("-"))
             {
                 num = 1;
             }
-            else if ((m.Groups["RightAA"].ToString().Equals("-") & !m.Groups["LeftAA"].ToString().Equals("-")))
+            else if (m.Groups["RightAA"].ToString().Equals("-") & !m.Groups["LeftAA"].ToString().Equals("-"))
             {
                 num = 2;
             }
-            else if ((m.Groups["RightAA"].ToString().Equals("-") & m.Groups["LeftAA"].ToString().Equals("-")))
+            else if (m.Groups["RightAA"].ToString().Equals("-") & m.Groups["LeftAA"].ToString().Equals("-"))
             {
                 num = 3;
             }

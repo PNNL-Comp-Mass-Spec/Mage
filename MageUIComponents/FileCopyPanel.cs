@@ -19,7 +19,7 @@ namespace MageUIComponents
 
         public string OverwriteExistingFiles
         {
-            get => (OverwriteExistingCtl.Checked) ? "Yes" : "No";
+            get => OverwriteExistingCtl.Checked ? "Yes" : "No";
             set => OverwriteExistingCtl.Checked = string.Equals(value, "Yes", StringComparison.OrdinalIgnoreCase);
         }
 
@@ -38,7 +38,7 @@ namespace MageUIComponents
 
         public string ApplyPrefixToFileName
         {
-            get => (usePrefixCtl.Checked) ? "Yes" : "No";
+            get => usePrefixCtl.Checked ? "Yes" : "No";
             set
             {
                 usePrefixCtl.Checked = string.Equals(value, "Yes", StringComparison.OrdinalIgnoreCase);
@@ -60,7 +60,7 @@ namespace MageUIComponents
 
         public string ResolveCacheInfoFiles
         {
-            get => (ResolveCacheInfoFilesCtl.Checked) ? "Yes" : "No";
+            get => ResolveCacheInfoFilesCtl.Checked ? "Yes" : "No";
             set => ResolveCacheInfoFilesCtl.Checked = string.Equals(value, "Yes", StringComparison.OrdinalIgnoreCase);
         }
 

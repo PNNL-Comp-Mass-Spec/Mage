@@ -240,7 +240,7 @@ namespace Mage
                 var outRow = MapDataRow(args.Fields);
 
                 var fileNameOutColIndex = OutputColumnPos[OutputFileColumnName];
-                outRow[fileNameOutColIndex] = (concatenateOutput) ? sourceFile : destFile;
+                outRow[fileNameOutColIndex] = concatenateOutput ? sourceFile : destFile;
 
                 // Strip off the MyEMSL FileID from the filename
                 var myEMSLFileID = MyEMSLReader.DatasetInfoBase.ExtractMyEMSLFileID(outRow[fileNameOutColIndex], out var newFilePath);

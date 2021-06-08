@@ -231,7 +231,7 @@ namespace Mage
                 }
                 else
                 {
-                    prefix = "Tag_" + (tagIndex++);
+                    prefix = "Tag_" + tagIndex++;
                 }
                 return prefix + "_" + sourceFile;
             }

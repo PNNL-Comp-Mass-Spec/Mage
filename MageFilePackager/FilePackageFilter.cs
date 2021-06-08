@@ -29,9 +29,9 @@ namespace MageFilePackager
         protected override void ColumnDefsFinished()
         {
             _directoryIdx = InputColumnPos["Directory"];
-            _storagePathIdx = (InputColumnPos.ContainsKey("Storage_Path")) ? InputColumnPos["Storage_Path"] : -1;
+            _storagePathIdx = InputColumnPos.ContainsKey("Storage_Path") ? InputColumnPos["Storage_Path"] : -1;
             _archivePathIdx = InputColumnPos["Archive_Path"];
-            _purgedIdx = (InputColumnPos.ContainsKey("Purged")) ? InputColumnPos["Purged"] : -1;
+            _purgedIdx = InputColumnPos.ContainsKey("Purged") ? InputColumnPos["Purged"] : -1;
             for (var i = 0; i < OutputColumnDefs.Count; i++)
             {
                 var cd = OutputColumnDefs[i];
@@ -72,7 +72,7 @@ namespace MageFilePackager
                     // If it is not an archive path,
                     // replace the storage root path
                     // with the archive root path
-                    var prefix = (PrefixList.ContainsKey(source)) ? PrefixList[source] : "";
+                    var prefix = PrefixList.ContainsKey(source) ? PrefixList[source] : "";
                     var purged = vals[_purgedIdx];
                     if (purged == "0")
                     {

@@ -64,7 +64,7 @@ namespace MageExtExtractionFilters
             // ResultType.MergeFile mfMap = mMergeFiles["ResultToSeqMap"];
             // ResultType.MergeFile mfProt = mMergeFiles["SeqToProteinMap"];
             mProteinMerger = new MergeProteinData(MergeProteinData.MergeModeConstants.InspectOrMSGFDB);
-            mOutputAllProteins = (mExtractionType.RType.ResultName == ResultType.MSGFDB_SYN_ALL_PROTEINS);
+            mOutputAllProteins = mExtractionType.RType.ResultName == ResultType.MSGFDB_SYN_ALL_PROTEINS;
             mDataWrittenRowTags = new SortedSet<string>();
         }
 
@@ -219,7 +219,7 @@ namespace MageExtExtractionFilters
                 accept = pass || mKeepAllResults;
                 if (mFilterResultsColIdx >= 0)
                 {
-                    vals[mFilterResultsColIdx] = ((pass) ? "Passed-" : "Failed-") + mExtractionType.ResultFilterSetID;
+                    vals[mFilterResultsColIdx] = (pass ? "Passed-" : "Failed-") + mExtractionType.ResultFilterSetID;
                 }
             }
 

@@ -377,7 +377,7 @@ namespace Mage
                     // Rename column if it has same name as previously handled column
                     if (InputColumnPos.ContainsKey(columnDef.Name))
                     {
-                        columnDef.Name += (++mNameDisambiguatorCount);
+                        columnDef.Name += ++mNameDisambiguatorCount;
                     }
                     InputColumnPos.Add(columnDef.Name, InputColumnIndex++);
                     InputColumnDefs.Add(columnDef);
@@ -676,7 +676,7 @@ namespace Mage
 
                     // Output column is mapped to input column
                     // Copy input column def to output col def for this column
-                    var colName = (string.IsNullOrEmpty(inputColName)) ? outputColName : inputColName;
+                    var colName = string.IsNullOrEmpty(inputColName) ? outputColName : inputColName;
                     MapOutputColumnToInputColumn(colName, outColIdx);
 
                     // And do any necessary overrides
