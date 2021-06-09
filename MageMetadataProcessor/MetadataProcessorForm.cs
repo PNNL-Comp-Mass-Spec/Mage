@@ -18,12 +18,6 @@ namespace MageMetadataProcessor
         // Current Mage pipeline that is running or has most recently run
         private ProcessingPipeline mCurrentPipeline;
 
-        // Current command that is being executed or has most recently been executed
-        private MageCommandEventArgs mCurrentCmd;
-
-        // Object that sent the current command
-        private object mCurrentCmdSender;
-
         #endregion
 
         #region Initialization
@@ -87,8 +81,6 @@ namespace MageMetadataProcessor
         /// <param name="command">Command to execute</param>
         public void DoCommand(object sender, MageCommandEventArgs command)
         {
-            // Remember who sent us the command
-            mCurrentCmdSender = sender;
 
             // Cancel the currently running pipeline
             if (command.Action == "cancel_operation" && mCurrentPipeline != null && mCurrentPipeline.Running)
@@ -186,7 +178,6 @@ namespace MageMetadataProcessor
                 }
                 else
                 {
-                    mCurrentCmd = command;
                     mCurrentPipeline.OnStatusMessageUpdated += statusPanel1.HandleStatusMessageUpdated;
                     mCurrentPipeline.OnRunCompleted += statusPanel1.HandleCompletionMessageUpdate;
                     mCurrentPipeline.OnRunCompleted += HandlePipelineCompletion;

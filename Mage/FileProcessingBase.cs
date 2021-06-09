@@ -40,10 +40,6 @@ namespace Mage
         /// </summary>
         protected const string COLUMN_NAME_DATASET_NUM = "Dataset_Num";
 
-        // ReSharper disable once CommentTypo
-        // protected const string COLUMN_NAME_DATASETID = "DatasetID";
-        // protected const string COLUMN_NAME_DATASET_ID = "Dataset_ID";
-
         /// <summary>
         /// Cache of files stored in MyEMSL for datasets that the user searches for
         /// </summary>
@@ -214,8 +210,6 @@ namespace Mage
         /// <returns>The dataset name if found; empty string if the dataset name could not be determined</returns>
         protected string DetermineDatasetName(string[] bufferRow, string directoryPath)
         {
-            string datasetName;
-
             var datasetColNames = new List<string>
             {
                 COLUMN_NAME_DATASET,

@@ -600,41 +600,6 @@ namespace MageExtractor
             };
         }
 
-        // private bool LoadDataIntoAccess(PipelineQueue oPipelineQueue, DestinationType oDestination) {
-
-        //    try
-        //    {
-
-        //        using (System.Data.OleDb.OleDbConnection conn =
-        //            new System.Data.OleDb.OleDbConnection(@"provider=microsoft.jet.oledb.4.0;data source=F:\Temp\Database1.mdb"))
-        //        {
-        //            conn.Open();
-        //            using (System.Data.OleDb.OleDbCommand cmd = conn.CreateCommand())
-        //            {
-        //                try
-        //                {
-        //                    cmd.CommandText = "drop table MyLocalTable";
-        //                    cmd.ExecuteNonQuery();
-        //                }
-        //                catch (Exception)
-        //                {
-        //                    // Don't care if target table exists, going to copy into it.
-        //                }
-
-        //                cmd.CommandText = @"SELECT * INTO MyLocalTable FROM [Text;FMT=Delimited(,);HDR=YES;IMEX=2;DATABASE=F:\Temp].[QC_Shew_XTandem.txt]";
-        //                cmd.CommandType = CommandType.Text;
-        //                cmd.ExecuteNonQuery();
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show(ex.Message);
-        //    }
-
-        //    return true;
-        //}
-
         #endregion
 
         #region Misc

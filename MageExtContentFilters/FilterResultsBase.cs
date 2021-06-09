@@ -226,8 +226,6 @@ namespace MageExtContentFilters
             eCleavageStates tmpState;
 
             var num = 0;
-            // var r = new Regex("^(?<1>\S)\.(?<2>\S)\S+(?<3>\S)\.(?<4>\S)$")
-            // var r = new Regex("^(?<1>\S)\.(?<2>\S)\S*(?<3>[A-Ja-j,L-Ql-q,S-Zs-z])[^A-Za-z]*\.(?<4>\S)$")
 
             var m = m_CleavageStateRegex.Match(peptideSequence);
 

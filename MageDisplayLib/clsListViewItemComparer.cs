@@ -11,20 +11,6 @@ namespace MageDisplayLib
         private readonly bool m_SortNumeric;
         private readonly bool m_SortDate;
 
-        public ListViewItemComparer()
-        {
-            m_SortCol = 0;
-            m_SortAscending = true;
-            m_SortNumeric = false;
-            m_SortDate = false;
-        }
-
-        public ListViewItemComparer(int column)
-        {
-            m_SortCol = column;
-            m_SortNumeric = false;
-            m_SortDate = false;
-        }
         /// <summary>
         /// Constructor
         /// </summary>
