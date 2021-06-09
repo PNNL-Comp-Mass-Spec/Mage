@@ -399,7 +399,7 @@ namespace Mage
         {
             var sb = new StringBuilder();
 
-            sb.Append("CREATE TABLE [" + ts.TableName + "] (" + Environment.NewLine);
+            sb.AppendFormat("CREATE TABLE [{0}] ({1}", ts.TableName, Environment.NewLine);
 
             for (var i = 0; i <= ts.Columns.Count - 1; i++)
             {
@@ -502,10 +502,11 @@ namespace Mage
             columnDataTypes = new List<DbType>(ts.Columns.Count - 1);
 
             var sb = new StringBuilder();
-            sb.Append("INSERT INTO [" + ts.TableName + "] (");
+            sb.AppendFormat("INSERT INTO [{0}] (", ts.TableName);
+
             for (var i = 0; i <= ts.Columns.Count - 1; i++)
             {
-                sb.Append("[" + ts.Columns[i].ColumnName + "]");
+                sb.AppendFormat("[{0}]", ts.Columns[i].ColumnName);
                 if (i < ts.Columns.Count - 1)
                 {
                     sb.Append(", ");

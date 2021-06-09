@@ -78,7 +78,7 @@ namespace MageFilePackager
             var sb = new StringBuilder();
             foreach (var item in postDataList)
             {
-                sb.Append(string.Format("&{0}={1}", item.Key, item.Value));
+                sb.AppendFormat("&{0}={1}", item.Key, item.Value);
             }
             return sb.ToString();
         }
