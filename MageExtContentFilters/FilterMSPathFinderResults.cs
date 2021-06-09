@@ -20,128 +20,110 @@ namespace MageExtContentFilters
           double pepQValue
          )
         {
-            var currEval = true;
+            var passesFilter = true;
             var peptideLength = GetPeptideLength(peptideSequence);
-            var termState = 0;
+            var terminusState = 0;
 
             var cleavageState = Convert.ToInt32(GetCleavageState(peptideSequence));
 
             foreach (var filterGroupID in m_FilterGroups.Keys)
             {
-                currEval = true;
+                passesFilter = true;
                 foreach (var filterRow in m_FilterGroups[filterGroupID])
                 {
-                    var currCritName = filterRow.CriteriaName;
-                    var currCritOperator = filterRow.CriteriaOperator;
+                    var currentCriteriaName = filterRow.CriteriaName;
+                    var currentOperator = filterRow.CriteriaOperator;
 
-                    switch (currCritName)
+                    switch (currentCriteriaName)
                     {
                         case "Charge":
-                            if (chargeState > 0)
+                            if (chargeState > 0 && !CompareInteger(chargeState, currentOperator, filterRow.CriteriaValueInt))
                             {
-                                if (!CompareInteger(chargeState, currCritOperator, filterRow.CriteriaValueInt))
-                                {
-                                    currEval = false;
-                                }
+                                passesFilter = false;
                             }
                             break;
+
                         case "MSGF_SpecProb":
                             // We don't run MSGF on MSPathFinder results, but we will test the filter threshold against specEValue
-                            if (specEValue > -1)
+                            if (specEValue > -1 && !CompareDouble(specEValue, currentOperator, filterRow.CriteriaValueFloat))
                             {
-                                if (!CompareDouble(specEValue, currCritOperator, filterRow.CriteriaValueFloat))
-                                {
-                                    currEval = false;
-                                }
+                                passesFilter = false;
                             }
                             break;
-                        case "Cleavage_State":
-                            if (cleavageState > -1)
-                            {
-                                if (!CompareInteger(cleavageState, currCritOperator, filterRow.CriteriaValueInt))
-                                {
-                                    currEval = false;
-                                }
-                            }
-                            break;
-                        case "Terminus_State":
-                            if (termState > -1)
-                            {
-                                if (termState < 0)
-                                    termState = GetTerminusState(peptideSequence);
 
-                                if (!CompareInteger(termState, currCritOperator, filterRow.CriteriaValueInt))
+                        case "Cleavage_State":
+                            if (cleavageState > -1 && !CompareInteger(cleavageState, currentOperator, filterRow.CriteriaValueInt))
+                            {
+                                passesFilter = false;
+                            }
+                            break;
+
+                        case "Terminus_State":
+                            if (terminusState > -1)
+                            {
+                                if (terminusState < 0)
+                                    terminusState = GetTerminusState(peptideSequence);
+
+                                if (!CompareInteger(terminusState, currentOperator, filterRow.CriteriaValueInt))
                                 {
-                                    currEval = false;
+                                    passesFilter = false;
                                 }
                             }
                             break;
+
                         case "Peptide_Length":
-                            if (peptideLength > 0)
+                            if (peptideLength > 0 && !CompareInteger(peptideLength, currentOperator, filterRow.CriteriaValueInt))
                             {
-                                if (!CompareInteger(peptideLength, currCritOperator, filterRow.CriteriaValueInt))
-                                {
-                                    currEval = false;
-                                }
+                                passesFilter = false;
                             }
                             break;
+
                         case "Mass":
-                            if (peptideMass > 0)
+                            if (peptideMass > 0 && !CompareDouble(peptideMass, currentOperator, filterRow.CriteriaValueFloat, 0.000001))
                             {
-                                if (!CompareDouble(peptideMass, currCritOperator, filterRow.CriteriaValueFloat, 0.000001))
-                                {
-                                    currEval = false;
-                                }
+                                passesFilter = false;
                             }
                             break;
+
                         case "MSGFDB_SpecProb":
-                            if (specEValue > -1)
+                            if (specEValue > -1 && !CompareDouble(specEValue, currentOperator, filterRow.CriteriaValueFloat))
                             {
-                                if (!CompareDouble(specEValue, currCritOperator, filterRow.CriteriaValueFloat))
-                                {
-                                    currEval = false;
-                                }
+                                passesFilter = false;
                             }
                             break;
+
                         case "MSGFDB_PValue":
-                            if (eValue > -1)
+                            if (eValue > -1 && !CompareDouble(eValue, currentOperator, filterRow.CriteriaValueFloat))
                             {
-                                if (!CompareDouble(eValue, currCritOperator, filterRow.CriteriaValueFloat))
-                                {
-                                    currEval = false;
-                                }
+                                passesFilter = false;
                             }
                             break;
+
                         case "MSGFDB_FDR":
                         case "MSGFPlus_QValue":
-                            if (qValue > -1)
+                            if (qValue > -1 && !CompareDouble(qValue, currentOperator, filterRow.CriteriaValueFloat, 0.000001))
                             {
-                                if (!CompareDouble(qValue, currCritOperator, filterRow.CriteriaValueFloat, 0.000001))
-                                {
-                                    currEval = false;
-                                }
+                                passesFilter = false;
                             }
                             break;
+
                         case "MSGFDB_PepFDR":
-                            if (pepQValue > -1)
+                            if (pepQValue > -1 && !CompareDouble(pepQValue, currentOperator, filterRow.CriteriaValueFloat, 0.000001))
                             {
-                                if (!CompareDouble(pepQValue, currCritOperator, filterRow.CriteriaValueFloat, 0.000001))
-                                {
-                                    currEval = false;
-                                }
+                                passesFilter = false;
                             }
                             break;
                     }
 
-                    if (currEval == false)
+                    if (!passesFilter)
                         break;                       // Subject didn't pass a criterion value, so move on to the next group
                 }
 
-                if (currEval)
-                    break;                           // Subject passed the criteria for this filtergroup
+                if (passesFilter)
+                    break;                           // Subject passed the criteria for this filter group
             }
 
-            return currEval;
+            return passesFilter;
         }
     }
 }
