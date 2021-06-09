@@ -444,7 +444,7 @@ namespace Mage
                 throw new MageException("Null module sent to AddModule (modDef.ModuleObject is null)");
             }
 
-            if (!(modDef.ModuleObject is IBaseModule module))
+            if (modDef.ModuleObject is not IBaseModule module)
             {
                 throw new MageException("Module is not of type IBaseModule; cannot add " + modDef.ModuleObject);
             }

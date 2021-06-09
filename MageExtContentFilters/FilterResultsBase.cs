@@ -28,7 +28,7 @@ namespace MageExtContentFilters
             public float CriteriaValueFloat;
             public int CriterionID;
 
-            public FilterCriteriaDef(string[] criteria)
+            public FilterCriteriaDef(IReadOnlyList<string> criteria)
             {
                 CriteriaName = criteria[CriteriaNameIndex].Trim();
                 CriteriaOperator = criteria[CriteriaOperatorIndex].Trim();
@@ -36,13 +36,15 @@ namespace MageExtContentFilters
                 int.TryParse(value, out CriteriaValueInt);
                 float.TryParse(value, out CriteriaValueFloat);
 
-                if (criteria.Length > 4)
+                if (criteria.Count > 4)
                 {
                     value = criteria[CriterionIDIndex].Trim();
                     int.TryParse(value, out CriterionID);
                 }
                 else
+                {
                     CriterionID = -1;
+                }
             }
 
             public override string ToString()
@@ -70,7 +72,7 @@ namespace MageExtContentFilters
             Full = 2
         }
 
-        public FilterResultsBase(Collection<string[]> filterCriteria, string filterSetID)
+        public FilterResultsBase(IEnumerable<string[]> filterCriteria, string filterSetID)
         {
             foreach (var criteria in filterCriteria)
             {
@@ -85,6 +87,7 @@ namespace MageExtContentFilters
             }
             // this.m_filters = filterCriteria;
             // this.m_FilterGroups = GetGroupList(this.m_filters);
+
             m_CleanSeqRegex = new Regex(@"(?<cleanseq>[a-zA-z\.]+)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
             m_CleavageStateRegex = new Regex(@"^(?<Prefix>\S)\.(?<PepStart>\S)\S*(?<PepEnd>[A-Z])[^A-Z]*\.(?<Suffix>\S)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
             m_TerminusStateRegex = new Regex(@"^(?<LeftAA>\S)\.\S+\.(?<RightAA>\S)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
@@ -128,7 +131,6 @@ namespace MageExtContentFilters
 
         protected bool CompareDouble(double valueToCompare, string operatorSymbol, double criterionValue, double thresholdNearlyEqual)
         {
-            var tmpvalue = false;
             var tmpDelta = Math.Abs(valueToCompare - criterionValue);
 
             switch (operatorSymbol)
@@ -136,68 +138,73 @@ namespace MageExtContentFilters
                 case "<":
                     // less than
                     if (valueToCompare < criterionValue)
-                        tmpvalue = true;
-                    break;
-                case "<=":
-                    // less than or equal to
-                        tmpvalue = true;
-                    if ((valueToCompare < criterionValue) | (tmpDelta < thresholdNearlyEqual))
                         return true;
                     break;
+
+                case "<=":
+                    // less than or equal to
+                    if ((valueToCompare < criterionValue) || (tmpDelta < thresholdNearlyEqual))
+                        return true;
+                    break;
+
                 case "=":
                     // equal
                     if (tmpDelta < thresholdNearlyEqual)
-                        tmpvalue = true;
+                        return true;
                     break;
+
                 case ">=":
                     // greater than or equal to
-                        tmpvalue = true;
-                    if ((valueToCompare > criterionValue) | (tmpDelta < thresholdNearlyEqual))
+                    if ((valueToCompare > criterionValue) || (tmpDelta < thresholdNearlyEqual))
+                        return true;
                     break;
+
                 case ">":
                     // greater than
                     if (valueToCompare > criterionValue)
-                        tmpvalue = true;
+                        return true;
                     break;
             }
 
-            return tmpvalue;
+            return false;
         }
 
         protected bool CompareInteger(int valueToCompare, string operatorSymbol, int criterionValue)
         {
-            var tmpvalue = false;
-
             switch (operatorSymbol)
             {
                 case "<":
                     // less than
                     if (valueToCompare < criterionValue)
-                        tmpvalue = true;
+                        return true;
                     break;
+
                 case "<=":
                     // less than or equal to
                     if (valueToCompare <= criterionValue)
-                        tmpvalue = true;
+                        return true;
                     break;
+
                 case "=":
                     // equal
                     if (valueToCompare == criterionValue)
-                        tmpvalue = true;
+                        return true;
                     break;
+
                 case ">=":
                     // greater than or equal to
                     if (valueToCompare >= criterionValue)
-                        tmpvalue = true;
+                        return true;
                     break;
+
                 case ">":
                     // greater than
                     if (valueToCompare > criterionValue)
-                        tmpvalue = true;
+                        return true;
                     break;
             }
 
-            return tmpvalue;
+            return false;
         }
 
         protected ArrayList GetGroupList(DataTable filterCriteria)
@@ -220,10 +227,9 @@ namespace MageExtContentFilters
             return tmpList;
         }
 
-        protected eCleavageStates GetCleavageState(string peptideSequence)
+        protected CleavageStateTypes GetCleavageState(string peptideSequence)
         {
             // Implements IFilterResults.GetCleavageState
-            eCleavageStates tmpState;
 
             var num = 0;
 
@@ -234,69 +240,57 @@ namespace MageExtContentFilters
             var pepEnd = m.Groups["PepEnd"].ToString();
             var suffix = m.Groups["Suffix"].ToString();
 
-            if (prefix.Equals("R") | prefix.Equals("K"))
+            if (prefix.Equals("R") || prefix.Equals("K"))
             {
                 if (!pepStart.Equals("P"))
-                    num += 1;
+                    num++;
             }
             else if (prefix.Equals("-"))
             {
-                num += 1;
+                num++;
             }
 
-            if (pepEnd.Equals("R") | pepEnd.Equals("K"))
+            if (pepEnd.Equals("R") || pepEnd.Equals("K"))
             {
                 if (!suffix.Equals("P"))
-                    num += 1;
+                    num++;
             }
             else if (suffix.Equals("-"))
             {
-                num += 1;
+                num++;
             }
 
-            switch (num)
+            return num switch
             {
-                case 0:
-                    tmpState = eCleavageStates.Non;
-                    break;
-                case 1:
-                    tmpState = eCleavageStates.Partial;
-                    break;
-                case 2:
-                    tmpState = eCleavageStates.Full;
-                    break;
-                default:
-                    tmpState = eCleavageStates.Full;
-                    break;
-            }
-
-            return tmpState;
+                0 => CleavageStateTypes.Non,
+                1 => CleavageStateTypes.Partial,
+                2 => CleavageStateTypes.Full,
+                // ReSharper disable once UnreachableSwitchArmDueToIntegerAnalysis
+                _ => CleavageStateTypes.Full
+            };
         }
 
         protected int GetTerminusState(string peptideSequence)
         {
             // var r = new Regex("^(?<LeftAA>\S)\.\S+\.(?<RightAA>\S)$")
             var m = m_TerminusStateRegex.Match(peptideSequence);
-            int num;
 
-            if (m.Groups["LeftAA"].ToString().Equals("-") & !m.Groups["RightAA"].ToString().Equals("-"))
+            if (m.Groups["LeftAA"].ToString().Equals("-") && !m.Groups["RightAA"].ToString().Equals("-"))
             {
-                num = 1;
-            }
-            else if (m.Groups["RightAA"].ToString().Equals("-") & !m.Groups["LeftAA"].ToString().Equals("-"))
-            {
-                num = 2;
-            }
-            else if (m.Groups["RightAA"].ToString().Equals("-") & m.Groups["LeftAA"].ToString().Equals("-"))
-            {
-                num = 3;
-            }
-            else
-            {
-                num = 0;
+                return 1;
             }
 
-            return num;
+            if (m.Groups["RightAA"].ToString().Equals("-") && !m.Groups["LeftAA"].ToString().Equals("-"))
+            {
+                return 2;
+            }
+
+            if (m.Groups["RightAA"].ToString().Equals("-") && m.Groups["LeftAA"].ToString().Equals("-"))
+            {
+                return 3;
+            }
+
+            return 0;
         }
 
         protected int GetPeptideLength(string dirtySequence)

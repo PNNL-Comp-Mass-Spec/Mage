@@ -108,7 +108,7 @@ namespace MageExtExtractionFilters
                 var FDR = GetColumnValue(vals, FDRIndex, -1d);
                 var PepFDR = GetColumnValue(vals, pepFDRIndex, -1d);
                 var msgfSpecProb = GetColumnValue(vals, msgfSpecProbIndex, -1d);
-                var rankMSGFDbSpecProb = 1;
+                const int rankMSGFDbSpecProb = 1;
 
                 var pass = ResultChecker.EvaluateMSGFDB(peptideSequence, chargeState, peptideMass, SpecProb, PValue, FDR, PepFDR, msgfSpecProb, rankMSGFDbSpecProb);
 

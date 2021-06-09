@@ -61,7 +61,7 @@ namespace Mage
         /// All MyEMSL files that pass filters; keys are MyEMSL File IDs, values are the MyEMSL Info.  Items will be auto-purged from this list if the list grows to over 1 million records
         /// </summary>
         /// <remarks>This dictionary is used by the FileCopy class to determine the archived file info for a file in MyEMSL using MyEMSLFile ID</remarks>
-        protected static Dictionary<Int64, DatasetDirectoryOrFileInfo> m_FilterPassingMyEMSLFiles;
+        protected static Dictionary<long, DatasetDirectoryOrFileInfo> m_FilterPassingMyEMSLFiles;
 
         /// <summary>
         /// RegEx to extract the dataset name from a path similar to these examples:
@@ -109,10 +109,9 @@ namespace Mage
             if (fileInfo.FileID == 0)
                 return;
 
-            if (m_FilterPassingMyEMSLFiles == null)
-                m_FilterPassingMyEMSLFiles = new Dictionary<long, DatasetDirectoryOrFileInfo>();
+            m_FilterPassingMyEMSLFiles ??= new Dictionary<long, DatasetDirectoryOrFileInfo>();
 
-            if (!m_FilterPassingMyEMSLFiles.TryGetValue(fileInfo.FileID, out var fileInfoCached))
+            if (!m_FilterPassingMyEMSLFiles.TryGetValue(fileInfo.FileID, out _))
             {
                 m_FilterPassingMyEMSLFiles.Add(fileInfo.FileID, new DatasetDirectoryOrFileInfo(fileInfo.FileID, false, fileInfo));
             }
@@ -125,7 +124,9 @@ namespace Mage
                                        select item.Key).ToList();
 
                 foreach (var fileID in fileIDsToRemove)
+                {
                     m_FilterPassingMyEMSLFiles.Remove(fileID);
+                }
             }
         }
 
@@ -269,7 +270,7 @@ namespace Mage
                     {
                         var errorMessage = "Failed to download file " + cachedFileInfo.FileInfo.RelativePathWindows + " from MyEMSL";
                         if (m_MyEMSLDatasetInfoCache.ErrorMessages.Count > 0)
-                            errorMessage += ": " + m_MyEMSLDatasetInfoCache.ErrorMessages.First();
+                            errorMessage += ": " + m_MyEMSLDatasetInfoCache.ErrorMessages[0];
                         else
                             errorMessage += ": Unknown Error";
 
@@ -323,7 +324,7 @@ namespace Mage
         /// <param name="myEMSLFileID">MyEMSL File ID to find</param>
         /// <param name="fileInfo">Output: File Info object</param>
         /// <returns>True if success, false if an error</returns>
-        protected bool GetCachedArchivedFileInfo(Int64 myEMSLFileID, out ArchivedFileInfo fileInfo)
+        protected bool GetCachedArchivedFileInfo(long myEMSLFileID, out ArchivedFileInfo fileInfo)
         {
             var fileInfoMatch = (from item in m_RecentlyFoundMyEMSLFiles where item.FileID == myEMSLFileID select item.FileInfo).ToList();
 
@@ -338,7 +339,7 @@ namespace Mage
                 return false;
             }
 
-            fileInfo = fileInfoMatch.First();
+            fileInfo = fileInfoMatch[0];
             return true;
         }
 
@@ -430,7 +431,7 @@ namespace Mage
 
         private void MyEMSLDatasetInfoCache_ProgressEvent(string progressMessage, float percentComplete)
         {
-            if (percentComplete >= 100 - Single.Epsilon)
+            if (percentComplete >= 100 - float.Epsilon)
                 OnStatusMessageUpdated(new MageStatusEventArgs("Downloading files from MyEMSL: 100% complete"));
             else
                 OnStatusMessageUpdated(new MageStatusEventArgs("Downloading files from MyEMSL: " + percentComplete.ToString("0.00") + "% complete"));

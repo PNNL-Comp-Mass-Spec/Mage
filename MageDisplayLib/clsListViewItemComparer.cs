@@ -7,7 +7,7 @@ namespace MageDisplayLib
     internal class ListViewItemComparer : IComparer
     {
         private readonly int m_SortCol;
-        private readonly bool m_SortAscending = true;
+        private readonly bool m_SortAscending;
         private readonly bool m_SortNumeric;
         private readonly bool m_SortDate;
 
@@ -61,36 +61,11 @@ namespace MageDisplayLib
 
                 try
                 {
-                    stringSort = false;
-
-                    if (item1.Length > 0)
-                    {
-                        if (!float.TryParse(item1, out val1))
-                            // Conversion failed
-                            stringSort = true;
-                    }
+                    stringSort = item1.Length > 0 && !float.TryParse(item1, out val1) || item2.Length > 0 && !float.TryParse(item2, out val2);
 
                     if (!stringSort)
                     {
-                        if (item2.Length > 0)
-                        {
-                            if (!float.TryParse(item2, out val2))
-                                // Conversion failed
-                                stringSort = true;
-                        }
-                    }
-
-                    if (!stringSort)
-                    {
-                        if (val1 > val2)
-                            comparisonResult = 1;
-                        else
-                        {
-                            if (val1 < val2)
-                                comparisonResult = -1;
-                            else
-                                comparisonResult = 0;
-                        }
+                        comparisonResult = val1.CompareTo(val2);
                     }
                 }
                 catch
@@ -110,36 +85,11 @@ namespace MageDisplayLib
 
                     try
                     {
-                        stringSort = false;
-
-                        if (item1.Length > 0)
-                        {
-                            if (!DateTime.TryParse(item1, out date1))
-                                // Conversion failed
-                                stringSort = true;
-                        }
+                        stringSort = item1.Length > 0 && !DateTime.TryParse(item1, out date1) || item2.Length > 0 && !DateTime.TryParse(item2, out date2);
 
                         if (!stringSort)
                         {
-                            if (item2.Length > 0)
-                            {
-                                if (!DateTime.TryParse(item2, out date2))
-                                    // Conversion failed
-                                    stringSort = true;
-                            }
-                        }
-
-                        if (!stringSort)
-                        {
-                            if (date1 > date2)
-                                comparisonResult = 1;
-                            else
-                            {
-                                if (date1 < date2)
-                                    comparisonResult = -1;
-                                else
-                                    comparisonResult = 0;
-                            }
+                            comparisonResult = date1.CompareTo(date2);
                         }
                     }
                     catch

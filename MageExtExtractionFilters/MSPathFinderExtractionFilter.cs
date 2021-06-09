@@ -138,10 +138,8 @@ namespace MageExtExtractionFilters
                     }
                     else
                     {
-                        for (var i = 0; i < rows.Count; i++)
+                        foreach (var row in rows)
                         {
-                            var row = rows[i];
-
                             var sScanChargePeptideProtein = CreateRowTag(row, includeProtein: true, columnIndices: mColumnIndices);
                             if (!mDataWrittenRowTags.Contains(sScanChargePeptideProtein))
                             {

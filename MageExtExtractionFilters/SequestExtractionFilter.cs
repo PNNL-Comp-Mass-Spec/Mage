@@ -109,9 +109,9 @@ namespace MageExtExtractionFilters
                 var rankXC = GetColumnValue(vals, rankXCIndex, -1);
 
                 // Legacy columns; no longer used
-                var spectrumCount = -1;
-                double discriminantScore = -1;
-                double NETAbsoluteDifference = -1;
+                const int spectrumCount = -1;
+                const double discriminantScore = -1;
+                const double NETAbsoluteDifference = -1;
 
                 var pass = ResultChecker.EvaluateSequest(peptideSequence, xCorrValue, delCNValue, delCN2Value, chargeState, peptideMass, spectrumCount, discriminantScore, NETAbsoluteDifference, cleavageState, msgfSpecProb, rankXC);
 

@@ -90,13 +90,12 @@ namespace MageDisplayLib
 
         private List<ToolStripItem> GetPersistenceMenuItems()
         {
-            var toolStripItems = new List<ToolStripItem>
+            return new()
             {
                 new ToolStripSeparator(),
                 new ToolStripMenuItem("Save to file", null, HandleSaveListDisplay, "SaveToFile"),
                 new ToolStripMenuItem("Reload from file", null, HandleReloadListDisplay, "ReloadFromFile")
             };
-            return toolStripItems;
         }
 
         /// <summary>
@@ -187,8 +186,8 @@ namespace MageDisplayLib
             {
                 FilePath = filePath
             };
-            var name = "SaveListDisplayPipeline";
-            return ProcessingPipeline.Assemble(name, new Collection<object>() { sourceObject, writer });
+
+            return ProcessingPipeline.Assemble("SaveListDisplayPipeline", new Collection<object> { sourceObject, writer });
         }
 
         /// <summary>
@@ -203,8 +202,8 @@ namespace MageDisplayLib
             {
                 FilePath = filePath
             };
-            var name = "RestoreListDisplayPipeline";
-            return ProcessingPipeline.Assemble(name, new Collection<object>() { reader, sinkObject });
+
+            return ProcessingPipeline.Assemble("RestoreListDisplayPipeline", new Collection<object> { reader, sinkObject });
         }
 
         #endregion
@@ -274,6 +273,7 @@ namespace MageDisplayLib
         {
             CopySelectedRows();
         }
+
         private void HandleListCopyColumn(object sender, EventArgs e)
         {
             CopyColumnList("Directory", null);
@@ -315,7 +315,7 @@ namespace MageDisplayLib
             // Copy the selected data to the clipboard
             // Include the column names if more than one row is selected (or if the ListView only contains one row)
             var copiedText = new StringBuilder(4096);
-            if (lvQueryResults.Items.Count == 1 | lvQueryResults.SelectedItems.Count > 1)
+            if (lvQueryResults.Items.Count == 1 || lvQueryResults.SelectedItems.Count > 1)
             {
                 // Populate strText with the column names
                 for (var i = 0; i < lvQueryResults.Columns.Count; i++)
@@ -382,7 +382,7 @@ namespace MageDisplayLib
         /// <param name="itemNames"></param>
         /// <param name="active"></param>
         /// <param name="lstAlwaysActive"></param>
-        private void AdjustMenuItemsFromNameList(List<string> itemNames, bool active, List<string> lstAlwaysActive)
+        private void AdjustMenuItemsFromNameList(IEnumerable<string> itemNames, bool active, ICollection<string> lstAlwaysActive)
         {
             foreach (var name in itemNames)
             {

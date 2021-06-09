@@ -107,7 +107,7 @@ namespace MageUIComponents
             }
 
             var baseFileName = Path.GetFileNameWithoutExtension(filePath);
-            if (baseFileName?.Length == 0)
+            if (baseFileName.Length == 0)
             {
                 if (filePath.Length == extension.Length)
                     filePath = Path.Combine("MageResults") + extension;

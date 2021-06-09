@@ -219,24 +219,23 @@ namespace MageExtExtractionFilters
             {
                 case DestinationType.Types.SQLite_Output:
                     autoName = prefix + "_" + Path.GetFileNameWithoutExtension(inputFilePath);
-                    destName = (!string.IsNullOrEmpty(this.Name)) ? this.Name : autoName;
-                    var sw = new SQLiteWriter
+                    destName = !string.IsNullOrEmpty(this.Name) ? this.Name : autoName;
+                    writer = new SQLiteWriter
                     {
                         DbPath = this.ContainerPath,
                         TableName = destName.Replace("-", "_")
                     };
-                    writer = sw;
                     break;
                 case DestinationType.Types.File_Output:
                     autoName = prefix + "_" + Path.GetFileName(inputFilePath);
-                    destName = (!string.IsNullOrEmpty(this.Name)) ? this.Name : autoName;
-                    var dw = new DelimitedFileWriter
+                    destName = !string.IsNullOrEmpty(this.Name) ? this.Name : autoName;
+
+                    // TODO: only append if concatenating
+                    writer = new DelimitedFileWriter
                     {
                         FilePath = Path.Combine(this.ContainerPath, destName),
                         Append = "Yes"
                     };
-                    // TODO: only append if concatenating
-                    writer = dw;
                     break;
             }
             return writer;

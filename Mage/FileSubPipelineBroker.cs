@@ -235,9 +235,11 @@ namespace Mage
         {
             var reader = new DelimitedFileReader();
 
-            if (!(ProcessingPipeline.MakeModule(FileFilterModuleName) is BaseModule filter))
+            if (ProcessingPipeline.MakeModule(FileFilterModuleName) is not BaseModule filter)
+            {
                 throw new NullReferenceException("Failed to create module " + FileFilterModuleName +
                                                  " in MakeDefaultFileProcessingPipeline; filter is not of type BaseModule");
+            }
 
             var writer = new DelimitedFileWriter();
 
@@ -257,9 +259,11 @@ namespace Mage
         {
             var reader = new DelimitedFileReader();
 
-            if (!(ProcessingPipeline.MakeModule(FileFilterModuleName) is BaseModule filter))
+            if (ProcessingPipeline.MakeModule(FileFilterModuleName) is not BaseModule filter)
+            {
                 throw new NullReferenceException("Failed to create module " + FileFilterModuleName +
                                                  " in MakeDefaultSQLiteProcessingPipeline; filter is not of type BaseModule");
+            }
 
             var writer = new SQLiteWriter();
 

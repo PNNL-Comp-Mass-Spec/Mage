@@ -221,7 +221,7 @@ namespace Mage
                 {
                     foreach (var overrideDef in ColDefOverride)
                     {
-                        if (string.Compare(overrideDef.Name, cs.ColumnName, StringComparison.OrdinalIgnoreCase) == 0)
+                        if (string.Equals(overrideDef.Name, cs.ColumnName, StringComparison.OrdinalIgnoreCase))
                         {
                             cs.ColumnType = overrideDef.DataType;
                             break;
@@ -753,21 +753,13 @@ namespace Mage
                 return true;
             }
 
-            if (!double.TryParse(value, out _))
-            {
-                return false;
-            }
-            return true;
+            return double.TryParse(value, out _);
         }
 
         private static bool IsSingleQuoted(string value)
         {
             value = value.Trim();
-            if (value.StartsWith("'") && value.EndsWith("'"))
-            {
-                return true;
-            }
-            return false;
+            return value.StartsWith("'") && value.EndsWith("'");
         }
 
         /// <summary>
@@ -779,12 +771,7 @@ namespace Mage
         {
             var rx = new Regex(@"N\'([^\']*)\'");
             var m = rx.Match(value);
-            if (m.Success)
-            {
-                return m.Groups[1].Value;
-            }
-
-            return value;
+            return m.Success ? m.Groups[1].Value : value;
         }
 
         #endregion

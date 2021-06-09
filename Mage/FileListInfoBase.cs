@@ -426,7 +426,7 @@ namespace Mage
             OnDataRowAvailable(new MageDataEventArgs(null));
         }
 
-        private string FileSizeBytesToString(Int64 sizeBytes)
+        private string FileSizeBytesToString(long sizeBytes)
         {
             if (sizeBytes == 0)
                 return "0";

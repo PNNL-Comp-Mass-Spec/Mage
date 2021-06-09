@@ -312,7 +312,7 @@ namespace MageDisplayLib
             {
                 if (gvQueryResults.Columns.Count > 0)
                 {
-                    foreach (var currentRow in rows)
+                    foreach (object[] currentRow in rows)
                     {
                         gvQueryResults.Rows.Add(currentRow);
                     }
@@ -432,7 +432,7 @@ namespace MageDisplayLib
         private void GridViewQueryResults_SelectionChanged(object sender, EventArgs e)
         {
             UpdateNoticeFieldWithRowInfo();
-            SelectionChanged?.Invoke(this, new EventArgs());
+            SelectionChanged?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>

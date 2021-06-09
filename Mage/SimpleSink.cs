@@ -68,7 +68,7 @@ namespace Mage
         /// </summary>
         public SimpleSink()
         {
-            RowsToSave = Int32.MaxValue;
+            RowsToSave = int.MaxValue;
             WriteToConsole = false;
         }
 

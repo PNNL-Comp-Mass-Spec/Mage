@@ -467,7 +467,7 @@ namespace MageDisplayLib
         /// <param name="text"></param>
         private void UpdateNoticeFld(string text)
         {
-            if (text != null && text == ".")
+            if (text is ".")
             {
                 lblNotice.Text += ".";
                 lblNotice.Update();

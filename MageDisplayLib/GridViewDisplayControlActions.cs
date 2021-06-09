@@ -320,8 +320,8 @@ namespace MageDisplayLib
             {
                 FilePath = filePath
             };
-            var name = "SaveListDisplayPipeline";
-            return ProcessingPipeline.Assemble(name, new Collection<object>() { sourceObject, writer });
+
+            return ProcessingPipeline.Assemble("SaveListDisplayPipeline", new Collection<object> { sourceObject, writer });
         }
 
         /// <summary>
@@ -336,8 +336,8 @@ namespace MageDisplayLib
             {
                 FilePath = filePath
             };
-            var name = "RestoreListDisplayPipeline";
-            return ProcessingPipeline.Assemble(name, new Collection<object>() { reader, sinkObject });
+
+            return ProcessingPipeline.Assemble("RestoreListDisplayPipeline", new Collection<object> { reader, sinkObject });
         }
 
         #endregion
@@ -418,7 +418,7 @@ namespace MageDisplayLib
             // Copy the selected data to the clipboard
             // Include the column names if more than one row is selected (or if the ListView only contains one row)
             var copiedText = new StringBuilder(4096);
-            if (gvQueryResults.Rows.Count == 1 | gvQueryResults.SelectedRows.Count > 1)
+            if (gvQueryResults.Rows.Count == 1 || gvQueryResults.SelectedRows.Count > 1)
             {
                 // Populate strText with the column names
                 for (var i = 0; i < gvQueryResults.Columns.Count; i++)

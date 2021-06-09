@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.IO;
 using MyEMSLReader;
 
@@ -234,7 +233,9 @@ namespace Mage
 
                     // Replace any invalid characters with an underscore
                     foreach (var chInvalidChar in Path.GetInvalidFileNameChars())
+                    {
                         prefix = prefix.Replace(chInvalidChar, '_');
+                    }
                 }
                 else
                 {
@@ -357,7 +358,7 @@ namespace Mage
             {
                 var datasetName = DetermineDatasetName(sourceDirectory.FullName);
 
-                GetMyEMSLParentDirectoriesAndSubDir(sourceDirectory.FullName, datasetName, out var subDir, out var parentDirectories);
+                GetMyEMSLParentDirectoriesAndSubDir(sourceDirectory.FullName, datasetName, out var subDir, out _);
 
                 m_RecentlyFoundMyEMSLFiles = m_MyEMSLDatasetInfoCache.FindFiles("*", subDir, datasetName, true);
 

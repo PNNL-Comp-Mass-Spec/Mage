@@ -37,7 +37,7 @@ namespace Mage
         /// </summary>
         public Terminator()
         {
-            RowsToSave = Int32.MaxValue;
+            RowsToSave = int.MaxValue;
         }
 
         #endregion

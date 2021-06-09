@@ -210,7 +210,7 @@ namespace Mage
 
             if (selectors.Count > 0)
             {
-                filterSpec = selectors.First();
+                filterSpec = selectors[0];
             }
 
             // Update directory paths if the File Name Selector starts with ..\

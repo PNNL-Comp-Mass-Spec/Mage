@@ -229,7 +229,9 @@ namespace Mage
 
                 var dataVals = new string[a.Length];
                 for (var i = 0; i < a.Length; i++)
+                {
                     dataVals[i] = a[i].ToString();
+                }
 
                 OnDataRowAvailable(new MageDataEventArgs(dataVals));
                 totalRows++;
@@ -317,6 +319,7 @@ namespace Mage
 
     }
 }
+
 // Numeric types:   bit, tinyint, smallint, int, bigint, decimal, real, float, numeric, smallmoney, money
 // String types:    char, varchar, text, nchar, nvarchar, ntext, uniqueidentifier, xml
 // Datetime types:  date, datetime, datetime2, smalldatetime, time, datetimeoffset

@@ -1,10 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Mage;
 
@@ -17,7 +12,7 @@ namespace MageExtContentFilters
 
         #region Member Variables
 
-        private Dictionary<string, string> mParameters = new();
+        private readonly Dictionary<string, string> mParameters = new();
 
         private string mFilterSetIDToAutoSelect = string.Empty;
 
@@ -46,7 +41,7 @@ namespace MageExtContentFilters
             InitializeComponent();
             gridViewDisplayControl1.List.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             gridViewDisplayControl1.MultiSelect = false;
-            gridViewDisplayControl1.SelectionChanged += new System.EventHandler<System.EventArgs>(this.listDisplayControl1_SelectionChanged);
+            gridViewDisplayControl1.SelectionChanged += ListDisplayControl1_SelectionChanged;
         }
 
         private void GetFilterSetList()

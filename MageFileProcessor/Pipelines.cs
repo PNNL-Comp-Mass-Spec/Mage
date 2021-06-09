@@ -138,23 +138,21 @@ namespace MageFileProcessor
         {
             // Create file copy module and initialize it
             var outputDirectory = GetRuntimeParam(runtimeParams, "OutputDirectory");
+
             var copier = new FileCopy
             {
                 OutputDirectoryPath = outputDirectory,
                 OutputColumnList = GetRuntimeParam(runtimeParams, "OutputColumnList"),
                 ApplyPrefixToFileName = GetRuntimeParam(runtimeParams, "ApplyPrefixToFileName"),
                 PrefixLeader = GetRuntimeParam(runtimeParams, "PrefixLeader"),
-                ColumnToUseForPrefix = GetRuntimeParam(runtimeParams, "ColumnToUseForPrefix")
+                ColumnToUseForPrefix = GetRuntimeParam(runtimeParams, "ColumnToUseForPrefix"),
+                OverwriteExistingFiles = string.Equals(GetRuntimeParam(runtimeParams, "OverwriteExistingFiles"), "Yes", StringComparison.OrdinalIgnoreCase),
+                ResolveCacheInfoFiles = string.Equals(GetRuntimeParam(runtimeParams, "ResolveCacheInfoFiles"), "Yes", StringComparison.OrdinalIgnoreCase),
+                FileTypeColumnName = "Item",
+                SourceDirectoryColumnName = GetRuntimeParam(runtimeParams, "SourceDirectoryColumnName"),
+                SourceFileColumnName = GetRuntimeParam(runtimeParams, "SourceFileColumnName"),
+                OutputFileColumnName = GetRuntimeParam(runtimeParams, "OutputFileColumnName")
             };
-
-            copier.OverwriteExistingFiles = string.Equals(GetRuntimeParam(runtimeParams, "OverwriteExistingFiles"), "Yes", StringComparison.OrdinalIgnoreCase);
-
-            copier.ResolveCacheInfoFiles = string.Equals(GetRuntimeParam(runtimeParams, "ResolveCacheInfoFiles"), "Yes", StringComparison.OrdinalIgnoreCase);
-
-            copier.FileTypeColumnName = "Item";
-            copier.SourceDirectoryColumnName = GetRuntimeParam(runtimeParams, "SourceDirectoryColumnName");
-            copier.SourceFileColumnName = GetRuntimeParam(runtimeParams, "SourceFileColumnName");
-            copier.OutputFileColumnName = GetRuntimeParam(runtimeParams, "OutputFileColumnName");
 
             // Create a delimited file writer module to build manifest and initialize it
             var writer = new DelimitedFileWriter
@@ -277,16 +275,19 @@ namespace MageFileProcessor
             BaseModule writer = null;
             switch (outputMode)
             {
-                case "SQLite_Output"
-                    SQLiteWriter sw = new SQLiteWriter();
-                    sw.DbPath = destination.ContainerPath;
-                    sw.TableName = destination.MetadataName;
-                    writer = sw;
+                case "SQLite_Output":
+
+                    writer = new SQLiteWriter
+                    {
+                        DbPath = destination.ContainerPath,
+                        TableName = destination.MetadataName
+                    };
                     break;
                 case DestinationType.Types.File_Output:
-                    DelimitedFileWriter dw = new DelimitedFileWriter();
-                    dw.FilePath = Path.Combine(destination.ContainerPath, destination.MetadataName);
-                    writer = dw;
+                    writer = new DelimitedFileWriter
+                    {
+                        FilePath = Path.Combine(destination.ContainerPath, destination.MetadataName)
+                    };
                     break;
             }
             ProcessingPipeline filePipeline = ProcessingPipeline.Assemble("Job Metadata", jobList, writer);
