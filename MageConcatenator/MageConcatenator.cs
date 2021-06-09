@@ -193,7 +193,7 @@ namespace MageConcatenator
                             MessageBox.Show("Directory not found: " + sourceDirectory, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             return;
                         }
-                        var sink = FileListDisplayControl.MakeSink("Files", 15);
+                        var sink = FileListDisplayControl.MakeSink("Files");
 
                         var pipeline = Pipelines.MakePipelineToGetLocalFileList(sink, runtimeParams);
                         mPipelineQueue.Pipelines.Enqueue(pipeline);

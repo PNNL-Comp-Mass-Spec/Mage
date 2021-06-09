@@ -79,7 +79,7 @@ namespace MageUIComponents
         private void LoadColumnMappingList()
         {
             var reader = new DelimitedFileReader {FilePath = MappingConfigFilePath};
-            var display = gridViewDisplayControl1.MakeSink("Column Mappings", 50);
+            var display = gridViewDisplayControl1.MakeSink("Column Mappings");
 
             mGetColumnMappingPipeline = ProcessingPipeline.Assemble("PipelineToGetColumnMappingConfig", reader, display);
             mGetColumnMappingPipeline.OnRunCompleted += HandlePipelineCompletion;

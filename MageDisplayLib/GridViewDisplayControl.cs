@@ -524,29 +524,17 @@ namespace MageDisplayLib
         /// <returns>ISinkModule reference</returns>
         public ISinkModule MakeSink()
         {
-            const int BLOCK_SIZE = 10;
-            return MakeSink(BLOCK_SIZE);
+            return MakeSink(string.Empty);
         }
 
         /// <summary>
         /// Return suitable ISinkModule reference to this object
         /// </summary>
         /// <param name="title"></param>
-        /// <param name="blkSz"></param>
         /// <returns>ISinkModule reference</returns>
-        public ISinkModule MakeSink(string title, int blkSz)
+        public ISinkModule MakeSink(string title)
         {
             PageTitle = title;
-            return MakeSink(blkSz);
-        }
-
-        /// <summary>
-        /// Return suitable ISinkModule reference to this object
-        /// </summary>
-        /// <param name="blkSz"></param>
-        /// <returns>ISinkModule reference</returns>
-        public ISinkModule MakeSink(int blkSz)
-        {
             Clear();
             return this;
         }

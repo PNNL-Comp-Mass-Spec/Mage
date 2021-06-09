@@ -256,7 +256,7 @@ namespace MageFilePackager
                         {
                             return;
                         }
-                        sink = JobListDisplayControl.MakeSink(command.Mode, 15);
+                        sink = JobListDisplayControl.MakeSink(command.Mode);
                         _mCurrentPipeline = Pipelines.MakeJobQueryPipeline(sink, queryDefXML, queryParameters);
                         break;
 
@@ -266,7 +266,7 @@ namespace MageFilePackager
                         if (builder.HasPredicate)
                         {
                             var reader = new SQLReader(builder);
-                            sink = JobListDisplayControl.MakeSink("Jobs", 15);
+                            sink = JobListDisplayControl.MakeSink("Jobs");
                             _mCurrentPipeline = ProcessingPipeline.Assemble("Get Jobs", reader, sink);
                         }
                         else
@@ -281,7 +281,7 @@ namespace MageFilePackager
                         var entityType = JobListDisplayControl.PageTitle;
                         var runtimeParams = GetRuntimeParamsForEntityFileType(entityType);
                         var source = new GVPipelineSource(JobListDisplayControl, mode);
-                        sink = FileListDisplayControl.MakeSink("Files", 15);
+                        sink = FileListDisplayControl.MakeSink("Files");
                         _mCurrentPipeline = Pipelines.MakeFileListPipeline(source, sink, runtimeParams);
                         break;
                     default:

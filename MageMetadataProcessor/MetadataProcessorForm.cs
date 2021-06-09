@@ -128,30 +128,35 @@ namespace MageMetadataProcessor
             {
                 case "basic_read":
                     sql = rawQueryPanel1.RawSQL;
-                    display = gridViewDisplayControl1.MakeSink("Metadata", 25);
+                    display = gridViewDisplayControl1.MakeSink("Metadata");
                     mCurrentPipeline = MakeRawQueryPipeline(display, server, database, sql);
                     break;
+
                 case "dataset_metadata":
                     sql = "SELECT * FROM V_Mage_Dataset_Factor_Metadata WHERE Dataset LIKE '%{0}%'";
                     sql = string.Format(sql, datasetFactorsPanel1.DatasetName);
-                    display = gridViewDisplayControl1.MakeSink("Metadata", 25);
+                    display = gridViewDisplayControl1.MakeSink("Metadata");
                     mCurrentPipeline = MakeRawQueryPipeline(display, server, database, sql);
                     break;
+
                 case "factor_count":
                     sql = GetDatasetSql("COUNT(*) AS Rows");
-                    display = gridViewDisplayControl1.MakeSink("Metadata", 25);
+                    display = gridViewDisplayControl1.MakeSink("Metadata");
                     mCurrentPipeline = MakeRawQueryPipeline(display, server, database, sql);
                     break;
+
                 case "factor_list":
                     sql = GetDatasetSql("Dataset, Dataset_ID, Factor, Value");
-                    display = gridViewDisplayControl1.MakeSink("Metadata", 25);
+                    display = gridViewDisplayControl1.MakeSink("Metadata");
                     mCurrentPipeline = MakeRawQueryPipeline(display, server, database, sql);
                     break;
+
                 case "factor_crosstab":
                     sql = GetDatasetSql("Dataset, Dataset_ID, Factor, Value");
-                    display = gridViewDisplayControl1.MakeSink("Metadata", 25);
+                    display = gridViewDisplayControl1.MakeSink("Metadata");
                     mCurrentPipeline = MakeCrosstabQueryPipeline(display, server, database, sql);
                     break;
+
                 case "save_to_db":
                     var source = new GVPipelineSource(gridViewDisplayControl1, mode);
                     var filePath = sqLiteDBPanel1.DBFilePath;

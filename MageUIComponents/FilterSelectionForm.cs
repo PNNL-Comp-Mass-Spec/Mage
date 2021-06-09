@@ -79,7 +79,7 @@ namespace MageUIComponents
                 reader.AddAdHocRow = new[] { label, filterDescriptions[label] };
             }
 
-            var display = gridViewDisplayControl1.MakeSink("Column Mappings", 50);
+            var display = gridViewDisplayControl1.MakeSink("Column Mappings");
             mGetFilterListPipeline = ProcessingPipeline.Assemble("PipelineToGetFilterList", reader, display);
             mGetFilterListPipeline.OnRunCompleted += HandlePipelineCompletion;
             mGetFilterListPipeline.RunRoot(null);

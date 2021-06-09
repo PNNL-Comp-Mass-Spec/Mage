@@ -189,7 +189,7 @@ namespace MageUIComponents
                 CreateDefaultColumnMappingConfigFile();
             }
             var reader = new DelimitedFileReader { FilePath = MappingConfigFilePath };
-            var display = ColumnMappingDisplayList.MakeSink(50);
+            var display = ColumnMappingDisplayList.MakeSink("ColumnMap");
             var pipeline = ProcessingPipeline.Assemble("PipelineToGetColumnMappingConfig", reader, display);
             pipeline.RunRoot(null);
         }
@@ -883,7 +883,7 @@ namespace MageUIComponents
         /// <param name="sink"></param>
         private void DisplayPreviewRows(BaseModule sink)
         {
-            var display = RowPreviewDisplayList.MakeSink();
+            var display = RowPreviewDisplayList.MakeSink("DisplayPreview");
             var pipeline = ProcessingPipeline.Assemble("DisplayPreview", sink, display);
             pipeline.RunRoot(null);
             RowPreviewDisplayList.PageTitle = "Preview of " + mPreviewSourceLabel;

@@ -72,7 +72,7 @@ namespace MageExtractor
             };
 
             // Create Mage module to receive query results
-            var filters = gridViewDisplayControl1.MakeSink("Filter Sets", 20);
+            var filters = gridViewDisplayControl1.MakeSink("Filter Sets");
 
             // Build pipeline and run it
             mGetFilterSetsPipeline = ProcessingPipeline.Assemble("GetFilters", reader, filters);

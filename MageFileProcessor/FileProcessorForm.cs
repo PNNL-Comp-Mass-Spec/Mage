@@ -280,7 +280,7 @@ namespace MageFileProcessor
                         {
                             return;
                         }
-                        sink = JobListDisplayControl.MakeSink(command.Mode, 15);
+                        sink = JobListDisplayControl.MakeSink(command.Mode);
 
                         pipeline = Pipelines.MakeJobQueryPipeline(sink, queryDefXML, queryParameters);
                         mPipelineQueue.Pipelines.Enqueue(pipeline);
@@ -297,7 +297,7 @@ namespace MageFileProcessor
                         }
 
                         var reader = new SQLReader(builder);
-                        sink = JobListDisplayControl.MakeSink("Jobs", 15);
+                        sink = JobListDisplayControl.MakeSink("Jobs");
 
                         pipeline = ProcessingPipeline.Assemble("Get Jobs", reader, sink);
                         mPipelineQueue.Pipelines.Enqueue(pipeline);
@@ -308,7 +308,7 @@ namespace MageFileProcessor
                         var entityType = JobListDisplayControl.PageTitle;
                         runtimeParams = GetRuntimeParamsForEntityFileType(entityType);
                         source = new GVPipelineSource(JobListDisplayControl, mode);
-                        sink = FileListDisplayControl.MakeSink("Files", 15);
+                        sink = FileListDisplayControl.MakeSink("Files");
 
                         pipeline = Pipelines.MakeFileListPipeline(source, sink, runtimeParams);
                         mPipelineQueue.Pipelines.Enqueue(pipeline);
@@ -324,7 +324,7 @@ namespace MageFileProcessor
                             MessageBox.Show("Directory not found: " + directoryPath, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             return;
                         }
-                        sink = FileListDisplayControl.MakeSink("Files", 15);
+                        sink = FileListDisplayControl.MakeSink("Files");
 
                         pipeline = Pipelines.MakePipelineToGetLocalFileList(sink, runtimeParams);
                         mPipelineQueue.Pipelines.Enqueue(pipeline);
@@ -340,7 +340,7 @@ namespace MageFileProcessor
                             MessageBox.Show("Manifest file not found: " + sFile, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                             return;
                         }
-                        sink = FileListDisplayControl.MakeSink("Files", 15);
+                        sink = FileListDisplayControl.MakeSink("Files");
 
                         pipeline = Pipelines.MakePipelineToGetFilesFromManifest(sink, runtimeParams);
                         mPipelineQueue.Pipelines.Enqueue(pipeline);

@@ -170,7 +170,7 @@ namespace MageFilePackager
         /// <param name="newContents">Contains contents to set</param>
         private void SetPackageContents(SimpleSink newContents)
         {
-            var sink = packageListDisplayControl1.MakeSink(ListTitle, 15);
+            var sink = packageListDisplayControl1.MakeSink(ListTitle);
             ProcessingPipeline.Assemble("PackageFileContent", new SinkWrapper(newContents), sink).RunRoot(null);
         }
 
