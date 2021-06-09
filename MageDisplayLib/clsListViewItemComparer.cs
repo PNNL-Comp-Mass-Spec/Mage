@@ -109,11 +109,8 @@ namespace MageDisplayLib
             if (m_SortAscending)
                 return comparisonResult;
 
-            // Reverse the sort by changing the sign of intComparisonResult
-            if (comparisonResult < 0)
-                comparisonResult = -comparisonResult;
-
-            return comparisonResult;
+            // Reverse the sort by changing the sign of comparisonResult
+            return -comparisonResult;
         }
     }
 }
