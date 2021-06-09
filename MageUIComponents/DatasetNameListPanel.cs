@@ -8,6 +8,8 @@ namespace MageUIComponents
 {
     public partial class DatasetNameListPanel : UserControl, IModuleParameters
     {
+        // Ignore Spelling: Ctrl
+
         public event EventHandler<MageCommandEventArgs> OnAction;
 
         #region IModuleParameters Members

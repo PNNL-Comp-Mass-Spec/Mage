@@ -48,6 +48,10 @@ namespace MageDisplayLib
     /// </summary>
     public partial class ListDisplayControl : UserControl
     {
+        // Ignore Spelling: desc, Mage, subitems
+
+        // Ignore Spelling: bigint, datetime, datetimeoffset, nchar, ntext, nvarchar, smalldatetime, smallint, smallmoney, tinyint, uniqueidentifier, varbinary, varchar
+
         /// <summary>
         /// This event fires to send command to external handler(s)
         /// </summary>

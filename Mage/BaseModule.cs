@@ -10,6 +10,8 @@ namespace Mage
     /// </summary>
     public class BaseModule : IBaseModule
     {
+        // Ignore Spelling: Mage
+
         private static readonly FileLogger traceLogBase = new(FileLogger.BaseLogFileName, BaseLogger.LogLevels.INFO, FileLogger.AppendDateToBaseFileName);
 
         /// <summary>

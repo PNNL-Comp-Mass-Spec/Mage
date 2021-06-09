@@ -10,6 +10,8 @@ namespace Mage
     /// </summary>
     public class SQLBuilder
     {
+        // Ignore Spelling: Mage, postgres, Regex, sproc, Username, Wildcards
+
         /// <summary>
         /// Name in mPredicates of the key that specifies whether the server is a PostgreSQL server
         /// </summary>

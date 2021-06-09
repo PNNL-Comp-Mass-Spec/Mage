@@ -14,6 +14,8 @@ namespace MageDisplayLib
     /// </summary>
     public partial class GridViewDisplayControl
     {
+        // Ignore Spelling: Mage, txt
+
         #region Constants
         private const string MENU_SELECT_ALL = "SelectAll";
         private const string MENU_SELECT_NONE = "SelectNone";

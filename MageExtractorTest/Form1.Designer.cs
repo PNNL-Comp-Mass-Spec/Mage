@@ -2,6 +2,8 @@
 {
     partial class Form1
     {
+        // Ignore Spelling: Mage
+
         /// <summary>
         /// Required designer variable.
         /// </summary>

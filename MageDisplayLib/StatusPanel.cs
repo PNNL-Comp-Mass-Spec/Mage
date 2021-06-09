@@ -10,6 +10,8 @@ namespace MageDisplayLib
     /// </summary>
     public partial class StatusPanel : UserControl
     {
+        // Ignore Spelling: Mage
+
         /// <summary>
         /// This event fires to send command to external command handler(s)
         /// </summary>

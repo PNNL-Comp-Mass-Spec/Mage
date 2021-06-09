@@ -13,6 +13,8 @@ namespace MageExtExtractionFilters
     /// </summary>
     public static class ExtractionPipelines
     {
+        // Ignore Spelling: Mage, msgfdb, msgfplus, Sequest
+
         public static PipelineQueue MakePipelineQueueToExtractFromFileList(SimpleSink fileList, ExtractionType extractionParms, DestinationType destination)
         {
             var pipelineQueue = new PipelineQueue();

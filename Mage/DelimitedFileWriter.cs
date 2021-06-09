@@ -10,6 +10,8 @@ namespace Mage
     /// </summary>
     public class DelimitedFileWriter : BaseModule, IDisposable
     {
+        // Ignore Spelling: Mage
+
         #region Member Variables
 
         private StreamWriter mOutFile;

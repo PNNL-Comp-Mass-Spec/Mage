@@ -2,6 +2,8 @@ namespace MageDisplayLib
 {
     partial class GridViewDisplayControl
     {
+        // Ignore Spelling: Ctrl
+
         /// <summary> 
         /// Required designer variable.
         /// </summary>

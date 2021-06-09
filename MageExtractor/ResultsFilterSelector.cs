@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using Mage;
 
-namespace MageExtractor {
-    public partial class ResultsFilterSelector : Form , IModuleParameters {
+namespace MageExtractor
+{
+    public partial class ResultsFilterSelector : Form, IModuleParameters
+    {
+        // Ignore Spelling: Mage
+
         #region Member Variables
 
         private readonly Dictionary<string, string> mParameters = new();

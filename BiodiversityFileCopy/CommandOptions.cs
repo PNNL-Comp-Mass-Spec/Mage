@@ -7,6 +7,8 @@ namespace BiodiversityFileCopy
 {
     internal static class CommandOptions
     {
+        // Ignore Spelling: mzid, fht, mzml
+
         public static bool InterpretCommandLineOptions(Processing proc, string[] args)
         {
             // Explanation of command options

@@ -16,6 +16,8 @@ namespace MageDisplayLib
     /// </summary>
     public class GVPipelineSource : BaseModule
     {
+        // Ignore Spelling: Mage
+
         #region Member Variables
 
         // Data grid view display whose data we are serving

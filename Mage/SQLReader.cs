@@ -14,6 +14,14 @@ namespace Mage
     /// </summary>
     public sealed class SQLReader : BaseModule
     {
+        // ReSharper disable CommentTypo
+
+        // Ignore Spelling: citext, dbo, Mage, Postgres, postgresql, smalldate, username, yyyy-MM-dd hh:mm:ss tt
+        // Ignore Spelling: bigint, datetime, datetimeoffset, nchar, ntext, nvarchar, smalldatetime, smallint, smallmoney, tinyint, uniqueidentifier, varbinary, varchar
+        // Ignore Spelling: bool, bytea, cidr, hstore, inet, json, jsonb, lseg, macaddr, timestamptz, timetz, tsquery, tsvector, uuid, varbit
+
+        // ReSharper restore CommentTypo
+
         /// <summary>
         /// SQL Command error constant
         /// </summary>

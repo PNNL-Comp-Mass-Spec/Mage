@@ -10,6 +10,8 @@ namespace MageExtExtractionFilters
     /// </summary>
     public class ResultType
     {
+        // Ignore Spelling: fht, msgfplus, msgfdb, mspathfinder, sequest, xt, xtandem
+
         #region Constants
 
         public const string XTANDEM_ALL_PROTEINS = "X!Tandem All Proteins";

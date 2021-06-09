@@ -6,6 +6,8 @@ namespace MageExtExtractionFilters
 {
     public class InspectExtractionFilter : ExtractionFilter
     {
+        // Ignore Spelling: Mage
+
         #region Member Variables
 
         // Working copy of Inspect filter object

@@ -11,6 +11,8 @@ namespace MageMetadataProcessor
 {
     public partial class MetadataProcessorForm : Form
     {
+        // Ignore Spelling: Mage
+
         #region Member Variables
 
         // Current Mage pipeline that is running or has most recently run

@@ -14,6 +14,8 @@ namespace Mage
     /// </summary>
     public class FileListFilter : FileListInfoBase
     {
+        // Ignore Spelling: Mage, Regex
+
         /// <summary>
         /// Normal file search (glob-based)
         /// </summary>

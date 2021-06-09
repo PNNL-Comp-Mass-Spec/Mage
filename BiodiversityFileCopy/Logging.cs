@@ -6,6 +6,9 @@ namespace BiodiversityFileCopy
 {
     internal static class Logging
     {
+        // ReSharper disable once CommentTypo
+        // Ignore Spelling: runlog
+
         public static string LogRootFolder { get; set; }
         public static string LogFileLabel { get; set; } = string.Empty;
 

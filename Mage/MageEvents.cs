@@ -10,7 +10,7 @@ namespace Mage
     /// </summary>
     public class MageColumnDef
     {
-        // Ignore Spelling: Args
+        // Ignore Spelling: Args, Mage
 
         /// <summary>
         /// Name of the column

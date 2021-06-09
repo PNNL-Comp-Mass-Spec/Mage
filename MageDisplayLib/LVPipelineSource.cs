@@ -13,6 +13,8 @@ namespace MageDisplayLib
     /// </summary>
     public class LVPipelineSource : BaseModule
     {
+        // Ignore Spelling: Mage
+
         #region Member Variables
 
         // Object whose data we are serving

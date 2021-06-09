@@ -13,6 +13,8 @@ namespace MageUIComponents
     /// </summary>
     public partial class ColumnMappingForm : Form
     {
+        // Ignore Spelling: datetime, Mage, smallint, varchar
+
         #region Member Variables
 
         /// <summary>

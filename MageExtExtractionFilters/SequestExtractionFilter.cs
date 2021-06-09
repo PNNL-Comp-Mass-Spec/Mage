@@ -9,6 +9,8 @@ namespace MageExtExtractionFilters
     /// </summary>
     public class SequestExtractionFilter : ExtractionFilter
     {
+        // Ignore Spelling: Mage, Sequest
+
         #region Member Variables
 
         // Working copy of SEQUEST hit checker object

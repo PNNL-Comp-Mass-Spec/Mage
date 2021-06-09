@@ -6,6 +6,8 @@ namespace MageExtExtractionFilters
 {
     public class XTandemExtractionFilter : ExtractionFilter
     {
+        // Ignore Spelling: Mage
+
         #region Member Variables
 
         // Working copy of X!Tandem filter object

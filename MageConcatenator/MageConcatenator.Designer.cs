@@ -2,6 +2,8 @@
 {
     partial class MageConcatenator
     {
+        // Ignore Spelling: Concatenator, Mage
+
         /// <summary>
         /// Required designer variable.
         /// </summary>

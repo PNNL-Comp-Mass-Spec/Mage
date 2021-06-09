@@ -10,6 +10,7 @@ namespace MageFilePackager
     public partial class FilePackageMgmtPanel : UserControl, IModuleParameters
     {
         // public event EventHandler<MageCommandEventArgs> OnAction;
+        // Ignore Spelling: Mage, txt
 
         #region Member Variables
 

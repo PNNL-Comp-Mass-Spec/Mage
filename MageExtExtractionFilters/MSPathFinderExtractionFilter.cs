@@ -6,6 +6,8 @@ namespace MageExtExtractionFilters
 {
     internal class MSPathFinderExtractionFilter : ExtractionFilter
     {
+        // Ignore Spelling: Mage
+
         #region "Enums"
         public enum MSPathFinderColumns
         {

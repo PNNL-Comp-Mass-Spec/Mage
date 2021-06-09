@@ -9,6 +9,8 @@ namespace MageDisplayLib
     /// </summary>
     public class TDPipelineSource : BaseModule
     {
+        // Ignore Spelling: Mage
+
         #region Member Variables
 
         // Object whose data we are serving

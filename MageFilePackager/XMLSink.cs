@@ -6,6 +6,8 @@ namespace MageFilePackager
 {
     internal class XMLSink : BaseModule
     {
+        // Ignore Spelling: Mage
+
         #region Member Variables
 
         private readonly StringBuilder _text = new();

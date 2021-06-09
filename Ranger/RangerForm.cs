@@ -5,8 +5,16 @@ using Mage;
 using MageDisplayLib;
 using RangerLib;
 
-namespace Ranger {
-    public partial class RangerForm : Form {
+namespace Ranger
+{
+    public partial class RangerForm : Form
+    {
+        // ReSharper disable CommentTypo
+
+        // Ignore Spelling: subpanels, Xcorr
+
+        // ReSharper restore CommentTypo
+
         private readonly List<IModuleParameters> mParamPanels = new List<IModuleParameters>();
 
         public RangerForm() {

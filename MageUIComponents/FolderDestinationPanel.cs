@@ -9,6 +9,8 @@ namespace MageUIComponents
 {
     public partial class FolderDestinationPanel : UserControl, IModuleParameters
     {
+        // Ignore Spelling: txt
+
         public FolderDestinationPanel()
         {
             InitializeComponent();

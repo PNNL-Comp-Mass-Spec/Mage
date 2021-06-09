@@ -12,6 +12,8 @@ namespace MageExtContentFilters
     [MageAttribute("Filter", "SEQUEST", "SEQUEST filter", "Uses filter criteria defined in DMS")]
     internal class SequestFilter : ContentFilter
     {
+        // Ignore Spelling: Mage, pre, Sequest
+
         #region Member Variables
 
         /// <summary>

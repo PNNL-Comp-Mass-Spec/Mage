@@ -14,6 +14,8 @@ namespace MageExtExtractionFilters
     /// </summary>
     public class FileContentExtractor : FileProcessingBase
     {
+        // Ignore Spelling: Mage
+
         #region Member Variables
 
         private int mCurrentFileCount;

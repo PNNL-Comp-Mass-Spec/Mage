@@ -15,6 +15,8 @@ namespace MageFileProcessor
 {
     public partial class FileProcessorForm : Form
     {
+        // Ignore Spelling: Mage, workflows
+
         #region Constants
         protected const string TAG_JOB_IDs = "Job_ID_List";
         protected const string TAG_JOB_IDs_FROM_DATASETS = "Jobs_From_Dataset_List";

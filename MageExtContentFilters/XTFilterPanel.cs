@@ -8,9 +8,13 @@ using System.Text;
 using System.Windows.Forms;
 using Mage;
 
-namespace MageExtContentFilters {
+namespace MageExtContentFilters
+{
     [MageAttribute("FilterPanel", "XTFilter", "XT filter", "Uses filter criteria defined in DMS")]
-    public partial class XTFilterPanel : Form, IModuleParameters {
+    public partial class XTFilterPanel : Form, IModuleParameters
+    {
+        // Ignore Spelling: Mage
+
         #region Member Variables
 
         private Dictionary<string, string> mParameters = new();

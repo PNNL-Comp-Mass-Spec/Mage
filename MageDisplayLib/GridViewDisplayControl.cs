@@ -9,6 +9,8 @@ namespace MageDisplayLib
 {
     public partial class GridViewDisplayControl : UserControl, IMageDisplayControl, ISinkModule, IModuleParameters
     {
+        // Ignore Spelling: checkbox, Ctrl, deselecting, deselects, Mage, subitems
+
         /// <summary>
         /// Signals anyone interested that row selection has changed
         /// </summary>

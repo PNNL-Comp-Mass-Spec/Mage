@@ -8,6 +8,8 @@ namespace MageExtractorTest
 {
     internal class ExtractorTests
     {
+        // Ignore Spelling: Sequest
+
         #region Member Variables
 
         public event EventHandler<MageStatusEventArgs> OnMessageUpdated;

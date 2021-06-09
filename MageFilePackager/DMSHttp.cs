@@ -7,6 +7,8 @@ namespace MageFilePackager
 {
     internal static class DMSHttp
     {
+        // Ignore Spelling: urlencoded, www
+
         /// <summary>
         /// Post web service request and receive response
         /// </summary>

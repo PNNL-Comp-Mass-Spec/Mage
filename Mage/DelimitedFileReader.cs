@@ -10,6 +10,8 @@ namespace Mage
     /// </summary>
     public class DelimitedFileReader : FileProcessingBase
     {
+        // Ignore Spelling: Mage
+
         #region Member Variables
 
         private bool doHeaderLine = true;

@@ -9,6 +9,8 @@ namespace MageExtExtractionFilters
     /// </summary>
     public class MSGFDbFHTExtractionFilter : ExtractionFilter
     {
+        // Ignore Spelling: Mage
+
         #region Member Variables
 
         // Working copy of MSGFDB filter object

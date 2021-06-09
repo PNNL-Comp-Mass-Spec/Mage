@@ -15,6 +15,8 @@ namespace MageDisplayLib
     /// </summary>
     public partial class ListDisplayControl
     {
+        // Ignore Spelling: Mage
+
         #region Member Variables
 
         /// <summary>

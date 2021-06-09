@@ -11,6 +11,8 @@ namespace MageUnitTests
     [TestFixture]
     public class ProcessingPipelineTest
     {
+        // Ignore Spelling: Mage
+
         /// <summary>
         /// A test for SetModuleParameter
         /// </summary>

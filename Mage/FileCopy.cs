@@ -20,6 +20,8 @@ namespace Mage
     /// </summary>
     public class FileCopy : FileContentProcessor
     {
+        // Ignore Spelling: downloader, Mage
+
         #region Member Variables
 
         // Used to provide unique prefix for duplicate file names

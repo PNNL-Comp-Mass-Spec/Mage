@@ -12,6 +12,8 @@ namespace MageFileProcessor
     /// </summary>
     public static class Pipelines
     {
+        // Ignore Spelling: Mage
+
         public const string PIPELINE_GET_DMS_FILES = "FileListPipeline";
         public const string PIPELINE_GET_LOCAL_FILES = "PipelineToGetLocalFileList";
 

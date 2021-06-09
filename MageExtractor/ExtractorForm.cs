@@ -12,7 +12,7 @@ namespace MageExtractor
 {
     public partial class ExtractorForm : Form
     {
-        // Ignore Spelling: workflows, cmd
+        // Ignore Spelling: cmd, mage, workflows
 
         #region Constants
 

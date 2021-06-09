@@ -11,6 +11,8 @@ namespace MageExtContentFilters
 {
     public class FilterResultsBase
     {
+        // Ignore Spelling: Regex
+
         protected static int CriteriaGroupIDIndex = 0;
         protected static int CriteriaNameIndex = 1;
         protected static int CriteriaOperatorIndex = 2;

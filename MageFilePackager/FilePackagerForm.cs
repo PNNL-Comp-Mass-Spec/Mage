@@ -13,6 +13,8 @@ namespace MageFilePackager
 {
     public partial class FilePackagerForm : Form
     {
+        // Ignore Spelling: Mage
+
         #region Constants
 
         private const string TagJobIDs = "Job_ID_List";

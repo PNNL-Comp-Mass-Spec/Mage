@@ -44,6 +44,8 @@ namespace Mage
     /// </summary>
     public class FileSubPipelineBroker : FileContentProcessor
     {
+        // Ignore Spelling: Mage
+
         #region Member Variables
 
         // Running count of number of files processed

@@ -6,6 +6,8 @@ namespace MageExtExtractionFilters
 {
     public class MSGFDbExtractionFilter : ExtractionFilter
     {
+        // Ignore Spelling: Mage
+
         #region "Enums"
         public enum MSGFDBColumns
         {

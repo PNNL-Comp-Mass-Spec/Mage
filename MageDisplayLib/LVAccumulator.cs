@@ -18,6 +18,8 @@ namespace MageDisplayLib
     /// </summary>
     public class LVAccumulator : ISinkModule
     {
+        // Ignore Spelling: Mage
+
         #region Events for ListDisplay listeners to register for
 
         /// <summary>

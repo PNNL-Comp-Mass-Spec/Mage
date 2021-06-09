@@ -8,9 +8,13 @@ using System.Text;
 using System.Windows.Forms;
 using Mage;
 
-namespace MageExtContentFilters {
+namespace MageExtContentFilters
+{
     [MageAttribute("FilterPanel", "SEQUEST", "SEQUEST Filter", "Parameters for SEQUEST Filter")]
-    public partial class SequestFilterPanel : Form, IModuleParameters {
+    public partial class SequestFilterPanel : Form, IModuleParameters
+    {
+        // Ignore Spelling: Mage
+
         #region Member Variables
 
         private Dictionary<string, string> mParameters = new();

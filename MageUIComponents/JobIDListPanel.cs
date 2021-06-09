@@ -8,6 +8,8 @@ namespace MageUIComponents
 {
     public partial class JobIDListPanel : UserControl, IModuleParameters
     {
+        // Ignore Spelling: Ctrl
+
         public event EventHandler<MageCommandEventArgs> OnAction;
 
         #region Member Variables

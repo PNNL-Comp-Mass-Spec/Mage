@@ -13,6 +13,8 @@ namespace MageConcatenator
 {
     public partial class MageConcatenator : Form
     {
+        // Ignore Spelling: Concatenator, Mage, workflows, HH:mm:ss
+
         #region Member Variables
 
         public const string PROGRAM_DATE = "June 7, 2021";
