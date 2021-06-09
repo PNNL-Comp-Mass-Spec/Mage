@@ -98,25 +98,24 @@ namespace MageExtContentFilters
         /// <param name="outputFilePath"></param>
         public void WriteCriteria(string outputFilePath)
         {
-            using (var swOutfile = new StreamWriter(new FileStream(sOutputFilePath, FileMode.Create, FileAccess.Write, FileShare.Read)))
+            using var writer = new StreamWriter(new FileStream(outputFilePath, FileMode.Create, FileAccess.Write, FileShare.Read));
+
+            writer.WriteLine("Filter_Set_ID" + "\t" + "Filter_Criteria_Group_ID" + "\t" + "Criterion_Name" + "\t" +
+                             "Operator" + "\t" + "Criterion_Value" + "\t" + "Criterion_ID");
+
+            foreach (var filterGroupID in m_FilterGroups.Keys)
             {
-                swOutfile.WriteLine("Filter_Set_ID" + "\t" + "Filter_Criteria_Group_ID" + "\t" + "Criterion_Name" + "\t" +
-                                    "Operator" + "\t" + "Criterion_Value" + "\t" + "Criterion_ID");
-
-                foreach (var filterGroupID in m_FilterGroups.Keys)
+                foreach (var filterRow in m_FilterGroups[filterGroupID])
                 {
-                    foreach (var filterRow in m_FilterGroups[filterGroupID])
-                    {
-                        swOutfile.Write(m_filterSetID + "\t" + filterGroupID + "\t" + filterRow.CriteriaName + "\t" +
-                                        filterRow.CriteriaOperator + "\t");
+                    writer.Write(m_filterSetID + "\t" + filterGroupID + "\t" + filterRow.CriteriaName + "\t" +
+                                 filterRow.CriteriaOperator + "\t");
 
-                        if (Math.Abs((int)filterRow.CriteriaValueFloat - filterRow.CriteriaValueFloat) < Single.Epsilon)
-                            swOutfile.Write(filterRow.CriteriaValueInt);
-                        else
-                            swOutfile.Write(filterRow.CriteriaValueFloat);
+                    if (Math.Abs((int)filterRow.CriteriaValueFloat - filterRow.CriteriaValueFloat) < Single.Epsilon)
+                        writer.Write(filterRow.CriteriaValueInt);
+                    else
+                        writer.Write(filterRow.CriteriaValueFloat);
 
-                        swOutfile.WriteLine("\t" + filterRow.CriterionID);
-                    }
+                    writer.WriteLine("\t" + filterRow.CriterionID);
                 }
             }
         }

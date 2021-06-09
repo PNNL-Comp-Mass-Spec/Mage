@@ -47,10 +47,8 @@ namespace MageFilePackager
                 }
                 else
                 {
-                    using (var reader = new StreamReader(responseStream))
-                    {
-                        responseData = reader.ReadToEnd();
-                    }
+                    using var reader = new StreamReader(responseStream);
+                    responseData = reader.ReadToEnd();
                 }
             }
             catch (WebException ex)
@@ -62,10 +60,8 @@ namespace MageFilePackager
                 }
                 else
                 {
-                    using (var reader = new StreamReader(responseStream))
-                    {
-                        responseData = reader.ReadToEnd();
-                    }
+                    using var reader = new StreamReader(responseStream);
+                    responseData = reader.ReadToEnd();
                 }
             }
 

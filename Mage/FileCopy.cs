@@ -427,57 +427,56 @@ namespace Mage
                     return false;
                 }
 
-                using (var reader = new StreamReader(new FileStream(cacheInfoFile.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
+                using var reader = new StreamReader(new FileStream(cacheInfoFile.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+
+                if (reader.EndOfStream)
                 {
-                    if (reader.EndOfStream)
+                    UpdateStatus(this, new MageStatusEventArgs("WARNING->CacheInfo file is empty: " + cacheInfoFilePath, 0));
+                    ReportMageWarning("WARNING->CacheInfo file is empty: " + cacheInfoFilePath);
+                    return false;
+                }
+
+                var remoteFilePath = reader.ReadLine();
+
+                if (string.IsNullOrWhiteSpace(remoteFilePath))
+                {
+                    UpdateStatus(this, new MageStatusEventArgs("WARNING->CacheInfo file is empty: " + cacheInfoFilePath, 0));
+                    ReportMageWarning("WARNING->CacheInfo file is empty: " + cacheInfoFilePath);
+                    return false;
+                }
+
+                var remoteFile = new FileInfo(remoteFilePath);
+                if (!remoteFile.Exists)
+                {
+                    UpdateStatus(this, new MageStatusEventArgs("Remote file not found: " + remoteFilePath, 1));
+                    ReportMageWarning("Remote file not found: " + remoteFilePath);
+                    return false;
+                }
+
+                var destPath = Path.Combine(cacheInfoFile.DirectoryName, remoteFile.Name);
+
+                if (File.Exists(destPath))
+                {
+                    if (overwriteExistingFiles)
                     {
-                        UpdateStatus(this, new MageStatusEventArgs("WARNING->CacheInfo file is empty: " + cacheInfoFilePath, 0));
-                        ReportMageWarning("WARNING->CacheInfo file is empty: " + cacheInfoFilePath);
-                        return false;
-                    }
-
-                    var remoteFilePath = reader.ReadLine();
-
-                    if (string.IsNullOrWhiteSpace(remoteFilePath))
-                    {
-                        UpdateStatus(this, new MageStatusEventArgs("WARNING->CacheInfo file is empty: " + cacheInfoFilePath, 0));
-                        ReportMageWarning("WARNING->CacheInfo file is empty: " + cacheInfoFilePath);
-                        return false;
-                    }
-
-                    var remoteFile = new FileInfo(remoteFilePath);
-                    if (!remoteFile.Exists)
-                    {
-                        UpdateStatus(this, new MageStatusEventArgs("Remote file not found: " + remoteFilePath, 1));
-                        ReportMageWarning("Remote file not found: " + remoteFilePath);
-                        return false;
-                    }
-
-                    var destPath = Path.Combine(cacheInfoFile.DirectoryName, remoteFile.Name);
-
-                    if (File.Exists(destPath))
-                    {
-                        if (overwriteExistingFiles)
-                        {
-                            UpdateStatus(this, new MageStatusEventArgs("NOTE->Copy replaced existing file: " + destPath, 0));
-                        }
-                        else
-                        {
-                            UpdateStatus(this, new MageStatusEventArgs("WARNING->Skipping existing file: " + destPath, 0));
-                            ReportMageWarning("WARNING->Skipping existing file: " + destPath);
-                            return false;
-                        }
-                        UpdateStatus(this, new MageStatusEventArgs("Start Copy->" + remoteFile.Name));
-                        File.Copy(remoteFile.FullName, destPath, true);
+                        UpdateStatus(this, new MageStatusEventArgs("NOTE->Copy replaced existing file: " + destPath, 0));
                     }
                     else
                     {
-                        UpdateStatus(this, new MageStatusEventArgs("Start Copy->" + remoteFile.Name));
-                        File.Copy(remoteFile.FullName, destPath, false);
+                        UpdateStatus(this, new MageStatusEventArgs("WARNING->Skipping existing file: " + destPath, 0));
+                        ReportMageWarning("WARNING->Skipping existing file: " + destPath);
+                        return false;
                     }
-
-                    return true;
+                    UpdateStatus(this, new MageStatusEventArgs("Start Copy->" + remoteFile.Name));
+                    File.Copy(remoteFile.FullName, destPath, true);
                 }
+                else
+                {
+                    UpdateStatus(this, new MageStatusEventArgs("Start Copy->" + remoteFile.Name));
+                    File.Copy(remoteFile.FullName, destPath, false);
+                }
+
+                return true;
             }
             catch (Exception e)
             {
