@@ -59,7 +59,7 @@
             this.button1.TabIndex = 2;
             this.button1.Text = "Selected";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // button2
             // 
@@ -69,7 +69,7 @@
             this.button2.TabIndex = 3;
             this.button2.Text = "All";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button2.Click += new System.EventHandler(this.Button2_Click);
             // 
             // TestRootPathCtl
             // 
@@ -87,7 +87,7 @@
             this.label1.Size = new System.Drawing.Size(86, 13);
             this.label1.TabIndex = 5;
             this.label1.Text = "Test Root Folder";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            this.label1.Click += new System.EventHandler(this.Label1_Click);
             // 
             // gridViewDisplayControl1
             // 

@@ -5,11 +5,14 @@ using Mage;
 using MageDisplayLib;
 using PRISM.Logging;
 
-namespace MageExtractorTest {
-    public partial class Form1 : Form {
+namespace MageExtractorTest
+{
+    public partial class Form1 : Form
+    {
         #region Initialization
 
-        public Form1() {
+        public Form1()
+        {
             InitializeComponent();
             SavedState.SetupConfigFiles("MageExtractor");
             var logFilePath = Path.Combine(SavedState.DataDirectory, "log.txt");
@@ -19,11 +22,13 @@ namespace MageExtractorTest {
 
         #endregion
 
-        private void button1_Click(object sender, EventArgs e) {
+        private void Button1_Click(object sender, EventArgs e)
+        {
             const DisplaySourceMode mode = DisplaySourceMode.Selected;
             RunTests(mode);
         }
-        private void button2_Click(object sender, EventArgs e) {
+        private void Button2_Click(object sender, EventArgs e)
+        {
             const DisplaySourceMode mode = DisplaySourceMode.All;
             RunTests(mode);
         }
@@ -34,9 +39,9 @@ namespace MageExtractorTest {
 
             textBox1.Clear();
 
-            var et = new ExtractorTests { TestDirectoryPath = TestRootPathCtl.Text};
-            et.OnMessageUpdated += HandleMessage;
-            et.RunExtractionTestCases(testCases);
+            var tests = new ExtractorTests { TestDirectoryPath = TestRootPathCtl.Text };
+            tests.OnMessageUpdated += HandleMessage;
+            tests.RunExtractionTestCases(testCases);
         }
 
         #region Message Handlers
@@ -61,9 +66,10 @@ namespace MageExtractorTest {
 
         #region Weird XML pipeline testing stuff
 
-        private void label1_Click(object sender, EventArgs e) {
+        private void Label1_Click(object sender, EventArgs e)
+        {
             TestXMLBuiltImportPipelines();
- //           TestCodeBuiltImportPipelines();
+            //           TestCodeBuiltImportPipelines();
         }
 
         private readonly string mXMLForPipelineToImportToFile = @"

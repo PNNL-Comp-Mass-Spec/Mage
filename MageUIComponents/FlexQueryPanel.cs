@@ -119,11 +119,11 @@ namespace MageUIComponents
 
         private static void DecodeQueryItem(string item, FlexQueryItemPanel pnl)
         {
-            var flds = item.Split('|');
-            pnl.Relation = flds[0];
-            pnl.Column = flds[1];
-            pnl.Comparision = flds[2];
-            pnl.Value = flds[3];
+            var fields = item.Split('|');
+            pnl.Relation = fields[0];
+            pnl.Column = fields[1];
+            pnl.Comparision = fields[2];
+            pnl.Value = fields[3];
         }
 
         private void GetJobsCtl_Click(object sender, EventArgs e)
@@ -139,10 +139,10 @@ namespace MageUIComponents
             var builder = new SQLBuilder(queryTemplate, ref args);
             foreach (var item in QueryItems.ToArray())
             {
-                var flds = item.Split('|');
-                if (!string.IsNullOrEmpty(flds[0]) && !string.IsNullOrEmpty(flds[1]) && !string.IsNullOrEmpty(flds[2]) && !string.IsNullOrEmpty(flds[3]))
+                var fields = item.Split('|');
+                if (!string.IsNullOrEmpty(fields[0]) && !string.IsNullOrEmpty(fields[1]) && !string.IsNullOrEmpty(fields[2]) && !string.IsNullOrEmpty(fields[3]))
                 {
-                    builder.AddPredicateItem(flds[0], flds[1], flds[2], flds[3]);
+                    builder.AddPredicateItem(fields[0], fields[1], fields[2], fields[3]);
                 }
             }
             return builder;
@@ -155,12 +155,12 @@ namespace MageUIComponents
                 /// <param name="queryItems"></param>
                 /// <returns></returns>
                 public static SQLReader GetMSSQLReaderFromFlexQuery(string queryTemplate, string[] queryItems) {
-                    Dictionary<string, string> args = new Dictionary<string, string>();
-                    SQLBuilder builder = new SQLBuilder(queryTemplate, ref args);
-                    foreach (string item in queryItems) {
-                        string[] flds = item.Split('|');
-                        if (!string.IsNullOrEmpty(flds[0]) && !string.IsNullOrEmpty(flds[1]) && !string.IsNullOrEmpty(flds[2]) && !string.IsNullOrEmpty(flds[3])) {
-                            builder.AddPredicateItem(flds[0], flds[1], flds[2], flds[3]);
+                    Dictionary<string, string> arguments = new Dictionary<string, string>();
+                    SQLBuilder builder = new SQLBuilder(queryTemplate, ref arguments);
+                    for each (string item in queryItems) {
+                        string[] fields = item.Split('|');
+                        if (!string.IsNullOrEmpty(fields[0]) && !string.IsNullOrEmpty(fields[1]) && !string.IsNullOrEmpty(fields[2]) && !string.IsNullOrEmpty(fields[3])) {
+                            builder.AddPredicateItem(fields[0], fields[1], fields[2], fields[3]);
                         }
                     }
                     SQLReader reader = new SQLReader();

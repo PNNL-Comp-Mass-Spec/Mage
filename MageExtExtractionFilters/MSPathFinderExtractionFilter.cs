@@ -29,7 +29,7 @@ namespace MageExtExtractionFilters
         // Working copy of MSPathFinder filter object
 
         // Indexes into the synopsis row field array
-        private udtColumnIndices mColumnIndices;
+        private ColumnIndices mColumnIndices;
         private int peptideMassIndex;
         private int specEValueIndex;
         private int eValueIndex;

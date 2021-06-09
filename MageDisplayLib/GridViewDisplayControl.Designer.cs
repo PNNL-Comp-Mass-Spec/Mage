@@ -64,7 +64,7 @@ namespace MageDisplayLib
             this.chkShiftClickMode.TabIndex = 9;
             this.chkShiftClickMode.Text = "Use Shift+Click, Ctrl+Click";
             this.chkShiftClickMode.UseVisualStyleBackColor = true;
-            this.chkShiftClickMode.CheckedChanged += new System.EventHandler(this.chkShiftClickSelect_CheckedChanged);
+            this.chkShiftClickMode.CheckedChanged += new System.EventHandler(this.ShiftClickSelect_CheckedChanged);
             // 
             // lblPageTitle
             // 
@@ -128,7 +128,7 @@ namespace MageDisplayLib
             this.gvQueryResults.ShiftClickSelect = false;
             this.gvQueryResults.Size = new System.Drawing.Size(929, 575);
             this.gvQueryResults.TabIndex = 6;
-            this.gvQueryResults.SelectionChanged += new System.EventHandler(this.gvQueryResults_SelectionChanged);
+            this.gvQueryResults.SelectionChanged += new System.EventHandler(this.GridViewQueryResults_SelectionChanged);
             // 
             // GridViewDisplayControl
             // 

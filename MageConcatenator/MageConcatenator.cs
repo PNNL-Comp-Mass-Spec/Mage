@@ -484,7 +484,7 @@ namespace MageConcatenator
                 Interval = 100,
                 Enabled = true
             };
-            mFileInfoUpdater.Tick += mFileInfoUpdater_Tick;
+            mFileInfoUpdater.Tick += FileInfoUpdater_Tick;
         }
 
         /// <summary>
@@ -616,7 +616,7 @@ namespace MageConcatenator
             mFileInfoUpdateRequired = true;
         }
 
-        private void mFileInfoUpdater_Tick(object sender, EventArgs e)
+        private void FileInfoUpdater_Tick(object sender, EventArgs e)
         {
             if (mFileInfoUpdateRequired)
             {
@@ -635,10 +635,10 @@ namespace MageConcatenator
         private void SetupStatusPanel()
         {
             statusPanel1.OwnerControl = this;
-            statusPanel1.OnAction += statusPanel1_OnAction;
+            statusPanel1.OnAction += StatusPanel1_OnAction;
         }
 
-        private void statusPanel1_OnAction(object sender, MageCommandEventArgs e)
+        private void StatusPanel1_OnAction(object sender, MageCommandEventArgs e)
         {
             if (e.Action == "cancel_operation")
             {
@@ -671,7 +671,7 @@ namespace MageConcatenator
 
         #region Button Events
 
-        private void cmdAbout_Click(object sender, EventArgs e)
+        private void About_Click(object sender, EventArgs e)
         {
             var message = "Written by Matthew Monroe for the Department of Energy.  This is version " +
                              System.Reflection.Assembly.GetExecutingAssembly().GetName().Version + " (" + PROGRAM_DATE + ")";

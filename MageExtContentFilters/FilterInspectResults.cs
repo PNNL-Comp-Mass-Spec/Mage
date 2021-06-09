@@ -12,138 +12,119 @@ namespace MageExtContentFilters
 
         public bool EvaluateInspect(string peptideSequence, int chargeState, double peptideMass, double MQScore, double TotalPRMScore, double FScore, double PValue, double msgfSpecProb, int rankTotalPRMScore)
         {
-            var currEval = true;
+            var passesFilter = true;
             var peptideLength = GetPeptideLength(peptideSequence);
-            var termState = 0;
+            var terminusState = 0;
 
             var cleavageState = Convert.ToInt32(GetCleavageState(peptideSequence));
 
             foreach (var filterGroupID in m_FilterGroups.Keys)
             {
-                currEval = true;
+                passesFilter = true;
                 foreach (var filterRow in m_FilterGroups[filterGroupID])
                 {
-                    var currCritName = filterRow.CriteriaName;
-                    var currCritOperator = filterRow.CriteriaOperator;
+                    var currentCriteriaName = filterRow.CriteriaName;
+                    var currentOperator = filterRow.CriteriaOperator;
 
-                    switch (currCritName)
+                    switch (currentCriteriaName)
                     {
                         case "Charge":
-                            if (chargeState > 0)
+                            if (chargeState > 0 && !CompareInteger(chargeState, currentOperator, filterRow.CriteriaValueInt))
                             {
-                                if (!CompareInteger(chargeState, currCritOperator, filterRow.CriteriaValueInt))
-                                {
-                                    currEval = false;
-                                }
+                                passesFilter = false;
                             }
                             break;
-                        case "MSGF_SpecProb":
-                            if (msgfSpecProb > -1)
-                            {
-                                if (!CompareDouble(msgfSpecProb, currCritOperator, filterRow.CriteriaValueFloat))
-                                {
-                                    currEval = false;
-                                }
-                            }
-                            break;
-                        case "Cleavage_State":
-                            if (cleavageState > -1)
-                            {
-                                if (!CompareInteger(cleavageState, currCritOperator, filterRow.CriteriaValueInt))
-                                {
-                                    currEval = false;
-                                }
-                            }
-                            break;
-                        case "Terminus_State":
-                            if (termState > -1)
-                            {
-                                if (termState < 0)
-                                    termState = GetTerminusState(peptideSequence);
 
-                                if (!CompareInteger(termState, currCritOperator, filterRow.CriteriaValueInt))
+                        case "MSGF_SpecProb":
+                            if (msgfSpecProb > -1 && !CompareDouble(msgfSpecProb, currentOperator, filterRow.CriteriaValueFloat))
+                            {
+                                passesFilter = false;
+                            }
+                            break;
+
+                        case "Cleavage_State":
+                            if (cleavageState > -1 && !CompareInteger(cleavageState, currentOperator, filterRow.CriteriaValueInt))
+                            {
+                                passesFilter = false;
+                            }
+                            break;
+
+                        case "Terminus_State":
+                            if (terminusState > -1)
+                            {
+                                if (terminusState < 0)
+                                    terminusState = GetTerminusState(peptideSequence);
+
+                                if (!CompareInteger(terminusState, currentOperator, filterRow.CriteriaValueInt))
                                 {
-                                    currEval = false;
+                                    passesFilter = false;
                                 }
                             }
                             break;
+
                         case "Peptide_Length":
-                            if (peptideLength > 0)
+                            if (peptideLength > 0 && !CompareInteger(peptideLength, currentOperator, filterRow.CriteriaValueInt))
                             {
-                                if (!CompareInteger(peptideLength, currCritOperator, filterRow.CriteriaValueInt))
-                                {
-                                    currEval = false;
-                                }
+                                passesFilter = false;
                             }
                             break;
+
                         case "Mass":
-                            if (peptideMass > 0)
+                            if (peptideMass > 0 && !CompareDouble(peptideMass, currentOperator, filterRow.CriteriaValueFloat, 0.000001))
                             {
-                                if (!CompareDouble(peptideMass, currCritOperator, filterRow.CriteriaValueFloat, 0.000001))
-                                {
-                                    currEval = false;
-                                }
+                                passesFilter = false;
                             }
                             break;
+
                         case "Inspect_MQScore":
-                            if (MQScore > -1)
+                            if (MQScore > -1 && !CompareDouble(MQScore, currentOperator, filterRow.CriteriaValueFloat, 0.000001))
                             {
-                                if (!CompareDouble(MQScore, currCritOperator, filterRow.CriteriaValueFloat, 0.000001))
-                                {
-                                    currEval = false;
-                                }
+                                passesFilter = false;
                             }
                             break;
+
                         case "Inspect_TotalPRMScore":
-                            if (TotalPRMScore > -1)
+                            if (TotalPRMScore > -1 && !CompareDouble(TotalPRMScore, currentOperator, filterRow.CriteriaValueFloat, 0.000001))
                             {
-                                if (!CompareDouble(TotalPRMScore, currCritOperator, filterRow.CriteriaValueFloat, 0.000001))
-                                {
-                                    currEval = false;
-                                }
+                                passesFilter = false;
                             }
                             break;
+
                         case "Inspect_FScore":
-                            if (FScore > -1)
+                            if (FScore > -1 && !CompareDouble(FScore, currentOperator, filterRow.CriteriaValueFloat, 0.000001))
                             {
-                                if (!CompareDouble(FScore, currCritOperator, filterRow.CriteriaValueFloat, 0.000001))
-                                {
-                                    currEval = false;
-                                }
+                                passesFilter = false;
                             }
                             break;
+
                         case "Inspect_PValue":
-                            if (PValue > -1)
+                            if (PValue > -1 && !CompareDouble(PValue, currentOperator, filterRow.CriteriaValueFloat))
                             {
-                                if (!CompareDouble(PValue, currCritOperator, filterRow.CriteriaValueFloat))
-                                {
-                                    currEval = false;
-                                }
+                                passesFilter = false;
                             }
                             break;
+
                         case "RankScore":
-                            if (rankTotalPRMScore > 0)
+                            if (rankTotalPRMScore > 0 && !CompareInteger(rankTotalPRMScore, currentOperator, filterRow.CriteriaValueInt))
                             {
-                                if (!CompareInteger(rankTotalPRMScore, currCritOperator, filterRow.CriteriaValueInt))
-                                {
-                                    currEval = false;
-                                }
+                                passesFilter = false;
                             }
                             break;
+
                         default:
-                            currEval = true;
+                            passesFilter = true;
                             break;
                     }
 
-                    if (currEval == false)
+                    if (!passesFilter)
                         break;                       // Subject didn't pass a criterion value, so move on to the next group
                 }
 
-                if (currEval)
-                    break;                           // Subject passed the criteria for this filtergroup
+                if (passesFilter)
+                    break;                           // Subject passed the criteria for this filter group
             }
 
-            return currEval;
+            return passesFilter;
         }
     }
 }

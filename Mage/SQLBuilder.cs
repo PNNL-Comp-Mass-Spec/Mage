@@ -487,22 +487,22 @@ namespace Mage
         public string BuildQuerySQL()
         {
             // Process the predicate list
-            var p_and = new List<string>();
-            var p_or = new List<string>();
+            var andPredicate = new List<string>();
+            var orPredicate = new List<string>();
 
             foreach (var predicate in mPredicates)
             {
-                var sWhereItem = MakeWhereItem(predicate, IsPostgres);
-                if (!string.IsNullOrEmpty(sWhereItem))
+                var whereItem = MakeWhereItem(predicate, IsPostgres);
+                if (!string.IsNullOrEmpty(whereItem))
                 {
                     switch (predicate.rel.ToLower())
                     {
                         case "and":
-                            p_and.Add(sWhereItem);
+                            andPredicate.Add(whereItem);
                             break;
 
                         case "or":
-                            p_or.Add(sWhereItem);
+                            orPredicate.Add(whereItem);
                             break;
                     }
                 }
@@ -513,13 +513,13 @@ namespace Mage
             baseSql.Append(" FROM " + PossiblyQuoteName(Table, IsPostgres));
 
             // Collect all 'or' clauses as one grouped item and put it into the 'and' item array
-            if (p_or.Count > 0)
+            if (orPredicate.Count > 0)
             {
-                p_and.Add("(" + string.Join(" OR ", p_or) + ")");
+                andPredicate.Add("(" + string.Join(" OR ", orPredicate) + ")");
             }
             //
             // 'and' all predicate clauses together
-            var andPredicates = string.Join(" AND ", p_and);
+            var andPredicates = string.Join(" AND ", andPredicate);
             if (!string.IsNullOrEmpty(andPredicates))
             {
                 baseSql.Append(" WHERE " + andPredicates);

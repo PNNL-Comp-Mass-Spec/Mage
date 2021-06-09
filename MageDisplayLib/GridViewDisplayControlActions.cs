@@ -120,12 +120,12 @@ namespace MageDisplayLib
                 // Whole context menu enabled/disabled based on whether there are any rows selected or not
                 if (SelectedItemCount == 0)
                 {
-                    List<string> lstAlwaysActive = null;
+                    List<string> alwaysActiveItems = null;
 
                     if (ItemCount > 0)
-                        lstAlwaysActive = mSelectAllOrNoneMenuItems;
+                        alwaysActiveItems = mSelectAllOrNoneMenuItems;
 
-                    AdjustMenuItemsFromNameList(mAllMenuItems, false, lstAlwaysActive);
+                    AdjustMenuItemsFromNameList(mAllMenuItems, false, alwaysActiveItems);
                 }
                 else
                 {
@@ -140,8 +140,8 @@ namespace MageDisplayLib
         /// </summary>
         /// <param name="itemNames"></param>
         /// <param name="active"></param>
-        /// <param name="lstAlwaysActive"></param>
-        private void AdjustMenuItemsFromNameList(List<string> itemNames, bool active, List<string> lstAlwaysActive)
+        /// <param name="alwaysActiveItems"></param>
+        private void AdjustMenuItemsFromNameList(IEnumerable<string> itemNames, bool active, ICollection<string> alwaysActiveItems)
         {
             foreach (var name in itemNames)
             {

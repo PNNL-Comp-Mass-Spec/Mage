@@ -64,8 +64,8 @@ namespace MageExtExtractionFilters
             OutputColumnList = "Job, Result_ID, Passed_Filter|+|text, *, Cleavage_State|+|text, Terminus_State|+|text, Protein_Name|+|text, Protein_Expectation_Value_Log(e)|+|double, Protein_Intensity_Log(I)|+|double";
             base.HandleColumnDef(sender, args);
 
-            // List<MageColumnDef> cd = (OutputColumnDefs != null) ? OutputColumnDefs : InputColumnDefs;
-            // OnColumnDefAvailable(new MageColumnEventArgs(cd.ToArray()));
+            // List<MageColumnDef> columnDefs = (OutputColumnDefs != null) ? OutputColumnDefs : InputColumnDefs;
+            // OnColumnDefAvailable(new MageColumnEventArgs(columnDefs.ToArray()));
             OnColumnDefAvailable(new MageColumnEventArgs(OutputColumnDefs.ToArray()));
 
             PrecalculateFieldIndexes();

@@ -162,7 +162,7 @@ namespace MageUIComponents
             }
         }
 
-        private void usePrefixCtl_CheckedChanged(object sender, EventArgs e)
+        private void UsePrefixCtl_CheckedChanged(object sender, EventArgs e)
         {
             AdjustPrefixNameFields();
         }

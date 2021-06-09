@@ -18,7 +18,7 @@ namespace MageExtExtractionFilters
 
         #region Structures
 
-        protected struct udtColumnIndices
+        protected struct ColumnIndices
         {
             public int ScanNumber;
             public int ChargeState;
@@ -131,7 +131,7 @@ namespace MageExtExtractionFilters
         protected string CreateRowTag(
             string[] vals,
             bool includeProtein,
-            udtColumnIndices columnIndices)
+            ColumnIndices columnIndices)
         {
             var scanNumber = GetColumnValue(vals, columnIndices.ScanNumber, -1);
             var chargeState = GetColumnValue(vals, columnIndices.ChargeState, 0);

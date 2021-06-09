@@ -97,7 +97,7 @@ namespace MageExtractor
             ConnectPanelsToCommandHandlers();
 
             // Connect click events
-            lblAboutLink.LinkClicked += lblAboutLink_LinkClicked;
+            lblAboutLink.LinkClicked += AboutLink_LinkClicked;
 
             // Connect the pipeline queue to message handlers
             ConnectPipelineQueueToStatusDisplay(mPipelineQueue);
@@ -424,7 +424,7 @@ namespace MageExtractor
         {
         }
 
-        private void lblAboutLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void AboutLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             try
             {

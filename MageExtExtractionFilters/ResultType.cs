@@ -25,9 +25,9 @@ namespace MageExtExtractionFilters
 
         static ResultType()
         {
-            foreach (var rtype in Types)
+            foreach (var resultType in Types)
             {
-                TypeList[rtype.ResultName] = rtype;
+                TypeList[resultType.ResultName] = resultType;
             }
         }
 
@@ -141,7 +141,7 @@ namespace MageExtExtractionFilters
         {
             public string ResultName { get; }
             public string NameColumn { get; }
-            public int ColumnIndx { get; set; }
+            public int ColumnIndex { get; set; }
             public string KeyCol { get; }
             public string FileNameTag { get; }
             public string MergeFileName { get; set; }
@@ -152,7 +152,7 @@ namespace MageExtExtractionFilters
                 NameColumn = name;
                 KeyCol = keyCol;
                 FileNameTag = tag;
-                ColumnIndx = -1;
+                ColumnIndex = -1;
                 MergeFileName = string.Empty;
             }
         }

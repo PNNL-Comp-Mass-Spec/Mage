@@ -14,16 +14,16 @@ namespace MageExtContentFilters
         {
             // Implements IFilterResults.EvaluatePeptide
 
-            return EvaluateSequest(peptideSequence, xCorrValue, delCNValue, delCN2Value, chargeState, peptideMass, -1, -1, -1, -1, -1, -1);
+            return EvaluateSequest(peptideSequence, xCorrValue, delCNValue, delCN2Value, chargeState, peptideMass, -1, -1, -1, cleavageState, -1, -1);
         }
 
         public bool EvaluateSequest(string peptideSequence, double xCorrValue, double delCNValue, double delCN2Value, int chargeState, double peptideMass, int spectrumCount, double discriminantScore, double NETAbsoluteDifference, int cleavageState, double msgfSpecProb, int rankXc)
         {
             // Implements IFilterResults.EvaluatePeptide
 
-            var currEval = false;
+            var passesFilter = false;
             var peptideLength = GetPeptideLength(peptideSequence);
-            var termState = 0;
+            var terminusState = 0;
 
             if (cleavageState == -1)
             {
@@ -32,148 +32,125 @@ namespace MageExtContentFilters
 
             foreach (var filterGroupID in m_FilterGroups.Keys)
             {
-                currEval = true;
+                passesFilter = true;
                 foreach (var filterRow in m_FilterGroups[filterGroupID])
                 {
-                    var currCritName = filterRow.CriteriaName;
-                    var currCritOperator = filterRow.CriteriaOperator;
+                    var currentCriteriaName = filterRow.CriteriaName;
+                    var currentOperator = filterRow.CriteriaOperator;
 
-                    switch (currCritName)
+                    switch (currentCriteriaName)
                     {
                         case "Charge":
-                            if (chargeState > 0)
+                            if (chargeState > 0 && !CompareInteger(chargeState, currentOperator, filterRow.CriteriaValueInt))
                             {
-                                if (!CompareInteger(chargeState, currCritOperator, filterRow.CriteriaValueInt))
-                                {
-                                    currEval = false;
-                                }
+                                passesFilter = false;
                             }
                             break;
-                        case "MSGF_SpecProb":
-                            if (msgfSpecProb > -1)
-                            {
-                                if (!CompareDouble(msgfSpecProb, currCritOperator, filterRow.CriteriaValueFloat))
-                                {
-                                    currEval = false;
-                                }
-                            }
-                            break;
-                        case "Cleavage_State":
-                            if (cleavageState > -1)
-                            {
-                                if (!CompareInteger(cleavageState, currCritOperator, filterRow.CriteriaValueInt))
-                                {
-                                    currEval = false;
-                                }
-                            }
-                            break;
-                        case "Terminus_State":
-                            if (termState > -1)
-                            {
-                                if (termState < 0)
-                                    termState = GetTerminusState(peptideSequence);
 
-                                if (!CompareInteger(termState, currCritOperator, filterRow.CriteriaValueInt))
+                        case "MSGF_SpecProb":
+                            if (msgfSpecProb > -1 && !CompareDouble(msgfSpecProb, currentOperator, filterRow.CriteriaValueFloat))
+                            {
+                                passesFilter = false;
+                            }
+                            break;
+
+                        case "Cleavage_State":
+                            if (cleavageState > -1 && !CompareInteger(cleavageState, currentOperator, filterRow.CriteriaValueInt))
+                            {
+                                passesFilter = false;
+                            }
+                            break;
+
+                        case "Terminus_State":
+                            if (terminusState > -1)
+                            {
+                                if (terminusState < 0)
+                                    terminusState = GetTerminusState(peptideSequence);
+
+                                if (!CompareInteger(terminusState, currentOperator, filterRow.CriteriaValueInt))
                                 {
-                                    currEval = false;
+                                    passesFilter = false;
                                 }
                             }
                             break;
+
                         case "Peptide_Length":
-                            if (peptideLength > 0)
+                            if (peptideLength > 0 && !CompareInteger(peptideLength, currentOperator, filterRow.CriteriaValueInt))
                             {
-                                if (!CompareInteger(peptideLength, currCritOperator, filterRow.CriteriaValueInt))
-                                {
-                                    currEval = false;
-                                }
+                                passesFilter = false;
                             }
                             break;
+
                         case "Mass":
-                            if (peptideMass > 0)
+                            if (peptideMass > 0 && !CompareDouble(peptideMass, currentOperator, filterRow.CriteriaValueFloat, 0.000001))
                             {
-                                if (!CompareDouble(peptideMass, currCritOperator, filterRow.CriteriaValueFloat, 0.000001))
-                                {
-                                    currEval = false;
-                                }
+                                passesFilter = false;
                             }
                             break;
+
                         case "High_Normalized_Score":
-                            if (xCorrValue > -1)
+                            if (xCorrValue > -1 && !CompareDouble(xCorrValue, currentOperator, filterRow.CriteriaValueFloat, 0.0001))
                             {
-                                if (!CompareDouble(xCorrValue, currCritOperator, filterRow.CriteriaValueFloat, 0.0001))
-                                {
-                                    currEval = false;
-                                }
+                                passesFilter = false;
                             }
                             break;
+
                         case "DelCn":
-                            if (delCNValue > -1)
+                            if (delCNValue > -1 && !CompareDouble(delCNValue, currentOperator, filterRow.CriteriaValueFloat, 0.0001))
                             {
-                                if (!CompareDouble(delCNValue, currCritOperator, filterRow.CriteriaValueFloat, 0.0001))
-                                {
-                                    currEval = false;
-                                }
+                                passesFilter = false;
                             }
                             break;
+
                         case "DelCn2":
-                            if (delCN2Value > -1)
+                            if (delCN2Value > -1 && !CompareDouble(delCN2Value, currentOperator, filterRow.CriteriaValueFloat, 0.0001))
                             {
-                                if (!CompareDouble(delCN2Value, currCritOperator, filterRow.CriteriaValueFloat, 0.0001))
-                                {
-                                    currEval = false;
-                                }
+                                passesFilter = false;
                             }
                             break;
+
                         case "Spectrum_Count":
-                            if (spectrumCount > 0)
+                            if (spectrumCount > 0 && !CompareInteger(spectrumCount, currentOperator, filterRow.CriteriaValueInt))
                             {
-                                if (!CompareInteger(spectrumCount, currCritOperator, filterRow.CriteriaValueInt))
-                                {
-                                    currEval = false;
-                                }
+                                passesFilter = false;
                             }
                             break;
+
                         case "Discriminant_Score":
-                            if (discriminantScore > -1)
+                            if (discriminantScore > -1 && !CompareDouble(discriminantScore, currentOperator, filterRow.CriteriaValueFloat, 0.000001))
                             {
-                                if (!CompareDouble(discriminantScore, currCritOperator, filterRow.CriteriaValueFloat, 0.000001))
-                                {
-                                    currEval = false;
-                                }
+                                passesFilter = false;
                             }
                             break;
+
                         case "NET_Difference_Absolute":
-                            if (NETAbsoluteDifference > -1)
+                            if (NETAbsoluteDifference > -1 && !CompareDouble(NETAbsoluteDifference, currentOperator, filterRow.CriteriaValueFloat, 0.000001))
                             {
-                                if (!CompareDouble(NETAbsoluteDifference, currCritOperator, filterRow.CriteriaValueFloat, 0.000001))
-                                {
-                                    currEval = false;
-                                }
+                                passesFilter = false;
                             }
                             break;
+
                         case "RankScore":
-                            if (rankXc > 0)
+                            if (rankXc > 0 && !CompareInteger(rankXc, currentOperator, filterRow.CriteriaValueInt))
                             {
-                                if (!CompareInteger(rankXc, currCritOperator, filterRow.CriteriaValueInt))
-                                {
-                                    currEval = false;
-                                }
+                                passesFilter = false;
                             }
                             break;
+
                         default:
-                            currEval = true;
+                            passesFilter = true;
                             break;
                     }
 
-                    if (currEval == false)
+                    if (!passesFilter)
                         break;                       // Subject didn't pass a criterion value, so move on to the next group
                 }
 
-                if (currEval)
-                    break;                           // Subject passed the criteria for this filtergroup
+                if (passesFilter)
+                    break;                           // Subject passed the criteria for this filter group
             }
 
-            return currEval;
+            return passesFilter;
         }
     }
 }

@@ -136,7 +136,7 @@
             this.usePrefixCtl.TabIndex = 8;
             this.usePrefixCtl.Text = "Apply prefix to file name";
             this.usePrefixCtl.UseVisualStyleBackColor = true;
-            this.usePrefixCtl.CheckedChanged += new System.EventHandler(this.usePrefixCtl_CheckedChanged);
+            this.usePrefixCtl.CheckedChanged += new System.EventHandler(this.UsePrefixCtl_CheckedChanged);
             // 
             // CopyAllCtl
             // 

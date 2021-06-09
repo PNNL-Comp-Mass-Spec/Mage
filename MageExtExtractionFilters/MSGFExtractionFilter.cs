@@ -56,8 +56,8 @@ namespace MageExtExtractionFilters
             OutputColumnList = "Job|+|text, MSGF_SpecProb|+|double, *";
             base.HandleColumnDef(sender, args);
 
-            // List<MageColumnDef> cd = (OutputColumnDefs != null) ? OutputColumnDefs : InputColumnDefs;
-            // OnColumnDefAvailable(new MageColumnEventArgs(cd.ToArray()));
+            // List<MageColumnDef> columnDefs = (OutputColumnDefs != null) ? OutputColumnDefs : InputColumnDefs;
+            // OnColumnDefAvailable(new MageColumnEventArgs(columnDefs.ToArray()));
             OnColumnDefAvailable(new MageColumnEventArgs(OutputColumnDefs.ToArray()));
 
             if (mMSGFMerger != null && !Abort)

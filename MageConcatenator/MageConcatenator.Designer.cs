@@ -67,7 +67,7 @@
             this.cmdAbout.TabIndex = 27;
             this.cmdAbout.Text = "About";
             this.cmdAbout.UseVisualStyleBackColor = true;
-            this.cmdAbout.Click += new System.EventHandler(this.cmdAbout_Click);
+            this.cmdAbout.Click += new System.EventHandler(this.About_Click);
             //
             // chkAddFileName
             //

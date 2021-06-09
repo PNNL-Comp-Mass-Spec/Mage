@@ -47,8 +47,8 @@
             this.lvQueryResults.TabIndex = 3;
             this.lvQueryResults.UseCompatibleStateImageBehavior = false;
             this.lvQueryResults.View = System.Windows.Forms.View.Details;
-            this.lvQueryResults.SelectedIndexChanged += new System.EventHandler(this.lvQueryResults_SelectedIndexChanged);
-            this.lvQueryResults.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lvQueryResults_ColumnClicked);
+            this.lvQueryResults.SelectedIndexChanged += new System.EventHandler(this.ListViewQueryResults_SelectedIndexChanged);
+            this.lvQueryResults.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ListViewQueryResults_ColumnClicked);
             // 
             // panel1
             // 

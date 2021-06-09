@@ -78,7 +78,7 @@ namespace MageExtExtractionFilters
             {
                 if (InputColumnPos.Keys.Contains(mf.NameColumn))
                 {
-                    mf.ColumnIndx = InputColumnPos[mf.NameColumn];
+                    mf.ColumnIndex = InputColumnPos[mf.NameColumn];
                 }
                 mMergeFiles[mf.NameColumn] = mf;
             }
@@ -129,9 +129,9 @@ namespace MageExtExtractionFilters
 
                         foreach (var mf in mMergeFiles.Values)
                         {
-                            if (mf.ColumnIndx >= 0)
+                            if (mf.ColumnIndex >= 0)
                             {
-                                var mergeFileName = args.Fields[mf.ColumnIndx];
+                                var mergeFileName = args.Fields[mf.ColumnIndex];
                                 filesToDownload.Add(mergeFileName);
                             }
                         }
@@ -182,7 +182,7 @@ namespace MageExtExtractionFilters
                 // Add actual file name to merge file list
                 foreach (var mf in mMergeFiles.Values)
                 {
-                    mf.MergeFileName = (mf.ColumnIndx < 0) ? "" : args.Fields[mf.ColumnIndx];
+                    mf.MergeFileName = mf.ColumnIndex < 0 ? "" : args.Fields[mf.ColumnIndex];
 
                     var myEMSLFileID = DatasetInfoBase.ExtractMyEMSLFileID(mf.MergeFileName, out var filePathClean);
 

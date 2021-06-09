@@ -115,7 +115,7 @@ namespace MageFileProcessor
             new GridViewDisplayActions(FileListDisplayControl);
 
             // Connect click events
-            lblAboutLink.LinkClicked += lblAboutLink_LinkClicked;
+            lblAboutLink.LinkClicked += AboutLink_LinkClicked;
 
             // Connect the pipeline queue to message handlers
             ConnectPipelineQueueToStatusDisplay(mPipelineQueue);
@@ -939,7 +939,7 @@ namespace MageFileProcessor
             // Console.WriteLine("PipelineQueueCompletion: " + args.Message);
         }
 
-        private void lblAboutLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void AboutLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             try
             {

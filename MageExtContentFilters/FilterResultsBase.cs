@@ -65,7 +65,7 @@ namespace MageExtContentFilters
         protected Regex m_CleavageStateRegex;
 
         protected Regex m_TerminusStateRegex;
-        public enum eCleavageStates
+        public enum CleavageStateTypes
         {
             Non = 0,
             Partial = 1,
@@ -97,8 +97,8 @@ namespace MageExtContentFilters
         /// <summary>
         /// Creates a tab-delimited text file with details of the filter groups for the filter set associated with this class
         /// </summary>
-        /// <param name="sOutputFilePath"></param>
-        public void WriteCriteria(string sOutputFilePath)
+        /// <param name="outputFilePath"></param>
+        public void WriteCriteria(string outputFilePath)
         {
             using (var swOutfile = new StreamWriter(new FileStream(sOutputFilePath, FileMode.Create, FileAccess.Write, FileShare.Read)))
             {
@@ -205,18 +205,19 @@ namespace MageExtContentFilters
 
         protected ArrayList GetGroupList(DataTable filterCriteria)
         {
-            var prevGroupID = 0;
+            var previousGroupID = 0;
 
             var tmpList = new ArrayList();
 
-            foreach (DataRow dr in filterCriteria.Rows)
+            foreach (DataRow row in filterCriteria.Rows)
             {
-                var currGroupID = Convert.ToInt32(dr["Filter_Criteria_Group_ID"]);
-                if (currGroupID != prevGroupID)
+                var currentGroupID = Convert.ToInt32(row["Filter_Criteria_Group_ID"]);
+                if (currentGroupID != previousGroupID)
                 {
-                    tmpList.Add(currGroupID);
+                    tmpList.Add(currentGroupID);
                 }
-                prevGroupID = currGroupID;
+
+                previousGroupID = currentGroupID;
             }
 
             return tmpList;
@@ -307,22 +308,21 @@ namespace MageExtContentFilters
         {
             var matches = m_CleanSeqRegex.Matches(dirtySequence);
 
-            var intermedSeq = new StringBuilder();
+            // This will hold all of the letters and periods in dirtySequence
+            var cleanSequence = new StringBuilder();
 
             foreach (Match m in matches)
             {
-                intermedSeq.Append(m.Value);
+                cleanSequence.Append(m.Value);
             }
 
-            if (Regex.IsMatch(intermedSeq.ToString(), @"\S\.\S+\.\S"))
+            if (Regex.IsMatch(cleanSequence.ToString(), @"\S\.\S+\.\S"))
             {
-                var tmpSeq = Regex.Split(intermedSeq.ToString(), @"\.");
+                var tmpSeq = Regex.Split(cleanSequence.ToString(), @"\.");
                 return tmpSeq[1].Length;
             }
-            else
-            {
-                return intermedSeq.Length;
-            }
+
+            return cleanSequence.Length;
         }
     }
 }

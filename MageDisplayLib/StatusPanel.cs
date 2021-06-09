@@ -152,10 +152,10 @@ namespace MageDisplayLib
         /// Append a new warning message to mWarningMessages
         /// Update the caption on the Warning Messages button
         /// </summary>
-        /// <param name="sMessage"></param>
-        private void AddWarningMessage(string sMessage)
+        /// <param name="message"></param>
+        private void AddWarningMessage(string message)
         {
-            mWarningMessages.Add(sMessage);
+            mWarningMessages.Add(message);
 
             if (mWarningMessages.Count == 1)
             {

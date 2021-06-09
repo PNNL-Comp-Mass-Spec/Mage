@@ -75,7 +75,7 @@ namespace MageDisplayLib
         /// <summary>
         /// SQL data types
         /// </summary>
-        protected enum eSqlDataColType
+        protected enum SqlDataTypes
         {
             /// <summary>
             /// Text
@@ -102,7 +102,7 @@ namespace MageDisplayLib
         /// <summary>
         /// Generic data type of each column
         /// </summary>
-        private readonly List<eSqlDataColType> mListViewColTypes = new();
+        private readonly List<SqlDataTypes> mListViewColTypes = new();
 
         /// <summary>
         /// Convenience array listing column names
@@ -231,7 +231,7 @@ namespace MageDisplayLib
         {
             InitializeComponent();
             SetupContextMenus(lvQueryResults);
-            mCellEditor = new ListViewCellEditor(lvQueryResults);
+            CellEditor = new ListViewCellEditor(lvQueryResults);
         }
 
         #endregion
@@ -312,13 +312,13 @@ namespace MageDisplayLib
         /// <summary>
         /// Return an LVAccumulator object that can supply input rows to this object
         /// </summary>
-        /// <param name="blksz"></param>
+        /// <param name="blockSize"></param>
         /// <returns></returns>
-        public LVAccumulator MakeAccumulator(int blksz)
+        public LVAccumulator MakeAccumulator(int blockSize)
         {
             Accumulator = new LVAccumulator
             {
-                ItemBlockSize = blksz
+                ItemBlockSize = blockSize
             };
             Accumulator.OnItemBlockRetrieved += HandleLVItemBlock;
             Accumulator.OnColumnBlockRetrieved += HandleColumnBlock;
@@ -388,7 +388,7 @@ namespace MageDisplayLib
                     case "int":
                     case "bigint":
                         // Integer number
-                        mListViewColTypes.Add(eSqlDataColType.numInt);
+                        mListViewColTypes.Add(SqlDataTypes.numInt);
                         break;
 
                     case "decimal":
@@ -398,7 +398,7 @@ namespace MageDisplayLib
                     case "smallmoney":
                     case "money":
                         // Non-integer number
-                        mListViewColTypes.Add(eSqlDataColType.numFloat);
+                        mListViewColTypes.Add(SqlDataTypes.numFloat);
                         break;
 
                     case "char":
@@ -410,7 +410,7 @@ namespace MageDisplayLib
                     case "uniqueidentifier":
                     case "xml":
                         // Text-based data type
-                        mListViewColTypes.Add(eSqlDataColType.text);
+                        mListViewColTypes.Add(SqlDataTypes.text);
                         break;
 
                     case "date":
@@ -420,13 +420,13 @@ namespace MageDisplayLib
                     case "time":
                     case "datetimeoffset":
                         // Date data type
-                        mListViewColTypes.Add(eSqlDataColType.date);
+                        mListViewColTypes.Add(SqlDataTypes.date);
                         break;
 
                     case "binary":
                     case "varbinary":
                     case "image":
-                        mListViewColTypes.Add(eSqlDataColType.binary);
+                        mListViewColTypes.Add(SqlDataTypes.binary);
                         break;
 
                     default:
@@ -434,12 +434,12 @@ namespace MageDisplayLib
                         // If the data type contains "date" or "time", then treat as datetime
                         if (colType.Contains("date") || colType.Contains("time"))
                         {
-                            mListViewColTypes.Add(eSqlDataColType.date);
+                            mListViewColTypes.Add(SqlDataTypes.date);
                         }
                         else
                         {
                             // Assume text
-                            mListViewColTypes.Add(eSqlDataColType.text);
+                            mListViewColTypes.Add(SqlDataTypes.text);
                         }
 
                         break;
@@ -495,7 +495,7 @@ namespace MageDisplayLib
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void lvQueryResults_ColumnClicked(object sender, ColumnClickEventArgs e)
+        private void ListViewQueryResults_ColumnClicked(object sender, ColumnClickEventArgs e)
         {
             var intColIndex = e.Column;
 
@@ -515,11 +515,11 @@ namespace MageDisplayLib
 
             switch (mListViewColTypes[intColIndex])
             {
-                case eSqlDataColType.numInt:
-                case eSqlDataColType.numFloat:
+                case SqlDataTypes.numInt:
+                case SqlDataTypes.numFloat:
                     sortNumeric = true;
                     break;
-                case eSqlDataColType.date:
+                case SqlDataTypes.date:
                     sortDate = true;
                     break;
             }
@@ -548,7 +548,7 @@ namespace MageDisplayLib
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void lvQueryResults_SelectedIndexChanged(object sender, EventArgs e)
+        private void ListViewQueryResults_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateNoticeFieldWithRowInfo();
             SelectionChanged?.Invoke(this, EventArgs.Empty);
@@ -618,25 +618,25 @@ namespace MageDisplayLib
         /// Mage pipeline can use to populate this control
         /// </summary>
         /// <param name="title"></param>
-        /// <param name="blkSz"></param>
+        /// <param name="blockSize"></param>
         /// <returns></returns>
-        public ISinkModule MakeSink(string title, int blkSz)
+        public ISinkModule MakeSink(string title, int blockSize)
         {
             PageTitle = title;
-            return MakeSink(blkSz);
+            return MakeSink(blockSize);
         }
 
         /// <summary>
         /// Return an ISinkModule reference that
         /// Mage pipeline can use to populate this control
         /// </summary>
-        /// <param name="blkSz"></param>
+        /// <param name="blockSize"></param>
         /// <returns></returns>
-        public ISinkModule MakeSink(int blkSz)
+        public ISinkModule MakeSink(int blockSize)
         {
             Clear();
             var lva = MakeAccumulator();
-            lva.ItemBlockSize = blkSz;
+            lva.ItemBlockSize = blockSize;
             return lva;
         }
 

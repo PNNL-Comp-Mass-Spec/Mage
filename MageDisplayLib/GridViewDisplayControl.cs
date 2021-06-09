@@ -419,7 +419,7 @@ namespace MageDisplayLib
         // See file GridViewDisplayControlActions.cs
 
         // Toggles support for Shift+Click selection mode in gvQueryResults
-        private void chkShiftClickSelect_CheckedChanged(object sender, EventArgs e)
+        private void ShiftClickSelect_CheckedChanged(object sender, EventArgs e)
         {
             gvQueryResults.ShiftClickSelect = chkShiftClickMode.Checked;
         }
@@ -429,7 +429,7 @@ namespace MageDisplayLib
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void gvQueryResults_SelectionChanged(object sender, EventArgs e)
+        private void GridViewQueryResults_SelectionChanged(object sender, EventArgs e)
         {
             UpdateNoticeFieldWithRowInfo();
             SelectionChanged?.Invoke(this, new EventArgs());
