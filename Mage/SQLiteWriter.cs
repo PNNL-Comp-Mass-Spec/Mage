@@ -367,6 +367,8 @@ namespace Mage
             }
         }
 
+        [Obsolete("Unused")]
+        // ReSharper disable once UnusedMember.Local
         private void ExecuteSQLInDatabase(string query)
         {
             AssureDBExists();
@@ -574,6 +576,8 @@ namespace Mage
         /// <param name="val"></param>
         /// <param name="columnSchema"></param>
         /// <returns></returns>
+        [Obsolete("Unused")]
+        // ReSharper disable once UnusedMember.Local
         private static object CastValueForColumn(object val, ColumnSchema columnSchema)
         {
             if (val is DBNull)

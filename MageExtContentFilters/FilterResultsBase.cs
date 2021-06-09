@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Data;
 using System.IO;
 using System.Text;
@@ -207,6 +206,8 @@ namespace MageExtContentFilters
             return false;
         }
 
+        [Obsolete("Unused")]
+        // ReSharper disable once UnusedMember.Global
         protected ArrayList GetGroupList(DataTable filterCriteria)
         {
             var previousGroupID = 0;

@@ -1,4 +1,8 @@
-﻿namespace MageDisplayLib {
+﻿using System;
+
+namespace MageDisplayLib
+{
+    [Obsolete("Incomplete and unused")]
     partial class SelectionListPanel {
         /// <summary>
         /// Required designer variable.

@@ -60,6 +60,8 @@ namespace MageDisplayLib
         /// currently in the context menu
         /// </summary>
         /// <param name="items"></param>
+        [Obsolete("Unused")]
+        // ReSharper disable once UnusedMember.Global
         public void InsertContextMenuItems(ToolStripItem[] items)
         {
             var currentMenuItems = new List<ToolStripItem>();
@@ -274,6 +276,8 @@ namespace MageDisplayLib
             CopySelectedRows();
         }
 
+        [Obsolete("Unused")]
+        // ReSharper disable once UnusedMember.Local
         private void HandleListCopyColumn(object sender, EventArgs e)
         {
             CopyColumnList("Directory", null);

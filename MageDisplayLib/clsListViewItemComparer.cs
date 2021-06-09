@@ -4,6 +4,7 @@ using System.Windows.Forms;
 
 namespace MageDisplayLib
 {
+    [Obsolete("Only used by obsolete classes")]
     internal class ListViewItemComparer : IComparer
     {
         private readonly int m_SortCol;

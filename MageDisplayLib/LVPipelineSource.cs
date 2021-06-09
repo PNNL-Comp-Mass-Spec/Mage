@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using Mage;
 
@@ -14,6 +15,7 @@ namespace MageDisplayLib
     /// available via Mage pipeline data source module connections
     /// </para>
     /// </summary>
+    [Obsolete("Unused")]
     public class LVPipelineSource : BaseModule
     {
         // Ignore Spelling: Mage

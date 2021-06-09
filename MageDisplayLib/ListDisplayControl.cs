@@ -46,6 +46,7 @@ namespace MageDisplayLib
     /// running in the UI thread.
     /// </para>
     /// </summary>
+    [Obsolete("Obsolete")]
     public partial class ListDisplayControl : UserControl
     {
         // Ignore Spelling: desc, Mage, subitems
