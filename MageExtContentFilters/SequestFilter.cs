@@ -70,7 +70,7 @@ namespace MageExtContentFilters
         /// <summary>
         /// This is called for each row that is being subjected to filtering.
         /// The fields array contains value of each column for the row.
-        /// The position index for each column has been precalculted by
+        /// The position index for each column has been pre-calculated by
         /// PrecalculateFieldIndexes() at startup.
         /// </summary>
         /// <param name="fields">Row, as array of fields</param>

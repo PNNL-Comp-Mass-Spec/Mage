@@ -7,16 +7,21 @@ using MyEMSLReader;
 namespace Mage
 {
     /// <summary>
+    /// <para>
     /// This module copies one or more input files to an output directory
-    ///
+    /// </para>
+    /// <para>
     /// Its FileContentProcessor base class provides the basic functionality
-    ///
+    /// </para>
+    /// <para>
     /// The OutputMode parameter tells this module whether or not to append a prefix to
     /// each output file name to avoid name collisions when input files can come from
     /// more than one input directory
-    ///
+    /// </para>
+    /// <para>
     /// If IDColumnName parameter is set, it specifies a column in the standard input data
     /// whose value should be used in the prefix.  Otherwise the prefix is generated.
+    /// </para>
     /// </summary>
     public class FileCopy : FileContentProcessor
     {

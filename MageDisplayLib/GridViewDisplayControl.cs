@@ -48,7 +48,7 @@ namespace MageDisplayLib
         #region Member Variables
 
         /// <summary>
-        /// Stash the Mage column defs we received on STI
+        /// Stash the Mage column definitions we received on STI
         /// in case we need to output them later
         /// </summary>
         private Collection<MageColumnDef> mColumnDefs;
@@ -364,7 +364,7 @@ namespace MageDisplayLib
 
         #endregion
 
-        #region List Maintenence
+        #region List Maintenance
 
         /// <summary>
         /// Empty the current display contents
@@ -643,7 +643,7 @@ namespace MageDisplayLib
             public bool LayoutSuspended { get; private set; }
 
             /// <summary>
-            /// Clears the current selection by unselecting all selected cells.
+            /// Clears the current selection by deselecting all selected cells.
             /// </summary>
             public new void ClearSelection()
             {
@@ -822,13 +822,13 @@ namespace MageDisplayLib
 
                         if (myHashTable.ContainsKey(s))
                         {
-                            // If the row is in the hashtable, remove it
+                            // If the row is in the hash table, remove it
                             myHashTable.Remove(s);
                             Rows[e.RowIndex].Selected = false;
                         }
                         else
                         {
-                            // Otherwise, insert it into the hashtable
+                            // Otherwise, insert it into the hash table
                             Rows[e.RowIndex].Selected = false;
 
                             myHashTable.Add(s, Rows[e.RowIndex]);

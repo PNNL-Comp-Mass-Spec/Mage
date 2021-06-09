@@ -21,7 +21,7 @@ namespace MageExtExtractionFilters
 
         #endregion
 
-        #region static properties and initializtion
+        #region static properties and initialization
 
         static ResultType()
         {

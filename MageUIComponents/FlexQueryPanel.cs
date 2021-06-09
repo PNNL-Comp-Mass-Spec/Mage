@@ -17,7 +17,7 @@ namespace MageUIComponents
 
         #endregion
 
-        #region Constructiors
+        #region Constructor
 
         public FlexQueryPanel()
         {
@@ -90,7 +90,7 @@ namespace MageUIComponents
 
         #endregion
 
-        #region Initialize Query Item Picklists
+        #region Initialize Query Item Pick lists
 
         public void SetComparisionPickList(string[] items)
         {

@@ -80,9 +80,8 @@ namespace MageMetadataProcessor
         #region Command Processing
 
         /// <summary>
-        /// Execute a command by building and running
-        /// the appropriate pipeline (or cancelling
-        /// the current pipeline activity)
+        /// Execute a command by building and running the appropriate pipeline
+        /// (alternatively, cancel a running pipeline)
         /// </summary>
         /// <param name="sender">(ignored)</param>
         /// <param name="command">Command to execute</param>
@@ -111,7 +110,7 @@ namespace MageMetadataProcessor
         }
 
         /// <summary>
-        /// Construnct and run a Mage pipeline for the given command
+        /// Construct and run a Mage pipeline for the given command
         /// </summary>
         /// <param name="command"></param>
         private void BuildAndRunPipeline(MageCommandEventArgs command)

@@ -149,10 +149,10 @@ namespace MageExtExtractionFilters
             }
         }
 
-        #region Utiltity Functions
+        #region Utility Functions
 
         /// <summary>
-        /// If the output is set to a concatentated output file, and it exists,
+        /// If the output is set to a concatenated output file, and it exists,
         /// give user options.
         /// </summary>
         /// <returns></returns>

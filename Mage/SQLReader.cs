@@ -138,7 +138,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Constructor that initialize values from xml specs and args
+        /// Constructor that initialize values from xml specs and arguments
         /// </summary>
         /// <param name="xml">XML template with specifications for the query</param>
         /// <param name="args">Key/Value parameter that will be mixed into query</param>
@@ -235,7 +235,7 @@ namespace Mage
 
             if (!string.IsNullOrEmpty(builder.SprocName))
             {
-                // If query is via sproc call, set sproc arguments
+                // If query is via stored procedure call, set stored procedure arguments
                 SprocName = builder.SprocName;
                 foreach (var param in builder.SprocParameters)
                 {
@@ -816,7 +816,6 @@ namespace Mage
                 var paramNames = new SortedSet<string>();
 
                 // Loop through all the arguments and add a parameter for each one
-                // the the SqlCommand being built
                 foreach (var resultRow in queryResults)
                 {
                     var parameterName = resultRow[columnIndexMap["parameter_name"]];
@@ -894,7 +893,7 @@ namespace Mage
 
 // Geometric types:        box, circle, line, lseg, path, point, polygon
 // Network Address Types:  inet, cidr, macaddr, macaddr8
-// Text Search Types:      tsvector, tsquery, tsquery
+// Text Search Types:      tsvector, tsquery
 // Additional Types:       array, hstore, json, jsonb, range, uuid, xml
 
 // ReSharper restore CommentTypo

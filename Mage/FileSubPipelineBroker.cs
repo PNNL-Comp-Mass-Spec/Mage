@@ -14,33 +14,42 @@ namespace Mage
     public delegate ProcessingPipeline FileProcessingPipelineGenerator(string inputFilePath, string outputFilePath, Dictionary<string, string> context);
 
     /// <summary>
+    /// <para>
     /// Module that creates and runs a Mage pipeline for one or more input files
-    ///
+    /// </para>
+    /// <para>
     /// It expects to receive path information for files via its standard tabular input
     /// (its FileContentProcessor base class provides the basic functionality)
-    ///
+    /// </para>
+    /// <para>
     /// This module builds a filtering sub-pipeline to process each file
-    /// and runs that in the the same thread the module is currently running in
-    ///
+    /// and runs that in the same thread the module is currently running in
+    /// </para>
+    /// <para>
     /// There are two internally-defined file processing sub-pipelines, that have a delimited file
     /// reader module that reads rows from a file and passed them to a filter module, which passes
     /// its rows to a writer module.
-    ///
+    /// </para>
+    /// <para>
     /// One of the internally-defined sub-pipelines uses a delimited file writer module,
     /// and the other uses a SQLite writer.
-    ///
+    /// </para>
+    /// <para>
     /// To use either of these internally-defined sub-pipelines, the client need only
     /// supply the name of the filter module to be used (by setting the FileFilterModuleName property)
     /// if the DatabaseName property is set, the SQLite database sub-pipeline will be used
     /// otherwise the delimited file writer sub-pipeline is used
-    ///
+    /// </para>
+    /// <para>
     /// If the DatabaseName property is set, and the TableName property is set, all results go into
     /// that table.  If the TableName property is blank, results for each source file go into
     /// a separate table.  Table names will be equivalent to what the output file name would have been
     /// for the source file, minus the file extension.
-    ///
+    /// </para>
+    /// <para>
     /// The sub-pipeline can also be supplied by the client by setting the FileProcessingPipelineGenerator
     /// delegate to call the client's pipeline generator function
+    /// </para>
     /// </summary>
     public class FileSubPipelineBroker : FileContentProcessor
     {

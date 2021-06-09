@@ -25,7 +25,13 @@ namespace MageDisplayLib
             m_SortNumeric = false;
             m_SortDate = false;
         }
-
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="column"></param>
+        /// <param name="sortAscending"></param>
+        /// <param name="sortNumeric"></param>
+        /// <param name="sortDate"></param>
         public ListViewItemComparer(int column, bool sortAscending, bool sortNumeric, bool sortDate)
         {
             m_SortCol = column;

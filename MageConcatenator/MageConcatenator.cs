@@ -17,7 +17,7 @@ namespace MageConcatenator
 
         #region Member Variables
 
-        public const string PROGRAM_DATE = "June 7, 2021";
+        public const string PROGRAM_DATE = "June 8, 2021";
 
         /// <summary>
         /// Pipeline queue for running the multiple pipelines that make up the workflows for this module
@@ -133,9 +133,8 @@ namespace MageConcatenator
         }
 
         /// <summary>
-        /// Execute a command by building and running
-        /// the appropriate pipeline (or cancelling
-        /// the current pipeline activity)
+        /// Execute a command by building and running the appropriate pipeline
+        /// (alternatively, cancel a running pipeline)
         /// </summary>
         /// <param name="sender">(ignored)</param>
         /// <param name="command">Command to execute</param>
@@ -260,7 +259,7 @@ namespace MageConcatenator
 
         #endregion
 
-        #region File Grocessing Routines
+        #region File Processing Routines
 
         private void CombineFiles(bool processAllFiles)
         {

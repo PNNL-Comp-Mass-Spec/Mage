@@ -83,7 +83,8 @@ namespace Mage
             {
                 // Code to dispose the managed resources of the class
             }
-            // Code to dispose the un-managed resources of the class
+
+            // Code to dispose the unmanaged resources of the class
             mOutFile?.Dispose();
 
             // isDisposed = true;

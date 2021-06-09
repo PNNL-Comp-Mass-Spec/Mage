@@ -9,7 +9,7 @@ namespace MageConcatenator
     {
         // Ignore Spelling: Cancelled
 
-        #region Constants and Classwide Variables
+        #region Constants and Class-wide Variables
 
         public const int MAX_ROWS_TO_TRACK = 100000;
 

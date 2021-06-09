@@ -284,7 +284,7 @@ namespace MageFilePackager
 
         #endregion
 
-        #region Make Manifiest Actions
+        #region Make Manifest Actions
 
         /// <summary>
         /// Create XML manifest for file package contents

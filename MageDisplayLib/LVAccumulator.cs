@@ -8,13 +8,16 @@ using Mage;
 namespace MageDisplayLib
 {
     /// <summary>
+    /// <para>
     /// Provides column definition and data row event handlers
     /// that can be wired into a Mage pipeline to receive data.
-    ///
+    /// </para>
+    /// <para>
     /// It converts data rows into ListView item lists suitable
     /// for populating a ListDisplayControl and accumulates them
     /// into a buffer.  When the buffer is full, it is emptied
     /// into the associated ListDisplayControl.
+    /// </para>
     /// </summary>
     public class LVAccumulator : ISinkModule
     {
@@ -64,7 +67,7 @@ namespace MageDisplayLib
         #region Constructors
 
         /// <summary>
-        /// Number of items to accumulate before firing an upate event
+        /// Number of items to accumulate before firing an update event
         /// </summary>
         public LVAccumulator()
         {
@@ -89,12 +92,14 @@ namespace MageDisplayLib
         #region Handlers for ISinkModule
 
         /// <summary>
+        /// <para>
         /// Receive data row, convert to ListView item, and add to accumulator.
-        ///
+        /// </para>
+        /// <para>
         /// This event handler receives row events from upstream module, one event per row.
         /// on the module's standard tabular input, one event per row
-        /// and a null vals object signalling the end of row events.
-        ///
+        /// and a null value object signaling the end of row events.
+        /// </para>
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -132,13 +137,16 @@ namespace MageDisplayLib
         }
 
         /// <summary>
+        /// <para>
         /// Build up list of ColumnHeader for list view.
-        ///
+        /// </para>
+        /// <para>
         /// This event handler receives column definition events
         /// on the module's standard tabular input, one event per column
-        /// and a null columnDef object signalling the end of column definition events.
+        /// and a null columnDef object signaling the end of column definition events.
         /// Subclasses should override this for any specialized column def handling
         /// that they need, but should be sure to also call the base class function.
+        /// </para>
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -194,7 +202,7 @@ namespace MageDisplayLib
 
         /// <summary>
         /// Construct new ItemBlockEventArgs object
-        /// with informatation in given collection of ListViewItems
+        /// with information in given collection of ListViewItems
         /// </summary>
         /// <param name="itemBlock"></param>
         public ItemBlockEventArgs(Collection<ListViewItem> itemBlock)

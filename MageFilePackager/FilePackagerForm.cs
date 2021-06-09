@@ -56,7 +56,7 @@ namespace MageFilePackager
             InitializeComponent();
 
             const bool isBetaVersion = true;
-            SetFormTitle("2021-06-07", isBetaVersion);
+            SetFormTitle("2021-06-08", isBetaVersion);
 
             SetTags();
 
@@ -193,9 +193,8 @@ namespace MageFilePackager
         #region Command Processing
 
         /// <summary>
-        /// Execute a command by building and running
-        /// the appropriate pipeline (or cancelling
-        /// the current pipeline activity)
+        /// Execute a command by building and running the appropriate pipeline
+        /// (alternatively, cancel a running pipeline)
         /// </summary>
         /// <param name="sender">(ignored)</param>
         /// <param name="command">Command to execute</param>

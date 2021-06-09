@@ -29,9 +29,9 @@
             this.listDisplayControl1 = new MageDisplayLib.ListDisplayControl();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // panel1
-            // 
+            //
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.listDisplayControl1);
             this.panel1.Controls.Add(this.EntityLabelCtl);
@@ -41,26 +41,26 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(610, 510);
             this.panel1.TabIndex = 0;
-            // 
+            //
             // EntityLabelCtl
-            // 
+            //
             this.EntityLabelCtl.AutoSize = true;
             this.EntityLabelCtl.Location = new System.Drawing.Point(9, 11);
             this.EntityLabelCtl.Name = "EntityLabelCtl";
             this.EntityLabelCtl.Size = new System.Drawing.Size(47, 13);
             this.EntityLabelCtl.TabIndex = 4;
             this.EntityLabelCtl.Text = "Entity ID";
-            // 
+            //
             // ItemIDCtl
-            // 
+            //
             this.ItemIDCtl.Location = new System.Drawing.Point(106, 8);
             this.ItemIDCtl.Name = "ItemIDCtl";
             this.ItemIDCtl.Size = new System.Drawing.Size(126, 20);
             this.ItemIDCtl.TabIndex = 3;
             this.ItemIDCtl.Text = "100";
-            // 
+            //
             // listDisplayControl1
-            // 
+            //
             this.listDisplayControl1.Accumulator = null;
             this.listDisplayControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
@@ -73,9 +73,9 @@
             this.listDisplayControl1.Size = new System.Drawing.Size(600, 460);
             this.listDisplayControl1.TabIndex = 6;
             this.listDisplayControl1.SelectionChanged += new System.EventHandler<System.EventArgs>(this.listDisplayControl1_SelectionChanged);
-            // 
+            //
             // SelectionListPanel
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel1);

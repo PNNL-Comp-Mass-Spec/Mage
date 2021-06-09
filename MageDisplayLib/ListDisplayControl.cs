@@ -35,7 +35,7 @@ namespace MageDisplayLib
     /// data rows to a Mage pipeline.
     /// </para>
     /// <para>
-    /// An external module (usually an LVAccumulator objet) provides
+    /// An external module (usually an LVAccumulator object) provides
     /// a block of column definitions and blocks of row items for the
     /// List view at the heart of this user control.
     /// These blocks are delivered by the external module via events
@@ -153,7 +153,7 @@ namespace MageDisplayLib
         public Collection<MageColumnDef> ColumnDefs => new(Accumulator.ColumnDefs);
 
         /// <summary>
-        /// Get collection of columnn names
+        /// Get collection of column names
         /// </summary>
         public Collection<string> ColumnNames
         {
@@ -169,7 +169,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// Get the current cell editor for the ListView of this object
+        /// Cell editor for ListView for this object
         /// </summary>
         public ListViewCellEditor CellEditor => mCellEditor;
 
@@ -236,7 +236,7 @@ namespace MageDisplayLib
 
         #endregion
 
-        #region List Maintenence
+        #region List Maintenance
 
         /// <summary>
         /// Remove the currently selected items from the display list
@@ -491,7 +491,7 @@ namespace MageDisplayLib
 
         /// <summary>
         /// Handler that receives user click on a column header
-        /// and then launches a sort operation on that colmun
+        /// and then launches a sort operation on that column
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -656,7 +656,7 @@ namespace MageDisplayLib
             var selIdx = lv.SelectedItems[0].Index;
             if (moveUp)
             {
-                // Ignore moveup of row(0)
+                // Ignore move up of row(0)
                 if (selIdx == 0)
                     return;
 
@@ -677,7 +677,7 @@ namespace MageDisplayLib
             }
             else
             {
-                // Ignore movedown of last item
+                // Ignore move down of last item
                 if (selIdx == lv.Items.Count - 1)
                     return;
 

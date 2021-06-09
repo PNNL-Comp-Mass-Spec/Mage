@@ -128,12 +128,15 @@ namespace Mage
         }
 
         /// <summary>
+        /// <para>
         /// Handler for Mage standard tabular column definition
         /// (override of base class)
-        ///
+        /// </para>
+        /// <para>
         /// In addition to base module column definition
         /// forms column description suitable for creating the SQL
         /// table definition and data insertion commands
+        /// </para>
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -150,10 +153,13 @@ namespace Mage
         }
 
         /// <summary>
+        /// <para>
         /// Handler for Mage standard tabular input data rows
         /// (override of base class)
-        ///
+        /// </para>
+        /// <para>
         /// Receive data row, add to accumulator, write to SQLite when buffer is full, or reader finishes
+        /// </para>
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -561,7 +567,12 @@ namespace Mage
             return sb.ToString();
         }
 
-        // Used in order to adjust the value received from SQL Server for the SQLite database.
+        /// <summary>
+        /// Can be used to adjust the value received from SQL Server for the SQLite database.
+        /// </summary>
+        /// <param name="val"></param>
+        /// <param name="columnSchema"></param>
+        /// <returns></returns>
         private static object CastValueForColumn(object val, ColumnSchema columnSchema)
         {
             if (val is DBNull)
@@ -763,7 +774,7 @@ namespace Mage
         /// Discards the Unicode prefix if it exists (e.g., N'SomeText') which is not supported in SQLite.
         /// </summary>
         /// <param name="value"></param>
-        /// <returns></returns>
+        /// <returns>String without leading N'</returns>
         private static string DiscardUnicodePrefix(string value)
         {
             var rx = new Regex(@"N\'([^\']*)\'");

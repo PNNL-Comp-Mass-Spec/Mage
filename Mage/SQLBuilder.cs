@@ -173,7 +173,7 @@ namespace Mage
 
         /// <summary>
         /// Construct new Mage SQLBuilder object
-        /// and build SQL query from given xml template and runtime args
+        /// and build SQL query from given xml template and runtime arguments
         /// </summary>
         /// <param name="xml">XML template with specifications for the query</param>
         /// <param name="args">Key/Value parameter that will be mixed into query</param>
@@ -189,7 +189,7 @@ namespace Mage
 
         /// <summary>
         /// Populate this object from query in xml specification
-        /// and any parameters passed in via args
+        /// and any parameters passed in via arguments
         /// </summary>
         /// <param name="xml">Specifications for query</param>
         /// <param name="args">Key/Value parameter that will be mixed into query</param>
@@ -271,7 +271,7 @@ namespace Mage
                 }
             }
 
-            // If this is straight query, apply args to predicate
+            // If this is straight query, apply arguments to predicate
             if (string.IsNullOrEmpty(SprocName) && args != null)
             {
                 foreach (var arg in args)
@@ -481,7 +481,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Build mssql T-SQL SQL query from component parts
+        /// Build SQL query from component parts
         /// </summary>
         /// <returns>SQL string</returns>
         public string BuildQuerySQL()
@@ -591,7 +591,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Generate sql predicate string from predicate specification object
+        /// Generate sQL predicate string from predicate specification object
         /// (column name, comparison operator, comparison value)
         /// </summary>
         /// <param name="predicate">List of predicate items</param>

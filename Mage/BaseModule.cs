@@ -277,7 +277,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Allows a string-valued property of this class (and its descendents)
+        /// Allows a string-valued property of this class (and its descendants)
         /// to be set by name
         /// </summary>
         /// <param name="key"></param>
@@ -296,7 +296,7 @@ namespace Mage
                 }
                 else
                 {
-                    var message = string.Format("Cannot convert value \"{0}\" to type bool for property \"{1}\"", val ?? "NULL", key);
+                    var message = string.Format("Cannot convert value \"{0}\" to type boolean for property \"{1}\"", val ?? "NULL", key);
                     ReportMageWarning(message);
                 }
             }

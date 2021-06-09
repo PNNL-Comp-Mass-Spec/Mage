@@ -26,7 +26,7 @@ namespace MageExtExtractionFilters
 
         #endregion
 
-        #region Propertires
+        #region Properties
 
         /// <summary>
         /// Set of parameters specifying the user's choices for
@@ -207,7 +207,7 @@ namespace MageExtExtractionFilters
                             FilePath = inputFilePath
                         };
 
-                        // Note that MSPathFinder jobs will not have an msgf file, but we
+                        // Note that MSPathFinder jobs will not have an MSGF file, but we
                         // still need to include the MSGFExtractionFilter in the pipeline so that
                         // the data gets filtered
                         ExtractionFilter msgfFilter = new MSGFExtractionFilter

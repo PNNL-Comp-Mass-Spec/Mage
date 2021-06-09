@@ -223,11 +223,14 @@ namespace MageDisplayLib
         }
 
         /// <summary>
+        /// <para>
         /// Save contents of list display to file chosen by user
-        ///
+        /// </para>
+        /// <para>
         /// Prompt user to choose file, create Mage pipeline to write it from
         /// the display list, and either send off as command to be executed by main program
         /// or execute directly
+        /// </para>
         /// </summary>
         /// <param name="sender">(ignored)</param>
         /// <param name="args">(ignored)</param>
@@ -259,11 +262,14 @@ namespace MageDisplayLib
         }
 
         /// <summary>
+        /// <para>
         /// Restore contents of display list from file chosen by user.
-        ///
+        /// </para>
+        /// <para>
         /// Prompt user to choose file, create Mage pipeline to read it into
         /// the display list, and either send off as command to be executed by main program
         /// or execute directly
+        /// </para>
         /// </summary>
         /// <param name="sender">(ignored)</param>
         /// <param name="args">(ignored)</param>
