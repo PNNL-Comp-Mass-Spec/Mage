@@ -470,6 +470,11 @@ namespace MageUIComponents
         /// <param name="colDefs"></param>
         private static void AddMissingInputColumns(IEnumerable<string[]> rows, Collection<MageColumnDef> colDefs)
         {
+            if (colDefs == null)
+            {
+                throw new ArgumentNullException(nameof(colDefs));
+            }
+
             // Make list of input column names
             var inputColList = new List<string>();
             foreach (var colDef in colDefs)
