@@ -145,19 +145,23 @@ namespace MageDisplayLib
         {
             foreach (var name in itemNames)
             {
-                if (!string.IsNullOrEmpty(name))
+                if (string.IsNullOrEmpty(name))
                 {
-                    foreach (var tsi in gvQueryResults.ContextMenuStrip.Items.Find(name, true))
+                    continue;
+                }
+
+                foreach (var tsi in gvQueryResults.ContextMenuStrip.Items.Find(name, true))
+                {
+                    if (alwaysActiveItems != null && alwaysActiveItems.Contains(name))
                     {
-                        if (lstAlwaysActive != null && lstAlwaysActive.Contains(name))
-                            tsi.Enabled = true;
+                        tsi.Enabled = true;
+                    }
+                    else
+                    {
+                        if (!gvQueryResults.AllowDelete && mDeleteMenuItems.Contains(name))
+                            tsi.Enabled = false;
                         else
-                        {
-                            if (!gvQueryResults.AllowDelete && mDeleteMenuItems.Contains(name))
-                                tsi.Enabled = false;
-                            else
-                                tsi.Enabled = active;
-                        }
+                            tsi.Enabled = active;
                     }
                 }
             }

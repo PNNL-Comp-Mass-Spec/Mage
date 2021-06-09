@@ -361,36 +361,35 @@ namespace Mage
 
                 m_RecentlyFoundMyEMSLFiles = m_MyEMSLDatasetInfoCache.FindFiles("*", subDir, datasetName, true);
 
-                if (m_RecentlyFoundMyEMSLFiles.Count > 0)
+                if (m_RecentlyFoundMyEMSLFiles.Count == 0)
                 {
-                    foreach (var archiveFile in m_RecentlyFoundMyEMSLFiles)
-                    {
-                        if (!archiveFile.IsDirectory)
-                            m_MyEMSLDatasetInfoCache.AddFileToDownloadQueue(archiveFile.FileInfo);
-                    }
-
-                    if (!string.IsNullOrEmpty(subDir))
-                    {
-                        if (target.Parent == null)
-                            throw new NullReferenceException("parent directory of " + target.FullName + " is null");
-
-                        // The downloader will append the subdirectory name, thus use target.Parent
-                        target = target.Parent;
-                    }
-
-                    var success = ProcessMyEMSLDownloadQueue(target.FullName, Downloader.DownloadLayout.SingleDataset);
-
-                    if (success) return;
-
-                    var message = "MyEMSL Download Error";
-                    if (m_MyEMSLDatasetInfoCache.ErrorMessages.Count > 0)
-                    {
-                        message += ": " + m_MyEMSLDatasetInfoCache.ErrorMessages.First();
-                    }
-
-                    UpdateStatus(this, new MageStatusEventArgs("FAILED->" + message, 1));
-                    ReportMageWarning(message);
+                    return;
                 }
+
+                foreach (var archiveFile in m_RecentlyFoundMyEMSLFiles)
+                {
+                    if (!archiveFile.IsDirectory)
+                        m_MyEMSLDatasetInfoCache.AddFileToDownloadQueue(archiveFile.FileInfo);
+                }
+
+                if (!string.IsNullOrEmpty(subDir))
+                {
+                    // The downloader will append the subdirectory name, thus use target.Parent
+                    target = target.Parent ?? throw new NullReferenceException("parent directory of " + target.FullName + " is null");
+                }
+
+                var success = ProcessMyEMSLDownloadQueue(target.FullName, Downloader.DownloadLayout.SingleDataset);
+
+                if (success) return;
+
+                var message = "MyEMSL Download Error";
+                if (m_MyEMSLDatasetInfoCache.ErrorMessages.Count > 0)
+                {
+                    message += ": " + m_MyEMSLDatasetInfoCache.ErrorMessages[0];
+                }
+
+                UpdateStatus(this, new MageStatusEventArgs("FAILED->" + message, 1));
+                ReportMageWarning(message);
             }
             catch (Exception e)
             {

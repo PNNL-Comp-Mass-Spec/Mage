@@ -287,17 +287,13 @@ namespace MageMetadataProcessor
                 TableName = tableName
             };
 
-            ProcessingPipeline pipeline;
             if (string.IsNullOrEmpty(outputColumnList))
             {
-                pipeline = ProcessingPipeline.Assemble("SaveListDisplayPipeline", sourceObject, writer);
+                return ProcessingPipeline.Assemble("SaveListDisplayPipeline", sourceObject, writer);
             }
-            else
-            {
-                var filter = new NullFilter {OutputColumnList = outputColumnList};
-                pipeline = ProcessingPipeline.Assemble("SaveListDisplayPipeline", sourceObject, filter, writer);
-            }
-            return pipeline;
+
+            var filter = new NullFilter {OutputColumnList = outputColumnList};
+            return ProcessingPipeline.Assemble("SaveListDisplayPipeline", sourceObject, filter, writer);
         }
 
         private ProcessingPipeline MakeRawQueryPipeline(ISinkModule display, string server, string database, string sql)

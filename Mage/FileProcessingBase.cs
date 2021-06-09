@@ -232,14 +232,10 @@ namespace Mage
 
             if (datasetColIndex >= 0 && datasetColIndex < bufferRow.Length)
             {
-                datasetName = bufferRow[datasetColIndex];
-            }
-            else
-            {
-                datasetName = DetermineDatasetName(directoryPath);
+                return bufferRow[datasetColIndex];
             }
 
-            return datasetName;
+            return DetermineDatasetName(directoryPath);
         }
 
         /// <summary>

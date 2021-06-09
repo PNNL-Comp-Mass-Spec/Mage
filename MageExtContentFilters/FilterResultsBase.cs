@@ -47,15 +47,13 @@ namespace MageExtContentFilters
 
             public override string ToString()
             {
-                if (Math.Abs(CriteriaValueInt - CriteriaValueFloat) < Single.Epsilon)
+                if (Math.Abs(CriteriaValueInt - CriteriaValueFloat) < float.Epsilon)
                     return CriteriaName + " " + CriteriaOperator + " " + CriteriaValueInt;
-                else
-                {
-                    if (Math.Abs(CriteriaValueFloat) < 0.002)
-                        return CriteriaName + " " + CriteriaOperator + " " + CriteriaValueFloat.ToString("0.00E+00");
-                    else
-                        return CriteriaName + " " + CriteriaOperator + " " + CriteriaValueFloat.ToString("0.000");
-                }
+
+                if (Math.Abs(CriteriaValueFloat) < 0.002)
+                    return CriteriaName + " " + CriteriaOperator + " " + CriteriaValueFloat.ToString("0.00E+00");
+
+                return CriteriaName + " " + CriteriaOperator + " " + CriteriaValueFloat.ToString("0.000");
             }
         }
 

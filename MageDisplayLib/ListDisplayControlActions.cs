@@ -386,15 +386,17 @@ namespace MageDisplayLib
         {
             foreach (var name in itemNames)
             {
-                if (!string.IsNullOrEmpty(name))
+                if (string.IsNullOrEmpty(name))
                 {
-                    foreach (var tsi in lvQueryResults.ContextMenuStrip.Items.Find(name, true))
-                    {
-                        if (lstAlwaysActive != null && lstAlwaysActive.Contains(name))
-                            tsi.Enabled = true;
-                        else
-                            tsi.Enabled = active;
-                    }
+                    continue;
+                }
+
+                foreach (var tsi in lvQueryResults.ContextMenuStrip.Items.Find(name, true))
+                {
+                    if (lstAlwaysActive != null && lstAlwaysActive.Contains(name))
+                        tsi.Enabled = true;
+                    else
+                        tsi.Enabled = active;
                 }
             }
         }
