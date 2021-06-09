@@ -79,8 +79,10 @@ namespace MageMetadataProcessor
         /// </summary>
         /// <param name="sender">(ignored)</param>
         /// <param name="command">Command to execute</param>
+        // ReSharper disable once UnusedMember.Global
         public void DoCommand(object sender, MageCommandEventArgs command)
         {
+            // ReSharper disable MergeIntoPattern
 
             // Cancel the currently running pipeline
             if (command.Action == "cancel_operation" && mCurrentPipeline != null && mCurrentPipeline.Running)
@@ -95,6 +97,8 @@ namespace MageMetadataProcessor
                 MessageBox.Show("Pipeline is already active");
                 return;
             }
+
+            // ReSharper restore MergeIntoPattern
 
             // Construct suitable Mage pipeline for the given command
             // and run that pipeline

@@ -138,6 +138,7 @@ namespace MageConcatenator
         /// </summary>
         /// <param name="sender">(ignored)</param>
         /// <param name="command">Command to execute</param>
+        // ReSharper disable once UnusedMember.Global
         public void DoCommand(object sender, MageCommandEventArgs command)
         {
             if (command.Action == "display_reloaded")

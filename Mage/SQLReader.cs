@@ -129,6 +129,7 @@ namespace Mage
         /// <param name="username">Database username; leave blank (or null) to use integrated authentication</param>
         /// <param name="password">Password if username is non-blank</param>
         [Obsolete("Use the Constructor that accepts server name, database name, etc.")]
+        // ReSharper disable once UnusedMember.Global
         public SQLReader(string username, string password)
         {
             Username = username;
@@ -171,6 +172,7 @@ namespace Mage
         /// <param name="sql">SQL Query</param>
         /// <remarks>The connection string will be auto-defined</remarks>
         [Obsolete("Use the Constructor that accepts a username and includes the isPostgres argument")]
+        // ReSharper disable once UnusedMember.Global
         public SQLReader(string server, string database, string sql)
         {
             Server = server;
@@ -206,6 +208,7 @@ namespace Mage
         /// </summary>
         /// <param name="connectionString">Database server connection string</param>
         /// <remarks>Use property SQLText to define the query to use</remarks>
+        // ReSharper disable once UnusedMember.Global
         public SQLReader(string connectionString)
         {
             ConnectionString = connectionString;

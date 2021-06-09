@@ -30,6 +30,7 @@ namespace MageUIComponents
         }
 
         [Obsolete("Use OutputDirectory")]
+        // ReSharper disable once UnusedMember.Global
         public string OutputFolder
         {
             get => OutputDirectory;

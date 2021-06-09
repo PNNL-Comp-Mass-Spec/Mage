@@ -89,6 +89,7 @@ namespace MageUIComponents
         }
 
         [Obsolete("Use IncludeFilesOrDirectories")]
+        // ReSharper disable once UnusedMember.Global
         public string IncludeFilesOrFolders
         {
             get => IncludeFilesOrDirectories;
@@ -102,6 +103,7 @@ namespace MageUIComponents
         }
 
         [Obsolete("Use SearchInSubdirectories")]
+        // ReSharper disable once UnusedMember.Global
         public string SearchInSubfolders
         {
             get => SearchInSubdirectories;
@@ -115,6 +117,7 @@ namespace MageUIComponents
         }
 
         [Obsolete("Use SubdirectorySearchName")]
+        // ReSharper disable once UnusedMember.Global
         public string SubfolderSearchName
         {
             get => SubdirectorySearchName;

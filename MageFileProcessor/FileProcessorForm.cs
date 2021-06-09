@@ -215,6 +215,7 @@ namespace MageFileProcessor
         /// </summary>
         /// <param name="sender">(ignored)</param>
         /// <param name="command">Command to execute</param>
+        // ReSharper disable once UnusedMember.Global
         public void DoCommand(object sender, MageCommandEventArgs command)
         {
             // Remember who sent us the command

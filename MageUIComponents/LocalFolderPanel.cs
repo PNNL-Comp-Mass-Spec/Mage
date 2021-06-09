@@ -60,6 +60,7 @@ namespace MageUIComponents
         public string MostRecentDirectory { get; set; }
 
         [Obsolete("Use MostRecentDirectory")]
+        // ReSharper disable once UnusedMember.Global
         public string MostRecentFolder
         {
             get => MostRecentDirectory;
@@ -73,6 +74,7 @@ namespace MageUIComponents
         }
 
         [Obsolete("Use SearchInSubdirectories")]
+        // ReSharper disable once UnusedMember.Global
         public string SearchInSubfolders
         {
             get => SearchInSubdirectories;
@@ -86,6 +88,7 @@ namespace MageUIComponents
         }
 
         [Obsolete("Use SubdirectorySearchName")]
+        // ReSharper disable once UnusedMember.Global
         public string SubfolderSearchName
         {
             get => SubdirectorySearchName;

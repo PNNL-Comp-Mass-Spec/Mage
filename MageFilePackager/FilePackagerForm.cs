@@ -198,11 +198,13 @@ namespace MageFilePackager
         /// </summary>
         /// <param name="sender">(ignored)</param>
         /// <param name="command">Command to execute</param>
+        // ReSharper disable once UnusedMember.Global
         public void DoCommand(object sender, MageCommandEventArgs command)
         {
             // Remember who sent us the command
             _mCurrentCmdSender = sender;
 
+            // ReSharper disable once ConvertIfStatementToSwitchStatement
             if (command.Action == "display_reloaded")
             {
                 _mCurrentCmd = command;

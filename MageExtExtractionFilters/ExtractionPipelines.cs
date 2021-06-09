@@ -15,6 +15,7 @@ namespace MageExtExtractionFilters
     {
         // Ignore Spelling: Mage, msgfdb, msgfplus, Sequest
 
+        // ReSharper disable once UnusedMember.Global
         public static PipelineQueue MakePipelineQueueToExtractFromFileList(SimpleSink fileList, ExtractionType extractionParms, DestinationType destination)
         {
             var pipelineQueue = new PipelineQueue();

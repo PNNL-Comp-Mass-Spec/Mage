@@ -5,6 +5,8 @@ using System.IO;
 using System.Text.RegularExpressions;
 using MyEMSLReader;
 
+// ReSharper disable UnusedMember.Global
+
 namespace Mage
 {
     /// <summary>
