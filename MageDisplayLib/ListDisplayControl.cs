@@ -115,11 +115,6 @@ namespace MageDisplayLib
         private int mListViewSortColIndex = -1;
         private bool mListViewSortAscending = true;
 
-        /// <summary>
-        /// Cell editor for ListView for this object
-        /// </summary>
-        private readonly ListViewCellEditor mCellEditor;
-
         #endregion
 
         #region Properties
@@ -171,7 +166,7 @@ namespace MageDisplayLib
         /// <summary>
         /// Cell editor for ListView for this object
         /// </summary>
-        public ListViewCellEditor CellEditor => mCellEditor;
+        public ListViewCellEditor CellEditor { get; }
 
         /// <summary>
         /// The list view control used by this object
