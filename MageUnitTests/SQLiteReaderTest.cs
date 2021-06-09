@@ -1,4 +1,5 @@
-﻿using Mage;
+﻿using System;
+using Mage;
 using NUnit.Framework;
 using System.Collections.Generic;
 
@@ -99,15 +100,18 @@ namespace MageUnitTests
             // Are there the expected number of fields in the data row?
             Assert.AreEqual(colList.Length, rows[0].Length);
 
+            Console.WriteLine("Factors");
+            Console.WriteLine();
+
             // Go through the rows and get value in "Factor" and "Value" columns
             var nameIndex = result.ColumnIndex["Factor"];
             var valIndex = result.ColumnIndex["Value"];
             foreach (var row in result.Rows)
             {
-                // ReSharper disable once UnusedVariable
                 var name = row[nameIndex];
-                // ReSharper disable once UnusedVariable
                 var value = row[valIndex];
+
+                Console.WriteLine("{0}: {1}", name, value);
             }
         }
 
@@ -155,17 +159,15 @@ namespace MageUnitTests
             return result;
         }
 
-        /// <summary>
-        ///  Example
-        /// </summary>
-        /// <param name="maxRows"></param>
-        /// <returns></returns>
-        public SimpleSink QueryFromConfig(int maxRows)
+        [Test]
+        [TestCase(25)]
+        public void QueryFromConfig(int maxRows)
         {
             // Runtime parameters for query (probably pass this in as an argument)
             var runtimeParameters = new Dictionary<string, string> {["Factor"] = "Group"};
 
             // Get XML query definition by name
+            // This will query the factors table in SQLite database Metadata.db
             ModuleDiscovery.QueryDefinitionFileName = "SQLiteQueryDefinitions.xml";
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("Factors");
             Assert.AreNotEqual("", queryDefXML);
@@ -174,7 +176,7 @@ namespace MageUnitTests
             var reader = new SQLiteReader(queryDefXML, runtimeParameters);
             Assert.AreNotEqual(null, reader);
 
-            const string expected = "SELECT * FROM factors WHERE \"Factor\" = 'Group'";
+            const string expected = "SELECT * FROM factors WHERE Factor = 'Group'";
             Assert.AreEqual(expected, reader.SQLText);
 
             // Create sink module to accumulate columns and rows
@@ -187,8 +189,6 @@ namespace MageUnitTests
             pipeline.AddModule("Results", result);
             pipeline.ConnectModules("Reader", "Results");
             pipeline.RunRoot(null);
-
-            return result;
         }
 
         /// <summary>

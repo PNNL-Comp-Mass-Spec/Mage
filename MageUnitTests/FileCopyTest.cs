@@ -63,8 +63,10 @@ namespace MageUnitTests
             target.ColumnToUseForPrefix = idColNameTest2;
             target.ApplyPrefixToFileName = "No";
             var fieldPosTest2 = target.InputColumnPosAccessor;
-            var expectedTest2 = sourceFile;
+
+            const string expectedTest2 = sourceFile;
             var actualTest2 = target.GetDestFileAccessor(sourceFile, fieldPosTest2, fields);
+
             Assert.AreEqual(expectedTest2, actualTest2, "No prefix");
 
             // ID column NOT in column list and ApplyPrefixToFileName set to "Yes"
@@ -73,8 +75,10 @@ namespace MageUnitTests
             target.ColumnToUseForPrefix = idColNameTest3;
             target.ApplyPrefixToFileName = "Yes";
             var fieldPosTest3 = target.InputColumnPosAccessor;
-            var expectedTest3 = "Tag_0_" + sourceFile;
+
+            const string expectedTest3 = "Tag_0_" + sourceFile;
             var actualTest3 = target.GetDestFileAccessor(sourceFile, fieldPosTest3, fields);
+
             Assert.AreEqual(expectedTest3, actualTest3, "Missing ID column");
         }
 
