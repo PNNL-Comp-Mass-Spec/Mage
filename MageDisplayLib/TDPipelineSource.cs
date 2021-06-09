@@ -94,7 +94,7 @@ namespace MageDisplayLib
             OutputDataLine(null);
         }
 
-        private void OutputHeaderLine(string[] fields)
+        private void OutputHeaderLine(IEnumerable<string> fields)
         {
             // Output the column definitions
             var columnDefs = new List<MageColumnDef>();

@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace MageExtContentFilters
 {
     public class FilterXTResults : FilterResultsBase
     {
-        public FilterXTResults(Collection<string[]> filterCriteria, string filterSetID)
+        public FilterXTResults(IEnumerable<string[]> filterCriteria, string filterSetID)
             : base(filterCriteria, filterSetID)
         {
         }

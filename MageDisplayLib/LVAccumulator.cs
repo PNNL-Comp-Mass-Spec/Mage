@@ -205,7 +205,7 @@ namespace MageDisplayLib
         /// with information in given collection of ListViewItems
         /// </summary>
         /// <param name="itemBlock"></param>
-        public ItemBlockEventArgs(Collection<ListViewItem> itemBlock)
+        public ItemBlockEventArgs(IEnumerable<ListViewItem> itemBlock)
         {
             ItemBlock = itemBlock?.ToArray();
         }

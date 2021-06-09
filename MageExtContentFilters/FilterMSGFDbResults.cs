@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace MageExtContentFilters
 {
     public class FilterMSGFDbResults : FilterResultsBase
     {
-        public FilterMSGFDbResults(Collection<string[]> filterCriteria, string filterSetID)
+        public FilterMSGFDbResults(IEnumerable<string[]> filterCriteria, string filterSetID)
             : base(filterCriteria, filterSetID)
         {
         }

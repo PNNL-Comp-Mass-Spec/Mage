@@ -368,7 +368,7 @@ namespace MageUIComponents
 
         #region Editing Panel Functions
 
-        private void DisplayColumnListInEditingPanel(Collection<MageColumnDef> colDefs)
+        private void DisplayColumnListInEditingPanel(IEnumerable<MageColumnDef> colDefs)
         {
             var colItems = new Collection<string[]>();
             foreach (var colDef in colDefs)
@@ -468,7 +468,7 @@ namespace MageUIComponents
         /// </summary>
         /// <param name="rows"></param>
         /// <param name="colDefs"></param>
-        private static void AddMissingInputColumns(Collection<string[]> rows, Collection<MageColumnDef> colDefs)
+        private static void AddMissingInputColumns(IEnumerable<string[]> rows, Collection<MageColumnDef> colDefs)
         {
             // Make list of input column names
             var inputColList = new List<string>();

@@ -215,7 +215,7 @@ namespace MageFileProcessor
         /// </summary>
         /// <param name="itemNames"></param>
         /// <param name="active"></param>
-        private void AdjustMenuItemsFromNameList(List<string> itemNames, bool active)
+        private void AdjustMenuItemsFromNameList(IEnumerable<string> itemNames, bool active)
         {
             foreach (var name in itemNames)
             {

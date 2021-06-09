@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace MageExtContentFilters
 {
     public class FilterMSPathFinderResults : FilterResultsBase
     {
-        public FilterMSPathFinderResults(Collection<string[]> filterCriteria, string filterSetID)
+        public FilterMSPathFinderResults(IEnumerable<string[]> filterCriteria, string filterSetID)
             : base(filterCriteria, filterSetID)
         {
         }
