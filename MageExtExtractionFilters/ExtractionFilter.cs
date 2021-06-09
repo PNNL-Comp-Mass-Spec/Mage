@@ -115,7 +115,7 @@ namespace MageExtExtractionFilters
             mTotalRowsCounter = 0;
             mPassedRowsCounter = 0;
 
-            var context = new Dictionary<string, string>() { { "Job", Job } };
+            var context = new Dictionary<string, string> { { "Job", Job } };
             SetContext(context);
             mKeepAllResults = OptionEnabled(mExtractionType.KeepAllResults);
         }

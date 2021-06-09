@@ -356,6 +356,7 @@ namespace MageDisplayLib
                 new ToolStripMenuItem("Copy selected rows", null, HandleCopyRows, "CopySelectedRows"),
                 new ToolStripMenuItem("Copy data in sorted column", null, HandleListCopyColumn, "CopyDataInSortedColumn")
             };
+
             return toolStripItems.ToArray();
         }
 
@@ -368,6 +369,7 @@ namespace MageDisplayLib
         {
             CopySelectedRows();
         }
+
         private void HandleListCopyColumn(object sender, EventArgs e)
         {
             if (gvQueryResults.SortedColumn == null)

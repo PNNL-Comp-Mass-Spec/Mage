@@ -27,12 +27,15 @@ namespace MageExtractorTest
             const DisplaySourceMode mode = DisplaySourceMode.Selected;
             RunTests(mode);
         }
+
         private void Button2_Click(object sender, EventArgs e)
         {
             const DisplaySourceMode mode = DisplaySourceMode.All;
             RunTests(mode);
         }
-        private void RunTests(DisplaySourceMode mode) {
+
+        private void RunTests(DisplaySourceMode mode)
+        {
             BaseModule display = new GVPipelineSource(gridViewDisplayControl1, mode);
             var testCases = new SimpleSink();
             ProcessingPipeline.Assemble("TestCases", display, testCases).RunRoot(null);
@@ -48,16 +51,21 @@ namespace MageExtractorTest
 
         private delegate void MessageHandler(string message);
 
-        private void HandleMessage(object sender, MageStatusEventArgs args) {
-            if (textBox1.InvokeRequired) {
+        private void HandleMessage(object sender, MageStatusEventArgs args)
+        {
+            if (textBox1.InvokeRequired)
+            {
                 MessageHandler ncb = DisplayMessage;
                 textBox1.Invoke(ncb, args.Message);
-            } else {
+            }
+            else
+            {
                 DisplayMessage(args.Message);
             }
         }
 
-        private void DisplayMessage(string Message) {
+        private void DisplayMessage(string Message)
+        {
             textBox1.Text += Message + Environment.NewLine;
             textBox1.Update();
         }
@@ -120,19 +128,22 @@ namespace MageExtractorTest
     </module>
 </pipeline>
 ";
-        private void TestXMLBuiltImportPipelines() {
+        private void TestXMLBuiltImportPipelines()
+        {
             ProcessingPipeline.Assemble(mXMLForPipelineToImportToFile).RunRoot(null);
             ProcessingPipeline.Assemble(mXMLForPipelineToImportToSQLite).RunRoot(null);
         }
 
-        private void TestCodeBuiltImportPipelines() {
+        private void TestCodeBuiltImportPipelines()
+        {
             var pipeline = ImportContentsOfFiles(@"C:\Data\syn2", "_syn.txt", "Name|+|text, *", @"C:\Data\syn2\junk.db3", "t_bob", "database");
             pipeline.RunRoot(null);
             pipeline = ImportContentsOfFiles(@"C:\Data\syn2", "_syn.txt", "Name|+|text, *", @"C:\Data\syn2\", "junk.txt", "file");
             pipeline.RunRoot(null);
         }
 
-        private ProcessingPipeline ImportContentsOfFiles(string sourceDirectoryPath, string fileNameSelector, string columnMap, string containerPath, string name, string destinationType) {
+        private ProcessingPipeline ImportContentsOfFiles(string sourceDirectoryPath, string fileNameSelector, string columnMap, string containerPath, string name, string destinationType)
+        {
             // Make source module in pipeline
             // to get filtered list of files in local directory
             var reader = new FileListFilter
@@ -159,14 +170,16 @@ namespace MageExtractorTest
 
             // Output extracted filed contents
             // to SQLite or delimited file(s)
-            if (destinationType == "database") {
+            if (destinationType == "database")
+            {
                 broker.OutputDirectoryPath = string.Empty;
                 broker.OutputFileName = string.Empty;
                 broker.DatabaseName = containerPath;
                 broker.TableName = name;
             }
 
-            if (destinationType == "file") {
+            if (destinationType == "file")
+            {
                 broker.OutputDirectoryPath = containerPath;
                 broker.OutputFileName = name;
                 broker.DatabaseName = string.Empty;

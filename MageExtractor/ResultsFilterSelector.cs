@@ -21,13 +21,16 @@ namespace MageExtractor
 
         #region Properties
 
-        public string FilterSetID {
+        public string FilterSetID
+        {
             get => FilterSetIDCtl.Text;
             set => FilterSetIDCtl.Text = value;
         }
 
-        public string FilterSetIDToSelect {
-            set {
+        public string FilterSetIDToSelect
+        {
+            set
+            {
                 FilterSetIDCtl.Text = value;
                 mFilterSetIDToAutoSelect = FilterSetIDCtl.Text;
             }
@@ -37,12 +40,14 @@ namespace MageExtractor
 
         #region IModuleParameters Members
 
-        public Dictionary<string, string> GetParameters() {
+        public Dictionary<string, string> GetParameters()
+        {
             mParameters["FilterSetID"] = FilterSetIDCtl.Text;
             return mParameters;
         }
 
-        public void SetParameters(Dictionary<string, string> paramList) {
+        public void SetParameters(Dictionary<string, string> paramList)
+        {
             FilterSetIDCtl.Text = paramList["FilterSetID"];
         }
 
@@ -51,7 +56,8 @@ namespace MageExtractor
         /// <summary>
         /// Constructor
         /// </summary>
-        public ResultsFilterSelector() {
+        public ResultsFilterSelector()
+        {
             InitializeComponent();
             gridViewDisplayControl1.List.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             gridViewDisplayControl1.MultiSelect = false;
@@ -80,22 +86,29 @@ namespace MageExtractor
             mGetFilterSetsPipeline.RunRoot(null);
         }
 
-        private void List_SelectionChanged(object sender, EventArgs e) {
-            if (gridViewDisplayControl1.List.SelectedRows.Count > 0) {
-                FilterSetIDCtl.Text = gridViewDisplayControl1.List.SelectedRows[0].Cells[0].Value.ToString() ;
+        private void List_SelectionChanged(object sender, EventArgs e)
+        {
+            if (gridViewDisplayControl1.List.SelectedRows.Count > 0)
+            {
+                FilterSetIDCtl.Text = gridViewDisplayControl1.List.SelectedRows[0].Cells[0].Value.ToString();
             }
         }
 
-        private void FilterPanel_Load(object sender, EventArgs e) {
+        private void FilterPanel_Load(object sender, EventArgs e)
+        {
             // Previously called GetFilterSetList() here
             // Instead, call InitializeFilterSetList once the program is running
         }
 
-        private void UpdateSelectedFilterSetID() {
-            if (!string.IsNullOrEmpty(mFilterSetIDToAutoSelect)) {
+        private void UpdateSelectedFilterSetID()
+        {
+            if (!string.IsNullOrEmpty(mFilterSetIDToAutoSelect))
+            {
                 // Find the row with the given filter set ID
-                foreach (DataGridViewRow item in gridViewDisplayControl1.List.Rows) {
-                    if (item.Cells[0].Value.ToString() == mFilterSetIDToAutoSelect) {
+                foreach (DataGridViewRow item in gridViewDisplayControl1.List.Rows)
+                {
+                    if (item.Cells[0].Value.ToString() == mFilterSetIDToAutoSelect)
+                    {
                         item.Selected = true;
                         FilterSetIDCtl.Text = mFilterSetIDToAutoSelect;
                         gridViewDisplayControl1.List.FirstDisplayedCell = item.Cells[0];
@@ -114,7 +127,8 @@ namespace MageExtractor
         /// </summary>
         /// <param name="sender">(ignored)</param>
         /// <param name="args">Contains status information to be displayed</param>
-        private void HandlePipelineCompletion(object sender, MageStatusEventArgs args) {
+        private void HandlePipelineCompletion(object sender, MageStatusEventArgs args)
+        {
             // Must use a delegate and Invoke to avoid "cross-thread operation not valid" exceptions
             VoidFnDelegate uf = UpdateSelectedFilterSetID;
             Invoke(uf);
@@ -122,5 +136,5 @@ namespace MageExtractor
 
         #endregion
 
-   }
+    }
 }

@@ -17,26 +17,36 @@ namespace Ranger
 
         private readonly List<IModuleParameters> mParamPanels = new List<IModuleParameters>();
 
-        public RangerForm() {
+        public RangerForm()
+        {
             InitializeComponent();
             InitializeParameterSubpanels();
 
-            try {
+            try
+            {
                 // Set up configuration folder and files
                 SavedState.SetupConfigFiles("MageRanger");
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show("Error loading settings: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
 
-            try {
+            try
+            {
                 // Restore settings to UI component panels
                 SavedState.RestoreSavedPanelParameters(PanelSupport.GetParameterPanelList(this));
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show("Error restoring saved settings; will auto-delete SavedState.xml.  Message details: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 // Delete the SavedState.xml file
-                try {
+                try
+                {
                     System.IO.File.Delete(SavedState.FilePath);
-                } catch (Exception ex2) {
+                }
+                catch (Exception ex2)
+                {
                     // Ignore errors here
                     Console.WriteLine("Error deleting SavedState file: " + ex2.Message);
                 }
@@ -45,7 +55,8 @@ namespace Ranger
             StatusCtl.Text = string.Empty;
         }
 
-        private void InitializeParameterSubpanels() {
+        private void InitializeParameterSubpanels()
+        {
             // Make list of parameter subpanels for convenient access
             mParamPanels.Add(incrementalParameterSubPanel1);
             mParamPanels.Add(incrementalParameterSubPanel2);
@@ -64,13 +75,15 @@ namespace Ranger
             incrementalParameterSubPanel5.SetValues("PPM", "0", "6", "0.5", false);
             incrementalParameterSubPanel6.SetValues("", "", "", "", false);
 
-            incrementalParameterLitSubPanel1.SetParameters(new Dictionary<string, string>() {
+            incrementalParameterLitSubPanel1.SetParameters(new Dictionary<string, string>
+            {
                 { "ParamName", "MSGF_Cutoff" },
                 { "Operator", "=" },
                 { "Active", "Off" },
                 { "IncrementList", "1E-9, 5E-9, 1E-10, 5E-10"}
             });
-            incrementalParameterLitSubPanel2.SetParameters(new Dictionary<string, string>() {
+            incrementalParameterLitSubPanel2.SetParameters(new Dictionary<string, string>
+            {
                 { "ParamName", "" },
                 { "Operator", "=" },
                 { "Active", "Off" },
@@ -78,31 +91,39 @@ namespace Ranger
             });
         }
 
-        private void SaveBtn_Click(object sender, EventArgs e) {
+        private void SaveBtn_Click(object sender, EventArgs e)
+        {
             StatusCtl.Text = "Processing...";
             var ran = BuildAndRunPipeline();
-            if (ran) {
+            if (ran)
+            {
                 SavedState.SaveParameters(PanelSupport.GetParameterPanelList(this));
-            } else {
+            }
+            else
+            {
                 StatusCtl.Text = "Canceled";
             }
         }
 
-        private bool BuildAndRunPipeline() {
+        private bool BuildAndRunPipeline()
+        {
             var ran = false;
             // Make new pipeline to generate parameter table
             var ptg = new ParamTableGenerator();
 
             // Populate pipeline with specs for each parameter to be generated
-            foreach (var iP in mParamPanels) {
+            foreach (var iP in mParamPanels)
+            {
                 var p = iP.GetParameters();
-                if (p["Active"] == "On") {
+                if (p["Active"] == "On")
+                {
                     ptg.AddParamColumn(p);
                 }
             }
 
             // Setup pipeline output
-            switch (tabControl1.SelectedTab.Tag.ToString()) {
+            switch (tabControl1.SelectedTab.Tag.ToString())
+            {
                 case "SaveToFile":
                     // Create module to write to file
                     ptg.FilePath = simpleFilePanel1.FilePath;
@@ -117,7 +138,8 @@ namespace Ranger
             // allow for confirmation or cancellation
             var prompt = string.Format("This will generate {0} rows", ptg.GeneratedParameterCount);
             var r = MessageBox.Show(prompt, "Confirm save", MessageBoxButtons.OKCancel);
-            if (r == DialogResult.OK) {
+            if (r == DialogResult.OK)
+            {
                 // Connect pipeline and run it
                 ran = true;
                 var pipeline = ptg.GetPipeline();
@@ -138,8 +160,9 @@ namespace Ranger
         /// </summary>
         /// <param name="sender">(ignored))</param>
         /// <param name="args">(ignored)</param>
-        private void HandleStatusMessageUpdated(object sender, MageStatusEventArgs args) {
-            // The current pipleline will call this function from its own thread
+        private void HandleStatusMessageUpdated(object sender, MageStatusEventArgs args)
+        {
+            // The current pipeline will call this function from its own thread
             // We need to do the cross-thread thing to update the GUI
             MessageHandler ncb = SetStatusMessage;
             Invoke(ncb, args.Message);
@@ -150,9 +173,11 @@ namespace Ranger
         /// </summary>
         /// <param name="sender">(ignored)</param>
         /// <param name="args">Contains status information to be displayed</param>
-        private void HandlePipelineCompletion(object sender, MageStatusEventArgs args) {
+        private void HandlePipelineCompletion(object sender, MageStatusEventArgs args)
+        {
             // Pipeline didn't blow up, make nice reassuring message
-            if (string.IsNullOrEmpty(args.Message)) {
+            if (string.IsNullOrEmpty(args.Message))
+            {
                 args.Message = "Process completed normally";
             }
 
@@ -164,7 +189,8 @@ namespace Ranger
 
         // This is targeted by the cross-thread invoke from HandleStatusMessageUpdated
         // and update the message status display
-        private void SetStatusMessage(string Message) {
+        private void SetStatusMessage(string Message)
+        {
             StatusCtl.Text = Message;
         }
 

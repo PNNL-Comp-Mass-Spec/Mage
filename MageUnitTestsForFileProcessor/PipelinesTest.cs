@@ -36,7 +36,8 @@ namespace MageUnitTestsForFileProcessor
     "<predicate rel='AND' col='Dataset' cmp='ContainsText' val=''>Descriptive text for Dataset</predicate>" +
     "<sort col='Job' dir='ASC'/>" +
   "</query>";
-            runtimeParms = new Dictionary<string, string>() {
+            runtimeParms = new Dictionary<string, string>
+            {
                 {"Dataset", "sarc_ms"}
             };
 
@@ -61,7 +62,8 @@ namespace MageUnitTestsForFileProcessor
         {
             ISinkModule sinkObject = new SimpleSink(maxRows);
 
-            runtimeParms = new Dictionary<string, string>() {
+            runtimeParms = new Dictionary<string, string>
+            {
                 {"Folder", "TestVal" },
                 {"FileNameFilter", "TestVal" }
             };
@@ -85,7 +87,8 @@ namespace MageUnitTestsForFileProcessor
         {
             ISinkModule sinkObject = new SimpleSink(maxRows);
 
-            runtimeParms = new Dictionary<string, string>() {
+            runtimeParms = new Dictionary<string, string>
+            {
                 {"ManifestFilePath", "TestVal" }
             };
 
@@ -185,7 +188,8 @@ namespace MageUnitTestsForFileProcessor
 
             ISinkModule sinkObject = new SimpleSink(maxRows);
 
-            runtimeParms = new Dictionary<string, string>() {
+            runtimeParms = new Dictionary<string, string>
+            {
                 { "FileColumnName", "File" },
                 { "IncludeFilesOrDirectories", "Files" },
                 { "FileSelectors", "log.txt" },

@@ -185,7 +185,8 @@ namespace MageUIComponents
         private void LoadColumnMappingList()
         {
             if (!File.Exists(MappingConfigFilePath))
-            {// Need to create config file
+            {
+                // Need to create config file
                 CreateDefaultColumnMappingConfigFile();
             }
             var reader = new DelimitedFileReader { FilePath = MappingConfigFilePath };

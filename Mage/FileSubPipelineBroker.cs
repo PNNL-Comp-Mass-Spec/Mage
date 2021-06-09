@@ -249,6 +249,7 @@ namespace Mage
             var concatenateFiles = !string.IsNullOrEmpty(OutputFileName) && mFileCount > 0;
             writer.Append = concatenateFiles ? "Yes" : "No";
             writer.Header = concatenateFiles ? "No" : "Yes";
+
             return ProcessingPipeline.Assemble("DefaultFileProcessingPipeline", reader, filter, writer);
         }
 
@@ -269,6 +270,7 @@ namespace Mage
             var tableName = !string.IsNullOrEmpty(TableName) ? TableName : Path.GetFileNameWithoutExtension(inputFilePath);
             writer.DbPath = DatabaseName;
             writer.TableName = tableName;
+
             return ProcessingPipeline.Assemble("DefaultFileProcessingPipeline", reader, filter, writer);
         }
 

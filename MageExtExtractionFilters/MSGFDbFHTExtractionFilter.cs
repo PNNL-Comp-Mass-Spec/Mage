@@ -164,7 +164,11 @@ namespace MageExtExtractionFilters
         public static FilterMSGFDbResults MakeMSGFDbResultChecker(string FilterSetID)
         {
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("Extraction_Filter_Set_List");
-            var runtimeParms = new Dictionary<string, string>() { { "Filter_Set_ID", FilterSetID } };
+            var runtimeParms = new Dictionary<string, string>
+            {
+                { "Filter_Set_ID", FilterSetID }
+            };
+
             var reader = new SQLReader(queryDefXML, runtimeParms);
 
             // Create Mage module to receive query results
