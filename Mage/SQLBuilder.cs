@@ -105,29 +105,29 @@ namespace Mage
             /// <summary>
             /// Relationship with other predicate items ("AND" or "OR")
             /// </summary>
-            public string rel { get; set; }
+            public string Relationship { get; set; }
 
             /// <summary>
             /// Column
             /// </summary>
-            public string col { get; set; }
+            public string ColumnName { get; set; }
 
             /// <summary>
             /// Comparison
             /// </summary>
-            public string cmp { get; set; }
+            public string Comparison { get; set; }
 
             /// <summary>
             /// Value to compare
             /// </summary>
-            public string val { get; set; }
+            public string Value { get; set; }
 
             /// <summary>
             /// Construct a basic query predicate item
             /// </summary>
             public QueryPredicate()
             {
-                rel = "AND";
+                Relationship = "AND";
             }
         }
 
@@ -139,20 +139,21 @@ namespace Mage
             /// <summary>
             /// Sorting column
             /// </summary>
-            public string col { get; set; }
+            public string ColumnName { get; set; }
 
             /// <summary>
             /// Sorting direction
             /// </summary>
-            public string dir { get; set; }
+            /// <remarks>ASC or DESC</remarks>
+            public string Direction { get; set; }
 
             /// <summary>
             /// Construct new QuerySort object
             /// </summary>
             public QuerySort()
             {
-                col = string.Empty;
-                dir = "ASC";
+                ColumnName = string.Empty;
+                Direction = "ASC";
             }
         }
 
@@ -229,17 +230,17 @@ namespace Mage
                         break;
 
                     case "predicate":
-                        var rel = itemNode.Attributes["rel"].InnerText;
+                        var relationship = itemNode.Attributes["rel"].InnerText;
                         var predicateColumn = itemNode.Attributes["col"].InnerText;
-                        var cmp = itemNode.Attributes["cmp"].InnerText;
-                        var val = itemNode.Attributes["val"].InnerText;
-                        SetColumnDefaultPredicate(rel, predicateColumn, cmp, val);
+                        var comparison = itemNode.Attributes["cmp"].InnerText;
+                        var comparisonValue = itemNode.Attributes["val"].InnerText;
+                        SetColumnDefaultPredicate(relationship, predicateColumn, comparison, comparisonValue);
                         break;
 
                     case "sort":
                         var sortColumn = itemNode.Attributes["col"].InnerText;
-                        var dir = itemNode.Attributes["dir"].InnerText;
-                        AddSortingItem(sortColumn, dir);
+                        var sortDirection = itemNode.Attributes["dir"].InnerText;
+                        AddSortingItem(sortColumn, sortDirection);
                         break;
 
                     case "sproc":
@@ -251,8 +252,7 @@ namespace Mage
                         var key = itemNode.Attributes["name"].InnerText;
                         if (itemNode.Attributes["value"] != null)
                         {
-                            var value = itemNode.Attributes["value"].InnerText;
-                            SprocParameters[key] = value;
+                            SprocParameters[key] = itemNode.Attributes["value"].InnerText;
                         }
                         break;
                 }
@@ -354,10 +354,10 @@ namespace Mage
         {
             var p = new QueryPredicate
             {
-                rel = rel,
-                col = col,
-                cmp = cmp,
-                val = val
+                Relationship = rel,
+                ColumnName = col,
+                Comparison = cmp,
+                Value = val
             };
             mDefaultPredicates[col] = p;
         }
@@ -373,8 +373,8 @@ namespace Mage
             if (mDefaultPredicates.ContainsKey(col))
             {
                 var p = mDefaultPredicates[col];
-                val ??= p.val;
-                AddPredicateItem(p.rel, p.col, p.cmp, val);
+                val ??= p.Value;
+                AddPredicateItem(p.Relationship, p.ColumnName, p.Comparison, val);
             }
             else if (val != null)
             {
@@ -385,34 +385,34 @@ namespace Mage
         /// <summary>
         /// Add an item for building the query predicate (with automatic "AND" relationship)
         /// </summary>
-        /// <param name="col">Column name</param>
-        /// <param name="cmp">Comparison type</param>
-        /// <param name="val">Comparison value</param>
-        public void AddPredicateItem(string col, string cmp, string val)
+        /// <param name="columnName">Column name</param>
+        /// <param name="comparison">Comparison type</param>
+        /// <param name="value">Comparison value</param>
+        public void AddPredicateItem(string columnName, string comparison, string value)
         {
-            AddPredicateItem("AND", col, cmp, val);
+            AddPredicateItem("AND", columnName, comparison, value);
         }
 
         /// <summary>
         /// Add an item for building the query predicate ('WHERE' clause)
         /// </summary>
-        /// <param name="rel">Relationship ("AND" or "OR")</param>
-        /// <param name="col">Column name</param>
-        /// <param name="cmp">Comparison type</param>
-        /// <param name="val">Comparison value</param>
-        public void AddPredicateItem(string rel, string col, string cmp, string val)
+        /// <param name="relationship">Relationship ("AND" or "OR")</param>
+        /// <param name="columnName">Column name</param>
+        /// <param name="comparison">Comparison type</param>
+        /// <param name="value">Comparison value</param>
+        public void AddPredicateItem(string relationship, string columnName, string comparison, string value)
         {
-            if (!string.IsNullOrEmpty(val))
+            if (!string.IsNullOrEmpty(value))
             {
                 // (someday) reject if any field empty, not just the value field
 
-                //  ConvertWildcards(ref cmp, ref val);
+                //  ConvertWildcards(ref comparison, ref value);
                 var p = new QueryPredicate
                 {
-                    rel = rel,
-                    col = col,
-                    cmp = cmp,
-                    val = val
+                    Relationship = relationship,
+                    ColumnName = columnName,
+                    Comparison = comparison,
+                    Value = value
                 };
                 mPredicates.Add(p);
             }
@@ -421,21 +421,21 @@ namespace Mage
         /// <summary>
         /// Add item to be used for building the 'Order by' clause
         /// </summary>
-        /// <param name="col">Sort column name</param>
+        /// <param name="columnName">Sort column name</param>
         /// <param name="dir">Sort direction ("ASC"/"DESC")</param>
-        public void AddSortingItem(string col, string dir)
+        public void AddSortingItem(string columnName, string dir)
         {
-            if (string.IsNullOrEmpty(col))
+            if (string.IsNullOrEmpty(columnName))
             {
                 return;
             }
 
             var sorting = new QuerySort
             {
-                col = col
+                ColumnName = columnName
             };
             var d = dir.ToUpper();
-            sorting.dir = (d == "DESC") ? d : "ASC";
+            sorting.Direction = (d == "DESC") ? d : "ASC";
             mSortingItems.Add(sorting);
         }
 
@@ -447,35 +447,35 @@ namespace Mage
         /// SQL wildcards for regex/glob.
         /// a leading tilde will force an exact match
         /// </summary>
-        /// <param name="cmp"></param>
-        /// <param name="val"></param>
-        protected static void ConvertWildcards(ref string cmp, ref string val)
+        /// <param name="comparison"></param>
+        /// <param name="value"></param>
+        protected static void ConvertWildcards(ref string comparison, ref string value)
         {
             // Look for wildcard characters
 
-            var exact_match = val.Substring(0, 1) == "~";
-            var regex_all = val.Contains("*");
-            var regex_one = val.Contains("?");
-            var sql_any = val.Contains("%");
+            var exact_match = value.Substring(0, 1) == "~";
+            var regex_all = value.Contains("*");
+            var regex_one = value.Contains("?");
+            var sql_any = value.Contains("%");
 
             // Force exact match
             if (exact_match)
             {
-                val = val.Replace("~", "");
-                cmp = "MatchesText";
+                value = value.Replace("~", "");
+                comparison = "MatchesText";
             }
             else
                 if (regex_all || regex_one)
             {
-                cmp = "wildcards";
+                comparison = "wildcards";
             }
             else
             {
                 var exceptions = new[] { "MatchesText", "MTx", "MatchesTextOrBlank", "MTxOB" };
-                if (!sql_any && !exceptions.Contains(cmp))
+                if (!sql_any && !exceptions.Contains(comparison))
                 {
                     // Quote underscores in the absence of '%' or regex/glob wildcards
-                    val = val.Replace("_", "[_]");
+                    value = value.Replace("_", "[_]");
                 }
             }
         }
@@ -495,7 +495,7 @@ namespace Mage
                 var whereItem = MakeWhereItem(predicate, IsPostgres);
                 if (!string.IsNullOrEmpty(whereItem))
                 {
-                    switch (predicate.rel.ToLower())
+                    switch (predicate.Relationship.ToLower())
                     {
                         case "and":
                             andPredicate.Add(whereItem);
@@ -585,7 +585,7 @@ namespace Mage
             var a = new List<string>();
             foreach (var item in sortItems)
             {
-                a.Add(string.Format("{0} {1}", PossiblyQuoteName(item.col, isPostgres), item.dir));
+                a.Add(string.Format("{0} {1}", PossiblyQuoteName(item.ColumnName, isPostgres), item.Direction));
             }
             return string.Join(", ", a);
         }
@@ -599,9 +599,9 @@ namespace Mage
         /// <returns>SQL text for predicate</returns>
         private static string MakeWhereItem(QueryPredicate predicate, bool isPostgres)
         {
-            var col = PossiblyQuoteName(predicate.col, isPostgres);
-            var cmp = predicate.cmp;
-            var val = predicate.val;
+            var col = PossiblyQuoteName(predicate.ColumnName, isPostgres);
+            var cmp = predicate.Comparison;
+            var val = predicate.Value;
 
             var str = string.Empty;
             switch (cmp)
