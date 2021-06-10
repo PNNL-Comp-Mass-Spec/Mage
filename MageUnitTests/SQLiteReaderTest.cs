@@ -2,6 +2,7 @@
 using Mage;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MageUnitTests
 {
@@ -163,12 +164,15 @@ namespace MageUnitTests
         [TestCase(25)]
         public void QueryFromConfig(int maxRows)
         {
+            var queryDefsFile = General.GetTestFile(@"..\..\..\TestItems\SQLiteQueryDefinitions.xml");
+
             // Runtime parameters for query (probably pass this in as an argument)
             var runtimeParameters = new Dictionary<string, string> { ["Factor"] = "Group" };
 
             // Get XML query definition by name
             // This will query the factors table in SQLite database Metadata.db
-            ModuleDiscovery.QueryDefinitionFileName = "SQLiteQueryDefinitions.xml";
+            ModuleDiscovery.QueryDefinitionFileName = queryDefsFile.FullName;
+
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("Factors");
             Assert.AreNotEqual("", queryDefXML);
 
@@ -189,6 +193,13 @@ namespace MageUnitTests
             pipeline.AddModule("Results", result);
             pipeline.ConnectModules("Reader", "Results");
             pipeline.RunRoot(null);
+
+            Console.WriteLine(string.Join("\t", from item in result.Columns select item.Name));
+
+            foreach (var item in result.Rows)
+            {
+                Console.WriteLine(string.Join("\t", item));
+            }
         }
 
         /// <summary>
