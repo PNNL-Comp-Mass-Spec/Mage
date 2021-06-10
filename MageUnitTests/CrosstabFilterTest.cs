@@ -23,7 +23,7 @@ namespace MageUnitTests
 
             // Create Delimited file reader module
             // and connect together
-            var reader = new DelimitedFileReader {FilePath = dataFile.FullName};
+            var reader = new DelimitedFileReader { FilePath = dataFile.FullName };
 
             var target = new CrosstabFilter
             {

@@ -164,7 +164,7 @@ namespace MageUnitTests
         public void QueryFromConfig(int maxRows)
         {
             // Runtime parameters for query (probably pass this in as an argument)
-            var runtimeParameters = new Dictionary<string, string> {["Factor"] = "Group"};
+            var runtimeParameters = new Dictionary<string, string> { ["Factor"] = "Group" };
 
             // Get XML query definition by name
             // This will query the factors table in SQLite database Metadata.db

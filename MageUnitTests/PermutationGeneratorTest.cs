@@ -160,7 +160,7 @@ namespace MageUnitTests
 
             var pipeline = new ProcessingPipeline("PGen_2_File");
 
-            var writer = new DelimitedFileWriter {FilePath = "param_permutations.txt"};
+            var writer = new DelimitedFileWriter { FilePath = "param_permutations.txt" };
 
             pipeline.RootModule = pipeline.AddModule("Gen", PGen);
             pipeline.AddModule("Writer", writer);

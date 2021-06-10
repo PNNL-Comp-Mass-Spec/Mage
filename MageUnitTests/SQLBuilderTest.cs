@@ -17,7 +17,7 @@ namespace MageUnitTests
         [Test]
         public void DefaultPredicateTest()
         {
-            var target = new SQLBuilder {Table = "T_X"};
+            var target = new SQLBuilder { Table = "T_X" };
 
             target.SetColumnDefaultPredicate("AND", "Bob", "MatchesText", "");
             target.SetColumnDefaultPredicate("OR", "Paul", "Equals", "");
@@ -40,7 +40,7 @@ namespace MageUnitTests
         [Test]
         public void TableTest()
         {
-            var target = new SQLBuilder {Table = "T_X"};
+            var target = new SQLBuilder { Table = "T_X" };
             const string expected = "SELECT * FROM T_X";
             var actual = target.BuildQuerySQL();
             Assert.AreEqual(expected, actual);
@@ -85,7 +85,7 @@ namespace MageUnitTests
         [Test]
         public void AddPredicateItemTest()
         {
-            var target = new SQLBuilder {Table = "T_X"};
+            var target = new SQLBuilder { Table = "T_X" };
 
             target.AddPredicateItem("AND", "Bob", "MatchesText", "Your uncle");
             var expected = "SELECT * FROM T_X WHERE Bob = 'Your uncle'";
@@ -149,7 +149,7 @@ namespace MageUnitTests
             // Runtime parameters for query
             const string testParam = "@ExperimentFilter";
             const string testValue = "borked";
-            var runtimeParameters = new Dictionary<string, string> {[testParam] = testValue};
+            var runtimeParameters = new Dictionary<string, string> { [testParam] = testValue };
 
             // Get XML query definition by name
             ModuleDiscovery.QueryDefinitionFileName = queryDefsFile.FullName;
