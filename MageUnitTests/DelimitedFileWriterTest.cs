@@ -28,7 +28,7 @@ namespace MageUnitTests
             var result = DelimitedFileReaderTest.ReadDelimitedFile(testFile);
 
             Assert.AreEqual(rows, source.Rows.Count, "Source row count does not match");
-            Assert.AreEqual(cols, source.Columns.Count, "Source column count does ot match");
+            Assert.AreEqual(cols, source.Columns.Count, "Source column count does not match");
             Assert.AreEqual(rows, result.Rows.Count, "Result row count does not match");
             Assert.AreEqual(cols, result.Columns.Count, "Result column count does not match");
             General.CompareSinks(source, result);

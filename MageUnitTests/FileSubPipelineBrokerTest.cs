@@ -12,6 +12,8 @@ namespace MageUnitTests
     [TestFixture]
     public class FileSubPipelineBrokerTest
     {
+        // Ignore Spelling: Kilroy, Mage
+
         #region Member Variables
 
         private string mPipelineResults = string.Empty;

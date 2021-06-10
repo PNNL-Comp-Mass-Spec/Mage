@@ -10,6 +10,9 @@ namespace MageUnitTests
     [TestFixture]
     public class DelimitedFileReaderTest
     {
+        // ReSharper disable once CommentTypo
+        // Ignore Spelling: fwhm
+
         /// <summary>
         /// A test for Header
         /// </summary>

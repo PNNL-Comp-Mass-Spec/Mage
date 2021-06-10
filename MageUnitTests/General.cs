@@ -10,6 +10,8 @@ namespace MageUnitTests
     [TestFixture]
     public class General
     {
+        // Ignore Spelling: Mage
+
         public const string DATABASE_PATH_KEY = "Database";
 
         private const string REMOTE_UNIT_TEST_DIRECTORY = @"\\proto-2\UnitTest_Files\Mage";

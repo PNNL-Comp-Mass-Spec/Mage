@@ -11,6 +11,12 @@ namespace MageUnitTests
     [TestFixture]
     public class SQLBuilderTest
     {
+        // ReSharper disable CommentTypo
+
+        // Ignore Spelling: borked, dos, sarc, tres, uno
+
+        // ReSharper restore CommentTypo
+
         /// <summary>
         /// Demonstrates use of column default predicate settings
         /// </summary>

@@ -14,6 +14,12 @@ namespace MageUnitTests
     [TestFixture]
     public class SQLReaderTest
     {
+        // ReSharper disable CommentTypo
+
+        // Ignore Spelling: dmsreader, labelling, mtuser, sarc, sproc
+
+        // ReSharper restore CommentTypo
+
         private const string DMS_READER = "dmsreader";
         private const string DMS_READER_PASSWORD = "dms4fun";
 
@@ -605,7 +611,7 @@ namespace MageUnitTests
             Assert.AreEqual(colList.Count, cols.Count, "Column count mismatch " + errorMessage);
             for (var i = 0; i < cols.Count; i++)
             {
-                Assert.AreEqual(colList[i], cols[i].Name, "Did not get get the expected row definitions " + errorMessage);
+                Assert.AreEqual(colList[i], cols[i].Name, "Did not get the expected row definitions " + errorMessage);
             }
 
             // Did the test sink module get the expected number of data rows
@@ -649,7 +655,7 @@ namespace MageUnitTests
                 Console.WriteLine(string.Join("  ", dataValues));
             }
 
-            Assert.AreEqual(maxRows, rows.Count, "Did not get get the expected number of data rows " + errorMessage);
+            Assert.AreEqual(maxRows, rows.Count, "Did not get the expected number of data rows " + errorMessage);
 
             // Are there the expected number of fields in the data row?
             Assert.AreEqual(colList.Count, rows[0].Length, "Data rows do not have the expected number of fields " + errorMessage);

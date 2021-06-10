@@ -8,6 +8,8 @@ namespace MageUnitTests
     /// </summary>
     public class TestModule : BaseModule
     {
+        // Ignore Spelling: Mage
+
         #region Member Variables
 
         // An internal buffer for accumulating rows passed in via the standard tabular input handler

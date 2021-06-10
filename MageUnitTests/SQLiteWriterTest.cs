@@ -29,7 +29,7 @@ namespace MageUnitTests
             var result1 = SQLiteReaderTest.ReadSQLiteDB(rows, sqlText, dbPath);
 
             Assert.AreEqual(rows, source1.Rows.Count, "Source row count does not match");
-            Assert.AreEqual(cols, source1.Columns.Count, "Source column count does ot match");
+            Assert.AreEqual(cols, source1.Columns.Count, "Source column count does not match");
             Assert.AreEqual(rows, result1.Rows.Count, "Result row count does not match");
             Assert.AreEqual(cols, result1.Columns.Count, "Result column count does not match");
             General.CompareSinks(source1, result1);
@@ -43,7 +43,7 @@ namespace MageUnitTests
             var result2 = SQLiteReaderTest.ReadSQLiteDB(rows, sqlText, dbPath);
 
             Assert.AreEqual(rows, source2.Rows.Count, "Source row count does not match");
-            Assert.AreEqual(cols, source2.Columns.Count, "Source column count does ot match");
+            Assert.AreEqual(cols, source2.Columns.Count, "Source column count does not match");
             Assert.AreEqual(rows, result2.Rows.Count, "Result row count does not match");
             Assert.AreEqual(cols, result2.Columns.Count, "Result column count does not match");
             //            General.CompareSinks(source2, result2);
@@ -70,7 +70,7 @@ namespace MageUnitTests
             var result = SQLiteReaderTest.ReadSQLiteDB(rows, sqlText, dbPath);
 
             Assert.AreEqual(rows, source.Rows.Count, "Source row count does not match");
-            Assert.AreEqual(cols, source.Columns.Count, "Source column count does ot match");
+            Assert.AreEqual(cols, source.Columns.Count, "Source column count does not match");
             Assert.AreEqual(rows, result.Rows.Count, "Result row count does not match");
             Assert.AreEqual(cols, result.Columns.Count, "Result column count does not match");
             General.CompareSinks(source, result);
