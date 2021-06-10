@@ -161,10 +161,11 @@ namespace MageUnitTests
         }
 
         [Test]
-        [TestCase(25)]
-        public void QueryFromConfig(int maxRows)
+        [TestCase(@"..\..\..\TestItems\Metadata.db", @"..\..\..\TestItems\SQLiteQueryDefinitions.xml", 20)]
+        public void QueryFromConfig(string filePath, string queryDefinitionsPath, int maxRows)
         {
-            var queryDefsFile = General.GetTestFile(@"..\..\..\TestItems\SQLiteQueryDefinitions.xml");
+            var dbFile = General.GetTestFile(filePath);
+            var queryDefsFile = General.GetTestFile(queryDefinitionsPath);
 
             // Runtime parameters for query (probably pass this in as an argument)
             var runtimeParameters = new Dictionary<string, string> { ["Factor"] = "Group" };
@@ -174,10 +175,14 @@ namespace MageUnitTests
             ModuleDiscovery.QueryDefinitionFileName = queryDefsFile.FullName;
 
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("Factors");
-            Assert.AreNotEqual("", queryDefXML);
+            Assert.AreNotEqual(string.Empty, queryDefXML);
 
             // Create SQLReader module initialized from XML definition
-            var reader = new SQLiteReader(queryDefXML, runtimeParameters);
+            var reader = new SQLiteReader(queryDefXML, runtimeParameters)
+            {
+                Database = dbFile.FullName
+            };
+
             Assert.AreNotEqual(null, reader);
 
             const string expected = "SELECT * FROM factors WHERE Factor = 'Group'";
