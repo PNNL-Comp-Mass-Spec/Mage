@@ -12,6 +12,8 @@ namespace MageUnitTests
     [TestFixture]
     public class BaseModuleTest
     {
+        // Ignore Spelling: varchar
+
         /// <summary>
         /// A test for OutputColumnList
         /// </summary>
@@ -146,7 +148,7 @@ namespace MageUnitTests
             }
             foreach (var item in target.OutColPos.Keys)
             {
-                Assert.AreEqual(outColPos[item], target.OutColPos[item], "Column postion map index does not match");
+                Assert.AreEqual(outColPos[item], target.OutColPos[item], "Column position map index does not match");
             }
         }
 
@@ -193,7 +195,7 @@ namespace MageUnitTests
             // against expected position index
             foreach (var item in target.OutColPos.Keys)
             {
-                Assert.AreEqual(outColPos[item], target.OutColPos[item], "Column postion map index does not match");
+                Assert.AreEqual(outColPos[item], target.OutColPos[item], "Column position map index does not match");
             }
 
             // Check remapped data rows
