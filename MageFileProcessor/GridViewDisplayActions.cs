@@ -17,14 +17,11 @@ namespace MageFileProcessor
         {
             get
             {
-                switch (Globals.DMSServer.ToLower())
+                return Globals.DMSServer.ToLower() switch
                 {
-                    case "cbdms":
-                        return "http://cbdmsweb.pnl.gov";
-                    default:
-                        // Includes gigasax
-                        return "https://dms2.pnl.gov";
-                }
+                    "cbdms" => "http://cbdmsweb.pnl.gov",
+                    _ => "https://dms2.pnl.gov"       // Includes gigasax
+                };
             }
         }
 
