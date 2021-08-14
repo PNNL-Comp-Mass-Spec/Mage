@@ -24,11 +24,14 @@ namespace Mage
         #region IBaseModule Members
 
         /// <summary>
+        /// <para>
         /// Handler for Mage standard tabular column definition
         /// (override of base class)
-        ///
+        /// </para>
+        /// <para>
         /// Let base class process columns for us
         /// and pass the appropriate definitions to our listeners
+        /// </para>
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -43,14 +46,17 @@ namespace Mage
         }
 
         /// <summary>
+        /// <para>
         /// Handler for Mage standard tabular input data rows
         /// (override of base class)
-        ///
+        /// </para>
+        /// <para>
         /// Check each input row against the filter and pass on the
         /// rows that are accepted
+        /// </para>
+        /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
-        /// </summary>
         public override void HandleDataRow(object sender, MageDataEventArgs args)
         {
             if (args.DataAvailable)
