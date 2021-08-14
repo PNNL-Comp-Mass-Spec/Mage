@@ -311,7 +311,9 @@ namespace Mage
                 if (mDbTools != null)
                     return mDbTools;
 
-                mDbTools = DbToolsFactory.GetDBTools(ConnectionString);
+                var connectionStringWithAppName = DbToolsFactory.AddApplicationNameToConnectionString(ConnectionString, "Mage_SQLReader");
+
+                mDbTools = DbToolsFactory.GetDBTools(connectionStringWithAppName);
                 IsPostgres = mDbTools.DbServerType == DbServerTypes.PostgreSQL;
 
                 return mDbTools;
@@ -333,12 +335,14 @@ namespace Mage
                 throw ex;
             }
 
-            if (ConnectionString.Equals(connectionString) && mDbTools != null)
+            var connectionStringToUse = DbToolsFactory.AddApplicationNameToConnectionString(connectionString, "Mage_SQLReader");
+
+            if (ConnectionString.Equals(connectionStringToUse) && mDbTools != null)
                 return mDbTools;
 
-            ConnectionString = connectionString;
+            ConnectionString = connectionStringToUse;
 
-            mDbTools = DbToolsFactory.GetDBTools(connectionString);
+            mDbTools = DbToolsFactory.GetDBTools(connectionStringToUse);
 
             return mDbTools;
         }
