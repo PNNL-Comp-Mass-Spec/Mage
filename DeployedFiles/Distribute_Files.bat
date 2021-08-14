@@ -10,6 +10,7 @@ xcopy Ranger\RangerLib.dll                        F:\Documents\Projects\DataMini
 xcopy MageExtractor\Mage.dll                      F:\Documents\Projects\JohnSandoval\APE\lib\ /D /Y
 xcopy MageExtractor\MageDisplayLib.dll            F:\Documents\Projects\JohnSandoval\APE\lib\ /D /Y
 xcopy MageExtractor\MageUIComponents.dll          F:\Documents\Projects\JohnSandoval\APE\lib\ /D /Y
+xcopy Ranger\RangerLib.dll                        F:\Documents\Projects\JohnSandoval\APE\lib\ /D /Y
 
 xcopy MageExtractor\Mage.dll                      F:\Documents\projects\JoshAldrich\InterferenceDetection\InterDetect\DLLLibrary\ /D /Y
 xcopy MageExtractor\Mage.dll                      F:\Documents\projects\JoshAldrich\ProteinParsimony\SetCover\Lib\ /D /Y
