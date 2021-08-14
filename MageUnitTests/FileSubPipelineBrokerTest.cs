@@ -14,14 +14,14 @@ namespace MageUnitTests
     {
         // Ignore Spelling: Kilroy, Mage
 
-        #region Member Variables
+
 
         private string mPipelineResults = string.Empty;
         private string mPipelineInputFilePath = string.Empty;
         private string mPipelineOutputFilePath = string.Empty;
         private static string mPipelineDummyModuleResults = string.Empty;
 
-        #endregion
+
 
         [Test]
         public void FileSubPipelineBrokerBasicTest()

@@ -10,17 +10,11 @@ namespace MageExtContentFilters
     {
         // Ignore Spelling: Mage
 
-        #region Member Variables
-
         private readonly Dictionary<string, string> mParameters = new();
 
         private string mFilterSetIDToAutoSelect = string.Empty;
 
         private ProcessingPipeline mGetFiltersPipeline;
-
-        #endregion
-
-        #region IModuleParameters Members
 
         public Dictionary<string, string> GetParameters()
         {
@@ -33,8 +27,6 @@ namespace MageExtContentFilters
             FilterSetIDCtl.Text = paramList["FilterSetID"];
             mFilterSetIDToAutoSelect = FilterSetIDCtl.Text;
         }
-
-        #endregion
 
         public XTFilterPanel()
         {
@@ -98,7 +90,7 @@ namespace MageExtContentFilters
             }
         }
 
-        #region Functions for handling status updates
+        // Methods for handling status updates
 
         private delegate void VoidFnDelegate();
 
@@ -113,8 +105,5 @@ namespace MageExtContentFilters
             VoidFnDelegate uf = UpdateFilterSetID;
             Invoke(uf);
         }
-
-        #endregion
-
     }
 }

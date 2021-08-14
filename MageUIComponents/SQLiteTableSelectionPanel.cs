@@ -4,8 +4,6 @@ using Mage;
 
 namespace MageUIComponents {
     public partial class SQLiteTableSelectionPanel : Form {
-        #region Properties
-
         public string DatabasePath {
             get => DatabasePathCtl.Text;
             set => DatabasePathCtl.Text = value;
@@ -16,7 +14,7 @@ namespace MageUIComponents {
             set => TableNameCtl.Text = value;
         }
 
-        #endregion
+
 
         public SQLiteTableSelectionPanel() {
             InitializeComponent();

@@ -11,22 +11,12 @@ namespace Mage
     /// </summary>
     public class FileListInfoLookup : FileListInfoBase
     {
-        #region Member Variables
-
         private int mFileNameColIndex = -1;
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// The name of the input column that contains the filename
         /// </summary>
         public string SourceFileColumnName { get; set; }
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Construct a new Mage file list filter module
@@ -35,9 +25,7 @@ namespace Mage
         {
         }
 
-        #endregion
-
-        #region Search Functions
+        // Search methods
 
         /// <summary>
         /// Set up indexes for row columns
@@ -69,10 +57,6 @@ namespace Mage
             var sourceFileName = mOutputBuffer[outputBufferRowIdx][mFileNameColIndex];
             GetFileInfo(outputBufferRowIdx, fileInfo, directoryPath, sourceFileName, datasetName);
         }
-
-        #endregion
-
-        #region Private Functions
 
         private void GetFileInfo(
             int outputBufferRowIdx,
@@ -145,9 +129,6 @@ namespace Mage
 
             return null;
         }
-
-        #endregion
-
     }
 }
 

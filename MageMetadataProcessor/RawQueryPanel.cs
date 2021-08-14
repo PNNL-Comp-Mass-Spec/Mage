@@ -14,17 +14,15 @@ namespace MageMetadataProcessor
             InitializeComponent();
         }
 
-        #region Properties
-
         public string RawSQL
         {
             get => RawSQLCtl.Text;
             set => RawSQLCtl.Text = value;
         }
 
-        #endregion
 
-        #region IModuleParameters Members
+
+
 
         public Dictionary<string, string> GetParameters()
         {
@@ -46,7 +44,7 @@ namespace MageMetadataProcessor
             }
         }
 
-        #endregion
+
 
         private void GetResultsBtn_Click(object sender, EventArgs e)
         {

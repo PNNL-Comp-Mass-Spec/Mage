@@ -12,8 +12,6 @@ namespace MageMetadataProcessor {
             InitializeComponent();
         }
 
-        #region Properties
-
         public string TableName {
             get => TableNameCtl.Text;
             set => TableNameCtl.Text = value;
@@ -31,12 +29,8 @@ namespace MageMetadataProcessor {
 
         public string OutputColumnList { get; set; }
 
-        #endregion
-
         // TableNameCtl;
         // DBFilePathCtl;
-
-        #region IModuleParameters Members
 
         public Dictionary<string, string> GetParameters() {
             return new() {
@@ -57,8 +51,6 @@ namespace MageMetadataProcessor {
                 }
             }
         }
-
-        #endregion
 
         private void BrowseForFileBtn_Click(object sender, EventArgs e) {
             var saveDialog = new SaveFileDialog

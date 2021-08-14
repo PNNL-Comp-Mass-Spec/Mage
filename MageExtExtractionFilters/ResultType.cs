@@ -12,16 +12,14 @@ namespace MageExtExtractionFilters
     {
         // Ignore Spelling: fht, msgfplus, msgfdb, mspathfinder, sequest, xt, xtandem
 
-        #region Constants
 
         public const string XTANDEM_ALL_PROTEINS = "X!Tandem All Proteins";
         public const string MSGFDB_SYN_ALL_PROTEINS = "MSGF+ Synopsis All Proteins";
         public const string INSPECT_SYN_ALL_PROTEINS = "Inspect Synopsis All Proteins";
         public const string MSPATHFINDER_SYN_ALL_PROTEINS = "MSPathFinder All Proteins";
 
-        #endregion
 
-        #region static properties and initialization
+
 
         static ResultType()
         {
@@ -85,9 +83,7 @@ namespace MageExtExtractionFilters
             new MergeFile(MSPATHFINDER_SYN_ALL_PROTEINS,   "SeqToProteinMap", "Unique_Seq_ID", "_mspath_syn_SeqToProteinMap.txt")
         };
 
-        #endregion
 
-        #region Properties
 
         /// <summary>
         /// User-friendly result name, for example "MSGF+ First Hits"
@@ -133,9 +129,9 @@ namespace MageExtExtractionFilters
             }
         }
 
-        #endregion
 
-        #region Internal Classes
+
+
 
         public class MergeFile
         {
@@ -157,9 +153,8 @@ namespace MageExtExtractionFilters
             }
         }
 
-        #endregion
 
-        #region Constructors
+
 
         /// <summary>
         /// Constructor
@@ -178,7 +173,7 @@ namespace MageExtExtractionFilters
             ResultIDColName = idColName;
         }
 
-        #endregion
+
 
         /// <summary>
         /// Return an extraction filter object for the current filter type

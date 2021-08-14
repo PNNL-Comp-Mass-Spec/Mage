@@ -15,18 +15,12 @@ namespace MageUIComponents
     {
         // Ignore Spelling: datetime, Mage, smallint, varchar
 
-        #region Member Variables
-
         /// <summary>
         /// Definition of columns that was read from input file
         /// </summary>
         private Collection<MageColumnDef> mInputColumnDefs = new();
 
         private bool mAddingMapping;
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Path to the SQLite configuration database
@@ -109,19 +103,11 @@ namespace MageUIComponents
         /// </summary>
         public int PreviewRowLimit { get; }
 
-        #endregion
-
-        #region Constructors
-
         public ColumnMappingForm()
         {
             InitializeComponent();
             PreviewRowLimit = 200;
         }
-
-        #endregion
-
-        #region Initialization
 
         /// <summary>
         /// Initialization actions after form is loaded
@@ -174,9 +160,7 @@ namespace MageUIComponents
             DisplayColumnListInEditingPanel("", false);
         }
 
-        #endregion
-
-        #region Column Mapping List Functions
+        // Column Mapping List Methods
 
         /// <summary>
         /// Use Mage pipeline to get contents of column mapping definition file
@@ -283,9 +267,7 @@ namespace MageUIComponents
             return isUnique;
         }
 
-        #endregion
-
-        #region Conversion Of Column List Between String And Table Formats
+        // Conversion Of Column List Between String And Table Formats
 
         /// <summary>
         /// Positions of fields in column spec
@@ -364,9 +346,7 @@ namespace MageUIComponents
             return rows;
         }
 
-        #endregion
-
-        #region Editing Panel Functions
+        // Editing Panel Methods
 
         private void DisplayColumnListInEditingPanel(IEnumerable<MageColumnDef> colDefs)
         {
@@ -631,10 +611,6 @@ namespace MageUIComponents
             return newColData;
         }
 
-        #endregion
-
-        #region List Item Movement
-
         private void MoveColSpecItemUpBtn_Click(object sender, EventArgs e)
         {
             ColumnSpecEditingDisplayList.MoveListItem(true);
@@ -644,10 +620,6 @@ namespace MageUIComponents
         {
             ColumnSpecEditingDisplayList.MoveListItem(false);
         }
-
-        #endregion
-
-        #region Form Closing
 
         /// <summary>
         /// Enable/disable controls depending on unsaved status
@@ -685,10 +657,6 @@ namespace MageUIComponents
             }
         }
 
-        #endregion
-
-        #region Event Handlers
-
         private void HandleColumnSpecEditingListDataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             string sAction;
@@ -701,9 +669,7 @@ namespace MageUIComponents
             MessageBox.Show(sAction + ", row " + (e.RowIndex + 1) + ", column " + (e.ColumnIndex + 1) + ": " + e.Exception.Message);
         }
 
-        #endregion
-
-        #region Column Cleanup Functions
+        // Column Cleanup Methods
 
         /// <summary>
         /// Clean off superfluous data size values for data types that don't need them
@@ -723,10 +689,6 @@ namespace MageUIComponents
                 }
             }
         }
-
-        #endregion
-
-        #region Import Column Definitions
 
         private BaseModule GetReaderForInputPreview()
         {
@@ -935,8 +897,5 @@ namespace MageUIComponents
         {
             LoadColumnListFromOutput();
         }
-
-        #endregion
-
     }
 }

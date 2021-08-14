@@ -26,14 +26,8 @@ namespace Mage
     {
         // Ignore Spelling: downloader, Mage
 
-        #region Member Variables
-
         // Used to provide unique prefix for duplicate file names
         private int tagIndex;
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Name of column to be used for output file name prefix (optional)
@@ -60,10 +54,6 @@ namespace Mage
         /// </summary>
         public bool ResolveCacheInfoFiles { set; get; }
 
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Construct a new Mage file copy module
         /// </summary>
@@ -76,10 +66,6 @@ namespace Mage
             OverwriteExistingFiles = false;
             ResolveCacheInfoFiles = false;
         }
-
-        #endregion
-
-        #region Overrides
 
         /// <summary>
         /// Copy given file to output
@@ -487,8 +473,5 @@ namespace Mage
                 return false;
             }
         }
-
-        #endregion
-
     }
 }

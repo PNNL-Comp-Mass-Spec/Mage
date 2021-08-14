@@ -13,8 +13,6 @@ namespace MageExtExtractionFilters
     {
         public enum Types { Unknown, File_Output, SQLite_Output }
 
-        #region Properties
-
         public Types Type { get; }
 
         public string ContainerPath { get; }
@@ -108,9 +106,8 @@ namespace MageExtExtractionFilters
             }
         }
 
-        #endregion
 
-        #region Constructors
+
 
         public DestinationType(string type, string path, string name)
         {
@@ -130,7 +127,7 @@ namespace MageExtExtractionFilters
             }
         }
 
-        #endregion
+
 
         /// <summary>
         /// If destination is file, return its full path
@@ -149,7 +146,7 @@ namespace MageExtExtractionFilters
             }
         }
 
-        #region Utility Functions
+        // Utility Methods
 
         /// <summary>
         /// If the output is set to a concatenated output file, and it exists,
@@ -202,7 +199,7 @@ namespace MageExtExtractionFilters
             return ok;
         }
 
-        #endregion
+
 
         /// <summary>
         /// Get destination writer module based on destination type

@@ -15,8 +15,6 @@ namespace MageFilePackager
     {
         // Ignore Spelling: Mage
 
-        #region Constants
-
         private const string TagJobIDs = "Job_ID_List";
         private const string TagJobIDsFromDatasets = "Jobs_From_Dataset_List";
         private const string TagDatasetList = "Datasets";
@@ -27,10 +25,6 @@ namespace MageFilePackager
 
         private const string FileListLabelPrefix = "Files From ";
 
-        #endregion
-
-        #region Member Variables
-
         // Current Mage pipeline that is running or has most recently run
         private ProcessingPipeline _mCurrentPipeline;
 
@@ -39,10 +33,6 @@ namespace MageFilePackager
 
         // Object that sent the current command
         private object _mCurrentCmdSender;
-
-        #endregion
-
-        #region Initialization
 
         /// <summary>
         /// Constructor
@@ -188,9 +178,7 @@ namespace MageFilePackager
             DataPackageDetailsTabPage.Tag = TagDataPackageDetails;
         }
 
-        #endregion
-
-        #region Command Processing
+        // Command Processing
 
         /// <summary>
         /// Execute a command by building and running the appropriate pipeline
@@ -377,9 +365,7 @@ namespace MageFilePackager
             return false;
         }
 
-        #endregion
-
-        #region Functions for setting UI state
+        // Methods for setting UI state
 
         /// <summary>
         /// Set initial conditions for display components
@@ -533,9 +519,7 @@ namespace MageFilePackager
             // }
         }
 
-        #endregion
-
-        #region Support functions for building runtime parameter lists from component panels
+        // Support methods for building runtime parameter lists from component panels
 
         /// <summary>
         /// Get XML definition for query with given name
@@ -594,9 +578,7 @@ namespace MageFilePackager
             return runtimeParams;
         }
 
-        #endregion
-
-        #region Functions for handling status updates
+        // Methods for handling status updates
 
         private delegate void CompletionStateUpdated(object status);
         private delegate void VoidFnDelegate();
@@ -642,9 +624,7 @@ namespace MageFilePackager
             System.Diagnostics.Process.Start(lblAboutLink.Text);
         }
 
-        #endregion
-
-        #region Panel Support Functions
+        // Panel Support Methods
 
         /// <summary>
         /// Set up status panel
@@ -677,11 +657,7 @@ namespace MageFilePackager
             JobFlexQueryPanel.SetComparisionPickList(new[] { "ContainsText", "DoesNotContainText", "StartsWithText", "MatchesText", "MatchesTextOrBlank", "Equals", "NotEqual", "GreaterThan", "GreaterThanOrEqualTo", "LessThan", "LessThanOrEqualTo", "MostRecentWeeks", "LaterThan", "EarlierThan", "InList" });
         }
 
-        #endregion
-
-        #region Callback Functions for UI Panel Use
-
-        #endregion
+        // Callback methods for UI Panel Use
 
     }
 }

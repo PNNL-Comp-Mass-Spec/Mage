@@ -41,8 +41,6 @@ namespace Mage
         /// </summary>
         public event EventHandler<MageStatusEventArgs> OnRunCompleted;
 
-        #region Member Variables
-
         /// <summary>
         /// Ordered list of modules managed by this pipeline object
         /// </summary>
@@ -52,10 +50,6 @@ namespace Mage
         /// Lookup reference for modules managed by this pipeline object (indexed by module name)
         /// </summary>
         private readonly Dictionary<string, IBaseModule> mModuleIndex = new();
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Message available to client after pipeline execution completes.
@@ -82,10 +76,6 @@ namespace Mage
         /// </summary>
         public Collection<IBaseModule> ModuleList => new(mModuleList);
 
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Construct a new Mage pipeline object
         /// </summary>
@@ -96,13 +86,7 @@ namespace Mage
             traceLogPipeline.Debug(string.Format("Building pipeline '{0}'", PipelineName));
         }
 
-        #endregion
-
-        #region Private Functions
-
-        #endregion
-
-        #region Functions Available to Clients
+        // Methods available to clients
 
         /// <summary>
         /// Invoke the run method on the root module of pipeline in separate thread from thread pool
@@ -467,10 +451,6 @@ namespace Mage
             return mModuleIndex[moduleName];
         }
 
-        #endregion
-
-        #region Error Messages
-
         /// <summary>
         /// Buffer to accumulate error messages from status update stream
         /// </summary>
@@ -480,10 +460,6 @@ namespace Mage
         /// Get error messages
         /// </summary>
         public Collection<string> ErrorMessages => new(mErrorMessages);
-
-        #endregion
-
-        #region Event Handlers
 
         /// <summary>
         /// Handler to receive OnStatusMessageUpdated events from modules in the pipeline
@@ -512,10 +488,6 @@ namespace Mage
             }
             OnWarningMessageUpdated?.Invoke(this, args);
         }
-
-        #endregion
-
-        #region Build Pipeline From XML definitions
 
         /// <summary>
         /// Construct a pipeline from an XML description
@@ -617,9 +589,6 @@ namespace Mage
                 SetModuleParameters(moduleName, moduleParams);
             }
         }
-        #endregion
-
-        #region Assemble Common Pipeline Configurations
 
         /// <summary>
         /// Assemble a linear processing pipeline from a list of modules.
@@ -772,8 +741,6 @@ namespace Mage
             }
             return Assemble(pipelineName, namedModuleList);
         }
-
-        #endregion
     }
 
     /// <summary>

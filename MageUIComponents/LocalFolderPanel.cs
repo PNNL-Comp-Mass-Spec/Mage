@@ -10,16 +10,14 @@ namespace MageUIComponents
     {
         public event EventHandler<MageCommandEventArgs> OnAction;
 
-        #region Member Variables
+
 
         /// <summary>
         /// Can be RegEx or FileSearch
         /// </summary>
         private string mSelectionMode = "FileSearch";
 
-        #endregion
 
-        #region Properties
 
         public string FileNameFilter
         {
@@ -95,9 +93,9 @@ namespace MageUIComponents
             set => SubdirectorySearchName = value;
         }
 
-        #endregion
 
-        #region IModuleParameters Members
+
+
 
         public Dictionary<string, string> GetParameters()
         {
@@ -137,7 +135,7 @@ namespace MageUIComponents
             }
         }
 
-        #endregion
+
 
         /// <summary>
         /// Constructor

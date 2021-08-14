@@ -28,8 +28,6 @@ namespace MageDisplayLib
             mWarningMessages = new System.Collections.Generic.List<string>();
         }
 
-        #region Properties
-
         /// <summary>
         /// The control that we are installed in
         /// </summary>
@@ -62,7 +60,7 @@ namespace MageDisplayLib
             set => CancelCtl.Visible = value;
         }
 
-        #endregion
+
 
         /// <summary>
         /// Clear the cached warning messages
@@ -79,7 +77,7 @@ namespace MageDisplayLib
             OnAction?.Invoke(this, new MageCommandEventArgs("cancel_operation"));
         }
 
-        #region Handle inter-thread message updates
+
 
         private delegate void MessageHandler(string message);
 
@@ -194,7 +192,7 @@ namespace MageDisplayLib
             }
         }
 
-        #endregion
+
 
         /// <summary>
         /// Make reasonable guess at who my owner form is

@@ -63,15 +63,9 @@ namespace MageDisplayLib
         /// </summary>
         public event EventHandler<EventArgs> SelectionChanged;
 
-        #region "Delegate Functions"
-
         // Callback for accessing fields from worker thread
         private delegate void ColumnBlockCallback(ColumnHeader[] columnBlock);
         private delegate void ItemBlockCallback(ListViewItem[] itemBlock);
-
-        #endregion
-
-        #region "Member Variables"
 
         /// <summary>
         /// SQL data types
@@ -115,10 +109,6 @@ namespace MageDisplayLib
         /// </summary>
         private int mListViewSortColIndex = -1;
         private bool mListViewSortAscending = true;
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Supplemental information about rows in list display (typically number of rows)
@@ -216,10 +206,6 @@ namespace MageDisplayLib
             set => panel1.Visible = value;
         }
 
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Construct new Mage ListDisplayControl object
         /// </summary>
@@ -229,10 +215,6 @@ namespace MageDisplayLib
             SetupContextMenus(lvQueryResults);
             CellEditor = new ListViewCellEditor(lvQueryResults);
         }
-
-        #endregion
-
-        #region List Maintenance
 
         /// <summary>
         /// Remove the currently selected items from the display list
@@ -290,9 +272,7 @@ namespace MageDisplayLib
             lvQueryResults.ResumeLayout();
         }
 
-        #endregion
-
-        #region "LVAccumulator Functions"
+        // LVAccumulator Methods
 
         /// <summary>
         /// Create a new LVAccumulator for this user control
@@ -481,10 +461,6 @@ namespace MageDisplayLib
             }
         }
 
-        #endregion
-
-        #region "Control Handlers"
-
         /// <summary>
         /// Handler that receives user click on a column header
         /// and then launches a sort operation on that column
@@ -561,9 +537,7 @@ namespace MageDisplayLib
             lblNotice.Text = s + i + r;
         }
 
-        #endregion
-
-        #region Pipeline Helper Functions
+        // Pipeline Helper methods
 
         /// <summary>
         /// Connect given object to the standard tabular output
@@ -636,10 +610,6 @@ namespace MageDisplayLib
             return lva;
         }
 
-        #endregion
-
-        #region Move Items
-
         /// <summary>
         /// Move the first currently selected item up or down in the list
         /// </summary>
@@ -692,8 +662,5 @@ namespace MageDisplayLib
                 lv.Focus();
             }
         }
-
-        #endregion
-
     }
 }

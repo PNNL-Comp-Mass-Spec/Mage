@@ -14,15 +14,9 @@ namespace MageExtractor
     {
         // Ignore Spelling: cmd, mage, workflows
 
-        #region Constants
-
         protected const string TAG_JOB_IDs = "Job_ID_List";
         protected const string TAG_JOB_IDs_FROM_DATASETS = "Jobs_From_Dataset_List";
         protected const string TAG_DATA_PACKAGE_ID = "Data_Package";
-
-        #endregion
-
-        #region Member Variables
 
         /// <summary>
         /// Pipeline queue for running the multiple pipelines that make up the workflows for this module
@@ -45,10 +39,6 @@ namespace MageExtractor
         private readonly SortedSet<string> mOutputDirectoryPaths = new();
 
         private string mFinalPipelineName = string.Empty;
-
-        #endregion
-
-        #region Initialization
 
         public ExtractorForm()
         {
@@ -168,10 +158,6 @@ namespace MageExtractor
             JobFlexQueryPanel.SetColumnPickList(new[] { "Job", "State", "Dataset", "Dataset_ID", "Tool", "Parameter_File", "Settings_File", "Instrument", "Experiment", "Campaign", "Organism", "Organism DB", "Protein Collection List", "Protein Options", "Comment", "Results Folder", "Folder", "Dataset_Created", "Job_Finish", "Request_ID" });
             JobFlexQueryPanel.SetComparisionPickList(new[] { "ContainsText", "DoesNotContainText", "StartsWithText", "MatchesText", "MatchesTextOrBlank", "Equals", "NotEqual", "GreaterThan", "GreaterThanOrEqualTo", "LessThan", "LessThanOrEqualTo", "MostRecentWeeks", "LaterThan", "EarlierThan", "InList" });
         }
-
-        #endregion
-
-        #region Panel Commands
 
         private void ConnectPanelsToCommandHandlers()
         {
@@ -379,10 +365,6 @@ namespace MageExtractor
             return false;
         }
 
-        #endregion
-
-        #region Pipeline and Queue Update Message Handlers
-
         private delegate void VoidFnDelegate();
 
         private void HandlePipelineUpdate(object sender, MageStatusEventArgs args)
@@ -446,10 +428,6 @@ namespace MageExtractor
             // with a URL:
             System.Diagnostics.Process.Start(lblAboutLink.Text);
         }
-
-        #endregion
-
-        #region Pipelines
 
         private void ConnectPipelineToStatusDisplay(ProcessingPipeline pipeline)
         {
@@ -536,10 +514,6 @@ namespace MageExtractor
             mPipelineQueue.Run(pipeline);
         }
 
-        #endregion
-
-        #region Setup Extraction Parameter Objects From UI
-
         /// <summary>
         /// Set the given content extraction module's destination parameters
         /// from the user's UI choices
@@ -600,10 +574,6 @@ namespace MageExtractor
             };
         }
 
-        #endregion
-
-        #region Misc
-
         /// <summary>
         /// Can't process empty list of jobs
         /// </summary>
@@ -660,8 +630,5 @@ namespace MageExtractor
                 // Ignore errors here
             }
         }
-
-        #endregion
-
     }
 }

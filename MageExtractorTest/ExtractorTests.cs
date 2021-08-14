@@ -10,8 +10,6 @@ namespace MageExtractorTest
     {
         // Ignore Spelling: Sequest
 
-        #region Member Variables
-
         public event EventHandler<MageStatusEventArgs> OnMessageUpdated;
 
         private readonly string mTestCasesFolder = "TestCases";
@@ -32,25 +30,13 @@ namespace MageExtractorTest
         private readonly int ContainerIdx = 6;
         private readonly int NameIdx = 7;
 
-        #endregion
-
-        #region Properties
-
         public string TestDirectoryPath { get; set; } = @"C:\Data\ExtractorTests";
-
-        #endregion
-
-        #region Initialization
-
-        #endregion
 
         public void RunTests()
         {
             // RunAllFindFilesTests();
             RunAllExtractionTests();
         }
-
-        #region File Extraction Tests
 
         /// <summary>
         /// Execute several test cases that run extraction pipeline queue from job list to results.
@@ -157,10 +143,6 @@ namespace MageExtractorTest
             }
         }
 
-        #endregion
-
-        #region File Searching Tests
-
         protected void RunAllFindFilesTests()
         {
             var testRootDirectory = new DirectoryInfo(TestDirectoryPath);
@@ -219,9 +201,7 @@ namespace MageExtractorTest
             }
         }
 
-        #endregion
-
-        #region Utility Functions
+        // Utility methods
 
         private SimpleSink GetFileContentsToSink(string path)
         {
@@ -275,9 +255,7 @@ namespace MageExtractorTest
             return mb.ToString();
         }
 
-        #endregion
-
-        #region Message Handling Functions
+        // Message Handling methods
 
         private void ConnectPipelineToMessageHandler(ProcessingPipeline pipeline)
         {
@@ -298,8 +276,5 @@ namespace MageExtractorTest
         {
             OnMessageUpdated?.Invoke(this, new MageStatusEventArgs(message));
         }
-
-        #endregion
-
     }
 }

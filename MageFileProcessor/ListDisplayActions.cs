@@ -14,8 +14,6 @@ namespace MageFileProcessor
     // ReSharper disable once UnusedMember.Global
     internal class ListDisplayActions
     {
-        #region Member Variables
-
         /// <summary>
         /// The particular ListDisplayControl object that this object is attached to
         /// and supplies context menu items for
@@ -41,10 +39,6 @@ namespace MageFileProcessor
         private readonly List<string> mJobSensitiveMenuItems = new();
         private readonly List<string> mDatasetSensitiveMenuItems = new();
 
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Constructor
         /// Can't instantiate this class without an associated ListDisplayControl object
@@ -57,10 +51,6 @@ namespace MageFileProcessor
             mListDisplay.SelectionChanged += HandleSelectionChanged;
             SetupContextMenus();
         }
-
-        #endregion
-
-        #region Setup
 
         /// <summary>
         /// Create the context menu for the display list
@@ -80,9 +70,7 @@ namespace MageFileProcessor
             }
         }
 
-        #endregion
-
-        #region Web Action Menus
+        // Web Action Menus
 
         /// <summary>
         /// Build set of menu items for opening web pages
@@ -129,9 +117,7 @@ namespace MageFileProcessor
             PanelSupport.LaunchWebBrowser(mListView, url, columnName);
         }
 
-        #endregion
-
-        #region Windows Explorer Directory Menu Actions
+        // Windows Explorer Directory Menu Actions
 
         private ToolStripItem[] GetDirectoryMenuItems()
         {
@@ -163,10 +149,6 @@ namespace MageFileProcessor
         {
             PanelSupport.OpenWindowsExplorer(mListView, columnName);
         }
-
-        #endregion
-
-        #region Event Handlers
 
         /// <summary>
         /// Will be wired up to receive "SelectionChanged" events
@@ -230,7 +212,5 @@ namespace MageFileProcessor
                 }
             }
         }
-
-        #endregion
     }
 }

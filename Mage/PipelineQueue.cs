@@ -20,8 +20,6 @@ namespace Mage
         /// </summary>
         public event EventHandler<MageStatusEventArgs> OnRunCompleted;
 
-        #region Member Variables
-
         /// <summary>
         /// Is queue currently running?
         /// </summary>
@@ -31,10 +29,6 @@ namespace Mage
         /// The current pipeline that is running (null if none)
         /// </summary>
         private ProcessingPipeline mCurrentPipeline;
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Get currently running pipeline
@@ -50,10 +44,6 @@ namespace Mage
         /// Have a look at the internal queue of pipelines
         /// </summary>
         public Queue<ProcessingPipeline> Pipelines => mPipelineQueue;
-
-        #endregion
-
-        #region Client Functions
 
         /// <summary>
         /// Internal queue of pipelines to be run
@@ -124,10 +114,6 @@ namespace Mage
             }
         }
 
-        #endregion
-
-        #region Internal Actions
-
         /// <summary>
         /// Run all the pipeline in the queue in order
         /// unless abort flag is set
@@ -153,10 +139,6 @@ namespace Mage
             UpdateQueueCompleted();
         }
 
-        #endregion
-
-        #region Notifications
-
         /// <summary>
         /// To inform subscribers
         /// </summary>
@@ -179,8 +161,5 @@ namespace Mage
         {
             OnPipelineStarted?.Invoke(this, new MageStatusEventArgs(msg));
         }
-
-        #endregion
-
     }
 }

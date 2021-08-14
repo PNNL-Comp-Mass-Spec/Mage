@@ -411,8 +411,6 @@ namespace Mage
             return success;
         }
 
-        #region "Event Handlers"
-
         private void MyEMSLDatasetInfoCache_ErrorEvent(string message, Exception ex)
         {
             ReportMageWarning("MyEMSL downloader: " + message);
@@ -436,7 +434,5 @@ namespace Mage
             else
                 OnStatusMessageUpdated(new MageStatusEventArgs("Downloading files from MyEMSL: " + percentComplete.ToString("0.00") + "% complete"));
         }
-        #endregion
-
     }
 }

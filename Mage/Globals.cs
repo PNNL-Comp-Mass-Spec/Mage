@@ -39,12 +39,8 @@ namespace Mage
             set => mDmsDatabase = value;
         }
 
-        #region "Member Variables"
-
         private static string mDmsServer;
         private static string mDmsDatabase;
-
-        #endregion
 
         /// <summary>
         /// Constructor

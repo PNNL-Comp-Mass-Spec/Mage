@@ -10,13 +10,7 @@ namespace MageExtExtractionFilters
     /// </summary>
     public class ExtractionFilter : BaseModule
     {
-        #region Constants
-
         public const string ALL_PASS_CUTOFF = "All Pass";
-
-        #endregion
-
-        #region Structures
 
         protected struct ColumnIndices
         {
@@ -25,10 +19,6 @@ namespace MageExtExtractionFilters
             public int PeptideSequence;
             public int Protein;
         }
-
-        #endregion
-
-        #region Member Variables
 
         protected ExtractionType mExtractionType;
 
@@ -48,10 +38,6 @@ namespace MageExtExtractionFilters
 
         protected int mMinimumReportIntervalMsec = 500;
         protected DateTime mLastReportTimeUTC = DateTime.UtcNow;
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// How many results were processed?
@@ -103,14 +89,6 @@ namespace MageExtExtractionFilters
             set => mMergeFiles = value;
         }
 
-        #endregion
-
-        #region Constructors
-
-        #endregion
-
-        #region Initialization
-
         private void InitializeParameters()
         {
             mTotalRowsCounter = 0;
@@ -126,8 +104,6 @@ namespace MageExtExtractionFilters
             base.Prepare();
             InitializeParameters();
         }
-
-        #endregion
 
         protected string CreateRowTag(
             string[] vals,

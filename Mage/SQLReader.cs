@@ -29,8 +29,6 @@ namespace Mage
 
         private static readonly FileLogger traceLogReader = new(FileLogger.BaseLogFileName, BaseLogger.LogLevels.INFO, FileLogger.AppendDateToBaseFileName);
 
-        #region member variables
-
         private IDBTools mDbTools;
 
         private const int CommandTimeoutSeconds = 15;
@@ -44,10 +42,6 @@ namespace Mage
         /// </summary>
         /// <remarks>Keys are stored procedure argument names, values are the value for each argument</remarks>
         private readonly Dictionary<string, string> mStoredProcParameters = new();
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Full connection string to database
@@ -110,10 +104,6 @@ namespace Mage
         {
             mStoredProcParameters[name] = value;
         }
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Construct a new SQL Reader module
@@ -214,10 +204,6 @@ namespace Mage
             ConnectionString = connectionString;
         }
 
-        #endregion
-
-        #region Initialization
-
         /// <summary>
         /// Set this module's properties using initialized SQLBuilder
         /// </summary>
@@ -260,10 +246,6 @@ namespace Mage
             }
         }
 
-        #endregion
-
-        #region IBaseModule Members
-
         /// <summary>
         /// Pass execution to module instead of having it respond to standard tabular input stream events
         /// (override of base class)
@@ -296,10 +278,6 @@ namespace Mage
                 ReportMageWarning("Error connecting to database: " + ex.Message);
             }
         }
-
-        #endregion
-
-        #region protected Functions
 
         /// <summary>
         /// Establish connection to the database server
@@ -670,9 +648,7 @@ namespace Mage
             OnStatusMessageUpdated(new MageStatusEventArgs(message));
         }
 
-        #endregion
-
-        #region Code for stored procedures
+        // Methods for stored procedures
 
         private DbParameter AddParameter(
             IDBTools dbTools,
@@ -873,9 +849,6 @@ namespace Mage
         {
             return (argMode == "INOUT" || argMode == "OUT") ? ParameterDirection.Output : ParameterDirection.Input;
         }
-
-        #endregion
-
     }
 }
 

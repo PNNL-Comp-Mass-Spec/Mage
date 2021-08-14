@@ -17,18 +17,13 @@ namespace MageFileProcessor
     {
         // Ignore Spelling: Mage, workflows
 
-        #region Constants
-        protected const string TAG_JOB_IDs = "Job_ID_List";
+                protected const string TAG_JOB_IDs = "Job_ID_List";
         protected const string TAG_JOB_IDs_FROM_DATASETS = "Jobs_From_Dataset_List";
         protected const string TAG_DATASET_LIST = "Datasets";
         protected const string TAG_DATASET_ID_LIST = "Dataset_List";
         protected const string TAG_DATASET_NAME_LIST = "Dataset_Name_List";
         protected const string TAG_DATA_PACKAGE_ID = "Data_Package";
         protected const string TAG_DATA_PACKAGE_DS_IDs = "Data_Package_Datasets";
-
-        #endregion
-
-        #region Member Variables
 
         /// <summary>
         /// Pipeline queue for running the multiple pipelines that make up the workflows for this module
@@ -48,10 +43,6 @@ namespace MageFileProcessor
 
         // Object that sent the current command
         private object mCurrentCmdSender;
-
-        #endregion
-
-        #region Initialization
 
         /// <summary>
         /// Constructor
@@ -186,9 +177,7 @@ namespace MageFileProcessor
             DataPackageDatasetsTabPage.Tag = TAG_DATA_PACKAGE_DS_IDs;
         }
 
-        #endregion
-
-        #region Command Processing
+        // Command Processing
 
         private void ConnectPipelineToStatusDisplay(ProcessingPipeline pipeline)
         {
@@ -510,9 +499,7 @@ namespace MageFileProcessor
             return false;
         }
 
-        #endregion
-
-        #region Functions for setting UI state
+        // Methods for setting UI state
 
         private const string mFileListLabelPrefix = "Files From ";
 
@@ -712,9 +699,7 @@ namespace MageFileProcessor
             EnableDisableOutputTabs();
         }
 
-        #endregion
-
-        #region Support functions for building runtime parameter lists from component panels
+        // Methods for building runtime parameter lists from component panels
 
         private string GetQueryDefinition(out string queryName)
         {
@@ -884,9 +869,7 @@ namespace MageFileProcessor
             return IDColumnName;
         }
 
-        #endregion
-
-        #region Functions for handling status updates
+        // Methods for handling status updates
 
         private delegate void CompletionStateUpdated(object status);
         private delegate void VoidFnDelegate();
@@ -963,9 +946,7 @@ namespace MageFileProcessor
             Process.Start(lblAboutLink.Text);
         }
 
-        #endregion
-
-        #region Panel Support Functions
+        // Panel Support Methods
 
         /// <summary>
         /// Set up status panel
@@ -1021,9 +1002,7 @@ namespace MageFileProcessor
             JobFlexQueryPanel.SetComparisionPickList(new[] { "ContainsText", "DoesNotContainText", "StartsWithText", "MatchesText", "MatchesTextOrBlank", "Equals", "NotEqual", "GreaterThan", "GreaterThanOrEqualTo", "LessThan", "LessThanOrEqualTo", "MostRecentWeeks", "LaterThan", "EarlierThan", "InList" });
         }
 
-        #endregion
-
-        #region Callback Functions for UI Panel Use
+        // Callback Methods for UI Panel Use
 
         /// <summary>
         /// Get fields from selected item in file list
@@ -1043,7 +1022,5 @@ namespace MageFileProcessor
 
             return FolderDestinationPanel1.GetParameters();
         }
-
-        #endregion
     }
 }

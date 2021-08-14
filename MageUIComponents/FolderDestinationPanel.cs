@@ -16,11 +16,9 @@ namespace MageUIComponents
             InitializeComponent();
         }
 
-        #region Member Variables
 
-        #endregion
 
-        #region Properties
+
 
         public string OutputDirectory
         {
@@ -41,9 +39,9 @@ namespace MageUIComponents
             set => OutputFileCtl.Text = value;
         }
 
-        #endregion
 
-        #region IModuleParameters Members
+
+
 
         public Dictionary<string, string> GetParameters()
         {
@@ -71,7 +69,7 @@ namespace MageUIComponents
             }
         }
 
-        #endregion
+
 
         private void SelectDirectoryCtl_Click(object sender, EventArgs e)
         {

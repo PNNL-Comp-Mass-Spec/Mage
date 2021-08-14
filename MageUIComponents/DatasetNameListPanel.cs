@@ -12,7 +12,7 @@ namespace MageUIComponents
 
         public event EventHandler<MageCommandEventArgs> OnAction;
 
-        #region IModuleParameters Members
+
 
         public Dictionary<string, string> GetParameters()
         {
@@ -35,7 +35,7 @@ namespace MageUIComponents
             }
         }
 
-        #endregion
+
 
         public DatasetNameListPanel()
         {

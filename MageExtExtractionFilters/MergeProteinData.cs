@@ -18,7 +18,7 @@ namespace MageExtExtractionFilters
             MSPathFinder = 2
         }
 
-        #region Member Variables
+
 
         // Reference to row in protein buffer
         // Keys are ResultID, values are SequenceId
@@ -35,13 +35,11 @@ namespace MageExtExtractionFilters
         // the key to use to look up the protein
         public int LookupColumn { get; set; } = -1;
 
-        #endregion
 
-        #region Properties
 
         public MergeModeConstants MergeMode { get; }
 
-        #endregion
+
 
         // Constructor
         public MergeProteinData(MergeModeConstants eMergeMode)

@@ -10,13 +10,11 @@ namespace MageExtractor
     {
         public event EventHandler<MageCommandEventArgs> OnAction;
 
-        #region Member Variables
+
 
         private readonly Dictionary<string, ResultType> mResultTypes = ResultType.TypeList;
 
-        #endregion
 
-        #region Properties
 
         public ResultType ResultTypeDescription => mResultTypes[ResultTypeName];
 
@@ -44,9 +42,9 @@ namespace MageExtractor
             set => MSGFCutoffCtl.Text = value;
         }
 
-        #endregion
 
-        #region IModuleParameters Members
+
+
 
         public Dictionary<string, string> GetParameters()
         {
@@ -87,7 +85,7 @@ namespace MageExtractor
             }
         }
 
-        #endregion
+
 
         public ExtractionSettingsPanel()
         {

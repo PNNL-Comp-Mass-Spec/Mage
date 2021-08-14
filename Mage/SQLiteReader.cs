@@ -17,8 +17,6 @@ namespace Mage
 
         private static readonly FileLogger traceLogReader = new(FileLogger.BaseLogFileName, BaseLogger.LogLevels.INFO, FileLogger.AppendDateToBaseFileName);
 
-        #region Member Variables
-
         private const int CommandTimeoutSeconds = 15;
 
         private DateTime startTime;
@@ -26,10 +24,6 @@ namespace Mage
         private TimeSpan duration;
 
         private SQLiteConnection mConnection;
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Full path to SQLite database file
@@ -40,10 +34,6 @@ namespace Mage
         /// SQL query to execute against database
         /// </summary>
         public string SQLText { get; set; }
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Construct a new Mage SQLite reader module
@@ -81,10 +71,6 @@ namespace Mage
             SetPropertiesFromBuilder(builder);
         }
 
-        #endregion
-
-        #region IDisposable Members
-
         /// <summary>
         /// Dispose of held resources
         /// </summary>
@@ -110,10 +96,6 @@ namespace Mage
             // isDisposed = true;
         }
 
-        #endregion
-
-        #region Initialization
-
         /// <summary>
         /// Set this module's properties using initialized SQLBuilder
         /// </summary>
@@ -130,10 +112,6 @@ namespace Mage
             sql = sql.Replace('[', '"').Replace(']', '"');
             SQLText = sql;
         }
-
-        #endregion
-
-        #region IBaseModule Members
 
         /// <summary>
         /// Execute query against database and stream results to Mage standard tabular output
@@ -152,10 +130,6 @@ namespace Mage
                 Close();
             }
         }
-
-        #endregion
-
-        #region Private Functions
 
         private void Access()
         {
@@ -314,9 +288,6 @@ namespace Mage
         {
             OnStatusMessageUpdated(new MageStatusEventArgs(message));
         }
-
-        #endregion
-
     }
 }
 

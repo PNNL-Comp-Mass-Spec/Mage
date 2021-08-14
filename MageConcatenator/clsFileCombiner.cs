@@ -9,21 +9,11 @@ namespace MageConcatenator
     {
         // Ignore Spelling: Cancelled
 
-        #region Constants and Class-wide Variables
-
         public const int MAX_ROWS_TO_TRACK = 100000;
 
         private bool mCancelProcessingRequested;
 
-        #endregion
-
-        #region Properties
-
         public bool AddFileNameFirstColumn { get; set; }
-
-        #endregion
-
-        #region Events
 
         public event EventHandler<MageStatusEventArgs> OnRunCompleted;
 
@@ -32,8 +22,6 @@ namespace MageConcatenator
         public event EventHandler<MageStatusEventArgs> OnWarning;
 
         public event EventHandler<MageStatusEventArgs> OnStatusUpdate;
-
-        #endregion
 
         /// <summary>
         /// Cancel the current processing

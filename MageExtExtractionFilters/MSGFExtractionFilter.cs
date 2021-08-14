@@ -7,8 +7,6 @@ namespace MageExtExtractionFilters
 {
     internal class MSGFExtractionFilter : ExtractionFilter
     {
-        #region Member Variables
-
         private MergeMSGFData mMSGFMerger;
 
         // Input column that contains key for looking up score to merge
@@ -16,10 +14,6 @@ namespace MageExtExtractionFilters
 
         // Output column in which merged score will be placed
         private string mMergeColumnName = string.Empty;
-
-        #endregion
-
-        #region Initialization
 
         private void InitializeParameters()
         {
@@ -39,8 +33,6 @@ namespace MageExtExtractionFilters
             base.Prepare();
             InitializeParameters();
         }
-
-        #endregion
 
         /// <summary>
         /// Terminate execution of this module
@@ -99,12 +91,8 @@ namespace MageExtExtractionFilters
             }
         }
 
-        #region Internal Classes
-
         protected class MergeMSGFData
         {
-            #region Member Variables
-
             private Dictionary<string, string> mMergeValueLookup;
 
             private ProcessingPipeline mMSGFReaderPipeline;
@@ -113,15 +101,9 @@ namespace MageExtExtractionFilters
             private bool mCheckCutoff;
             private bool mAcceptMissingMerges = true;
 
-            #endregion
-
-            #region Properties
-
-            public int MatchColIdx { get; set; }
+                public int MatchColIdx { get; set; }
 
             public int MergeColIdx { get; set; }
-
-            #endregion
 
             /// <summary>
             /// Terminate execution of this module
@@ -226,8 +208,5 @@ namespace MageExtExtractionFilters
                 }
             }
         }
-
-        #endregion
-
     }
 }

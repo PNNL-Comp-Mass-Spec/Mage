@@ -12,13 +12,7 @@ namespace Mage
     {
         // Ignore Spelling: Mage
 
-        #region Member Variables
-
         private bool doHeaderLine = true;
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Delimiter for input file (default to tab)
@@ -35,10 +29,6 @@ namespace Mage
         /// </summary>
         public string Header { get; set; }
 
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Construct a new Mage delimited file reader object
         /// (defaulted to "AutoSense" and expecting a header line
@@ -48,10 +38,6 @@ namespace Mage
             Delimiter = "AutoSense"; // "\t";
             Header = "Yes";
         }
-
-        #endregion
-
-        #region IBaseModule Members
 
         /// <summary>
         /// Called before pipeline runs - module can do any special setup that it needs
@@ -84,9 +70,7 @@ namespace Mage
             }
         }
 
-        #endregion
-
-        #region Support Functions
+        // Support methods
 
         /// <summary>
         /// Output contents of file, automatically deciding
@@ -245,7 +229,5 @@ namespace Mage
         {
             OnStatusMessageUpdated(new MageStatusEventArgs(message));
         }
-
-        #endregion
     }
 }

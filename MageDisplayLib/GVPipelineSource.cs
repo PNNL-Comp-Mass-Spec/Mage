@@ -18,8 +18,6 @@ namespace MageDisplayLib
     {
         // Ignore Spelling: Mage
 
-        #region Member Variables
-
         // Data grid view display whose data we are serving
         private GridViewDisplayControl myListControl;
 
@@ -39,10 +37,6 @@ namespace MageDisplayLib
         /// Internal buffer for cell contents from our associated GridViewDisplayControl
         /// </summary>
         private readonly List<string[]> mRowBuffer = new();
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Construct a new GVPipelineSource object
@@ -86,10 +80,6 @@ namespace MageDisplayLib
             GetRowsFromList();
         }
 
-        #endregion
-
-        #region Properties
-
         /// <summary>
         /// Set this module to stop executing
         /// </summary>
@@ -98,10 +88,6 @@ namespace MageDisplayLib
             get => Abort;
             set => Abort = value;
         }
-
-        #endregion
-
-        #region IBaseModule Members
 
         /// <summary>
         /// Output each row in associated GridViewDisplayList object
@@ -113,10 +99,6 @@ namespace MageDisplayLib
         {
             OutputListItems();
         }
-
-        #endregion
-
-        #region Private Functions
 
         /// <summary>
         /// Return an array of objects from given DataGridView row cell contents
@@ -193,7 +175,5 @@ namespace MageDisplayLib
             }
             OnDataRowAvailable(new MageDataEventArgs(null));
         }
-
-        #endregion
     }
 }

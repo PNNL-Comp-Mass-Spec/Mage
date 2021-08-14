@@ -12,11 +12,9 @@ namespace MageUIComponents
 
         public event EventHandler<MageCommandEventArgs> OnAction;
 
-        #region Member Variables
 
-        #endregion
 
-        #region Properties
+
 
         public string ListName { get; set; }
 
@@ -26,9 +24,9 @@ namespace MageUIComponents
             set => LegendCtl.Text = value;
         }
 
-        #endregion
 
-        #region IModuleParameters Members
+
+
 
         public Dictionary<string, string> GetParameters()
         {
@@ -49,7 +47,7 @@ namespace MageUIComponents
             }
         }
 
-        #endregion
+
 
         public JobIDListPanel()
         {

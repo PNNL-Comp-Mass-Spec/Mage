@@ -8,7 +8,7 @@ namespace MageExtExtractionFilters
     {
         // Ignore Spelling: Mage
 
-        #region Member Variables
+
 
         // Working copy of Inspect filter object
 
@@ -27,15 +27,12 @@ namespace MageExtExtractionFilters
         private MergeProteinData mProteinMerger;
         private bool mOutputAllProteins;
 
-        #endregion
 
-        #region Properties
 
         public FilterInspectResults ResultChecker { get; set; }
 
-        #endregion
 
-        #region Initialization
+
 
         /// <summary>
         /// Read contents of associated protein files and build lookup tables and indexes
@@ -54,7 +51,7 @@ namespace MageExtExtractionFilters
             InitializeParameters();
         }
 
-        #endregion
+
 
         /// <summary>
         /// Set up output column specifications to provide fields to receive merged protein fields

@@ -13,14 +13,8 @@ namespace MageMetadataProcessor
     {
         // Ignore Spelling: Mage
 
-        #region Member Variables
-
         // Current Mage pipeline that is running or has most recently run
         private ProcessingPipeline mCurrentPipeline;
-
-        #endregion
-
-        #region Initialization
 
         /// <summary>
         /// Constructor
@@ -69,9 +63,7 @@ namespace MageMetadataProcessor
             AdjustInitialUIState();
         }
 
-        #endregion
-
-        #region Command Processing
+        // Command Processing
 
         /// <summary>
         /// Execute a command by building and running the appropriate pipeline
@@ -195,8 +187,6 @@ namespace MageMetadataProcessor
             }
         }
 
-        #endregion
-
         private string GetDatasetSql(string cols)
         {
             var sql = "SELECT " + cols + " FROM V_Custom_Factors_List_Report ";
@@ -215,7 +205,7 @@ namespace MageMetadataProcessor
             return sql;
         }
 
-        #region Functions for setting UI state
+        // Methods for setting UI state
 
         /// <summary>
         /// Set initial conditions for display components
@@ -242,9 +232,7 @@ namespace MageMetadataProcessor
             EnableCancel(false);
         }
 
-        #endregion
-
-        #region Functions for handling status updates
+        // Methods for handling status updates
 
         private delegate void CompletionStateUpdated(object status);
 
@@ -261,10 +249,6 @@ namespace MageMetadataProcessor
             CompletionStateUpdated csu = AdjustPostCommandUIState;
             Invoke(csu, new object[] { null });
         }
-
-        #endregion
-
-        #region Mage Pipelines
 
         /// <summary>
         /// Build Mage pipeline to save contents of list display to SQLite database
@@ -323,9 +307,7 @@ namespace MageMetadataProcessor
             return ProcessingPipeline.Assemble("MetadataPreview", reader, filter, display);
         }
 
-        #endregion
-
-        #region Panel Support Functions
+        // Panel Support Methods
 
         /// <summary>
         /// Set up status panel
@@ -355,8 +337,5 @@ namespace MageMetadataProcessor
         {
             ColumnMapSelectionForm.MappingConfigFilePath = Path.Combine(SavedState.DataDirectory, "ColumnMappingConfig.db");
         }
-
-        #endregion
-
     }
 }

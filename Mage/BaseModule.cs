@@ -20,8 +20,6 @@ namespace Mage
         // ReSharper disable once MemberCanBeProtected.Global (used by the Analysis Manager)
         public const string kNoFilesFound = "--No Files Found--";
 
-        #region Member Variables
-
         private int mNameDisambiguatorCount = 1;
 
         /// <summary>
@@ -79,10 +77,6 @@ namespace Mage
         /// </summary>
         protected Dictionary<string, int> ContextColPos;
 
-        #endregion
-
-        #region Properties
-
         /// <summary>
         /// Comma-delimited list of specs for output columns that the module will supply to standard tabular output
         /// (this is only needed if module does not simply pass through the input columns)
@@ -96,8 +90,6 @@ namespace Mage
         /// <example>Item|+|text, Name|+|text, File_Size_KB|+|text, Directory, *</example>
         /// <example>ref|+|text, one, two, three, results|+|float</example>
         public string OutputColumnList { get; set; }
-
-        #endregion
 
         /// <summary>
         /// Set the context parameters for the module (Optional)
@@ -131,8 +123,6 @@ namespace Mage
 
             Context = mergedContext;
         }
-
-        #region IBaseModule Members
 
         /// <summary>
         /// Event that is fired to send row data out via the module's standard tabular output
@@ -453,9 +443,7 @@ namespace Mage
                 OnStatusMessageUpdated(new MageStatusEventArgs(source + ": Processing aborted"));
         }
 
-        #endregion
-
-        #region helper functions
+        // Helper methods
 
         /// <summary>
         /// Returns the index of columnName in columnPos
@@ -848,8 +836,5 @@ namespace Mage
             colIndex = -1;
             return false;
         }
-
-        #endregion
-
     }
 }

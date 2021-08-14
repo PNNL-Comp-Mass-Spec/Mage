@@ -7,15 +7,9 @@ namespace MageUIComponents
 {
     public partial class FilterSelectionForm : Form
     {
-        #region Member Variables
-
         private string mFilterNameToAutoSelect = string.Empty;
 
         private ProcessingPipeline mGetFilterListPipeline;
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Currently selected column mapping
@@ -37,8 +31,6 @@ namespace MageUIComponents
                 mFilterNameToAutoSelect = FilterNameCtl.Text;
             }
         }
-
-        #endregion
 
         /// <summary>
         /// Construct a new FilterSelectionForm
@@ -111,7 +103,7 @@ namespace MageUIComponents
             }
         }
 
-        #region Functions for handling status updates
+        // Methods for handling status updates
 
         private delegate void VoidFnDelegate();
 
@@ -126,7 +118,5 @@ namespace MageUIComponents
             VoidFnDelegate uf = UpdateSelectedFilter;
             Invoke(uf);
         }
-
-        #endregion
     }
 }

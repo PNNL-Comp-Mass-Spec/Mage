@@ -150,7 +150,7 @@ namespace Ranger
             return ran;
         }
 
-        #region Functions for handling status updates
+        // Methods for handling status updates
 
         private delegate void MessageHandler(string message);
         private delegate void CompletionStateUpdated(object status);
@@ -193,7 +193,5 @@ namespace Ranger
         {
             StatusCtl.Text = Message;
         }
-
-        #endregion
     }
 }

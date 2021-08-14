@@ -11,7 +11,7 @@ namespace MageExtExtractionFilters
     {
         // Ignore Spelling: Mage
 
-        #region Member Variables
+
 
         // Working copy of MSGFDB filter object
 
@@ -28,13 +28,11 @@ namespace MageExtExtractionFilters
 
         private int msgfSpecProbIndex = -1;
 
-        #endregion
 
-        #region Properties
 
         public FilterMSGFDbResults ResultChecker { get; set; }
 
-        #endregion
+
 
         /// <summary>
         /// Set up output column specifications to provide fields to receive merged protein fields

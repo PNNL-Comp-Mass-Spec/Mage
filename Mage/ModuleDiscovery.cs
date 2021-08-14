@@ -23,12 +23,6 @@ namespace Mage
             QueryDefinitionFileName = "QueryDefinitions.xml";
         }
 
-        #region Member Variables
-
-        #endregion
-
-        #region Properties
-
         /// <summary>
         /// Directory path where this class will search for DLLs that contain loadable Mage modules
         /// (including content filter modules and associated parameter panels)
@@ -73,9 +67,7 @@ namespace Mage
         /// </remarks>
         public static string DMSDatabaseOverride;
 
-        #endregion
-
-        #region General Discovery Functions
+        // General discovery methods
 
         /// <summary>
         /// Looks for a class with the given class name in the canonical
@@ -159,10 +151,6 @@ namespace Mage
             }
             return modType;
         }
-
-        #endregion
-
-        #region Filter Discovery support
 
         /// <summary>
         /// List of attributes for filters and parameter panels
@@ -311,10 +299,6 @@ namespace Mage
             return filterList;
         }
 
-        #endregion
-
-        #region Predefined Query Definition support
-
         /// <summary>
         /// Get XML definition for query with given name
         /// from external XML query definition file
@@ -373,8 +357,5 @@ namespace Mage
 
             return queryNode.OuterXml;
         }
-
-        #endregion
-
     }
 }

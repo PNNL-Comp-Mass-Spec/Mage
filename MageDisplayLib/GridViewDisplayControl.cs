@@ -18,8 +18,6 @@ namespace MageDisplayLib
 
         private readonly Dictionary<string, string> mParameters = new();
 
-        #region IModuleParameters Members
-
         /// <summary>
         /// Gets settings for this panel
         /// </summary>
@@ -43,10 +41,6 @@ namespace MageDisplayLib
             }
         }
 
-        #endregion
-
-        #region Member Variables
-
         /// <summary>
         /// Stash the Mage column definitions we received on STI
         /// in case we need to output them later
@@ -54,10 +48,6 @@ namespace MageDisplayLib
         private Collection<MageColumnDef> mColumnDefs;
 
         private bool mAllowDisableShiftClickMode = true;
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Defines whether or not checkbox "Use Shift+Click, Ctrl+Click" is visible
@@ -242,10 +232,6 @@ namespace MageDisplayLib
             }
         }
 
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Construct a new GridViewDisplayControl object
         /// </summary>
@@ -279,9 +265,7 @@ namespace MageDisplayLib
 
         }
 
-        #endregion
-
-        #region Functions for inter-thread UI updating
+        // Methods for inter-thread UI updating
 
         /// <summary>
         /// Delegates for inter-thread access to DataGridView control
@@ -362,10 +346,6 @@ namespace MageDisplayLib
             }
         }
 
-        #endregion
-
-        #region List Maintenance
-
         /// <summary>
         /// Empty the current display contents
         /// </summary>
@@ -411,9 +391,7 @@ namespace MageDisplayLib
             UpdateNoticeFieldWithRowInfo();
         }
 
-        #endregion
-
-        #region Control Handlers
+        // Control Handlers
 
         // Note that a right click context menu provides for Select All, Select None, copy selected rows, etc.
         // See file GridViewDisplayControlActions.cs
@@ -446,31 +424,19 @@ namespace MageDisplayLib
             lblNotice.Text = s + i + r;
         }
 
-        #endregion
-
         //--------------------------------------------------------
         // Mage standard tabular input (ISinkModule interface)
         //--------------------------------------------------------
-
-        #region STI Member Variables
 
         /// <summary>
         /// Internal buffer to accumulate data rows from standard tabular input
         /// </summary>
         private readonly Collection<string[]> mRowBuffer = new();
 
-        #endregion
-
-        #region STI Properties
-
         /// <summary>
         /// Number of data rows in an item block
         /// </summary>
         public int ItemBlockSize { get; set; }
-
-        #endregion
-
-        #region STI ISinkModule Members
 
         /// <summary>
         /// Get Mage column definitions
@@ -514,9 +480,7 @@ namespace MageDisplayLib
             }
         }
 
-        #endregion
-
-        #region Compatibility with ListDisplayControl
+        // Compatibility with ListDisplayControl
 
         /// <summary>
         /// Return suitable ISinkModule reference to this object
@@ -538,10 +502,6 @@ namespace MageDisplayLib
             Clear();
             return this;
         }
-
-        #endregion
-
-        #region Public Functions
 
         /// <summary>
         /// Automatically resize the column widths
@@ -603,8 +563,6 @@ namespace MageDisplayLib
             lv.Refresh();
             lv.Focus();
         }
-
-        #endregion
 
         /// <summary>
         /// Displays data in a customizable grid

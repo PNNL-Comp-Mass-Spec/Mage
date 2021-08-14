@@ -6,15 +6,9 @@ namespace MageUIComponents
 {
     public partial class ColumnMapSelectionForm : Form
     {
-        #region Member Variables
-
         private string mColumnMapToAutoSelect = string.Empty;
 
         private ProcessingPipeline mGetColumnMappingPipeline;
-
-        #endregion
-
-        #region Properties
 
         public static string MappingConfigFilePath { get; set; }
 
@@ -55,8 +49,6 @@ namespace MageUIComponents
                 return string.Empty;
             }
         }
-
-        #endregion
 
         public ColumnMapSelectionForm()
         {
@@ -112,7 +104,7 @@ namespace MageUIComponents
             }
         }
 
-        #region Functions for handling status updates
+        // Methods for handling status updates
 
         private delegate void VoidFnDelegate();
 
@@ -127,8 +119,5 @@ namespace MageUIComponents
             VoidFnDelegate uf = UpdateSelectedColumnMapping;
             Invoke(uf);
         }
-
-        #endregion
-
     }
 }

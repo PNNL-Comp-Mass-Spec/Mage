@@ -124,7 +124,7 @@ namespace MageUIComponents
             set => SubdirectorySearchName = value;
         }
 
-        #region IModuleParameters Members
+
 
         public Dictionary<string, string> GetParameters()
         {
@@ -163,15 +163,13 @@ namespace MageUIComponents
             }
         }
 
-        #region Properties
-
         public string FileSelectors
         {
             get => FileSelectorsCtl.Text;
             set => FileSelectorsCtl.Text = value;
         }
 
-        #endregion
+
 
         private void GetFilesForSelectedEntriesCtl_Click(object sender, EventArgs e)
         {
@@ -183,7 +181,7 @@ namespace MageUIComponents
             OnAction?.Invoke(this, new MageCommandEventArgs("get_files_from_entities", "all"));
         }
 
-        #endregion
+
 
         private void RegExRadioBtn_CheckedChanged(object sender, EventArgs e)
         {

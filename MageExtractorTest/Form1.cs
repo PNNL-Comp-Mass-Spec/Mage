@@ -9,8 +9,6 @@ namespace MageExtractorTest
 {
     public partial class Form1 : Form
     {
-        #region Initialization
-
         public Form1()
         {
             InitializeComponent();
@@ -19,8 +17,6 @@ namespace MageExtractorTest
             const bool appendDateToBaseName = false;
             FileLogger.ChangeLogFileBaseName(logFilePath, appendDateToBaseName);
         }
-
-        #endregion
 
         private void Button1_Click(object sender, EventArgs e)
         {
@@ -47,8 +43,6 @@ namespace MageExtractorTest
             tests.RunExtractionTestCases(testCases);
         }
 
-        #region Message Handlers
-
         private delegate void MessageHandler(string message);
 
         private void HandleMessage(object sender, MageStatusEventArgs args)
@@ -70,9 +64,7 @@ namespace MageExtractorTest
             textBox1.Update();
         }
 
-        #endregion
-
-        #region Weird XML pipeline testing stuff
+        // Weird XML pipeline testing stuff
 
         private void Label1_Click(object sender, EventArgs e)
         {
@@ -193,7 +185,5 @@ namespace MageExtractorTest
         // Export SQLite query to file
 
         // Do extraction
-
-        #endregion
     }
 }

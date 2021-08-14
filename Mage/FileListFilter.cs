@@ -34,8 +34,6 @@ namespace Mage
             Directories
         };
 
-        #region Member Variables
-
         private bool mIncludeFiles;
         private bool mIncludeDirectories;
         private bool mRecurseMyEMSL;
@@ -44,14 +42,6 @@ namespace Mage
         /// List of subdirectories to search when RecursiveSearch is enabled ("Search in subdirectories")
         /// </summary>
         private readonly List<string[]> mSearchSubdirectories = new();
-
-        #endregion
-
-        #region "Constants"
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// List of directory paths to which the user did not have access
@@ -175,10 +165,6 @@ namespace Mage
             set => SubdirectorySearchName = value;
         }
 
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Construct a new Mage file list filter module
         /// </summary>
@@ -189,9 +175,7 @@ namespace Mage
             RecursiveSearch = "No";
         }
 
-        #endregion
-
-        #region Search Functions
+        // Search Methods
 
         /// <summary>
         /// Set up controls for scope of search
@@ -279,10 +263,6 @@ namespace Mage
         {
             SearchDirectories(outputBufferRowIdx, fileInfo, subdirectoryInfo, directoryPath, datasetName);
         }
-
-        #endregion
-
-        #region Private Functions
 
         private void SearchDirectories(
             int outputBufferRowIdx,
@@ -711,8 +691,5 @@ namespace Mage
             }
             return selector;
         }
-
-        #endregion
-
     }
 }

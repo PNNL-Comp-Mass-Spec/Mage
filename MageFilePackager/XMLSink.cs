@@ -8,27 +8,13 @@ namespace MageFilePackager
     {
         // Ignore Spelling: Mage
 
-        #region Member Variables
-
         private readonly StringBuilder _text = new();
-
-        #endregion
-
-        #region Properties
 
         public string Text => _text.ToString();
 
         public Dictionary<string, string> Prefixes { get; set; }
 
         public Dictionary<string, string> Parameters { get; set; }
-
-        #endregion
-
-        #region Constructors
-
-        #endregion
-
-        #region IBaseModule Members
 
         public override void Prepare()
         {
@@ -55,9 +41,7 @@ namespace MageFilePackager
             }
         }
 
-        #endregion
-
-        #region Support Functions
+        // Support methods
 
         private void OutputParameterElements()
         {
@@ -94,7 +78,5 @@ namespace MageFilePackager
             }
             _text.Append(" />\n");
         }
-
-        #endregion
     }
 }

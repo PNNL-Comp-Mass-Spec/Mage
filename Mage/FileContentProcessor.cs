@@ -28,14 +28,10 @@ namespace Mage
     /// </summary>
     public class FileContentProcessor : FileProcessingBase
     {
-        #region Member Variables
-
         // Delegate that this module calls to get output file name
         private OutputFileNamer GetOutputFileName;
 
-        #endregion
-
-        #region Functions Available to Clients
+        // Methods available to clients
 
         /// <summary>
         /// Define a delegate function that will generate output file name
@@ -45,10 +41,6 @@ namespace Mage
         {
             GetOutputFileName = namer;
         }
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Path to the directory into which the
@@ -111,10 +103,6 @@ namespace Mage
         /// </summary>
         public string OutputFileColumnName { get; set; }
 
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Construct new Mage file content processor module
         /// </summary>
@@ -129,10 +117,6 @@ namespace Mage
             OutputColumnList = string.Format("{0}|+|text, {1}", OutputFileColumnName, SourceDirectoryColumnName);
             GetOutputFileName = GetDefaultOutputFileName;
         }
-
-        #endregion
-
-        #region IBaseModule Members
 
         /// <summary>
         /// Handler for Mage standard tabular input data rows
@@ -271,10 +255,6 @@ namespace Mage
             ExportColumnDefs();
         }
 
-        #endregion
-
-        #region Overrides
-
         /// <summary>
         /// This function should be overriden by subclasses to do the actual processing
         /// </summary>
@@ -295,9 +275,7 @@ namespace Mage
         {
         }
 
-        #endregion
-
-        #region Utility functions
+        // Utility methods
 
         /// <summary>
         /// Default output file renamer
@@ -311,9 +289,7 @@ namespace Mage
             return sourceFile;
         }
 
-        #endregion
-
-        #region Functions for Output Columns
+        // Methods for output columns
 
         // Tell our subscribers what columns to expect from us
         // which will be information about the files processed
@@ -322,10 +298,6 @@ namespace Mage
         {
             OnColumnDefAvailable(new MageColumnEventArgs(OutputColumnDefs.ToArray()));
         }
-
-        #endregion
-
-        #region Event Handlers
 
         /// <summary>
         /// Update any interested listeners about our progress
@@ -336,7 +308,5 @@ namespace Mage
         {
             OnStatusMessageUpdated(args);
         }
-
-        #endregion
     }
 }

@@ -9,13 +9,7 @@ namespace Mage
     /// </summary>
     public class DataGenerator : BaseModule
     {
-        #region Member Variables
-
         private readonly List<string[]> mAdHocRows = new();
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Add a data row to the internal row buffer
@@ -54,10 +48,6 @@ namespace Mage
         /// </summary>
         public static string SimulatedDataTemplate { get; }
 
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Static constructor
         /// </summary>
@@ -92,9 +82,6 @@ namespace Mage
             Rows = 20;
             Cols = 5;
         }
-        #endregion
-
-        #region IBaseModule Members
 
         /// <summary>
         /// Pass execution to module instead of having it respond to standard tabular input stream events
@@ -194,8 +181,5 @@ namespace Mage
         {
             OnDataRowAvailable(new MageDataEventArgs(fields));
         }
-
-        #endregion
-
     }
 }

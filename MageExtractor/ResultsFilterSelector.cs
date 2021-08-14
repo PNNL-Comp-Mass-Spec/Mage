@@ -9,17 +9,11 @@ namespace MageExtractor
     {
         // Ignore Spelling: Mage
 
-        #region Member Variables
-
         private readonly Dictionary<string, string> mParameters = new();
 
         private string mFilterSetIDToAutoSelect = string.Empty;
 
         private ProcessingPipeline mGetFilterSetsPipeline;
-
-        #endregion
-
-        #region Properties
 
         public string FilterSetID
         {
@@ -36,10 +30,6 @@ namespace MageExtractor
             }
         }
 
-        #endregion
-
-        #region IModuleParameters Members
-
         public Dictionary<string, string> GetParameters()
         {
             mParameters["FilterSetID"] = FilterSetIDCtl.Text;
@@ -50,8 +40,6 @@ namespace MageExtractor
         {
             FilterSetIDCtl.Text = paramList["FilterSetID"];
         }
-
-        #endregion
 
         /// <summary>
         /// Constructor
@@ -118,7 +106,7 @@ namespace MageExtractor
             }
         }
 
-        #region Functions for handling status updates
+        // Methods for handling status updates
 
         private delegate void VoidFnDelegate();
 
@@ -133,8 +121,5 @@ namespace MageExtractor
             VoidFnDelegate uf = UpdateSelectedFilterSetID;
             Invoke(uf);
         }
-
-        #endregion
-
     }
 }

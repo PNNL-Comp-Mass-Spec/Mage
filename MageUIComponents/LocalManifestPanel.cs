@@ -14,11 +14,9 @@ namespace MageUIComponents
             InitializeComponent();
         }
 
-        #region Member Variables
 
-        #endregion
 
-        #region Properties
+
 
         public string ManifestFilePath
         {
@@ -26,9 +24,9 @@ namespace MageUIComponents
             set => LocalManifestFileCtl.Text = value;
         }
 
-        #endregion
 
-        #region IModuleParameters Members
+
+
 
         public Dictionary<string, string> GetParameters()
         {
@@ -51,7 +49,7 @@ namespace MageUIComponents
             }
         }
 
-        #endregion
+
 
         private void DefineManifestFileCtl_Click(object sender, EventArgs e)
         {

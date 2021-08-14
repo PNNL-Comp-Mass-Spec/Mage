@@ -14,8 +14,6 @@ namespace MageUIComponents
             InitializeComponent();
         }
 
-        #region Properties
-
         public string DatabaseName
         {
             get
@@ -38,9 +36,9 @@ namespace MageUIComponents
             set => TableNameCtl.Text = value;
         }
 
-        #endregion
 
-        #region IModuleParameters Members
+
+
 
         public Dictionary<string, string> GetParameters()
         {
@@ -67,7 +65,7 @@ namespace MageUIComponents
             }
         }
 
-        #endregion
+
 
         private void SelectSqLiteDbCtl_Click(object sender, EventArgs e)
         {

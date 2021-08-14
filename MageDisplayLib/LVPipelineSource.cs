@@ -20,18 +20,12 @@ namespace MageDisplayLib
     {
         // Ignore Spelling: Mage
 
-        #region Member Variables
-
         // Object whose data we are serving
         private readonly ListDisplayControl myListControl;
 
         private readonly List<MageColumnDef> mColumnDefs = new();
 
         private readonly List<List<string>> RowBuffer = new();
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Construct a LVPipelineSource object
@@ -55,10 +49,6 @@ namespace MageDisplayLib
             GetRowsFromList(mode);
         }
 
-        #endregion
-
-        #region Properties
-
         /// <summary>
         /// Set the module to stop execution
         /// </summary>
@@ -67,10 +57,6 @@ namespace MageDisplayLib
             get => Abort;
             set => Abort = value;
         }
-
-        #endregion
-
-        #region IBaseModule Members
 
         /// <summary>
         /// Output each row in associated ListViewDisplayList object
@@ -82,10 +68,6 @@ namespace MageDisplayLib
         {
             OutputListItems();
         }
-
-        #endregion
-
-        #region Private Functions
 
         private void GetColumnDefs()
         {
@@ -137,8 +119,5 @@ namespace MageDisplayLib
             }
             OnDataRowAvailable(new MageDataEventArgs(null));
         }
-
-        #endregion
-
     }
 }

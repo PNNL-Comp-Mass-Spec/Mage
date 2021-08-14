@@ -16,7 +16,7 @@ namespace MageExtExtractionFilters
     {
         // Ignore Spelling: Mage
 
-        #region Member Variables
+
 
         private int mCurrentFileCount;
 
@@ -24,9 +24,7 @@ namespace MageExtExtractionFilters
 
         private string mCurrentProgressText = string.Empty;
 
-        #endregion
 
-        #region Properties
 
         /// <summary>
         /// Set of parameters specifying the user's choices for
@@ -53,7 +51,7 @@ namespace MageExtExtractionFilters
         /// </summary>
         public string SourceFileColumnName { get; set; }
 
-        #endregion
+
 
         /// <summary>
         /// Column indexes

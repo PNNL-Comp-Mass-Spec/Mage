@@ -11,14 +11,8 @@ namespace Mage
     /// <remarks>This filter is used by the Analysis Manager's Phospho_FDR_Aggregator PlugIn</remarks>
     public class MergeFromLookup : ContentFilter
     {
-        #region Member Variables
-
         private int _keyColIdx;
         private int _mergeColIdx;
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Key-value lookup for merged value
@@ -41,8 +35,6 @@ namespace Mage
         /// </summary>
         /// <remarks>Default is False</remarks>
         public bool ThrowExceptionIfLookupFails { get; set; }
-
-        #endregion
 
         /// <summary>
         /// Set up column indexes

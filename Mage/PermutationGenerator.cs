@@ -11,8 +11,6 @@ namespace Mage
     /// </summary>
     public class PermutationGenerator : BaseModule
     {
-        #region Member Variables
-
         /// <summary>
         /// List of definitions for the parameters that will be permutated
         /// and included in the standard tabular output as columns
@@ -22,10 +20,6 @@ namespace Mage
         private int mTotalRows = 1;
 
         private int mAutoColumnIndex = -1;
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Include header row in generated data
@@ -73,10 +67,6 @@ namespace Mage
             }
         }
 
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Construct a new empty Mage permutation generator object
         /// </summary>
@@ -88,9 +78,7 @@ namespace Mage
             AutoColumnSeed = 1;
         }
 
-        #endregion
-
-        #region Client Accessible Functions
+       // Client accessible methods
 
         /// <summary>
         /// Add a parameter column definition.  The parameter will be incremented by the step
@@ -119,10 +107,6 @@ namespace Mage
             SetCycleCountsForParamterColDefList();
         }
 
-        #endregion
-
-        #region IBaseModule Members
-
         /// <summary>
         /// Generate data and output it
         /// (override of base class)
@@ -138,10 +122,6 @@ namespace Mage
             }
             GenerateRows();
         }
-
-        #endregion
-
-        #region Private Functions
 
         // Set up auto column
         private void SetupAutoColumn()
@@ -257,10 +237,6 @@ namespace Mage
                 OnColumnDefAvailable(new MageColumnEventArgs(InputColumnDefs.ToArray()));
             }
         }
-
-        #endregion
-
-        #region Private classes
 
         // Class that provides permutation behavior
         // for a single parameter
@@ -392,7 +368,5 @@ namespace Mage
                 }
             }
         }
-
-        #endregion
     }
 }

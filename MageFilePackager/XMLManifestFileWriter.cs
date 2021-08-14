@@ -9,8 +9,6 @@ namespace MageFilePackager
     [Obsolete("Unused")]
     internal class XMLManifestFileWriter : BaseModule, IDisposable
     {
-        #region Member Variables
-
         private StreamWriter _mOutFile;
 
         public XMLManifestFileWriter(string filePath)
@@ -18,24 +16,12 @@ namespace MageFilePackager
             FilePath = filePath;
         }
 
-        #endregion
-
-        #region Properties
-
         /// <summary>
         /// Full path for output files
         /// </summary>
         public string FilePath { get; }
 
         public Dictionary<string, string> Prefixes { get; set; }
-
-        #endregion
-
-        #region Constructors
-
-        #endregion
-
-        #region IDisposable Members
 
         /// <summary>
         /// Dispose of held resources
@@ -61,10 +47,6 @@ namespace MageFilePackager
 
             // isDisposed = true;
         }
-
-        #endregion
-
-        #region IBaseModule Members
 
         /// <summary>
         /// Called before pipeline runs - module can do any special setup that it needs
@@ -129,9 +111,7 @@ namespace MageFilePackager
             }
         }
 
-        #endregion
-
-        #region Support Functions
+        // Support methods
 
         private void OutputHeader()
         {
@@ -164,7 +144,5 @@ namespace MageFilePackager
             sb.Append(" />");
             _mOutFile.WriteLine(sb.ToString());
         }
-
-        #endregion
     }
 }

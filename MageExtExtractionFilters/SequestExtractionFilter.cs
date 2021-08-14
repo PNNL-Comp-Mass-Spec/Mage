@@ -11,7 +11,7 @@ namespace MageExtExtractionFilters
     {
         // Ignore Spelling: Mage, Sequest
 
-        #region Member Variables
+
 
         // Working copy of SEQUEST hit checker object
 
@@ -26,13 +26,11 @@ namespace MageExtExtractionFilters
         private int msgfSpecProbIndex;
         private int rankXCIndex;
 
-        #endregion
 
-        #region Properties
 
         public FilterSequestResults ResultChecker { get; set; }
 
-        #endregion
+
 
         /// <summary>
         /// Set up output column specifications to provide fields to receive merged protein fields

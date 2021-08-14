@@ -12,8 +12,6 @@ namespace MageFilePackager
     /// </summary>
     internal class GridViewDisplayActions
     {
-        #region Member Variables
-
         /// <summary>
         /// The particular GridViewDisplayControl object that this object is attached to
         /// and supplies context menu items for
@@ -39,10 +37,6 @@ namespace MageFilePackager
         private readonly List<string> mJobSensitiveMenuItems = new();
         private readonly List<string> mDatasetSensitiveMenuItems = new();
 
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Constructor
         /// Can't instantiate this class without an associated GridViewDisplayControl object
@@ -55,10 +49,6 @@ namespace MageFilePackager
             mDisplayUserControl.SelectionChanged += HandleSelectionChanged;
             SetupContextMenus();
         }
-
-        #endregion
-
-        #region Setup
 
         /// <summary>
         /// Create the context menu for the display list
@@ -78,9 +68,7 @@ namespace MageFilePackager
             }
         }
 
-        #endregion
-
-        #region Web Action Menus
+        // Web Action Menus
 
         /// <summary>
         /// Build set of menu items for opening web pages
@@ -128,9 +116,7 @@ namespace MageFilePackager
             PanelSupport.LaunchWebBrowser(mDisplayView, url, columnName);
         }
 
-        #endregion
-
-        #region Windows Explorer Directory Menu Actions
+        // Windows Explorer Directory Menu Actions
 
         private IEnumerable<ToolStripItem> GetDirectoryMenuItems()
         {
@@ -162,10 +148,6 @@ namespace MageFilePackager
         {
             PanelSupport.OpenWindowsExplorer(mDisplayView, columnName);
         }
-
-        #endregion
-
-        #region Event Handlers
 
         /// <summary>
         /// Will be wired up to receive "SelectionChanged" events
@@ -229,7 +211,5 @@ namespace MageFilePackager
                 }
             }
         }
-
-        #endregion
     }
 }

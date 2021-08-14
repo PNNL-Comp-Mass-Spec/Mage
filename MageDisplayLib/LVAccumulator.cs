@@ -23,8 +23,6 @@ namespace MageDisplayLib
     {
         // Ignore Spelling: Mage
 
-        #region Events for ListDisplay listeners to register for
-
         /// <summary>
         /// Event that is fired to pass on column definitions to our associated control
         /// </summary>
@@ -35,17 +33,9 @@ namespace MageDisplayLib
         /// </summary>
         public event EventHandler<ItemBlockEventArgs> OnItemBlockRetrieved;
 
-        #endregion
-
-        #region Member Variables
-
         private readonly List<ListViewItem> itemAccumulator = new();
         private readonly List<ColumnHeader> columnAccumulator = new();
         private List<MageColumnDef> mColumnDefs = new();
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Number of data rows in an item block
@@ -62,10 +52,6 @@ namespace MageDisplayLib
         /// </summary>
         public Collection<MageColumnDef> Columns => new(mColumnDefs);
 
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Number of items to accumulate before firing an update event
         /// </summary>
@@ -74,9 +60,7 @@ namespace MageDisplayLib
             ItemBlockSize = 1000;
         }
 
-        #endregion
-
-        #region Utility functions
+        // Utility methods
 
         /// <summary>
         /// Clear any accumulate row and column information
@@ -86,10 +70,6 @@ namespace MageDisplayLib
             itemAccumulator.Clear();
             columnAccumulator.Clear();
         }
-
-        #endregion
-
-        #region Handlers for ISinkModule
 
         /// <summary>
         /// <para>
@@ -179,10 +159,7 @@ namespace MageDisplayLib
             }
             OnColumnBlockRetrieved?.Invoke(this, new ColumnHeaderEventArgs(new Collection<ColumnHeader>(columnAccumulator)));
         }
-        #endregion
     }
-
-    #region Event argument classes
 
     /// <summary>
     /// Argument class for event that passes block of items to list view control
@@ -237,6 +214,4 @@ namespace MageDisplayLib
             ColumnBlock = columnBlock?.ToArray();
         }
     }
-
-    #endregion
 }

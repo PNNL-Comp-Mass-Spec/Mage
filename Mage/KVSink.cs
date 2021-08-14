@@ -7,16 +7,10 @@ namespace Mage
     /// </summary>
     public class KVSink : BaseModule
     {
-        #region Member Variables
-
         private int mKeyColIdx;
         private int mValColIdx;
 
         private readonly Dictionary<string, string> mKV = new();
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Name of input column that contains key
@@ -32,8 +26,6 @@ namespace Mage
         /// Get accumulated key/value store
         /// </summary>
         public Dictionary<string, string> Values => mKV;
-
-        #endregion
 
         /// <summary>
         /// Handler for ColumnDefAvailable events

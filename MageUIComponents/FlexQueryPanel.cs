@@ -11,14 +11,11 @@ namespace MageUIComponents
     {
         public event EventHandler<MageCommandEventArgs> OnAction;
 
-        #region Member Variables
-
         private readonly List<FlexQueryItemPanel> QueryItemPanels = new();
 
-        #endregion
-
-        #region Constructor
-
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public FlexQueryPanel()
         {
             InitializeComponent();
@@ -27,10 +24,6 @@ namespace MageUIComponents
             QueryItemPanels.Add(flexQueryItemPanel3);
             QueryItemPanels.Add(flexQueryItemPanel4);
         }
-
-        #endregion
-
-        #region IModuleParameters Members
 
         public Dictionary<string, string> GetParameters()
         {
@@ -65,10 +58,6 @@ namespace MageUIComponents
             }
         }
 
-        #endregion
-
-        #region Properties
-
         public string QueryName { get; set; }
 
         public Collection<string> QueryItems
@@ -88,10 +77,6 @@ namespace MageUIComponents
             }
         }
 
-        #endregion
-
-        #region Initialize Query Item Pick lists
-
         public void SetComparisionPickList(string[] items)
         {
             foreach (var pnl in QueryItemPanels)
@@ -108,9 +93,7 @@ namespace MageUIComponents
             }
         }
 
-        #endregion
-
-        #region Utility Functions
+        // Utility methods
 
         private static string EncodeQueryItem(FlexQueryItemPanel pnl)
         {
@@ -130,8 +113,6 @@ namespace MageUIComponents
         {
             OnAction?.Invoke(this, new MageCommandEventArgs("get_entities_from_flex_query", QueryName));
         }
-
-        #endregion
 
         public SQLBuilder GetSQLBuilder(string queryTemplate)
         {

@@ -14,15 +14,9 @@ namespace MageFilePackager
             treeView1.AfterCheck += NodeAfterCheck;
         }
 
-        #region Member Variables
-
         // Column information for the standard file package format
         private List<MageColumnDef> _columnDefs;
         private Dictionary<string, int> _columnPos;
-
-        #endregion
-
-        #region Properties
 
         // Mage display source from which to load the tree view
         public GVPipelineSource FileListSource { get; set; }
@@ -30,8 +24,6 @@ namespace MageFilePackager
         // Mage filter module to use in translating source display into standard file package format
         // (optional, depending on source)
         public BaseModule PackageFilter { get; set; }
-
-        #endregion
 
         /// <summary>
         /// Populate tree when form loads
@@ -72,8 +64,6 @@ namespace MageFilePackager
         {
             return new TreeSource { ColumnDefs = _columnDefs, FileTree = treeView1 };
         }
-
-        #region File Selection
 
         private float _checkedSizeTotal;
         private int _numChecked;
@@ -116,10 +106,6 @@ namespace MageFilePackager
                 node.Text = string.Format("{0} [{1:###,###,##0.0} MB]", node.Name, myTally / 1024);
             }
         }
-
-        #endregion
-
-        #region Tree Control Utilities
 
         private void ExpandAllBtnClick(object sender, EventArgs e)
         {
@@ -189,10 +175,6 @@ namespace MageFilePackager
                 CalculateCheckedTotalSize();
             }
         }
-
-        #endregion
-
-        #region Internal Classes
 
         /// <summary>
         /// Mage sink module that populates tree view from file paths
@@ -299,8 +281,5 @@ namespace MageFilePackager
                 }
             }
         }
-
-        #endregion
-
     }
 }

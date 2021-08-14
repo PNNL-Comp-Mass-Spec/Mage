@@ -9,8 +9,6 @@ namespace MageMetadataProcessor
     {
         public event EventHandler<MageCommandEventArgs> OnAction;
 
-        #region Properties
-
         public string DatasetName
         {
             get => DatasetNameCtl.Text;
@@ -22,9 +20,9 @@ namespace MageMetadataProcessor
             set => DataPackageNumberCtl.Text = value;
         }
 
-        #endregion
 
-        #region IModuleParameters Members
+
+
 
         public Dictionary<string, string> GetParameters()
         {
@@ -50,7 +48,7 @@ namespace MageMetadataProcessor
             }
         }
 
-        #endregion
+
 
         public DatasetFactorsPanel()
         {

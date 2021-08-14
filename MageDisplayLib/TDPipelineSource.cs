@@ -11,8 +11,6 @@ namespace MageDisplayLib
     {
         // Ignore Spelling: Mage
 
-        #region Member Variables
-
         // Object whose data we are serving
         private readonly TextDisplayControl myTextControl;
 
@@ -20,10 +18,6 @@ namespace MageDisplayLib
         private char[] mDelimiter = { '\t' };
 
         private bool doHeaderLine = true;
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Construct new Mage TDPipelineSource object
@@ -36,10 +30,6 @@ namespace MageDisplayLib
             myTextControl = lc;
             Header = "Yes";
         }
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Delimiter used to separate text lines into fields
@@ -55,10 +45,6 @@ namespace MageDisplayLib
         /// </summary>
         public string Header { get; }
 
-        #endregion
-
-        #region IBaseModule Members
-
         /// <summary>
         /// Output each row in associated TextDisplayList object
         /// to Mage standard tabular output, one row at a time.
@@ -69,10 +55,6 @@ namespace MageDisplayLib
             doHeaderLine = OptionEnabled(Header);
             OutputRowsFromList();
         }
-
-        #endregion
-
-        #region Private Functions
 
         private void OutputRowsFromList()
         {
@@ -110,8 +92,5 @@ namespace MageDisplayLib
         {
             OnDataRowAvailable(new MageDataEventArgs(fields));
         }
-
-        #endregion
-
     }
 }

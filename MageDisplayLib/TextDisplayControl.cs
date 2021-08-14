@@ -9,8 +9,6 @@ namespace MageDisplayLib
     /// </summary>
     public partial class TextDisplayControl : UserControl
     {
-        #region Properties
-
         /// <summary>
         /// Get complete contents of text display
         /// </summary>
@@ -43,7 +41,7 @@ namespace MageDisplayLib
             set => MainTextCtl.ScrollBars = value;
         }
 
-        #endregion
+
 
         /// <summary>
         /// Set lines of text to display in the control

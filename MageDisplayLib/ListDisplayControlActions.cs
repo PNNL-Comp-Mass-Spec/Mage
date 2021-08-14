@@ -17,17 +17,13 @@ namespace MageDisplayLib
     {
         // Ignore Spelling: Mage
 
-        #region Member Variables
-
         /// <summary>
         /// List of names of all menu items created by this class
         /// </summary>
         private readonly List<string> mAllMenuItems = new();
         private readonly List<string> mSelectAllMenuItems = new();
 
-        #endregion
-
-        #region Context Menu Functions
+        // Context Menu Methods
 
         /// <summary>
         /// Add context menu to control for saving and restoring contents of list display to/from a file
@@ -86,9 +82,7 @@ namespace MageDisplayLib
             lvQueryResults.ContextMenuStrip.Items.AddRange(items);
         }
 
-        #endregion
-
-        #region List Persistence Functions
+        // List Persistence Methods
 
         private List<ToolStripItem> GetPersistenceMenuItems()
         {
@@ -208,10 +202,6 @@ namespace MageDisplayLib
             return ProcessingPipeline.Assemble("RestoreListDisplayPipeline", new Collection<object> { reader, sinkObject });
         }
 
-        #endregion
-
-        #region Basic Housekeeping Menus
-
         /// <summary>
         /// Builds a set of new menu items that handle basic housekeeping
         /// (selection and deletion) of items in list
@@ -248,9 +238,7 @@ namespace MageDisplayLib
             DeleteNotSelectedItems();
         }
 
-        #endregion
-
-        #region Copy Menus
+        // Copy Menus
 
         /// <summary>
         /// Builds as set of menu items for actions that copy contents of
@@ -350,10 +338,6 @@ namespace MageDisplayLib
             Clipboard.SetText(copiedText.ToString());
         }
 
-        #endregion
-
-        #region Event Handlers
-
         /// <summary>
         /// Will be wired up to receive "SelectionChanged" events
         /// from associated ListDisplay so that display state
@@ -404,7 +388,5 @@ namespace MageDisplayLib
                 }
             }
         }
-
-        #endregion
     }
 }

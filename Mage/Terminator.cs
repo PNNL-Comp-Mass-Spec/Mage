@@ -10,13 +10,7 @@ namespace Mage
     /// </summary>
     public class Terminator : BaseModule
     {
-        #region Member Variables
-
         private int mRowsProcessed;
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Number of rows to accumulate in internal row buffer
@@ -28,10 +22,6 @@ namespace Mage
         /// </summary>
         public Collection<MageColumnDef> Columns => new(InputColumnDefs);
 
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Construct a terminator module with no limit on input rows
         /// </summary>
@@ -39,10 +29,6 @@ namespace Mage
         {
             RowsToSave = int.MaxValue;
         }
-
-        #endregion
-
-        #region IBaseModule Members
 
         /// <summary>
         /// Called before pipeline runs - module can do any special setup that it needs
@@ -86,8 +72,5 @@ namespace Mage
                 }
             }
         }
-
-        #endregion
-
     }
 }

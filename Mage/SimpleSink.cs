@@ -22,16 +22,10 @@ namespace Mage
     /// </summary>
     public class SimpleSink : BaseModule
     {
-        #region Member Variables
-
         /// <summary>
         /// An internal buffer for accumulating rows passed in via the standard tabular input handler
         /// </summary>
         private readonly List<string[]> SavedRows = new();
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Echo each column event and each row event to console if set true (default)
@@ -58,10 +52,6 @@ namespace Mage
         /// Get rows that were accumulated in the internal row buffer
         /// </summary>
         public Collection<string[]> Rows => new(SavedRows);
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Construct a new Mage sink object
@@ -92,10 +82,6 @@ namespace Mage
             RowsToSave = rows;
             WriteToConsole = verbose;
         }
-
-        #endregion
-
-        #region IBaseModule Members
 
         /// <summary>
         /// Called before pipeline runs - module can do any special setup that it needs
@@ -173,9 +159,7 @@ namespace Mage
             OnDataRowAvailable(new MageDataEventArgs(null));
         }
 
-        #endregion
-
-        #region Utility_Functions
+        // Utility methods
 
         /// <summary>
         /// Populates value with the value for column colIndex in row rowIndex
@@ -298,8 +282,5 @@ namespace Mage
             }
             return false;
         }
-
-        #endregion
-
     }
 }

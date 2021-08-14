@@ -8,7 +8,7 @@ namespace MageExtExtractionFilters
     {
         // Ignore Spelling: Mage
 
-        #region "Enums"
+
         public enum MSPathFinderColumns
         {
             Peptide,
@@ -22,9 +22,9 @@ namespace MageExtExtractionFilters
             Protein
         }
 
-        #endregion
 
-        #region Member Variables
+
+
 
         // Working copy of MSPathFinder filter object
 
@@ -40,15 +40,12 @@ namespace MageExtExtractionFilters
         private bool mOutputAllProteins;
         private SortedSet<string> mDataWrittenRowTags;
 
-        #endregion
 
-        #region Properties
 
         public FilterMSPathFinderResults ResultChecker { get; set; }
 
-        #endregion
 
-        #region Initialization
+
 
         /// <summary>
         /// Read contents of associated protein files and build lookup tables and indexes
@@ -68,7 +65,7 @@ namespace MageExtExtractionFilters
             InitializeParameters();
         }
 
-        #endregion
+
 
         /// <summary>
         /// Set up output column specifications to provide fields to receive merged protein fields

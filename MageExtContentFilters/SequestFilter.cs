@@ -14,7 +14,7 @@ namespace MageExtContentFilters
     {
         // Ignore Spelling: Mage, pre, Sequest
 
-        #region Member Variables
+
 
         /// <summary>
         /// Working copy of SEQUEST filter object
@@ -37,16 +37,14 @@ namespace MageExtContentFilters
         private int msgfSpecProbIndex;
         private int rankXcIndex;
 
-        #endregion
 
-        #region Properties
 
         /// <summary>
         /// The ID of the filter set from DMS to use
         /// </summary>
         public string FilterSetID { get; set; }
 
-        #endregion
+
 
         /// <summary>
         /// Called before pipeline runs - module can do any special setup that it needs

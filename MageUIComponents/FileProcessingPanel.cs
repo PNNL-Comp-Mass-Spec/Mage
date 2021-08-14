@@ -26,7 +26,7 @@ namespace MageUIComponents
         // Delegate for getting information about output file/database
         public Func<Dictionary<string, string>> GetSelectedOutputInfo;
 
-        #region Member Variables
+
 
         /// <summary>
         /// Stores parameter sets for filters, keyed by filter name.
@@ -38,18 +38,16 @@ namespace MageUIComponents
         /// </summary>
         private string mOutputColumnList = string.Empty;
 
-        #endregion
 
-        #region Properties
 
         /// <summary>
         /// Return class name for selected filter
         /// </summary>
         public string SelectedFilterClassName => ModuleDiscovery.SelectedFilterClassName(FilterSelectionCtl.Text);
 
-        #endregion
 
-        #region IModuleParameters Members
+
+
 
         /// <summary>
         /// Get a merged set of parameters consisting of the canonical parameters
@@ -84,7 +82,7 @@ namespace MageUIComponents
             // FUTURE: set individual controls from items in the list
         }
 
-        #endregion
+
 
         /// <summary>
         /// Issue command to process file contents
@@ -108,7 +106,7 @@ namespace MageUIComponents
             OnAction?.Invoke(this, new MageCommandEventArgs("process_file_contents", "all"));
         }
 
-        #region Support functions
+        // Support methods
 
         /// <summary>
         /// See if there is a parameter panel associated with the currently selected filter
@@ -140,7 +138,7 @@ namespace MageUIComponents
             }
         }
 
-        #endregion
+
 
         // (if there is such a panel)
         /// <summary>
@@ -175,7 +173,7 @@ namespace MageUIComponents
             }
         }
 
-        #region Column Mapping Functions
+        // Column mapping methods
 
         /// <summary>
         /// Bring up column mapping selection list and allow user to choose one
@@ -223,7 +221,7 @@ namespace MageUIComponents
             mOutputColumnList = string.Empty;
         }
 
-        #endregion
+
 
         /// <summary>
         /// Bring up filter selection dialog and allow user to choose one

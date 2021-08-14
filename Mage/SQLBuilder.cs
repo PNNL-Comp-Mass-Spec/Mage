@@ -36,17 +36,11 @@ namespace Mage
         /// <remarks>This constant's value must match the property named Username in the SQLReader class</remarks>
         public const string USERNAME_KEY = "Username";
 
-        #region Member Variables
-
         private readonly List<QueryPredicate> mPredicates = new();
 
         private readonly Dictionary<string, QueryPredicate> mDefaultPredicates = new();
 
         private readonly List<QuerySort> mSortingItems = new();
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Database table for SQL query
@@ -92,10 +86,6 @@ namespace Mage
         /// Are there any predicate clauses?
         /// </summary>
         public bool HasPredicate => mPredicates.Count > 0;
-
-        #endregion
-
-        #region Private Classes
 
         /// <summary>
         /// A query predicate item
@@ -157,10 +147,6 @@ namespace Mage
             }
         }
 
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Construct new Mage SQLBuilder object
         /// </summary>
@@ -183,10 +169,6 @@ namespace Mage
             QueryType = "filtered_and_sorted";
             InitializeFromXML(xml, ref args);
         }
-
-        #endregion
-
-        #region Initialization
 
         /// <summary>
         /// Populate this object from query in xml specification
@@ -293,10 +275,6 @@ namespace Mage
                 SprocParameters[arg.Key] = arg.Value;
             }
         }
-
-        #endregion
-
-        #region Client functions
 
         /// <summary>
         /// Return a dictionary object containing the description text for query components
@@ -557,10 +535,6 @@ namespace Mage
             return sql.ToString();
         }
 
-        #endregion
-
-        #region Private Functions
-
         private string GetAttributeValue(XmlNode itemNode, string attributeName, string valueIfMissing)
         {
             if (itemNode.Attributes == null)
@@ -774,8 +748,5 @@ namespace Mage
 
             return quotedList.ToString();
         }
-
-        #endregion
-
     }
 }

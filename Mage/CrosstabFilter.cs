@@ -8,8 +8,6 @@ namespace Mage
     /// </summary>
     public class CrosstabFilter : BaseModule
     {
-        #region Member Variables
-
         // Indexes to critical columns
         private int mEntityIdx = -1;
         private int mEntityIDIdx = -1;
@@ -23,10 +21,6 @@ namespace Mage
         // Accumulator list of factors
         // It is a dictionary, keyed by entity ID, of dictionaries of name/value pairs for the crosstab fields
         private readonly Dictionary<string, Dictionary<string, string>> mFactorList = new();
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Name of the input column that contains the name of the entity to build crosstab for
@@ -48,10 +42,6 @@ namespace Mage
         /// </summary>
         public string FactorValueCol { get; set; }
 
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Construct a new Mage crosstab filter module
         /// </summary>
@@ -62,10 +52,6 @@ namespace Mage
             FactorNameCol = "Factor";
             FactorValueCol = "Value";
         }
-
-        #endregion
-
-        #region BaseModule Overrides
 
         /// <summary>
         /// Handler for Mage standard tabular column definition
@@ -108,10 +94,6 @@ namespace Mage
                 OutputDataRows();
             }
         }
-
-        #endregion
-
-        #region Data Utitilites
 
         /// <summary>
         /// Pull data of of the input fields and add it to
@@ -202,7 +184,5 @@ namespace Mage
 
             OnColumnDefAvailable(new MageColumnEventArgs(outCols.ToArray()));
         }
-
-        #endregion
     }
 }

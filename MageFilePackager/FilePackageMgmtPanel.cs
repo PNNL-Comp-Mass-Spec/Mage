@@ -11,19 +11,13 @@ namespace MageFilePackager
     {
         // Ignore Spelling: Mage, txt
 
-        #region Member Variables
-
         // Path for local copy of manifest file
         private string _outputPath;
-
-        #endregion
 
         public FilePackageMgmtPanel()
         {
             InitializeComponent();
         }
-
-        #region IModuleParameters Members
 
         public Dictionary<string, string> GetParameters()
         {
@@ -45,10 +39,6 @@ namespace MageFilePackager
                 }
             }
         }
-
-        #endregion
-
-        #region Properties
 
         public string ListTitle
         {
@@ -82,10 +72,6 @@ namespace MageFilePackager
             }
             set => _outputPath = value;
         }
-
-        #endregion
-
-        #region Package Content Actions
 
         private void ClearPackageList()
         {
@@ -190,10 +176,6 @@ namespace MageFilePackager
             return nvSink;
         }
 
-        #endregion
-
-        #region File List Actions
-
         /// <summary>
         /// Display contents of file package in tree view
         /// and allow user to choose which files to keep
@@ -281,10 +263,6 @@ namespace MageFilePackager
             }
         }
 
-        #endregion
-
-        #region Make Manifest Actions
-
         /// <summary>
         /// Create XML manifest for file package contents
         /// and optionally save to file and/or submit to DMS web service
@@ -342,10 +320,6 @@ namespace MageFilePackager
                 }
             }
         }
-
-        #endregion
-
-        #region Utilities
 
         /// <summary>
         /// Get total size of all files in file package
@@ -416,9 +390,7 @@ namespace MageFilePackager
             return filter;
         }
 
-        #endregion
-
-        #region Control Event Handlers
+        // Control Event Handlers
 
         private void SaveBtnClick(object sender, EventArgs e)
         {
@@ -452,8 +424,5 @@ namespace MageFilePackager
         {
             EditPackageListAsTree();
         }
-
-        #endregion
-
     }
 }

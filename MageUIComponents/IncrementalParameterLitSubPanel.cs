@@ -6,8 +6,6 @@ namespace MageUIComponents
 {
     public partial class IncrementalParameterLitSubPanel : UserControl, IModuleParameters
     {
-        #region IModuleParameters Members
-
         public Dictionary<string, string> GetParameters()
         {
             return new()
@@ -40,8 +38,6 @@ namespace MageUIComponents
                 }
             }
         }
-
-        #endregion
 
         public IncrementalParameterLitSubPanel()
         {

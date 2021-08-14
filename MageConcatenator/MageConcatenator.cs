@@ -15,8 +15,6 @@ namespace MageConcatenator
     {
         // Ignore Spelling: Concatenator, Mage, workflows, HH:mm:ss
 
-        #region Member Variables
-
         public const string PROGRAM_DATE = "June 10, 2021";
 
         /// <summary>
@@ -35,10 +33,6 @@ namespace MageConcatenator
         private clsFileCombiner mFileCombiner;
         private List<string> mCombineFilesPaths;
         private string mCombineFilesTargetFilePath;
-
-        #endregion
-
-        #region Initialization
 
         public MageConcatenator()
         {
@@ -109,9 +103,7 @@ namespace MageConcatenator
             AdjustInitialUIState();
         }
 
-        #endregion
-
-        #region Command Processing
+        // Command Processing
 
         private void ConnectPipelineToStatusDisplay(ProcessingPipeline pipeline)
         {
@@ -257,10 +249,6 @@ namespace MageConcatenator
                 Invoke(ec, false);
             }
         }
-
-        #endregion
-
-        #region File Processing Routines
 
         private void CombineFiles(bool processAllFiles)
         {
@@ -460,9 +448,7 @@ namespace MageConcatenator
             }
         }
 
-        #endregion
-
-        #region Functions for setting UI state
+        // Methods for setting UI state
 
         private const string mFileListLabelPrefix = "Files From ";
 
@@ -565,9 +551,8 @@ namespace MageConcatenator
 
             return runtimeParams;
         }
-        #endregion
 
-        #region Functions for handling status updates
+        // Methods for handling status updates
 
         private delegate void CompletionStateUpdated(object status);
         private delegate void BoolFnDelegate(bool value);
@@ -626,9 +611,7 @@ namespace MageConcatenator
             }
         }
 
-        #endregion
-
-        #region Panel Support Functions
+        // Panel Support Methods
 
         /// <summary>
         /// Set up status panel
@@ -668,10 +651,6 @@ namespace MageConcatenator
             ModuleDiscovery.SetupFilters();
         }
 
-        #endregion
-
-        #region Button Events
-
         private void About_Click(object sender, EventArgs e)
         {
             var message = "Written by Matthew Monroe for the Department of Energy.  This is version " +
@@ -688,8 +667,5 @@ namespace MageConcatenator
         {
             CombineFiles(false);
         }
-
-        #endregion
-
     }
 }

@@ -13,11 +13,7 @@ namespace Mage
     /// </summary>
     public class AddAssociatedFile : FileProcessingBase
     {
-        #region Member Variables
 
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Constructor
@@ -27,10 +23,6 @@ namespace Mage
             SourceDirectoryColumnName = "Directory";
             SourceFileColumnName = "Name";
         }
-
-        #endregion
-
-        #region Properites
 
         /// <summary>
         /// Name of the column in the standard tabular input
@@ -71,8 +63,6 @@ namespace Mage
                 mAssociatedFileNameFragment = fields[1];
             }
         }
-
-        #endregion
 
         private int mInputDirectoryIdx;
         private int mInputFileIdx;

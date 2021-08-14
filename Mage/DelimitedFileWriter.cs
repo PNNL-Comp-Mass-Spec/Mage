@@ -12,15 +12,9 @@ namespace Mage
     {
         // Ignore Spelling: Mage
 
-        #region Member Variables
-
         private StreamWriter mOutFile;
 
         private bool mAppendFlag;
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Delimiter to use for output file (defaults to tab)
@@ -43,10 +37,6 @@ namespace Mage
         /// </summary>
         public string Append { get; set; }
 
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Construct new Mage delimited file writer module
         /// with property defaults:
@@ -60,9 +50,6 @@ namespace Mage
             Header = "Yes";
             Append = "No";
         }
-        #endregion
-
-        #region IDisposable Members
 
         /// <summary>
         /// Dispose of held resources
@@ -89,10 +76,6 @@ namespace Mage
 
             // isDisposed = true;
         }
-
-        #endregion
-
-        #region IBaseModule Members
 
         /// <summary>
         /// Called before pipeline runs - module can do any special setup that it needs
@@ -177,9 +160,7 @@ namespace Mage
             }
         }
 
-        #endregion
-
-        #region Support Functions
+        // Support methods
 
         private void OutputHeader()
         {
@@ -222,7 +203,5 @@ namespace Mage
             }
             mOutFile.WriteLine();
         }
-
-        #endregion
     }
 }

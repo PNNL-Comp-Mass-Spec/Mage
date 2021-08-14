@@ -16,14 +16,10 @@ namespace MageDisplayLib
     {
         // Ignore Spelling: Mage, txt
 
-        #region Constants
-        private const string MENU_SELECT_ALL = "SelectAll";
+                private const string MENU_SELECT_ALL = "SelectAll";
         private const string MENU_SELECT_NONE = "SelectNone";
         private const string MENU_DELETE_SELECTED = "DeleteSelectedRows";
         private const string MENU_DELETE_NON_SELECTED = "DeleteNonSelectedRows";
-        #endregion
-
-        #region Member Variables
 
         /// <summary>
         /// This event is fired to sent command to external command handler(s)
@@ -37,9 +33,7 @@ namespace MageDisplayLib
         private readonly List<string> mSelectAllOrNoneMenuItems = new();
         private readonly List<string> mDeleteMenuItems = new();
 
-        #endregion
-
-        #region Context Menu Functions
+        // Context Menu Methods
 
         /// <summary>
         /// Add context menu to control for saving and restoring contents of list display to/from a file
@@ -102,10 +96,6 @@ namespace MageDisplayLib
             gvQueryResults.ContextMenuStrip.Items.AddRange(items);
         }
 
-        #endregion
-
-        #region Event Handlers
-
         /// <summary>
         /// Will be wired up to receive "SelectionChanged" events
         /// from associated GridView so that display state
@@ -167,10 +157,6 @@ namespace MageDisplayLib
             }
         }
 
-        #endregion
-
-        #region Basic Housekeeping Menus
-
         /// <summary>
         /// Builds a set of new menu items that handle basic housekeeping
         /// (selection and deletion) of items in list
@@ -211,9 +197,7 @@ namespace MageDisplayLib
             DeleteNotSelectedItems();
         }
 
-        #endregion
-
-        #region List Persistence Functions
+        // List Persistence Methods
 
         private List<ToolStripItem> GetPersistenceMenuItems()
         {
@@ -340,9 +324,7 @@ namespace MageDisplayLib
             return ProcessingPipeline.Assemble("RestoreListDisplayPipeline", new Collection<object> { reader, sinkObject });
         }
 
-        #endregion
-
-        #region Copy Menus
+        // Copy Menus
 
         /// <summary>
         /// Builds as set of menu items for actions that copy contents of
@@ -448,8 +430,5 @@ namespace MageDisplayLib
             }
             Clipboard.SetText(copiedText.ToString());
         }
-
-        #endregion
-
     }
 }

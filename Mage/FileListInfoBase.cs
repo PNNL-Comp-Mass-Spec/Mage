@@ -30,8 +30,6 @@ namespace Mage
         /// </summary>
         protected static readonly FileLogger traceLogFileList = new(FileLogger.BaseLogFileName, BaseLogger.LogLevels.INFO, FileLogger.AppendDateToBaseFileName);
 
-        #region Member Variables
-
         /// <summary>
         /// Buffer that accumulates a row of output fields for each input row
         /// received via standard tabular input or via the "DirectoryPath" property
@@ -51,10 +49,6 @@ namespace Mage
         private int mFileSizeOutColIndex = -1;
         private int mFileDateOutColIndex = -1;
         private int mFileTypeOutColIndex = -1;
-
-        #endregion
-
-        #region "Constants"
 
         /// <summary>
         /// Default column name for the item type column
@@ -80,10 +74,6 @@ namespace Mage
         /// Default column name for the source directory column
         /// </summary>
         public const string COLUMN_NAME_SOURCE_DIRECTORY = "Directory";
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// The name of the input column that contains the directory path to search for files
@@ -120,10 +110,6 @@ namespace Mage
         /// </summary>
         public string FileTypeColumnName { get; set; }
 
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Construct a new Mage file list filter module
         /// </summary>
@@ -136,10 +122,6 @@ namespace Mage
             SourceDirectoryColumnName = COLUMN_NAME_SOURCE_DIRECTORY;       // Directory
             OutputColumnList = string.Format("{0}|+|text, {1}|+|text, {2}|+|text, {3}|+|text, {4}|+|text", FileTypeColumnName, FileColumnName, FileSizeColumnName, FileDateColumnName, SourceDirectoryColumnName);
         }
-
-        #endregion
-
-        #region IBaseModule Members
 
         /// <summary>
         /// Called when this module functions as source module
@@ -191,9 +173,7 @@ namespace Mage
             ExportColumnDefs();
         }
 
-        #endregion
-
-        #region Functions for Output Columns
+        // Methods for output columns
 
         /// <summary>
         /// Tell our subscribers what columns to expect from us
@@ -205,9 +185,7 @@ namespace Mage
             OnColumnDefAvailable(new MageColumnEventArgs(OutputColumnDefs.ToArray()));
         }
 
-        #endregion
-
-        #region Search Functions
+        // Search Methods
 
         /// <summary>
         /// Initialize variables prior to starting the search
@@ -228,10 +206,6 @@ namespace Mage
             Dictionary<string, DirectoryInfo> subdirectoryInfo,
             string directoryPath,
             string datasetName);
-
-        #endregion
-
-        #region Private Functions
 
         private void SearchDirectoriesAndOutputFiles()
         {
@@ -450,10 +424,6 @@ namespace Mage
             OnStatusMessageUpdated(new MageStatusEventArgs(message));
         }
 
-        #endregion
-
-        #region File/Subdirectory Result Reporting
-
         /// <summary>
         /// Report a found subdirectory to output
         /// </summary>
@@ -526,8 +496,5 @@ namespace Mage
             traceLogFileList.Error(msg);
             OnDataRowAvailable(new MageDataEventArgs(mOutputBuffer[outputBufferRowIdx]));
         }
-
-        #endregion
-
     }
 }

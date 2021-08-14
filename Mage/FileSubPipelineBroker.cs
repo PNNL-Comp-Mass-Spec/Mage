@@ -55,8 +55,6 @@ namespace Mage
     {
         // Ignore Spelling: Mage
 
-        #region Member Variables
-
         // Running count of number of files processed
         private int mFileCount;
 
@@ -70,9 +68,7 @@ namespace Mage
 
         private string mTableName = string.Empty;
 
-        #endregion
-
-        #region Functions Available to Clients
+        // Methods available to clients
 
         /// <summary>
         /// Define a delegate function that will be called by this module
@@ -84,10 +80,6 @@ namespace Mage
         {
             ProcessingPipelineMaker = maker;
         }
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Name of filter module that is used when internally defined sub-pipeline is used
@@ -155,10 +147,6 @@ namespace Mage
             return mFileFilterParameters;
         }
 
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Construct a new Mage file sub pipeline broker module
         /// </summary>
@@ -170,10 +158,6 @@ namespace Mage
             DatabaseName = string.Empty; // Client must set these properties to user internally-defined SQLiteWriter sub-pipeline
             TableName = string.Empty;
         }
-
-        #endregion
-
-        #region Overrides
 
         /// <summary>
         /// Called before pipeline runs - module can do any special setup that it needs
@@ -227,10 +211,6 @@ namespace Mage
             }
         }
 
-        #endregion
-
-        #region Internally-Defined Processing Pipelines
-
         private ProcessingPipeline MakeDefaultFileProcessingPipeline(string inputFilePath, string outputFilePath, Dictionary<string, string> context)
         {
             var reader = new DelimitedFileReader();
@@ -277,8 +257,6 @@ namespace Mage
 
             return ProcessingPipeline.Assemble("DefaultFileProcessingPipeline", reader, filter, writer);
         }
-
-        #endregion
 
         /// <summary>
         /// Wire the filter module's file renaming method to this broker module's delegate

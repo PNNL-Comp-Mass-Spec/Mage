@@ -10,18 +10,12 @@ namespace Mage
     /// </summary>
     public class ContentFilter : BaseModule
     {
-        #region Member Variables
-
         private int totalRowsCounter;
         private int passedRowsCounter;
         private const int reportRowBlockSize = 1000;
 
         private const int mMinimumReportIntervalMsec = 500;
         private DateTime mLastReportTimeUTC = DateTime.UtcNow;
-
-        #endregion
-
-        #region IBaseModule Members
 
         /// <summary>
         /// <para>
@@ -85,10 +79,6 @@ namespace Mage
             }
         }
 
-        #endregion
-
-        #region Filtering Functions
-
         /// <summary>
         /// This function should be overriden by subclasses to do the actual filtering
         /// </summary>
@@ -120,8 +110,5 @@ namespace Mage
         {
             return sourceFile;
         }
-
-        #endregion
-
     }
 }

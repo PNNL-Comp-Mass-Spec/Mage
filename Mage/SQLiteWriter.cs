@@ -21,8 +21,6 @@ namespace Mage
 
         private static readonly FileLogger traceLogWriter = new(FileLogger.BaseLogFileName, BaseLogger.LogLevels.INFO, FileLogger.AppendDateToBaseFileName);
 
-        #region Member Variables
-
         /// <summary>
         /// Buffer for accumulating rows into output block
         /// </summary>
@@ -41,10 +39,6 @@ namespace Mage
         private int mRowsAccumulated;
 
         private int mBlockSize = 1000;
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Name of the table in the database into which the tabular data will be inserted
@@ -82,10 +76,6 @@ namespace Mage
             }
         }
 
-        #endregion
-
-        #region IDisposable Members
-
         /// <summary>
         /// Dispose of held resources
         /// </summary>
@@ -111,10 +101,6 @@ namespace Mage
 
             // isDisposed = true;
         }
-
-        #endregion
-
-        #region IBaseModule Members
 
         /// <summary>
         /// Called after pipeline run is complete - module can do any special cleanup
@@ -197,9 +183,7 @@ namespace Mage
             }
         }
 
-        #endregion
-
-        #region Helper Functions
+        // Helper methods
 
         private TableSchema MakeTableSchema(IEnumerable<MageColumnDef> colDefs)
         {
@@ -245,10 +229,6 @@ namespace Mage
         {
             OnStatusMessageUpdated(new MageStatusEventArgs(message));
         }
-
-        #endregion
-
-        #region "Top level SQLite Stuff"
 
         /// <summary>
         /// Create the target file if it doesn't exist.
@@ -388,10 +368,6 @@ namespace Mage
                 traceLogWriter.Error("ExecuteSQLInDatabase failed: " + ex.Message);
             }
         }
-
-        #endregion
-
-        #region "General SQLite Stuff"
 
         /// <summary>
         /// Returns the CREATE TABLE DDL for creating the SQLite table
@@ -779,10 +755,6 @@ namespace Mage
             return m.Success ? m.Groups[1].Value : value;
         }
 
-        #endregion
-
-        #region "Internal classes for SQLite
-
         private class ColumnSchema
         {
             public string ColumnName = string.Empty;
@@ -809,7 +781,5 @@ namespace Mage
             public string TableName = string.Empty;
             public List<ColumnSchema> Columns;
         }
-        #endregion
-
     }
 }

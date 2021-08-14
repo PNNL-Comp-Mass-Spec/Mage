@@ -10,15 +10,9 @@ namespace MageUnitTests
     {
         // Ignore Spelling: Mage
 
-        #region Member Variables
-
         // An internal buffer for accumulating rows passed in via the standard tabular input handler
         protected readonly List<string[]> SavedRows = new();
         protected readonly List<string[]> SavedMappedRows = new();
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// This property name is used by Unit Test SetModuleParameterTest
@@ -40,10 +34,6 @@ namespace MageUnitTests
         public List<KeyValuePair<int, int>> OutToInPosMap => OutputToInputColumnPosMap;
 
         // public List<KeyValuePair<string, string>> InternalParameterList { get { return parameters; } }
-
-        #endregion
-
-        #region IBaseModule Members
 
         /// <summary>
         /// Called before pipeline runs - module can do any special setup that it needs
@@ -82,8 +72,5 @@ namespace MageUnitTests
         {
             base.HandleColumnDef(sender, args);
         }
-
-        #endregion
-
     }
 }

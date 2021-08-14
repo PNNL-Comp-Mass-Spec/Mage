@@ -12,7 +12,7 @@ namespace MageUIComponents
         protected bool mShowGetDatasets = true;
         protected bool mShowGetJobs = true;
 
-        #region IModuleParameters Members
+
 
         public bool ShowGetDatasets
         {
@@ -59,7 +59,7 @@ namespace MageUIComponents
             }
         }
 
-        #endregion
+
 
         public JobDataPackagePanel()
         {

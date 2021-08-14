@@ -14,7 +14,7 @@ namespace MageUIComponents
             InitializeComponent();
         }
 
-        #region IModuleParameters Members
+
 
         public Dictionary<string, string> GetParameters()
         {
@@ -49,7 +49,7 @@ namespace MageUIComponents
             }
         }
 
-        #endregion
+
 
         private void GetJobsCtl_Click(object sender, EventArgs e)
         {

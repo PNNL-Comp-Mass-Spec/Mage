@@ -10,8 +10,6 @@ namespace MageDisplayLib
     /// </summary>
     public class ListViewCellEditor
     {
-        #region Member Variables
-
         /// <summary>
         /// Default cell editor
         /// </summary>
@@ -54,10 +52,6 @@ namespace MageDisplayLib
         /// </summary>
         private readonly Dictionary<int, int> mColumnPickers = new();
 
-        #endregion
-
-        #region Properties
-
         /// <summary>
         /// Defines whether or not the cell editor
         /// can make changes to underlying cell
@@ -67,10 +61,6 @@ namespace MageDisplayLib
             get => mDefaultCellEditor.ReadOnly;
             set => mDefaultCellEditor.ReadOnly = !value;
         }
-
-        #endregion
-
-        #region Constructors
 
         /// <summary>
         /// Construct a new ListViewCellEditor object and bind it to the given ListView control
@@ -82,10 +72,6 @@ namespace MageDisplayLib
             mListView.onScroll += HandleScrollEvent;
             SetupCellEditing();
         }
-
-        #endregion
-
-        #region Initialization
 
         /// <summary>
         /// Create default cell editor (TextBox)
@@ -119,9 +105,7 @@ namespace MageDisplayLib
             }
         }
 
-        #endregion
-
-        #region ComboBox Cell Editor Stuff
+        // ComboBox Cell Editor Stuff
 
         private void InitializeEditingComboBox(ComboBox cmbBox)
         {
@@ -163,10 +147,6 @@ namespace MageDisplayLib
             cellEditor?.Hide();
         }
 
-        #endregion
-
-        #region TextBox Cell Editor Stuff
-
         private void InitializeEditingTextBox(TextBox editBox)
         {
             mListView.Controls.AddRange(new Control[] { editBox });
@@ -206,10 +186,6 @@ namespace MageDisplayLib
             mListViewItemUnderEdit.SubItems[mSubItemUnderEdit].Text = cellEditor.Text;
             cellEditor.Hide(); // mEditBox.Hide();
         }
-
-        #endregion
-
-        #region Initiate Cell Editing
 
         /// <summary>
         /// Remember where we clicked
@@ -300,8 +276,5 @@ namespace MageDisplayLib
             cellEditor.Text = lvi.SubItems[subItemIdx].Text;
             cellEditor.Focus();
         }
-
-        #endregion
-
     }
 }

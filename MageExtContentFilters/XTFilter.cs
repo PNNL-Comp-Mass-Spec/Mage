@@ -12,8 +12,6 @@ namespace MageExtContentFilters
     [MageAttribute("Filter", "XTFilter", "XT filter", "Uses filter criteria defined in DMS")]
     internal class XTFilter : ContentFilter
     {
-        #region Member Variables
-
         // Working copy of SEQUEST filter object
         private FilterXTResults mXTFilter;
 
@@ -26,16 +24,10 @@ namespace MageExtContentFilters
         private int logEValueIndex;
         private int msgfSpecProbIndex = -1;
 
-        #endregion
-
-        #region Properties
-
         /// <summary>
         /// The ID of the filter set from DMS to use
         /// </summary>
         public string FilterSetID { get; set; }
-
-        #endregion
 
         /// <summary>
         /// Called before pipeline runs - module can do any special setup that it needs

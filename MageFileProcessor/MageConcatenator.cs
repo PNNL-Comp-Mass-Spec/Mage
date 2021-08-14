@@ -16,7 +16,7 @@ namespace MageFileProcessor
 {
     public partial class MageConcatenator : Form
     {
-        #region Member Variables
+
 
         /// <summary>
         /// Pipeline queue for running the multiple pipelines that make up the workflows for this module
@@ -31,9 +31,8 @@ namespace MageFileProcessor
         // Object that sent the current command
         object mCurrentCmdSender;
 
-        #endregion
 
-        #region Initialization
+
 
         public MageConcatenator()
         {
@@ -97,9 +96,7 @@ namespace MageFileProcessor
             AdjustInitialUIState();
         }
 
-        #endregion
-
-        #region Command Processing
+        // Command Processing
 
         private void ConnectPipelineToStatusDisplay(ProcessingPipeline pipeline)
         {
@@ -273,9 +270,7 @@ namespace MageFileProcessor
 
         }
 
-        #endregion
-
-        #region Functions for setting UI state
+        // Methods for setting UI state
 
         const string mFileListLabelPrefix = "Files From ";
 
@@ -375,9 +370,8 @@ namespace MageFileProcessor
 
             return rp;
         }
-        #endregion
 
-        #region Functions for handling status updates
+        // Methods for handling status updates
 
         private delegate void CompletionStateUpdated(object status);
         private delegate void VoidFnDelegate();
@@ -431,9 +425,7 @@ namespace MageFileProcessor
             // Console.WriteLine("PipelineQueueCompletion: " + args.Message);
         }
 
-        #endregion
-
-        #region Panel Support Functions
+        // Panel Support Methods
 
         /// <summary>
         /// Set up status panel
@@ -464,9 +456,9 @@ namespace MageFileProcessor
             ModuleDiscovery.SetupFilters();
         }
 
-        #endregion
 
-        #region Button Events
+
+
 
         private void ProcessAllFilesCtl_Click(object sender, EventArgs e)
         {
@@ -478,7 +470,7 @@ namespace MageFileProcessor
             ProcessFiles(false);
         }
 
-        #endregion
+
 
     }
 }
