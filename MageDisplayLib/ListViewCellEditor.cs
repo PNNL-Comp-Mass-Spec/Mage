@@ -131,8 +131,7 @@ namespace MageDisplayLib
 
         private void HandleEditingComboBoxSelectionChanged(object sender, EventArgs e)
         {
-            var cellEditor = sender as ComboBox;
-            if (cellEditor == null) return;
+            if (sender is not ComboBox cellEditor) return;
 
             var sel = cellEditor.SelectedIndex;
             if (sel < 0) return;
@@ -180,8 +179,7 @@ namespace MageDisplayLib
 
         private void HandleEditingTextBoxLostFocus(object sender, EventArgs e)
         {
-            var cellEditor = sender as TextBox;
-            if (cellEditor == null) return;
+            if (sender is not TextBox cellEditor) return;
 
             mListViewItemUnderEdit.SubItems[mSubItemUnderEdit].Text = cellEditor.Text;
             cellEditor.Hide(); // mEditBox.Hide();
