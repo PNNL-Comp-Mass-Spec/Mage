@@ -10,6 +10,8 @@ namespace MageDisplayLib
     /// </summary>
     public class ListViewCellEditor
     {
+        // Ignore Spelling: subitem
+
         /// <summary>
         /// Default cell editor
         /// </summary>
@@ -27,7 +29,7 @@ namespace MageDisplayLib
         private ListViewItem mListViewItemUnderEdit;
 
         /// <summary>
-        /// The columm index of the cell currently being edited
+        /// The column index of the cell currently being edited
         /// </summary>
         private int mSubItemUnderEdit;
 
@@ -90,7 +92,7 @@ namespace MageDisplayLib
         /// <summary>
         /// Add a new ComboBox cell editor
         /// </summary>
-        /// <param name="choices">Choices in the picklis</param>
+        /// <param name="choices">Choices in the pick list</param>
         /// <param name="columns">List of column indexes to use this picker for</param>
         public void AddPicker(string[] choices, int[] columns)
         {
@@ -257,7 +259,7 @@ namespace MageDisplayLib
 
         /// <summary>
         /// Place the cell editor over the cell being edited,
-        /// inialize it with the current value of the cell,
+        /// initialize it with the current value of the cell,
         /// and make it visible
         /// </summary>
         /// <param name="cellStartPos"></param>

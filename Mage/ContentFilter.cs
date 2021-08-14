@@ -10,6 +10,8 @@ namespace Mage
     /// </summary>
     public class ContentFilter : BaseModule
     {
+        // Ignore Spelling: Mage
+
         private int totalRowsCounter;
         private int passedRowsCounter;
         private const int reportRowBlockSize = 1000;
@@ -80,7 +82,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// This function should be overriden by subclasses to do the actual filtering
+        /// This function should be overridden by subclasses to do the actual filtering
         /// </summary>
         /// <param name="vals"></param>
         /// <returns></returns>
