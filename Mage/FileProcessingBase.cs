@@ -102,8 +102,8 @@ namespace Mage
         /// <summary>
         /// Store the archive file info for a file in m_FilterPassingMyEMSLFiles
         /// </summary>
-        /// <param name="fileInfo">MyEMSL file info</param>
         /// <remarks>Useful for retrieving MyEMSL file info at a future time using MyEMSL File ID</remarks>
+        /// <param name="fileInfo">MyEMSL file info</param>
         protected static void CacheFilterPassingFile(ArchivedFileInfo fileInfo)
         {
             if (fileInfo.FileID == 0)
@@ -236,9 +236,9 @@ namespace Mage
         /// <summary>
         /// Download the given file if it is in MyEMSL
         /// </summary>
+        /// <remarks>it is better to add several files to the download queue using AddFileToDownloadQueue then download them in bulk using ProcessMyEMSLDownloadQueue</remarks>
         /// <param name="filePathRemote">File path to examine</param>
         /// <returns>The local file path to which the file was downloaded; if not in MyEMSL, then returns the original path</returns>
-        /// <remarks>it is better to add several files to the download queue using AddFileToDownloadQueue then download them in bulk using ProcessMyEMSLDownloadQueue</remarks>
         protected string DownloadFileIfRequired(string filePathRemote)
         {
             string filePathLocal;
@@ -385,10 +385,10 @@ namespace Mage
         /// <summary>
         /// Download queued MyEMSL files to the specified directory
         /// </summary>
+        /// <remarks>Any queued files that have explicit download paths will be downloaded to the explicit path and not downloadDirectoryPath</remarks>
         /// <param name="downloadDirectoryPath">Target directory path to save the files in</param>
         /// <param name="directoryLayout">Directory layout to use</param>
         /// <returns>True if success (including an empty queue), false if an error</returns>
-        /// <remarks>Any queued files that have explicit download paths will be downloaded to the explicit path and not downloadDirectoryPath</remarks>
         protected bool ProcessMyEMSLDownloadQueue(string downloadDirectoryPath, Downloader.DownloadLayout directoryLayout)
         {
             if (m_MyEMSLDatasetInfoCache.FilesToDownload.Count == 0)

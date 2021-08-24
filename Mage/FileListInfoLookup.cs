@@ -38,12 +38,12 @@ namespace Mage
         /// <summary>
         /// Search for files in the given directory
         /// </summary>
+        /// <remarks>This function only looks for the file in column mFileNameColIndex</remarks>
         /// <param name="outputBufferRowIdx">Row index in mOutputBuffer to examine</param>
         /// <param name="fileInfo">Dictionary of found files (input/output parameter)</param>
         /// <param name="subdirectoryInfo">Dictionary of found directories (input/output parameter)</param>
         /// <param name="directoryPath">Directory path to examine</param>
         /// <param name="datasetName">Dataset name</param>
-        /// <remarks>This function only looks for the file in column mFileNameColIndex</remarks>
         protected override void SearchOneDirectory(
             int outputBufferRowIdx,
             Dictionary<string, FileInfo> fileInfo,

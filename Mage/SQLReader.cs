@@ -157,10 +157,10 @@ namespace Mage
         /// <summary>
         /// Constructor that accepts a server name, database name, and SQL query
         /// </summary>
+        /// <remarks>The connection string will be auto-defined</remarks>
         /// <param name="server">Database server name</param>
         /// <param name="database">Database name</param>
         /// <param name="sql">SQL Query</param>
-        /// <remarks>The connection string will be auto-defined</remarks>
         [Obsolete("Use the Constructor that accepts a username and includes the isPostgres argument")]
         // ReSharper disable once UnusedMember.Global
         public SQLReader(string server, string database, string sql)
@@ -175,12 +175,12 @@ namespace Mage
         /// <summary>
         /// Constructor that accepts a server name, database name, and SQL query
         /// </summary>
+        /// <remarks>The connection string will be auto-defined</remarks>
         /// <param name="server">Database server name</param>
         /// <param name="database">Database name</param>
         /// <param name="username">Username; leave blank (or null) to use integrated authentication</param>
         /// <param name="password">Password if username is non-blank</param>
         /// <param name="isPostgres">True if a PostgreSQL server</param>
-        /// <remarks>The connection string will be auto-defined</remarks>
         public SQLReader(string server, string database, string username, string password, bool isPostgres = false)
         {
             Server = server;
@@ -196,8 +196,8 @@ namespace Mage
         /// <summary>
         /// Constructor that accepts a connection string
         /// </summary>
-        /// <param name="connectionString">Database server connection string</param>
         /// <remarks>Use property SQLText to define the query to use</remarks>
+        /// <param name="connectionString">Database server connection string</param>
         // ReSharper disable once UnusedMember.Global
         public SQLReader(string connectionString)
         {

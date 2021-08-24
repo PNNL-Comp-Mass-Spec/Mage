@@ -280,10 +280,9 @@ namespace MageConcatenator
         /// <summary>
         /// Examine the row to verify if it is delimited using the specified delimiter (should be tab or comma)
         /// </summary>
+        /// <remarks>If we only find one column when we split the row on delimiter, then try the alternate delimiter</remarks>
         /// <param name="currentRow"></param>
         /// <param name="delimiter"></param>
-        /// <returns></returns>
-        /// <remarks>If we only find one column when we split the row on delimiter, then try the alternate delimiter</remarks>
         private char VerifyDelimiter(string currentRow, char delimiter)
         {
             if (string.IsNullOrWhiteSpace(currentRow))
