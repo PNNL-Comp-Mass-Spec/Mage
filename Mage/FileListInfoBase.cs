@@ -451,7 +451,7 @@ namespace Mage
         /// <param name="directoryPath"></param>
         /// <param name="fileName"></param>
         /// <param name="fileSizeKB"></param>
-        /// /// <param name="fileDate"></param>
+        /// <param name="fileDate"></param>
         private void ReportFileFound(int outputBufferRowIdx, string directoryPath, string fileName, string fileSizeKB, string fileDate)
         {
             var outRow = (string[])mOutputBuffer[outputBufferRowIdx].Clone(); // yes, we do want a shallow copy
