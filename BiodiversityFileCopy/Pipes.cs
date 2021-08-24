@@ -105,7 +105,6 @@ namespace BiodiversityFileCopy
         /// <summary>
         /// Get list of datasets from given data package ID list
         /// </summary>
-        /// <returns></returns>
         public static SimpleSink GetDatasetsForDataPackages(string dataPackageId, Dictionary<string, string> orgLookup)
         {
             // var queryTemplate = @"SELECT Dataset_ID, Dataset, State, Folder As Directory, Data_Package_ID FROM V_Mage_Data_Package_Datasets WHERE Data_Package_ID IN (@)";
@@ -171,7 +170,6 @@ FROM (
         /// <param name="dataPackageId"></param>
         /// <param name="orgLookup"></param>
         /// <param name="queryTemplate"></param>
-        /// <returns></returns>
         private static SimpleSink GetItemsForDataPackages(string dataPackageId, Dictionary<string, string> orgLookup, string queryTemplate)
         {
             var sql = queryTemplate.Replace("@", dataPackageId);
@@ -205,7 +203,6 @@ FROM (
         /// extracted from given sink object
         /// </summary>
         /// <param name="dataPackageList">Snk object containing information to be extracted</param>
-        /// <returns></returns>
         public static Dictionary<string, string> ExtractOrganismLookupFromSink(SimpleSink dataPackageList)
         {
             var orgLookup = new Dictionary<string, string>();
@@ -222,7 +219,6 @@ FROM (
         /// Extract list of data package IDs from given sink object
         /// </summary>
         /// <param name="dataPackageList">Sink object containing information to be extracted</param>
-        /// <returns></returns>
         public static List<string> ExtractIdListFromSink(SimpleSink dataPackageList)
         {
             var idIdx = dataPackageList.ColumnIndex["Package_ID"];
@@ -235,7 +231,6 @@ FROM (
         /// Get list of data packages and the organism assigned for each
         /// </summary>
         /// <param name="dataPackageListFilePath"></param>
-        /// <returns></returns>
         public static SimpleSink GetDataPackageList(string dataPackageListFilePath)
         {
             var dataPackageList = new SimpleSink();
@@ -255,7 +250,6 @@ FROM (
         /// </summary>
         /// <param name="datasetList"></param>
         /// <param name="outputRootDirectoryPath">Directory path at root of all output subdirectories</param>
-        /// <returns></returns>
         public static SimpleSink AddRawFilePaths(SimpleSink datasetList, string outputRootDirectoryPath)
         {
             // TBD: use file search as for mzid and mzml
@@ -281,7 +275,6 @@ FROM (
         /// </summary>
         /// <param name="jobList"> </param>
         /// <param name="outputRootDirectoryPath"></param>
-        /// <returns></returns>
         public static SimpleSink AddMzmlFilePathsFromJobs(SimpleSink jobList, string outputRootDirectoryPath)
         {
             const string datasetDirectoryColName = "Dataset_Folder_Path";
@@ -314,7 +307,6 @@ FROM (
         /// </summary>
         /// <param name="jobList">List of jobs to process</param>
         /// <param name="datasetDirectoryColName"></param>
-        /// <returns></returns>
         private static SimpleSink AddParentDirectoryToJobList(SimpleSink jobList, string datasetDirectoryColName)
         {
             // Set up pipeline source to only do rows with package IDs in whitelist
@@ -340,7 +332,6 @@ FROM (
         /// </summary>
         /// <param name="datasetList"></param>
         /// <param name="outputRootDirectoryPath"></param>
-        /// <returns></returns>
         public static SimpleSink AddMzidFilePaths(SimpleSink datasetList, string outputRootDirectoryPath)
         {
             var src = new SinkWrapper(datasetList);
@@ -364,7 +355,6 @@ FROM (
         /// </summary>
         /// <param name="datasetList"></param>
         /// <param name="outputRootDirectoryPath"></param>
-        /// <returns></returns>
         public static SimpleSink AddFhtFilePaths(SimpleSink datasetList, string outputRootDirectoryPath)
         {
             var src = new SinkWrapper(datasetList);
@@ -388,7 +378,6 @@ FROM (
         /// </summary>
         /// <param name="fastaFileList"></param>
         /// <param name="outputRootDirectoryPath">Directory path at root of all output subdirectories</param>
-        /// <returns></returns>
         public static SimpleSink AddFastaFilePaths(SimpleSink fastaFileList, string outputRootDirectoryPath)
         {
             var dsl = new SimpleSink();
@@ -427,7 +416,6 @@ FROM (
         /// </summary>
         /// <param name="colName"></param>
         /// <param name="datasetList"></param>
-        /// <returns></returns>
         public static IEnumerable<string> ExtractColumnFromSink(string colName, SimpleSink datasetList)
         {
             return datasetList.Rows.Select(row => row[datasetList.ColumnIndex[colName]]);

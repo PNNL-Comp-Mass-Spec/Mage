@@ -178,7 +178,6 @@ namespace MageExtExtractionFilters
         /// <summary>
         /// Return an extraction filter object for the current filter type
         /// </summary>
-        /// <returns></returns>
         public ExtractionFilter GetExtractionFilter(FilterResultsBase resultsChecker)
         {
             return Filter switch
@@ -198,7 +197,6 @@ namespace MageExtExtractionFilters
         /// and given filter set
         /// </summary>
         /// <param name="filterSetID">Filter set ID</param>
-        /// <returns></returns>
         public FilterResultsBase GetResultsChecker(string filterSetID)
         {
             return Filter switch

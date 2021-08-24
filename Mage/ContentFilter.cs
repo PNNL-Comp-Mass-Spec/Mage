@@ -85,7 +85,6 @@ namespace Mage
         /// This function should be overridden by subclasses to do the actual filtering
         /// </summary>
         /// <param name="vals"></param>
-        /// <returns></returns>
         protected virtual bool CheckFilter(ref string[] vals)
         {
             const bool accepted = false;
@@ -107,7 +106,6 @@ namespace Mage
         /// <param name="sourceFile">name of input file</param>
         /// <param name="fieldPos">index of field in file metadata to be used for renaming</param>
         /// <param name="fields">file metadata</param>
-        /// <returns></returns>
         public virtual string RenameOutputFile(string sourceFile, Dictionary<string, int> fieldPos, string[] fields)
         {
             return sourceFile;

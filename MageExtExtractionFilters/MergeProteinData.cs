@@ -131,7 +131,6 @@ namespace MageExtExtractionFilters
         /// </summary>
         /// <param name="outRow"></param>
         /// <param name="matchFound">Output parameter: True if the ResultID and SequenceID are present in the cached data</param>
-        /// <returns></returns>
         public Collection<string[]> MergeAllProteins(string[] outRow, out bool matchFound)
         {
             Collection<string[]> outRows = null;

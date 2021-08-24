@@ -46,7 +46,6 @@ namespace MageFilePackager
         /// Filter each row
         /// </summary>
         /// <param name="vals"></param>
-        /// <returns></returns>
         protected override bool CheckFilter(ref string[] vals)
         {
             // Apply field mapping to output

@@ -837,7 +837,6 @@ namespace MageFileProcessor
         /// <summary>
         /// Get "best" column name to use for naming prefix according to heuristic
         /// </summary>
-        /// <returns></returns>
         private static string GetBestPrefixIDColumnName(IEnumerable<MageColumnDef> colDefs)
         {
             var IDColumnName = string.Empty;
@@ -1007,7 +1006,6 @@ namespace MageFileProcessor
         /// <summary>
         /// Get fields from selected item in file list
         /// </summary>
-        /// <returns></returns>
         private Dictionary<string, string> GetSelectedFileItem()
         {
             return FileListDisplayControl.SelectedItemFields;

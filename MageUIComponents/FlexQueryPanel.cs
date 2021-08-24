@@ -134,7 +134,6 @@ namespace MageUIComponents
                 /// </summary>
                 /// <param name="queryTemplate"></param>
                 /// <param name="queryItems"></param>
-                /// <returns></returns>
                 public static SQLReader GetMSSQLReaderFromFlexQuery(string queryTemplate, string[] queryItems) {
                     Dictionary<string, string> arguments = new Dictionary<string, string>();
                     SQLBuilder builder = new SQLBuilder(queryTemplate, ref arguments);

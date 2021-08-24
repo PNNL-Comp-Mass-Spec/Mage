@@ -171,7 +171,6 @@ namespace MageDisplayLib
         /// <summary>
         /// Get list of items being passed in the event
         /// </summary>
-        /// <returns></returns>
         public ListViewItem[] GetItemBlock()
         {
             return ItemBlock;
@@ -198,7 +197,6 @@ namespace MageDisplayLib
         /// <summary>
         /// Return array of column definitions
         /// </summary>
-        /// <returns></returns>
         public ColumnHeader[] GetColumnBlock()
         {
             return ColumnBlock;

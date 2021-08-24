@@ -261,7 +261,6 @@ namespace MageFileProcessor
         /// as metadata file or db table
         /// </summary>
         /// <param name="jobList"></param>
-        /// <returns></returns>
         public static ProcessingPipeline MakePipelineToExportJobMetadata(BaseModule jobList, string outputMode, string outputDirectoryPath)
         {
             if (outputMode == )
@@ -302,7 +301,6 @@ namespace MageFileProcessor
         /// <param name="jobListSource">Mage module that contains list of files</param>
         /// <param name="fileListSink">Mage module to accumulate list of results into</param>
         /// <param name="runtimeParams">Runtime parameters</param>
-        /// <returns></returns>
         public static ProcessingPipeline MakePipelineToGetListOfFiles(BaseModule jobListSource, BaseModule fileListSink, Dictionary<string, string> runtimeParams)
         {
             var outputDirectory = GetRuntimeParam(runtimeParams, "OutputDirectory");

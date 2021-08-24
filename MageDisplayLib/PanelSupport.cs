@@ -18,7 +18,6 @@ namespace MageDisplayLib
         /// Note: Only return one if there are many (which current design approach should rule out)
         /// </summary>
         /// <param name="ctrl"></param>
-        /// <returns></returns>
         public static IModuleParameters GetParameterPanel(Control ctrl)
         {
             var userControlList = new List<Control>();
@@ -99,7 +98,6 @@ namespace MageDisplayLib
         /// Remove duplicates and missing values and return clean list
         /// </summary>
         /// <param name="rawList"></param>
-        /// <returns></returns>
         public static string CleanUpDelimitedList(string rawList)
         {
             rawList = rawList.Replace("\t", ",");
@@ -127,7 +125,6 @@ namespace MageDisplayLib
         /// Convert the value to a string, treating null as an empty string
         /// </summary>
         /// <param name="value"></param>
-        /// <returns></returns>
         public static string FixNull(object value)
         {
             if (value == null)

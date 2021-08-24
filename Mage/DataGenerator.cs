@@ -138,7 +138,6 @@ namespace Mage
         /// Return a simulted row of data with the given number of columns
         /// </summary>
         /// <param name="numCols"></param>
-        /// <returns></returns>
         public static string[] MakeSimulatedHeaderRow(int numCols)
         {
             var row = new string[numCols];
@@ -154,7 +153,6 @@ namespace Mage
         /// </summary>
         /// <param name="i"></param>
         /// <param name="numCols"></param>
-        /// <returns></returns>
         public static string[] MakeSimulatedDataRow(int i, int numCols)
         {
             var row = new string[numCols];

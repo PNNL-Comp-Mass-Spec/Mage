@@ -162,7 +162,6 @@ namespace MageFilePackager
         /// <summary>
         /// Get current package contents
         /// </summary>
-        /// <returns></returns>
         private SimpleSink GetCurrentPackageContents()
         {
             var nvSink = new Accumulator();
@@ -325,7 +324,6 @@ namespace MageFilePackager
         /// Get total size of all files in file package
         /// </summary>
         /// <param name="totalKB"> </param>
-        /// <returns></returns>
         private string TotalGB(float totalKB)
         {
             return string.Format("{0:###,###,##0.0 GBytes}", totalKB / 1048576);
@@ -334,7 +332,6 @@ namespace MageFilePackager
         /// <summary>
         /// Calculate total size of all files in file package
         /// </summary>
-        /// <returns></returns>
         private float TotalKB()
         {
             float totalKB = 0;
@@ -363,7 +360,6 @@ namespace MageFilePackager
         /// Create Mage module that removes prefixes from file paths according to source entity type
         /// </summary>
         /// <param name="entityType"></param>
-        /// <returns></returns>
         private FilePackageFilter GetPackageFilter(string entityType)
         {
             const string baseColMap = "Item, Name, KB|" + FileListInfoBase.COLUMN_NAME_FILE_SIZE + ", Path|+|text, Source|+|text, ";

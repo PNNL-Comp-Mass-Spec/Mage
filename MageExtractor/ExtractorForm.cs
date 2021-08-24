@@ -577,7 +577,6 @@ namespace MageExtractor
         /// <summary>
         /// Can't process empty list of jobs
         /// </summary>
-        /// <returns></returns>
         private bool CheckForJobsToProcess()
         {
             var ok = true;

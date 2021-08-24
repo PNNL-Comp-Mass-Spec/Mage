@@ -161,7 +161,6 @@ namespace MageDisplayLib
         /// Builds a set of new menu items that handle basic housekeeping
         /// (selection and deletion) of items in list
         /// </summary>
-        /// <returns></returns>
         private ToolStripItem[] GetBasicHousekeepingMenuItems()
         {
             var toolStripItems = new List<ToolStripItem>
@@ -297,7 +296,6 @@ namespace MageDisplayLib
         /// </summary>
         /// <param name="sourceObject">Mage module that can deliver contents of ListView on standard tabular input</param>
         /// <param name="filePath">File to save contents to</param>
-        /// <returns></returns>
         private static ProcessingPipeline SaveListDisplay(IBaseModule sourceObject, string filePath)
         {
             var writer = new DelimitedFileWriter
@@ -313,7 +311,6 @@ namespace MageDisplayLib
         /// </summary>
         /// <param name="sinkObject">Mage module that can deliver standard tabular input to ListView</param>
         /// <param name="filePath">File to reload list from</param>
-        /// <returns></returns>
         private static ProcessingPipeline ReloadListDisplay(ISinkModule sinkObject, string filePath)
         {
             var reader = new DelimitedFileReader
@@ -330,7 +327,6 @@ namespace MageDisplayLib
         /// Builds as set of menu items for actions that copy contents of
         /// List to clipboard
         /// </summary>
-        /// <returns></returns>
         private ToolStripItem[] GetCopyMenuItems()
         {
             var toolStripItems = new List<ToolStripItem>

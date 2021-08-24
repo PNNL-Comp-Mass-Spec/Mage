@@ -68,7 +68,6 @@ namespace MageExtExtractionFilters
         /// <param name="jobListSource">Mage module that contains list of jobs to search</param>
         /// <param name="fileListSink">Mage module to accumulate list of results (and MSGF) files into</param>
         /// <param name="extractionParms">Extraction parameters</param>
-        /// <returns></returns>
         public static ProcessingPipeline MakePipelineToGetListOfFiles(BaseModule jobListSource, BaseModule fileListSink, ExtractionType extractionParms)
         {
             var modules = new Collection<object>
@@ -136,7 +135,6 @@ namespace MageExtExtractionFilters
         /// <param name="jobList"></param>
         /// <param name="toolCol"></param>
         /// <param name="extractionParams">Extraction parameters</param>
-        /// <returns></returns>
         public static string CheckJobResultType(BaseModule jobList, string toolCol, ExtractionType extractionParams)
         {
             var msg = string.Empty;
@@ -186,7 +184,6 @@ namespace MageExtExtractionFilters
         /// with the same prefix set off by underscore character.
         /// </summary>
         /// <param name="rawTool"></param>
-        /// <returns></returns>
         public static string GetBaseTool(string rawTool)
         {
             var tool = rawTool.ToLower();
@@ -218,7 +215,6 @@ namespace MageExtExtractionFilters
         /// </summary>
         /// <param name="jobList"></param>
         /// <param name="destination"></param>
-        /// <returns></returns>
         public static ProcessingPipeline MakePipelineToExportJobMetadata(BaseModule jobList, DestinationType destination)
         {
             BaseModule writer = null;
@@ -250,7 +246,6 @@ namespace MageExtExtractionFilters
         /// </summary>
         /// <param name="fileList"></param>
         /// <param name="destination"></param>
-        /// <returns></returns>
         public static ProcessingPipeline MakePipelineToExportFileList(MyEMSLSinkWrapper fileList, DestinationType destination)
         {
             BaseModule writer = null;

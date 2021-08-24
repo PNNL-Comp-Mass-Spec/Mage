@@ -59,7 +59,6 @@ namespace MageFilePackager
         /// <summary>
         /// Return a Mage source module that outputs file objects that were checked in tree
         /// </summary>
-        /// <returns></returns>
         public BaseModule GetSource()
         {
             return new TreeSource { ColumnDefs = _columnDefs, FileTree = treeView1 };

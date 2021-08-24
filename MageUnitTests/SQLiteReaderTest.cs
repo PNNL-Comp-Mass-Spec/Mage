@@ -119,7 +119,6 @@ namespace MageUnitTests
         /// <summary>
         /// Example of packaged reader pipeline
         /// </summary>
-        /// <returns></returns>
         public SimpleSink GetDataFromSQLite(string queryDefName, Dictionary<string, string> runtimeParameters, int maxRows)
         {
             if (runtimeParameters.TryGetValue(SQLITE_QUERY_DEF_FILE_PATH_KEY, out var queryDefFilePath))

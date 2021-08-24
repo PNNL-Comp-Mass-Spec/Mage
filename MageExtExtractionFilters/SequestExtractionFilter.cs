@@ -83,7 +83,6 @@ namespace MageExtExtractionFilters
         /// and pass on result if it passed the filter
         /// </summary>
         /// <param name="vals"></param>
-        /// <returns></returns>
         protected bool CheckFilter(string[] vals)
         {
             var accept = true;
@@ -155,7 +154,6 @@ namespace MageExtExtractionFilters
         /// Make a new FilterSequestResults object that is configured to use the given filter set ID
         /// </summary>
         /// <param name="FilterSetID"></param>
-        /// <returns></returns>
         public static FilterSequestResults MakeSequestResultChecker(string FilterSetID)
         {
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("Extraction_Filter_Set_List");

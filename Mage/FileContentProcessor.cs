@@ -10,7 +10,6 @@ namespace Mage
     /// <param name="sourceFile">the original name of the file</param>
     /// <param name="fieldPos">index to the metadata field to be used in renaming</param>
     /// <param name="fields">list of metadata fields for original file</param>
-    /// <returns></returns>
     public delegate string OutputFileNamer(string sourceFile, Dictionary<string, int> fieldPos, string[] fields);
 
     /// <summary>
@@ -283,7 +282,6 @@ namespace Mage
         /// <param name="sourceFile"></param>
         /// <param name="fieldPos"></param>
         /// <param name="fields"></param>
-        /// <returns></returns>
         protected string GetDefaultOutputFileName(string sourceFile, Dictionary<string, int> fieldPos, string[] fields)
         {
             return sourceFile;

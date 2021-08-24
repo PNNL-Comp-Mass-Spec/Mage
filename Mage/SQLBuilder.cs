@@ -280,7 +280,6 @@ namespace Mage
         /// Return a dictionary object containing the description text for query components
         /// </summary>
         /// <param name="xml">Specifications for query</param>
-        /// <returns></returns>
         public static Dictionary<string, string> GetDescriptionsFromXML(string xml)
         {
             var descriptions = new Dictionary<string, string>();
@@ -732,7 +731,6 @@ namespace Mage
         /// Adds single quotes to a comma separated list of values
         /// </summary>
         /// <param name="valList"></param>
-        /// <returns></returns>
         private static string QuoteList(string valList)
         {
             var values = valList.Split(',');

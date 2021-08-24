@@ -278,7 +278,6 @@ namespace MageDisplayLib
         /// Create a new LVAccumulator for this user control
         /// and wire up its events to this user control's event handlers
         /// </summary>
-        /// <returns></returns>
         public LVAccumulator MakeAccumulator()
         {
             const int BLOCK_SIZE = 100;
@@ -289,7 +288,6 @@ namespace MageDisplayLib
         /// Return an LVAccumulator object that can supply input rows to this object
         /// </summary>
         /// <param name="blockSize"></param>
-        /// <returns></returns>
         public LVAccumulator MakeAccumulator(int blockSize)
         {
             Accumulator = new LVAccumulator
@@ -576,7 +574,6 @@ namespace MageDisplayLib
         /// Return an ISinkModule reference that
         /// Mage pipeline can use to populate this control
         /// </summary>
-        /// <returns></returns>
         public ISinkModule MakeSink()
         {
             const int BLOCK_SIZE = 10;
@@ -589,7 +586,6 @@ namespace MageDisplayLib
         /// </summary>
         /// <param name="title"></param>
         /// <param name="blockSize"></param>
-        /// <returns></returns>
         public ISinkModule MakeSink(string title, int blockSize)
         {
             PageTitle = title;
@@ -601,7 +597,6 @@ namespace MageDisplayLib
         /// Mage pipeline can use to populate this control
         /// </summary>
         /// <param name="blockSize"></param>
-        /// <returns></returns>
         public ISinkModule MakeSink(int blockSize)
         {
             Clear();

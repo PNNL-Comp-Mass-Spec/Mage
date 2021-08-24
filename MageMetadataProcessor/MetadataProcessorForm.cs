@@ -257,7 +257,6 @@ namespace MageMetadataProcessor
         /// <param name="filePath">File to save contents to</param>
         /// <param name="tableName"></param>
         /// <param name="outputColumnList"></param>
-        /// <returns></returns>
         private static ProcessingPipeline MakeSaveToDBPipeline(IBaseModule sourceObject, string filePath, string tableName, string outputColumnList)
         {
             var writer = new SQLiteWriter

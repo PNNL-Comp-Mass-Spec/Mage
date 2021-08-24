@@ -387,7 +387,6 @@ namespace Mage
         /// Create module from class name
         /// </summary>
         /// <param name="className"></param>
-        /// <returns></returns>
         public static IBaseModule MakeModule(string className)
         {
             IBaseModule module = null;
@@ -415,7 +414,6 @@ namespace Mage
         /// Add the module object to the pipeline
         /// </summary>
         /// <param name="modDef"></param>
-        /// <returns></returns>
         public IBaseModule AddModule(ModuleDef modDef)
         {
             if (modDef == null)
@@ -445,7 +443,6 @@ namespace Mage
         /// Return a reference to the given module
         /// </summary>
         /// <param name="moduleName">Module name</param>
-        /// <returns></returns>
         public IBaseModule GetModule(string moduleName)
         {
             return mModuleIndex[moduleName];
@@ -678,7 +675,6 @@ namespace Mage
         /// </summary>
         /// <param name="name">Name of the pipeline</param>
         /// <param name="moduleList">comma-delimited list of modules as arguments</param>
-        /// <returns></returns>
         public static ProcessingPipeline Assemble(string name, params object[] moduleList)
         {
             var moduleCollection = new Collection<object>(moduleList);
@@ -689,7 +685,6 @@ namespace Mage
         /// Assemble a linear processing pipeline from an XML spec
         /// </summary>
         /// <param name="pipelineSpecXML"></param>
-        /// <returns></returns>
         public static ProcessingPipeline Assemble(string pipelineSpecXML)
         {
             var doc = new XmlDocument();

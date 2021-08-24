@@ -152,7 +152,6 @@ namespace MageExtExtractionFilters
         /// If the output is set to a concatenated output file, and it exists,
         /// give user options.
         /// </summary>
-        /// <returns></returns>
         public static bool VerifyDestinationOptionsWithUser(DestinationType destination)
         {
             var ok = true;
@@ -206,7 +205,6 @@ namespace MageExtExtractionFilters
         /// </summary>
         /// <param name="prefix"></param>
         /// <param name="inputFilePath"></param>
-        /// <returns></returns>
         public BaseModule GetDestinationWriterModule(string prefix, string inputFilePath)
         {
             BaseModule writer = null;

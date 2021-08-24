@@ -147,7 +147,6 @@ namespace MageExtExtractionFilters
             /// and conditionally apply cutoff test
             /// </summary>
             /// <param name="outRow"></param>
-            /// <returns></returns>
             public bool MergeMSGFDataFields(string[] outRow)
             {
                 var accepted = true;

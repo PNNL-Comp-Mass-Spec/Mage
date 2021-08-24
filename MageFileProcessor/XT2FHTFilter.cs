@@ -64,7 +64,6 @@ namespace MageFileProcessor
         /// <param name="sourceFile"></param>
         /// <param name="fieldPos"></param>
         /// <param name="fields"></param>
-        /// <returns></returns>
         public override string RenameOutputFile(string sourceFile, Dictionary<string, int> fieldPos, string[] fields)
         {
             return System.Text.RegularExpressions.Regex.Replace(sourceFile, "_xt", "_fht", System.Text.RegularExpressions.RegexOptions.IgnoreCase);

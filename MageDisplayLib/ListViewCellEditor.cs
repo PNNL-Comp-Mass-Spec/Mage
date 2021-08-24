@@ -235,7 +235,6 @@ namespace MageDisplayLib
         /// </summary>
         /// <param name="mouseX"></param>
         /// <param name="lv"></param>
-        /// <returns></returns>
         private static int[] GetSubitemIndexFromXPos(int mouseX, ListView lv)
         {
             var results = new int[3];

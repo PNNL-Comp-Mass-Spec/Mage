@@ -80,7 +80,6 @@ namespace Mage
         /// instantiation by the caller.
         /// </summary>
         /// <param name="ClassName">name of class to search for</param>
-        /// <returns></returns>
         public static Type GetModuleTypeFromClassName(string ClassName)
         {
             // Is the module class in the executing assembly?
@@ -133,7 +132,6 @@ namespace Mage
         /// </summary>
         /// <param name="ClassName"></param>
         /// <param name="assembly"></param>
-        /// <returns></returns>
         private static Type GetClassTypeFromAssembly(string ClassName, Assembly assembly)
         {
             Type modType = null;
@@ -203,7 +201,6 @@ namespace Mage
         /// Return class name for given filter label
         /// </summary>
         /// <param name="filterLabel"></param>
-        /// <returns></returns>
         public static string SelectedFilterClassName(string filterLabel)
         {
             if (mFiltersByLabel.ContainsKey(filterLabel))
@@ -217,7 +214,6 @@ namespace Mage
         /// Find name of parameter panel associated with given filter label, if there is one
         /// </summary>
         /// <param name="filterLabel"></param>
-        /// <returns></returns>
         public static string GetParameterPanelForFilter(string filterLabel)
         {
             if (mFiltersByLabel.ContainsKey(filterLabel))
@@ -257,7 +253,6 @@ namespace Mage
         /// Find filter modules in main assembly and loadable assemblies
         /// and add to the internal master list
         /// </summary>
-        /// <returns></returns>
         public static Collection<MageAttribute> FindFilters()
         {
             // List to hold info about discovered filters
@@ -304,7 +299,6 @@ namespace Mage
         /// from external XML query definition file
         /// </summary>
         /// <param name="queryName">Query Name</param>
-        /// <returns></returns>
         public static string GetQueryXMLDef(string queryName)
         {
             var doc = new XmlDocument();

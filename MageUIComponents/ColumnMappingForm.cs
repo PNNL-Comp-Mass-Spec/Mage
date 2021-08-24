@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -282,7 +282,6 @@ namespace MageUIComponents
         /// int a column list in column mapping format
         /// </summary>
         /// <param name="colItems"></param>
-        /// <returns></returns>
         private static string GetColumnListFromColumnSpecItems(IEnumerable<string[]> colItems)
         {
             var specs = new List<string>();
@@ -479,7 +478,6 @@ namespace MageUIComponents
         /// Roll the individual column specs in the column spec editing display list
         /// int a column list in column mapping format
         /// </summary>
-        /// <returns></returns>
         private string GetColListFromEditingPanel()
         {
             var colItems = GetColumnSpecItemsFromEditingPanel();
@@ -490,7 +488,6 @@ namespace MageUIComponents
         /// Get the individual column specs in the column spec editing display list
         /// as a collection of field arrays
         /// </summary>
-        /// <returns></returns>
         private Collection<string[]> GetColumnSpecItemsFromEditingPanel()
         {
             var colItems = new Collection<string[]>();
@@ -604,7 +601,6 @@ namespace MageUIComponents
         /// <summary>
         /// Get a new column row to insert
         /// </summary>
-        /// <returns></returns>
         private static string[] GetDefaultNewColumn()
         {
             var newColData = new[] { "New_Column", "", "text", "" };
@@ -633,7 +629,6 @@ namespace MageUIComponents
         /// <summary>
         /// Are there unsaved changes to the column mapping
         /// </summary>
-        /// <returns></returns>
         private bool UnsavedChanges()
         {
             return SaveColumnMappingsBtn.Enabled;
@@ -715,7 +710,6 @@ namespace MageUIComponents
         /// Return a Mage reader module that is set up
         /// to read preview of selected file processing output file/database
         /// </summary>
-        /// <returns></returns>
         private BaseModule GetReaderForOutputPreview()
         {
             BaseModule rdr;
@@ -760,7 +754,6 @@ namespace MageUIComponents
         /// </summary>
         /// <param name="reader"></param>
         /// <param name="numRows"></param>
-        /// <returns></returns>
         private static SimpleSink GetPreviewFromSource(BaseModule reader, int numRows)
         {
             var sink = new SimpleSink { RowsToSave = numRows };
@@ -775,7 +768,6 @@ namespace MageUIComponents
         /// Return a Mage SimpleSink module populated with
         /// preview from file processing input target
         /// </summary>
-        /// <returns></returns>
         private SimpleSink GetInputPreview(int numRows)
         {
             var reader = GetReaderForInputPreview();
@@ -826,7 +818,6 @@ namespace MageUIComponents
         /// Return a Mage SimpleSink module populated with
         /// preview from file processing output target
         /// </summary>
-        /// <returns></returns>
         private SimpleSink GetOutputPreview(int numRows)
         {
             var reader = GetReaderForOutputPreview();

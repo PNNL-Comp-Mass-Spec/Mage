@@ -206,7 +206,6 @@ namespace Mage
         /// <param name="sourceFile"></param>
         /// <param name="fieldPos"></param>
         /// <param name="fields"></param>
-        /// <returns></returns>
         protected string GetDestFile(string sourceFile, Dictionary<string, int> fieldPos, string[] fields)
         {
             if (OptionEnabled(ApplyPrefixToFileName))

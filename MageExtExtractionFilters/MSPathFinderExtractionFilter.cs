@@ -162,7 +162,6 @@ namespace MageExtExtractionFilters
         /// and pass on result if it passed the filter
         /// </summary>
         /// <param name="vals"></param>
-        /// <returns></returns>
         protected bool CheckFilter(string[] vals)
         {
             var accept = true;

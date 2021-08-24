@@ -263,7 +263,6 @@ namespace Mage
         /// from given DataRow object
         /// </summary>
         /// <param name="drField"></param>
-        /// <returns></returns>
         private static MageColumnDef GetColumnInfo(DataRow drField)
         {
             // Add the canonical column definition fields to column definition

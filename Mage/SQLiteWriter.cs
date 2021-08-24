@@ -551,7 +551,6 @@ namespace Mage
         /// </summary>
         /// <param name="val"></param>
         /// <param name="columnSchema"></param>
-        /// <returns></returns>
         [Obsolete("Unused")]
         // ReSharper disable once UnusedMember.Local
         private static object CastValueForColumn(object val, ColumnSchema columnSchema)
@@ -676,7 +675,6 @@ namespace Mage
         /// Matches database data types to .NET types
         /// </summary>
         /// <param name="cs"></param>
-        /// <returns></returns>
         private static DbType GetDbTypeOfColumn(ColumnSchema cs)
         {
             var success = PRISMDatabaseUtils.DBToolsBase.GetDbTypeByDataTypeName(cs.ColumnType, out var dataType, out _);
@@ -726,7 +724,6 @@ namespace Mage
         /// Check if the DEFAULT clause is valid by SQLite standards
         /// </summary>
         /// <param name="value"></param>
-        /// <returns></returns>
         private static bool IsValidDefaultValue(string value)
         {
             if (IsSingleQuoted(value))

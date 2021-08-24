@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,7 +21,6 @@ namespace MageDisplayLib
         /// <summary>
         /// Gets settings for this panel
         /// </summary>
-        /// <returns></returns>
         public Dictionary<string, string> GetParameters()
         {
             mParameters["ShiftClickMode"] = chkShiftClickMode.Checked.ToString();
@@ -31,7 +30,6 @@ namespace MageDisplayLib
         /// <summary>
         /// Sets settings for this panel
         /// </summary>
-        /// <returns></returns>
         public void SetParameters(Dictionary<string, string> paramList)
         {
             if (paramList.TryGetValue("ShiftClickMode", out var value))

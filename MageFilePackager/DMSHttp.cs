@@ -14,7 +14,6 @@ namespace MageFilePackager
         /// </summary>
         /// <param name="url"></param>
         /// <param name="postDataList"></param>
-        /// <returns></returns>
         public static string Post(string url, Dictionary<string, string> postDataList)
         {
             // Format the data to be posted
@@ -72,7 +71,6 @@ namespace MageFilePackager
         /// Convert set of Key/Value pairs to POST data string
         /// </summary>
         /// <param name="postDataList"></param>
-        /// <returns></returns>
         private static string FormatPostData(Dictionary<string, string> postDataList)
         {
             var sb = new StringBuilder();

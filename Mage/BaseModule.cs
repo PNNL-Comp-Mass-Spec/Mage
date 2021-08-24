@@ -213,7 +213,6 @@ namespace Mage
         /// </summary>
         /// <param name="message"></param>
         /// <param name="ex"></param>
-        /// <returns></returns>
         protected Exception ReportMageException(string message, Exception ex = null)
         {
             var mageException = new MageException(message, ex);
@@ -225,7 +224,6 @@ namespace Mage
         /// Raise event OnWarningMessage
         /// </summary>
         /// <param name="message"></param>
-        /// <returns></returns>
         protected void ReportMageWarning(string message)
         {
             OnWarningMessage(new MageStatusEventArgs(message));
@@ -514,7 +512,6 @@ namespace Mage
         /// Return True if optionValue is Yes or True or 1
         /// </summary>
         /// <param name="optionValue"></param>
-        /// <returns></returns>
         protected bool OptionEnabled(string optionValue)
         {
             return string.Equals(optionValue, "Yes", StringComparison.OrdinalIgnoreCase) ||
@@ -787,7 +784,6 @@ namespace Mage
         /// definition
         /// </summary>
         /// <param name="vals">An input data row with fields according to input column definitions</param>
-        /// <returns></returns>
         protected string[] MapDataRow(string[] vals)
         {
             // Remap results according to our output column definitions

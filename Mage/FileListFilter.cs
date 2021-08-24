@@ -580,7 +580,6 @@ namespace Mage
         /// </summary>
         /// <param name="fileList"></param>
         /// <param name="fileNameRegExSpecs"></param>
-        /// <returns></returns>
         private static List<FileSystemInfo> FilterFileNamesFromList(IReadOnlyCollection<FileSystemInfo> fileList, IReadOnlyCollection<Regex> fileNameRegExSpecs)
         {
             var filteredFilesOrDirectories = new List<FileSystemInfo>(fileList.Count);
@@ -611,7 +610,6 @@ namespace Mage
         /// <summary>
         /// Make list of regex objects from list of file selectors
         /// </summary>
-        /// <returns></returns>
         private static List<Regex> GetRegexFileSelectors(IEnumerable<string> selectors)
         {
             var fileNameSpecs = new List<Regex>();
@@ -634,7 +632,6 @@ namespace Mage
         /// <summary>
         /// Get list of individual file selectors from selector list
         /// </summary>
-        /// <returns></returns>
         public List<string> GetFileNameSelectors()
         {
             var selectorList = new List<string>();
@@ -677,7 +674,6 @@ namespace Mage
         /// Those should have been used already when determining which directories to search
         /// </summary>
         /// <param name="selector"></param>
-        /// <returns></returns>
         private string ScrubRelativePathText(string selector)
         {
             if (!selector.StartsWith(@"..\"))

@@ -526,7 +526,6 @@ namespace MageFilePackager
         /// from external XML query definition file
         /// </summary>
         /// <param name="queryName"></param>
-        /// <returns></returns>
         private string GetQueryDefinition(out string queryName)
         {
             // Note: Tab page tag field contains name of query to look up in query def file

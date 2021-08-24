@@ -289,7 +289,6 @@ namespace MageExtExtractionFilters
         /// </summary>
         /// <param name="resultsDirectoryPath"></param>
         /// <param name="job"></param>
-        /// <returns></returns>
         private ExtractionFilter GetExtractionFilterModule(string resultsDirectoryPath, string job)
         {
             var resultsFilter = ExtractionParms.RType.GetExtractionFilter(mResultsChecker);

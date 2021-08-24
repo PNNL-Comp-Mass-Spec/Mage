@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
 using Mage;
 
@@ -104,7 +104,6 @@ namespace MageDisplayLib
         /// Return an array of objects from given DataGridView row cell contents
         /// </summary>
         /// <param name="row"></param>
-        /// <returns></returns>
         private static string[] GetOutputRowFromGridRow(DataGridViewRow row)
         {
             var n = row.Cells.Count;

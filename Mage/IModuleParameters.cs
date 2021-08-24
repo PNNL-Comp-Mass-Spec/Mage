@@ -11,7 +11,6 @@ namespace Mage
         /// <summary>
         /// Get list of parameters
         /// </summary>
-        /// <returns></returns>
         Dictionary<string, string> GetParameters();
 
         /// <summary>

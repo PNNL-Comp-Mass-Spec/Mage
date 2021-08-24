@@ -575,7 +575,6 @@ namespace Mage
         /// Get canonical column definition fields for a DataColumn
         /// </summary>
         /// <param name="column">DataColumn instance</param>
-        /// <returns></returns>
         private static MageColumnDef GetColumnInfo(DataColumn column)
         {
             // Add the canonical column definition fields to column definition
@@ -719,7 +718,6 @@ namespace Mage
         /// <param name="dbTools"></param>
         /// <param name="sprocName">Stored procedure name; can optionally contain a schema name, e.g. mc.GetManagerParameters</param>
         /// <param name="sprocParams">Dictionary where keys are stored procedure argument names and values are the value for each argument</param>
-        /// <returns></returns>
         private DbCommand GetSprocCmd(IDBTools dbTools, string sprocName, IReadOnlyDictionary<string, string> sprocParams)
         {
             var isPostgres = dbTools.DbServerType == DbServerTypes.PostgreSQL;
@@ -844,7 +842,6 @@ namespace Mage
         /// Get canonical notation for argument direction
         /// </summary>
         /// <param name="argMode"></param>
-        /// <returns></returns>
         private static ParameterDirection ParamDirection(string argMode)
         {
             return (argMode == "INOUT" || argMode == "OUT") ? ParameterDirection.Output : ParameterDirection.Input;

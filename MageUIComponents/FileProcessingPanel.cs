@@ -54,7 +54,6 @@ namespace MageUIComponents
         /// plus any specific parameters for the currently selected filter
         /// (added by filter's parameter panel)
         /// </summary>
-        /// <returns></returns>
         public Dictionary<string, string> GetParameters()
         {
             // If there is a parameter set for the currently selected filter
