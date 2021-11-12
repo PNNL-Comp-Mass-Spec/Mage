@@ -49,7 +49,7 @@ namespace Mage
         public SortedSet<string> AccessDeniedSubdirectories { get; } = new();
 
         /// <summary>
-        /// Semi-colon delimited list of file matching patterns
+        /// Semicolon delimited list of file matching patterns
         /// </summary>
         public string FileNameSelector { get; set; }
 

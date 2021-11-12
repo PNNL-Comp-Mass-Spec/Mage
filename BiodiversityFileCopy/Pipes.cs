@@ -407,7 +407,7 @@ FROM (
             flf.FileSelectorMode = "FileSearch";                    // How to use the file matching patterns ("FileSearch" or "RegEx")
             flf.IncludeFilesOrDirectories = "File";                 // Include files an/or directories in results ("File", "Directory", "IncludeFilesOrDirectories")
             flf.RecursiveSearch = recursiveSearch;
-            flf.FileNameSelector = fileNameSelector;                // Semi-colon delimited list of file matching patterns
+            flf.FileNameSelector = fileNameSelector;                // Semicolon delimited list of file matching patterns
             flf.SubdirectorySearchName = subdirectorySearchName;    // Directory name pattern used to restrict recursive search
         }
 
