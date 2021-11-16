@@ -56,12 +56,15 @@ namespace Mage
         }
 
         /// <summary>
+        /// <para>
         /// Handler for Mage standard tabular column definition
         /// (override of base class)
-        ///
+        /// </para>
+        /// <para>
         /// Handle the column definitions
         /// Just call the base class, and then
         /// precalculate the indexes to the critical columns
+        /// </para>
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -104,7 +107,7 @@ namespace Mage
         /// <param name="args"></param>
         private void RememberFactorData(MageDataEventArgs args)
         {
-            // Get values of critical fields using pre-calculated indexes
+            // Get values of critical fields using precalculated indexes
             var entityName = args.Fields[mEntityIdx];
             var entityID = args.Fields[mEntityIDIdx];
             var factor = args.Fields[mFactorIdx];

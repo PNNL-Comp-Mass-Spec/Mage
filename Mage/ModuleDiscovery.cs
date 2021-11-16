@@ -115,9 +115,6 @@ namespace Mage
 
         /// <summary>
         /// Look in the given assembly object for a class with the given name.
-        ///
-        /// We should have been able to use assembly.GetType("className")
-        /// instead of doing this function, but it doesn't seem to work.  This is the work-around
         /// </summary>
         /// <param name="className"></param>
         /// <param name="assembly"></param>

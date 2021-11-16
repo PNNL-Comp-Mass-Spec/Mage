@@ -7,20 +7,25 @@ using System.Collections.ObjectModel;
 namespace Mage
 {
     /// <summary>
+    /// <para>
     /// This Mage module can receive data over its standard tabular input
     /// and perform several actions useful for testing other Mage modules
     /// or as a simple end terminus for a pipeline
-    ///
+    /// </para>
+    /// <para>
     /// By default, it outputs descriptions of column definition events and data rows that it
     /// receives to the console (this behavior can be disabled via the WriteToConsole property)
-    ///
+    /// </para>
+    /// <para>
     /// By default, it retains column definitions (via BaseModule behavior)
-    ///
+    /// </para>
+    /// <para>
     /// It also can accumulate data rows in an internal buffer.  The maximum number of rows
     /// that it will accumulate is set by the RowsToSave property (defaults to a few rows)
-    ///
+    /// </para>
+    /// <para>
     /// Both the column definitions and any accumulated data rows can be retrieved by client
-    ///
+    /// </para>
     /// </summary>
     public class SimpleSink : BaseModule
     {

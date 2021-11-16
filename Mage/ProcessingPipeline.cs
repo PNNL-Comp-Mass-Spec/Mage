@@ -742,11 +742,14 @@ namespace Mage
     }
 
     /// <summary>
+    /// <para>
     /// Class that encapsulates a minimum definition of a pipeline
     /// module for pipeline creation.
-    ///
+    /// </para>
+    /// <para>
     /// It contains a reference to a pipeline module and the
     /// name that the module will have in the pipeline
+    /// </para>
     /// </summary>
     public class ModuleDef
     {

@@ -15,17 +15,23 @@ namespace Mage
     public delegate string OutputFileNamer(string sourceFile, Dictionary<string, int> fieldPos, string[] fields);
 
     /// <summary>
+    /// <para>
     /// Module that provides base functions for processing one or more input files
-    ///
+    /// </para>
+    /// <para>
     /// It expects to receive path information for files via its standard tabular input
-    ///
+    /// </para>
+    /// <para>
     /// Each row of standard tabular input will contain information for a single file
     /// (parameters SourceFileColumnName and SourceDirectoryColumnName) define which
     /// columns in standard input contain the directory and name of the input file.
-    ///
+    /// </para>
+    /// <para>
     /// The OutputDirectoryPath parameter tells this module where to put results files
-    ///
+    /// </para>
+    /// <para>
     /// This module outputs a record of each file processed on standard tabular output
+    /// </para>
     /// </summary>
     public class FileContentProcessor : FileProcessingBase
     {

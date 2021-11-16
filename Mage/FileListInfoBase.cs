@@ -8,23 +8,32 @@ using PRISM.Logging;
 namespace Mage
 {
     /// <summary>
+    /// <para>
     /// This module serves as the base class for either FileListFilter or FileListInfoLookup
-    ///
+    /// </para>
+    /// <para>
     /// If using FileListFilter, pass in a list of directory paths to be searched
+    /// </para>
+    /// <para>
     /// If using FileListInfoLookup, pass in a list of file paths whose file information should be determined
-    ///
+    /// </para>
+    /// <para>
     /// This module can receive the list of source directories via either its HandleDataRow listener
     /// (it will accumulate the list into an internal file path buffer and then use it to look for files)
     /// or it may be run as a source module after one or more source directories are specified by
     /// setting the "DirectoryPath" property/parameter
-    ///
+    /// </para>
+    /// <para>
     /// This module uses output column definitions
     /// the internal defaults will provide a functional minimum even if the
     /// "OutputColumnList" property is not set by the client, but if it is
     /// it must include a new column definition for the column specified by the "FileColumnName" property
+    /// </para>
     /// </summary>
     public abstract class FileListInfoBase : FileProcessingBase
     {
+        // Ignore Spelling: Mage, hh:mm:ss tt, yyyy-MM-dd
+
         /// <summary>
         /// Trace logger
         /// </summary>
@@ -126,11 +135,14 @@ namespace Mage
         }
 
         /// <summary>
+        /// <para>
         /// Handler for Mage standard tabular input data rows
         /// (override of base class)
-        ///
+        /// </para>
+        /// <para>
         /// Receive storage directory path as column in data row,
         /// and save it and the ID column value to our local directory path buffer
+        /// </para>
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
