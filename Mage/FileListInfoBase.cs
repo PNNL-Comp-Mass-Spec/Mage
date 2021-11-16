@@ -81,16 +81,6 @@ namespace Mage
         public string SourceDirectoryColumnName { get; set; }
 
         /// <summary>
-        /// The name of the input column that contains the directory path to search for files
-        /// </summary>
-        [Obsolete("Use SourceDirectoryColumnName")]
-        public string SourceFolderColumnName
-        {
-            get => SourceDirectoryColumnName;
-            set => SourceDirectoryColumnName = value;
-        }
-
-        /// <summary>
         /// Name of output column that will receive filename
         /// </summary>
         public string FileColumnName { get; set; }

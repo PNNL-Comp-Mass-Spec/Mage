@@ -23,14 +23,6 @@ namespace MageUIComponents
             set => OutputDirectoryCtl.Text = value;
         }
 
-        [Obsolete("Use OutputDirectory")]
-        // ReSharper disable once UnusedMember.Global
-        public string OutputFolder
-        {
-            get => OutputDirectory;
-            set => OutputDirectory = value;
-        }
-
         public string ApplyPrefixToFileName
         {
             get => usePrefixCtl.Checked ? "Yes" : "No";

@@ -206,28 +206,6 @@ namespace MageExtContentFilters
             return false;
         }
 
-        [Obsolete("Unused")]
-        // ReSharper disable once UnusedMember.Global
-        protected ArrayList GetGroupList(DataTable filterCriteria)
-        {
-            var previousGroupID = 0;
-
-            var tmpList = new ArrayList();
-
-            foreach (DataRow row in filterCriteria.Rows)
-            {
-                var currentGroupID = Convert.ToInt32(row["Filter_Criteria_Group_ID"]);
-                if (currentGroupID != previousGroupID)
-                {
-                    tmpList.Add(currentGroupID);
-                }
-
-                previousGroupID = currentGroupID;
-            }
-
-            return tmpList;
-        }
-
         protected CleavageStateTypes GetCleavageState(string peptideSequence)
         {
             // Implements IFilterResults.GetCleavageState

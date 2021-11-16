@@ -44,22 +44,7 @@ namespace MageUIComponents
             set => LocalDirectoryCtl.Text = value;
         }
 
-        [Obsolete("Use Directory")]
-        public string Folder
-        {
-            get => Directory;
-            set => Directory = value;
-        }
-
         public string MostRecentDirectory { get; set; }
-
-        [Obsolete("Use MostRecentDirectory")]
-        // ReSharper disable once UnusedMember.Global
-        public string MostRecentFolder
-        {
-            get => MostRecentDirectory;
-            set => MostRecentDirectory = value;
-        }
 
         public string SearchInSubdirectories
         {
@@ -67,31 +52,11 @@ namespace MageUIComponents
             set => SearchInSubdirectoriesCtl.Checked = string.Equals(value, "Yes", StringComparison.OrdinalIgnoreCase);
         }
 
-        [Obsolete("Use SearchInSubdirectories")]
-        // ReSharper disable once UnusedMember.Global
-        public string SearchInSubfolders
-        {
-            get => SearchInSubdirectories;
-            set => SearchInSubdirectories = value;
-        }
-
         public string SubdirectorySearchName
         {
             get => SubdirectorySearchNameCtl.Text;
             set => SubdirectorySearchNameCtl.Text = value;
         }
-
-        [Obsolete("Use SubdirectorySearchName")]
-        // ReSharper disable once UnusedMember.Global
-        public string SubfolderSearchName
-        {
-            get => SubdirectorySearchName;
-            set => SubdirectorySearchName = value;
-        }
-
-
-
-
 
         public Dictionary<string, string> GetParameters()
         {

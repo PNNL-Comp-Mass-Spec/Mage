@@ -260,13 +260,6 @@ namespace MageDisplayLib
             CopySelectedRows();
         }
 
-        [Obsolete("Unused")]
-        // ReSharper disable once UnusedMember.Local
-        private void HandleListCopyColumn(object sender, EventArgs e)
-        {
-            CopyColumnList("Directory", null);
-        }
-
         /// <summary>
         /// Copy list of values in specified column to the clipboard
         /// </summary>

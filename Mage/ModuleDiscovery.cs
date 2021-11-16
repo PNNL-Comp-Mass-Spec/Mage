@@ -30,15 +30,6 @@ namespace Mage
         public static string ExternalModuleDirectory { get; set; }
 
         /// <summary>
-        /// Directory path where this class will search for DLLs that contain loadable Mage modules
-        /// </summary>
-        [Obsolete("Use ExternalModuleDirectory")]
-        public static string ExternalModuleFolder {
-            get => ExternalModuleDirectory;
-            set => ExternalModuleDirectory = value;
-        }
-
-        /// <summary>
         /// Prefix that this class will require file names of DLLs to
         /// have in order to search them for loadable Mage modules
         /// </summary>
@@ -167,35 +158,9 @@ namespace Mage
         private static readonly Dictionary<string, MageAttribute> mFiltersByLabel = new();
 
         /// <summary>
-        /// Get list of filter labels (for display)
-        /// </summary>
-        [Obsolete("Unused")]
-        public static Collection<string> FilterLabels
-        {
-            get
-            {
-                var labels = new Collection<string>();
-                foreach (var ma in mFilters.Values)
-                {
-                    labels.Add(ma.ModLabel);
-                }
-                return labels;
-            }
-        }
-
-        /// <summary>
         /// Get list of filters
         /// </summary>
         public static IEnumerable<MageAttribute> Filters => new Collection<MageAttribute>(mFilters.Values.ToArray());
-
-        /// <summary>
-        /// Get Mage attributes for filters
-        /// </summary>
-        [Obsolete("Unused")]
-        public static MageAttribute GetFilterAttributes(string filterName)
-        {
-            return mFilters[filterName];
-        }
 
         /// <summary>
         /// Return class name for given filter label

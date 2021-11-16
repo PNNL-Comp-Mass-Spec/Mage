@@ -88,26 +88,10 @@ namespace MageUIComponents
             }
         }
 
-        [Obsolete("Use IncludeFilesOrDirectories")]
-        // ReSharper disable once UnusedMember.Global
-        public string IncludeFilesOrFolders
-        {
-            get => IncludeFilesOrDirectories;
-            set => IncludeFilesOrDirectories = value;
-        }
-
         public string SearchInSubdirectories
         {
             get => SearchInSubdirectoriesCtl.Checked ? "Yes" : "No";
             set => SearchInSubdirectoriesCtl.Checked = string.Equals(value, "Yes", StringComparison.OrdinalIgnoreCase);
-        }
-
-        [Obsolete("Use SearchInSubdirectories")]
-        // ReSharper disable once UnusedMember.Global
-        public string SearchInSubfolders
-        {
-            get => SearchInSubdirectories;
-            set => SearchInSubdirectories = value;
         }
 
         public string SubdirectorySearchName
@@ -115,16 +99,6 @@ namespace MageUIComponents
             get => SubdirectorySearchNameCtl.Text;
             set => SubdirectorySearchNameCtl.Text = value;
         }
-
-        [Obsolete("Use SubdirectorySearchName")]
-        // ReSharper disable once UnusedMember.Global
-        public string SubfolderSearchName
-        {
-            get => SubdirectorySearchName;
-            set => SubdirectorySearchName = value;
-        }
-
-
 
         public Dictionary<string, string> GetParameters()
         {

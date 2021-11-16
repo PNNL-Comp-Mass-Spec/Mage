@@ -44,9 +44,5 @@ namespace MageMetadataProcessor
         {
             OnAction?.Invoke(this, new MageCommandEventArgs("basic_read", ""));
         }
-
-        private void GetResultsCrosstabBtn_Click(object sender, EventArgs e)
-        {
-        }
     }
 }

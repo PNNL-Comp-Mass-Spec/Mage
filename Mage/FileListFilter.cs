@@ -65,16 +65,6 @@ namespace Mage
         public string IncludeFilesOrDirectories { get; set; }
 
         /// <summary>
-        /// Include files and/or directories in results
-        /// </summary>
-        [Obsolete("Use IncludeFilesOrDirectories")]
-        public string IncludeFilesOrFolders
-        {
-            get => IncludeFilesOrDirectories;
-            set => IncludeFilesOrDirectories = value;
-        }
-
-        /// <summary>
         /// Setting this property sets the file path to the internal file path buffer
         /// (necessary if Run will be called instead of processing via standard tabular input)
         /// </summary>
@@ -86,16 +76,6 @@ namespace Mage
                 mOutputBuffer.Clear();
                 AddDirectoryPath(value);
             }
-        }
-
-        /// <summary>
-        /// Setting this property sets the file path to the internal file path buffer
-        /// </summary>
-        [Obsolete("Use DirectoryPath")]
-        public string FolderPath
-        {
-            get => DirectoryPath;
-            set => DirectoryPath = value;
         }
 
         /// <summary>
@@ -135,14 +115,6 @@ namespace Mage
             if (!bufferUpdated)
                 mOutputBuffer.Add(new[] { "", "", "", "", path });  // Note: needs to have the same number of columns as OutputColumnList
         }
-
-        /// <summary>
-        /// Add a path to a directory to be searched
-        /// </summary>
-        [Obsolete("Use AddDirectoryPath")]
-        public void AddFolderPath(string path)
-        {
-            AddDirectoryPath(path);
         }
 
         /// <summary>
@@ -154,16 +126,6 @@ namespace Mage
         /// Directory name pattern used to restrict recursive search
         /// </summary>
         public string SubdirectorySearchName { get; set; }
-
-        /// <summary>
-        /// Directory name pattern used to restrict recursive search
-        /// </summary>
-        [Obsolete("Use SubdirectorySearchName")]
-        public string SubfolderSearchName
-        {
-            get => SubdirectorySearchName;
-            set => SubdirectorySearchName = value;
-        }
 
         /// <summary>
         /// Construct a new Mage file list filter module

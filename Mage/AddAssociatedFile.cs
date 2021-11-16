@@ -31,13 +31,6 @@ namespace Mage
 
         /// <summary>
         /// Name of the column in the standard tabular input
-        /// that contains the input directory path
-        /// </summary>
-        [Obsolete("Use SourceDirectoryColumnName")]
-        public string SourceFolderColumnName => SourceDirectoryColumnName;
-
-        /// <summary>
-        /// Name of the column in the standard tabular input
         /// that contains the input file name
         /// optional - defaults to "Name")
         /// </summary>

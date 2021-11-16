@@ -67,14 +67,6 @@ namespace MageExtExtractionFilters
             set => mResultsDirectoryPath = value;
         }
 
-        [Obsolete("Use ResultsDirectoryPath")]
-        // ReSharper disable once UnusedMember.Global
-        public string ResultFolderPath
-        {
-            get => ResultsDirectoryPath;
-            set => ResultsDirectoryPath = value;
-        }
-
         /// <summary>
         /// Current analysis job that results belong to
         /// </summary>

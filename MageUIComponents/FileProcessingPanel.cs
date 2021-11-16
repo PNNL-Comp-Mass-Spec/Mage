@@ -67,14 +67,6 @@ namespace MageUIComponents
             return p;
         }
 
-        public void SetParameters(Dictionary<string, string> paramList)
-        {
-            // mParameters[FilterSelectionCtl.Text] = paramList;
-            // FUTURE: set individual controls from items in the list
-        }
-
-
-
         /// <summary>
         /// Issue command to process file contents
         /// for selected items in list

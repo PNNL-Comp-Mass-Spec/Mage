@@ -22,33 +22,12 @@ namespace BiodiversityFileCopy
 
         public string SourceDirectoryPathColName { get; set; }
 
-        [Obsolete("Use SourceDirectoryPathColName")]
-        public string SourceFolderPathColName
-        {
-            get => SourceDirectoryPathColName;
-            set => SourceDirectoryPathColName = value;
-        }
-
         public string DestinationRootDirectoryPath { get; set; }
-
-        [Obsolete("Use DestinationRootDirectoryPath")]
-        public string DestinationRootFolderPath
-        {
-            get => DestinationRootDirectoryPath;
-            set => DestinationRootDirectoryPath = value;
-        }
 
         public string SourceFilePathColName { get; set; }
         public string DestinationFilePathColName { get; set; }
 
         public string OutputSubdirectoryName { get; set; }
-
-        [Obsolete("Use OutputSubdirectoryName")]
-        public string OutputSubfolderName
-        {
-            get => OutputSubdirectoryName;
-            set => OutputSubdirectoryName = value;
-        }
 
         public override void HandleColumnDef(object sender, MageColumnEventArgs args)
         {

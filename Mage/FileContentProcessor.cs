@@ -49,15 +49,6 @@ namespace Mage
         public string OutputDirectoryPath { get; set; }
 
         /// <summary>
-        /// Path to the directory into which the
-        /// processed input file contents will be saved as an output file
-        /// </summary>
-        [Obsolete("Use OutputDirectoryPath")]
-        public string OutputFolderPath {
-            get => OutputDirectoryPath;
-            set => OutputDirectoryPath = value; }
-
-        /// <summary>
         /// If this is not blank, it will be combined with the
         /// OutputDirectoryPath to generate the output file file.
         /// This will override use of any naming information
@@ -71,17 +62,6 @@ namespace Mage
         /// (optional - defaults to "Directory"; previously defaulted to "Folder")
         /// </summary>
         public string SourceDirectoryColumnName { get; set; }
-
-        /// <summary>
-        /// Name of the column in the standard tabular input
-        /// that contains the input directory path
-        /// </summary>
-        [Obsolete("Use SourceDirectoryColumnName")]
-        public string SourceFolderColumnName
-        {
-            get => SourceDirectoryColumnName;
-            set => SourceDirectoryColumnName = value;
-        }
 
         /// <summary>
         /// Name of the column in the standard tabular input

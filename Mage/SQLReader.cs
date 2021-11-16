@@ -114,21 +114,6 @@ namespace Mage
         }
 
         /// <summary>
-        /// Construct a new SQL Reader module, using the given database user
-        /// </summary>
-        /// <param name="username">Database username; leave blank (or null) to use integrated authentication</param>
-        /// <param name="password">Password if username is non-blank</param>
-        [Obsolete("Use the Constructor that accepts server name, database name, etc.")]
-        // ReSharper disable once UnusedMember.Global
-        public SQLReader(string username, string password)
-        {
-            Username = username;
-            Password = password;
-
-            ConnectionString = string.Empty;
-        }
-
-        /// <summary>
         /// Constructor that initialize values from xml specs and arguments
         /// </summary>
         /// <param name="xml">XML template with specifications for the query</param>
@@ -152,24 +137,6 @@ namespace Mage
         public SQLReader(SQLBuilder builder, string username = "", string password = "", bool isPostgres = false)
         {
             SetPropertiesFromBuilder(builder, username, password, isPostgres);
-        }
-
-        /// <summary>
-        /// Constructor that accepts a server name, database name, and SQL query
-        /// </summary>
-        /// <remarks>The connection string will be auto-defined</remarks>
-        /// <param name="server">Database server name</param>
-        /// <param name="database">Database name</param>
-        /// <param name="sql">SQL Query</param>
-        [Obsolete("Use the Constructor that accepts a username and includes the isPostgres argument")]
-        // ReSharper disable once UnusedMember.Global
-        public SQLReader(string server, string database, string sql)
-        {
-            Server = server;
-            Database = database;
-
-            SQLText = sql;
-            ConnectionString = string.Empty;
         }
 
         /// <summary>
