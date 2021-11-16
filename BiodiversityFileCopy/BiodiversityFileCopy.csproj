@@ -68,10 +68,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SimpleFilePathsFilter.cs" />
-    <Compile Include="BaseFilePathsFilter.cs" />
     <Compile Include="AddJobDatasetFolderFilter.cs" />
     <Compile Include="AddOrganismNameFilter.cs" />
+    <Compile Include="BaseFilePathsFilter.cs" />
     <Compile Include="CommandOptions.cs" />
     <Compile Include="FastaFilePathsFilter.cs" />
     <Compile Include="Logging.cs" />
@@ -81,6 +80,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RawFilePathsFilter.cs" />
+    <Compile Include="SimpleFilePathsFilter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mage\Mage.csproj">

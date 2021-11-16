@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -113,17 +113,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddAssociatedFile.cs" />
-    <Compile Include="FileListInfoBase.cs" />
-    <Compile Include="FileListInfoLookup.cs" />
-    <Compile Include="FileProcessingBase.cs" />
-    <Compile Include="Globals.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="KVSink.cs" />
-    <Compile Include="MergeFromLookup.cs" />
-    <Compile Include="MyEMSLSinkWrapper.cs" />
-    <Compile Include="NullFilter.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="BaseModule.cs" />
     <Compile Include="ContentFilter.cs" />
     <Compile Include="CrosstabFilter.cs" />
@@ -133,15 +122,23 @@
     <Compile Include="FileContentProcessor.cs" />
     <Compile Include="FileCopy.cs" />
     <Compile Include="FileListFilter.cs" />
+    <Compile Include="FileListInfoBase.cs" />
+    <Compile Include="FileListInfoLookup.cs" />
+    <Compile Include="FileProcessingBase.cs" />
     <Compile Include="FileSubPipelineBroker.cs" />
+    <Compile Include="Globals.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IBaseModule.cs" />
     <Compile Include="IModuleParameters.cs" />
     <Compile Include="ISinkModule.cs" />
+    <Compile Include="KVSink.cs" />
     <Compile Include="MageAttributes.cs" />
     <Compile Include="MageCommandEventArgs.cs" />
     <Compile Include="MageEvents.cs" />
+    <Compile Include="MergeFromLookup.cs" />
     <Compile Include="ModuleDiscovery.cs" />
-    <Compile Include="SQLReader.cs" />
+    <Compile Include="MyEMSLSinkWrapper.cs" />
+    <Compile Include="NullFilter.cs" />
     <Compile Include="PermutationGenerator.cs" />
     <Compile Include="PipelineQueue.cs" />
     <Compile Include="ProcessingPipeline.cs" />
@@ -151,6 +148,7 @@
     <Compile Include="SQLBuilder.cs" />
     <Compile Include="SQLiteReader.cs" />
     <Compile Include="SQLiteWriter.cs" />
+    <Compile Include="SQLReader.cs" />
     <Compile Include="Terminator.cs" />
   </ItemGroup>
   <ItemGroup>

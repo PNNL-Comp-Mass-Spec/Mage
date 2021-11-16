@@ -102,12 +102,8 @@
     <Compile Include="FilterInspectResults.cs" />
     <Compile Include="FilterMSGFDbResults.cs" />
     <Compile Include="FilterMSPathFinderResults.cs" />
-    <Compile Include="FilterResultsBase.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="FilterSequestResults.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="FilterResultsBase.cs" />
+    <Compile Include="FilterSequestResults.cs" />
     <Compile Include="FilterXTResults.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SequestFilter.cs" />
