@@ -87,10 +87,13 @@ namespace BiodiversityFileCopy
                 var cacheFilePath = Path.Combine(row[SourceDirectoryIdx], row[FileIdx]);
                 // var gen = cacheFilePath.Contains(_msxmlGenPattern);
 
-                var fc = File.ReadAllLines(cacheFilePath);
-                if (fc.Length <= 0) continue;
+                var cacheFileLines = File.ReadAllLines(cacheFilePath);
 
-                var srcFilePath = fc[0].Trim(); // TBD: check for exactly one line
+                if (cacheFileLines.Length == 0)
+                    continue;
+
+                var srcFilePath = cacheFileLines[0].Trim();
+
                 var mzmlFileName = Path.GetFileName(srcFilePath);
                 if (string.IsNullOrEmpty(mzmlFileName)) continue;
 

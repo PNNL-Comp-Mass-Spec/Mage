@@ -173,14 +173,15 @@ namespace BiodiversityFileCopy
         {
             var fileDatasetIDs = new HashSet<string>(Pipes.ExtractColumnFromSink(datasetIDColName, fileList));
             var missingFileDatasetIDs = packageDatasetIDs.Except(fileDatasetIDs).ToList();
-            var sr = string.Format("{0} {1} files were found for {2} datasets ", fileDatasetIDs.Count,
-                                   fileLabel, packageDatasetIDs.Count);
-            Logging.LogMsg(sr);
-            if (missingFileDatasetIDs.Any())
+            var message = string.Format("{0} {1} files were found for {2} datasets ", fileDatasetIDs.Count, fileLabel, packageDatasetIDs.Count);
+
+            Logging.LogMsg(message);
+
+            if (missingFileDatasetIDs.Count > 0)
             {
-                var sm = string.Join(",", missingFileDatasetIDs);
-                var sx = string.Format("The following datasets did not have {1} files: {0}", sm, fileLabel);
-                Logging.LogWarning(sx);
+                var datasetIDs = string.Join(",", missingFileDatasetIDs);
+                var warningMessage = string.Format("The following datasets did not have {0} files: {1}", fileLabel, datasetIDs);
+                Logging.LogWarning(warningMessage);
             }
         }
 
@@ -189,20 +190,21 @@ namespace BiodiversityFileCopy
         /// </summary>
         private void CheckJobsVsDatasets(HashSet<string> pkgDatasetIDs, HashSet<string> pkgJobDatasetIDs)
         {
-            var missingJobs = pkgDatasetIDs.Except(pkgJobDatasetIDs).ToList();
-            var missingDatasets = pkgJobDatasetIDs.Except(pkgDatasetIDs).ToList();
+            var datasetsMissingJobs = pkgDatasetIDs.Except(pkgJobDatasetIDs).ToList();
+            var jobsMissingDatasets = pkgJobDatasetIDs.Except(pkgDatasetIDs).ToList();
 
-            if (missingJobs.Any())
+            if (datasetsMissingJobs.Count > 0)
             {
-                var sm = string.Join(",", missingJobs);
-                var ss = string.Format("There were no completed jobs in the data package for the following datasets {0}", sm);
-                Logging.LogWarning(ss);
+                var datasetIDs = string.Join(",", datasetsMissingJobs);
+                var message = string.Format("There were no completed jobs in the data package for the following datasets {0}", datasetIDs);
+                Logging.LogWarning(message);
             }
-            if (missingDatasets.Any())
+
+            if (jobsMissingDatasets.Count > 0)
             {
-                var sm = string.Join(",", missingDatasets);
-                var ss = string.Format("There were completed jobs for the following datasets that are not part of the data package {0}", sm);
-                Logging.LogWarning(ss);
+                var jobIDs = string.Join(",", jobsMissingDatasets);
+                var message = string.Format("There were completed jobs for the following datasets that are not part of the data package {0}", jobIDs);
+                Logging.LogWarning(message);
             }
         }
     }

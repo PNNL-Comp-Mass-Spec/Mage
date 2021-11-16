@@ -61,13 +61,13 @@ namespace Mage
         /// Construct new MageAttribute object
         /// </summary>
         /// <param name="type">attribute type</param>
-        /// <param name="ID">attribute ID</param>
+        /// <param name="id">attribute ID</param>
         /// <param name="label">attribute label</param>
         /// <param name="description">attribute description</param>
-        public MageAttribute(string type, string ID, string label, string description)
+        public MageAttribute(string type, string id, string label, string description)
         {
             ModType = type;
-            ModID = ID;
+            ModID = id;
             ModLabel = label;
             ModDescription = description;
         }

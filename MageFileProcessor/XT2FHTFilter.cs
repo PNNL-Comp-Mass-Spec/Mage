@@ -35,7 +35,7 @@ namespace MageFileProcessor
         // This is a function that returns an output column map
         private static string GetFilterColumnMap()
         {
-            var colMapfields = new List<string>
+            var colMapFields = new List<string>
             {
                 "HitNum|+|text",
                 "ScanNum|Scan",
@@ -57,7 +57,7 @@ namespace MageFileProcessor
                 "MScore|+|text",
                 "NumTrypticEnds|+|text"
             };
-            return string.Join(", ", colMapfields);
+            return string.Join(", ", colMapFields);
         }
 
         /// <summary>

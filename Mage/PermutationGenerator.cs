@@ -94,7 +94,7 @@ namespace Mage
         {
             var pDef = new ParameterDef(name, lower, upper, step);
             mParamColDefinitions.Add(pDef);
-            SetCycleCountsForParamterColDefList();
+            SetCycleCountsForParameterColDefList();
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Mage
         {
             var pDef = new ParameterDef(parms);
             mParamColDefinitions.Add(pDef);
-            SetCycleCountsForParamterColDefList();
+            SetCycleCountsForParameterColDefList();
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Mage
 
         // Set the row cycle count for each parameter def object
         // and get total row count that will be produced
-        private void SetCycleCountsForParamterColDefList()
+        private void SetCycleCountsForParameterColDefList()
         {
             // Set cycle count for each parameter def object
             // and get total row count that will be produced

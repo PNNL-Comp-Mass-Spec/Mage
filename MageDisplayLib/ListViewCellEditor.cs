@@ -71,7 +71,7 @@ namespace MageDisplayLib
         public ListViewCellEditor(ListViewEx lv)
         {
             mListView = lv;
-            mListView.onScroll += HandleScrollEvent;
+            mListView.OnScroll += HandleScrollEvent;
             SetupCellEditing();
         }
 

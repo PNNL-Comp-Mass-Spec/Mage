@@ -177,10 +177,10 @@ namespace Mage
         {
             if (mFiltersByLabel.ContainsKey(filterLabel))
             {
-                var ID = mFiltersByLabel[filterLabel].ModID;
-                if (mPanels.ContainsKey(ID))
+                var id = mFiltersByLabel[filterLabel].ModID;
+                if (mPanels.ContainsKey(id))
                 {
-                    return mPanels[ID].ModClassName;
+                    return mPanels[id].ModClassName;
                 }
             }
             return string.Empty;
@@ -194,16 +194,17 @@ namespace Mage
         {
             mFilterList.Clear();
             mFilterList = FindFilters();
-            foreach (var ma in mFilterList)
+
+            foreach (var item in mFilterList)
             {
                 if (ma.ModType == "Filter")
                 {
-                    mFilters.Add(ma.ModID, ma);
-                    mFiltersByLabel.Add(ma.ModLabel, ma);
+                    mFilters.Add(item.ModID, item);
+                    mFiltersByLabel.Add(item.ModLabel, item);
                 }
                 else if (ma.ModType == "FilterPanel")
                 {
-                    mPanels.Add(ma.ModID, ma);
+                    mPanels.Add(item.ModID, item);
                 }
             }
         }

@@ -219,8 +219,8 @@ namespace MageExtExtractionFilters
                         var writer = Destination.GetDestinationWriterModule(job, inputFilePath);
                         var pipeline = ProcessingPipeline.Assemble("Extract File Contents", resultsFileReader, msgfFilter, resultsFilter, writer);
 
-                        pipeline.OnWarningMessageUpdated += pipeline_OnWarningMessageUpdated;
-                        pipeline.OnStatusMessageUpdated += pipeline_OnStatusMessageUpdated;
+                        pipeline.OnWarningMessageUpdated += Pipeline_OnWarningMessageUpdated;
+                        pipeline.OnStatusMessageUpdated += Pipeline_OnStatusMessageUpdated;
 
                         pipeline.RunRoot(null);
 
@@ -238,7 +238,7 @@ namespace MageExtExtractionFilters
             OnDataRowAvailable(args);
         }
 
-        private void pipeline_OnStatusMessageUpdated(object sender, MageStatusEventArgs e)
+        private void Pipeline_OnStatusMessageUpdated(object sender, MageStatusEventArgs e)
         {
             if (string.IsNullOrEmpty(mCurrentProgressText))
                 OnStatusMessageUpdated(e);
@@ -246,7 +246,7 @@ namespace MageExtExtractionFilters
                 OnStatusMessageUpdated(new MageStatusEventArgs(mCurrentProgressText + ": " + e.Message));
         }
 
-        private void pipeline_OnWarningMessageUpdated(object sender, MageStatusEventArgs e)
+        private void Pipeline_OnWarningMessageUpdated(object sender, MageStatusEventArgs e)
         {
             if (!e.Message.StartsWith("ProteinMerger did not find a match for row"))
                 OnWarningMessage(e);
