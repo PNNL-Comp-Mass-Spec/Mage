@@ -649,10 +649,8 @@ namespace Mage
                 if (moduleObject is IBaseModule baseModule)
                 {
                     pipeline.AddModule(currentModName, baseModule);
-                    if (pipeline.RootModule == null)
-                    {
-                        pipeline.RootModule = baseModule;
-                    }
+                    pipeline.RootModule ??= baseModule;
+
                     if (!string.IsNullOrEmpty(precedingModName))
                     {
                         pipeline.ConnectModules(precedingModName, currentModName);

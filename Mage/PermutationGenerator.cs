@@ -210,10 +210,7 @@ namespace Mage
                 var outRow = MapDataRow(fields);
                 for (var i = 0; i < outRow.Length; i++)
                 {
-                    if (outRow[i] == null)
-                    {
-                        outRow[i] = string.Empty;
-                    }
+                    outRow[i] ??= string.Empty;
                 }
                 if (mAutoColumnIndex > -1)
                 {
