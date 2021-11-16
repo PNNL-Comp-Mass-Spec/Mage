@@ -66,9 +66,9 @@ namespace Mage
         /// <param name="description">attribute description</param>
         public MageAttribute(string type, string ID, string label, string description)
         {
+            ModType = type;
             ModID = ID;
             ModLabel = label;
-            ModType = type;
             ModDescription = description;
         }
     }
