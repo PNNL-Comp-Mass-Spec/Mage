@@ -9,7 +9,8 @@ namespace MageExtContentFilters
     /// This class will be auto-discovered by the ModuleDiscovery class in Mage
     /// The list of auto-discovered filters is then used to populate the grid view on form FilterSelectionForm.cs
     /// </remarks>
-    [MageAttribute("Filter", "SEQUEST", "SEQUEST filter", "Uses filter criteria defined in DMS")]
+    [Mage("Filter", "SEQUEST", "SEQUEST filter", "Uses filter criteria defined in DMS")]
+    // ReSharper disable once UnusedMember.Global
     internal class SequestFilter : ContentFilter
     {
         // Ignore Spelling: Mage, pre, Sequest

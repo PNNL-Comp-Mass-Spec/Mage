@@ -5,7 +5,7 @@ using Mage;
 
 namespace MageExtContentFilters
 {
-    [MageAttribute("FilterPanel", "SEQUEST", "SEQUEST Filter", "Parameters for SEQUEST Filter")]
+    [Mage("FilterPanel", "SEQUEST", "SEQUEST Filter", "Parameters for SEQUEST Filter")]
     public partial class SequestFilterPanel : Form, IModuleParameters
     {
         // Ignore Spelling: Mage

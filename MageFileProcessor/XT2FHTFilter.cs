@@ -3,7 +3,7 @@ using Mage;
 
 namespace MageFileProcessor
 {
-    [MageAttribute("Filter", "XT2FHT", "Ascore XT2FHT", "Convert XT results files to SEQUEST FHT format")]
+    [Mage("Filter", "XT2FHT", "Ascore XT2FHT", "Convert XT results files to SEQUEST FHT format")]
     internal class XT2FHTFilter : ContentFilter
     {
         // This is called for each row that is being subjected to filtering
