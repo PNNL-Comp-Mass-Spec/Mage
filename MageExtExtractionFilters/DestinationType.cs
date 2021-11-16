@@ -29,15 +29,15 @@ namespace MageExtExtractionFilters
                 var destName = string.Empty;
                 switch (Type)
                 {
-                    case DestinationType.Types.SQLite_Output:
-                        destName = string.Format("metadata_{0:yyyy-MM-dd_hhmmss}", System.DateTime.Now);
+                    case Types.SQLite_Output:
+                        destName = string.Format("metadata_{0:yyyy-MM-dd_hhmmss}", DateTime.Now);
                         if (!string.IsNullOrEmpty(Name))
                         {
                             destName = Name + "_metadata";
                         }
                         break;
-                    case DestinationType.Types.File_Output:
-                        destName = string.Format("metadata_{0:yyyy-MM-dd_hhmmss}.txt", System.DateTime.Now);
+                    case Types.File_Output:
+                        destName = string.Format("metadata_{0:yyyy-MM-dd_hhmmss}.txt", DateTime.Now);
                         if (!string.IsNullOrEmpty(Name))
                         {
                             destName = Path.GetFileNameWithoutExtension(Name) + "_metadata.txt";
@@ -58,15 +58,15 @@ namespace MageExtExtractionFilters
                 var destName = string.Empty;
                 switch (Type)
                 {
-                    case DestinationType.Types.SQLite_Output:
-                        destName = string.Format("filter_criteria_{0:yyyy-MM-dd_hhmmss}", System.DateTime.Now);
+                    case Types.SQLite_Output:
+                        destName = string.Format("filter_criteria_{0:yyyy-MM-dd_hhmmss}", DateTime.Now);
                         if (!string.IsNullOrEmpty(Name))
                         {
                             destName = Name + "_filter_criteria";
                         }
                         break;
-                    case DestinationType.Types.File_Output:
-                        destName = string.Format("filter_criteria_{0:yyyy-MM-dd_hhmmss}.txt", System.DateTime.Now);
+                    case Types.File_Output:
+                        destName = string.Format("filter_criteria_{0:yyyy-MM-dd_hhmmss}.txt", DateTime.Now);
                         if (!string.IsNullOrEmpty(Name))
                         {
                             destName = Path.GetFileNameWithoutExtension(Name) + "_filter_criteria.txt";
@@ -87,15 +87,15 @@ namespace MageExtExtractionFilters
                 var destName = string.Empty;
                 switch (Type)
                 {
-                    case DestinationType.Types.SQLite_Output:
-                        destName = string.Format("file_list_{0:yyyy-MM-dd_hhmmss}", System.DateTime.Now);
+                    case Types.SQLite_Output:
+                        destName = string.Format("file_list_{0:yyyy-MM-dd_hhmmss}", DateTime.Now);
                         if (!string.IsNullOrEmpty(Name))
                         {
                             destName = Name + "_file_list";
                         }
                         break;
-                    case DestinationType.Types.File_Output:
-                        destName = string.Format("file_list_{0:yyyy-MM-dd_hhmmss}.txt", System.DateTime.Now);
+                    case Types.File_Output:
+                        destName = string.Format("file_list_{0:yyyy-MM-dd_hhmmss}.txt", DateTime.Now);
                         if (!string.IsNullOrEmpty(Name))
                         {
                             destName = Path.GetFileNameWithoutExtension(Name) + "_file_list.txt";
@@ -110,18 +110,12 @@ namespace MageExtExtractionFilters
         {
             ContainerPath = path;
             Name = name;
-            switch (type)
+            Type = type switch
             {
-                case "File_Output":
-                    Type = Types.File_Output;
-                    break;
-                case "SQLite_Output":
-                    Type = Types.SQLite_Output;
-                    break;
-                default:
-                    Type = Types.Unknown;
-                    break;
-            }
+                "File_Output" => Types.File_Output,
+                "SQLite_Output" => Types.SQLite_Output,
+                _ => Types.Unknown
+            };
         }
 
         /// <summary>
@@ -153,7 +147,7 @@ namespace MageExtExtractionFilters
             if (!string.IsNullOrEmpty(destination.FilePath))
             {
                 var sb = new StringBuilder();
-                sb.AppendLine(string.Format("A copy of file '{0}' exists.  What action do you wish to take?", destination.Name));
+                sb.AppendFormat("A copy of file '{0}' exists.  What action do you wish to take?", destination.Name).AppendLine();
                 sb.AppendLine();
                 sb.AppendLine("Yes - delete existing file and continue with extraction");
                 sb.AppendLine("No - retain existing file and append extracted results to it");
@@ -173,22 +167,16 @@ namespace MageExtExtractionFilters
                             {
                                 File.Delete(destination.FilePath);
                             }
-                            catch (Exception e)
+                            catch (IOException e)
                             {
-                                if (e is IOException)
-                                {
-                                    MessageBox.Show(e.Message);
-                                    ok = false;
-                                }
-                                else
-                                {
-                                    throw;
-                                }
+                                MessageBox.Show(e.Message);
+                                ok = false;
                             }
                             break;
                     }
                 }
             }
+
             // TODO: check that dataset name is file and not directory
             return ok;
         }
@@ -200,33 +188,33 @@ namespace MageExtExtractionFilters
         /// <param name="inputFilePath"></param>
         public BaseModule GetDestinationWriterModule(string prefix, string inputFilePath)
         {
-            BaseModule writer = null;
             string autoName;
             string destName;
-            switch (this.Type)
+
+            switch (Type)
             {
-                case DestinationType.Types.SQLite_Output:
+                case Types.SQLite_Output:
                     autoName = prefix + "_" + Path.GetFileNameWithoutExtension(inputFilePath);
-                    destName = !string.IsNullOrEmpty(this.Name) ? this.Name : autoName;
-                    writer = new SQLiteWriter
+                    destName = !string.IsNullOrEmpty(Name) ? Name : autoName;
+
+                    return new SQLiteWriter
                     {
-                        DbPath = this.ContainerPath,
+                        DbPath = ContainerPath,
                         TableName = destName.Replace("-", "_")
                     };
-                    break;
-                case DestinationType.Types.File_Output:
+
+                case Types.File_Output:
                     autoName = prefix + "_" + Path.GetFileName(inputFilePath);
-                    destName = !string.IsNullOrEmpty(this.Name) ? this.Name : autoName;
+                    destName = !string.IsNullOrEmpty(Name) ? Name : autoName;
 
                     // TODO: only append if concatenating
-                    writer = new DelimitedFileWriter
+                    return new DelimitedFileWriter
                     {
-                        FilePath = Path.Combine(this.ContainerPath, destName),
+                        FilePath = Path.Combine(ContainerPath, destName),
                         Append = "Yes"
                     };
-                    break;
             }
-            return writer;
+            return null;
         }
     }
 }
