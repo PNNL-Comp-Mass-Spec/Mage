@@ -103,7 +103,9 @@ namespace MageExtExtractionFilters
                 var filesDownloadedFromMyEMSL = new List<string>();
 
                 if (resultFileName == kNoFilesFound)
+                {
                     inputFilePath = string.Empty;
+                }
                 else
                 {
                     inputFilePath = Path.Combine(resultsDirectoryPath, resultFileName);
@@ -153,7 +155,9 @@ namespace MageExtExtractionFilters
                                 filesDownloadedFromMyEMSL.Add(filePathLocal);
                             }
                             else
+                            {
                                 throw new MageException("Cannot download file since not in MyEMSL Memory Cache: " + filesToDownload[i]);
+                            }
                         }
 
                         // Note that the target directory path will be ignored since we explicitly defined the destination file path when queuing the file
@@ -161,6 +165,7 @@ namespace MageExtExtractionFilters
                         if (!success)
                         {
                             var msg = "Failed to download Mage Extractor merge files from MyEMSL";
+
                             if (m_MyEMSLDatasetInfoCache.ErrorMessages.Count > 0)
                                 msg += ": " + m_MyEMSLDatasetInfoCache.ErrorMessages.First();
                             else
@@ -232,7 +237,9 @@ namespace MageExtExtractionFilters
                 if (filesDownloadedFromMyEMSL.Count > 0)
                 {
                     foreach (var localFile in filesDownloadedFromMyEMSL)
+                    {
                         DeleteFileIfLowDiskSpace(localFile);
+                    }
                 }
             }
             OnDataRowAvailable(args);

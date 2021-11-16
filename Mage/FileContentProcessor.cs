@@ -131,7 +131,9 @@ namespace Mage
                     else if (Directory.Exists(sourceDirectory))
                     {
                         if (File.Exists(Path.Combine(sourceDirectory, sourceFile)))
+                        {
                             fileType = "file";
+                        }
                         else
                         {
                             UpdateStatus(this, new MageStatusEventArgs("FAILED->Cannot process directories with this processing mode", 1));

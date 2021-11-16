@@ -219,7 +219,6 @@ namespace Mage
 
             value = Rows[rowIndex][colIndex];
             return true;
-
         }
 
         /// <summary>

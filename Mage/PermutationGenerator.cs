@@ -363,6 +363,7 @@ namespace Mage
                     for (var j = 0; current <= UpperBound; j++)
                     {
                         current = LowerBound + j * Step;
+
                         if (current > UpperBound)
                             break;
 

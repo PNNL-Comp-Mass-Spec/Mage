@@ -136,9 +136,11 @@ namespace MageDisplayLib
             {
                 var parameterList = new Dictionary<string, string>();
                 if (parms != null)
+                {
                     foreach (XmlNode parameter in parms)
                     {
-                        if (parameter.Attributes == null) continue;
+                        if (parameter.Attributes == null)
+                            continue;
 
                         var paramPanel = parameter.Attributes["panel"].InnerText;
                         var paramName = parameter.Attributes["name"].InnerText;
@@ -149,6 +151,8 @@ namespace MageDisplayLib
                             parameterList[paramName] = paramValue;
                         }
                     }
+                }
+
                 var panel = panelList[listPanel];
                 panel.SetParameters(parameterList);
             }

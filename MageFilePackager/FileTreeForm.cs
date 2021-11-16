@@ -216,8 +216,11 @@ namespace MageFilePackager
                 var curNodeList = FileTree.Nodes;
                 foreach (var directoryName in directoryParts)
                 {
-                    if (string.IsNullOrEmpty(directoryName)) continue;
+                    if (string.IsNullOrEmpty(directoryName))
+                        continue;
+
                     var n = curNodeList.IndexOfKey(directoryName);
+
                     TreeNode curNode;
                     if (n < 0)
                     {

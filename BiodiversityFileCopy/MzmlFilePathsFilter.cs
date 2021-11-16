@@ -72,7 +72,9 @@ namespace BiodiversityFileCopy
                 string[] row = null;
 
                 var q = kv.Value;
-                if (q == null) continue;
+                if (q == null)
+                    continue;
+
                 if (q.RefineryPath != null)
                 {
                     row = q.RefRow;
@@ -96,12 +98,14 @@ namespace BiodiversityFileCopy
                 var srcFilePath = cacheFileLines[0].Trim();
 
                 var mzmlFileName = Path.GetFileName(srcFilePath);
-                if (string.IsNullOrEmpty(mzmlFileName)) continue;
+                if (string.IsNullOrEmpty(mzmlFileName))
+                    continue;
 
                 var ogName = row[OrgNameIdx];
                 var destFilepath = Path.Combine(DestinationRootDirectoryPath, ogName, OutputSubdirectoryName, mzmlFileName);
                 row[SourceFileIdx] = srcFilePath;
                 row[DestFileIdx] = destFilepath;
+
                 savedRows.Add(row);
             }
             return savedRows;
