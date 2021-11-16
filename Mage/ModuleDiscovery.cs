@@ -66,50 +66,46 @@ namespace Mage
         /// also searches assembly DLLs that are in the directory given
         /// by the ExternalModuleDirectory property and tagged with the
         /// file name prefix given by the LoadableModuleFileNamePrefix property.
-        ///
-        /// Returns a .Net Type object suitable for further examination or
-        /// instantiation by the caller.
         /// </summary>
-        /// <param name="ClassName">name of class to search for</param>
-        public static Type GetModuleTypeFromClassName(string ClassName)
+        /// <param name="className">name of class to search for</param>
+        /// <returns>.NET Type object</returns>
+        public static Type GetModuleTypeFromClassName(string className)
         {
             // Is the module class in the executing assembly?
-            var ae = Assembly.GetExecutingAssembly(); // GetType().Assembly;
-                                                      // modType = ae.GetType(ClassName); // should work, but doesn't
-                                                      // string ne = ae.GetName().Name;
-                                                      // modType = Type.GetType(ne + "." + ClassName); // does work, but do it the long way for consistency
-            var modType = GetClassTypeFromAssembly(ClassName, ae);
+            var executingAssembly = Assembly.GetExecutingAssembly();
+
+            var modType = GetClassTypeFromAssembly(className, executingAssembly);
 
             if (modType == null)
             {
                 // Is the module class in the main assembly?
-                var aa = Assembly.GetEntryAssembly();
-                modType = GetClassTypeFromAssembly(ClassName, aa);
+                var entryAssembly = Assembly.GetEntryAssembly();
+                modType = GetClassTypeFromAssembly(className, entryAssembly);
             }
+
             if (modType == null)
             {
                 // Is the module class in the assembly of the code that called us?
-                var ac = Assembly.GetCallingAssembly(); // GetType().Assembly;
-                // string nc = ac.GetName().Name;
-                // modType = Type.GetType(nc + "." + ClassName); // should work, but doesn't
-                modType = GetClassTypeFromAssembly(ClassName, ac);
+                var callingAssembly = Assembly.GetCallingAssembly();
+                modType = GetClassTypeFromAssembly(className, callingAssembly);
             }
+
             if (modType == null)
             {
                 // Is the module class found in a loadable assembly?
                 if (ExternalModuleDirectory != null)
                 {
-                    var di = new DirectoryInfo(ExternalModuleDirectory);
-                    var dllFiles = di.GetFiles(LoadableModuleFileNamePrefix + "*.dll");
-                    foreach (var fi in dllFiles)
+                    var moduleDirectory = new DirectoryInfo(ExternalModuleDirectory);
+
+                    foreach (var fi in moduleDirectory.GetFiles(LoadableModuleFileNamePrefix + "*.dll"))
                     {
                         var DLLName = fi.Name;
                         var path = Path.Combine(ExternalModuleDirectory, DLLName);
                         var af = Assembly.LoadFrom(path);
-                        modType = GetClassTypeFromAssembly(ClassName, af);
+                        modType = GetClassTypeFromAssembly(className, af);
                         if (modType != null)
                             break; // We found it, don't keep looking
-                    } // foreach
+                    }
                 }
             }
             return modType;
@@ -121,17 +117,16 @@ namespace Mage
         /// We should have been able to use assembly.GetType("className")
         /// instead of doing this function, but it doesn't seem to work.  This is the work-around
         /// </summary>
-        /// <param name="ClassName"></param>
+        /// <param name="className"></param>
         /// <param name="assembly"></param>
-        private static Type GetClassTypeFromAssembly(string ClassName, Assembly assembly)
+        private static Type GetClassTypeFromAssembly(string className, Assembly assembly)
         {
             Type modType = null;
             if (assembly != null)
             {
-                var ts = assembly.GetTypes();
-                foreach (var t in ts)
+                foreach (var t in assembly.GetTypes())
                 {
-                    if (t.Name == ClassName)
+                    if (t.Name == className)
                     {
                         modType = t;
                         break;
