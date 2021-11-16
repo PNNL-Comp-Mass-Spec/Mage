@@ -367,13 +367,10 @@ namespace Mage
                             }
 
                             fileName = DatasetInfoBase.AppendMyEMSLFileID(archiveFileInfo.Filename, myEMSLFileID);
-                            var fiMyEMSLFile = new FileInfo(MYEMSL_PATH_FLAG + "\\" + archiveFileInfo.PathWithInstrumentAndDatasetWindows);
-                            if (fiMyEMSLFile.Directory != null)
-                                directoryPath = fiMyEMSLFile.Directory.FullName;
-                            else
-                            {
-                                directoryPath = string.Empty;
-                            }
+                            var myEMSLFile = new FileInfo(MYEMSL_PATH_FLAG + "\\" + archiveFileInfo.PathWithInstrumentAndDatasetWindows);
+
+                            directoryPath = myEMSLFile.Directory != null ? myEMSLFile.Directory.FullName : string.Empty;
+
                             fileSizeKB = FileSizeBytesToString(archiveFileInfo.FileSizeBytes);
                             fileDate = archiveFileInfo.SubmissionTimeODBC12hr;
 

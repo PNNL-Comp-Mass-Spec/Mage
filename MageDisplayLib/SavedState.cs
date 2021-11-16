@@ -126,8 +126,7 @@ namespace MageDisplayLib
             doc.Load(FilePath);
 
             // Get list of parameter nodes
-            var xpath = ".//parameter";
-            var parms = doc.SelectNodes(xpath);
+            var parms = doc.SelectNodes(".//parameter");
 
             // For each panel in list, collect its parameters from the XML node list
             // and set them for the panel

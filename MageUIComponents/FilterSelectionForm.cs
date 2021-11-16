@@ -58,8 +58,8 @@ namespace MageUIComponents
 
             var sortedNames = new List<string>();
             var filterDescriptions = new Dictionary<string, string>();
-            var filters = ModuleDiscovery.Filters;
-            foreach (var filter in filters)
+
+            foreach (var filter in ModuleDiscovery.Filters)
             {
                 sortedNames.Add(filter.ModLabel);
                 filterDescriptions.Add(filter.ModLabel, filter.ModDescription);
