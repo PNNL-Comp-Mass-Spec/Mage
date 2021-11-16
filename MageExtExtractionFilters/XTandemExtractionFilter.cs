@@ -8,10 +8,6 @@ namespace MageExtExtractionFilters
     {
         // Ignore Spelling: Mage
 
-
-
-        // Working copy of X!Tandem filter object
-
         // Indexes into the synopsis row field array
         private int peptideSequenceIndex;
         private int delCN2ValueIndex;

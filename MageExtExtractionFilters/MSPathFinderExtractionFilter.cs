@@ -21,8 +21,6 @@ namespace MageExtExtractionFilters
             Protein
         }
 
-        // Working copy of MSPathFinder filter object
-
         // Indexes into the synopsis row field array
         private ColumnIndices mColumnIndices;
         private int peptideMassIndex;

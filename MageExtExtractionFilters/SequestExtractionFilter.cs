@@ -11,10 +11,6 @@ namespace MageExtExtractionFilters
     {
         // Ignore Spelling: Mage, Sequest
 
-
-
-        // Working copy of SEQUEST hit checker object
-
         // Indexes into the synopsis row field array
         private int peptideSequenceIndex;
         private int xCorrValueIndex;

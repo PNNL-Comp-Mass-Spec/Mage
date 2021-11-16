@@ -11,8 +11,6 @@ namespace MageExtExtractionFilters
     {
         // Ignore Spelling: Mage
 
-        // Working copy of MSGFDB filter object
-
         // Indexes into the synopsis row field array
         private int peptideSequenceIndex;
         private int chargeStateIndex;
