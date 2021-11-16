@@ -1,9 +1,8 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 
 namespace MageConcatenator
 {
-    internal class clsFileInfo
+    internal class InputFileInfo
     {
         public string Name { get; set; }
         public string SizeKB { get; set; }
@@ -29,7 +28,7 @@ namespace MageConcatenator
         /// </summary>
         /// <param name="directoryPath"></param>
         /// <param name="filename"></param>
-        public clsFileInfo(string directoryPath, string filename)
+        public InputFileInfo(string directoryPath, string filename)
         {
             DirectoryPath = directoryPath;
             Name = filename;

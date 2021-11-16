@@ -206,7 +206,7 @@ namespace MageConcatenator
             }
         }
 
-        public bool UpdateFileRowColCounts(List<clsFileInfo> lstFiles)
+        public bool UpdateFileRowColCounts(List<InputFileInfo> lstFiles)
         {
             try
             {
@@ -226,7 +226,7 @@ namespace MageConcatenator
             }
         }
 
-        private void UpdateColCounts(clsFileInfo item)
+        private void UpdateColCounts(InputFileInfo item)
         {
             try
             {

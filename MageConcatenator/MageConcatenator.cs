@@ -345,9 +345,9 @@ namespace MageConcatenator
         /// Obtains the data from the File List control
         /// </summary>
         /// <returns>Dictionary where keys are file paths and values are the file information for each file</returns>
-        private List<clsFileInfo> GetSelectedFiles()
+        private List<InputFileInfo> GetSelectedFiles()
         {
-            var lstSelectedFiles = new List<clsFileInfo>();
+            var lstSelectedFiles = new List<InputFileInfo>();
             var combineFilesPaths = new SortedSet<string>();
 
             foreach (var selectedFileRow in FileListDisplayControl.SelectedItemRowsDictionaryList)
@@ -371,7 +371,7 @@ namespace MageConcatenator
                     continue;
                 }
 
-                var fileInfo = new clsFileInfo(directoryPath, filename)
+                var fileInfo = new InputFileInfo(directoryPath, filename)
                 {
                     DateModified = dateModified,
                     SizeKB = fileSizeKB
