@@ -12,8 +12,6 @@ namespace MageUIComponents
 
         public event EventHandler<MageCommandEventArgs> OnAction;
 
-
-
         public Dictionary<string, string> GetParameters()
         {
             return new()
@@ -34,8 +32,6 @@ namespace MageUIComponents
                 }
             }
         }
-
-
 
         public DataPackageDetailsListPanel()
         {

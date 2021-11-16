@@ -8,8 +8,6 @@ namespace MageExtExtractionFilters
     {
         // Ignore Spelling: Mage
 
-
-
         // Working copy of Inspect filter object
 
         // Indexes into the synopsis row field array
@@ -27,12 +25,7 @@ namespace MageExtExtractionFilters
         private MergeProteinData mProteinMerger;
         private bool mOutputAllProteins;
 
-
-
         public FilterInspectResults ResultChecker { get; set; }
-
-
-
 
         /// <summary>
         /// Read contents of associated protein files and build lookup tables and indexes
@@ -50,8 +43,6 @@ namespace MageExtExtractionFilters
             base.Prepare();
             InitializeParameters();
         }
-
-
 
         /// <summary>
         /// Set up output column specifications to provide fields to receive merged protein fields

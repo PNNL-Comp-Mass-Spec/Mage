@@ -11,10 +11,6 @@ namespace MageUIComponents
     {
         public event EventHandler<MageCommandEventArgs> OnAction;
 
-
-
-
-
         public string OverwriteExistingFiles
         {
             get => OverwriteExistingCtl.Checked ? "Yes" : "No";
@@ -63,10 +59,6 @@ namespace MageUIComponents
             set => ResolveCacheInfoFilesCtl.Checked = string.Equals(value, "Yes", StringComparison.OrdinalIgnoreCase);
         }
 
-
-
-
-
         public Dictionary<string, string> GetParameters()
         {
             return new()
@@ -105,8 +97,6 @@ namespace MageUIComponents
                 }
             }
         }
-
-
 
         public FileCopyPanel()
         {

@@ -106,9 +106,6 @@ namespace MageExtExtractionFilters
             }
         }
 
-
-
-
         public DestinationType(string type, string path, string name)
         {
             ContainerPath = path;
@@ -126,8 +123,6 @@ namespace MageExtExtractionFilters
                     break;
             }
         }
-
-
 
         /// <summary>
         /// If destination is file, return its full path
@@ -159,7 +154,7 @@ namespace MageExtExtractionFilters
             {
                 var sb = new StringBuilder();
                 sb.AppendLine(string.Format("A copy of file '{0}' exists.  What action do you wish to take?", destination.Name));
-                sb.AppendLine("");
+                sb.AppendLine();
                 sb.AppendLine("Yes - delete existing file and continue with extraction");
                 sb.AppendLine("No - retain existing file and append extracted results to it");
                 sb.AppendLine("Cancel - retain existing file and abort extraction");
@@ -197,8 +192,6 @@ namespace MageExtExtractionFilters
             // TODO: check that dataset name is file and not directory
             return ok;
         }
-
-
 
         /// <summary>
         /// Get destination writer module based on destination type

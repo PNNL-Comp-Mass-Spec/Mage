@@ -144,9 +144,5 @@
         private System.Windows.Forms.TextBox DatabaseNameCtl;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-
-
-
-
     }
 }

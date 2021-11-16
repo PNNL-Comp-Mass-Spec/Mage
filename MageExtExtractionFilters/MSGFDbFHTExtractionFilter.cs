@@ -11,8 +11,6 @@ namespace MageExtExtractionFilters
     {
         // Ignore Spelling: Mage
 
-
-
         // Working copy of MSGFDB filter object
 
         // Indexes into the synopsis row field array
@@ -28,11 +26,7 @@ namespace MageExtExtractionFilters
 
         private int msgfSpecProbIndex = -1;
 
-
-
         public FilterMSGFDbResults ResultChecker { get; set; }
-
-
 
         /// <summary>
         /// Set up output column specifications to provide fields to receive merged protein fields

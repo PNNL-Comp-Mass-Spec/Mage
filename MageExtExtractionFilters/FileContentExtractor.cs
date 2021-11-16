@@ -16,15 +16,11 @@ namespace MageExtExtractionFilters
     {
         // Ignore Spelling: Mage
 
-
-
         private int mCurrentFileCount;
 
         private FilterResultsBase mResultsChecker;
 
         private string mCurrentProgressText = string.Empty;
-
-
 
         /// <summary>
         /// Set of parameters specifying the user's choices for
@@ -50,8 +46,6 @@ namespace MageExtExtractionFilters
         /// optional - defaults to "Name")
         /// </summary>
         public string SourceFileColumnName { get; set; }
-
-
 
         /// <summary>
         /// Column indexes

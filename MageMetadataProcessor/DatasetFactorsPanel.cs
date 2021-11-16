@@ -20,10 +20,6 @@ namespace MageMetadataProcessor
             set => DataPackageNumberCtl.Text = value;
         }
 
-
-
-
-
         public Dictionary<string, string> GetParameters()
         {
             return new() {
@@ -47,8 +43,6 @@ namespace MageMetadataProcessor
                 }
             }
         }
-
-
 
         public DatasetFactorsPanel()
         {

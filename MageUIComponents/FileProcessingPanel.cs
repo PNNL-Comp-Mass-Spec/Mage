@@ -26,8 +26,6 @@ namespace MageUIComponents
         // Delegate for getting information about output file/database
         public Func<Dictionary<string, string>> GetSelectedOutputInfo;
 
-
-
         /// <summary>
         /// Stores parameter sets for filters, keyed by filter name.
         /// </summary>
@@ -38,16 +36,10 @@ namespace MageUIComponents
         /// </summary>
         private string mOutputColumnList = string.Empty;
 
-
-
         /// <summary>
         /// Return class name for selected filter
         /// </summary>
         public string SelectedFilterClassName => ModuleDiscovery.SelectedFilterClassName(FilterSelectionCtl.Text);
-
-
-
-
 
         /// <summary>
         /// Get a merged set of parameters consisting of the canonical parameters
@@ -137,8 +129,6 @@ namespace MageUIComponents
             }
         }
 
-
-
         // (if there is such a panel)
         /// <summary>
         /// Bring up parameter panel associated with currently selected filter
@@ -219,8 +209,6 @@ namespace MageUIComponents
             ColumnMapSelectionCtl.Text = "(automatic)";
             mOutputColumnList = string.Empty;
         }
-
-
 
         /// <summary>
         /// Bring up filter selection dialog and allow user to choose one

@@ -20,10 +20,6 @@ namespace MageMetadataProcessor
             set => RawSQLCtl.Text = value;
         }
 
-
-
-
-
         public Dictionary<string, string> GetParameters()
         {
             return new() {
@@ -43,8 +39,6 @@ namespace MageMetadataProcessor
                 }
             }
         }
-
-
 
         private void GetResultsBtn_Click(object sender, EventArgs e)
         {

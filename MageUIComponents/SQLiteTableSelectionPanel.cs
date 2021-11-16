@@ -14,8 +14,6 @@ namespace MageUIComponents {
             set => TableNameCtl.Text = value;
         }
 
-
-
         public SQLiteTableSelectionPanel() {
             InitializeComponent();
             TableName = string.Empty;

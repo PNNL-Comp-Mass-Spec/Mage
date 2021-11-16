@@ -18,8 +18,6 @@ namespace MageExtExtractionFilters
             MSPathFinder = 2
         }
 
-
-
         // Reference to row in protein buffer
         // Keys are ResultID, values are SequenceId
         private Dictionary<string, int> mProtDataLookup;
@@ -35,11 +33,7 @@ namespace MageExtExtractionFilters
         // the key to use to look up the protein
         public int LookupColumn { get; set; } = -1;
 
-
-
         public MergeModeConstants MergeMode { get; }
-
-
 
         // Constructor
         public MergeProteinData(MergeModeConstants eMergeMode)

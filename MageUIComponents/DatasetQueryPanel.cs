@@ -14,8 +14,6 @@ namespace MageUIComponents
             InitializeComponent();
         }
 
-
-
         public Dictionary<string, string> GetParameters()
         {
             return new()
@@ -48,8 +46,6 @@ namespace MageUIComponents
                 }
             }
         }
-
-
 
         private void GetDatasetsCtl_Click(object sender, EventArgs e)
         {

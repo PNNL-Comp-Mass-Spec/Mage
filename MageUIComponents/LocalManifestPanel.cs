@@ -14,19 +14,11 @@ namespace MageUIComponents
             InitializeComponent();
         }
 
-
-
-
-
         public string ManifestFilePath
         {
             get => LocalManifestFileCtl.Text;
             set => LocalManifestFileCtl.Text = value;
         }
-
-
-
-
 
         public Dictionary<string, string> GetParameters()
         {
@@ -48,8 +40,6 @@ namespace MageUIComponents
                 }
             }
         }
-
-
 
         private void DefineManifestFileCtl_Click(object sender, EventArgs e)
         {

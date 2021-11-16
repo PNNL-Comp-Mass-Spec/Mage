@@ -8,7 +8,6 @@ namespace MageExtExtractionFilters
     {
         // Ignore Spelling: Mage
 
-
         public enum MSGFDBColumns
         {
             Peptide,
@@ -23,10 +22,6 @@ namespace MageExtExtractionFilters
             Scan,
             Protein
         }
-
-
-
-
 
         // Working copy of MSGFDB filter object
 
@@ -48,12 +43,7 @@ namespace MageExtExtractionFilters
         private bool mOutputAllProteins;
         private SortedSet<string> mDataWrittenRowTags;
 
-
-
         public FilterMSGFDbResults ResultChecker { get; set; }
-
-
-
 
         /// <summary>
         /// Read contents of associated protein files and build lookup tables and indexes
@@ -72,8 +62,6 @@ namespace MageExtExtractionFilters
             base.Prepare();
             InitializeParameters();
         }
-
-
 
         /// <summary>
         /// Set up output column specifications to provide fields to receive merged protein fields

@@ -13,8 +13,6 @@ namespace Mage
     /// </summary>
     public class AddAssociatedFile : FileProcessingBase
     {
-
-
         /// <summary>
         /// Constructor
         /// </summary>

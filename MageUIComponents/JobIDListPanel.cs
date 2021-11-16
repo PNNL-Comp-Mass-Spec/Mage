@@ -12,10 +12,6 @@ namespace MageUIComponents
 
         public event EventHandler<MageCommandEventArgs> OnAction;
 
-
-
-
-
         public string ListName { get; set; }
 
         public string Legend
@@ -23,10 +19,6 @@ namespace MageUIComponents
             get => LegendCtl.Text;
             set => LegendCtl.Text = value;
         }
-
-
-
-
 
         public Dictionary<string, string> GetParameters()
         {
@@ -46,8 +38,6 @@ namespace MageUIComponents
                 }
             }
         }
-
-
 
         public JobIDListPanel()
         {

@@ -14,14 +14,10 @@ namespace MageUnitTests
     {
         // Ignore Spelling: Kilroy, Mage
 
-
-
         private string mPipelineResults = string.Empty;
         private string mPipelineInputFilePath = string.Empty;
         private string mPipelineOutputFilePath = string.Empty;
         private static string mPipelineDummyModuleResults = string.Empty;
-
-
 
         [Test]
         public void FileSubPipelineBrokerBasicTest()

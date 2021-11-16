@@ -40,5 +40,4 @@
     <predicate rel='AND' col='Dataset_ID' cmp='InList' val='' />
   </query>
 
-
 </queries>

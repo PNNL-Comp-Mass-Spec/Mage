@@ -36,10 +36,6 @@ namespace MageUIComponents
             set => TableNameCtl.Text = value;
         }
 
-
-
-
-
         public Dictionary<string, string> GetParameters()
         {
             return new()
@@ -64,8 +60,6 @@ namespace MageUIComponents
                 }
             }
         }
-
-
 
         private void SelectSqLiteDbCtl_Click(object sender, EventArgs e)
         {

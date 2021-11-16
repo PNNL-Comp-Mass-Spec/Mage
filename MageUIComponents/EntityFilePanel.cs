@@ -169,8 +169,6 @@ namespace MageUIComponents
             set => FileSelectorsCtl.Text = value;
         }
 
-
-
         private void GetFilesForSelectedEntriesCtl_Click(object sender, EventArgs e)
         {
             OnAction?.Invoke(this, new MageCommandEventArgs("get_files_from_entities", "selected"));
@@ -180,8 +178,6 @@ namespace MageUIComponents
         {
             OnAction?.Invoke(this, new MageCommandEventArgs("get_files_from_entities", "all"));
         }
-
-
 
         private void RegExRadioBtn_CheckedChanged(object sender, EventArgs e)
         {

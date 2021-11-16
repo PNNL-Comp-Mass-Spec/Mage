@@ -16,10 +16,6 @@ namespace MageUIComponents
             InitializeComponent();
         }
 
-
-
-
-
         public string OutputDirectory
         {
             get => OutputDirectoryCtl.Text;
@@ -38,10 +34,6 @@ namespace MageUIComponents
             }
             set => OutputFileCtl.Text = value;
         }
-
-
-
-
 
         public Dictionary<string, string> GetParameters()
         {
@@ -68,8 +60,6 @@ namespace MageUIComponents
                 }
             }
         }
-
-
 
         private void SelectDirectoryCtl_Click(object sender, EventArgs e)
         {

@@ -26,11 +26,7 @@ namespace MageExtExtractionFilters
         private int msgfSpecProbIndex;
         private int rankXCIndex;
 
-
-
         public FilterSequestResults ResultChecker { get; set; }
-
-
 
         /// <summary>
         /// Set up output column specifications to provide fields to receive merged protein fields

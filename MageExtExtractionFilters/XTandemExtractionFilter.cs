@@ -24,12 +24,7 @@ namespace MageExtExtractionFilters
         private MergeProteinData mProteinMerger;
         private bool mOutputAllProteins;
 
-
-
         public FilterXTResults ResultChecker { get; set; }
-
-
-
 
         /// <summary>
         /// Read contents of associated protein files and build lookup tables and indexes
@@ -47,8 +42,6 @@ namespace MageExtExtractionFilters
             base.Prepare();
             InitializeParameters();
         }
-
-
 
         /// <summary>
         /// Set up output column specifications to provide fields to receive merged protein fields

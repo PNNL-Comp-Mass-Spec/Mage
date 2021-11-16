@@ -41,8 +41,6 @@ namespace MageDisplayLib
             set => MainTextCtl.ScrollBars = value;
         }
 
-
-
         /// <summary>
         /// Set lines of text to display in the control
         /// </summary>

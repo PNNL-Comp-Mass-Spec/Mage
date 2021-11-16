@@ -60,8 +60,6 @@ namespace MageDisplayLib
             set => CancelCtl.Visible = value;
         }
 
-
-
         /// <summary>
         /// Clear the cached warning messages
         /// </summary>
@@ -76,8 +74,6 @@ namespace MageDisplayLib
         {
             OnAction?.Invoke(this, new MageCommandEventArgs("cancel_operation"));
         }
-
-
 
         private delegate void MessageHandler(string message);
 
@@ -191,8 +187,6 @@ namespace MageDisplayLib
                 SetStatusMessage(message);
             }
         }
-
-
 
         /// <summary>
         /// Make reasonable guess at who my owner form is

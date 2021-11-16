@@ -10,14 +10,10 @@ namespace MageUIComponents
     {
         public event EventHandler<MageCommandEventArgs> OnAction;
 
-
-
         /// <summary>
         /// Can be RegEx or FileSearch
         /// </summary>
         private string mSelectionMode = "FileSearch";
-
-
 
         public string FileNameFilter
         {
@@ -134,8 +130,6 @@ namespace MageUIComponents
                 }
             }
         }
-
-
 
         /// <summary>
         /// Constructor

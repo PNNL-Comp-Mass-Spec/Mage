@@ -8,7 +8,6 @@ namespace MageExtExtractionFilters
     {
         // Ignore Spelling: Mage
 
-
         public enum MSPathFinderColumns
         {
             Peptide,
@@ -21,10 +20,6 @@ namespace MageExtExtractionFilters
             Scan,
             Protein
         }
-
-
-
-
 
         // Working copy of MSPathFinder filter object
 
@@ -40,12 +35,7 @@ namespace MageExtExtractionFilters
         private bool mOutputAllProteins;
         private SortedSet<string> mDataWrittenRowTags;
 
-
-
         public FilterMSPathFinderResults ResultChecker { get; set; }
-
-
-
 
         /// <summary>
         /// Read contents of associated protein files and build lookup tables and indexes
@@ -64,8 +54,6 @@ namespace MageExtExtractionFilters
             base.Prepare();
             InitializeParameters();
         }
-
-
 
         /// <summary>
         /// Set up output column specifications to provide fields to receive merged protein fields

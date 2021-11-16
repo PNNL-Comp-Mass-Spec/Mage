@@ -120,6 +120,7 @@ namespace MageFileProcessor
 
             // Filter module to add manifest file's directory as new column
             var filter = new NullFilter();
+
             const string manifestDirColName = "Manifest_Directory";
             filter.OutputColumnList = string.Format("Name, *, {0}|+|text", manifestDirColName);
             filter.SetContext(new Dictionary<string, string> { { manifestDirColName, directoryPath } });
@@ -269,7 +270,6 @@ namespace MageFileProcessor
                 broker.TableName = GetRuntimeParam(runtimeParams, "TableName");
                 outputDirectoryPath = Path.GetDirectoryName(GetRuntimeParam(runtimeParams, "DatabaseName"));
             }
-
 
             BaseModule writer = null;
             switch (outputMode)

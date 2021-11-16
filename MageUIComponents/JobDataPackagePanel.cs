@@ -12,8 +12,6 @@ namespace MageUIComponents
         protected bool mShowGetDatasets = true;
         protected bool mShowGetJobs = true;
 
-
-
         public bool ShowGetDatasets
         {
             get => mShowGetDatasets;
@@ -58,8 +56,6 @@ namespace MageUIComponents
                 }
             }
         }
-
-
 
         public JobDataPackagePanel()
         {
