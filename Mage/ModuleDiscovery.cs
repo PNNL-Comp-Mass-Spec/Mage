@@ -197,12 +197,12 @@ namespace Mage
 
             foreach (var item in mFilterList)
             {
-                if (ma.ModType == "Filter")
+                if (item.ModType == MageAttribute.FILTER_MODULE)
                 {
                     mFilters.Add(item.ModID, item);
                     mFiltersByLabel.Add(item.ModLabel, item);
                 }
-                else if (ma.ModType == "FilterPanel")
+                else if (item.ModType == MageAttribute.FILTER_PANEL_MODULE)
                 {
                     mPanels.Add(item.ModID, item);
                 }

@@ -2,7 +2,7 @@
 
 namespace MageFileProcessor
 {
-    [Mage("Filter", "XCorr", "XCorr Example", "Simple filter for SEQUEST results (XCorr > 2.0)")]
+    [Mage(MageAttribute.FILTER_MODULE, "XCorr", "XCorr Example", "Simple filter for SEQUEST results (XCorr > 2.0)")]
     internal class XCorrExample : ContentFilter
     {
         // Ignore Spelling: Precalculate

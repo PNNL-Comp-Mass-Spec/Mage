@@ -5,7 +5,7 @@ using Mage;
 
 namespace MageExtContentFilters
 {
-    [Mage("FilterPanel", "XTFilter", "XT filter", "Uses filter criteria defined in DMS")]
+    [Mage(MageAttribute.FILTER_PANEL_MODULE, "XTFilter", "XT filter", "Uses filter criteria defined in DMS")]
     public partial class XTFilterPanel : Form, IModuleParameters
     {
         // Ignore Spelling: Mage

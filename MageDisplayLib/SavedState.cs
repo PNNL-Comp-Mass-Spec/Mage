@@ -13,10 +13,11 @@ namespace MageDisplayLib
     /// </summary>
     public static class SavedState
     {
-        private static readonly string mQueryDefFileName = "QueryDefinitions.xml";
         // Ignore Spelling: floyd, Mage, utf
 
-        private static readonly string mSavedStateFileName = "SavedState.xml";
+        private const string QUERY_DEFS_FILE = "QueryDefinitions.xml";
+
+        private const string SAVED_STATE_FILE = "SavedState.xml";
 
         /// <summary>
         /// Path to directory that contains config data
@@ -44,13 +45,13 @@ namespace MageDisplayLib
             }
 
             // Set default path for query definitions config file
-            ModuleDiscovery.QueryDefinitionFileName = Path.Combine(DataDirectory, mQueryDefFileName);
+            ModuleDiscovery.QueryDefinitionFileName = Path.Combine(DataDirectory, QUERY_DEFS_FILE);
             if (!File.Exists(ModuleDiscovery.QueryDefinitionFileName))
             {
-                var ioQueryDef = new FileInfo(mQueryDefFileName);
+                var ioQueryDef = new FileInfo(QUERY_DEFS_FILE);
                 if (ioQueryDef.Exists)
                 {
-                    File.Copy(mQueryDefFileName, ModuleDiscovery.QueryDefinitionFileName);
+                    File.Copy(QUERY_DEFS_FILE, ModuleDiscovery.QueryDefinitionFileName);
                 }
                 else
                 {
@@ -59,16 +60,16 @@ namespace MageDisplayLib
             }
             else
             {
-                var fiInfo = new FileInfo(mQueryDefFileName);
+                var fiInfo = new FileInfo(QUERY_DEFS_FILE);
                 var fcInfo = new FileInfo(ModuleDiscovery.QueryDefinitionFileName);
                 if (fiInfo.LastWriteTimeUtc > fcInfo.LastWriteTimeUtc)
                 {
-                    File.Copy(mQueryDefFileName, ModuleDiscovery.QueryDefinitionFileName, true);
+                    File.Copy(QUERY_DEFS_FILE, ModuleDiscovery.QueryDefinitionFileName, true);
                 }
             }
 
             // Setup to save and restore settings for UI component panels
-            FilePath = Path.Combine(DataDirectory, mSavedStateFileName);
+            FilePath = Path.Combine(DataDirectory, SAVED_STATE_FILE);
 
             // Tell modules where to look for loadable module DLLs
             var fi = new FileInfo(System.Windows.Forms.Application.ExecutablePath);
@@ -90,16 +91,17 @@ namespace MageDisplayLib
 
             // Step through panel list and add XML parameter definitions for each parameter
             // for each panel that has an IModuleParameters interface
-            var lineFormat = "<parameter panel='{0}' name='{1}' value='{2}' />";
+            const string LINE_FORMAT = "<parameter panel='{0}' name='{1}' value='{2}' />";
+
             foreach (var panelDesc in panelList)
             {
                 var paramPanel = panelDesc.Key;
-                var parms = panelDesc.Value.GetParameters();
-                foreach (var paramDesc in parms)
+
+                foreach (var paramDesc in panelDesc.Value.GetParameters())
                 {
                     var paramName = paramDesc.Key;
                     var paramValue = paramDesc.Value;
-                    sb.AppendLine(string.Format(lineFormat, paramPanel, paramName, paramValue));
+                    sb.AppendFormat(LINE_FORMAT, paramPanel, paramName, paramValue).AppendLine();
                 }
             }
             // make closing XML root element

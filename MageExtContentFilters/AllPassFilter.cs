@@ -9,7 +9,7 @@ namespace MageExtContentFilters
     /// This class will be auto-discovered by the ModuleDiscovery class in Mage
     /// The list of auto-discovered filters is then used to populate the gridview on form FilterSelectionForm.cs
     /// </remarks>
-    [Mage("Filter", "AllPassFilter", "All Pass", "Pass everything and apply output column mapping")]
+    [Mage(MageAttribute.FILTER_MODULE, "AllPassFilter", "All Pass", "Pass everything and apply output column mapping")]
     public class AllPassFilter : ContentFilter
     {
         // Ignore Spelling: gridview, Mage

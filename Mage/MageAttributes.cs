@@ -13,6 +13,16 @@ namespace Mage
         // Ignore Spelling: Mage
 
         /// <summary>
+        /// Filter module
+        /// </summary>
+        public const string FILTER_MODULE = "Filter";
+
+        /// <summary>
+        /// Filter panel module
+        /// </summary>
+        public const string FILTER_PANEL_MODULE = "FilterPanel";
+
+        /// <summary>
         /// Type of module
         /// </summary>
         public string ModType { get; set; }

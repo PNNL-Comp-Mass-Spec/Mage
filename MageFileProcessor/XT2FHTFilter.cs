@@ -3,7 +3,7 @@ using Mage;
 
 namespace MageFileProcessor
 {
-    [Mage("Filter", "XT2FHT", "Ascore XT2FHT", "Convert XT results files to SEQUEST FHT format")]
+    [Mage(MageAttribute.FILTER_MODULE, "XT2FHT", "Ascore XT2FHT", "Convert XT results files to SEQUEST FHT format")]
     internal class XT2FHTFilter : ContentFilter
     {
         // Ignore Spelling: Ascore

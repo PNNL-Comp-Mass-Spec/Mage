@@ -9,7 +9,7 @@ namespace MageExtContentFilters
     /// This class will be auto-discovered by the ModuleDiscovery class in Mage
     /// The list of auto-discovered filters is then used to populate the gridview on form FilterSelectionForm.cs
     /// </remarks>
-    [Mage("Filter", "XTFilter", "XT filter", "Uses filter criteria defined in DMS")]
+    [Mage(MageAttribute.FILTER_MODULE, "XTFilter", "XT filter", "Uses filter criteria defined in DMS")]
     internal class XTFilter : ContentFilter
     {
         // Ignore Spelling: Mage, precalculated
