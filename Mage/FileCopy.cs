@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using MyEMSLReader;
+using PRISM;
 
 namespace Mage
 {
@@ -79,11 +80,12 @@ namespace Mage
             try
             {
                 var bShowDoneMsg = true;
+                var destPathSafe = GetFileSafeLongPath(destPath);
 
                 if (sourcePath.StartsWith(MYEMSL_PATH_FLAG))
                 {
                     var myEMSLFileID = DatasetInfoBase.ExtractMyEMSLFileID(sourcePath);
-                    DatasetInfoBase.ExtractMyEMSLFileID(destPath, out var destPathClean);
+                    DatasetInfoBase.ExtractMyEMSLFileID(destPathSafe, out var destPathClean);
 
                     if (!OverwriteExistingFiles && File.Exists(destPathClean))
                     {
@@ -121,10 +123,11 @@ namespace Mage
                 else
                 {
                     UpdateStatus(this, new MageStatusEventArgs("Start Copy->" + sourceFile));
+                    var sourceFi = GetFileInfo(sourcePath);
                     if (OverwriteExistingFiles)
                     {
-                        var bFileExists = File.Exists(destPath);
-                        File.Copy(sourcePath, destPath, true);
+                        var bFileExists = File.Exists(destPathSafe);
+                        sourceFi.CopyTo(destPathSafe, true);
                         if (bFileExists)
                         {
                             UpdateStatus(this, new MageStatusEventArgs("NOTE->Copy replaced existing file: " + destPath, 0));
@@ -134,7 +137,7 @@ namespace Mage
                     }
                     else
                     {
-                        if (File.Exists(destPath))
+                        if (File.Exists(destPathSafe))
                         {
                             UpdateStatus(this, new MageStatusEventArgs("WARNING->Skipping existing file: " + destPath, 0));
                             ReportMageWarning("WARNING->Skipping existing file: " + destPath);
@@ -143,7 +146,7 @@ namespace Mage
                         }
                         else
                         {
-                            File.Copy(sourcePath, destPath, false);
+                            sourceFi.CopyTo(destPathSafe, false);
                         }
                     }
 
@@ -191,8 +194,8 @@ namespace Mage
         /// <param name="destPath">Target directory path</param>
         protected override void ProcessDirectory(string sourcePath, string destPath)
         {
-            var source = new DirectoryInfo(sourcePath);
-            var target = new DirectoryInfo(destPath);
+            var source = GetDirectoryInfo(sourcePath);
+            var target = GetDirectoryInfo(destPath);
 
             if (sourcePath.StartsWith(MYEMSL_PATH_FLAG))
                 CopyAllMyEMSL(source, target);
@@ -265,9 +268,12 @@ namespace Mage
                 {
                     sourceFile = fi.Name;
                     sourcePath = fi.FullName;
+                    var fiSafe = GetFileInfo(fi.FullName);
+                    var destPath = Path.Combine(target.FullName, fi.Name);
+                    var destSafe = GetFileSafeLongPath(destPath);
 
                     UpdateStatus(this, new MageStatusEventArgs("Start Copy->" + fi.Name));
-                    fi.CopyTo(Path.Combine(target.FullName, fi.Name), true);
+                    fiSafe.CopyTo(destSafe, true);
                     UpdateStatus(this, new MageStatusEventArgs("Done->" + fi.Name));
                 }
 
@@ -276,8 +282,10 @@ namespace Mage
                 {
                     try
                     {
+                        var diSourceSubDirSafe = GetDirectoryInfo(diSourceSubDir.FullName);
                         var nextTargetSubDir = target.CreateSubdirectory(diSourceSubDir.Name);
-                        CopyAll(diSourceSubDir, nextTargetSubDir);
+                        var nextTargetSubDirSafe = GetDirectoryInfo(nextTargetSubDir.FullName);
+                        CopyAll(diSourceSubDirSafe, nextTargetSubDirSafe);
                     }
                     catch (Exception e)
                     {
@@ -454,12 +462,12 @@ namespace Mage
                         return false;
                     }
                     UpdateStatus(this, new MageStatusEventArgs("Start Copy->" + remoteFile.Name));
-                    File.Copy(remoteFile.FullName, destPath, true);
+                    remoteFile.CopyTo(destPath, true);
                 }
                 else
                 {
                     UpdateStatus(this, new MageStatusEventArgs("Start Copy->" + remoteFile.Name));
-                    File.Copy(remoteFile.FullName, destPath, false);
+                    remoteFile.CopyTo(destPath, false);
                 }
 
                 return true;
@@ -471,6 +479,54 @@ namespace Mage
                 System.Threading.Thread.Sleep(250);
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Obtain a DirectoryInfo object for the given path
+        /// </summary>
+        /// <remarks>If the path length is over 210 and not on Linux, converts the path to a Win32 long path</remarks>
+        /// <param name="directoryPath"></param>
+        private static DirectoryInfo GetDirectoryInfo(string directoryPath)
+        {
+            return directoryPath.Length >= NativeIOFileTools.FILE_PATH_LENGTH_THRESHOLD - 50 && !SystemInfo.IsLinux
+                ? new DirectoryInfo(NativeIOFileTools.GetWin32LongPath(directoryPath))
+                : new DirectoryInfo(directoryPath);
+        }
+
+        /// <summary>
+        /// Obtain a FileInfo object for the given path
+        /// </summary>
+        /// <remarks>If the path length is over 260 and not on Linux, converts the path to a Win32 long path</remarks>
+        /// <param name="filePath"></param>
+        private static FileInfo GetFileInfo(string filePath)
+        {
+            return filePath.Length >= NativeIOFileTools.FILE_PATH_LENGTH_THRESHOLD && !SystemInfo.IsLinux
+                ? new FileInfo(NativeIOFileTools.GetWin32LongPath(filePath))
+                : new FileInfo(filePath);
+        }
+
+        /// <summary>
+        /// Obtain a DirectoryInfo object for the given path
+        /// </summary>
+        /// <remarks>If the path length is over 210 and not on Linux, converts the path to a Win32 long path</remarks>
+        /// <param name="directoryPath"></param>
+        private static string GetDirectorySafeLongPath(string directoryPath)
+        {
+            return directoryPath.Length >= NativeIOFileTools.FILE_PATH_LENGTH_THRESHOLD - 50 && !SystemInfo.IsLinux
+                ? NativeIOFileTools.GetWin32LongPath(directoryPath)
+                : directoryPath;
+        }
+
+        /// <summary>
+        /// Obtain a FileInfo object for the given path
+        /// </summary>
+        /// <remarks>If the path length is over 260 and not on Linux, converts the path to a Win32 long path</remarks>
+        /// <param name="filePath"></param>
+        private static string GetFileSafeLongPath(string filePath)
+        {
+            return filePath.Length >= NativeIOFileTools.FILE_PATH_LENGTH_THRESHOLD && !SystemInfo.IsLinux
+                ? NativeIOFileTools.GetWin32LongPath(filePath)
+                : filePath;
         }
     }
 }
