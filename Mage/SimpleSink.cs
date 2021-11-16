@@ -181,14 +181,7 @@ namespace Mage
         {
             value = 0;
 
-            if (colIndex > -1)
-            {
-                if (double.TryParse(Rows[rowIndex][colIndex], out value))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return colIndex > -1 && double.TryParse(Rows[rowIndex][colIndex], out value);
         }
 
         /// <summary>
@@ -202,14 +195,7 @@ namespace Mage
         {
             value = 0;
 
-            if (colIndex > -1)
-            {
-                if (int.TryParse(Rows[rowIndex][colIndex], out value))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return colIndex > -1 && int.TryParse(Rows[rowIndex][colIndex], out value);
         }
 
         /// <summary>

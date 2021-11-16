@@ -724,7 +724,7 @@ namespace MageFileProcessor
 
         private Dictionary<string, string> GetRuntimeParamsForLocalDirectory()
         {
-            var runtimeParams = new Dictionary<string, string>
+            return new Dictionary<string, string>
             {
                 {"FileNameFilter", LocalFolderPanel1.FileNameFilter},
                 {"FileSelectionMode", LocalFolderPanel1.FileSelectionMode},
@@ -732,16 +732,14 @@ namespace MageFileProcessor
                 {"SearchInSubdirectories", LocalFolderPanel1.SearchInSubdirectories},
                 {"SubdirectorySearchName", LocalFolderPanel1.SubdirectorySearchName}
             };
-            return runtimeParams;
         }
 
         private Dictionary<string, string> GetRuntimeParamsForManifestFile()
         {
-            var runtimeParams = new Dictionary<string, string>
+            return new Dictionary<string, string>
             {
                 {"ManifestFilePath", LocalManifestPanel1.ManifestFilePath}
             };
-            return runtimeParams;
         }
 
         private Dictionary<string, string> GetRuntimeParamsForFileProcessing()
