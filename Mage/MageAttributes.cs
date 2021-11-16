@@ -48,26 +48,6 @@ namespace Mage
         public string ModClassName { get; set; }
 
         /// <summary>
-        /// Get current module type
-        /// </summary>
-        public string type => ModType;
-
-        /// <summary>
-        /// Get current module ID
-        /// </summary>
-        public string ID => ModID;
-
-        /// <summary>
-        /// Get current short label
-        /// </summary>
-        public string label => ModLabel;
-
-        /// <summary>
-        /// Get current descriptions
-        /// </summary>
-        public string description => ModDescription;
-
-        /// <summary>
         /// Construct new MageAttribute object
         /// </summary>
         /// <param name="type">attribute type</param>
