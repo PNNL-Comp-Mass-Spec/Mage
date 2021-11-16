@@ -10,9 +10,10 @@ namespace BiodiversityFileCopy
     /// </summary>
     public class MzmlFilePathsFilter : BaseFilePathsFilter
     {
-        protected int ItemIdx;
-        protected int FileIdx;
         // Ignore Spelling: Mage
+
+        private int ItemIdx;
+        private int FileIdx;
 
         public Dictionary<string, MzMLPath> MzMLPaths { get; } = new Dictionary<string, MzMLPath>();
 
