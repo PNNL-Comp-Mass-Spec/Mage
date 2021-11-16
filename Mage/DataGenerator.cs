@@ -9,6 +9,8 @@ namespace Mage
     /// </summary>
     public class DataGenerator : BaseModule
     {
+        // Ignore Spelling: Mage
+
         private readonly List<string[]> mAdHocRows = new();
 
         /// <summary>

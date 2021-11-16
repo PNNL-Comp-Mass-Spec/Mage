@@ -9,6 +9,8 @@ namespace BiodiversityFileCopy
 {
     internal class Processing
     {
+        // Ignore Spelling: fht, msgf
+
         public bool DoRawCopy { get; set; }
         public bool DoMZMLCopy { get; set; }
         public bool DoFASTACopy { get; set; }

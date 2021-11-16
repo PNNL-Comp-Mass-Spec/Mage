@@ -14,6 +14,7 @@ namespace MageDisplayLib
     public static class SavedState
     {
         private static readonly string mQueryDefFileName = "QueryDefinitions.xml";
+        // Ignore Spelling: floyd, Mage, utf
 
         private static readonly string mSavedStateFileName = "SavedState.xml";
 

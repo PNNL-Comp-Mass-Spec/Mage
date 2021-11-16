@@ -11,6 +11,8 @@ namespace Mage
     /// </summary>
     public class PermutationGenerator : BaseModule
     {
+        // Ignore Spelling: Mage, permutated
+
         /// <summary>
         /// List of definitions for the parameters that will be permutated
         /// and included in the standard tabular output as columns

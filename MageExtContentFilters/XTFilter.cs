@@ -12,6 +12,8 @@ namespace MageExtContentFilters
     [Mage("Filter", "XTFilter", "XT filter", "Uses filter criteria defined in DMS")]
     internal class XTFilter : ContentFilter
     {
+        // Ignore Spelling: Mage, precalculated
+
         private FilterXTResults mXTFilter;
 
         // Indexes into the synopsis row field array

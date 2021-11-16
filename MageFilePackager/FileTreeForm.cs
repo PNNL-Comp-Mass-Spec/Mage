@@ -8,6 +8,8 @@ namespace MageFilePackager
 {
     public partial class FileTreeForm : Form
     {
+        // Ignore Spelling: Mage, Precalculate
+
         public FileTreeForm()
         {
             InitializeComponent();

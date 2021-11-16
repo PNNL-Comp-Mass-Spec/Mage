@@ -12,6 +12,7 @@ namespace BiodiversityFileCopy
     {
         protected int ItemIdx;
         protected int FileIdx;
+        // Ignore Spelling: Mage
 
         public Dictionary<string, MzMLPath> MzMLPaths { get; } = new Dictionary<string, MzMLPath>();
 

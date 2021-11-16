@@ -11,6 +11,7 @@ namespace MageConcatenator
     public class Pipelines
     {
         public const string PIPELINE_GET_LOCAL_FILES = "PipelineToGetLocalFileList";
+        // Ignore Spelling: Mage
 
         // Class is not instantiated
         private Pipelines()
