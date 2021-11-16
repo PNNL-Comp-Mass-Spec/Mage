@@ -510,6 +510,7 @@ namespace Mage
         /// </summary>
         /// <remarks>If the path length is over 210 and not on Linux, converts the path to a Win32 long path</remarks>
         /// <param name="directoryPath"></param>
+        // ReSharper disable once UnusedMember.Local
         private static string GetDirectorySafeLongPath(string directoryPath)
         {
             return directoryPath.Length >= NativeIOFileTools.FILE_PATH_LENGTH_THRESHOLD - 50 && !SystemInfo.IsLinux

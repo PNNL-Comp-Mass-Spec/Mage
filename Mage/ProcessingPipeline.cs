@@ -540,6 +540,7 @@ namespace Mage
         /// Set the parameters for all the modules in the pipeline from an XML definition file
         /// </summary>
         /// <param name="pipelineModuleParams">Path to the XML definition file</param>
+        // ReSharper disable once UnusedMember.Global
         public void SetAllModuleParameters(string pipelineModuleParams)
         {
             // Step though XML document that defines parameters for modules.

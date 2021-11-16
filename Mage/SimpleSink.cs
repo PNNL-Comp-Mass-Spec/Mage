@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
+// ReSharper disable UnusedMember.Global
+
 namespace Mage
 {
     /// <summary>

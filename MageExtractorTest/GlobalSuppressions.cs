@@ -6,5 +6,5 @@
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Keep for reference", Scope = "member", Target = "~M:MageExtractorTest.ExtractorTests.WriteSinkContentsToFile(Mage.SimpleSink,System.String)")]
-[assembly: SuppressMessage("Redundancy", "RCS1213:Remove unused member declaration.", Justification = "Keep for reference", Scope = "member", Target = "~M:MageExtractorTest.ExtractorTests.WriteSinkContentsToFile(Mage.SimpleSink,System.String)")]
 [assembly: SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Keep for reference", Scope = "member", Target = "~M:MageExtractorTest.Form1.TestCodeBuiltImportPipelines")]
+[assembly: SuppressMessage("Redundancy", "RCS1213:Remove unused member declaration.", Justification = "Keep for reference", Scope = "member", Target = "~M:MageExtractorTest.ExtractorTests.WriteSinkContentsToFile(Mage.SimpleSink,System.String)")]

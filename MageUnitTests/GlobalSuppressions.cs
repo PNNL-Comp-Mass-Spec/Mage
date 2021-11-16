@@ -6,6 +6,6 @@
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Redundancy", "RCS1212:Remove redundant assignment.", Justification = "Leave for debugging purposes", Scope = "member", Target = "~M:MageUnitTests.ProcessingPipelineTest.PipelineFromModuleListTest")]
-[assembly: SuppressMessage("Redundancy", "RCS1212:Remove redundant assignment.", Justification = "Leave for debugging purposes", Scope = "member", Target = "~M:MageUnitTests.ProcessingPipelineTest.PipelineFromNamesListTest")]
 [assembly: SuppressMessage("Redundancy", "RCS1212:Remove redundant assignment.", Justification = "Leave for debugging purposes", Scope = "member", Target = "~M:MageUnitTests.ProcessingPipelineTest.PipelineFromNamedModuleListTest1")]
 [assembly: SuppressMessage("Redundancy", "RCS1212:Remove redundant assignment.", Justification = "Leave for debugging purposes", Scope = "member", Target = "~M:MageUnitTests.ProcessingPipelineTest.PipelineFromNamedModuleListTest2")]
+[assembly: SuppressMessage("Redundancy", "RCS1212:Remove redundant assignment.", Justification = "Leave for debugging purposes", Scope = "member", Target = "~M:MageUnitTests.ProcessingPipelineTest.PipelineFromNamesListTest")]
