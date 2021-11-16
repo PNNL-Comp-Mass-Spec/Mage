@@ -53,6 +53,7 @@ namespace MageFileProcessor
                 "RankXc|+|text",
                 "DelM|Delta_Mass",
                 "XcRatio|+|text",
+                // ReSharper disable once StringLiteralTypo
                 "PassFilt|+|text",
                 "MScore|+|text",
                 "NumTrypticEnds|+|text"

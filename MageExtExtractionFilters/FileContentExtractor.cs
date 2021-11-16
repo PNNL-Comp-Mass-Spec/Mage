@@ -283,6 +283,7 @@ namespace MageExtExtractionFilters
         /// </summary>
         /// <param name="resultsDirectoryPath"></param>
         /// <param name="job"></param>
+        // ReSharper disable once UnusedMember.Local
         private ExtractionFilter GetExtractionFilterModule(string resultsDirectoryPath, string job)
         {
             var resultsFilter = ExtractionParms.RType.GetExtractionFilter(mResultsChecker);

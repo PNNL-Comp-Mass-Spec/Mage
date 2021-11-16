@@ -2,6 +2,8 @@
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
+// ReSharper disable UnusedMember.Local
+
 namespace MageDisplayLib
 {
     /// <summary>
@@ -14,6 +16,8 @@ namespace MageDisplayLib
         /// </summary>
         public event EventHandler<ScrollEventArgs> OnScroll;
 
+        // ReSharper disable IdentifierTypo
+
         // Windows messages
         private const int WM_HSCROLL = 0x0114;
         private const int WM_VSCROLL = 0x0115;
@@ -21,6 +25,8 @@ namespace MageDisplayLib
         // ScrollBar types
         private const int SB_HORZ = 0;
         private const int SB_VERT = 1;
+
+        // ReSharper restore IdentifierTypo
 
         /// <summary>
         /// Override WndProc to snare horizontal scrolling event from raw Windows message stream

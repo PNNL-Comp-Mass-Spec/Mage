@@ -37,6 +37,8 @@ namespace MageDisplayLib
         /// Position of last mouse click (used to determine which cell to edit)
         /// </summary>
         private int mLastClickX;
+
+        // ReSharper disable once NotAccessedField.Local
         private int mLastClickY;
 
         /// <summary>
