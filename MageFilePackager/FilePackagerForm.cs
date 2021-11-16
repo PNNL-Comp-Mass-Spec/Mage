@@ -45,8 +45,7 @@ namespace MageFilePackager
 
             InitializeComponent();
 
-            const bool isBetaVersion = true;
-            SetFormTitle("2021-10-12", isBetaVersion);
+            SetFormTitle();
 
             SetTags();
 
@@ -145,23 +144,12 @@ namespace MageFilePackager
             lblAboutLink.Text = "http://prismwiki.pnl.gov/wiki/Mage_Suite";
         }
 
-        private void SetFormTitle(string programDate, bool beta)
+        private void SetFormTitle()
         {
             var objVersion = Assembly.GetExecutingAssembly().GetName().Version;
             var version = string.Format("{0}.{1}.{2}", objVersion.Major, objVersion.Minor, objVersion.Build);
 
-            txtVersion.Text = "Version " + version;
-
-            if (!string.IsNullOrEmpty(programDate))
-            {
-                if (beta)
-                    txtVersion.Text += string.Format(" ({0}, beta)", programDate);
-                else
-                    txtVersion.Text += string.Format(" ({0})", programDate);
-            }
-
-            if (beta)
-                Text += " (beta)";
+            txtVersion.Text = string.Format("Version {0} ({1})", version, Globals.PROGRAM_DATE_SHORT);
         }
 
         /// <summary>

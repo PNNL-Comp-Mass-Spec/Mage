@@ -7,6 +7,16 @@ namespace Mage
     public static class Globals
     {
         /// <summary>
+        /// Program date
+        /// </summary>
+        public const string PROGRAM_DATE = "November 16, 2021";
+
+        /// <summary>
+        /// Program date, short yyyy-MM-dd format
+        /// </summary>
+        public const string PROGRAM_DATE_SHORT = "2021-11-16";
+
+        /// <summary>
         /// Default DMS server
         /// </summary>
         public const string DEFAULT_DMS_SERVER = "gigasax";

@@ -15,8 +15,6 @@ namespace MageConcatenator
     {
         // Ignore Spelling: Concatenator, Mage, workflows, HH:mm:ss
 
-        public const string PROGRAM_DATE = "August 14, 2021";
-
         /// <summary>
         /// Pipeline queue for running the multiple pipelines that make up the workflows for this module
         /// </summary>
@@ -654,7 +652,7 @@ namespace MageConcatenator
         private void About_Click(object sender, EventArgs e)
         {
             var message = "Written by Matthew Monroe for the Department of Energy.  This is version " +
-                             System.Reflection.Assembly.GetExecutingAssembly().GetName().Version + " (" + PROGRAM_DATE + ")";
+                             System.Reflection.Assembly.GetExecutingAssembly().GetName().Version + " (" + Globals.PROGRAM_DATE + ")";
             MessageBox.Show(message, "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
