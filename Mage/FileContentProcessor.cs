@@ -4,6 +4,8 @@ using System.IO;
 
 namespace Mage
 {
+    // Ignore Spelling: Mage, renamer
+
     /// <summary>
     /// Delegate for a function that returns an output file name for a given input file name and parameters
     /// </summary>

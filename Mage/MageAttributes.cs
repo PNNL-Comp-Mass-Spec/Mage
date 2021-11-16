@@ -10,6 +10,8 @@ namespace Mage
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public sealed class MageAttribute : Attribute
     {
+        // Ignore Spelling: Mage
+
         /// <summary>
         /// Type of module
         /// </summary>

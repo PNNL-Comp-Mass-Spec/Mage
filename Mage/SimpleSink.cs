@@ -24,6 +24,8 @@ namespace Mage
     /// </summary>
     public class SimpleSink : BaseModule
     {
+        // Ignore Spelling: Mage
+
         /// <summary>
         /// An internal buffer for accumulating rows passed in via the standard tabular input handler
         /// </summary>

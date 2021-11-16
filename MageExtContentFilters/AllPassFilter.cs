@@ -12,6 +12,8 @@ namespace MageExtContentFilters
     [MageAttribute("Filter", "AllPassFilter", "All Pass", "Pass everything and apply output column mapping")]
     public class AllPassFilter : ContentFilter
     {
+        // Ignore Spelling: gridview, Mage
+
         /// <summary>
         /// Pass all rows and apply column mapping
         /// </summary>

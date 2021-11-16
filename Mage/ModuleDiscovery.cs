@@ -14,6 +14,8 @@ namespace Mage
     /// </summary>
     public sealed class ModuleDiscovery
     {
+        // Ignore Spelling: Mage
+
         /// <summary>
         /// Static Constructor
         /// </summary>

@@ -8,6 +8,8 @@ namespace Mage
     /// </summary>
     public class CrosstabFilter : BaseModule
     {
+        // Ignore Spelling: crosstab, Mage, precalculate, precalculated
+
         // Indexes to critical columns
         private int mEntityIdx = -1;
         private int mEntityIDIdx = -1;

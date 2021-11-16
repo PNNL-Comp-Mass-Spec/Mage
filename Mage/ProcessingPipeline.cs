@@ -22,6 +22,8 @@ namespace Mage
     /// </summary>
     public class ProcessingPipeline
     {
+        // Ignore Spelling: Mage
+
         private static readonly FileLogger traceLogPipeline = new(FileLogger.BaseLogFileName, BaseLogger.LogLevels.INFO, FileLogger.AppendDateToBaseFileName);
 
         /// <summary>

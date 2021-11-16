@@ -6,6 +6,8 @@ namespace Mage
     /// </summary>
     public static class Globals
     {
+        // Ignore Spelling: yyyy-MM-dd
+
         /// <summary>
         /// Program date
         /// </summary>
