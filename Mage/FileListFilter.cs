@@ -113,8 +113,10 @@ namespace Mage
             }
 
             if (!bufferUpdated)
-                mOutputBuffer.Add(new[] { "", "", "", "", path });  // Note: needs to have the same number of columns as OutputColumnList
-        }
+            {
+                // Note: needs to have the same number of columns as OutputColumnList
+                mOutputBuffer.Add(new[] { string.Empty, string.Empty, string.Empty, string.Empty, path });
+            }
         }
 
         /// <summary>
