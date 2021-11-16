@@ -221,8 +221,13 @@ namespace Mage
             // List to hold classes that we will look at
             var classesToExamine = new List<Type>();
 
+            var entryAssembly = Assembly.GetEntryAssembly();
+
+            if (entryAssembly == null)
+                throw new NullReferenceException("Unable to determine the entry assembly");
+
             // Add classes from main assembly
-            classesToExamine.AddRange(Assembly.GetEntryAssembly().GetTypes());
+            classesToExamine.AddRange(entryAssembly.GetTypes());
 
             // Get classes from loadable DLLs
             var di = new DirectoryInfo(ExternalModuleDirectory);
