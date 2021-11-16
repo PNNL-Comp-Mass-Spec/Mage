@@ -109,27 +109,30 @@ namespace Mage
         /// <param name="args"></param>
         public override void HandleDataRow(object sender, MageDataEventArgs args)
         {
-            if (args.DataAvailable)
+            if (!args.DataAvailable)
             {
-                if (WriteToConsole)
-                {
-                    foreach (var item in args.Fields)
-                    {
-                        Console.Write(item + "|");
-                    }
-                    Console.WriteLine();
-                }
-                if (SavedRows.Count < RowsToSave)
-                {
-                    SavedRows.Add(args.Fields);
-                }
-                else
-                {
-                    CancelPipeline();
-                }
-
-                OnDataRowAvailable(args);
+                return;
             }
+
+            if (WriteToConsole)
+            {
+                foreach (var item in args.Fields)
+                {
+                    Console.Write(item + "|");
+                }
+                Console.WriteLine();
+            }
+
+            if (SavedRows.Count < RowsToSave)
+            {
+                SavedRows.Add(args.Fields);
+            }
+            else
+            {
+                CancelPipeline();
+            }
+
+            OnDataRowAvailable(args);
         }
 
         /// <summary>
@@ -209,12 +212,14 @@ namespace Mage
         {
             value = null;
 
-            if (colIndex > -1)
+            if (colIndex < 0)
             {
-                value = Rows[rowIndex][colIndex];
-                return true;
+                return false;
             }
-            return false;
+
+            value = Rows[rowIndex][colIndex];
+            return true;
+
         }
 
         /// <summary>
@@ -228,14 +233,8 @@ namespace Mage
         {
             value = 0;
 
-            if (ColumnIndex.TryGetValue(columnName, out var colIndex))
-            {
-                if (double.TryParse(Rows[rowIndex][colIndex], out value))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return ColumnIndex.TryGetValue(columnName, out var colIndex) &&
+                   double.TryParse(Rows[rowIndex][colIndex], out value);
         }
 
         /// <summary>
@@ -249,14 +248,7 @@ namespace Mage
         {
             value = 0;
 
-            if (ColumnIndex.TryGetValue(columnName, out var colIndex))
-            {
-                if (int.TryParse(Rows[rowIndex][colIndex], out value))
-                {
-                    return true;
-                }
-            }
-            return false;
+            return ColumnIndex.TryGetValue(columnName, out var colIndex) && int.TryParse(Rows[rowIndex][colIndex], out value);
         }
 
         /// <summary>
@@ -270,12 +262,13 @@ namespace Mage
         {
             value = null;
 
-            if (ColumnIndex.TryGetValue(columnName, out var colIndex))
+            if (!ColumnIndex.TryGetValue(columnName, out var colIndex))
             {
-                value = Rows[rowIndex][colIndex];
-                return true;
+                return false;
             }
-            return false;
+
+            value = Rows[rowIndex][colIndex];
+            return true;
         }
     }
 }
