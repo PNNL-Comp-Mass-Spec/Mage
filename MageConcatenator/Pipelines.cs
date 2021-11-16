@@ -8,15 +8,11 @@ namespace MageConcatenator
     /// This class contains several functions that build Mage pipelines
     /// that supply data to the UI in response to user commands
     /// </summary>
-    public class Pipelines
+    public static class Pipelines
     {
-        public const string PIPELINE_GET_LOCAL_FILES = "PipelineToGetLocalFileList";
         // Ignore Spelling: Mage
 
-        // Class is not instantiated
-        private Pipelines()
-        {
-        }
+        public const string PIPELINE_GET_LOCAL_FILES = "PipelineToGetLocalFileList";
 
         /// <summary>
         /// Pipeline to get selected list of files from local directory into list display
