@@ -115,9 +115,7 @@
     <Compile Include="ProcessingPipelineTest.cs" />
     <Compile Include="QueryDefinitionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SQLBuilderTest.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
+    <Compile Include="SQLBuilderTest.cs" />
     <Compile Include="SQLiteReaderTest.cs" />
     <Compile Include="SQLiteWriterTest.cs" />
     <Compile Include="SQLReaderTest.cs" />
