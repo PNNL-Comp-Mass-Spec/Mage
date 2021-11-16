@@ -37,7 +37,7 @@ namespace MageUIComponents
 
         public Dictionary<string, string> GetParameters()
         {
-            return new()
+            return new Dictionary<string, string>
             {
                 { "OutputDirectory", OutputDirectory},
                 { "OutputFile", OutputFile}

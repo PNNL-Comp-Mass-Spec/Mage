@@ -86,7 +86,7 @@ namespace MageDisplayLib
 
         private List<ToolStripItem> GetPersistenceMenuItems()
         {
-            return new()
+            return new List<ToolStripItem>
             {
                 new ToolStripSeparator(),
                 new ToolStripMenuItem("Save to file", null, HandleSaveListDisplay, "SaveToFile"),

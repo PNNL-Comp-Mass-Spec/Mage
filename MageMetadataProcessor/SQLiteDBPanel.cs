@@ -33,7 +33,8 @@ namespace MageMetadataProcessor {
         // DBFilePathCtl;
 
         public Dictionary<string, string> GetParameters() {
-            return new() {
+            return new Dictionary<string, string>
+            {
                 { "TableName",  TableName },
                 { "DBFilePath",  DBFilePath }
             };

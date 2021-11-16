@@ -40,7 +40,8 @@ namespace MageExtractor
 
         public Dictionary<string, string> GetParameters()
         {
-            return new() {
+            return new Dictionary<string, string>
+            {
                 { "ResultType",   ResultTypeName},
                 { "KeepAllResults",   KeepAllResults},
                 { "ResultFilter",   ResultFilterSetID},

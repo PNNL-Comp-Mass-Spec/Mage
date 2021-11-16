@@ -22,7 +22,8 @@ namespace MageMetadataProcessor
 
         public Dictionary<string, string> GetParameters()
         {
-            return new() {
+            return new Dictionary<string, string>
+            {
                 { "DatasetName",  DatasetName },
                 { "DataPackageNumber", DataPackageNumber }
             };

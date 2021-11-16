@@ -27,7 +27,7 @@ namespace MageUIComponents
 
         public Dictionary<string, string> GetParameters()
         {
-            return new()
+            return new Dictionary<string, string>
             {
                 { "QueryItem0",   EncodeQueryItem(QueryItemPanels[0])},
                 { "QueryItem1",   EncodeQueryItem(QueryItemPanels[1])},

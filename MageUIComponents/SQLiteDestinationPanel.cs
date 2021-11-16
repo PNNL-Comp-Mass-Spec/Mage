@@ -38,10 +38,10 @@ namespace MageUIComponents
 
         public Dictionary<string, string> GetParameters()
         {
-            return new()
+            return new Dictionary<string, string>
             {
-                { "DatabaseName",   DatabaseName},
-                { "TableName",   TableName}
+                { "DatabaseName", DatabaseName},
+                { "TableName", TableName}
             };
         }
 

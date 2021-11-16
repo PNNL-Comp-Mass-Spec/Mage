@@ -102,7 +102,7 @@ namespace MageUIComponents
 
         public Dictionary<string, string> GetParameters()
         {
-            return new()
+            return new Dictionary<string, string>
             {
                 { "FileSelectors", FileSelectors },
                 { "FileSelectionMode", FileSelectionMode },
