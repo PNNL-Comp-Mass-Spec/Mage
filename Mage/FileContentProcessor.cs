@@ -52,7 +52,7 @@ namespace Mage
 
         /// <summary>
         /// If this is not blank, it will be combined with the
-        /// OutputDirectoryPath to generate the output file file.
+        /// OutputDirectoryPath to generate the output file.
         /// This will override use of any naming information
         /// from data row
         /// </summary>
@@ -237,7 +237,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// This function should be overriden by subclasses to do the actual processing
+        /// This function should be overridden by subclasses to do the actual processing
         /// </summary>
         /// <param name="sourceFile"></param>
         /// <param name="sourcePath"></param>
@@ -248,7 +248,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// This function should be overriden by subclasses to do the actual processing
+        /// This function should be overridden by subclasses to do the actual processing
         /// </summary>
         /// <param name="sourcePath"></param>
         /// <param name="destPath"></param>

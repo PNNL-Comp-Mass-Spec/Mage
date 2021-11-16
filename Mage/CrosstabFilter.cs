@@ -98,7 +98,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Pull data of of the input fields and add it to
+        /// Read data from the input fields and add it to
         /// accumulating crosstab buffers
         /// </summary>
         /// <param name="args"></param>

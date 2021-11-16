@@ -32,7 +32,7 @@ namespace MageUIComponents
         private readonly Dictionary<string, Dictionary<string, string>> mParameters = new();
 
         /// <summary>
-        /// Output column list from seleted column mapping (if any)
+        /// Output column list from selected column mapping (if any)
         /// </summary>
         private string mOutputColumnList = string.Empty;
 
