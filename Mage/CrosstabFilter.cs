@@ -78,12 +78,15 @@ namespace Mage
         }
 
         /// <summary>
+        /// <para>
         /// Handler for Mage standard tabular input data rows
         /// (override of base class)
-        ///
+        /// </para>
+        /// <para>
         /// Accumulate the data fields into the crosstab buffers
         /// and then output the accumulated results when the input
         /// data stream completes.
+        /// </para>
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>

@@ -7,7 +7,7 @@ namespace MageExtContentFilters
     /// </summary>
     /// <remarks>
     /// This class will be auto-discovered by the ModuleDiscovery class in Mage
-    /// The list of auto-discovered filters is then used to populate the gridview on form FilterSelectionForm.cs
+    /// The list of auto-discovered filters is then used to populate the GridView on form FilterSelectionForm.cs
     /// </remarks>
     [Mage(MageAttribute.FILTER_MODULE, "XTFilter", "XT filter", "Uses filter criteria defined in DMS")]
     internal class XTFilter : ContentFilter
@@ -78,7 +78,7 @@ namespace MageExtContentFilters
         }
 
         /// <summary>
-        /// Setup a Sequest filter object with a set of filter criteria
+        /// Setup a SEQUEST filter object with a set of filter criteria
         /// that is obtained for the given FilterSetID from DMS
         /// my means of a Mage pipeline
         /// </summary>
@@ -102,7 +102,7 @@ namespace MageExtContentFilters
             var pipeline = ProcessingPipeline.Assemble("GetFilterCriteria", reader, filterCriteria);
             pipeline.RunRoot(null);
 
-            // Create new Sequest filter object with retrieved filter criteria
+            // Create new SEQUEST filter object with retrieved filter criteria
             mXTFilter = new FilterXTResults(filterCriteria.Rows, FilterSetID);
         }
 

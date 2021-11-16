@@ -11,7 +11,7 @@ namespace MageFileProcessor
         // This is called for each row that is being subjected to filtering
         // the fields array contains value of each column for the row
         // the column index of each field can be looked up by field name in columnPos[]
-        // to prevent the row from being sent to the ouput, return false
+        // to prevent the row from being sent to the output, return false
         protected override bool CheckFilter(ref string[] fields)
         {
             if (OutputColumnDefs != null)

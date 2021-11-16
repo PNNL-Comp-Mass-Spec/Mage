@@ -149,16 +149,16 @@ namespace BiodiversityFileCopy
             // Copy *.fasta files for data package jobs
             if (DoFASTACopy)
             {
-                Logging.LogMsg(string.Format("Processing fasta files [{0}]", DateTime.Now.ToString(CultureInfo.InvariantCulture)));
+                Logging.LogMsg(string.Format("Processing FASTA files [{0}]", DateTime.Now.ToString(CultureInfo.InvariantCulture)));
 
-                // Get distinct list of fasta files from data package jobs
+                // Get distinct list of FASTA files from data package jobs
                 var fastaList = Pipes.GetFastaFilesForDataPackages(dPkgId, orgLookup);
 
                 // Add source and destination file paths for files
                 var fileList = Pipes.AddFastaFilePaths(fastaList, OutputRootDirectoryPath);
 
                 var ne = Pipes.CopyFiles(fileList, "SourceFilePath", "DestinationFilePath", DoCopyFiles, Verbose, DoSourceCheck);
-                Logging.LogMsg(string.Format("{0} fasta files exist at destination out of {1} in list for {2} datasets ", ne, fileList.Rows.Count, packageDatasetIDs.Count));
+                Logging.LogMsg(string.Format("{0} FASTA files exist at destination out of {1} in list for {2} datasets ", ne, fileList.Rows.Count, packageDatasetIDs.Count));
             }
         }
 

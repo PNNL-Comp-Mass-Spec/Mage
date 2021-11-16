@@ -5,7 +5,7 @@ namespace Mage
 {
     /// <summary>
     /// Mage module that can generate a simulated data stream on Mage standard tabular output
-    /// or accept a set of data that it will stream to ouput
+    /// or accept a set of data that it will stream to output
     /// </summary>
     public class DataGenerator : BaseModule
     {
@@ -137,7 +137,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Return a simulted row of data with the given number of columns
+        /// Return a simulated row of data with the given number of columns
         /// </summary>
         /// <param name="numCols"></param>
         public static string[] MakeSimulatedHeaderRow(int numCols)

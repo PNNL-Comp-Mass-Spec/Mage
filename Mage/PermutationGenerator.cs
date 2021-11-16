@@ -80,12 +80,14 @@ namespace Mage
             AutoColumnSeed = 1;
         }
 
-       // Client accessible methods
+        // Client accessible methods
 
         /// <summary>
-        /// Add a parameter column definition.  The parameter will be incremented by the step
-        /// ammount withing the range set by the lower and upper bounds.
+        /// Add a parameter column definition
         /// </summary>
+        /// <remarks>
+        /// The parameter will be incremented by the step size within the range set by the lower and upper bounds
+        /// </remarks>
         /// <param name="name">Name of the parameter</param>
         /// <param name="lower">Lower bound of the parameter</param>
         /// <param name="upper">Upper bound of the parameter</param>
@@ -98,9 +100,11 @@ namespace Mage
         }
 
         /// <summary>
-        /// Add a parameter column definition.  The parameter will be
-        /// incremented according to parameters supplied as key/value pairs
+        /// Add a parameter column definition
         /// </summary>
+        /// <remarks>
+        /// The parameter will be incremented according to parameters supplied as key/value pairs
+        /// </remarks>
         /// <param name="parms">parameters as key/value pairs</param>
         public void AddParamColumn(Dictionary<string, string> parms)
         {

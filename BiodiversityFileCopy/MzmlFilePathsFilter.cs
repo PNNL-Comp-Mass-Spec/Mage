@@ -22,9 +22,9 @@ namespace BiodiversityFileCopy
         public override void HandleColumnDef(object sender, MageColumnEventArgs args)
         {
             base.HandleColumnDef(sender, args);
-            ItemIdx = OutputColumnPos["Item"];// TBD: look up from property
-            FileIdx = OutputColumnPos["File"];// TBD: look up from property
-            _datasetIdIdx = OutputColumnPos["Dataset_ID"];// TBD: look up from property
+            ItemIdx = OutputColumnPos["Item"];
+            FileIdx = OutputColumnPos["File"];
+            _datasetIdIdx = OutputColumnPos["Dataset_ID"];
         }
 
         public override bool BuildPaths(string[] outRow, ref string srcFilePath, ref string destFilepath)
@@ -83,9 +83,10 @@ namespace BiodiversityFileCopy
                     row = q.GenRow;
                     row[SourceFileIdx] = q.GenPath;
                 }
-                Debug.Assert(row != null, "row != null");
+
+                Debug.Assert(row != null, "row is null in MzmlFilePathsFilter.CorrectFilePaths");
+
                 var cacheFilePath = Path.Combine(row[SourceDirectoryIdx], row[FileIdx]);
-                // var gen = cacheFilePath.Contains(_msxmlGenPattern);
 
                 var cacheFileLines = File.ReadAllLines(cacheFilePath);
 
