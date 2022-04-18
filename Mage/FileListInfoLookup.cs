@@ -122,7 +122,7 @@ namespace Mage
 
             if (m_RecentlyFoundMyEMSLFiles.Count > 0)
             {
-                var archiveFile = m_RecentlyFoundMyEMSLFiles.First();
+                var archiveFile = m_RecentlyFoundMyEMSLFiles[0];
                 var encodedFilePath = DatasetInfoBase.AppendMyEMSLFileID(Path.Combine(parentDirectories, archiveFile.FileInfo.RelativePathWindows), archiveFile.FileID);
                 return new FileInfo(encodedFilePath);
             }

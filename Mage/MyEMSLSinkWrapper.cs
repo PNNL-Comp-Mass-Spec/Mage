@@ -123,7 +123,7 @@ namespace Mage
                 {
                     string errorMessage;
                     if (m_MyEMSLDatasetInfoCache.ErrorMessages.Count > 0)
-                        errorMessage ="Error downloading files using MyEMSL: " + m_MyEMSLDatasetInfoCache.ErrorMessages.First();
+                        errorMessage ="Error downloading files using MyEMSL: " + m_MyEMSLDatasetInfoCache.ErrorMessages[0];
                     else
                         errorMessage = "Unknown error downloading files using MyEMSL";
 

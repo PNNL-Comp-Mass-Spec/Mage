@@ -167,7 +167,7 @@ namespace MageExtExtractionFilters
                             var msg = "Failed to download Mage Extractor merge files from MyEMSL";
 
                             if (m_MyEMSLDatasetInfoCache.ErrorMessages.Count > 0)
-                                msg += ": " + m_MyEMSLDatasetInfoCache.ErrorMessages.First();
+                                msg += ": " + m_MyEMSLDatasetInfoCache.ErrorMessages[0];
                             else
                                 msg += ": Unknown Error";
 
