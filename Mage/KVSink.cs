@@ -10,8 +10,6 @@ namespace Mage
         private int mKeyColIdx;
         private int mValColIdx;
 
-        private readonly Dictionary<string, string> mKV = new();
-
         /// <summary>
         /// Name of input column that contains key
         /// </summary>
@@ -25,7 +23,7 @@ namespace Mage
         /// <summary>
         /// Get accumulated key/value store
         /// </summary>
-        public Dictionary<string, string> Values => mKV;
+        public Dictionary<string, string> Values { get; } = new();
 
         /// <summary>
         /// Handler for ColumnDefAvailable events
@@ -42,12 +40,9 @@ namespace Mage
         /// </summary>
         public override void HandleDataRow(object sender, MageDataEventArgs args)
         {
-            if (args.DataAvailable)
+            if (args.DataAvailable && args.Fields.Length >= mValColIdx)
             {
-                if (args.Fields.Length >= mValColIdx)
-                {
-                    mKV[args.Fields[mKeyColIdx]] = args.Fields[mValColIdx];
-                }
+                Values[args.Fields[mKeyColIdx]] = args.Fields[mValColIdx];
             }
         }
     }

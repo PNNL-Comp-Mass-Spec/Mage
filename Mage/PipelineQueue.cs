@@ -21,34 +21,19 @@ namespace Mage
         public event EventHandler<MageStatusEventArgs> OnRunCompleted;
 
         /// <summary>
-        /// Is queue currently running?
-        /// </summary>
-        private bool mQueueRunning;
-
-        /// <summary>
-        /// The current pipeline that is running (null if none)
-        /// </summary>
-        private ProcessingPipeline mCurrentPipeline;
-
-        /// <summary>
         /// Get currently running pipeline
         /// </summary>
-        public ProcessingPipeline CurrentPipeline => mCurrentPipeline;
+        public ProcessingPipeline CurrentPipeline { get; private set; }
 
         /// <summary>
         /// Is queue currently running
         /// </summary>
-        public bool IsRunning => mQueueRunning;
+        public bool IsRunning { get; private set; }
 
         /// <summary>
         /// Have a look at the internal queue of pipelines
         /// </summary>
-        public Queue<ProcessingPipeline> Pipelines => mPipelineQueue;
-
-        /// <summary>
-        /// Internal queue of pipelines to be run
-        /// </summary>
-        private readonly Queue<ProcessingPipeline> mPipelineQueue = new();
+        public Queue<ProcessingPipeline> Pipelines { get; } = new();
 
         /// <summary>
         /// Adds a pipeline to the queue
@@ -56,7 +41,7 @@ namespace Mage
         /// <param name="pipeline"></param>
         public void Add(ProcessingPipeline pipeline)
         {
-            mPipelineQueue.Enqueue(pipeline);
+            Pipelines.Enqueue(pipeline);
         }
 
         /// <summary>
@@ -78,9 +63,9 @@ namespace Mage
         public void Run()
         {
             Globals.AbortRequested = false;
-            if (!mQueueRunning)
+            if (!IsRunning)
             {
-                mQueueRunning = true;
+                IsRunning = true;
                 ThreadPool.QueueUserWorkItem(RunPipelinesInQueue);
             }
         }
@@ -92,9 +77,9 @@ namespace Mage
         public void RunRoot(object state)
         {
             Globals.AbortRequested = false;
-            if (!mQueueRunning)
+            if (!IsRunning)
             {
-                mQueueRunning = true;
+                IsRunning = true;
                 RunPipelinesInQueue(state);
             }
         }
@@ -106,10 +91,10 @@ namespace Mage
         public void Cancel()
         {
             Globals.AbortRequested = true;
-            mCurrentPipeline?.Cancel();
-            while (mPipelineQueue.Count > 0)
+            CurrentPipeline?.Cancel();
+            while (Pipelines.Count > 0)
             {
-                var nextPipeline = mPipelineQueue.Dequeue();
+                var nextPipeline = Pipelines.Dequeue();
                 nextPipeline.Cancel();
             }
         }
@@ -121,7 +106,7 @@ namespace Mage
         /// <param name="state"></param>
         private void RunPipelinesInQueue(object state)
         {
-            while (mPipelineQueue.Count > 0)
+            while (Pipelines.Count > 0)
             {
                 if (Globals.AbortRequested)
                 {
@@ -129,13 +114,13 @@ namespace Mage
                     break;
                 }
 
-                mCurrentPipeline = mPipelineQueue.Dequeue();
-                UpdatePipelineStarted(mCurrentPipeline.PipelineName);
-                mCurrentPipeline.RunRoot(null);
-                mCurrentPipeline = null;
+                CurrentPipeline = Pipelines.Dequeue();
+                UpdatePipelineStarted(CurrentPipeline.PipelineName);
+                CurrentPipeline.RunRoot(null);
+                CurrentPipeline = null;
             }
-            mPipelineQueue.Clear();
-            mQueueRunning = false;
+            Pipelines.Clear();
+            IsRunning = false;
             UpdateQueueCompleted();
         }
 
