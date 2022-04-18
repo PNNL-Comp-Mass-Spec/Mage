@@ -631,12 +631,11 @@ namespace MageFileProcessor
                 return;
             }
 
-            if (!(mCurrentCmdSender is IMageDisplayControl))
+            if (mCurrentCmdSender is not IMageDisplayControl ldc)
             {
                 return;
             }
 
-            var ldc = (IMageDisplayControl)mCurrentCmdSender;
             var type = ldc.PageTitle;
 
             var colNames = ldc.ColumnNames;
