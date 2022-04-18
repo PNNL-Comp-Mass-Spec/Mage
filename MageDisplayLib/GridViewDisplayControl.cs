@@ -298,6 +298,7 @@ namespace MageDisplayLib
                     {
                         gvQueryResults.Rows.Add(currentRow);
                     }
+
                     UpdateNoticeFld(".");
                 }
                 else

@@ -61,14 +61,17 @@ namespace MageDisplayLib
         public void InsertContextMenuItems(ToolStripItem[] items)
         {
             var currentMenuItems = new List<ToolStripItem>();
+
             foreach (ToolStripItem tsi in lvQueryResults.ContextMenuStrip.Items)
             {
                 currentMenuItems.Add(tsi);
             }
+
             var newMenu = new ContextMenuStrip();
             newMenu.Items.AddRange(items);
             newMenu.Items.Add(new ToolStripSeparator());
             newMenu.Items.AddRange(currentMenuItems.ToArray());
+
             lvQueryResults.ContextMenuStrip = newMenu;
         }
 
