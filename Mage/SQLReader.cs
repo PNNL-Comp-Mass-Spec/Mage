@@ -683,7 +683,7 @@ namespace Mage
         /// with the given argument values
         /// </summary>
         /// <param name="dbTools"></param>
-        /// <param name="sprocName">Stored procedure name; can optionally contain a schema name, e.g. mc.GetManagerParameters</param>
+        /// <param name="sprocName">Stored procedure name; can optionally contain a schema name, e.g. mc.get_manager_parameters</param>
         /// <param name="sprocParams">Dictionary where keys are stored procedure argument names and values are the value for each argument</param>
         private DbCommand GetSprocCmd(IDBTools dbTools, string sprocName, IReadOnlyDictionary<string, string> sprocParams)
         {
@@ -724,9 +724,9 @@ namespace Mage
                     // ReSharper disable CommentTypo
 
                     // Procedure and function names in PostgreSQL have an integer appended to them, for example:
-                    //   postlogentry_20837
-                    //   udf_append_to_text_30864
-                    //   getmanagerparameters_29338
+                    //   post_log_entry_53737
+                    //   append_to_text_53730
+                    //   get_manager_parameters_49424
 
                     // ReSharper restore CommentTypo
 
