@@ -71,10 +71,7 @@ namespace MageDisplayLib
 
         private void GetColumnDefs()
         {
-            foreach (var colDef in myListControl.ColumnDefs)
-            {
-                mColumnDefs.Add(colDef);
-            }
+            mColumnDefs.AddRange(myListControl.ColumnDefs);
         }
 
         private void GetRowsFromList(DisplaySourceMode mode)
