@@ -221,9 +221,9 @@ namespace MageUnitTests
             {
                 n--;
                 var k = rng.Next(n + 1);
-                var value = list[k];
-                list[k] = list[n];
-                list[n] = value;
+
+                // Swap values
+                (list[k], list[n]) = (list[n], list[k]);
             }
         }
     }
