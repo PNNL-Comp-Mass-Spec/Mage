@@ -16,4 +16,4 @@ xcopy MageExtractor\Mage.dll                      F:\Documents\projects\JoshAldr
 xcopy MageExtractor\Mage.dll                      F:\Documents\projects\JoshAldrich\ProteinParsimony\SetCover\Lib\ /D /Y
 
 @echo off
-pause
+if not "%1"=="NoPause" pause
