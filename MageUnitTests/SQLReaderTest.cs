@@ -350,6 +350,7 @@ namespace MageUnitTests
         {
             var serverName = Globals.DMSServer;
             var databaseName = Globals.DMSDatabase;
+            var isPostgres = Globals.PostgresDMS;
 
             // Create SQLReader module and test sink module
             // and connect together (no pipeline object used)
@@ -367,7 +368,16 @@ namespace MageUnitTests
 
             // Define and run a database query
             // Defaults are gigasax and DMS5
-            target.SQLText = string.Format("SELECT TOP ({1}) {0} FROM V_Mage_Analysis_Jobs WHERE Instrument LIKE '%test%'", colNames, maxRows.ToString());
+
+            // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
+            if (isPostgres)
+            {
+                target.SQLText = string.Format("SELECT {0} FROM V_Mage_Analysis_Jobs WHERE Instrument LIKE '%test%' LIMIT {1}", colNames, maxRows.ToString());
+            }
+            else
+            {
+                target.SQLText = string.Format("SELECT TOP {1} {0} FROM V_Mage_Analysis_Jobs WHERE Instrument LIKE '%test%'", colNames, maxRows.ToString());
+            }
 
             target.Run(null);
 

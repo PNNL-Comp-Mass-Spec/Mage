@@ -256,7 +256,9 @@ namespace Mage
                 if (mDbTools != null)
                     return mDbTools;
 
-                var connectionStringWithAppName = DbToolsFactory.AddApplicationNameToConnectionString(ConnectionString, "Mage_SQLReader");
+                var dbServerType = DbToolsFactory.GetServerTypeFromConnectionString(ConnectionString);
+
+                var connectionStringWithAppName = DbToolsFactory.AddApplicationNameToConnectionString(ConnectionString, "Mage_SQLReader", dbServerType);
 
                 mDbTools = DbToolsFactory.GetDBTools(connectionStringWithAppName);
                 IsPostgres = mDbTools.DbServerType == DbServerTypes.PostgreSQL;
@@ -265,6 +267,8 @@ namespace Mage
             }
 
             string connectionString;
+
+            // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
             if (IsPostgres)
             {
                 connectionString = GetPgSqlConnectionString(Server, Database, Username, Password);
@@ -280,7 +284,9 @@ namespace Mage
                 throw ex;
             }
 
-            var connectionStringToUse = DbToolsFactory.AddApplicationNameToConnectionString(connectionString, "Mage_SQLReader");
+            var serverType = IsPostgres ? DbServerTypes.PostgreSQL : DbServerTypes.MSSQLServer;
+
+            var connectionStringToUse = DbToolsFactory.AddApplicationNameToConnectionString(connectionString, "Mage_SQLReader", serverType);
 
             if (ConnectionString.Equals(connectionStringToUse) && mDbTools != null)
                 return mDbTools;

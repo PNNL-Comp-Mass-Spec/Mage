@@ -11,12 +11,12 @@ namespace Mage
         /// <summary>
         /// Program date
         /// </summary>
-        public const string PROGRAM_DATE = "January 7, 2023";
+        public const string PROGRAM_DATE = "January 14, 2023";
 
         /// <summary>
         /// Program date, short yyyy-MM-dd format
         /// </summary>
-        public const string PROGRAM_DATE_SHORT = "2023-01-07";
+        public const string PROGRAM_DATE_SHORT = "2023-01-14";
 
         /// <summary>
         /// Default DMS server
@@ -51,6 +51,11 @@ namespace Mage
             set => mDmsDatabase = value;
         }
 
+        /// <summary>
+        /// True if querying a PostgreSQL database
+        /// </summary>
+        public static bool PostgresDMS { get; set; }
+
         private static string mDmsServer;
         private static string mDmsDatabase;
 
@@ -62,6 +67,7 @@ namespace Mage
             AbortRequested = false;
             mDmsServer = DEFAULT_DMS_SERVER;
             mDmsDatabase = DEFAULT_DMS_DATABASE;
+            PostgresDMS = false;
         }
     }
 }

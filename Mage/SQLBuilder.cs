@@ -53,8 +53,16 @@ namespace Mage
         public string Columns { set; get; }
 
         /// <summary>
-        /// True if columns with spaces should be quoted with double quotes instead of square brackets
+        /// True when obtaining data from PostgreSQL
         /// </summary>
+        /// <remarks>
+        /// <para>
+        /// When true, column names with spaces will be quoted with double quotes instead of square brackets
+        /// </para>
+        /// <para>
+        /// When true, will use LIMIT 1 insteadof TOP 1 to limit the number of rows returned
+        /// </para>
+        /// </remarks>
         public bool IsPostgres { get; set; }
 
         /// <summary>
@@ -507,6 +515,7 @@ namespace Mage
 
             // Construct final query according to its intended use
             var sql = new StringBuilder();
+
             switch (QueryType)
             {
                 case "count_only": // Query for returning count of total rows
@@ -515,8 +524,20 @@ namespace Mage
                     break;
 
                 case "column_data_only":
-                    sql.Append("SELECT TOP(1)" + display_cols);
-                    sql.Append(baseSql);
+
+                    // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
+                    if (IsPostgres)
+                    {
+                        sql.AppendFormat("SELECT {0}", display_cols);
+                        sql.Append(baseSql);
+                        sql.Append(" LIMIT 1");
+                    }
+                    else
+                    {
+                        sql.AppendFormat("SELECT TOP 1 {0}", display_cols);
+                        sql.Append(baseSql);
+                    }
+
                     break;
 
                 case "filtered_only":
