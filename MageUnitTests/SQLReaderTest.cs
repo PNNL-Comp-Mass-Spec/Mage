@@ -186,7 +186,7 @@ namespace MageUnitTests
             reader.DataRowAvailable += sink.HandleDataRow;
 
             // Define query
-            var colList = new[] { "Dataset", "Dataset_ID", "Factor", "Value" };
+            var colList = new[] { "dataset", "dataset_id", "factor", "value" };
             var colNames = string.Join(", ", colList);
 
             var builder = new SQLBuilder
@@ -197,7 +197,7 @@ namespace MageUnitTests
             };
 
             // The query builder will convert the following predicate to "Dataset LIKE '%sarc%'"
-            builder.AddPredicateItem("Dataset", "sarc");
+            builder.AddPredicateItem("dataset", "sarc");
 
             reader.SQLText = builder.BuildQuerySQL();
 
