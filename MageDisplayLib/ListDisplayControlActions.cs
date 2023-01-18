@@ -367,9 +367,7 @@ namespace MageDisplayLib
             foreach (var name in itemNames)
             {
                 if (string.IsNullOrEmpty(name))
-                {
                     continue;
-                }
 
                 foreach (var tsi in lvQueryResults.ContextMenuStrip.Items.Find(name, true))
                 {

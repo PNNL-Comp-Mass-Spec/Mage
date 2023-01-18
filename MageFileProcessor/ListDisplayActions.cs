@@ -203,12 +203,12 @@ namespace MageFileProcessor
         {
             foreach (var name in itemNames)
             {
-                if (!string.IsNullOrEmpty(name))
+                if (string.IsNullOrEmpty(name))
+                    continue;
+
+                foreach (var tsi in mListView.ContextMenuStrip.Items.Find(name, true))
                 {
-                    foreach (var tsi in mListView.ContextMenuStrip.Items.Find(name, true))
-                    {
-                        tsi.Enabled = active;
-                    }
+                    tsi.Enabled = active;
                 }
             }
         }

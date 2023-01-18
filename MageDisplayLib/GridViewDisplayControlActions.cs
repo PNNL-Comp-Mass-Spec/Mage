@@ -139,9 +139,7 @@ namespace MageDisplayLib
             foreach (var name in itemNames)
             {
                 if (string.IsNullOrEmpty(name))
-                {
                     continue;
-                }
 
                 foreach (var tsi in gvQueryResults.ContextMenuStrip.Items.Find(name, true))
                 {
@@ -149,12 +147,13 @@ namespace MageDisplayLib
                     {
                         tsi.Enabled = true;
                     }
+                    else if (!gvQueryResults.AllowDelete && mDeleteMenuItems.Contains(name))
+                    {
+                        tsi.Enabled = false;
+                    }
                     else
                     {
-                        if (!gvQueryResults.AllowDelete && mDeleteMenuItems.Contains(name))
-                            tsi.Enabled = false;
-                        else
-                            tsi.Enabled = active;
+                        tsi.Enabled = active;
                     }
                 }
             }

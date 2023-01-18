@@ -663,12 +663,9 @@ namespace Mage
                         pipeline.ConnectModules(precedingModName, currentModName);
                     }
                 }
-                else
+                else if (moduleObject is ISinkModule module && !string.IsNullOrEmpty(precedingModName))
                 {
-                    if (moduleObject is ISinkModule module && !string.IsNullOrEmpty(precedingModName))
-                    {
-                        pipeline.ConnectExternalModule(precedingModName, module);
-                    }
+                    pipeline.ConnectExternalModule(precedingModName, module);
                 }
             }
 

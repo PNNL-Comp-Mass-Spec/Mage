@@ -627,13 +627,10 @@ namespace Mage
             // Process each column spec from spec list
             try
             {
-                if (OutputColumnList.StartsWith("Job, "))
+                if (OutputColumnList.StartsWith("Job, ") && !InputColumnPos.ContainsKey("Job"))
                 {
-                    if (!InputColumnPos.ContainsKey("Job"))
-                    {
-                        // Job number is not available; don't try to add it
-                        OutputColumnList = OutputColumnList.Substring(5);
-                    }
+                    // Job number is not available; don't try to add it
+                    OutputColumnList = OutputColumnList.Substring(5);
                 }
 
                 foreach (var colSpec in OutputColumnList.Split(','))
@@ -641,9 +638,9 @@ namespace Mage
                     // Break each column spec into fields
                     var colSpecFields = colSpec.Trim().Split('|');
                     var outputColName = colSpecFields[0].Trim();
-                    var inputColName = (colSpecFields.Length > 1) ? colSpecFields[1].Trim() : "";
-                    var type = (colSpecFields.Length > 2) ? colSpecFields[2].Trim() : "";
-                    var size = (colSpecFields.Length > 3) ? colSpecFields[3].Trim() : "";
+                    var inputColName = (colSpecFields.Length > 1) ? colSpecFields[1].Trim() : string.Empty;
+                    var type = (colSpecFields.Length > 2) ? colSpecFields[2].Trim() : string.Empty;
+                    var size = (colSpecFields.Length > 3) ? colSpecFields[3].Trim() : string.Empty;
 
                     if (outputColName == "*")
                     {

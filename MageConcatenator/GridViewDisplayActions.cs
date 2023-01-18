@@ -201,14 +201,15 @@ namespace MageConcatenator
         /// <param name="active"></param>
         private void AdjustMenuItemsFromNameList(List<string> itemNames, bool active)
         {
+            // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
             foreach (var name in itemNames)
             {
-                if (!string.IsNullOrEmpty(name))
+                if (string.IsNullOrEmpty(name))
+                    continue;
+
+                foreach (var tsi in mDisplayView.ContextMenuStrip.Items.Find(name, true))
                 {
-                    foreach (var tsi in mDisplayView.ContextMenuStrip.Items.Find(name, true))
-                    {
-                        tsi.Enabled = active;
-                    }
+                    tsi.Enabled = active;
                 }
             }
         }

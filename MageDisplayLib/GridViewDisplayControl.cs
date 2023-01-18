@@ -32,11 +32,11 @@ namespace MageDisplayLib
         /// </summary>
         public void SetParameters(Dictionary<string, string> paramList)
         {
-            if (paramList.TryGetValue("ShiftClickMode", out var value))
-            {
-                if (bool.TryParse(value, out var isChecked))
-                    chkShiftClickMode.Checked = isChecked;
-            }
+            if (!paramList.TryGetValue("ShiftClickMode", out var value))
+                return;
+
+            if (bool.TryParse(value, out var isChecked))
+                chkShiftClickMode.Checked = isChecked;
         }
 
         /// <summary>
