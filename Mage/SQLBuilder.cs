@@ -256,32 +256,32 @@ namespace Mage
                 }
             }
 
+            if (args == null)
+                return;
+
             // Find any special runtime arguments (name is marked by prefix)
             // Strip the prefix, add to specialArgs, and remove from runtime arguments list
-            var tempArgs = new Dictionary<string, string>(args);
-            foreach (var arg in tempArgs)
+            foreach (var arg in new Dictionary<string, string>(args))
             {
-                if (arg.Key.StartsWith(":"))
-                { // Special runtime parameters have prefix
-                    var key = arg.Key.Substring(1, arg.Key.Length - 1);
-                    SpecialArgs[key] = arg.Value;
-                    args.Remove(arg.Key);
-                }
+                if (!arg.Key.StartsWith(":"))
+                    continue;
+
+                // Special runtime parameters have a colon as a prefix
+                var key = arg.Key.Substring(1, arg.Key.Length - 1);
+                SpecialArgs[key] = arg.Value;
+                args.Remove(arg.Key);
             }
 
             // If this is straight query, apply arguments to predicate
-            if (string.IsNullOrEmpty(SprocName) && args != null)
+            if (string.IsNullOrEmpty(SprocName))
             {
-                foreach (var arg in args)
+                foreach (var arg in args.Where(arg => !string.IsNullOrEmpty(arg.Value)))
                 {
-                    if (!string.IsNullOrEmpty(arg.Value))
-                    {
-                        AddPredicateItem(arg.Key, arg.Value);
-                    }
+                    AddPredicateItem(arg.Key, arg.Value);
                 }
             }
 
-            if (string.IsNullOrEmpty(SprocName) || args == null)
+            if (string.IsNullOrEmpty(SprocName))
                 return;
 
             // Working with a stored procedure query
