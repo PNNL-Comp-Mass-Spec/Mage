@@ -1,5 +1,4 @@
-﻿using System;
-using Mage;
+﻿using Mage;
 
 namespace BiodiversityFileCopy
 {
