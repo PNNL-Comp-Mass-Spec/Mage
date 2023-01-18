@@ -234,16 +234,16 @@ namespace MageExtExtractionFilters
             mProteinDataSorted.Clear();
             for (var rowIdx = 0; rowIdx < mProteinData.Rows.Count; rowIdx++)
             {
-                var bValidProteinInfo = false;
+                var validProteinInfo = false;
                 var oProteinInfo = new ProteinInfo();
 
                 if (mProteinData.TryGetValueViaColumnIndex(colIndexUniqueSeqID, rowIdx, out int iValue))
                 {
-                    bValidProteinInfo = true;
+                    validProteinInfo = true;
                     oProteinInfo.Unique_Seq_ID = iValue;
                 }
 
-                if (bValidProteinInfo)
+                if (validProteinInfo)
                 {
                     if (mProteinData.TryGetValueViaColumnIndex(colIndexCleavageState, rowIdx, out iValue))
                         oProteinInfo.Cleavage_State = iValue;

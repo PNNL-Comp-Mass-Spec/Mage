@@ -331,39 +331,38 @@ namespace Mage
         /// <summary>
         /// Set default values to use when adding predicate clause for a column
         /// </summary>
-        /// <param name="rel">Relationship ("AND" or "OR")</param>
-        /// <param name="col">Column name</param>
-        /// <param name="cmp">Comparison type</param>
-        /// <param name="val">Comparison value</param>
-        public void SetColumnDefaultPredicate(string rel, string col, string cmp, string val)
+        /// <param name="relationship">Relationship ("AND" or "OR")</param>
+        /// <param name="columnName">Column name</param>
+        /// <param name="comparison">Comparison type</param>
+        /// <param name="value">Comparison value</param>
+        public void SetColumnDefaultPredicate(string relationship, string columnName, string comparison, string value)
         {
-            var p = new QueryPredicate
+            mDefaultPredicates[columnName] = new QueryPredicate
             {
-                Relationship = rel,
-                ColumnName = col,
-                Comparison = cmp,
-                Value = val
+                Relationship = relationship,
+                ColumnName = columnName,
+                Comparison = comparison,
+                Value = value
             };
-            mDefaultPredicates[col] = p;
         }
 
         /// <summary>
         /// Add an item for building the query predicate
         /// default predicate items for column
         /// </summary>
-        /// <param name="col">Column name</param>
-        /// <param name="val">Comparison value</param>
-        public void AddPredicateItem(string col, string val)
+        /// <param name="columnName">Column name</param>
+        /// <param name="value">Comparison value</param>
+        public void AddPredicateItem(string columnName, string value)
         {
-            if (mDefaultPredicates.ContainsKey(col))
+            if (mDefaultPredicates.ContainsKey(columnName))
             {
-                var p = mDefaultPredicates[col];
-                val ??= p.Value;
-                AddPredicateItem(p.Relationship, p.ColumnName, p.Comparison, val);
+                var p = mDefaultPredicates[columnName];
+                value ??= p.Value;
+                AddPredicateItem(p.Relationship, p.ColumnName, p.Comparison, value);
             }
-            else if (val != null)
+            else if (value != null)
             {
-                AddPredicateItem("AND", col, "ContainsText", val);
+                AddPredicateItem("AND", columnName, "ContainsText", value);
             }
         }
 
@@ -438,26 +437,25 @@ namespace Mage
         {
             // Look for wildcard characters
 
-            var exact_match = value.Substring(0, 1) == "~";
-            var regex_all = value.Contains("*");
-            var regex_one = value.Contains("?");
-            var sql_any = value.Contains("%");
+            var exactMatch = value.Substring(0, 1) == "~";
+            var regexAll = value.Contains("*");
+            var regexOne = value.Contains("?");
+            var sqlAny = value.Contains("%");
 
             // Force exact match
-            if (exact_match)
+            if (exactMatch)
             {
                 value = value.Replace("~", "");
                 comparison = "MatchesText";
             }
-            else
-                if (regex_all || regex_one)
+            else if (regexAll || regexOne)
             {
                 comparison = "wildcards";
             }
             else
             {
                 var exceptions = new[] { "MatchesText", "MTx", "MatchesTextOrBlank", "MTxOB" };
-                if (!sql_any && !exceptions.Contains(comparison))
+                if (!sqlAny && !exceptions.Contains(comparison))
                 {
                     // Quote underscores in the absence of '%' or regex/glob wildcards
                     value = value.Replace("_", "[_]");
@@ -562,10 +560,7 @@ namespace Mage
 
             var attribute = itemNode.Attributes[attributeName];
 
-            if (attribute?.InnerText == null)
-                return valueIfMissing;
-
-            return attribute.InnerText;
+            return attribute?.InnerText == null ? valueIfMissing : attribute.InnerText;
         }
 
         /// <summary>
@@ -585,7 +580,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Generate sQL predicate string from predicate specification object
+        /// Generate SQL predicate string from predicate specification object
         /// (column name, comparison operator, comparison value)
         /// </summary>
         /// <param name="predicate">List of predicate items</param>
@@ -593,134 +588,135 @@ namespace Mage
         /// <returns>SQL text for predicate</returns>
         private static string MakeWhereItem(QueryPredicate predicate, bool isPostgres)
         {
-            var col = PossiblyQuoteName(predicate.ColumnName, isPostgres);
-            var cmp = predicate.Comparison;
-            var val = predicate.Value;
+            var columnName = PossiblyQuoteName(predicate.ColumnName, isPostgres);
+            var comparison = predicate.Comparison;
+            var value = predicate.Value;
 
-            var str = string.Empty;
-            switch (cmp)
+            var whereClause = string.Empty;
+
+            switch (comparison)
             {
                 case "wildcards":
-                    val = val.Replace("_", "[_]");
-                    val = val.Replace("*", "%");
-                    val = val.Replace("?", "_");
-                    str += string.Format("{0} LIKE '{1}'", col, val);
+                    value = value.Replace("_", "[_]");
+                    value = value.Replace("*", "%");
+                    value = value.Replace("?", "_");
+                    whereClause += string.Format("{0} LIKE '{1}'", columnName, value);
                     break;
 
                 case "ContainsText":
                 case "CTx":
-                    val = (val.Substring(0, 1) == "`") ? val.Replace("`", "") + "%" : "%" + val + "%";
-                    str += string.Format("{0} LIKE '{1}'", col, val);
+                    value = (value.Substring(0, 1) == "`") ? value.Replace("`", "") + "%" : "%" + value + "%";
+                    whereClause += string.Format("{0} LIKE '{1}'", columnName, value);
                     break;
 
                 case "DoesNotContainText":
                 case "DNCTx":
-                    val = (val.Substring(0, 1) == "`") ? val.Replace("`", "") + "%" : "%" + val + "%";
-                    str += string.Format("NOT {0} LIKE '{1}'", col, val);
+                    value = (value.Substring(0, 1) == "`") ? value.Replace("`", "") + "%" : "%" + value + "%";
+                    whereClause += string.Format("NOT {0} LIKE '{1}'", columnName, value);
                     break;
 
                 case "MatchesText":
                 case "MTx":
-                    str += string.Format("{0} = '{1}'", col, val);
+                    whereClause += string.Format("{0} = '{1}'", columnName, value);
                     break;
 
                 case "StartsWithText":
                 case "SWTx":
-                    val += "%";
-                    str += string.Format("{0} LIKE '{1}'", col, val);
+                    value += "%";
+                    whereClause += string.Format("{0} LIKE '{1}'", columnName, value);
                     break;
 
                 case "Equals":
                 case "EQn":
-                    if (double.TryParse(val, out _))
+                    if (double.TryParse(value, out _))
                     {
-                        str += string.Format("{0} = {1}", col, val);
+                        whereClause += string.Format("{0} = {1}", columnName, value);
                     }
                     else
                     {
-                        str += string.Format("{0} = '{1}'", col, val);
+                        whereClause += string.Format("{0} = '{1}'", columnName, value);
                     }
                     break;
 
                 case "NotEqual":
                 case "NEn":
-                    if (double.TryParse(val, out _))
+                    if (double.TryParse(value, out _))
                     {
-                        str += string.Format("NOT {0} = {1}", col, val);
+                        whereClause += string.Format("NOT {0} = {1}", columnName, value);
                     }
                     else
                     {
-                        str += string.Format("NOT {0} = '{1}'", col, val);
+                        whereClause += string.Format("NOT {0} = '{1}'", columnName, value);
                     }
                     break;
 
                 case "GreaterThan":
                 case "GTn":
-                    if (double.TryParse(val, out _))
+                    if (double.TryParse(value, out _))
                     {
-                        str += string.Format("{0} > {1}", col, val);
+                        whereClause += string.Format("{0} > {1}", columnName, value);
                     }
                     break;
 
                 case "LessThan":
                 case "LTn":
-                    if (double.TryParse(val, out _))
+                    if (double.TryParse(value, out _))
                     {
-                        str += string.Format("{0} < {1}", col, val);
+                        whereClause += string.Format("{0} < {1}", columnName, value);
                     }
                     break;
 
                 case "LessThanOrEqualTo":
                 case "LTOEn":
-                    if (double.TryParse(val, out _))
+                    if (double.TryParse(value, out _))
                     {
-                        str += string.Format("{0} <= {1}", col, val);
+                        whereClause += string.Format("{0} <= {1}", columnName, value);
                     }
                     break;
 
                 case "GreaterThanOrEqualTo":
                 case "GTOEn":
-                    if (double.TryParse(val, out _))
+                    if (double.TryParse(value, out _))
                     {
-                        str += string.Format("{0} >= {1}", col, val);
+                        whereClause += string.Format("{0} >= {1}", columnName, value);
                     }
                     break;
 
                 case "InList":
-                    str += string.Format(" {0} IN ({1}) ", col, val);
+                    whereClause += string.Format(" {0} IN ({1}) ", columnName, value);
                     break;
 
                 case "InListText":
-                    str += string.Format(" {0} IN ({1}) ", col, QuoteList(val));
+                    whereClause += string.Format(" {0} IN ({1}) ", columnName, QuoteList(value));
                     break;
 
                 case "MatchesTextOrBlank":
                 case "MTxOB":
-                    str += string.Format("{0} = '{1}' OR {0} = ''", col, val);
+                    whereClause += string.Format("{0} = '{1}' OR {0} = ''", columnName, value);
                     break;
 
                 case "LaterThan":
                 case "LTd":
-                    str += string.Format("{0} > '{1}'", col, val);
+                    whereClause += string.Format("{0} > '{1}'", columnName, value);
                     break;
 
                 case "EarlierThan":
                 case "ETd":
-                    str += string.Format("{0} < '{1}'", col, val);
+                    whereClause += string.Format("{0} < '{1}'", columnName, value);
                     break;
 
                 case "MostRecentWeeks":
                 case "MRWd":
                     // ReSharper disable StringLiteralTypo
-                    str += string.Format(" {0} > DATEADD(Week, -{1}, GETDATE()) ", col, val);
+                    whereClause += string.Format(" {0} > DATEADD(Week, -{1}, GETDATE()) ", columnName, value);
                     // ReSharper restore StringLiteralTypo
                     break;
 
                 default:
-                    str += " unrecognized";
+                    whereClause += " unrecognized";
                     break;
             }
-            return str;
+            return whereClause;
         }
 
         private static string PossiblyQuoteName(string objectName, bool isPostgres)

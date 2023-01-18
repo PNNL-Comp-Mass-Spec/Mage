@@ -272,15 +272,16 @@ namespace Mage
         /// <param name="val"></param>
         public virtual void SetPropertyByName(string key, string val)
         {
-            var pi = GetType().GetProperty(key);
-            if (pi == null)
+            var propertyInfo = GetType().GetProperty(key);
+
+            if (propertyInfo == null)
                 return;
 
-            if (pi.PropertyType == typeof(bool))
+            if (propertyInfo.PropertyType == typeof(bool))
             {
                 if (bool.TryParse(val, out var parsedValue))
                 {
-                    pi.SetValue(this, parsedValue, null);
+                    propertyInfo.SetValue(this, parsedValue, null);
                 }
                 else
                 {
@@ -288,11 +289,11 @@ namespace Mage
                     ReportMageWarning(message);
                 }
             }
-            else if (pi.PropertyType == typeof(DateTime))
+            else if (propertyInfo.PropertyType == typeof(DateTime))
             {
                 if (DateTime.TryParse(val, out var parsedValue))
                 {
-                    pi.SetValue(this, parsedValue, null);
+                    propertyInfo.SetValue(this, parsedValue, null);
                 }
                 else
                 {
@@ -302,7 +303,7 @@ namespace Mage
             }
             else
             {
-                pi.SetValue(this, val, null);
+                propertyInfo.SetValue(this, val, null);
             }
         }
 

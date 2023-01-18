@@ -321,22 +321,20 @@ namespace MageFilePackager
             // FUTURE: validation for TagDataPackageDetails??
             if (string.IsNullOrEmpty(msg) && (queryName == TagJobIDs || queryName == TagJobIDsFromDatasets || queryName == TagDatasetIDList))
             {
-                var cSepChars = new[] { ',', '\t' };
+                var sepChars = new[] { ',', '\t' };
 
-                var sWarning = queryName == TagJobIDs ? "Job number '" : "Use dataset IDs, not dataset names: '";
+                var warning = queryName == TagJobIDs ? "Job number '" : "Use dataset IDs, not dataset names: '";
 
                 // Validate that the job numbers or dataset IDs are all numeric
                 foreach (var entry in queryParameters)
                 {
-                    var sValue = entry.Value.Replace(Environment.NewLine, ",");
+                    var entityList = entry.Value.Replace(Environment.NewLine, ",");
 
-                    var values = sValue.Split(cSepChars);
-
-                    foreach (var datasetID in values)
+                    foreach (var datasetID in entityList.Split(sepChars))
                     {
                         if (!int.TryParse(datasetID, out _))
                         {
-                            msg = sWarning + datasetID + "' is not numeric";
+                            msg = warning + datasetID + "' is not numeric";
                             break;
                         }
                     }
