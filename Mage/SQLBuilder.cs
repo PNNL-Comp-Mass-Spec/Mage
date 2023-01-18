@@ -300,7 +300,7 @@ namespace Mage
         {
             var descriptions = new Dictionary<string, string>();
 
-            var doc = new System.Xml.XmlDocument();
+            var doc = new XmlDocument();
             doc.LoadXml(xml);
 
             var queryNode = doc.SelectSingleNode(".//query");
@@ -308,7 +308,7 @@ namespace Mage
                 return descriptions;
 
             // Step through all item nodes in query
-            foreach (System.Xml.XmlNode itemNode in queryNode.ChildNodes)
+            foreach (XmlNode itemNode in queryNode.ChildNodes)
             {
                 switch (itemNode.Name)
                 {
