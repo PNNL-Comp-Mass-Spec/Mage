@@ -127,6 +127,14 @@ namespace Mage
             {
                 Relationship = "AND";
             }
+
+            /// <summary>
+            /// Show the column name, comparison mode, and search value
+            /// </summary>
+            public override string ToString()
+            {
+                return string.Format("{0} {1} {2}", ColumnName, Comparison, Value);
+            }
         }
 
         /// <summary>
