@@ -449,7 +449,7 @@ namespace MageFileProcessor
                 };
             }
 
-            if (string.IsNullOrEmpty(msg) && (queryName == TAG_JOB_IDs || queryName == TAG_JOB_IDs_FROM_DATASETS || queryName == TAG_DATASET_ID_LIST))
+            if (string.IsNullOrEmpty(msg) && queryName is TAG_JOB_IDs or TAG_JOB_IDs_FROM_DATASETS or TAG_DATASET_ID_LIST)
             {
                 var sepChars = new[] { ',', '\t' };
 

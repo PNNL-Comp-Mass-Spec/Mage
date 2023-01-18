@@ -297,7 +297,7 @@ namespace Mage
             }
             catch (Exception e)
             {
-                if (e is ArgumentNullException || e is System.Security.SecurityException || e is ArgumentException || e is PathTooLongException || e is DirectoryNotFoundException || e is UnauthorizedAccessException)
+                if (e is ArgumentNullException or System.Security.SecurityException or ArgumentException or PathTooLongException or DirectoryNotFoundException or UnauthorizedAccessException)
                 {
                     var msg = e.Message;
 

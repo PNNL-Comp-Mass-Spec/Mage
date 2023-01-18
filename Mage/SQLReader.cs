@@ -353,7 +353,7 @@ namespace Mage
             }
             catch (Exception e)
             {
-                if (e is InvalidOperationException || e is SqlException)
+                if (e is InvalidOperationException or SqlException)
                 {
                     var ex = ReportMageException(SQL_COMMAND_ERROR + ": " + e.Message + ";    " + SQLText, e);
                     throw ex;
@@ -799,7 +799,7 @@ namespace Mage
             }
             catch (Exception e)
             {
-                if (e is InvalidOperationException || e is SqlException)
+                if (e is InvalidOperationException or SqlException)
                 {
                     var ex = ReportMageException("Problem forming SQL command: " + e.Message, e);
                     throw ex;
@@ -817,7 +817,7 @@ namespace Mage
         /// <param name="argMode"></param>
         private static ParameterDirection ParamDirection(string argMode)
         {
-            return (argMode == "INOUT" || argMode == "OUT") ? ParameterDirection.Output : ParameterDirection.Input;
+            return argMode is "INOUT" or "OUT" ? ParameterDirection.Output : ParameterDirection.Input;
         }
     }
 }

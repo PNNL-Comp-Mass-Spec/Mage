@@ -319,7 +319,7 @@ namespace MageFilePackager
             }
 
             // FUTURE: validation for TagDataPackageDetails??
-            if (string.IsNullOrEmpty(msg) && (queryName == TagJobIDs || queryName == TagJobIDsFromDatasets || queryName == TagDatasetIDList))
+            if (string.IsNullOrEmpty(msg) && queryName is TagJobIDs or TagJobIDsFromDatasets or TagDatasetIDList)
             {
                 var sepChars = new[] { ',', '\t' };
 
@@ -464,7 +464,7 @@ namespace MageFilePackager
         /// </summary>
         private void AdjustListDisplayTitleFromColumnDefs()
         {
-            if (_mCurrentCmd.Action == "reload_list_display" || _mCurrentCmd.Action == "display_reloaded")
+            if (_mCurrentCmd.Action is "reload_list_display" or "display_reloaded")
             {
                 if (_mCurrentCmdSender is IMageDisplayControl ldc)
                 {

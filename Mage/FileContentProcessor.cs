@@ -154,7 +154,7 @@ namespace Mage
                     fileType = args.Fields[InputColumnPos[FileTypeColumnName]].ToLower();
                 }
 
-                if (fileType == "directory" || fileType == "folder")
+                if (fileType is "directory" or "folder")
                     sourceIsDirectory = true;
 
                 string sourcePath;
@@ -203,7 +203,7 @@ namespace Mage
                     {
                         ProcessFile(sourceFile, sourcePath, destPath, context);
                     }
-                    if (fileType == "directory" || fileType == "folder")
+                    if (fileType is "directory" or "folder")
                     {
                         ProcessDirectory(sourcePath, destPath);
                     }

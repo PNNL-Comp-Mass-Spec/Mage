@@ -267,7 +267,7 @@ namespace MageExtractor
                 }
                 else
                 {
-                    if (result < 0 || result > 1)
+                    if (result is < 0 or > 1)
                         result = -1;
                 }
 
@@ -315,7 +315,7 @@ namespace MageExtractor
                 };
             }
 
-            if (string.IsNullOrEmpty(msg) && (queryName == TAG_JOB_IDs || queryName == TAG_JOB_IDs_FROM_DATASETS))
+            if (string.IsNullOrEmpty(msg) && queryName is TAG_JOB_IDs or TAG_JOB_IDs_FROM_DATASETS)
             {
                 var sepChars = new[] { ',', '\t' };
                 
