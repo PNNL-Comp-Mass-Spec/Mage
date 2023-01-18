@@ -36,6 +36,9 @@ namespace MageDisplayLib
         /// </summary>
         public static void SetupConfigFiles(string configDirectoryName)
         {
+            // Example data directory path:
+            // C:\Users\D3L243\AppData\Roaming\MageFileProcessor
+
             DataDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), configDirectoryName);
 
             // Make sure application data directory exists
@@ -46,34 +49,35 @@ namespace MageDisplayLib
 
             // Set default path for query definitions config file
             ModuleDiscovery.QueryDefinitionFileName = Path.Combine(DataDirectory, QUERY_DEFS_FILE);
-            if (!File.Exists(ModuleDiscovery.QueryDefinitionFileName))
+
+            // This is the query definitions config file in the same directory as the .exe
+            var referenceQueryDefFile = new FileInfo(QUERY_DEFS_FILE);
+
+            // This is the query definitions config file in the user's application data directory
+            var userQueryDefFile = new FileInfo(ModuleDiscovery.QueryDefinitionFileName);
+
+            if (!userQueryDefFile.Exists)
             {
-                var ioQueryDef = new FileInfo(QUERY_DEFS_FILE);
-                if (ioQueryDef.Exists)
+                if (referenceQueryDefFile.Exists)
                 {
                     File.Copy(QUERY_DEFS_FILE, ModuleDiscovery.QueryDefinitionFileName);
                 }
                 else
                 {
-                    throw new FileNotFoundException("Query Definitions file not found; please copy " + ioQueryDef.Name + " from the appropriate subdirectory at \\\\floyd\\software\\Mage\\Exe_Only to " + ioQueryDef.Directory);
+                    throw new FileNotFoundException("Query Definitions file not found; please copy " + referenceQueryDefFile.Name + " from the appropriate subdirectory at \\\\floyd\\software\\Mage\\Exe_Only to " + referenceQueryDefFile.Directory);
                 }
             }
-            else
+            else if (referenceQueryDefFile.Exists && referenceQueryDefFile.LastWriteTimeUtc > userQueryDefFile.LastWriteTimeUtc)
             {
-                var fiInfo = new FileInfo(QUERY_DEFS_FILE);
-                var fcInfo = new FileInfo(ModuleDiscovery.QueryDefinitionFileName);
-                if (fiInfo.LastWriteTimeUtc > fcInfo.LastWriteTimeUtc)
-                {
-                    File.Copy(QUERY_DEFS_FILE, ModuleDiscovery.QueryDefinitionFileName, true);
-                }
+                File.Copy(referenceQueryDefFile.FullName, userQueryDefFile.FullName, true);
             }
 
             // Setup to save and restore settings for UI component panels
             FilePath = Path.Combine(DataDirectory, SAVED_STATE_FILE);
 
             // Tell modules where to look for loadable module DLLs
-            var fi = new FileInfo(System.Windows.Forms.Application.ExecutablePath);
-            ModuleDiscovery.ExternalModuleDirectory = fi.DirectoryName;
+            var programExecutable = new FileInfo(System.Windows.Forms.Application.ExecutablePath);
+            ModuleDiscovery.ExternalModuleDirectory = programExecutable.DirectoryName;
         }
 
         /// <summary>
