@@ -183,7 +183,7 @@ namespace Mage
             Username = username;
             Password = password;
             ConnectionString = string.Empty;
-            IsPostgres = isPostgres;
+            IsPostgres = isPostgres || builder.IsPostgres;
 
             // Set this module's properties from builder's special arguments list
             // This should update Server and Database, plus optionally Username, Password, and IsPostgres

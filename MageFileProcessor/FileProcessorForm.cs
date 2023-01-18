@@ -270,7 +270,9 @@ namespace MageFileProcessor
 
                     case "get_entities_from_flex_query":
                         queryDefXML = ModuleDiscovery.GetQueryXMLDef(command.Mode);
-                        var builder = JobFlexQueryPanel.GetSQLBuilder(queryDefXML);
+
+                        var builder = JobFlexQueryPanel.GetSQLBuilder(queryDefXML, Globals.PostgresDMS);
+
                         if (!builder.HasPredicate)
                         {
                             MessageBox.Show("You must define one or more search criteria before searching", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -818,15 +820,20 @@ namespace MageFileProcessor
                 {"SourceDirectoryColumnName", "Directory"},
                 {"FileColumnName", "Name"}
             };
+
             switch (entityType)
             {
                 case "Jobs":
+                    // Columns Directory, Job, Dataset, etc. correspond to views V_Mage_Analysis_Jobs and V_Mage_Data_Package_Analysis_Jobs
                     runtimeParams.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_DATE + "|+|text, Directory, Job, Dataset, Dataset_ID, Tool, Settings_File, Parameter_File, Instrument");
                     break;
+
                 case "Datasets":
-                    runtimeParams.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_DATE + "|+|text, Directory, Dataset, Dataset_ID, Experiment, Campaign, State, Instrument, Created, Type, Comment");
+                    // Columns  Directory, Dataset, Dataset_ID, etc. correspond to views V_Mage_Dataset_List and V_Mage_Data_Package_Datasets
+                    runtimeParams.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_DATE + "|+|text, Directory, Dataset, Dataset_ID, Experiment, Campaign, State, Instrument, Created, Dataset_Type, Comment");
                     break;
             }
+
             return runtimeParams;
         }
 
@@ -993,7 +1000,10 @@ namespace MageFileProcessor
         private void SetupFlexQueryPanels()
         {
             JobFlexQueryPanel.QueryName = "Job_Flex_Query";
+
+            // Note that method GetSQLBuilder in class FlexQueryPanel will replace spaces with underscores for the names in this list
             JobFlexQueryPanel.SetColumnPickList(new[] { "Job", "State", "Dataset", "Dataset_ID", "Tool", "Parameter_File", "Settings_File", "Instrument", "Experiment", "Campaign", "Organism", "Organism DB", "Protein Collection List", "Protein Options", "Comment", "Results Folder", "Folder", "Dataset_Created", "Job_Finish", "Request_ID" });
+
             JobFlexQueryPanel.SetComparisionPickList(new[] { "ContainsText", "DoesNotContainText", "StartsWithText", "MatchesText", "MatchesTextOrBlank", "Equals", "NotEqual", "GreaterThan", "GreaterThanOrEqualTo", "LessThan", "LessThanOrEqualTo", "MostRecentWeeks", "LaterThan", "EarlierThan", "InList" });
         }
 

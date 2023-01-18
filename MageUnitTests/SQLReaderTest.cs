@@ -232,6 +232,7 @@ namespace MageUnitTests
         {
             var serverName = Globals.DMSServer;
             var databaseName = Globals.DMSDatabase;
+            var isPostgres = Globals.PostgresDMS;
 
             // Create SQLReader module and test sink module
             // and connect together (no pipeline object used)
@@ -258,7 +259,8 @@ namespace MageUnitTests
             var builder = new SQLBuilder
             {
                 Table = "V_Analysis_Job_Export_MultiAlign",
-                Columns = colNames
+                Columns = colNames,
+                IsPostgres = isPostgres
             };
             builder.AddPredicateItem("datasetName", "ContainsText", "sarc_ms");
             target.SQLText = builder.BuildQuerySQL();
@@ -294,6 +296,7 @@ namespace MageUnitTests
         {
             const string serverName = "Pogo";
             const string databaseName = "MTS_Master";
+            const bool isPostgres = false;
 
             // Create SQLReader module and test sink module
             // and connect together (no pipeline object used)
@@ -308,14 +311,15 @@ namespace MageUnitTests
             // Define and run a database query
 
             // Define columns (normally not needed for production code, but necessary for unit test)
-            var colList = new[] { "Server_Name", "MT_DB_ID", "MT_DB_Name", "State_ID", "State" };
+            var colList = new[] { "server_name", "mt_db_id", "mt_db_name", "state_id", "state" };
             var colNames = string.Join(", ", colList);
 
             // Define query
             var builder = new SQLBuilder
             {
                 Table = "V_MT_DBs",
-                Columns = colNames
+                Columns = colNames,
+                IsPostgres = isPostgres
             };
             target.SQLText = builder.BuildQuerySQL();
 

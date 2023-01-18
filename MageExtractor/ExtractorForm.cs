@@ -143,7 +143,10 @@ namespace MageExtractor
         private void SetupFlexQueryPanels()
         {
             JobFlexQueryPanel.QueryName = "Job_Flex_Query";
+
+            // Note that method GetSQLBuilder in class FlexQueryPanel will replace spaces with underscores for the names in this list
             JobFlexQueryPanel.SetColumnPickList(new[] { "Job", "State", "Dataset", "Dataset_ID", "Tool", "Parameter_File", "Settings_File", "Instrument", "Experiment", "Campaign", "Organism", "Organism DB", "Protein Collection List", "Protein Options", "Comment", "Results Folder", "Folder", "Dataset_Created", "Job_Finish", "Request_ID" });
+
             JobFlexQueryPanel.SetComparisionPickList(new[] { "ContainsText", "DoesNotContainText", "StartsWithText", "MatchesText", "MatchesTextOrBlank", "Equals", "NotEqual", "GreaterThan", "GreaterThanOrEqualTo", "LessThan", "LessThanOrEqualTo", "MostRecentWeeks", "LaterThan", "EarlierThan", "InList" });
         }
 
@@ -456,8 +459,11 @@ namespace MageExtractor
         private bool GetJobList(string queryName)
         {
             var result = false;
+
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef(queryName);
-            var builder = JobFlexQueryPanel.GetSQLBuilder(queryDefXML);
+
+            var builder = JobFlexQueryPanel.GetSQLBuilder(queryDefXML, Globals.PostgresDMS);
+
             if (builder.HasPredicate)
             {
                 result = true;

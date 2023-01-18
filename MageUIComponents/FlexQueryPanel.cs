@@ -120,16 +120,25 @@ namespace MageUIComponents
             OnAction?.Invoke(this, new MageCommandEventArgs("get_entities_from_flex_query", QueryName));
         }
 
-        public SQLBuilder GetSQLBuilder(string queryTemplate)
+        public SQLBuilder GetSQLBuilder(string queryTemplate, bool isPostgres)
         {
             var args = new Dictionary<string, string>();
-            var builder = new SQLBuilder(queryTemplate, ref args);
+
+            var builder = new SQLBuilder(queryTemplate, args)
+            {
+                IsPostgres = isPostgres
+            };
+
             foreach (var item in QueryItems.ToArray())
             {
                 var fields = item.Split('|');
+
                 if (!string.IsNullOrEmpty(fields[0]) && !string.IsNullOrEmpty(fields[1]) && !string.IsNullOrEmpty(fields[2]) && !string.IsNullOrEmpty(fields[3]))
                 {
-                    builder.AddPredicateItem(fields[0], fields[1], fields[2], fields[3]);
+                    // Replaces spaces with underscores since columns in the source view do not have spaces (effective 2023-01-18)
+                    var columnName = fields[1].Replace(' ', '_');
+
+                    builder.AddPredicateItem(fields[0], columnName, fields[2], fields[3]);
                 }
             }
             return builder;

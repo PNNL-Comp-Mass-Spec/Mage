@@ -220,6 +220,12 @@ namespace Mage
                         SpecialArgs[DATABASE_NAME_KEY] = GetAttributeValue(itemNode, "database", string.Empty);
                         SpecialArgs[USERNAME_KEY] = GetAttributeValue(itemNode, "user", string.Empty);
                         SpecialArgs[IS_POSTGRES_KEY] = GetAttributeValue(itemNode, "postgres", "false");
+
+                        if (bool.TryParse(SpecialArgs[IS_POSTGRES_KEY], out var isPostgres) && isPostgres)
+                        {
+                            IsPostgres = true;
+                        }
+
                         break;
 
                     case "table":

@@ -41,6 +41,9 @@ namespace Mage
         /// Master list of input column position keyed to column name (for lookup of column index by column name)
         /// (default HandleColumnDef will build this)
         /// </summary>
+        /// <remarks>
+        /// Use OrdinalIgnoreCase to allow for input columns to be capitalized (SQL Server) or lowercase (PostgreSQL)
+        /// </remarks>
         protected Dictionary<string, int> InputColumnPos = new(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
@@ -370,6 +373,7 @@ namespace Mage
                     {
                         columnDef.Name += ++mNameDisambiguatorCount;
                     }
+
                     InputColumnPos.Add(columnDef.Name, InputColumnIndex++);
                     InputColumnDefs.Add(columnDef);
                 }
@@ -448,7 +452,7 @@ namespace Mage
         /// <summary>
         /// Returns the index of columnName in columnPos
         /// </summary>
-        /// <param name="columnPos">Dictionary of column position information</param>
+        /// <param name="columnPos">Dictionary of column position information (instantiate with OrdinalIgnoreCase to ignore capitalization)</param>
         /// <param name="columnName">Column to find</param>
         /// <returns>Index if defined; otherwise, returns -1</returns>
         protected static int GetColumnIndex(Dictionary<string, int> columnPos, string columnName)
