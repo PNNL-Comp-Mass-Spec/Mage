@@ -20,12 +20,12 @@ namespace BiodiversityFileCopy
 
         public static void LogWarning(string msg)
         {
-            msg = "Warning:" + msg;
+            msg = "Warning: " + msg;
             LogMsg(msg);
         }
         public static void LogError(string msg)
         {
-            msg = "Error:" + msg;
+            msg = "Error: " + msg;
             LogMsg(msg);
         }
 

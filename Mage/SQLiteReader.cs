@@ -186,7 +186,7 @@ namespace Mage
 
             stopTime = DateTime.UtcNow;
             duration = stopTime - startTime;
-            traceLogReader.Info("SQLiteReader.GetData --> Get data finish (" + duration + ") [" + totalRows + "]:" + SQLText);
+            traceLogReader.Info("SQLiteReader.GetData --> Get data finish (" + duration + ") [" + totalRows + "]: " + SQLText);
 
             // Always close the DataReader
             myReader.Close();
@@ -195,7 +195,7 @@ namespace Mage
         private void OutputDataRows(IDataReader myReader, ref int totalRows)
         {
             startTime = DateTime.UtcNow;
-            traceLogReader.Debug("SQLiteReader.GetData --> Get data start:" + SQLText);
+            traceLogReader.Debug("SQLiteReader.GetData --> Get data start: " + SQLText);
             while (myReader.Read())
             {
                 var a = new object[myReader.FieldCount];
@@ -226,7 +226,7 @@ namespace Mage
         {
             // If anyone is registered as listening for ColumnDefAvailable events, make it happen for them
             startTime = DateTime.UtcNow;
-            traceLogReader.Debug("SQLiteReader.GetData --> Get column info start:" + SQLText);
+            traceLogReader.Debug("SQLiteReader.GetData --> Get column info start: " + SQLText);
 
             // Determine the column names and column data types (
 
@@ -255,7 +255,7 @@ namespace Mage
             OnColumnDefAvailable(new MageColumnEventArgs(columnDefs.ToArray()));
             stopTime = DateTime.UtcNow;
             duration = stopTime - startTime;
-            traceLogReader.Info("SQLiteReader.GetData --> Get column info finish (" + duration + "):" + SQLText);
+            traceLogReader.Info("SQLiteReader.GetData --> Get column info finish (" + duration + "): " + SQLText);
         }
 
         /// <summary>

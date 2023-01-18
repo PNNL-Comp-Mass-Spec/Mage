@@ -379,7 +379,7 @@ namespace Mage
             }
             catch (Exception e)
             {
-                var msg = "Module '" + moduleName + ":" + moduleType + "' could not be created - " + e.Message;
+                var msg = "Module '" + moduleName + ": " + moduleType + "' could not be created - " + e.Message;
                 traceLogPipeline.Error(msg);
                 throw new MageException(msg);
             }

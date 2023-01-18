@@ -374,8 +374,9 @@ namespace Mage
                 }
                 catch (Exception e)
                 {
-                    var errorMessage = "HandleColumnDef:" + e.Message;
+                    var errorMessage = "HandleColumnDef: " + e.Message;
                     traceLogBase.Error(errorMessage);
+
                     var ex = ReportMageException(errorMessage, e);
                     throw ex;
                 }
@@ -673,7 +674,7 @@ namespace Mage
             }
             catch (Exception e)
             {
-                var errorMessage = "Problem with defining output columns:" + e.Message;
+                var errorMessage = "Problem with defining output columns: " + e.Message;
                 traceLogBase.Error(errorMessage);
                 var ex = ReportMageException(errorMessage, e);
                 throw ex;

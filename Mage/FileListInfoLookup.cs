@@ -89,7 +89,7 @@ namespace Mage
                 }
                 else if (e is IOException)
                 {
-                    var errorMessage = "Process aborted:" + e.Message;
+                    var errorMessage = "Process aborted: " + e.Message;
                     var ex = ReportMageException(errorMessage, e);
                     throw ex;
                 }

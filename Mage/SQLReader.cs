@@ -400,7 +400,7 @@ namespace Mage
 
             stopTime = DateTime.UtcNow;
             duration = stopTime - startTime;
-            traceLogReader.Info("SQLReader.GetData --> Get data finish (" + duration + ") [" + totalRows + "]:" + SQLText);
+            traceLogReader.Info("SQLReader.GetData --> Get data finish (" + duration + ") [" + totalRows + "]: " + SQLText);
         }
 
         /// <summary>
@@ -413,7 +413,7 @@ namespace Mage
         {
             // Now do all the rows - if anyone is registered as wanting them
             startTime = DateTime.UtcNow;
-            traceLogReader.Debug("SQLReader.GetData --> Get data start:" + SQLText);
+            traceLogReader.Debug("SQLReader.GetData --> Get data start: " + SQLText);
 
             var dateTimeColumns = new SortedSet<int>();
             var timeColumns = new SortedSet<int>();
@@ -514,7 +514,7 @@ namespace Mage
         {
             // If anyone is registered as listening for ColumnDefAvailable events, make it happen for them
             startTime = DateTime.UtcNow;
-            traceLogReader.Debug("SQLReader.GetData --> Get column info start:" + SQLText);
+            traceLogReader.Debug("SQLReader.GetData --> Get column info start: " + SQLText);
 
             // Determine the column names and column data types (
 
@@ -541,7 +541,7 @@ namespace Mage
             OnColumnDefAvailable(new MageColumnEventArgs(columnDefs.ToArray()));
             stopTime = DateTime.UtcNow;
             duration = stopTime - startTime;
-            traceLogReader.Info("SQLReader.GetData --> Get column info finish (" + duration + "):" + SQLText);
+            traceLogReader.Info("SQLReader.GetData --> Get column info finish (" + duration + "): " + SQLText);
         }
 
         /// <summary>
@@ -801,7 +801,7 @@ namespace Mage
             {
                 if (e is InvalidOperationException || e is SqlException)
                 {
-                    var ex = ReportMageException("Problem forming SQL command:" + e.Message, e);
+                    var ex = ReportMageException("Problem forming SQL command: " + e.Message, e);
                     throw ex;
                 }
 

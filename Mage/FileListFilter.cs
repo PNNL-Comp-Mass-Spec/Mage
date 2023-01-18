@@ -321,7 +321,7 @@ namespace Mage
                 }
                 else if (e is IOException)
                 {
-                    var errorMessage = "Process aborted:" + e.Message;
+                    var errorMessage = "Process aborted: " + e.Message;
                     var ex = ReportMageException(errorMessage, e);
                     throw ex;
                 }
@@ -587,7 +587,7 @@ namespace Mage
                 catch (Exception e)
                 {
                     traceLogFileList.Error(e.Message);
-                    throw new MageException("Problem with file selector:" + e.Message);
+                    throw new MageException("Problem with file selector: " + e.Message);
                 }
             }
             return fileNameSpecs;
