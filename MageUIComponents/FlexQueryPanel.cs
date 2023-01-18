@@ -136,7 +136,7 @@ namespace MageUIComponents
                 /// <param name="queryItems"></param>
                 public static SQLReader GetMSSQLReaderFromFlexQuery(string queryTemplate, string[] queryItems) {
                     Dictionary<string, string> arguments = new Dictionary<string, string>();
-                    SQLBuilder builder = new SQLBuilder(queryTemplate, ref arguments);
+                    SQLBuilder builder = new SQLBuilder(queryTemplate, arguments);
                     for each (string item in queryItems) {
                         string[] fields = item.Split('|');
                         if (!string.IsNullOrEmpty(fields[0]) && !string.IsNullOrEmpty(fields[1]) && !string.IsNullOrEmpty(fields[2]) && !string.IsNullOrEmpty(fields[3])) {

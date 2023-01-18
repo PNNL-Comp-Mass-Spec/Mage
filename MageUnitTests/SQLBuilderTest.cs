@@ -128,7 +128,7 @@ namespace MageUnitTests
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("Factors_List_Report");
             Assert.AreNotEqual("", queryDefXML);
 
-            var target = new SQLBuilder(queryDefXML, ref runtimeParameters);
+            var target = new SQLBuilder(queryDefXML, runtimeParameters);
             // SQLBuilder target = new SQLBuilder();
             // target.InitializeFromXML(queryDefXML, ref runtimeParameters);
             var specialArgs = target.SpecialArgs;
@@ -162,7 +162,7 @@ namespace MageUnitTests
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("GetMassTagsPlusPepProphetStats");
             Assert.AreNotEqual("", queryDefXML);
 
-            var target = new SQLBuilder(queryDefXML, ref runtimeParameters);
+            var target = new SQLBuilder(queryDefXML, runtimeParameters);
             Assert.AreEqual("GetMassTagsPlusPepProphetStats", target.SprocName);
 
             var sprocParams = target.SprocParameters;

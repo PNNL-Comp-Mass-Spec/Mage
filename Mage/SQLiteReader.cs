@@ -51,7 +51,7 @@ namespace Mage
         /// <param name="args"></param>
         public SQLiteReader(string xml, Dictionary<string, string> args)
         {
-            var builder = new SQLBuilder(xml, ref args);
+            var builder = new SQLBuilder(xml, args);
             SetPropertiesFromBuilder(builder);
         }
 
@@ -65,7 +65,7 @@ namespace Mage
         /// <param name="databasePath">Path to the SQLite database</param>
         public SQLiteReader(string xml, Dictionary<string, string> args, string databasePath)
         {
-            var builder = new SQLBuilder(xml, ref args);
+            var builder = new SQLBuilder(xml, args);
             builder.SpecialArgs["Database"] = databasePath;
 
             SetPropertiesFromBuilder(builder);

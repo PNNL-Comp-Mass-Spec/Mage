@@ -172,10 +172,10 @@ namespace Mage
         /// </summary>
         /// <param name="xml">XML template with specifications for the query</param>
         /// <param name="args">Key/Value parameter that will be mixed into query</param>
-        public SQLBuilder(string xml, ref Dictionary<string, string> args)
+        public SQLBuilder(string xml, Dictionary<string, string> args)
         {
             QueryType = "filtered_and_sorted";
-            InitializeFromXML(xml, ref args);
+            InitializeFromXML(xml, args);
         }
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace Mage
         /// </summary>
         /// <param name="xml">Specifications for query</param>
         /// <param name="args">Key/Value parameter that will be mixed into query</param>
-        public void InitializeFromXML(string xml, ref Dictionary<string, string> args)
+        public void InitializeFromXML(string xml, Dictionary<string, string> args)
         {
             Columns = "*";
             SprocName = string.Empty;

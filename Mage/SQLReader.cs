@@ -123,7 +123,7 @@ namespace Mage
         /// <param name="isPostgres">True if a PostgreSQL server</param>
         public SQLReader(string xml, Dictionary<string, string> args, string username = "", string password = "", bool isPostgres = false)
         {
-            var builder = new SQLBuilder(xml, ref args);
+            var builder = new SQLBuilder(xml, args);
             SetPropertiesFromBuilder(builder, username, password, isPostgres);
         }
 
