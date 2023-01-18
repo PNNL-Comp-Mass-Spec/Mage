@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<queries>
+
+  <query name='Jobs'>
+    <connection server='prismdb1' database='dms' postgres='true' user='d3l243' />
+    <table name='V_Mage_Analysis_Jobs' cols='*'/>
+    <predicate rel='AND' col='Dataset' cmp='ContainsText' val=''/>
+    <predicate rel='AND' col='Tool' cmp='ContainsText' val=''/>
+    <predicate rel='AND' col='Parameter_File' cmp='ContainsText' val=''/>
+    <predicate rel='AND' col='Settings_File' cmp='ContainsText' val=''/>
+  </query>
+
+  <query name='Job_ID_List'>
+    <connection server='prismdb1' database='dms' postgres='true' user='d3l243' />
+    <table name='V_Mage_Analysis_Jobs' cols='*'/>
+    <predicate rel='AND' col='Job' cmp='InList' val=''/>
+  </query>
+
+  <query name='Data_Package'>
+    <connection server='prismdb1' database='dms' postgres='true' user='d3l243' />
+    <table name='V_Mage_Data_Package_Analysis_Jobs' cols='*'/>
+    <predicate rel='AND' col='Data_Package_ID' cmp='Equals' val=''/>
+  </query>
+
+  <query name='Data_Package_Datasets'>
+    <connection server='prismdb1' database='dms' postgres='true' user='d3l243' />
+    <table name='V_Mage_Data_Package_Datasets' cols='*'/>
+    <predicate rel='AND' col='Data_Package_ID' cmp='Equals' val=''/>
+  </query>
+
+  <query name='Datasets'>
+    <connection server='prismdb1' database='dms' postgres='true' user='d3l243' />
+    <table name='V_Mage_Dataset_List' cols='*' />
+    <predicate rel='AND' col='Dataset' cmp='ContainsText' val=''/>
+  </query>
+
+  <query name='Dataset_List'>
+    <connection server='prismdb1' database='dms' postgres='true' user='d3l243' />
+    <table name='V_Mage_Dataset_List' cols='*' />
+    <predicate rel='AND' col='Dataset_ID' cmp='InList' val='' />
+  </query>
+
+  <query name='Dataset_Name_List'>
+    <connection server='prismdb1' database='dms' postgres='true' user='d3l243' />
+    <table name='V_Mage_Dataset_List' cols='*' />
+    <predicate rel='AND' col='Dataset' cmp='InListText' val='' />
+  </query>
+
+  <query name='Jobs_From_Dataset_List'>
+    <connection server='prismdb1' database='dms' postgres='true' user='d3l243' />
+    <table name='V_Mage_Analysis_Jobs' cols='*'/>
+    <predicate rel='AND' col='Dataset_ID' cmp='InList' val='' />
+  </query>
+
+  <query name='Job_Flex_Query'>
+    <connection server='prismdb1' database='dms' postgres='true' user='d3l243' />
+    <table name='V_Mage_Analysis_Jobs' cols='*'/>
+  </query>
+
+</queries>
