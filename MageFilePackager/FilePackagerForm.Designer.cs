@@ -377,8 +377,8 @@
             // 
             this.JobDatasetIDList1.BackColor = System.Drawing.SystemColors.Control;
             this.JobDatasetIDList1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.JobDatasetIDList1.Legend = "(Job IDs)";
-            this.JobDatasetIDList1.ListName = "Job";
+            this.JobDatasetIDList1.Legend = "(Dataset IDs)";
+            this.JobDatasetIDList1.ListName = "Dataset_ID";
             this.JobDatasetIDList1.Location = new System.Drawing.Point(4, 4);
             this.JobDatasetIDList1.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.JobDatasetIDList1.Name = "JobDatasetIDList1";

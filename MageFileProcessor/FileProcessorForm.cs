@@ -114,7 +114,12 @@ namespace MageFileProcessor
             FileProcessingPanel1.GetSelectedFileInfo += GetSelectedFileItem;
             FileProcessingPanel1.GetSelectedOutputInfo += GetSelectedOutputItem;
 
-            SetupFlexQueryPanels(); // Must be done before restoring saved state
+            // This must called before restoring saved state
+            SetupFlexQueryPanels();
+
+            // In addition, assure that the ListName for JobDatasetIDList1 is Dataset_ID
+            JobDatasetIDList1.Legend = "(Dataset IDs)";
+            JobDatasetIDList1.ListName = "Dataset_ID";
 
             try
             {
@@ -513,9 +518,6 @@ namespace MageFileProcessor
             JobListDisplayControl.PageTitle = "Entities";
             FileListDisplayControl.PageTitle = "Files";
             FileListDisplayControl.AutoSizeColumnWidths = true;
-
-            JobDatasetIDList1.Legend = "(Dataset IDs)";
-            JobDatasetIDList1.ListName = "Dataset_ID";
 
             // Disable certain UI component panels
             EntityFilePanel1.Enabled = false;
