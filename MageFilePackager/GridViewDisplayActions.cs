@@ -175,16 +175,18 @@ namespace MageFilePackager
 
                 foreach (var colDef in mDisplayUserControl.ColumnDefs)
                 {
-                    switch (colDef.Name)
+                    switch (colDef.Name.ToLower())
                     {
-                        case "Job":
+                        case "job":
                             AdjustMenuItemsFromNameList(mJobSensitiveMenuItems, true);
                             break;
-                        case "Dataset":
+
+                        case "dataset":
                             AdjustMenuItemsFromNameList(mDatasetSensitiveMenuItems, true);
                             break;
-                        case "Directory":
-                        case "Folder":
+
+                        case "directory":
+                        case "folder":
                             AdjustMenuItemsFromNameList(mDirectorySensitiveMenuItems, true);
                             break;
                     }
