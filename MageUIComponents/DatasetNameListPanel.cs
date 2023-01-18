@@ -26,7 +26,7 @@ namespace MageUIComponents
             {
                 switch (paramDef.Key)
                 {
-                    case "Dataset_ID":
+                    case "Dataset":
                         DatasetListCtl.Text = paramDef.Value;
                         break;
                 }
