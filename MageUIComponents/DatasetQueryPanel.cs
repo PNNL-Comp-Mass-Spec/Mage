@@ -18,10 +18,10 @@ namespace MageUIComponents
         {
             return new Dictionary<string, string>
             {
-                { "Dataset", DatasetCtl.Text },
-                { "Instrument", InstrumentCtl.Text },
-                { "State", StateCtl.Text },
-                { "Dataset Type", TypeCtl.Text }
+                { "Dataset",      DatasetCtl.Text },
+                { "Instrument",   InstrumentCtl.Text },
+                { "State",        StateCtl.Text },
+                { "Dataset_Type", TypeCtl.Text }
             };
         }
 
@@ -34,13 +34,16 @@ namespace MageUIComponents
                     case "Dataset":
                         DatasetCtl.Text = paramDef.Value;
                         break;
+
                     case "Instrument":
                         InstrumentCtl.Text = paramDef.Value;
                         break;
+
                     case "State":
                         StateCtl.Text = paramDef.Value;
                         break;
-                    case "Dataset Type":
+
+                    case "Dataset_Type":
                         TypeCtl.Text = paramDef.Value;
                         break;
                 }
