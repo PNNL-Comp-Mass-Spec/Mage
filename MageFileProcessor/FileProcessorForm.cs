@@ -17,7 +17,7 @@ namespace MageFileProcessor
     {
         // Ignore Spelling: Mage, workflows
 
-                protected const string TAG_JOB_IDs = "Job_ID_List";
+        protected const string TAG_JOB_IDs = "Job_ID_List";
         protected const string TAG_JOB_IDs_FROM_DATASETS = "Jobs_From_Dataset_List";
         protected const string TAG_DATASET_LIST = "Datasets";
         protected const string TAG_DATASET_ID_LIST = "Dataset_List";
@@ -247,6 +247,7 @@ namespace MageFileProcessor
                 {
                     case "get_entities_from_query":
                         queryDefXML = GetQueryDefinition(out var queryName);
+
                         if (string.IsNullOrEmpty(queryDefXML))
                         {
                             MessageBox.Show("Unknown query type '" + queryName + "'.  Your QueryDefinitions.xml file is out-of-date", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -254,6 +255,7 @@ namespace MageFileProcessor
                         }
 
                         var queryParameters = GetRuntimeParamsForEntityQuery();
+
                         if (!ValidQueryParameters(queryName, queryParameters))
                         {
                             return;
@@ -263,6 +265,7 @@ namespace MageFileProcessor
                         pipeline = Pipelines.MakeJobQueryPipeline(sink, queryDefXML, queryParameters);
                         mPipelineQueue.Pipelines.Enqueue(pipeline);
                         mFinalPipelineName = pipeline.PipelineName;
+
                         break;
 
                     case "get_entities_from_flex_query":
@@ -280,11 +283,14 @@ namespace MageFileProcessor
                         pipeline = ProcessingPipeline.Assemble("Get Jobs", reader, sink);
                         mPipelineQueue.Pipelines.Enqueue(pipeline);
                         mFinalPipelineName = pipeline.PipelineName;
+
                         break;
 
                     case "get_files_from_entities":
                         var entityType = JobListDisplayControl.PageTitle;
+
                         runtimeParams = GetRuntimeParamsForEntityFileType(entityType);
+
                         source = new GVPipelineSource(JobListDisplayControl, mode);
                         sink = FileListDisplayControl.MakeSink("Files");
 
@@ -292,11 +298,14 @@ namespace MageFileProcessor
                         mPipelineQueue.Pipelines.Enqueue(pipeline);
                         mFinalPipelineName = pipeline.PipelineName;
                         mFileSourcePipelineName = pipeline.PipelineName;
+
                         break;
 
                     case "get_files_from_local_directory":
                         runtimeParams = GetRuntimeParamsForLocalDirectory();
+
                         var directoryPath = GetRuntimeParam(runtimeParams, "Directory");
+
                         if (!Directory.Exists(directoryPath))
                         {
                             MessageBox.Show("Directory not found: " + directoryPath, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -308,11 +317,14 @@ namespace MageFileProcessor
                         mPipelineQueue.Pipelines.Enqueue(pipeline);
                         mFinalPipelineName = pipeline.PipelineName;
                         mFileSourcePipelineName = pipeline.PipelineName;
+
                         break;
 
                     case "get_files_from_local_manifest":
                         runtimeParams = GetRuntimeParamsForManifestFile();
+
                         var sFile = GetRuntimeParam(runtimeParams, "ManifestFilePath");
+
                         if (!File.Exists(sFile))
                         {
                             MessageBox.Show("Manifest file not found: " + sFile, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -324,10 +336,12 @@ namespace MageFileProcessor
                         mPipelineQueue.Pipelines.Enqueue(pipeline);
                         mFinalPipelineName = pipeline.PipelineName;
                         mFileSourcePipelineName = pipeline.PipelineName;
+
                         break;
 
                     case "copy_files":
                         runtimeParams = GetRuntimeParamsForCopyFiles();
+
                         if (string.IsNullOrEmpty(GetRuntimeParam(runtimeParams, "OutputDirectory")))
                         {
                             MessageBox.Show("Destination directory cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -343,6 +357,7 @@ namespace MageFileProcessor
 
                     case "process_file_contents":
                         var filterParams = FileProcessingPanel1.GetParameters();
+
                         runtimeParams = GetRuntimeParamsForFileProcessing();
 
                         switch (FilterOutputTabs.SelectedTab.Tag.ToString())
@@ -359,6 +374,7 @@ namespace MageFileProcessor
                                     MessageBox.Show("Destination file cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                                     return;
                                 }
+
                                 break;
 
                             case "SQLite_Output":
@@ -373,6 +389,7 @@ namespace MageFileProcessor
                                     MessageBox.Show("SQLite destination table name cannot be empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                                     return;
                                 }
+
                                 break;
 
                             default:

@@ -224,6 +224,7 @@ namespace MageFilePackager
                 {
                     case "get_entities_from_query":
                         queryDefXML = GetQueryDefinition(out var queryName);
+
                         if (string.IsNullOrEmpty(queryDefXML))
                         {
                             MessageBox.Show("Unknown query type '" + queryName + "'.  Your QueryDefinitions.xml file is out-of-date", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -236,6 +237,7 @@ namespace MageFilePackager
                         }
                         sink = JobListDisplayControl.MakeSink(command.Mode);
                         _mCurrentPipeline = Pipelines.MakeJobQueryPipeline(sink, queryDefXML, queryParameters);
+
                         break;
 
                     case "get_entities_from_flex_query":
@@ -253,6 +255,7 @@ namespace MageFilePackager
                             _mCurrentPipeline = null;
                             return;
                         }
+
                         break;
 
                     case "get_files_from_entities":
@@ -262,6 +265,7 @@ namespace MageFilePackager
                         sink = FileListDisplayControl.MakeSink("Files");
                         _mCurrentPipeline = Pipelines.MakeFileListPipeline(source, sink, runtimeParams);
                         break;
+
                     default:
                         return;
                 }

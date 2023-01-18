@@ -24,7 +24,7 @@ namespace MageUIComponents
         {
             return new Dictionary<string, string>
             {
-                { "ManifestFilePath",  ManifestFilePath }
+                { "ManifestFilePath", ManifestFilePath }
             };
         }
 

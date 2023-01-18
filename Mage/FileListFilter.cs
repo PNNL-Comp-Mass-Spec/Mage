@@ -599,10 +599,13 @@ namespace Mage
         public List<string> GetFileNameSelectors()
         {
             var selectorList = new List<string>();
+
+            // ReSharper disable once LoopCanBeConvertedToQuery
             foreach (var selector in FileNameSelector.Split(';'))
             {
                 selectorList.Add(selector.Trim());
             }
+
             return selectorList;
         }
 

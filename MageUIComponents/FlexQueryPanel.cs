@@ -29,10 +29,10 @@ namespace MageUIComponents
         {
             return new Dictionary<string, string>
             {
-                { "QueryItem0",   EncodeQueryItem(QueryItemPanels[0])},
-                { "QueryItem1",   EncodeQueryItem(QueryItemPanels[1])},
-                { "QueryItem2",   EncodeQueryItem(QueryItemPanels[2])},
-                { "QueryItem3",   EncodeQueryItem(QueryItemPanels[3])},
+                { "QueryItem0", EncodeQueryItem(QueryItemPanels[0]) },
+                { "QueryItem1", EncodeQueryItem(QueryItemPanels[1]) },
+                { "QueryItem2", EncodeQueryItem(QueryItemPanels[2]) },
+                { "QueryItem3", EncodeQueryItem(QueryItemPanels[3]) }
             };
         }
 
@@ -45,12 +45,15 @@ namespace MageUIComponents
                     case "QueryItem0":
                         DecodeQueryItem(paramDef.Value, QueryItemPanels[0]);
                         break;
+
                     case "QueryItem1":
                         DecodeQueryItem(paramDef.Value, QueryItemPanels[1]);
                         break;
+
                     case "QueryItem2":
                         DecodeQueryItem(paramDef.Value, QueryItemPanels[2]);
                         break;
+
                     case "QueryItem3":
                         DecodeQueryItem(paramDef.Value, QueryItemPanels[3]);
                         break;
@@ -65,6 +68,7 @@ namespace MageUIComponents
             get
             {
                 var items = new Collection<string>();
+
                 foreach (var pnl in QueryItemPanels)
                 {
                     if (!string.IsNullOrWhiteSpace(pnl.Value))
@@ -73,6 +77,7 @@ namespace MageUIComponents
                         items.Add(item);
                     }
                 }
+
                 return items;
             }
         }
@@ -103,6 +108,7 @@ namespace MageUIComponents
         private static void DecodeQueryItem(string item, FlexQueryItemPanel pnl)
         {
             var fields = item.Split('|');
+
             pnl.Relation = fields[0];
             pnl.Column = fields[1];
             pnl.Comparision = fields[2];

@@ -74,15 +74,19 @@ namespace MageUIComponents
                     case "OutputFolder":
                         OutputDirectory = paramDef.Value;
                         break;
+
                     case "OverwriteExistingFiles":
                         OverwriteExistingFiles = paramDef.Value;
                         break;
+
                     case "ApplyPrefixToFileName":
                         ApplyPrefixToFileName = paramDef.Value;
                         break;
+
                     case "PrefixLeader":
                         PrefixLeader = paramDef.Value;
                         break;
+
                     case "PrefixColumnName":
                         PrefixColumnName = paramDef.Value;
                         break;

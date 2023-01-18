@@ -604,9 +604,11 @@ namespace Mage
         {
             var namedModuleList = new Collection<ModuleDef>();
             var seq = 0;
+
             foreach (var moduleObject in moduleList)
             {
                 string moduleName;
+
                 if (moduleObject is string stringValue)
                 {
                     moduleName = stringValue + (++seq);
@@ -615,8 +617,10 @@ namespace Mage
                 {
                     moduleName = moduleObject.GetType().Name + (++seq);
                 }
+
                 namedModuleList.Add(new ModuleDef(moduleName, moduleObject));
             }
+
             return Assemble(name, namedModuleList);
         }
 
@@ -635,17 +639,20 @@ namespace Mage
             var pipeline = new ProcessingPipeline(name);
 
             var currentModName = string.Empty;
+
             foreach (var mod in namedModuleList)
             {
                 var precedingModName = currentModName;
                 currentModName = mod.ModuleName;
 
                 var moduleObject = mod.ModuleObject;
+
                 if (moduleObject is string stringValue)
                 {
                     moduleObject = MakeModule(stringValue);
                 }
 
+                // ReSharper disable once ConvertIfStatementToSwitchStatement
                 if (moduleObject is IBaseModule baseModule)
                 {
                     pipeline.AddModule(currentModName, baseModule);
@@ -664,6 +671,7 @@ namespace Mage
                     }
                 }
             }
+
             return pipeline;
         }
 

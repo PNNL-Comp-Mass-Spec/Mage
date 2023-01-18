@@ -40,7 +40,7 @@ namespace MageUIComponents
             return new Dictionary<string, string>
             {
                 { "OutputDirectory", OutputDirectory},
-                { "OutputFile", OutputFile}
+                { "OutputFile",      OutputFile}
             };
         }
 
@@ -54,6 +54,7 @@ namespace MageUIComponents
                     case "OutputFolder":
                         OutputDirectory = paramDef.Value;
                         break;
+
                     case "OutputFile":
                         OutputFile = paramDef.Value;
                         break;

@@ -757,6 +757,7 @@ namespace Mage
 
             var inputColIdx = InputColumnPos[inputColName];
             var colDef = InputColumnDefs[inputColIdx];
+
             AddOutputColumnDefinition(colDef, outColIdx, inputColIdx);
         }
 

@@ -63,6 +63,7 @@ namespace Mage
         public void Run()
         {
             Globals.AbortRequested = false;
+
             if (!IsRunning)
             {
                 IsRunning = true;
@@ -119,8 +120,10 @@ namespace Mage
                 CurrentPipeline.RunRoot(null);
                 CurrentPipeline = null;
             }
+
             Pipelines.Clear();
             IsRunning = false;
+
             UpdateQueueCompleted();
         }
 

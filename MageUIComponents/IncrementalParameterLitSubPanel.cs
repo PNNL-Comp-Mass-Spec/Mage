@@ -10,9 +10,9 @@ namespace MageUIComponents
         {
             return new Dictionary<string, string>
             {
-                { "ParamName", ParamNameCtl.Text },
-                { "Operator", OperationCtl.Text },
-                { "Active", ActiveCtl.Checked?"On":"Off" },
+                { "ParamName",     ParamNameCtl.Text },
+                { "Operator",      OperationCtl.Text },
+                { "Active",        ActiveCtl.Checked ? "On" : "Off" },
                 { "IncrementList", IncrementListCtl.Text }
             };
         }
@@ -26,12 +26,15 @@ namespace MageUIComponents
                     case "ParamName":
                         ParamNameCtl.Text = paramDef.Value;
                         break;
+
                     case "Operator":
                         OperationCtl.Text = paramDef.Value;
                         break;
+
                     case "Active":
                         ActiveCtl.Checked = paramDef.Value == "On";
                         break;
+
                     case "IncrementList":
                         IncrementListCtl.Text = paramDef.Value;
                         break;

@@ -24,7 +24,7 @@ namespace MageMetadataProcessor
         {
             return new Dictionary<string, string>
             {
-                { "RawSQL",  RawSQL }
+                { "RawSQL", RawSQL }
             };
         }
 

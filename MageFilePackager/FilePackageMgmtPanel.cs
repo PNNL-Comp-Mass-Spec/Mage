@@ -23,7 +23,7 @@ namespace MageFilePackager
         {
             return new Dictionary<string, string>
             {
-                { "OutputFilePath",   OutputFilePath}
+                { "OutputFilePath", OutputFilePath}
             };
         }
 

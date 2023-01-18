@@ -34,12 +34,15 @@ namespace MageUIComponents
                     case "Dataset":
                         DatasetCtl.Text = paramDef.Value;
                         break;
+
                     case "Tool":
                         ToolCtl.Text = paramDef.Value;
                         break;
+
                     case "Settings_File":
                         SettingsFileCtl.Text = paramDef.Value;
                         break;
+
                     case "Parameter_File":
                         ParameterFileCtl.Text = paramDef.Value;
                         break;

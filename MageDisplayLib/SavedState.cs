@@ -135,6 +135,7 @@ namespace MageDisplayLib
             foreach (var listPanel in panelList.Keys)
             {
                 var parameterList = new Dictionary<string, string>();
+
                 if (parms != null)
                 {
                     foreach (XmlNode parameter in parms)

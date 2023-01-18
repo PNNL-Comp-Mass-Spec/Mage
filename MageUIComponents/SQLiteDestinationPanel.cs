@@ -41,7 +41,7 @@ namespace MageUIComponents
             return new Dictionary<string, string>
             {
                 { "DatabaseName", DatabaseName},
-                { "TableName", TableName}
+                { "TableName",    TableName}
             };
         }
 
@@ -54,6 +54,7 @@ namespace MageUIComponents
                     case "DatabaseName":
                         DatabaseName = paramDef.Value;
                         break;
+
                     case "TableName":
                         TableName = paramDef.Value;
                         break;

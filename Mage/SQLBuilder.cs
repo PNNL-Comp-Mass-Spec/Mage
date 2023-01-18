@@ -398,6 +398,7 @@ namespace Mage
                     Comparison = comparison,
                     Value = value
                 };
+
                 mPredicates.Add(p);
             }
         }
@@ -476,6 +477,7 @@ namespace Mage
             foreach (var predicate in mPredicates)
             {
                 var whereItem = MakeWhereItem(predicate, IsPostgres);
+
                 if (!string.IsNullOrEmpty(whereItem))
                 {
                     switch (predicate.Relationship.ToLower())
@@ -500,7 +502,7 @@ namespace Mage
             {
                 andPredicate.Add("(" + string.Join(" OR ", orPredicate) + ")");
             }
-            //
+
             // 'and' all predicate clauses together
             var andPredicates = string.Join(" AND ", andPredicate);
             if (!string.IsNullOrEmpty(andPredicates))
@@ -572,10 +574,12 @@ namespace Mage
         private static string MakeOrderBy(IEnumerable<QuerySort> sortItems, bool isPostgres)
         {
             var a = new List<string>();
+
             foreach (var item in sortItems)
             {
                 a.Add(string.Format("{0} {1}", PossiblyQuoteName(item.ColumnName, isPostgres), item.Direction));
             }
+
             return string.Join(", ", a);
         }
 
@@ -721,7 +725,7 @@ namespace Mage
 
         private static string PossiblyQuoteName(string objectName, bool isPostgres)
         {
-            var charsToQuote = new[] {' ', '%'};
+            var charsToQuote = new[] { ' ', '%' };
 
             if (objectName.StartsWith("[") && objectName.EndsWith("]") && isPostgres)
             {

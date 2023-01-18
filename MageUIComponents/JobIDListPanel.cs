@@ -30,6 +30,7 @@ namespace MageUIComponents
 
         public void SetParameters(Dictionary<string, string> paramList)
         {
+            // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
             foreach (var paramDef in paramList)
             {
                 if (paramDef.Key == ListName)

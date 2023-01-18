@@ -43,7 +43,7 @@ namespace MageMetadataProcessor
             return new Dictionary<string, string>
             {
                 { "TableName",  TableName },
-                { "DBFilePath",  DBFilePath }
+                { "DBFilePath", DBFilePath }
             };
         }
 
@@ -56,6 +56,7 @@ namespace MageMetadataProcessor
                     case "TableName":
                         TableName = paramDef.Value;
                         break;
+
                     case "DBFilePath":
                         DBFilePath = paramDef.Value;
                         break;

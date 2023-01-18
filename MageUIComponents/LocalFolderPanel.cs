@@ -62,11 +62,11 @@ namespace MageUIComponents
         {
             return new Dictionary<string, string>
             {
-                { "FileNameFilter",  FileNameFilter },
-                { "FileSelectionMode", FileSelectionMode },
-                { "Directory",  Directory },
-                { "SearchInSubdirectories", SearchInSubdirectories},
-                { "SubdirectorySearchName", SubdirectorySearchName}
+                { "FileNameFilter",         FileNameFilter },
+                { "FileSelectionMode",      FileSelectionMode },
+                { "Directory",              Directory },
+                { "SearchInSubdirectories", SearchInSubdirectories },
+                { "SubdirectorySearchName", SubdirectorySearchName }
             };
         }
 
@@ -79,16 +79,20 @@ namespace MageUIComponents
                     case "FileNameFilter":
                         FileNameFilter = paramDef.Value;
                         break;
+
                     case "FileSelectionMode":
                         FileSelectionMode = paramDef.Value;
                         break;
+
                     case "Directory":
                     case "Folder":
                         Directory = paramDef.Value;
                         break;
+
                     case "SearchInSubdirectories":
                         SearchInSubdirectories = paramDef.Value;
                         break;
+
                     case "SubdirectorySearchName":
                         SubdirectorySearchName = paramDef.Value;
                         break;

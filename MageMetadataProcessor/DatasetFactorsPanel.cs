@@ -38,6 +38,7 @@ namespace MageMetadataProcessor
                     case "DatasetName":
                         DatasetName = paramDef.Value;
                         break;
+
                     case "DataPackageNumber":
                         DataPackageNumber = paramDef.Value;
                         break;

@@ -42,10 +42,10 @@ namespace MageExtractor
         {
             return new Dictionary<string, string>
             {
-                { "ResultType",   ResultTypeName},
-                { "KeepAllResults",   KeepAllResults},
-                { "ResultFilter",   ResultFilterSetID},
-                { "MSGFCutoff",   MSGFCutoff}
+                { "ResultType",     ResultTypeName },
+                { "KeepAllResults", KeepAllResults },
+                { "ResultFilter",   ResultFilterSetID },
+                { "MSGFCutoff",     MSGFCutoff }
             };
         }
 
@@ -60,12 +60,15 @@ namespace MageExtractor
                         case "ResultType":
                             ResultTypeName = paramDef.Value;
                             break;
+
                         case "KeepAllResults":
                             KeepAllResults = paramDef.Value;
                             break;
+
                         case "ResultFilter":
                             ResultFilterSetID = paramDef.Value;
                             break;
+
                         case "MSGFCutoff":
                             MSGFCutoff = paramDef.Value;
                             break;
@@ -96,7 +99,7 @@ namespace MageExtractor
                 ResultTypeNameCtl.SelectedIndex = indexToSelect;
             }
 
-            MSGFCutoffCtl.Items.AddRange(new object[] {ExtractionFilter.ALL_PASS_CUTOFF, "1E-8", "1E-9", "5E-9", "1E-10", "5E-10", "1E-11" });
+            MSGFCutoffCtl.Items.AddRange(new object[] { ExtractionFilter.ALL_PASS_CUTOFF, "1E-8", "1E-9", "5E-9", "1E-10", "5E-10", "1E-11" });
             MSGFCutoffCtl.Text = "1E-10";
         }
 

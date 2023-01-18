@@ -475,6 +475,7 @@ namespace MageExtractor
             {
                 MessageBox.Show("You must define one or more search criteria before searching for jobs", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
+
             return result;
         }
 

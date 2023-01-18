@@ -104,11 +104,11 @@ namespace MageUIComponents
         {
             return new Dictionary<string, string>
             {
-                { "FileSelectors", FileSelectors },
-                { "FileSelectionMode", FileSelectionMode },
-                { "IncludeFilesOrDirectories", IncludeFilesOrDirectories},
-                { "SearchInSubdirectories", SearchInSubdirectories},
-                { "SubdirectorySearchName", SubdirectorySearchName}
+                { "FileSelectors",             FileSelectors },
+                { "FileSelectionMode",         FileSelectionMode },
+                { "IncludeFilesOrDirectories", IncludeFilesOrDirectories },
+                { "SearchInSubdirectories",    SearchInSubdirectories },
+                { "SubdirectorySearchName",    SubdirectorySearchName }
             };
         }
 
@@ -121,15 +121,19 @@ namespace MageUIComponents
                     case "FileSelectors":
                         FileSelectors = paramDef.Value;
                         break;
+
                     case "FileSelectionMode":
                         FileSelectionMode = paramDef.Value;
                         break;
+
                     case "IncludeFilesOrDirectories":
                         IncludeFilesOrDirectories = paramDef.Value;
                         break;
+
                     case "SearchInSubdirectories":
                         SearchInSubdirectories = paramDef.Value;
                         break;
+
                     case "SubdirectorySearchName":
                         SubdirectorySearchName = paramDef.Value;
                         break;
