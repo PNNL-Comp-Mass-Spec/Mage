@@ -21,7 +21,7 @@ namespace Mage
         private bool doHeaderLine = true;
 
         /// <summary>
-        /// Delimiter for input file (default to tab)
+        /// Delimiter for input file (default is a tab character)
         /// </summary>
         public string Delimiter { get; set; }
 
@@ -67,9 +67,11 @@ namespace Mage
                 case "AutoSense":
                     OutputContents();
                     break;
+
                 case "CSV":
                     OutputFileContentsFromCSV();
                     break;
+
                 default:
                     OutputFileContents();
                     break;
@@ -98,9 +100,12 @@ namespace Mage
             {
                 using (var fileReader = new StreamReader(new FileStream(delimitedFilePathLocal, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
                 {
-                    string line;
-                    while ((line = fileReader.ReadLine()) != null)
+                    while (!fileReader.EndOfStream)
                     {
+                        var line = fileReader.ReadLine();
+                        if (line == null)
+                            break;
+
                         if (Abort)
                         {
                             ReportProcessingAborted();
@@ -116,6 +121,7 @@ namespace Mage
 
                         // Parse line according to delimiter type
                         string[] fields;
+
                         if (tabDelimited)
                         {
                             fields = line.Split(delimiter);
@@ -163,15 +169,20 @@ namespace Mage
 
             using var fileReader = new StreamReader(new FileStream(FilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
 
-            string line;
-            while ((line = fileReader.ReadLine()) != null)
+            while (!fileReader.EndOfStream)
             {
+                var line = fileReader.ReadLine();
+                if (line == null)
+                    break;
+
                 if (Abort)
                 {
                     ReportProcessingAborted();
                     break;
                 }
+
                 var fields = line.Split(delimiter);
+
                 if (doHeaderLine)
                 {
                     doHeaderLine = false;
@@ -191,9 +202,12 @@ namespace Mage
 
             using var fileReader = new StreamReader(new FileStream(FilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
 
-            string line;
-            while ((line = fileReader.ReadLine()) != null)
+            while (!fileReader.EndOfStream)
             {
+                var line = fileReader.ReadLine();
+                if (line == null)
+                    break;
+
                 if (Abort)
                 {
                     ReportProcessingAborted();
