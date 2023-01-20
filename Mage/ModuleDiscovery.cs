@@ -280,8 +280,7 @@ namespace Mage
 
             if (string.IsNullOrWhiteSpace(DMSServerOverride) && string.IsNullOrWhiteSpace(DMSDatabaseOverride))
             {
-                var nodeXML = queryNode.OuterXml;
-                return nodeXML;
+                return queryNode.OuterXml;
             }
 
             return UpdateQueryXMLConnectionInfo(queryNode, DMSServerOverride, DMSDatabaseOverride);
