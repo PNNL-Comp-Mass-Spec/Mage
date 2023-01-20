@@ -106,6 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="clsListViewItemComparer.cs" />
+    <Compile Include="ConnectionInfo.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GridViewDisplayControl.cs">
       <SubType>UserControl</SubType>

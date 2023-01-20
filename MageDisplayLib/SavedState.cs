@@ -67,9 +67,30 @@ namespace MageDisplayLib
                     throw new FileNotFoundException("Query Definition file not found; please copy " + referenceQueryDefFile.Name + " from the appropriate subdirectory at \\\\floyd\\software\\Mage\\Exe_Only to " + referenceQueryDefFile.Directory);
                 }
             }
-            else if (referenceQueryDefFile.Exists && referenceQueryDefFile.LastWriteTimeUtc > userQueryDefFile.LastWriteTimeUtc)
+            else
             {
-                File.Copy(referenceQueryDefFile.FullName, userQueryDefFile.FullName, true);
+                bool copyRequired;
+
+                if (referenceQueryDefFile.Exists)
+                {
+                    if (referenceQueryDefFile.LastWriteTimeUtc > userQueryDefFile.LastWriteTimeUtc)
+                    {
+                        copyRequired = true;
+                    }
+                    else
+                    {
+                        copyRequired = !MatchingConnectionInfo(referenceQueryDefFile, userQueryDefFile);
+                    }
+                }
+                else
+                {
+                    copyRequired = false;
+                }
+
+                if (copyRequired)
+                {
+                    File.Copy(referenceQueryDefFile.FullName, userQueryDefFile.FullName, true);
+                }
             }
 
             // Setup to save and restore settings for UI component panels
@@ -162,6 +183,156 @@ namespace MageDisplayLib
                 var panel = panelList[listPanel];
                 panel.SetParameters(parameterList);
             }
+        }
+
+        /// <summary>
+        /// Read the queries in a query definition file and return a dictionary with each query's name and connection info
+        /// </summary>
+        /// <param name="filePath">Query definition file</param>
+        /// <returns>Dictionary where keys are query names and values are instances of class ConnectionInfo</returns>
+        private static Dictionary<string, ConnectionInfo> LoadQueryDefinitionFile(string filePath)
+        {
+            var queries = new Dictionary<string, ConnectionInfo>();
+
+            XmlDocument xmlDoc;
+            using (var reader = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                xmlDoc = new XmlDocument();
+                xmlDoc.Load(reader);
+            }
+
+            // Use an XPath query to select all of the query nodes
+            var nodes = xmlDoc.SelectNodes("//queries/query");
+
+            if (nodes == null)
+                return queries;
+
+            foreach (XmlNode query in nodes)
+            {
+                // Example node XML:
+                // <query name='Jobs'>
+                //     <connection server='prismdb1' database='dms' postgres='true' user='d3l243' /
+
+                if (query.Attributes == null)
+                {
+                    continue;
+                }
+
+                var queryName = query.Attributes["name"].Value;
+
+                if (queries.ContainsKey(queryName))
+                {
+                    // The same query is defined twice; ignore the duplicate
+                    continue;
+                }
+
+                var connectionInfo = query.SelectSingleNode("connection");
+
+                if (connectionInfo?.Attributes == null)
+                {
+                    continue;
+                }
+
+                var server = TryGetAttribute(connectionInfo, "server", string.Empty);
+                var database = TryGetAttribute(connectionInfo, "database", string.Empty);
+                var postgres = TryGetAttribute(connectionInfo, "postgres", false);
+                var user = TryGetAttribute(connectionInfo, "user", string.Empty);
+
+                var connection = new ConnectionInfo(server, database, user)
+                {
+                    Postgres = postgres
+                };
+
+                queries.Add(queryName, connection);
+            }
+
+            return queries;
+        }
+
+        /// <summary>
+        /// Compare the connection info for each query in the query definition files
+        /// </summary>
+        /// <param name="sourceFile">Source query definition file (typically in the directory with the .exe)</param>
+        /// <param name="targetFile">Target query definition file (typically in C:\Users\Username\AppData\Roaming\MageFileProcessor)</param>
+        /// <returns>True if the connection info matches for all of the queries, false if any do not match</returns>
+        private static bool MatchingConnectionInfo(FileSystemInfo sourceFile, FileSystemInfo targetFile)
+        {
+            var sourceQueries = LoadQueryDefinitionFile(sourceFile.FullName);
+
+            var targetQueries = LoadQueryDefinitionFile(targetFile.FullName);
+
+            return MatchingConnectionInfo(sourceQueries, targetQueries);
+        }
+
+        /// <summary>
+        /// Compare the connection info for each query in the dictionaries
+        /// </summary>
+        /// <param name="sourceQueries">Dictionary where keys are query names and values are instances of class ConnectionInfo</param>
+        /// <param name="targetQueries">Dictionary where keys are query names and values are instances of class ConnectionInfo</param>
+        /// <returns></returns>
+        private static bool MatchingConnectionInfo(IReadOnlyDictionary<string, ConnectionInfo> sourceQueries, IReadOnlyDictionary<string, ConnectionInfo> targetQueries)
+        {
+            foreach (var sourceQuery in sourceQueries)
+            {
+                if (!targetQueries.TryGetValue(sourceQuery.Key, out var targetConnectionInfo))
+                {
+                    // The source file has a query that the target file does not have
+                    return false;
+                }
+
+                if (!MatchingConnectionInfo(sourceQuery.Value, targetConnectionInfo))
+                {
+                    // Connection details differ
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Compare the connection info
+        /// </summary>
+        /// <param name="sourceConnectionInfo"></param>
+        /// <param name="targetConnectionInfo"></param>
+        /// <returns>True if both refer to the same server, database, and user (which could be an empty string)</returns>
+        private static bool MatchingConnectionInfo(ConnectionInfo sourceConnectionInfo, ConnectionInfo targetConnectionInfo)
+        {
+            return sourceConnectionInfo.Postgres == targetConnectionInfo.Postgres &&
+                   (sourceConnectionInfo.Server ?? string.Empty) == (targetConnectionInfo.Server ?? string.Empty) &&
+                   (sourceConnectionInfo.Database ?? string.Empty) == (targetConnectionInfo.Database ?? string.Empty) &&
+                   (sourceConnectionInfo.User ?? string.Empty) == (targetConnectionInfo.User ?? string.Empty);
+        }
+
+        /// <summary>
+        /// Retrieve the string value for the given XML attribute
+        /// </summary>
+        /// <param name="node">XML node</param>
+        /// <param name="attributeName">Attribute name</param>
+        /// <param name="defaultValue">Default value</param>
+        /// <returns>Value if found, or defaultValue if the named attribute does not exist</returns>
+        private static string TryGetAttribute(XmlNode node, string attributeName, string defaultValue)
+        {
+            if (node.Attributes == null)
+                return defaultValue;
+
+            var value = node.Attributes.GetNamedItem(attributeName);
+
+            return value == null ? defaultValue : value.Value;
+        }
+
+        /// <summary>
+        /// Retrieve the boolean value for the given XML attribute
+        /// </summary>
+        /// <param name="node">XML node</param>
+        /// <param name="attributeName">>Attribute name</param>
+        /// <param name="defaultValue">Default value</param>
+        /// <returns>Value if found, or defaultValue if the named attribute does not exist</returns>
+        private static bool TryGetAttribute(XmlNode node, string attributeName, bool defaultValue)
+        {
+            var postgres = TryGetAttribute(node, attributeName, string.Empty);
+
+            return bool.TryParse(postgres, out var isPostgres) ? isPostgres : defaultValue;
         }
     }
 }
