@@ -473,28 +473,26 @@ namespace MageFilePackager
         /// </summary>
         private void AdjustListDisplayTitleFromColumnDefs()
         {
-            if (_mCurrentCmd.Action is "reload_list_display" or "display_reloaded")
+            if (_mCurrentCmd.Action is "reload_list_display" or "display_reloaded" &&
+                _mCurrentCmdSender is IMageDisplayControl ldc)
             {
-                if (_mCurrentCmdSender is IMageDisplayControl ldc)
+                var type = ldc.PageTitle;
+                var colNames = ldc.ColumnNames;
+                if (colNames.Contains("Item"))
                 {
-                    var type = ldc.PageTitle;
-                    var colNames = ldc.ColumnNames;
-                    if (colNames.Contains("Item"))
-                    {
-                        type = "Files";
-                    }
-                    else
-                        if (colNames.Contains("Job"))
-                    {
-                        type = "Jobs";
-                    }
-                    else
-                            if (colNames.Contains("Dataset_ID"))
-                    {
-                        type = "Datasets";
-                    }
-                    ldc.PageTitle = type;
+                    type = "Files";
                 }
+                else
+                if (colNames.Contains("Job"))
+                {
+                    type = "Jobs";
+                }
+                else
+                if (colNames.Contains("Dataset_ID"))
+                {
+                    type = "Datasets";
+                }
+                ldc.PageTitle = type;
             }
         }
 
