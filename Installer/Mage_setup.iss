@@ -46,8 +46,8 @@ Source: ..\DeployedFiles\MageConcatenator\System.ValueTuple.dll                 
 Source: ..\DeployedFiles\MageConcatenator\x64\SQLite.Interop.dll                        ; DestDir: {app}\MageConcatenator\x64
 Source: ..\DeployedFiles\MageConcatenator\x86\SQLite.Interop.dll                        ; DestDir: {app}\MageConcatenator\x86
 
-Source: ..\DeployedFiles\MageConcatenator\ReadMe.txt                    ; DestDir: {app}\MageConcatenator
-Source: ..\DeployedFiles\MageConcatenator\QueryDefinitions.xml          ; DestDir: {app}\MageConcatenator
+Source: ..\DeployedFiles\MageConcatenator\ReadMe.txt                                    ; DestDir: {app}\MageConcatenator
+Source: ..\DeployedFiles\MageConcatenator\QueryDefinitions.xml                          ; DestDir: {app}\MageConcatenator
 
 
 Source: ..\DeployedFiles\MageExtractor\MageExtractor.exe                             ; DestDir: {app}\MageExtractor
@@ -86,8 +86,8 @@ Source: ..\DeployedFiles\MageExtractor\System.ValueTuple.dll                    
 Source: ..\DeployedFiles\MageExtractor\x64\SQLite.Interop.dll                        ; DestDir: {app}\MageExtractor\x64
 Source: ..\DeployedFiles\MageExtractor\x86\SQLite.Interop.dll                        ; DestDir: {app}\MageExtractor\x86
 
-Source: ..\DeployedFiles\MageExtractor\ReadMe.txt                       ; DestDir: {app}\MageExtractor
-Source: ..\DeployedFiles\MageExtractor\QueryDefinitions.xml             ; DestDir: {app}\MageExtractor
+Source: ..\DeployedFiles\MageExtractor\ReadMe.txt                                    ; DestDir: {app}\MageExtractor
+Source: ..\DeployedFiles\MageExtractor\QueryDefinitions.xml                          ; DestDir: {app}\MageExtractor
 
 
 Source: ..\DeployedFiles\MageFilePackager\MageFilePackager.exe                          ; DestDir: {app}\MageFilePackager
@@ -124,8 +124,8 @@ Source: ..\DeployedFiles\MageFilePackager\System.ValueTuple.dll                 
 Source: ..\DeployedFiles\MageFilePackager\x64\SQLite.Interop.dll                        ; DestDir: {app}\MageFilePackager\x64
 Source: ..\DeployedFiles\MageFilePackager\x86\SQLite.Interop.dll                        ; DestDir: {app}\MageFilePackager\x86
 
-Source: ..\DeployedFiles\MageFilePackager\ReadMe.txt                    ; DestDir: {app}\MageFilePackager
-Source: ..\DeployedFiles\MageFilePackager\QueryDefinitions.xml          ; DestDir: {app}\MageFilePackager
+Source: ..\DeployedFiles\MageFilePackager\ReadMe.txt                                    ; DestDir: {app}\MageFilePackager
+Source: ..\DeployedFiles\MageFilePackager\QueryDefinitions.xml                          ; DestDir: {app}\MageFilePackager
 
 
 Source: ..\DeployedFiles\MageFileProcessor\MageFileProcessor.exe                         ; DestDir: {app}\MageFileProcessor
@@ -164,9 +164,9 @@ Source: ..\DeployedFiles\MageFileProcessor\System.ValueTuple.dll                
 Source: ..\DeployedFiles\MageFileProcessor\x64\SQLite.Interop.dll                        ; DestDir: {app}\MageFileProcessor\x64
 Source: ..\DeployedFiles\MageFileProcessor\x86\SQLite.Interop.dll                        ; DestDir: {app}\MageFileProcessor\x86
                                
-Source: ..\DeployedFiles\MageFileProcessor\ReadMe.txt                   ; DestDir: {app}\MageFileProcessor
-Source: ..\DeployedFiles\MageFileProcessor\QueryDefinitions.xml         ; DestDir: {app}\MageFileProcessor
-Source: ..\DeployedFiles\MageFileProcessor\ColumnMapping.txt            ; DestDir: {app}\MageFileProcessor
+Source: ..\DeployedFiles\MageFileProcessor\ReadMe.txt                                    ; DestDir: {app}\MageFileProcessor
+Source: ..\DeployedFiles\MageFileProcessor\ColumnMapping.txt                             ; DestDir: {app}\MageFileProcessor
+Source: ..\DeployedFiles\MageFileProcessor\QueryDefinitions.xml                          ; DestDir: {app}\MageFileProcessor
 
 
 Source: ..\DeployedFiles\MageMetaDataProcessor\MageMetadataProcessor.exe                     ; DestDir: {app}\MageMetaDataProcessor
@@ -203,8 +203,8 @@ Source: ..\DeployedFiles\MageMetaDataProcessor\System.ValueTuple.dll            
 Source: ..\DeployedFiles\MageMetaDataProcessor\x64\SQLite.Interop.dll                        ; DestDir: {app}\MageMetaDataProcessor\x64
 Source: ..\DeployedFiles\MageMetaDataProcessor\x86\SQLite.Interop.dll                        ; DestDir: {app}\MageMetaDataProcessor\x86
 
-Source: ..\DeployedFiles\MageMetaDataProcessor\ReadMe.txt               ; DestDir: {app}\MageMetaDataProcessor
-Source: ..\DeployedFiles\MageMetaDataProcessor\QueryDefinitions.xml     ; DestDir: {app}\MageMetaDataProcessor
+Source: ..\DeployedFiles\MageMetaDataProcessor\ReadMe.txt                                    ; DestDir: {app}\MageMetaDataProcessor
+Source: ..\DeployedFiles\MageMetaDataProcessor\QueryDefinitions.xml                          ; DestDir: {app}\MageMetaDataProcessor
 
 
 Source: ..\DeployedFiles\Ranger\Ranger.exe                                    ; DestDir: {app}\Ranger
@@ -241,11 +241,11 @@ Source: ..\DeployedFiles\Ranger\System.ValueTuple.dll                         ; 
 Source: ..\DeployedFiles\Ranger\x64\SQLite.Interop.dll                        ; DestDir: {app}\Ranger\x64
 Source: ..\DeployedFiles\Ranger\x86\SQLite.Interop.dll                        ; DestDir: {app}\Ranger\x86
 
-Source: ..\DeployedFiles\Ranger\ReadMe.txt                              ; DestDir: {app}\Ranger
-Source: ..\DeployedFiles\Ranger\QueryDefinitions.xml                    ; DestDir: {app}\Ranger
+Source: ..\DeployedFiles\Ranger\ReadMe.txt                                    ; DestDir: {app}\Ranger
+Source: ..\DeployedFiles\Ranger\QueryDefinitions.xml                          ; DestDir: {app}\Ranger
 
-Source: ..\MageExtractor\Extractor.ico                                  ; DestDir: {app}\MageExtractor
-Source: ..\MageFileProcessor\wand.ico                                   ; DestDir: {app}\MageFileProcessor
+Source: ..\MageExtractor\Extractor.ico                                        ; DestDir: {app}\MageExtractor
+Source: ..\MageFileProcessor\wand.ico                                         ; DestDir: {app}\MageFileProcessor
 
 Source: Images\textdoc.ico                   ; DestDir: {app}
 Source: Images\delete_16x.ico                ; DestDir: {app}

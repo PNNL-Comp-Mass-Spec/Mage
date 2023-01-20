@@ -13,7 +13,7 @@ WelcomeLabel2=This will install [name/ver] on your computer.
 
 [Files]
 Source: ..\DeployedFiles\MageConcatenator\MageConcatenator.exe                          ; DestDir: {app}\MageConcatenator
-Source: ..\DeployedFiles\CBDMS\MageConcatenator.exe.config                              ; DestDir: {app}\MageConcatenator
+Source: ..\DeployedFiles\CBDMS\MageConcatenator\MageConcatenator.exe.config             ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\ICSharpCode.SharpZipLib.dll                   ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\Jayrock.Json.dll                              ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\Mage.dll                                      ; DestDir: {app}\MageConcatenator
@@ -46,12 +46,12 @@ Source: ..\DeployedFiles\MageConcatenator\System.ValueTuple.dll                 
 Source: ..\DeployedFiles\MageConcatenator\x64\SQLite.Interop.dll                        ; DestDir: {app}\MageConcatenator\x64
 Source: ..\DeployedFiles\MageConcatenator\x86\SQLite.Interop.dll                        ; DestDir: {app}\MageConcatenator\x86
 
-Source: ..\DeployedFiles\MageConcatenator\ReadMe.txt                    ; DestDir: {app}\MageConcatenator
-Source: ..\DeployedFiles\MageConcatenator\QueryDefinitions.xml          ; DestDir: {app}\MageConcatenator
+Source: ..\DeployedFiles\MageConcatenator\ReadMe.txt                                    ; DestDir: {app}\MageConcatenator
+Source: ..\DeployedFiles\CBDMS\MageConcatenator\QueryDefinitions.xml                    ; DestDir: {app}\MageConcatenator
 
 
 Source: ..\DeployedFiles\MageExtractor\MageExtractor.exe                             ; DestDir: {app}\MageExtractor
-Source: ..\DeployedFiles\CBDMS\MageExtractor.exe.config                              ; DestDir: {app}\MageExtractor
+Source: ..\DeployedFiles\CBDMS\MageExtractor\MageExtractor.exe.config                ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\ICSharpCode.SharpZipLib.dll                   ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\Jayrock.Json.dll                              ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\Mage.dll                                      ; DestDir: {app}\MageExtractor
@@ -86,12 +86,12 @@ Source: ..\DeployedFiles\MageExtractor\System.ValueTuple.dll                    
 Source: ..\DeployedFiles\MageExtractor\x64\SQLite.Interop.dll                        ; DestDir: {app}\MageExtractor\x64
 Source: ..\DeployedFiles\MageExtractor\x86\SQLite.Interop.dll                        ; DestDir: {app}\MageExtractor\x86
 
-Source: ..\DeployedFiles\MageExtractor\ReadMe.txt                       ; DestDir: {app}\MageExtractor
-Source: ..\DeployedFiles\MageExtractor\QueryDefinitions.xml             ; DestDir: {app}\MageExtractor
+Source: ..\DeployedFiles\MageExtractor\ReadMe.txt                                    ; DestDir: {app}\MageExtractor
+Source: ..\DeployedFiles\CBDMS\MageExtractor\QueryDefinitions.xml                    ; DestDir: {app}\MageExtractor
 
 
 Source: ..\DeployedFiles\MageFilePackager\MageFilePackager.exe                          ; DestDir: {app}\MageFilePackager
-Source: ..\DeployedFiles\CBDMS\MageFilePackager.exe.config                              ; DestDir: {app}\MageFilePackager
+Source: ..\DeployedFiles\CBDMS\MageFilePackager\MageFilePackager.exe.config             ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\ICSharpCode.SharpZipLib.dll                   ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\Jayrock.Json.dll                              ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\Mage.dll                                      ; DestDir: {app}\MageFilePackager
@@ -124,12 +124,12 @@ Source: ..\DeployedFiles\MageFilePackager\System.ValueTuple.dll                 
 Source: ..\DeployedFiles\MageFilePackager\x64\SQLite.Interop.dll                        ; DestDir: {app}\MageFilePackager\x64
 Source: ..\DeployedFiles\MageFilePackager\x86\SQLite.Interop.dll                        ; DestDir: {app}\MageFilePackager\x86
 
-Source: ..\DeployedFiles\MageFilePackager\ReadMe.txt                    ; DestDir: {app}\MageFilePackager
-Source: ..\DeployedFiles\MageFilePackager\QueryDefinitions.xml          ; DestDir: {app}\MageFilePackager
+Source: ..\DeployedFiles\MageFilePackager\ReadMe.txt                                    ; DestDir: {app}\MageFilePackager
+Source: ..\DeployedFiles\CBDMS\MageFilePackager\QueryDefinitions.xml                    ; DestDir: {app}\MageFilePackager
 
 
 Source: ..\DeployedFiles\MageFileProcessor\MageFileProcessor.exe                         ; DestDir: {app}\MageFileProcessor
-Source: ..\DeployedFiles\CBDMS\MageFileProcessor.exe.config                              ; DestDir: {app}\MageFileProcessor
+Source: ..\DeployedFiles\CBDMS\MageFileProcessor\MageFileProcessor.exe.config            ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\ICSharpCode.SharpZipLib.dll                   ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\Jayrock.Json.dll                              ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\Mage.dll                                      ; DestDir: {app}\MageFileProcessor
@@ -164,13 +164,13 @@ Source: ..\DeployedFiles\MageFileProcessor\System.ValueTuple.dll                
 Source: ..\DeployedFiles\MageFileProcessor\x64\SQLite.Interop.dll                        ; DestDir: {app}\MageFileProcessor\x64
 Source: ..\DeployedFiles\MageFileProcessor\x86\SQLite.Interop.dll                        ; DestDir: {app}\MageFileProcessor\x86
                                
-Source: ..\DeployedFiles\MageFileProcessor\ReadMe.txt                   ; DestDir: {app}\MageFileProcessor
-Source: ..\DeployedFiles\MageFileProcessor\QueryDefinitions.xml         ; DestDir: {app}\MageFileProcessor
-Source: ..\DeployedFiles\MageFileProcessor\ColumnMapping.txt            ; DestDir: {app}\MageFileProcessor
+Source: ..\DeployedFiles\MageFileProcessor\ReadMe.txt                                    ; DestDir: {app}\MageFileProcessor
+Source: ..\DeployedFiles\MageFileProcessor\ColumnMapping.txt                             ; DestDir: {app}\MageFileProcessor
+Source: ..\DeployedFiles\CBDMS\MageFileProcessor\QueryDefinitions.xml                    ; DestDir: {app}\MageFileProcessor
 
 
 Source: ..\DeployedFiles\MageMetaDataProcessor\MageMetadataProcessor.exe                     ; DestDir: {app}\MageMetaDataProcessor
-Source: ..\DeployedFiles\CBDMS\MageMetadataProcessor.exe.config                              ; DestDir: {app}\MageMetaDataProcessor
+Source: ..\DeployedFiles\CBDMS\MageMetadataProcessor\MageMetadataProcessor.exe.config        ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\ICSharpCode.SharpZipLib.dll                   ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\Jayrock.Json.dll                              ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\Mage.dll                                      ; DestDir: {app}\MageMetaDataProcessor
@@ -203,8 +203,8 @@ Source: ..\DeployedFiles\MageMetaDataProcessor\System.ValueTuple.dll            
 Source: ..\DeployedFiles\MageMetaDataProcessor\x64\SQLite.Interop.dll                        ; DestDir: {app}\MageMetaDataProcessor\x64
 Source: ..\DeployedFiles\MageMetaDataProcessor\x86\SQLite.Interop.dll                        ; DestDir: {app}\MageMetaDataProcessor\x86
 
-Source: ..\DeployedFiles\MageMetaDataProcessor\ReadMe.txt               ; DestDir: {app}\MageMetaDataProcessor
-Source: ..\DeployedFiles\MageMetaDataProcessor\QueryDefinitions.xml     ; DestDir: {app}\MageMetaDataProcessor
+Source: ..\DeployedFiles\MageMetaDataProcessor\ReadMe.txt                                    ; DestDir: {app}\MageMetaDataProcessor
+Source: ..\DeployedFiles\CBDMS\MageMetaDataProcessor\QueryDefinitions.xml                    ; DestDir: {app}\MageMetaDataProcessor
 
 
 Source: ..\MageExtractor\Extractor.ico                                  ; DestDir: {app}\MageExtractor
