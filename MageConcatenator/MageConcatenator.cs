@@ -41,9 +41,6 @@ namespace MageConcatenator
             Globals.DMSServer = Settings.Default.DMSServer;
             Globals.DMSDatabase = Settings.Default.DMSDatabase;
 
-            ModuleDiscovery.DMSServerOverride = Globals.DMSServer;
-            ModuleDiscovery.DMSDatabaseOverride = Globals.DMSDatabase;
-
             try
             {
                 // Set up configuration directory and files

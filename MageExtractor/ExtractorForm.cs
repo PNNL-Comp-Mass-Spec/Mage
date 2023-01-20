@@ -51,14 +51,11 @@ namespace MageExtractor
             SetAboutText();
 
             // These settings are loaded from file MageExtractor.exe.config
-            // Typically gigasax and DMS5
-            Globals.DMSServer = Settings.Default.DMSServer;
-            Globals.DMSDatabase = Settings.Default.DMSDatabase;
+            // The global values will be updated when the QueryDefinitions.xml file is read
+            Globals.DMSServer = Settings.Default.DMSServer;         // Default: gigasax
+            Globals.DMSDatabase = Settings.Default.DMSDatabase;     // Default: DMS5
 
             txtServer.Text = "DMS Server: " + Globals.DMSServer;
-
-            ModuleDiscovery.DMSServerOverride = Globals.DMSServer;
-            ModuleDiscovery.DMSDatabaseOverride = Globals.DMSDatabase;
 
             try
             {
@@ -321,7 +318,7 @@ namespace MageExtractor
             if (string.IsNullOrEmpty(msg) && queryName is TAG_JOB_IDs or TAG_JOB_IDs_FROM_DATASETS)
             {
                 var sepChars = new[] { ',', '\t' };
-                
+
                 var warning = queryName == TAG_JOB_IDs ? "Job number '" : "Use dataset IDs, not dataset names: '";
 
                 // Validate that the job numbers or dataset IDs are all numeric

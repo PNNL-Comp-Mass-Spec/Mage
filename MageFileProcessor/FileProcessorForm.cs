@@ -58,14 +58,11 @@ namespace MageFileProcessor
             SetAboutText();
 
             // These settings are loaded from file MageFileProcessor.exe.config
-            // Typically gigasax and DMS5
-            Globals.DMSServer = Settings.Default.DMSServer;
-            Globals.DMSDatabase = Settings.Default.DMSDatabase;
+            // The global values will be updated when the QueryDefinitions.xml file is read
+            Globals.DMSServer = Settings.Default.DMSServer;         // Default: gigasax
+            Globals.DMSDatabase = Settings.Default.DMSDatabase;     // Default: DMS5
 
             txtServer.Text = "DMS Server: " + Globals.DMSServer;
-
-            ModuleDiscovery.DMSServerOverride = Globals.DMSServer;
-            ModuleDiscovery.DMSDatabaseOverride = Globals.DMSDatabase;
 
             try
             {

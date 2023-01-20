@@ -51,15 +51,12 @@ namespace MageFilePackager
 
             SetAboutText();
 
-            // These settings are loaded from file MageConcatenator.exe.config
+            // These settings are loaded from file MageFilePackager.exe.config
             // Typically gigasax and DMS5
             Globals.DMSServer = Settings.Default.DMSServer;
             Globals.DMSDatabase = Settings.Default.DMSDatabase;
 
             txtServer.Text = "DMS Server: " + Globals.DMSServer;
-
-            ModuleDiscovery.DMSServerOverride = Globals.DMSServer;
-            ModuleDiscovery.DMSDatabaseOverride = Globals.DMSDatabase;
 
             try
             {
@@ -70,14 +67,6 @@ namespace MageFilePackager
             {
                 MessageBox.Show("Error loading settings: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-
-            // These settings are loaded from file MageFilePackager.exe.config
-            // Typically gigasax and DMS5
-            Globals.DMSServer = Settings.Default.DMSServer;
-            Globals.DMSDatabase = Settings.Default.DMSDatabase;
-
-            ModuleDiscovery.DMSServerOverride = Globals.DMSServer;
-            ModuleDiscovery.DMSDatabaseOverride = Globals.DMSDatabase;
 
             try
             {

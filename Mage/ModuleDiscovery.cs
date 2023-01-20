@@ -49,6 +49,7 @@ namespace Mage
         /// This allows the user to update the .exe.config file with a specific server and database,
         /// without needing to also update the QueryDefinitions.xml file
         /// </remarks>
+        [Obsolete("Retired in January 2023 since the SavedState class now compares connection info in the default QueryDefinitions.xml file to the copy in the user's AppData directory; if the info differs, the file in AppData is replace with the default file")]
         public static string DMSServerOverride;
 
         /// <summary>
@@ -58,6 +59,7 @@ namespace Mage
         /// This allows the user to update the .exe.config file with a specific server and database,
         /// without needing to also update the QueryDefinitions.xml file
         /// </remarks>
+        [Obsolete("Retired in January 2023")]
         public static string DMSDatabaseOverride;
 
         // General discovery methods
@@ -278,14 +280,21 @@ namespace Mage
                 return string.Empty;
             }
 
+            return queryNode.OuterXml;
+
+            // Code used prior to January 2023 to override the DMS server name and database name, causing the connection info in the QueryDefinitions.xml file to be ignored
+
+            /*
             if (string.IsNullOrWhiteSpace(DMSServerOverride) && string.IsNullOrWhiteSpace(DMSDatabaseOverride))
             {
                 return queryNode.OuterXml;
             }
 
             return UpdateQueryXMLConnectionInfo(queryNode, DMSServerOverride, DMSDatabaseOverride);
+            */
         }
 
+        [Obsolete("Retired in January 2023")]
         private static string UpdateQueryXMLConnectionInfo(XmlNode queryNode, string dmsServerOverride, string dmsDatabaseOverride)
         {
             const string xpathConnection = "//queries/query/connection";
