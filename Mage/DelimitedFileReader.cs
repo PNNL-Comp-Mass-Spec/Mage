@@ -112,9 +112,12 @@ namespace Mage
                             break;
                         }
 
-                        // Check first line for delimiter type
+                        // Check first non-blank line for delimiter type
                         if (checkDelimiter)
                         {
+                            if (string.IsNullOrWhiteSpace(line))
+                                continue;
+
                             tabDelimited = !SwitchToCSV(line);
                             checkDelimiter = false;
                         }
