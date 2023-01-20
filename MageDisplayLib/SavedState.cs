@@ -47,13 +47,13 @@ namespace MageDisplayLib
                 Directory.CreateDirectory(DataDirectory);
             }
 
-            // Set default path for query definitions config file
+            // Set default path for query definition config file
             ModuleDiscovery.QueryDefinitionFileName = Path.Combine(DataDirectory, QUERY_DEFS_FILE);
 
-            // This is the query definitions config file in the same directory as the .exe
+            // This is the query definition config file in the same directory as the .exe
             var referenceQueryDefFile = new FileInfo(QUERY_DEFS_FILE);
 
-            // This is the query definitions config file in the user's application data directory
+            // This is the query definition config file in the user's application data directory
             var userQueryDefFile = new FileInfo(ModuleDiscovery.QueryDefinitionFileName);
 
             if (!userQueryDefFile.Exists)
@@ -64,7 +64,7 @@ namespace MageDisplayLib
                 }
                 else
                 {
-                    throw new FileNotFoundException("Query Definitions file not found; please copy " + referenceQueryDefFile.Name + " from the appropriate subdirectory at \\\\floyd\\software\\Mage\\Exe_Only to " + referenceQueryDefFile.Directory);
+                    throw new FileNotFoundException("Query Definition file not found; please copy " + referenceQueryDefFile.Name + " from the appropriate subdirectory at \\\\floyd\\software\\Mage\\Exe_Only to " + referenceQueryDefFile.Directory);
                 }
             }
             else if (referenceQueryDefFile.Exists && referenceQueryDefFile.LastWriteTimeUtc > userQueryDefFile.LastWriteTimeUtc)
@@ -108,6 +108,7 @@ namespace MageDisplayLib
                     sb.AppendFormat(LINE_FORMAT, paramPanel, paramName, paramValue).AppendLine();
                 }
             }
+
             // make closing XML root element
             sb.AppendLine("</parameters>");
 

@@ -45,6 +45,7 @@ namespace MageUIComponents
             {
                 IncludefilesCtl.Checked = false;
                 IncludeDirectoriesCtl.Checked = false;
+
                 if (value.Contains("File"))
                 {
                     IncludefilesCtl.Checked = true;

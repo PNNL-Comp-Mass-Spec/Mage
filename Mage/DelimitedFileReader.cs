@@ -195,7 +195,9 @@ namespace Mage
                     ReportProcessingAborted();
                     break;
                 }
+
                 var fields = r.Split(line);
+
                 if (doHeaderLine)
                 {
                     doHeaderLine = false;
@@ -213,6 +215,7 @@ namespace Mage
         {
             // Output the column definitions
             var colDefs = new List<MageColumnDef>();
+
             foreach (var field in fields)
             {
                 colDefs.Add(new MageColumnDef(field, "text", "10"));

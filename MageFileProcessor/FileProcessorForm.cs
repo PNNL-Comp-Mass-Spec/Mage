@@ -128,7 +128,8 @@ namespace MageFileProcessor
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error restoring saved settings; will auto-delete SavedState.xml.  Message details: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Error restoring saved settings; will auto-delete SavedState.xml. Message details: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
                 // Delete the SavedState.xml file
                 try
                 {

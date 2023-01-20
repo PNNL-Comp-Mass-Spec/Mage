@@ -601,6 +601,7 @@ namespace Mage
                 return;
 
             ContextColPos = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+
             foreach (var colPos in NewOutputColumnPos)
             {
                 if (Context.ContainsKey(colPos.Key))
@@ -704,6 +705,7 @@ namespace Mage
             foreach (var inputColDef in InputColumnDefs)
             {
                 var inputColName = inputColDef.Name;
+
                 if (!OutputColumnPos.ContainsKey(inputColName))
                 {
                     MapOutputColumnToInputColumn(inputColName, outColIdx);

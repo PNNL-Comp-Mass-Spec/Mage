@@ -219,7 +219,9 @@ namespace MageFilePackager
             {
                 // Build and run the pipeline appropriate to the command
                 ISinkModule sink;
+
                 string queryDefXML;
+
                 switch (command.Action)
                 {
                     case "get_entities_from_query":
@@ -271,6 +273,7 @@ namespace MageFilePackager
                     default:
                         return;
                 }
+
                 if (_mCurrentPipeline != null)
                 {
                     _mCurrentCmd = command;
@@ -524,8 +527,8 @@ namespace MageFilePackager
             Control queryPage = EntityListSourceTabs.SelectedTab;
             queryName = queryPage.Tag.ToString();
 
-            // Get XML query definitions from bin copy of file
-            // not the one in AppData
+            // Get XML query definitions from the .xml file in the same directory as the .exe
+            // (do not use the one in AppData)
             var doc = new XmlDocument();
             doc.Load("QueryDefinitions.xml");
 
@@ -554,18 +557,22 @@ namespace MageFilePackager
                              {"SourceDirectoryColumnName", "Directory"},
                              {"FileColumnName", "Name"}
                          };
+
             switch (entityType)
             {
                 case "Jobs":
                     runtimeParams.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_DATE + "|+|text, Directory, Job, Dataset, Dataset_ID, Tool, Settings_File, Parameter_File, Instrument, Storage_Path, Purged, Archive_Path");
                     break;
+
                 case "Datasets":
                     runtimeParams.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_DATE + "|+|text, Directory, Dataset, Dataset_ID, State, Instrument, Type, Storage_Path, Purged, Archive_Path");
                     break;
+
                 default:
                     runtimeParams.Add("OutputColumnList", "Item|+|text, Name|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_SIZE + "|+|text, " + FileListInfoBase.COLUMN_NAME_FILE_DATE + "|+|text, Directory, *");
                     break;
             }
+
             return runtimeParams;
         }
 
