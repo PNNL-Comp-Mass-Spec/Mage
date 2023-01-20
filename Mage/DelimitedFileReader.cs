@@ -12,6 +12,12 @@ namespace Mage
     {
         // Ignore Spelling: Mage
 
+        /// <summary>
+        /// This RegEx is used to parse CSV files
+        /// It assures that we only split on commas that are not inside double-quoted strings
+        /// </summary>
+        private const string SPLIT_CSV = ",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))";
+
         private bool doHeaderLine = true;
 
         /// <summary>
@@ -82,9 +88,7 @@ namespace Mage
             var tabDelimited = true;
             var delimiter = "\t".ToCharArray();
 
-            // This RegEx is used to parse CSV files
-            // It assures that we only split on commas that are not inside double-quoted strings
-            var r = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
+            var r = new Regex(SPLIT_CSV);
 
             var delimitedFilePathLocal = DownloadFileIfRequired(FilePath);
 
@@ -183,7 +187,7 @@ namespace Mage
 
         private void OutputFileContentsFromCSV()
         {
-            var r = new Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
+            var r = new Regex(SPLIT_CSV);
 
             using var fileReader = new StreamReader(new FileStream(FilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
 
