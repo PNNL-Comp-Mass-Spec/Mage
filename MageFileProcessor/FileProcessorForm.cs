@@ -62,17 +62,23 @@ namespace MageFileProcessor
             Globals.DMSServer = Settings.Default.DMSServer;         // Default: gigasax
             Globals.DMSDatabase = Settings.Default.DMSDatabase;     // Default: DMS5
 
-            txtServer.Text = "DMS Server: " + Globals.DMSServer;
-
             try
             {
                 // Set up configuration directory and files
                 SavedState.SetupConfigFiles("MageFileProcessor");
+
+                if (SavedState.GetDatabaseConnectionInfo(out var dmsServer, out var dmsDatabase))
+                {
+                    Globals.DMSServer = dmsServer;
+                    Globals.DMSDatabase = dmsDatabase;
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error loading settings: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
+
+            txtServer.Text = "DMS Server: " + Globals.DMSServer;
 
             try
             {

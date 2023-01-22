@@ -45,6 +45,12 @@ namespace MageConcatenator
             {
                 // Set up configuration directory and files
                 SavedState.SetupConfigFiles("MageConcatenator");
+
+                if (SavedState.GetDatabaseConnectionInfo(out var dmsServer, out var dmsDatabase))
+                {
+                    Globals.DMSServer = dmsServer;
+                    Globals.DMSDatabase = dmsDatabase;
+                }
             }
             catch (Exception ex)
             {

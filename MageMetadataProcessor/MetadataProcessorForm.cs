@@ -32,6 +32,12 @@ namespace MageMetadataProcessor
             {
                 // Set up configuration directory and files
                 SavedState.SetupConfigFiles("MageMetadataProcessor");
+
+                if (SavedState.GetDatabaseConnectionInfo(out var dmsServer, out var dmsDatabase))
+                {
+                    Globals.DMSServer = dmsServer;
+                    Globals.DMSDatabase = dmsDatabase;
+                }
             }
             catch (Exception ex)
             {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml;
 using Mage;
@@ -28,6 +29,61 @@ namespace MageDisplayLib
         /// Path to saved state file
         /// </summary>
         public static string FilePath { get; set; }
+
+        /// <summary>
+        /// Examine queries in the query definition file to determine the DMS server and database
+        /// </summary>
+        /// <param name="dmsServer"></param>
+        /// <param name="dmsDatabase"></param>
+        public static bool GetDatabaseConnectionInfo(out string dmsServer, out string dmsDatabase)
+        {
+            var queryDefinitions = LoadQueryDefinitionFile(ModuleDiscovery.QueryDefinitionFileName);
+
+            // Keys in this dictionary are server and database name (separated by a vertical bar)
+            // Values are the number of queries that use the given server
+            var serverList = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+
+            // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
+            foreach (var item in queryDefinitions)
+            {
+                var serverAndDatabase = string.Format("{0}|{1}", item.Value.Server, item.Value.Database);
+
+                if (serverList.TryGetValue(serverAndDatabase, out var usageCount))
+                {
+                    serverList[serverAndDatabase] = usageCount + 1;
+                }
+                else
+                {
+                    serverList.Add(serverAndDatabase, 1);
+                }
+            }
+
+            if (serverList.Count == 0)
+            {
+                dmsServer = string.Empty;
+                dmsDatabase = string.Empty;
+
+                return false;
+            }
+
+            // Select the most commonly used server
+            var serverInfo = (from item in serverList orderby item.Value descending select item.Key).First();
+
+            var nameParts = serverInfo.Split('|');
+
+            if (nameParts.Length >= 2)
+            {
+                dmsServer = nameParts[0];
+                dmsDatabase = nameParts[1];
+
+                return true;
+            }
+
+            dmsServer = string.Empty;
+            dmsDatabase = string.Empty;
+
+            return false;
+        }
 
         /// <summary>
         /// Set global paths to reference where config files live
@@ -190,7 +246,7 @@ namespace MageDisplayLib
         /// </summary>
         /// <param name="filePath">Query definition file</param>
         /// <returns>Dictionary where keys are query names and values are instances of class ConnectionInfo</returns>
-        private static Dictionary<string, ConnectionInfo> LoadQueryDefinitionFile(string filePath)
+        internal static Dictionary<string, ConnectionInfo> LoadQueryDefinitionFile(string filePath)
         {
             var queries = new Dictionary<string, ConnectionInfo>();
 

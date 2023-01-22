@@ -56,17 +56,23 @@ namespace MageFilePackager
             Globals.DMSServer = Settings.Default.DMSServer;
             Globals.DMSDatabase = Settings.Default.DMSDatabase;
 
-            txtServer.Text = "DMS Server: " + Globals.DMSServer;
-
             try
             {
                 // Set up configuration directory and files
                 SavedState.SetupConfigFiles("MageFilePackager");
+
+                if (SavedState.GetDatabaseConnectionInfo(out var dmsServer, out var dmsDatabase))
+                {
+                    Globals.DMSServer = dmsServer;
+                    Globals.DMSDatabase = dmsDatabase;
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error loading settings: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
+
+            txtServer.Text = "DMS Server: " + Globals.DMSServer;
 
             try
             {
