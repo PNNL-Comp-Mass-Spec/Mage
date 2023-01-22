@@ -29,10 +29,7 @@ Source: ..\DeployedFiles\MageConcatenator\PRISM.dll                             
 Source: ..\DeployedFiles\MageConcatenator\PRISMDatabaseUtils.dll                        ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\ShFolderBrowser.dll                           ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\System.Buffers.dll                            ; DestDir: {app}\MageConcatenator
-Source: ..\DeployedFiles\MageConcatenator\System.CodeDom.dll                            ; DestDir: {app}\MageConcatenator                                                 
 Source: ..\DeployedFiles\MageConcatenator\System.Collections.Immutable.dll              ; DestDir: {app}\MageConcatenator                                                               
-Source: ..\DeployedFiles\MageConcatenator\System.Data.Odbc.dll                          ; DestDir: {app}\MageConcatenator                                                   
-Source: ..\DeployedFiles\MageConcatenator\System.Data.SqlClient.dll                     ; DestDir: {app}\MageConcatenator                                                        
 Source: ..\DeployedFiles\MageConcatenator\System.Data.SQLite.dll                        ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\System.Diagnostics.DiagnosticSource.dll       ; DestDir: {app}\MageConcatenator                                                                      
 Source: ..\DeployedFiles\MageConcatenator\System.Memory.dll                             ; DestDir: {app}\MageConcatenator
@@ -69,10 +66,7 @@ Source: ..\DeployedFiles\MageExtractor\PRISM.dll                                
 Source: ..\DeployedFiles\MageExtractor\PRISMDatabaseUtils.dll                        ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\ShFolderBrowser.dll                           ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\System.Buffers.dll                            ; DestDir: {app}\MageExtractor
-Source: ..\DeployedFiles\MageExtractor\System.CodeDom.dll                            ; DestDir: {app}\MageExtractor                                                 
 Source: ..\DeployedFiles\MageExtractor\System.Collections.Immutable.dll              ; DestDir: {app}\MageExtractor                                                               
-Source: ..\DeployedFiles\MageExtractor\System.Data.Odbc.dll                          ; DestDir: {app}\MageExtractor                                                   
-Source: ..\DeployedFiles\MageExtractor\System.Data.SqlClient.dll                     ; DestDir: {app}\MageExtractor                                                        
 Source: ..\DeployedFiles\MageExtractor\System.Data.SQLite.dll                        ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\System.Diagnostics.DiagnosticSource.dll       ; DestDir: {app}\MageExtractor                                                                      
 Source: ..\DeployedFiles\MageExtractor\System.Memory.dll                             ; DestDir: {app}\MageExtractor
@@ -107,10 +101,7 @@ Source: ..\DeployedFiles\MageFilePackager\PRISM.dll                             
 Source: ..\DeployedFiles\MageFilePackager\PRISMDatabaseUtils.dll                        ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\ShFolderBrowser.dll                           ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\System.Buffers.dll                            ; DestDir: {app}\MageFilePackager
-Source: ..\DeployedFiles\MageFilePackager\System.CodeDom.dll                            ; DestDir: {app}\MageFilePackager                                                    
 Source: ..\DeployedFiles\MageFilePackager\System.Collections.Immutable.dll              ; DestDir: {app}\MageFilePackager                                                                  
-Source: ..\DeployedFiles\MageFilePackager\System.Data.Odbc.dll                          ; DestDir: {app}\MageFilePackager                                                      
-Source: ..\DeployedFiles\MageFilePackager\System.Data.SqlClient.dll                     ; DestDir: {app}\MageFilePackager                                                           
 Source: ..\DeployedFiles\MageFilePackager\System.Data.SQLite.dll                        ; DestDir: {app}\MageFilePackager                                                        
 Source: ..\DeployedFiles\MageFilePackager\System.Diagnostics.DiagnosticSource.dll       ; DestDir: {app}\MageFilePackager                                                                         
 Source: ..\DeployedFiles\MageFilePackager\System.Memory.dll                             ; DestDir: {app}\MageFilePackager
@@ -147,10 +138,7 @@ Source: ..\DeployedFiles\MageFileProcessor\PRISM.dll                            
 Source: ..\DeployedFiles\MageFileProcessor\PRISMDatabaseUtils.dll                        ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\ShFolderBrowser.dll                           ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\System.Buffers.dll                            ; DestDir: {app}\MageFileProcessor
-Source: ..\DeployedFiles\MageFileProcessor\System.CodeDom.dll                            ; DestDir: {app}\MageFileProcessor                                                 
 Source: ..\DeployedFiles\MageFileProcessor\System.Collections.Immutable.dll              ; DestDir: {app}\MageFileProcessor                                                               
-Source: ..\DeployedFiles\MageFileProcessor\System.Data.Odbc.dll                          ; DestDir: {app}\MageFileProcessor                                                   
-Source: ..\DeployedFiles\MageFileProcessor\System.Data.SqlClient.dll                     ; DestDir: {app}\MageFileProcessor                                                        
 Source: ..\DeployedFiles\MageFileProcessor\System.Data.SQLite.dll                        ; DestDir: {app}\MageFileProcessor                                                     
 Source: ..\DeployedFiles\MageFileProcessor\System.Diagnostics.DiagnosticSource.dll       ; DestDir: {app}\MageFileProcessor                                                                      
 Source: ..\DeployedFiles\MageFileProcessor\System.Memory.dll                             ; DestDir: {app}\MageFileProcessor
@@ -186,10 +174,7 @@ Source: ..\DeployedFiles\MageMetaDataProcessor\PRISM.dll                        
 Source: ..\DeployedFiles\MageMetaDataProcessor\PRISMDatabaseUtils.dll                        ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\ShFolderBrowser.dll                           ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\System.Buffers.dll                            ; DestDir: {app}\MageMetaDataProcessor
-Source: ..\DeployedFiles\MageMetaDataProcessor\System.CodeDom.dll                            ; DestDir: {app}\MageMetaDataProcessor                                                     
 Source: ..\DeployedFiles\MageMetaDataProcessor\System.Collections.Immutable.dll              ; DestDir: {app}\MageMetaDataProcessor                                                                   
-Source: ..\DeployedFiles\MageMetaDataProcessor\System.Data.Odbc.dll                          ; DestDir: {app}\MageMetaDataProcessor                                                       
-Source: ..\DeployedFiles\MageMetaDataProcessor\System.Data.SqlClient.dll                     ; DestDir: {app}\MageMetaDataProcessor                                                            
 Source: ..\DeployedFiles\MageMetaDataProcessor\System.Data.SQLite.dll                        ; DestDir: {app}\MageMetaDataProcessor                                                         
 Source: ..\DeployedFiles\MageMetaDataProcessor\System.Diagnostics.DiagnosticSource.dll       ; DestDir: {app}\MageMetaDataProcessor                                                                          
 Source: ..\DeployedFiles\MageMetaDataProcessor\System.Memory.dll                             ; DestDir: {app}\MageMetaDataProcessor
