@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
@@ -725,9 +726,17 @@ namespace Mage
 
                 case "MostRecentWeeks":
                 case "MRWd":
-                    // ReSharper disable StringLiteralTypo
-                    whereClause += string.Format(" {0} > DATEADD(Week, -{1}, GETDATE()) ", columnName, value);
-                    // ReSharper restore StringLiteralTypo
+                    if (int.TryParse(value, out var mostRecentWorks))
+                    {
+                        var dateThreshold = DateTime.Now.AddDays(-7 * mostRecentWorks);
+                        whereClause += string.Format(" {0} > '{1:yyyy-MM-dd HH:mm:ss}' ", columnName, dateThreshold);
+                    }
+                    else
+                    {
+                        // Non-integer value supplied for MostRecentWeeks; default to 7 days
+                        var dateThreshold = DateTime.Now.AddDays(-7);
+                        whereClause += string.Format(" {0} > '{1:yyyy-MM-dd HH:mm:ss}' ", columnName, dateThreshold);
+                    }
                     break;
 
                 default:
