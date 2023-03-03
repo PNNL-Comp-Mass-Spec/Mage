@@ -5,6 +5,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 
+[assembly: SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Keep for reference", Scope = "member", Target = "~M:Mage.ModuleDiscovery.UpdateQueryXMLConnectionInfo(System.Xml.XmlNode,System.String,System.String)~System.String")]
 [assembly: SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Leave for future usage", Scope = "member", Target = "~M:Mage.FileCopy.GetDirectorySafeLongPath(System.String)~System.String")]
 [assembly: SuppressMessage("General", "RCS1079:Throwing of new NotImplementedException.", Justification = "This is a placeholder method", Scope = "member", Target = "~M:Mage.BaseModule.HandleDataRow(System.Object,Mage.MageDataEventArgs)")]
 [assembly: SuppressMessage("General", "RCS1079:Throwing of new NotImplementedException.", Justification = "This is a placeholder method", Scope = "member", Target = "~M:Mage.BaseModule.Run(System.Object)")]
