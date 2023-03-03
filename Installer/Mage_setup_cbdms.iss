@@ -15,7 +15,6 @@ WelcomeLabel2=This will install [name/ver] on your computer.
 Source: ..\DeployedFiles\MageConcatenator\MageConcatenator.exe                          ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\CBDMS\MageConcatenator\MageConcatenator.exe.config             ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\ICSharpCode.SharpZipLib.dll                   ; DestDir: {app}\MageConcatenator
-Source: ..\DeployedFiles\MageConcatenator\Jayrock.Json.dll                              ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\Mage.dll                                      ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\MageDisplayLib.dll                            ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\MageUIComponents.dll                          ; DestDir: {app}\MageConcatenator
@@ -23,8 +22,9 @@ Source: ..\DeployedFiles\MageConcatenator\Microsoft.Bcl.AsyncInterfaces.dll     
 Source: ..\DeployedFiles\MageConcatenator\Microsoft.Bcl.HashCode.dll                    ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\Microsoft.Extensions.Logging.Abstractions.dll ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\MyEMSLReader.dll                              ; DestDir: {app}\MageConcatenator
+Source: ..\DeployedFiles\MageConcatenator\Newtonsoft.Json.dll                           ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\Npgsql.dll                                    ; DestDir: {app}\MageConcatenator
-Source: ..\DeployedFiles\MageConcatenator\Pacifica.Core.dll                             ; DestDir: {app}\MageConcatenator
+Source: ..\DeployedFiles\MageConcatenator\Pacifica.dll                                  ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\PRISM.dll                                     ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\PRISMDatabaseUtils.dll                        ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\ShFolderBrowser.dll                           ; DestDir: {app}\MageConcatenator
@@ -50,7 +50,6 @@ Source: ..\DeployedFiles\CBDMS\MageConcatenator\QueryDefinitions.xml            
 Source: ..\DeployedFiles\MageExtractor\MageExtractor.exe                             ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\CBDMS\MageExtractor\MageExtractor.exe.config                ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\ICSharpCode.SharpZipLib.dll                   ; DestDir: {app}\MageExtractor
-Source: ..\DeployedFiles\MageExtractor\Jayrock.Json.dll                              ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\Mage.dll                                      ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\MageDisplayLib.dll                            ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\MageExtContentFilters.dll                     ; DestDir: {app}\MageExtractor
@@ -60,8 +59,9 @@ Source: ..\DeployedFiles\MageExtractor\Microsoft.Bcl.AsyncInterfaces.dll        
 Source: ..\DeployedFiles\MageExtractor\Microsoft.Bcl.HashCode.dll                    ; DestDir: {app}\MageExtractor                                                         
 Source: ..\DeployedFiles\MageExtractor\Microsoft.Extensions.Logging.Abstractions.dll ; DestDir: {app}\MageExtractor                                                                            
 Source: ..\DeployedFiles\MageExtractor\MyEMSLReader.dll                              ; DestDir: {app}\MageExtractor
+Source: ..\DeployedFiles\MageExtractor\Newtonsoft.Json.dll                           ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\Npgsql.dll                                    ; DestDir: {app}\MageExtractor
-Source: ..\DeployedFiles\MageExtractor\Pacifica.Core.dll                             ; DestDir: {app}\MageExtractor
+Source: ..\DeployedFiles\MageExtractor\Pacifica.dll                                  ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\PRISM.dll                                     ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\PRISMDatabaseUtils.dll                        ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\ShFolderBrowser.dll                           ; DestDir: {app}\MageExtractor
@@ -87,7 +87,6 @@ Source: ..\DeployedFiles\CBDMS\MageExtractor\QueryDefinitions.xml               
 Source: ..\DeployedFiles\MageFilePackager\MageFilePackager.exe                          ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\CBDMS\MageFilePackager\MageFilePackager.exe.config             ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\ICSharpCode.SharpZipLib.dll                   ; DestDir: {app}\MageFilePackager
-Source: ..\DeployedFiles\MageFilePackager\Jayrock.Json.dll                              ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\Mage.dll                                      ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\MageDisplayLib.dll                            ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\MageUIComponents.dll                          ; DestDir: {app}\MageFilePackager
@@ -95,8 +94,9 @@ Source: ..\DeployedFiles\MageFilePackager\Microsoft.Bcl.AsyncInterfaces.dll     
 Source: ..\DeployedFiles\MageFilePackager\Microsoft.Bcl.HashCode.dll                    ; DestDir: {app}\MageFilePackager                                                            
 Source: ..\DeployedFiles\MageFilePackager\Microsoft.Extensions.Logging.Abstractions.dll ; DestDir: {app}\MageFilePackager                                                                               
 Source: ..\DeployedFiles\MageFilePackager\MyEMSLReader.dll                              ; DestDir: {app}\MageFilePackager
+Source: ..\DeployedFiles\MageFilePackager\Newtonsoft.Json.dll                           ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\Npgsql.dll                                    ; DestDir: {app}\MageFilePackager
-Source: ..\DeployedFiles\MageFilePackager\Pacifica.Core.dll                             ; DestDir: {app}\MageFilePackager
+Source: ..\DeployedFiles\MageFilePackager\Pacifica.dll                                  ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\PRISM.dll                                     ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\PRISMDatabaseUtils.dll                        ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\ShFolderBrowser.dll                           ; DestDir: {app}\MageFilePackager
@@ -122,7 +122,6 @@ Source: ..\DeployedFiles\CBDMS\MageFilePackager\QueryDefinitions.xml            
 Source: ..\DeployedFiles\MageFileProcessor\MageFileProcessor.exe                         ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\CBDMS\MageFileProcessor\MageFileProcessor.exe.config            ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\ICSharpCode.SharpZipLib.dll                   ; DestDir: {app}\MageFileProcessor
-Source: ..\DeployedFiles\MageFileProcessor\Jayrock.Json.dll                              ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\Mage.dll                                      ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\MageDisplayLib.dll                            ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\MageExtContentFilters.dll                     ; DestDir: {app}\MageFileProcessor
@@ -131,9 +130,10 @@ Source: ..\DeployedFiles\MageFileProcessor\MageUIComponents.dll                 
 Source: ..\DeployedFiles\MageFileProcessor\Microsoft.Bcl.AsyncInterfaces.dll             ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\Microsoft.Bcl.HashCode.dll                    ; DestDir: {app}\MageFileProcessor                                                         
 Source: ..\DeployedFiles\MageFileProcessor\Microsoft.Extensions.Logging.Abstractions.dll ; DestDir: {app}\MageFileProcessor                                                                            
+Source: ..\DeployedFiles\MageFileProcessor\Newtonsoft.Json.dll                           ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\MyEMSLReader.dll                              ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\Npgsql.dll                                    ; DestDir: {app}\MageFileProcessor
-Source: ..\DeployedFiles\MageFileProcessor\Pacifica.Core.dll                             ; DestDir: {app}\MageFileProcessor
+Source: ..\DeployedFiles\MageFileProcessor\Pacifica.dll                                  ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\PRISM.dll                                     ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\PRISMDatabaseUtils.dll                        ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\ShFolderBrowser.dll                           ; DestDir: {app}\MageFileProcessor
@@ -160,16 +160,16 @@ Source: ..\DeployedFiles\CBDMS\MageFileProcessor\QueryDefinitions.xml           
 Source: ..\DeployedFiles\MageMetaDataProcessor\MageMetadataProcessor.exe                     ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\CBDMS\MageMetadataProcessor\MageMetadataProcessor.exe.config        ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\ICSharpCode.SharpZipLib.dll                   ; DestDir: {app}\MageMetaDataProcessor
-Source: ..\DeployedFiles\MageMetaDataProcessor\Jayrock.Json.dll                              ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\Mage.dll                                      ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\MageDisplayLib.dll                            ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\MageUIComponents.dll                          ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\Microsoft.Bcl.AsyncInterfaces.dll             ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\Microsoft.Bcl.HashCode.dll                    ; DestDir: {app}\MageMetaDataProcessor                                                             
 Source: ..\DeployedFiles\MageMetaDataProcessor\Microsoft.Extensions.Logging.Abstractions.dll ; DestDir: {app}\MageMetaDataProcessor                                                                                
+Source: ..\DeployedFiles\MageMetaDataProcessor\Newtonsoft.Json.dll                           ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\MyEMSLReader.dll                              ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\Npgsql.dll                                    ; DestDir: {app}\MageMetaDataProcessor
-Source: ..\DeployedFiles\MageMetaDataProcessor\Pacifica.Core.dll                             ; DestDir: {app}\MageMetaDataProcessor
+Source: ..\DeployedFiles\MageMetaDataProcessor\Pacifica.dll                                  ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\PRISM.dll                                     ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\PRISMDatabaseUtils.dll                        ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\ShFolderBrowser.dll                           ; DestDir: {app}\MageMetaDataProcessor
