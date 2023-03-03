@@ -223,10 +223,7 @@ namespace Mage
             // List to hold classes that we will look at
             var classesToExamine = new List<Type>();
 
-            var entryAssembly = Assembly.GetEntryAssembly();
-
-            if (entryAssembly == null)
-                throw new NullReferenceException("Unable to determine the entry assembly");
+            var entryAssembly = Assembly.GetEntryAssembly() ?? throw new NullReferenceException("Unable to determine the entry assembly");
 
             // Add classes from main assembly
             classesToExamine.AddRange(entryAssembly.GetTypes());
