@@ -420,15 +420,15 @@ namespace MageUnitTests
 
             // Define and run a database sproc query
             // Defaults are gigasax and DMS5
-            target.SprocName = "FindExistingJobsForRequest";
+            target.SprocName = "find_existing_jobs_for_request";
             target.SetSprocParam("@requestID", "8142");
 
             target.Run(null);
 
             // Define columns (normally not needed for production code, but necessary for unit test)
             var colList = new[] {
-                "Job", "State", "Priority", "Request", "Created", "Start", "Finish", "Processor",
-                "Dataset" };
+                "job", "state", "priority", "request", "created", "start", "finish", "processor",
+                "dataset" };
 
             var sprocInfo = "procedure " + target.SprocName + " in " + target.Database;
             CheckQueryResults(sink, maxRows, colList, serverName, databaseName, username, sprocInfo);
