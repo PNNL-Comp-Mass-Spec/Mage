@@ -353,7 +353,9 @@ namespace Mage
 
                 GetMyEMSLParentDirectoriesAndSubDir(sourceDirectory.FullName, datasetName, out var subDir, out _);
 
-                m_RecentlyFoundMyEMSLFiles = m_MyEMSLDatasetInfoCache.FindFiles("*", subDir, datasetName, true);
+                var fileIDList = string.Empty;
+
+                m_RecentlyFoundMyEMSLFiles = m_MyEMSLDatasetInfoCache.FindFiles("*", subDir, datasetName, fileIDList, true);
 
                 if (m_RecentlyFoundMyEMSLFiles.Count == 0)
                 {

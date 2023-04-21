@@ -516,9 +516,12 @@ namespace Mage
             string parentDirectories)
         {
             var fiList = new List<FileSystemInfo>();
+            var fileIDList = string.Empty;
+
             if (searchMode == DirectorySearchMode.Files)
             {
-                m_RecentlyFoundMyEMSLFiles = m_MyEMSLDatasetInfoCache.FindFiles(fileDialog, subDir, datasetName, mRecurseMyEMSL);
+                m_RecentlyFoundMyEMSLFiles = m_MyEMSLDatasetInfoCache.FindFiles(fileDialog, subDir, datasetName, fileIDList, mRecurseMyEMSL);
+
                 foreach (var archiveFile in m_RecentlyFoundMyEMSLFiles)
                 {
                     var encodedFilePath = DatasetInfoBase.AppendMyEMSLFileID(Path.Combine(parentDirectories, archiveFile.FileInfo.RelativePathWindows), archiveFile.FileID);

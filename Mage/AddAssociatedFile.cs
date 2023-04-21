@@ -145,7 +145,9 @@ namespace Mage
 
                             DatasetInfoBase.ExtractMyEMSLFileID(assocFileName, out var assocFileNameClean);
 
-                            m_RecentlyFoundMyEMSLFiles = m_MyEMSLDatasetInfoCache.FindFiles(assocFileNameClean, subDir, datasetName, recurse: false);
+                            var fileIDList = string.Empty;
+
+                            m_RecentlyFoundMyEMSLFiles = m_MyEMSLDatasetInfoCache.FindFiles(assocFileNameClean, subDir, datasetName, fileIDList, recurse: false);
                             if (m_RecentlyFoundMyEMSLFiles.Count > 0)
                             {
                                 var archiveFileInfo = m_RecentlyFoundMyEMSLFiles[0];
