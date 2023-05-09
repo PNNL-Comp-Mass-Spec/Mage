@@ -817,7 +817,7 @@ namespace Mage
         /// <param name="argMode"></param>
         private static ParameterDirection ParamDirection(string argMode)
         {
-            return argMode is "INOUT" or "OUT" ? ParameterDirection.Output : ParameterDirection.Input;
+            return argMode is "INOUT" or "OUT" ? ParameterDirection.InputOutput : ParameterDirection.Input;
         }
     }
 }
