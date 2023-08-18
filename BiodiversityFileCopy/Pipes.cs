@@ -107,20 +107,20 @@ namespace BiodiversityFileCopy
         /// </summary>
         public static SimpleSink GetDatasetsForDataPackages(string dataPackageId, Dictionary<string, string> orgLookup)
         {
-            // var queryTemplate = @"SELECT Dataset_ID, Dataset, State, Folder As Directory, Data_Package_ID FROM V_Mage_Data_Package_Datasets WHERE Data_Package_ID IN (@)";
+            // var queryTemplate = @"SELECT Dataset_ID, Dataset, State, Folder As Directory, Data_Pkg_ID FROM V_Mage_Data_Package_Datasets WHERE Data_Pkg_ID IN (@)";
             const string queryTemplate = @"
 SELECT DS.Dataset_ID ,
        DS.Dataset ,
        DS.State ,
        DS.Folder As Directory ,
-       DS.Data_Package_ID,
+       DS.Data_Pkg_ID AS Data_Package_ID,
        DFP.Dataset_Folder_Path ,
        DFP.Archive_Folder_Path ,
        DFP.MyEMSL_Path_Flag ,
        DFP.Instrument_Data_Purged
 FROM V_Mage_Data_Package_Datasets AS DS
 INNER JOIN V_Dataset_Folder_Paths AS DFP ON DS.Dataset_ID = DFP.Dataset_ID
-WHERE DS.Data_Package_ID IN (@)
+WHERE DS.Data_Pkg_ID IN (@)
 ";
             return GetItemsForDataPackages(dataPackageId, orgLookup, queryTemplate);
         }
@@ -129,18 +129,18 @@ WHERE DS.Data_Package_ID IN (@)
         {
             const string queryTemplate = @"
 SELECT Job ,
-       [Results Folder] ,
+       Results_Folder ,
        Folder as Directory ,
        Tool ,
-       [Organism DB] ,
+       Organism_DB ,
        Dataset ,
        Dataset_ID ,
        Organism ,
-       Data_Package_ID ,
-       [State]
+       Data_Pkg_ID AS Data_Package_ID ,
+       State
 FROM V_Mage_Data_Package_Analysis_Jobs AS DPAJ
-WHERE DPAJ.Data_Package_ID IN (@)
-      AND [State] in ('Complete', 'No Export')";
+WHERE DPAJ.Data_Pkg_ID IN (@)
+      AND State in ('Complete', 'No Export')";
             return GetItemsForDataPackages(dataPackageId, orgLookup, queryTemplate);
         }
 
@@ -148,17 +148,17 @@ WHERE DPAJ.Data_Package_ID IN (@)
         {
             const string queryTemplate = @"
 SELECT Organism,
-       [Organism DB],
-       dbo.GetFASTAFilePath([Organism DB], Organism) AS [FASTA_Folder],
-       Data_Package_ID
+       Organism_DB,
+       dbo.get_fasta_file_path(Organism_DB, Organism) AS FASTA_Folder,
+       Data_Pkg_ID
 FROM (
     SELECT DISTINCT
            Organism,
-           [Organism DB],
-           Data_Package_ID
+           Organism_DB,
+           Data_Pkg_ID
     FROM V_Mage_Data_Package_Analysis_Jobs
-    WHERE [State] in ('Complete', 'No Export') AND
-          Data_Package_ID IN (@)
+    WHERE State in ('Complete', 'No Export') AND
+          Data_Pkg_ID IN (@)
 ) TX
                                         ";
             return GetItemsForDataPackages(dataPackageId, orgLookup, queryTemplate);
@@ -185,7 +185,7 @@ FROM (
             var ogf = new AddOrganismNameFilter
             {
                 OutputColumnList = "OG_Name|+|text, *",
-                DataPackageIDColName = "Data_Package_ID",
+                DataPackageIDColName = "Data_Pkg_ID",
                 OrgNameColName = "OG_Name",
                 OrganismLookup = orgLookup
             };
