@@ -6,7 +6,7 @@ namespace Mage
     /// </summary>
     public static class Globals
     {
-        // Ignore Spelling: yyyy-MM-dd
+        // Ignore Spelling: DMS, Mage, Postgres, yyyy-MM-dd
 
         /// <summary>
         /// Program date
