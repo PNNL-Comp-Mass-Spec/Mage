@@ -26,16 +26,16 @@ namespace MageExtExtractionFilters
         // Indexes into the synopsis row field array
         private ColumnIndices mColumnIndices;
         private int peptideMassIndex;
-        private int msgfDbSpecEValueIndex;		        // MSGFDB_SpecProb for MSGFDB, MSGFDB_SpecEValue for MSGF+
-        private int rankMSGFDbSpecProbIndex = -1;		// Rank_MSGFDB_SpecProb for MSGFDB, Rank_MSGFDB_SpecEValue for MSGF+
+        private int msgfDbSpecEValueIndex;		        // MSGFDB_SpecProb for MSGFDB, MSGFDB_SpecEValue for MS-GF+
+        private int rankMSGFDbSpecProbIndex = -1;		// Rank_MSGFDB_SpecProb for MSGFDB, Rank_MSGFDB_SpecEValue for MS-GF+
 
-        private int eValueIndex;					    // PValue for MSGFDB,          EValue for MSGF+
+        private int eValueIndex;					    // PValue for MSGFDB,          EValue for MS-GF+
 
         // Note that FDR and PepFDR may not be present
-        private int FDRIndex = -1;						// FDR for MSGFDB,             QValue for MSGF+
-        private int pepFDRIndex = -1;					// PepFDR for MSGFDB,          PepQValue for MSGF+
+        private int FDRIndex = -1;						// FDR for MSGFDB,             QValue for MS-GF+
+        private int pepFDRIndex = -1;					// PepFDR for MSGFDB,          PepQValue for MS-GF+
 
-        private int msgfSpecProbIndex = -1;             // Spectral Probability from MSGF; for MSGF+ this column will have identical values the data in msgfDbSpecEValueIndex
+        private int msgfSpecProbIndex = -1;             // Spectral Probability from MSGF; for MS-GF+ this column will have identical values the data in msgfDbSpecEValueIndex
 
         private MergeProteinData mProteinMerger;
         private bool mOutputAllProteins;
@@ -231,7 +231,7 @@ namespace MageExtExtractionFilters
 
             var columnIndex = GetColumnIndex(columnHeaders, "MSGFDB_SpecProb");
 
-            // MSGF+ has MSGFDB_SpecEValue instead of MSGFDB_SpecProb; need to check for this
+            // MS-GF+ has MSGFDB_SpecEValue instead of MSGFDB_SpecProb; need to check for this
             if (columnIndex < 0)
             {
                 columnIndex = GetColumnIndex(columnHeaders, "MSGFDB_SpecEValue");
@@ -241,7 +241,7 @@ namespace MageExtExtractionFilters
 
             dctColumnMapping.Add(MSGFDBColumns.MSGFDB_SpecProbOrEValue, columnIndex);
 
-            // Note that FDR and PepFDR (QValue and PepQValue in MSGF+) may not be present in MSGFDB results
+            // Note that FDR and PepFDR (QValue and PepQValue in MS-GF+) may not be present in MSGFDB results
             if (msgfPlus)
             {
                 dctColumnMapping.Add(MSGFDBColumns.PValueOrEValue, GetColumnIndex(columnHeaders, "EValue"));
@@ -327,7 +327,7 @@ namespace MageExtExtractionFilters
             var pipeline = ProcessingPipeline.Assemble("GetFilterCriteria", reader, filterCriteria);
             pipeline.RunRoot(null);
 
-            // Create new MSGF+ filter object with retrieved filter criteria
+            // Create new MS-GF+ filter object with retrieved filter criteria
             return new FilterMSGFDbResults(filterCriteria.Rows, FilterSetID);
         }
     }

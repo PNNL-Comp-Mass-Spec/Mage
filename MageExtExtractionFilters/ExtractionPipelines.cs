@@ -171,7 +171,7 @@ namespace MageExtExtractionFilters
 
             if (string.Equals(toolName, "msgfplus", StringComparison.OrdinalIgnoreCase) && filterName.StartsWith("msgfplus", StringComparison.OrdinalIgnoreCase))
             {
-                // MSGF+ results can be processed by two different extractors: msgfdb and msgfdbFHT
+                // MS-GF+ results can be processed by two different extractors: msgfdb and msgfdbFHT
                 return msg;
             }
 

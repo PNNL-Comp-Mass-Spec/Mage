@@ -14,7 +14,7 @@ namespace MageExtExtractionFilters
         public enum MergeModeConstants
         {
             XTandem = 0,
-            InspectOrMSGFDB = 1,         // Used by Inspect and MSGF+
+            InspectOrMSGFDB = 1,         // Used by Inspect and MS-GF+
             MSPathFinder = 2
         }
 

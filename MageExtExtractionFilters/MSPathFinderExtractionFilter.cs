@@ -264,7 +264,7 @@ namespace MageExtExtractionFilters
             var pipeline = ProcessingPipeline.Assemble("GetFilterCriteria", reader, filterCriteria);
             pipeline.RunRoot(null);
 
-            // Create new MSGF+ filter object with retrieved filter criteria
+            // Create new MS-GF+ filter object with retrieved filter criteria
             return new FilterMSPathFinderResults(filterCriteria.Rows, FilterSetID);
         }
     }
