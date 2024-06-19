@@ -154,7 +154,7 @@ namespace MageUnitTests
         /// </summary>
         [Test]
         [TestCase("", "", DMS_READER, DMS_READER_PASSWORD, false)]
-        [TestCase("prismdb1", "dms", DMS_READER, DMS_READER_PASSWORD, true)]
+        [TestCase("prismdb2", "dms", DMS_READER, DMS_READER_PASSWORD, true)]
         [Category("DatabaseNamedUser")]
         public void QueryDatasetFactorsNamedUser(string serverName, string databaseName, string userName, string userPassword, bool isPostgres)
         {
