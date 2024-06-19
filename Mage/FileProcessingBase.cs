@@ -371,7 +371,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Called by pipeline container after pipeline execution has processed all of the data rows
+        /// Called by pipeline container after pipeline execution has processed each of the data rows
         /// Download any queued MyEMSL files
         /// </summary>
         public override bool PostProcess()

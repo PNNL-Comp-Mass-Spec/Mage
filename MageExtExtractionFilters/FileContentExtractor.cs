@@ -113,7 +113,7 @@ namespace MageExtExtractionFilters
                     if (inputFilePath.StartsWith(MYEMSL_PATH_FLAG))
                     {
                         // We need to download the result file and any merge files from MyEMSL
-                        // We'll download all of the files for the given dataset as a group
+                        // We'll download the files for the given dataset as a group
                         // These files should already have a MyEMSL File ID encoded in them
 
                         var filesToDownload = new List<string>

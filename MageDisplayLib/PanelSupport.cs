@@ -134,7 +134,7 @@ namespace MageDisplayLib
         }
 
         /// <summary>
-        /// Get a delimiter appropriate for use when copying all of the data values in a column
+        /// Get a delimiter appropriate for use when copying the data values in a column
         /// </summary>
         /// <param name="delimiter"></param>
         /// <returns>Newline if delimiter is null empty; tab if delimiter is tab, and delimiter plus space otherwise</returns>

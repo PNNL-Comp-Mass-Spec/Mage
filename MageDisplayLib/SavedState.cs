@@ -257,7 +257,7 @@ namespace MageDisplayLib
                 xmlDoc.Load(reader);
             }
 
-            // Use an XPath query to select all of the query nodes
+            // Use an XPath query to select the query nodes
             var nodes = xmlDoc.SelectNodes("//queries/query");
 
             if (nodes == null)
@@ -310,7 +310,7 @@ namespace MageDisplayLib
         /// </summary>
         /// <param name="sourceFile">Source query definition file (typically in the directory with the .exe)</param>
         /// <param name="targetFile">Target query definition file (typically in C:\Users\Username\AppData\Roaming\MageFileProcessor)</param>
-        /// <returns>True if the connection info matches for all of the queries, false if any do not match</returns>
+        /// <returns>True if the connection info matches for each of the queries, false if any do not match</returns>
         private static bool MatchingConnectionInfo(FileSystemInfo sourceFile, FileSystemInfo targetFile)
         {
             var sourceQueries = LoadQueryDefinitionFile(sourceFile.FullName);

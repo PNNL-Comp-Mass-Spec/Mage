@@ -274,7 +274,7 @@ namespace MageExtContentFilters
         {
             var matches = m_CleanSeqRegex.Matches(dirtySequence);
 
-            // This will hold all of the letters and periods in dirtySequence
+            // This will hold the letters and periods in dirtySequence
             var cleanSequence = new StringBuilder();
 
             foreach (Match m in matches)

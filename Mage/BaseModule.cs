@@ -420,7 +420,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Called by pipeline container after to pipeline execution has processed all of the data rows
+        /// Called by pipeline container after to pipeline execution has processed each of the data rows
         /// </summary>
         public virtual bool PostProcess()
         {

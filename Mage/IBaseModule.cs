@@ -19,7 +19,7 @@ namespace Mage
         void Prepare();
 
         /// <summary>
-        /// Called after pipeline completes processing all of the data rows
+        /// Called after pipeline completes processing the data rows
         /// </summary>
         bool PostProcess();
 

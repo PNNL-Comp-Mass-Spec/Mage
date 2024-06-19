@@ -45,6 +45,8 @@ namespace Mage
         /// </summary>
         public string TableName { get; set; }
 
+        // ReSharper disable once GrammarMistakeInComment
+
         /// <summary>
         /// Optional list of column definitions that will be used when creating the target table in the SqLite database
         /// </summary>

@@ -582,9 +582,9 @@ namespace MageUnitTests
             // Define and run a database sproc query
             target.SprocName = "GetAllMassTagDatabases";
 
-            // target.AddParm("@IncludeUnused", "0");
-            // target.AddParm("@IncludeDeleted", "0");
-            // target.AddParm("@ServerFilter", "");
+            // target.SetSprocParam("@IncludeUnused", "0");
+            // target.SetSprocParam("@IncludeDeleted", "0");
+            // target.SetSprocParam("@ServerFilter", "");
             target.SetSprocParam("@VerboseColumnOutput", "0");
 
             target.Run(null);
