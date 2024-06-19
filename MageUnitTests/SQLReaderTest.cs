@@ -16,7 +16,7 @@ namespace MageUnitTests
     {
         // ReSharper disable CommentTypo
 
-        // Ignore Spelling: dmsreader, labelling, mtuser, sarc, sproc
+        // Ignore Spelling: dmsreader, labelling, mtuser, Postgres, sarc, sproc, username
 
         // ReSharper restore CommentTypo
 
