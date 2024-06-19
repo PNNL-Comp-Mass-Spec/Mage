@@ -637,6 +637,7 @@ namespace Mage
                 ReportMageWarning(string.Format(
                     "Skipping duplicate stored procedure parameter {0} for procedure {1}",
                     parameterName, cmd.CommandText));
+
                 return null;
             }
 
@@ -651,9 +652,9 @@ namespace Mage
                 return null;
             }
 
-            if (sprocParams.ContainsKey(parameterName))
+            if (sprocParams.TryGetValue(parameterName, out var paramValue))
             {
-                newParam.Value = sprocParams[parameterName];
+                newParam.Value = paramValue;
             }
 
             return newParam;
