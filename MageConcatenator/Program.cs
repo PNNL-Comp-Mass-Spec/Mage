@@ -10,7 +10,7 @@ using System.Windows.Forms;
 // Copyright 2014, Battelle Memorial Institute.  All Rights Reserved.
 
 // E-mail: matthew.monroe@pnnl.gov or proteomics@pnnl.gov
-// Website: https://github.com/PNNL-Comp-Mass-Spec/ or https://panomics.pnnl.gov/ or https://www.pnnl.gov/integrative-omics
+// Website: https://github.com/PNNL-Comp-Mass-Spec/ or https://www.pnnl.gov/integrative-omics
 // -------------------------------------------------------------------------------
 //
 // Licensed under the 2-Clause BSD License; you may not use this file except
