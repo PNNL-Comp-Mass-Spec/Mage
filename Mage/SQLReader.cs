@@ -18,7 +18,7 @@ namespace Mage
 
         // Ignore Spelling: citext, dbo, Mage, Postgres, postgresql, sproc, smalldate, SQL, username, yyyy-MM-dd hh:mm:ss tt
         // Ignore Spelling: bigint, datetime, datetimeoffset, nchar, ntext, nvarchar, smalldatetime, smallint, smallmoney, tinyint, uniqueidentifier, varbinary, varchar
-        // Ignore Spelling: bool, bytea, cidr, hstore, inet, json, jsonb, lseg, macaddr, timestamptz, timetz, tsquery, tsvector, uuid, varbit
+        // Ignore Spelling: bool, bytea, cidr, hstore, inet, json, jsonb, lseg, macaddr, refcursor, timestamptz, timetz, tsquery, tsvector, uuid, varbit
 
         // ReSharper restore CommentTypo
 
@@ -223,6 +223,9 @@ namespace Mage
             try
             {
                 var dbTools = Connect();
+                dbTools.ErrorEvent += OnDbToolsErrorEvent;
+
+                RegisterEvents(dbTools);
 
                 try
                 {
@@ -371,6 +374,7 @@ namespace Mage
             var cmd = GetSprocCmd(dbTools, SprocName, mStoredProcParameters);
 
             var success = dbTools.GetQueryResultsDataTable(cmd, out var queryResults);
+
             if (!success)
             {
                 var ex = ReportMageException("GetQueryResultsDataTable returned false calling stored procedure " + SprocName);
@@ -632,6 +636,7 @@ namespace Mage
             IReadOnlyDictionary<string, string> sprocParams,
             int argSize = 0)
         {
+            // ReSharper disable once CanSimplifySetAddingWithSingleCall
             if (paramNames.Contains(parameterName))
             {
                 ReportMageWarning(string.Format(
@@ -858,6 +863,42 @@ namespace Mage
             return argMode is "INOUT" or "OUT" ? ParameterDirection.InputOutput : ParameterDirection.Input;
         }
 
+        /// <summary>
+        /// Use this method to chain events between classes
+        /// </summary>
+        /// <param name="sourceClass">Source class</param>
+        private void RegisterEvents(IEventNotifier sourceClass)
+        {
+            sourceClass.DebugEvent += OnDebugEvent;
+            sourceClass.StatusEvent += OnStatusEvent;
+            sourceClass.ErrorEvent += OnErrorEvent;
+            sourceClass.WarningEvent += OnWarningEvent;
+            // sourceClass.ProgressUpdate += OnProgressUpdate;
+        }
+
+        private void OnDebugEvent(string message)
+        {
+            PRISM.ConsoleMsgUtils.ShowDebug(message);
+        }
+
+        private void OnDbToolsErrorEvent(string message, Exception ex)
+        {
+            OnWarningMessage(new MageStatusEventArgs(string.Format("DBTools Error: {0}", message)));
+        }
+        private void OnErrorEvent(string message, Exception ex)
+        {
+            OnWarningMessage(new MageStatusEventArgs(string.Format("DBTools Error: {0}", message)));
+        }
+
+        private void OnStatusEvent(string message)
+        {
+            Console.WriteLine(message);
+        }
+
+        private void OnWarningEvent(string message)
+        {
+            OnWarningMessage(new MageStatusEventArgs(string.Format("DBTools Warning: {0}", message)));
+        }
     }
 }
 
