@@ -40,5 +40,23 @@ namespace MageConcatenator.Properties {
                 return ((string)(this["DMSDatabase"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("dmsreader")]
+        public string DMSUser {
+            get {
+                return ((string)(this["DMSUser"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("dms4fun")]
+        public string DMSUserPassword {
+            get {
+                return ((string)(this["DMSUserPassword"]));
+            }
+        }
     }
 }

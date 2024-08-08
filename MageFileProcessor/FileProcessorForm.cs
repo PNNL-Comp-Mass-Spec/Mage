@@ -61,16 +61,20 @@ namespace MageFileProcessor
             // The global values will be updated when the QueryDefinitions.xml file is read
             Globals.DMSServer = Settings.Default.DMSServer;             // Default: prismdb2
             Globals.DMSDatabase = Settings.Default.DMSDatabase;         // Default: dms
+            Globals.DMSUser = Settings.Default.DMSUser;                 // Default: dmsreader
+            Globals.DMSUserPassword = Settings.Default.DMSUserPassword;
 
             try
             {
                 // Set up configuration directory and files
                 SavedState.SetupConfigFiles("MageFileProcessor");
 
-                if (SavedState.GetDatabaseConnectionInfo(out var dmsServer, out var dmsDatabase))
+                if (SavedState.GetDatabaseConnectionInfo(out var dmsServer, out var dmsDatabase, out var dmsUser, out var dmsUserPassword))
                 {
                     Globals.DMSServer = dmsServer;
                     Globals.DMSDatabase = dmsDatabase;
+                    Globals.DMSUser = dmsUser;
+                    Globals.DMSUserPassword = dmsUserPassword;
                 }
             }
             catch (Exception ex)

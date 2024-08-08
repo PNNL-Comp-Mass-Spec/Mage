@@ -37,6 +37,12 @@ namespace Mage
         /// <remarks>This constant's value must match the property named Username in the SQLReader class</remarks>
         public const string USERNAME_KEY = "Username";
 
+        /// <summary>
+        /// Name in mPredicates of the key that specifies the database user's password
+        /// </summary>
+        /// <remarks>This constant's value must match the property named Password in the SQLReader class</remarks>
+        public const string PASSWORD_KEY = "Password";
+
         private readonly List<QueryPredicate> mPredicates = new();
 
         private readonly Dictionary<string, QueryPredicate> mDefaultPredicates = new();
@@ -220,6 +226,7 @@ namespace Mage
                         SpecialArgs[SERVER_NAME_KEY] = GetAttributeValue(itemNode, "server", string.Empty);
                         SpecialArgs[DATABASE_NAME_KEY] = GetAttributeValue(itemNode, "database", string.Empty);
                         SpecialArgs[USERNAME_KEY] = GetAttributeValue(itemNode, "user", string.Empty);
+                        SpecialArgs[PASSWORD_KEY] = GetAttributeValue(itemNode, "password", string.Empty);
                         SpecialArgs[IS_POSTGRES_KEY] = GetAttributeValue(itemNode, "postgres", "false");
 
                         if (bool.TryParse(SpecialArgs[IS_POSTGRES_KEY], out var isPostgres) && isPostgres)

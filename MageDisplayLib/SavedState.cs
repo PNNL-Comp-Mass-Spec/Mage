@@ -35,26 +35,32 @@ namespace MageDisplayLib
         /// </summary>
         /// <param name="dmsServer"></param>
         /// <param name="dmsDatabase"></param>
-        public static bool GetDatabaseConnectionInfo(out string dmsServer, out string dmsDatabase)
+        /// <param name="dmsUser"></param>
+        /// <param name="dmsUserPassword"></param>
+        public static bool GetDatabaseConnectionInfo(out string dmsServer, out string dmsDatabase, out string dmsUser, out string dmsUserPassword)
         {
             var queryDefinitions = LoadQueryDefinitionFile(ModuleDiscovery.QueryDefinitionFileName);
 
-            // Keys in this dictionary are server and database name (separated by a vertical bar)
+            // Keys in this dictionary are server name, database name, database user, and password (separated by vertical bars)
             // Values are the number of queries that use the given server
             var serverList = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
             // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
             foreach (var item in queryDefinitions)
             {
-                var serverAndDatabase = string.Format("{0}|{1}", item.Value.Server, item.Value.Database);
+                var connectionInfo = string.Format("{0}|{1}|{2}|{3}",
+                    item.Value.Server,
+                    item.Value.Database,
+                    item.Value.User ?? string.Empty,
+                    item.Value.Password ?? string.Empty);
 
-                if (serverList.TryGetValue(serverAndDatabase, out var usageCount))
+                if (serverList.TryGetValue(connectionInfo, out var usageCount))
                 {
-                    serverList[serverAndDatabase] = usageCount + 1;
+                    serverList[connectionInfo] = usageCount + 1;
                 }
                 else
                 {
-                    serverList.Add(serverAndDatabase, 1);
+                    serverList.Add(connectionInfo, 1);
                 }
             }
 
@@ -62,6 +68,8 @@ namespace MageDisplayLib
             {
                 dmsServer = string.Empty;
                 dmsDatabase = string.Empty;
+                dmsUser = string.Empty;
+                dmsUserPassword = string.Empty;
 
                 return false;
             }
@@ -75,12 +83,16 @@ namespace MageDisplayLib
             {
                 dmsServer = nameParts[0];
                 dmsDatabase = nameParts[1];
+                dmsUser = nameParts[2];
+                dmsUserPassword = nameParts[3];
 
                 return true;
             }
 
             dmsServer = string.Empty;
             dmsDatabase = string.Empty;
+            dmsUser = string.Empty;
+            dmsUserPassword = string.Empty;
 
             return false;
         }
@@ -293,8 +305,9 @@ namespace MageDisplayLib
                 var database = TryGetAttribute(connectionInfo, "database", string.Empty);
                 var postgres = TryGetAttribute(connectionInfo, "postgres", false);
                 var user = TryGetAttribute(connectionInfo, "user", string.Empty);
+                var password = TryGetAttribute(connectionInfo, "password", string.Empty);
 
-                var connection = new ConnectionInfo(server, database, user)
+                var connection = new ConnectionInfo(server, database, user, password)
                 {
                     Postgres = postgres
                 };
@@ -351,13 +364,14 @@ namespace MageDisplayLib
         /// </summary>
         /// <param name="sourceConnectionInfo"></param>
         /// <param name="targetConnectionInfo"></param>
-        /// <returns>True if both refer to the same server, database, and user (which could be an empty string)</returns>
+        /// <returns>True if both refer to the same server, database, user (which could be an empty string), and password (which could be an empty string)</returns>
         private static bool MatchingConnectionInfo(ConnectionInfo sourceConnectionInfo, ConnectionInfo targetConnectionInfo)
         {
             return sourceConnectionInfo.Postgres == targetConnectionInfo.Postgres &&
                    (sourceConnectionInfo.Server ?? string.Empty) == (targetConnectionInfo.Server ?? string.Empty) &&
                    (sourceConnectionInfo.Database ?? string.Empty) == (targetConnectionInfo.Database ?? string.Empty) &&
-                   (sourceConnectionInfo.User ?? string.Empty) == (targetConnectionInfo.User ?? string.Empty);
+                   (sourceConnectionInfo.User ?? string.Empty) == (targetConnectionInfo.User ?? string.Empty) &&
+                   (sourceConnectionInfo.Password ?? string.Empty) == (targetConnectionInfo.Password ?? string.Empty);
         }
 
         /// <summary>

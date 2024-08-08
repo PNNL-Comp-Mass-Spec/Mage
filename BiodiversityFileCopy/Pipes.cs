@@ -179,6 +179,8 @@ FROM (
             {
                 Server = Globals.DMSServer,
                 Database = Globals.DMSDatabase,
+                Username = Globals.DMSUser,
+                Password = Globals.DMSUserPassword,
                 SQLText = sql
             };
 

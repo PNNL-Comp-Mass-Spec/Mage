@@ -55,16 +55,20 @@ namespace MageFilePackager
             // Typically prismdb2 and dms
             Globals.DMSServer = Settings.Default.DMSServer;
             Globals.DMSDatabase = Settings.Default.DMSDatabase;
+            Globals.DMSUser = Settings.Default.DMSUser;
+            Globals.DMSUserPassword = Settings.Default.DMSUserPassword;
 
             try
             {
                 // Set up configuration directory and files
                 SavedState.SetupConfigFiles("MageFilePackager");
 
-                if (SavedState.GetDatabaseConnectionInfo(out var dmsServer, out var dmsDatabase))
+                if (SavedState.GetDatabaseConnectionInfo(out var dmsServer, out var dmsDatabase, out var dmsUser, out var dmsUserPassword))
                 {
                     Globals.DMSServer = dmsServer;
                     Globals.DMSDatabase = dmsDatabase;
+                    Globals.DMSUser = dmsUser;
+                    Globals.DMSUserPassword = dmsUserPassword;
                 }
             }
             catch (Exception ex)

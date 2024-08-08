@@ -8,5 +8,11 @@
     <Setting Name="DMSDatabase" Type="System.String" Scope="Application">
       <Value Profile="(Default)">dms</Value>
     </Setting>
+    <Setting Name="DMSUser" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">dmsreader</Value>
+    </Setting>
+    <Setting Name="DMSUserPassword" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">dms4fun</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

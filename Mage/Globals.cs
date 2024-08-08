@@ -28,6 +28,15 @@ namespace Mage
         /// </summary>
         public const string DEFAULT_DMS_DATABASE = "dms";
 
+        /// <summary>
+        /// Default DMS database
+        /// </summary>
+        public const string DEFAULT_DMS_USER = "dmsreader";
+
+        /// <summary>
+        /// Default DMS database
+        /// </summary>
+        public const string DEFAULT_DMS_USER_PASSWORD = "dms4fun";
 
         /// <summary>
         /// This will be set to true by one of the threads if the user requests that an operation be aborted
@@ -53,12 +62,32 @@ namespace Mage
         }
 
         /// <summary>
+        /// DMS database user
+        /// </summary>
+        public static string DMSUser
+        {
+            get => mDmsUser ?? DEFAULT_DMS_USER;
+            set => mDmsUser = value;
+        }
+
+        /// <summary>
+        /// DMS database user's password
+        /// </summary>
+        public static string DMSUserPassword
+        {
+            get => mDmsUserPassword ?? DEFAULT_DMS_USER_PASSWORD;
+            set => mDmsUserPassword = value;
+        }
+
+        /// <summary>
         /// True if querying a PostgreSQL database
         /// </summary>
         public static bool PostgresDMS { get; set; }
 
         private static string mDmsServer;
         private static string mDmsDatabase;
+        private static string mDmsUser;
+        private static string mDmsUserPassword;
 
         /// <summary>
         /// Constructor
@@ -68,7 +97,9 @@ namespace Mage
             AbortRequested = false;
             mDmsServer = DEFAULT_DMS_SERVER;
             mDmsDatabase = DEFAULT_DMS_DATABASE;
-            PostgresDMS = false;
+            mDmsUser = DEFAULT_DMS_USER;
+            mDmsUserPassword = DEFAULT_DMS_USER_PASSWORD;
+            PostgresDMS = true;
         }
     }
 }
