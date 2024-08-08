@@ -163,13 +163,13 @@ namespace MageUnitTests
 
         private void QueryDatasetFactors(string serverName, string databaseName, string username, string password, bool isPostgres)
         {
-            // Default server is gigasax
+            // Default server is prismdb2
             if (string.IsNullOrWhiteSpace(serverName))
             {
                 serverName = Globals.DMSServer;
             }
 
-            // Default database is DMS5
+            // Default database is dms
             if (string.IsNullOrWhiteSpace(databaseName))
             {
                 databaseName = Globals.DMSDatabase;

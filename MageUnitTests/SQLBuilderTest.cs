@@ -119,7 +119,7 @@ namespace MageUnitTests
 
             // Runtime parameters for query
             var runtimeParameters = new Dictionary<string, string>();
-            const string testDB = "DMS5_T3";
+            const string testDB = "dms";
             runtimeParameters[":Database"] = testDB;
             runtimeParameters["Dataset"] = "sarc";
 

@@ -24,7 +24,7 @@ namespace MageMetadataProcessor
             InitializeComponent();
 
             // These settings are loaded from file MageMetadataProcessor.exe.config
-            // Typically gigasax and DMS5
+            // Typically prismdb2 and dms
             Globals.DMSServer = Settings.Default.DMSServer;
             Globals.DMSDatabase = Settings.Default.DMSDatabase;
 
@@ -110,9 +110,10 @@ namespace MageMetadataProcessor
             var mode = (command.Mode == "selected") ? DisplaySourceMode.Selected : DisplaySourceMode.All;
             ISinkModule display;
 
-            // Typically gigasax and DMS5
+            // Typically prismdb2 and dms
             var server = Globals.DMSServer;
             var database = Globals.DMSDatabase;
+
             string sql;
 
             switch (command.Action)

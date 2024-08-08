@@ -101,7 +101,7 @@ namespace MageExtContentFilters
         /// </summary>
         private void SetupSequestFilter()
         {
-            // Create Mage module to query DMS (typically on gigasax)
+            // Create Mage module to query DMS (typically on prismdb2)
             var reader = new SQLReader
             {
                 Database = Globals.DMSDatabase,

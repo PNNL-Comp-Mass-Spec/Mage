@@ -21,12 +21,13 @@ namespace Mage
         /// <summary>
         /// Default DMS server
         /// </summary>
-        public const string DEFAULT_DMS_SERVER = "gigasax";
+        public const string DEFAULT_DMS_SERVER = "prismdb2";
 
         /// <summary>
         /// Default DMS database
         /// </summary>
-        public const string DEFAULT_DMS_DATABASE = "DMS5";
+        public const string DEFAULT_DMS_DATABASE = "dms";
+
 
         /// <summary>
         /// This will be set to true by one of the threads if the user requests that an operation be aborted

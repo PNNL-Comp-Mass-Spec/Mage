@@ -22,7 +22,7 @@ namespace MageFileProcessor
                 return Globals.DMSServer.ToLower() switch
                 {
                     "cbdms" => "http://cbdmsweb.pnl.gov",
-                    _ => "https://dms2.pnl.gov"       // Includes gigasax
+                    _ => "https://dms2.pnl.gov"       // Includes gigasax and prismdb2
                 };
             }
         }

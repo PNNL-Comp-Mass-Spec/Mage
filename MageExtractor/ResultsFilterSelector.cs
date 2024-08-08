@@ -57,7 +57,7 @@ namespace MageExtractor
         /// </summary>
         public void InitializeFilterSetList()
         {
-            // Create Mage module to query DMS (typically on gigasax)
+            // Create Mage module to query DMS (typically on prismdb2)
             var reader = new SQLReader
             {
                 Database = Globals.DMSDatabase,

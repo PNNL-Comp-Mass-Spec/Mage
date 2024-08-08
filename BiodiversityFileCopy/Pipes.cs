@@ -174,7 +174,7 @@ FROM (
         {
             var sql = queryTemplate.Replace("@", dataPackageId);
 
-            // Typically gigasax and DMS5
+            // Typically prismdb2 and dms
             var dbr = new SQLReader
             {
                 Server = Globals.DMSServer,

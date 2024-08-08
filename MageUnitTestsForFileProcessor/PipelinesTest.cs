@@ -26,7 +26,7 @@ namespace MageUnitTestsForFileProcessor
         {
             ISinkModule sinkObject = new SimpleSink(maxRows);
 
-            // Default server info: gigasax and DMS5
+            // Default server info: prismdb2 and dms
             var queryDefXML = @"
   <query name='Mage_Analysis_Jobs'>
     <description>Get selected list of analysis jobs</description>

@@ -37,9 +37,10 @@ namespace MageConcatenator
             InitializeComponent();
 
             // These settings are loaded from file MageConcatenator.exe.config
-            // Typically gigasax and DMS5
+            // Typically prismdb2 and dms
             Globals.DMSServer = Settings.Default.DMSServer;
             Globals.DMSDatabase = Settings.Default.DMSDatabase;
+            Globals.DMSUser = Settings.Default.DMSUser;
 
             try
             {

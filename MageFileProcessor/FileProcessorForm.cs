@@ -59,8 +59,8 @@ namespace MageFileProcessor
 
             // These settings are loaded from file MageFileProcessor.exe.config
             // The global values will be updated when the QueryDefinitions.xml file is read
-            Globals.DMSServer = Settings.Default.DMSServer;         // Default: gigasax
-            Globals.DMSDatabase = Settings.Default.DMSDatabase;     // Default: DMS5
+            Globals.DMSServer = Settings.Default.DMSServer;             // Default: prismdb2
+            Globals.DMSDatabase = Settings.Default.DMSDatabase;         // Default: dms
 
             try
             {

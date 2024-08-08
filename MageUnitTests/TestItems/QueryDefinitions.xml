@@ -2,23 +2,23 @@
 <queries>
   <query name='Mage_Analysis_Jobs'>
     <description>Get selected list of analysis jobs</description>
-    <connection server='gigasax' database='DMS5' />
-    <table name='V_Mage_Analysis_Jobs' cols='Job, State, Dataset, Dataset_ID, Tool, Parameter_File, Settings_File, Instrument, Experiment, Campaign, Organism, Organism_DB, Protein_Collection_List, Protein_Options, Comment, Results_Folder, Folder, Dataset_Created, Job_Finish, Dataset_Rating, Separation_Type, Dataset_Type, Request_ID' />
+    <connection server='prismdb2' postgres='true' database='dms' user='dmsreader' password='dms4fun'/>
+    <table name='V_Mage_Analysis_Jobs' cols='Job, State, Dataset, Dataset_ID, Tool, Parameter_File, Settings_File, Instrument, Experiment, Campaign, Organism, Organism_DB, Protein_Collection_List, Protein_Options, Comment, Results_Folder, Folder, Dataset_Created, Job_Finish, Dataset_Rating, Separation_Type, Dataset_Type, Request_ID'/>
     <predicate rel='AND' col='Job' cmp='Equals' val=''>Descriptive text for Job</predicate>
     <predicate rel='AND' col='Dataset' cmp='ContainsText' val=''>Descriptive text for Dataset</predicate>
-    <sort col='Job' dir='ASC' />
+    <sort col='Job' dir='ASC'/>
   </query>
 
   <query name='GetMassTagsPlusPepProphetStats'>
     <description>Get mass tags for given MT database</description>
-    <connection server='pogo' database='MT_Shewanella_ProdTest_Formic_P1385' />
-    <sproc name='GetMassTagsPlusPepProphetStats' />
+    <connection server='pogo' database='MT_Shewanella_ProdTest_Formic_P1385'/>
+    <sproc name='GetMassTagsPlusPepProphetStats'/>
     <param name="@MassCorrectionIDFilterList" value="" >Descriptive text for MassCorrectionIDFilterList</param>
     <param name="@ConfirmedOnly" value="0" >Descriptive text for ConfirmedOnly</param>
     <param name="@MinimumHighNormalizedScore" value="0" >Descriptive text for MinimumHighNormalizedScore</param>
     <param name="@MinimumPMTQualityScore" value="4" >Descriptive text for MinimumPMTQualityScore</param>
     <param name="@NETValueType" value="0" >Descriptive text for NETValueType</param>
-    <param name="@MinimumHighDiscriminantScore" value="0" />
+    <param name="@MinimumHighDiscriminantScore" value="0"/>
     <param name="@ExperimentFilter" value="" >Descriptive text for ExperimentFilter</param>
     <param name="@ExperimentExclusionFilter" value="" >Descriptive text for ExperimentExclusionFilter</param>
     <!-- if "val" attribute is missing, parameter definition not automatically included in sproc call -->
@@ -28,9 +28,9 @@
 
   <query name='Factors_List_Report'>
     <description>Get factors for selected datasets</description>
-    <connection server='gigasax' database='DMS5' />
-    <table name='V_Custom_Factors_List_Report' cols='Dataset, Dataset_ID, Factor, Value' />
+    <connection server='prismdb2' postgres='true' database='dms' user='dmsreader' password='dms4fun'/>
+    <table name='V_Custom_Factors_List_Report' cols='Dataset, Dataset_ID, Factor, Value'/>
     <predicate rel='AND' col='Dataset' cmp='ContainsText' val=''>Descriptive text for Dataset</predicate>
-    <predicate rel='AND' col='Dataset_ID' cmp='Equals' val='' />
+    <predicate rel='AND' col='Dataset_ID' cmp='Equals' val=''/>
   </query>
 </queries>
