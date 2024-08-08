@@ -246,7 +246,7 @@ namespace MageConcatenator
             if (success)
             {
                 CompletionStateUpdated csu = AdjustPostCommandUIState;
-                Invoke(csu, new object[] { null });
+                Invoke(csu, [null]);
             }
             else
             {
@@ -584,13 +584,10 @@ namespace MageConcatenator
             statusPanel1.HandleCompletionMessageUpdate(this, new MageStatusEventArgs(args.Message));
             Console.WriteLine(args.Message);
 
-            if (sender is ProcessingPipeline pipeline)
+            if (sender is ProcessingPipeline pipeline && pipeline.PipelineName == mFinalPipelineName)
             {
-                if (pipeline.PipelineName == mFinalPipelineName)
-                {
-                    CompletionStateUpdated csu = AdjustPostCommandUIState;
-                    Invoke(csu, new object[] { null });
-                }
+                CompletionStateUpdated csu = AdjustPostCommandUIState;
+                Invoke(csu, [null]);
             }
 
             if (args.Message.StartsWith(SQLReader.SQL_COMMAND_ERROR))

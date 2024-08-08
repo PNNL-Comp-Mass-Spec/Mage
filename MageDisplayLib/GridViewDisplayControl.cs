@@ -475,7 +475,7 @@ namespace MageDisplayLib
             if (endOfData)
             {
                 DisplayRowBlockCallback drc = HandleDisplayRowBlock;
-                Invoke(drc, new object[] { null });
+                Invoke(drc, [null]);
             }
         }
 

@@ -908,17 +908,17 @@ namespace MageFileProcessor
             statusPanel1.HandleCompletionMessageUpdate(this, new MageStatusEventArgs(args.Message));
             Console.WriteLine(args.Message);
 
-            if (sender is ProcessingPipeline pipeline)
+            if (sender is ProcessingPipeline pipeline && pipeline.PipelineName == mFinalPipelineName)
             {
-                if (pipeline.PipelineName == mFinalPipelineName)
-                {
-                    CompletionStateUpdated csu = AdjustPostCommandUIState;
-                    Invoke(csu, new object[] { null });
+                CompletionStateUpdated csu = AdjustPostCommandUIState;
 
-                    // Must use a delegate and Invoke to avoid "cross-thread operation not valid" exceptions
-                    VoidFnDelegate et = EnableDisableOutputTabs;
-                    Invoke(et);
-                }
+                // The following is equivalent to:
+                // Invoke(csu, new object[] { null });
+                Invoke(csu, [null]);
+
+                // Must use a delegate and Invoke to avoid "cross-thread operation not valid" exceptions
+                VoidFnDelegate et = EnableDisableOutputTabs;
+                Invoke(et);
             }
 
             if (args.Message.StartsWith(SQLReader.SQL_COMMAND_ERROR))
@@ -1012,9 +1012,9 @@ namespace MageFileProcessor
             JobFlexQueryPanel.QueryName = "Job_Flex_Query";
 
             // Note that method GetSQLBuilder in class FlexQueryPanel will replace spaces with underscores for the names in this list
-            JobFlexQueryPanel.SetColumnPickList(new[] { "Job", "State", "Dataset", "Dataset_ID", "Tool", "Parameter_File", "Settings_File", "Instrument", "Experiment", "Campaign", "Organism", "Organism DB", "Protein Collection List", "Protein Options", "Comment", "Results Folder", "Folder", "Dataset_Created", "Job_Finish", "Request_ID" });
+            JobFlexQueryPanel.SetColumnPickList(["Job", "State", "Dataset", "Dataset_ID", "Tool", "Parameter_File", "Settings_File", "Instrument", "Experiment", "Campaign", "Organism", "Organism DB", "Protein Collection List", "Protein Options", "Comment", "Results Folder", "Folder", "Dataset_Created", "Job_Finish", "Request_ID"]);
 
-            JobFlexQueryPanel.SetComparisionPickList(new[] { "ContainsText", "DoesNotContainText", "StartsWithText", "MatchesText", "MatchesTextOrBlank", "Equals", "NotEqual", "GreaterThan", "GreaterThanOrEqualTo", "LessThan", "LessThanOrEqualTo", "MostRecentWeeks", "LaterThan", "EarlierThan", "InList" });
+            JobFlexQueryPanel.SetComparisionPickList(["ContainsText", "DoesNotContainText", "StartsWithText", "MatchesText", "MatchesTextOrBlank", "Equals", "NotEqual", "GreaterThan", "GreaterThanOrEqualTo", "LessThan", "LessThanOrEqualTo", "MostRecentWeeks", "LaterThan", "EarlierThan", "InList"]);
         }
 
         // Callback Methods for UI Panel Use

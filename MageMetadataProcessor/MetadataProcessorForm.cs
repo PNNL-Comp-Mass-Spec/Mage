@@ -255,7 +255,7 @@ namespace MageMetadataProcessor
             Console.WriteLine(args.Message);
 
             CompletionStateUpdated csu = AdjustPostCommandUIState;
-            Invoke(csu, new object[] { null });
+            Invoke(csu, [null]);
         }
 
         /// <summary>
