@@ -20,6 +20,7 @@ Source: ..\DeployedFiles\MageConcatenator\MageDisplayLib.dll                    
 Source: ..\DeployedFiles\MageConcatenator\MageUIComponents.dll                          ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\Microsoft.Bcl.AsyncInterfaces.dll             ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\Microsoft.Bcl.HashCode.dll                    ; DestDir: {app}\MageConcatenator
+Source: ..\DeployedFiles\MageConcatenator\Microsoft.Extensions.DependencyInjection.Abstractions.dll ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\Microsoft.Extensions.Logging.Abstractions.dll ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\MyEMSLReader.dll                              ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\Newtonsoft.Json.dll                           ; DestDir: {app}\MageConcatenator
@@ -29,9 +30,9 @@ Source: ..\DeployedFiles\MageConcatenator\PRISM.dll                             
 Source: ..\DeployedFiles\MageConcatenator\PRISMDatabaseUtils.dll                        ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\ShFolderBrowser.dll                           ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\System.Buffers.dll                            ; DestDir: {app}\MageConcatenator
-Source: ..\DeployedFiles\MageConcatenator\System.Collections.Immutable.dll              ; DestDir: {app}\MageConcatenator                                                               
+Source: ..\DeployedFiles\MageConcatenator\System.Collections.Immutable.dll              ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\System.Data.SQLite.dll                        ; DestDir: {app}\MageConcatenator
-Source: ..\DeployedFiles\MageConcatenator\System.Diagnostics.DiagnosticSource.dll       ; DestDir: {app}\MageConcatenator                                                                      
+Source: ..\DeployedFiles\MageConcatenator\System.Diagnostics.DiagnosticSource.dll       ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\System.Memory.dll                             ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\System.Numerics.Vectors.dll                   ; DestDir: {app}\MageConcatenator
 Source: ..\DeployedFiles\MageConcatenator\System.Runtime.CompilerServices.Unsafe.dll    ; DestDir: {app}\MageConcatenator
@@ -56,8 +57,9 @@ Source: ..\DeployedFiles\MageExtractor\MageExtContentFilters.dll                
 Source: ..\DeployedFiles\MageExtractor\MageExtExtractionFilters.dll                  ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\MageUIComponents.dll                          ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\Microsoft.Bcl.AsyncInterfaces.dll             ; DestDir: {app}\MageExtractor
-Source: ..\DeployedFiles\MageExtractor\Microsoft.Bcl.HashCode.dll                    ; DestDir: {app}\MageExtractor                                                         
-Source: ..\DeployedFiles\MageExtractor\Microsoft.Extensions.Logging.Abstractions.dll ; DestDir: {app}\MageExtractor                                                                            
+Source: ..\DeployedFiles\MageExtractor\Microsoft.Bcl.HashCode.dll                    ; DestDir: {app}\MageExtractor
+Source: ..\DeployedFiles\MageExtractor\Microsoft.Extensions.DependencyInjection.Abstractions.dll ; DestDir: {app}\MageExtractor
+Source: ..\DeployedFiles\MageExtractor\Microsoft.Extensions.Logging.Abstractions.dll ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\MyEMSLReader.dll                              ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\Newtonsoft.Json.dll                           ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\Npgsql.dll                                    ; DestDir: {app}\MageExtractor
@@ -66,9 +68,9 @@ Source: ..\DeployedFiles\MageExtractor\PRISM.dll                                
 Source: ..\DeployedFiles\MageExtractor\PRISMDatabaseUtils.dll                        ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\ShFolderBrowser.dll                           ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\System.Buffers.dll                            ; DestDir: {app}\MageExtractor
-Source: ..\DeployedFiles\MageExtractor\System.Collections.Immutable.dll              ; DestDir: {app}\MageExtractor                                                               
+Source: ..\DeployedFiles\MageExtractor\System.Collections.Immutable.dll              ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\System.Data.SQLite.dll                        ; DestDir: {app}\MageExtractor
-Source: ..\DeployedFiles\MageExtractor\System.Diagnostics.DiagnosticSource.dll       ; DestDir: {app}\MageExtractor                                                                      
+Source: ..\DeployedFiles\MageExtractor\System.Diagnostics.DiagnosticSource.dll       ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\System.Memory.dll                             ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\System.Numerics.Vectors.dll                   ; DestDir: {app}\MageExtractor
 Source: ..\DeployedFiles\MageExtractor\System.Runtime.CompilerServices.Unsafe.dll    ; DestDir: {app}\MageExtractor
@@ -91,8 +93,9 @@ Source: ..\DeployedFiles\MageFilePackager\Mage.dll                              
 Source: ..\DeployedFiles\MageFilePackager\MageDisplayLib.dll                            ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\MageUIComponents.dll                          ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\Microsoft.Bcl.AsyncInterfaces.dll             ; DestDir: {app}\MageFilePackager
-Source: ..\DeployedFiles\MageFilePackager\Microsoft.Bcl.HashCode.dll                    ; DestDir: {app}\MageFilePackager                                                            
-Source: ..\DeployedFiles\MageFilePackager\Microsoft.Extensions.Logging.Abstractions.dll ; DestDir: {app}\MageFilePackager                                                                               
+Source: ..\DeployedFiles\MageFilePackager\Microsoft.Bcl.HashCode.dll                    ; DestDir: {app}\MageFilePackager
+Source: ..\DeployedFiles\MageFilePackager\Microsoft.Extensions.DependencyInjection.Abstractions.dll ; DestDir: {app}\MageFilePackager
+Source: ..\DeployedFiles\MageFilePackager\Microsoft.Extensions.Logging.Abstractions.dll ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\MyEMSLReader.dll                              ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\Newtonsoft.Json.dll                           ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\Npgsql.dll                                    ; DestDir: {app}\MageFilePackager
@@ -101,9 +104,9 @@ Source: ..\DeployedFiles\MageFilePackager\PRISM.dll                             
 Source: ..\DeployedFiles\MageFilePackager\PRISMDatabaseUtils.dll                        ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\ShFolderBrowser.dll                           ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\System.Buffers.dll                            ; DestDir: {app}\MageFilePackager
-Source: ..\DeployedFiles\MageFilePackager\System.Collections.Immutable.dll              ; DestDir: {app}\MageFilePackager                                                                  
-Source: ..\DeployedFiles\MageFilePackager\System.Data.SQLite.dll                        ; DestDir: {app}\MageFilePackager                                                        
-Source: ..\DeployedFiles\MageFilePackager\System.Diagnostics.DiagnosticSource.dll       ; DestDir: {app}\MageFilePackager                                                                         
+Source: ..\DeployedFiles\MageFilePackager\System.Collections.Immutable.dll              ; DestDir: {app}\MageFilePackager
+Source: ..\DeployedFiles\MageFilePackager\System.Data.SQLite.dll                        ; DestDir: {app}\MageFilePackager
+Source: ..\DeployedFiles\MageFilePackager\System.Diagnostics.DiagnosticSource.dll       ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\System.Memory.dll                             ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\System.Numerics.Vectors.dll                   ; DestDir: {app}\MageFilePackager
 Source: ..\DeployedFiles\MageFilePackager\System.Runtime.CompilerServices.Unsafe.dll    ; DestDir: {app}\MageFilePackager
@@ -128,8 +131,9 @@ Source: ..\DeployedFiles\MageFileProcessor\MageExtContentFilters.dll            
 Source: ..\DeployedFiles\MageFileProcessor\MageExtExtractionFilters.dll                  ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\MageUIComponents.dll                          ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\Microsoft.Bcl.AsyncInterfaces.dll             ; DestDir: {app}\MageFileProcessor
-Source: ..\DeployedFiles\MageFileProcessor\Microsoft.Bcl.HashCode.dll                    ; DestDir: {app}\MageFileProcessor                                                         
-Source: ..\DeployedFiles\MageFileProcessor\Microsoft.Extensions.Logging.Abstractions.dll ; DestDir: {app}\MageFileProcessor                                                                            
+Source: ..\DeployedFiles\MageFileProcessor\Microsoft.Bcl.HashCode.dll                    ; DestDir: {app}\MageFileProcessor
+Source: ..\DeployedFiles\MageFileProcessor\Microsoft.Extensions.DependencyInjection.Abstractions.dll ; DestDir: {app}\MageFileProcessor
+Source: ..\DeployedFiles\MageFileProcessor\Microsoft.Extensions.Logging.Abstractions.dll ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\Newtonsoft.Json.dll                           ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\MyEMSLReader.dll                              ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\Npgsql.dll                                    ; DestDir: {app}\MageFileProcessor
@@ -138,9 +142,9 @@ Source: ..\DeployedFiles\MageFileProcessor\PRISM.dll                            
 Source: ..\DeployedFiles\MageFileProcessor\PRISMDatabaseUtils.dll                        ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\ShFolderBrowser.dll                           ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\System.Buffers.dll                            ; DestDir: {app}\MageFileProcessor
-Source: ..\DeployedFiles\MageFileProcessor\System.Collections.Immutable.dll              ; DestDir: {app}\MageFileProcessor                                                               
-Source: ..\DeployedFiles\MageFileProcessor\System.Data.SQLite.dll                        ; DestDir: {app}\MageFileProcessor                                                     
-Source: ..\DeployedFiles\MageFileProcessor\System.Diagnostics.DiagnosticSource.dll       ; DestDir: {app}\MageFileProcessor                                                                      
+Source: ..\DeployedFiles\MageFileProcessor\System.Collections.Immutable.dll              ; DestDir: {app}\MageFileProcessor
+Source: ..\DeployedFiles\MageFileProcessor\System.Data.SQLite.dll                        ; DestDir: {app}\MageFileProcessor
+Source: ..\DeployedFiles\MageFileProcessor\System.Diagnostics.DiagnosticSource.dll       ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\System.Memory.dll                             ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\System.Numerics.Vectors.dll                   ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\System.Runtime.CompilerServices.Unsafe.dll    ; DestDir: {app}\MageFileProcessor
@@ -151,7 +155,7 @@ Source: ..\DeployedFiles\MageFileProcessor\System.Threading.Tasks.Extensions.dll
 Source: ..\DeployedFiles\MageFileProcessor\System.ValueTuple.dll                         ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\x64\SQLite.Interop.dll                        ; DestDir: {app}\MageFileProcessor\x64
 Source: ..\DeployedFiles\MageFileProcessor\x86\SQLite.Interop.dll                        ; DestDir: {app}\MageFileProcessor\x86
-                               
+
 Source: ..\DeployedFiles\MageFileProcessor\ReadMe.txt                                    ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\ColumnMapping.txt                             ; DestDir: {app}\MageFileProcessor
 Source: ..\DeployedFiles\MageFileProcessor\QueryDefinitions.xml                          ; DestDir: {app}\MageFileProcessor
@@ -164,8 +168,9 @@ Source: ..\DeployedFiles\MageMetaDataProcessor\Mage.dll                         
 Source: ..\DeployedFiles\MageMetaDataProcessor\MageDisplayLib.dll                            ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\MageUIComponents.dll                          ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\Microsoft.Bcl.AsyncInterfaces.dll             ; DestDir: {app}\MageMetaDataProcessor
-Source: ..\DeployedFiles\MageMetaDataProcessor\Microsoft.Bcl.HashCode.dll                    ; DestDir: {app}\MageMetaDataProcessor                                                             
-Source: ..\DeployedFiles\MageMetaDataProcessor\Microsoft.Extensions.Logging.Abstractions.dll ; DestDir: {app}\MageMetaDataProcessor                                                                                
+Source: ..\DeployedFiles\MageMetaDataProcessor\Microsoft.Bcl.HashCode.dll                    ; DestDir: {app}\MageMetaDataProcessor
+Source: ..\DeployedFiles\MageMetaDataProcessor\Microsoft.Extensions.DependencyInjection.Abstractions.dll ; DestDir: {app}\MageMetaDataProcessor
+Source: ..\DeployedFiles\MageMetaDataProcessor\Microsoft.Extensions.Logging.Abstractions.dll ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\Newtonsoft.Json.dll                           ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\MyEMSLReader.dll                              ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\Npgsql.dll                                    ; DestDir: {app}\MageMetaDataProcessor
@@ -174,9 +179,9 @@ Source: ..\DeployedFiles\MageMetaDataProcessor\PRISM.dll                        
 Source: ..\DeployedFiles\MageMetaDataProcessor\PRISMDatabaseUtils.dll                        ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\ShFolderBrowser.dll                           ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\System.Buffers.dll                            ; DestDir: {app}\MageMetaDataProcessor
-Source: ..\DeployedFiles\MageMetaDataProcessor\System.Collections.Immutable.dll              ; DestDir: {app}\MageMetaDataProcessor                                                                   
-Source: ..\DeployedFiles\MageMetaDataProcessor\System.Data.SQLite.dll                        ; DestDir: {app}\MageMetaDataProcessor                                                         
-Source: ..\DeployedFiles\MageMetaDataProcessor\System.Diagnostics.DiagnosticSource.dll       ; DestDir: {app}\MageMetaDataProcessor                                                                          
+Source: ..\DeployedFiles\MageMetaDataProcessor\System.Collections.Immutable.dll              ; DestDir: {app}\MageMetaDataProcessor
+Source: ..\DeployedFiles\MageMetaDataProcessor\System.Data.SQLite.dll                        ; DestDir: {app}\MageMetaDataProcessor
+Source: ..\DeployedFiles\MageMetaDataProcessor\System.Diagnostics.DiagnosticSource.dll       ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\System.Memory.dll                             ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\System.Numerics.Vectors.dll                   ; DestDir: {app}\MageMetaDataProcessor
 Source: ..\DeployedFiles\MageMetaDataProcessor\System.Runtime.CompilerServices.Unsafe.dll    ; DestDir: {app}\MageMetaDataProcessor
@@ -198,8 +203,9 @@ Source: ..\DeployedFiles\Ranger\Mage.dll                                      ; 
 Source: ..\DeployedFiles\Ranger\MageDisplayLib.dll                            ; DestDir: {app}\Ranger
 Source: ..\DeployedFiles\Ranger\MageUIComponents.dll                          ; DestDir: {app}\Ranger
 Source: ..\DeployedFiles\Ranger\Microsoft.Bcl.AsyncInterfaces.dll             ; DestDir: {app}\Ranger
-Source: ..\DeployedFiles\Ranger\Microsoft.Bcl.HashCode.dll                    ; DestDir: {app}\Ranger                                               
-Source: ..\DeployedFiles\Ranger\Microsoft.Extensions.Logging.Abstractions.dll ; DestDir: {app}\Ranger                                                                  
+Source: ..\DeployedFiles\Ranger\Microsoft.Bcl.HashCode.dll                    ; DestDir: {app}\Ranger
+Source: ..\DeployedFiles\Ranger\Microsoft.Extensions.DependencyInjection.Abstractions.dll ; DestDir: {app}\Ranger
+Source: ..\DeployedFiles\Ranger\Microsoft.Extensions.Logging.Abstractions.dll ; DestDir: {app}\Ranger
 Source: ..\DeployedFiles\Ranger\MyEMSLReader.dll                              ; DestDir: {app}\Ranger
 Source: ..\DeployedFiles\Ranger\Newtonsoft.Json.dll                           ; DestDir: {app}\Ranger
 Source: ..\DeployedFiles\Ranger\Npgsql.dll                                    ; DestDir: {app}\Ranger
@@ -209,9 +215,9 @@ Source: ..\DeployedFiles\Ranger\PRISMDatabaseUtils.dll                        ; 
 Source: ..\DeployedFiles\Ranger\RangerLib.dll                                 ; DestDir: {app}\Ranger
 Source: ..\DeployedFiles\Ranger\ShFolderBrowser.dll                           ; DestDir: {app}\Ranger
 Source: ..\DeployedFiles\Ranger\System.Buffers.dll                            ; DestDir: {app}\Ranger
-Source: ..\DeployedFiles\Ranger\System.Collections.Immutable.dll              ; DestDir: {app}\Ranger                                                     
-Source: ..\DeployedFiles\Ranger\System.Data.SQLite.dll                        ; DestDir: {app}\Ranger                                           
-Source: ..\DeployedFiles\Ranger\System.Diagnostics.DiagnosticSource.dll       ; DestDir: {app}\Ranger                                                            
+Source: ..\DeployedFiles\Ranger\System.Collections.Immutable.dll              ; DestDir: {app}\Ranger
+Source: ..\DeployedFiles\Ranger\System.Data.SQLite.dll                        ; DestDir: {app}\Ranger
+Source: ..\DeployedFiles\Ranger\System.Diagnostics.DiagnosticSource.dll       ; DestDir: {app}\Ranger
 Source: ..\DeployedFiles\Ranger\System.Memory.dll                             ; DestDir: {app}\Ranger
 Source: ..\DeployedFiles\Ranger\System.Numerics.Vectors.dll                   ; DestDir: {app}\Ranger
 Source: ..\DeployedFiles\Ranger\System.Runtime.CompilerServices.Unsafe.dll    ; DestDir: {app}\Ranger
