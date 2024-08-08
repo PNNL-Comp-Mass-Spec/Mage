@@ -10,7 +10,7 @@ namespace Mage
     /// </summary>
     public class BaseModule : IBaseModule
     {
-        // Ignore Spelling: Mage
+        // Ignore Spelling: Defs, Mage, Vals
 
         private static readonly FileLogger traceLogBase = new(FileLogger.BaseLogFileName, BaseLogger.LogLevels.INFO, FileLogger.AppendDateToBaseFileName);
 
@@ -59,7 +59,7 @@ namespace Mage
 
         /// <summary>
         /// Master list of Output column position keyed to column name (for lookup of column index by column name)
-        /// (case insensitive)
+        /// (case-insensitive)
         /// </summary>
         /// <remarks>Not all modules require this feature</remarks>
         protected Dictionary<string, int> OutputColumnPos;
@@ -76,7 +76,7 @@ namespace Mage
 
         /// <summary>
         /// Position map list of new output columns that have
-        /// matching keys in the Context parameters (case insensitive dictionary)
+        /// matching keys in the Context parameters (case-insensitive dictionary)
         /// </summary>
         protected Dictionary<string, int> ContextColPos;
 
@@ -526,7 +526,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Perform case insensitive replacement string replace
+        /// Perform case-insensitive replacement string replace
         /// </summary>
         /// <param name="original">Text to search</param>
         /// <param name="pattern">Text to find</param>
@@ -538,7 +538,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Perform case insensitive replacement string replace
+        /// Perform case-insensitive replacement string replace
         /// </summary>
         /// <param name="original">Text to search</param>
         /// <param name="pattern">Text to find</param>
@@ -551,7 +551,7 @@ namespace Mage
         }
 
         /// <summary>
-        /// Perform case insensitive replacement string replace
+        /// Perform case-insensitive replacement string replace
         /// </summary>
         /// <param name="original">Text to search</param>
         /// <param name="pattern">Text to find</param>
@@ -686,7 +686,7 @@ namespace Mage
 
         /// <summary>
         /// A name/position map for "new" output columns (columns added to output that don't remap input columns)
-        /// (case insensitive)
+        /// (case-insensitive)
         /// </summary>
         /// <remarks>Not all modules require this feature</remarks>
         protected Dictionary<string, int> NewOutputColumnPos;

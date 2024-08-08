@@ -14,7 +14,7 @@ namespace MageDisplayLib
     /// </summary>
     public static class SavedState
     {
-        // Ignore Spelling: floyd, Mage, utf
+        // Ignore Spelling: dms, floyd, Mage, utf
 
         private const string QUERY_DEFS_FILE = "QueryDefinitions.xml";
 

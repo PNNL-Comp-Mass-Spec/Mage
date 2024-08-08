@@ -2,6 +2,8 @@
 {
     internal class ConnectionInfo
     {
+        // Ignore Spelling: Mage, Postgres
+
         /// <summary>
         /// Server name
         /// </summary>

@@ -102,7 +102,7 @@ namespace Mage
         /// <summary>
         /// Call the Run method on the root module of pipeline (execution will be in caller's thread)
         /// </summary>
-        /// <param name="state">Provided so that this function has necessary signature to be target of ThreadPool.QueueUserWorkItem</param>
+        /// <param name="state">Provided so that this function has the necessary signature to be a target of ThreadPool.QueueUserWorkItem</param>
         public void RunRoot(object state)
         {
             var processingError = false;
@@ -371,10 +371,12 @@ namespace Mage
             try
             {
                 var module = MakeModule(className);
+
                 if (module == null)
                 {
                     throw new MageException("Class not found in searched assemblies");
                 }
+
                 return AddModule(moduleName, module);
             }
             catch (Exception e)

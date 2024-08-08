@@ -16,7 +16,7 @@ namespace Mage
     {
         // ReSharper disable CommentTypo
 
-        // Ignore Spelling: citext, dbo, Mage, Postgres, postgresql, sproc, smalldate, username, yyyy-MM-dd hh:mm:ss tt
+        // Ignore Spelling: citext, dbo, Mage, Postgres, postgresql, sproc, smalldate, SQL, username, yyyy-MM-dd hh:mm:ss tt
         // Ignore Spelling: bigint, datetime, datetimeoffset, nchar, ntext, nvarchar, smalldatetime, smallint, smallmoney, tinyint, uniqueidentifier, varbinary, varchar
         // Ignore Spelling: bool, bytea, cidr, hstore, inet, json, jsonb, lseg, macaddr, timestamptz, timetz, tsquery, tsvector, uuid, varbit
 

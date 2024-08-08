@@ -17,7 +17,7 @@ namespace Mage
     /// </summary>
     public sealed class SQLiteWriter : BaseModule, IDisposable
     {
-        // Ignore Spelling: bool, Mage, sqlite, varchar, yyyy-MM-dd, HH:mm:ss
+        // Ignore Spelling: bool, Mage, Nullable, sqlite, varchar, yyyy-MM-dd, HH:mm:ss
 
         private static readonly FileLogger traceLogWriter = new(FileLogger.BaseLogFileName, BaseLogger.LogLevels.INFO, FileLogger.AppendDateToBaseFileName);
 

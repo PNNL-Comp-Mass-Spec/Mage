@@ -7,6 +7,8 @@ namespace BiodiversityFileCopy
 {
     internal static class Pipes
     {
+        // Ignore Spelling: dest, fasta, fht, mzid, mzml
+
         private static void ConnectPipelineToMessaging(ProcessingPipeline pl)
         {
             pl.OnWarningMessageUpdated += Logging.HandleLogMessage;
@@ -22,13 +24,14 @@ namespace BiodiversityFileCopy
         /// <param name="sourceFilePathColName">Name of column that contains source path for file</param>
         /// <param name="destFilePathColName">Name of column that contains source path for file</param>
         /// <param name="doCopy">Actually copy the file</param>
-        /// <param name="verbose"> </param>
+        /// <param name="verbose">When true, log copy messages</param>
         /// <param name="checkSource"> </param>
         public static int CopyFiles(SimpleSink fileList, string sourceFilePathColName, string destFilePathColName, bool doCopy, bool verbose, bool checkSource)
         {
             var srcIdx = fileList.ColumnIndex[sourceFilePathColName];
             var destIdx = fileList.ColumnIndex[destFilePathColName];
             var numExist = 0;
+
             foreach (var row in fileList.Rows)
             {
                 var destPath = row[destIdx];
@@ -60,7 +63,7 @@ namespace BiodiversityFileCopy
         /// Copy a file
         /// </summary>
         /// <param name="doCopy">Copy if true, otherwise just log what would have happened</param>
-        /// <param name="verbose">Log message about copy if true</param>
+        /// <param name="verbose">When true, log copy messages</param>
         /// <param name="destPath">Full path to copy file to</param>
         /// <param name="sourcePath">Full path to copy file from</param>
         private static void CopyFile(bool doCopy, bool verbose, string destPath, string sourcePath)
