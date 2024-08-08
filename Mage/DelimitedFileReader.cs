@@ -237,10 +237,12 @@ namespace Mage
             // Output the column definitions
             var colDefs = new List<MageColumnDef>();
 
+            // ReSharper disable once LoopCanBeConvertedToQuery
             foreach (var field in fields)
             {
                 colDefs.Add(new MageColumnDef(field, "text", "10"));
             }
+
             OnColumnDefAvailable(new MageColumnEventArgs(colDefs.ToArray()));
         }
 

@@ -90,7 +90,10 @@ namespace MageFileProcessor
             var datasetDetailMenuItem = new ToolStripMenuItem("Dataset detail", null, HandleDatasetWebAction, "DatasetDetailWebPage");
             mDatasetSensitiveMenuItems.Add(datasetDetailMenuItem.Name);
             webPageMenuItem.DropDownItems.Add(datasetDetailMenuItem);
+
+#pragma warning disable IDE0305
             return toolStripItems.ToArray();
+#pragma warning restore IDE0305
         }
 
         /// <summary>
@@ -127,7 +130,9 @@ namespace MageFileProcessor
             mDirectorySensitiveMenuItems.Add(openDirectoryMenuItem.Name);
             toolStripItems.Add(openDirectoryMenuItem);
 
+#pragma warning disable IDE0305
             return toolStripItems.ToArray();
+#pragma warning restore IDE0305
         }
 
         /// <summary>
