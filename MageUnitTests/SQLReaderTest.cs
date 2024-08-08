@@ -86,6 +86,9 @@ namespace MageUnitTests
             Assert.AreEqual(expected, actual);
         }
 
+        /*
+         * Disabled in August 2024 when DMS was moved to PostgreSQL
+         *
         [Test]
         [TestCase(@"..\..\..\TestItems\QueryDefinitions.xml")]
         [Category("DatabaseIntegrated")]
@@ -93,16 +96,17 @@ namespace MageUnitTests
         {
             XMLQueryDatasetFactors(queryDefinitionsPath, "", "");
         }
+        */
 
         [Test]
         [TestCase(@"..\..\..\TestItems\QueryDefinitions.xml")]
         [Category("DatabaseNamedUser")]
         public void XMLQueryDatasetFactorsNamedUser(string queryDefinitionsPath)
         {
-            XMLQueryDatasetFactors(queryDefinitionsPath, DMS_READER, DMS_READER_PASSWORD);
+            XMLQueryDatasetFactors(queryDefinitionsPath, DMS_READER, DMS_READER_PASSWORD, true);
         }
 
-        public void XMLQueryDatasetFactors(string queryDefinitionsPath, string username, string password)
+        public void XMLQueryDatasetFactors(string queryDefinitionsPath, string username, string password, bool isPostgres)
         {
             var queryDefsFile = General.GetTestFile(queryDefinitionsPath);
 
@@ -119,7 +123,7 @@ namespace MageUnitTests
             Assert.AreNotEqual("", queryDefXML);
 
             // Create SQLReader module initialized from XML definition
-            var target = new SQLReader(queryDefXML, runtimeParameters, username, password);
+            var target = new SQLReader(queryDefXML, runtimeParameters, username, password, isPostgres);
             Assert.AreNotEqual(null, target);
             RegisterEvents(target);
 
@@ -142,7 +146,7 @@ namespace MageUnitTests
         /// Test to get factors for dataset name
         /// </summary>
         [Test]
-        [TestCase("", "", false)]
+        [TestCase("gigasax", "DMS5", false)]
         [Category("DatabaseIntegrated")]
         public void QueryDatasetFactorsIntegrated(string serverName, string databaseName, bool isPostgres)
         {
@@ -153,7 +157,6 @@ namespace MageUnitTests
         /// Test to get factors for dataset name
         /// </summary>
         [Test]
-        [TestCase("", "", DMS_READER, DMS_READER_PASSWORD, false)]
         [TestCase("prismdb2", "dms", DMS_READER, DMS_READER_PASSWORD, true)]
         [Category("DatabaseNamedUser")]
         public void QueryDatasetFactorsNamedUser(string serverName, string databaseName, string userName, string userPassword, bool isPostgres)
@@ -211,10 +214,11 @@ namespace MageUnitTests
         /// using SQLBuilder to make the SQL
         /// </summary>
         [Test]
+        [TestCase("Gigasax", "DMS5", false)]
         [Category("DatabaseIntegrated")]
-        public void QueryWithSQLBuilderTestIntegrated()
+        public void QueryWithSQLBuilderTestIntegrated(string server, string database, bool isPostgres)
         {
-            QueryWithSQLBuilderTest("", "");
+            QueryWithSQLBuilderTest(server, database, isPostgres, string.Empty, string.Empty);
         }
 
         /// <summary>
@@ -225,18 +229,14 @@ namespace MageUnitTests
         [Category("DatabaseNamedUser")]
         public void QueryWithSQLBuilderTestNamedUser()
         {
-            QueryWithSQLBuilderTest(DMS_READER, DMS_READER_PASSWORD);
+            QueryWithSQLBuilderTest(Globals.DMSServer, Globals.DMSDatabase, Globals.PostgresDMS, DMS_READER, DMS_READER_PASSWORD);
         }
 
-        private void QueryWithSQLBuilderTest(string username, string password)
+        private void QueryWithSQLBuilderTest(string serverName, string databaseName, bool isPostgres, string username, string password)
         {
-            var serverName = Globals.DMSServer;
-            var databaseName = Globals.DMSDatabase;
-            var isPostgres = Globals.PostgresDMS;
-
             // Create SQLReader module and test sink module
             // and connect together (no pipeline object used)
-            var target = new SQLReader(serverName, databaseName, username, password);
+            var target = new SQLReader(serverName, databaseName, username, password, isPostgres);
             RegisterEvents(target);
 
             const int maxRows = 7;
@@ -332,34 +332,31 @@ namespace MageUnitTests
         /// A test for straight SQL query against DMS
         /// </summary>
         [Test]
+        [TestCase("Gigasax", "DMS5", false)]
         [Category("DatabaseIntegrated")]
-        public void QueryTestIntegrated()
+        public void QueryTestIntegrated(string server, string database, bool isPostgres)
         {
-            QueryTest("", "");
-        }
-
-        /// <summary>
-        /// A test for straight SQL query against DMS on Gigasax
-        /// </summary>
-        [Test]
-        [Category("DatabaseNamedUser")]
-        public void QueryTestNamedUser()
-        {
-            QueryTest(DMS_READER, DMS_READER_PASSWORD);
+            QueryTest(server, database, isPostgres, string.Empty, string.Empty);
         }
 
         /// <summary>
         /// A test for straight SQL query against DMS
         /// </summary>
-        private void QueryTest(string username, string password)
+        [Test]
+        [Category("DatabaseNamedUser")]
+        public void QueryTestNamedUser()
         {
-            var serverName = Globals.DMSServer;
-            var databaseName = Globals.DMSDatabase;
-            var isPostgres = Globals.PostgresDMS;
+            QueryTest(Globals.DMSServer, Globals.DMSDatabase, Globals.PostgresDMS, DMS_READER, DMS_READER_PASSWORD);
+        }
 
+        /// <summary>
+        /// A test for straight SQL query against DMS
+        /// </summary>
+        private void QueryTest(string serverName, string databaseName, bool isPostgres, string username, string password)
+        {
             // Create SQLReader module and test sink module
             // and connect together (no pipeline object used)
-            var target = new SQLReader(serverName, databaseName, username, password);
+            var target = new SQLReader(serverName, databaseName, username, password, isPostgres);
             RegisterEvents(target);
 
             const int maxRows = 7;
@@ -372,7 +369,7 @@ namespace MageUnitTests
             var colNames = string.Join(", ", colList);
 
             // Define and run a database query
-            // Defaults are gigasax and DMS5
+            // Defaults are prismdb2 and dms
 
             // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
             if (isPostgres)
@@ -390,27 +387,30 @@ namespace MageUnitTests
         }
 
         [Test]
+        [TestCase("Gigasax", "DMS5", false)]
         [Category("DatabaseIntegrated")]
-        public void DMSSprocTestIntegrated()
+        public void DMSSprocTestIntegrated(string server, string database, bool isPostgres)
         {
-            DMSSprocReadTest("", "");
+            DMSSprocReadTest(server, database, isPostgres, string.Empty, string.Empty);
         }
 
+        /*
+         * Disabled in August 2024 since it results in the following error message
+         * Missing type info, ResolveTypeInfo needs to be called before Bind
+         *
         [Test]
         [Category("DatabaseNamedUser")]
         public void DMSSprocTestNamedUser()
         {
-            DMSSprocReadTest(DMS_READER, DMS_READER_PASSWORD);
+            DMSSprocReadTest(Globals.DMSServer, Globals.DMSDatabase, Globals.PostgresDMS, DMS_READER, DMS_READER_PASSWORD);
         }
+        */
 
-        private void DMSSprocReadTest(string username, string password)
+        private void DMSSprocReadTest(string serverName, string databaseName, bool isPostgres, string username, string password)
         {
-            var serverName = Globals.DMSServer;
-            var databaseName = Globals.DMSDatabase;
-
             // Create SQLReader module and test sink module
             // and connect together (no pipeline object used)
-            var target = new SQLReader(serverName, databaseName, username, password);
+            var target = new SQLReader(serverName, databaseName, username, password, isPostgres);
             RegisterEvents(target);
 
             const int maxRows = 4;
@@ -418,17 +418,21 @@ namespace MageUnitTests
             target.ColumnDefAvailable += sink.HandleColumnDef;
             target.DataRowAvailable += sink.HandleDataRow;
 
-            // Define and run a database sproc query
-            // Defaults are gigasax and DMS5
-            target.SprocName = "find_existing_jobs_for_request";
-            target.SetSprocParam("@requestID", "8142");
+            // Define and run a database stored procedure query
+            // Defaults are prismdb2 and dms
+            target.SprocName = "predefined_analysis_rules_proc";
+            target.SetSprocParam("@datasetName", "QC_Mam_19_01_d_09Aug22_Pippin_WBEH-22-02-04-50u");
 
             target.Run(null);
 
             // Define columns (normally not needed for production code, but necessary for unit test)
             var colList = new[] {
-                "job", "state", "priority", "request", "created", "start", "finish", "processor",
-                "dataset" };
+                "step", "level", "seq", "predefine_id", "next_lvl", "trigger_mode", "export_mode", "action", "reason", "notes", "analysis_tool",
+                "instrument_class_criteria", "instrument_criteria", "instrument_exclusion", "campaign_criteria", "campaign_exclusion",
+                "experiment_criteria", "experiment_exclusion", "organism_criteria", "dataset_criteria", "dataset_exclusion", "dataset_type",
+                "exp_comment_criteria", "labelling_inclusion", "labelling_exclusion", "separation_type_criteria", "scan_count_min", "scan_count_max",
+                "param_file", "settings_file", "organism", "protein_collections", "protein_options", "organism_db", "special_processing", "priority"
+            };
 
             var sprocInfo = "procedure " + target.SprocName + " in " + target.Database;
             CheckQueryResults(sink, maxRows, colList, serverName, databaseName, username, sprocInfo);

@@ -30,12 +30,13 @@ namespace MageUnitTestsForFileProcessor
             var queryDefXML = @"
   <query name='Mage_Analysis_Jobs'>
     <description>Get selected list of analysis jobs</description>
-    <connection server='" + Globals.DMSServer + "' database='" + Globals.DMSDatabase + "'/>" +
+    <connection server='" + Globals.DMSServer + "' postgres='true' database='" + Globals.DMSDatabase + "' user='" + Globals.DMSUser + "' password='" + Globals.DMSUserPassword + "'/>" +
     "<table name='V_Mage_Analysis_Jobs' cols='*'/>" +
     "<predicate rel='AND' col='Job' cmp='Equals' val=''>Descriptive text for Job</predicate>" +
     "<predicate rel='AND' col='Dataset' cmp='ContainsText' val=''>Descriptive text for Dataset</predicate>" +
     "<sort col='Job' dir='ASC'/>" +
   "</query>";
+
             runtimeParms = new Dictionary<string, string>
             {
                 {"Dataset", "sarc_ms"}
@@ -51,6 +52,8 @@ namespace MageUnitTestsForFileProcessor
             var target = (SQLReader)source;
             Assert.AreEqual(Globals.DMSDatabase.ToLower(), target.Database.ToLower());
             Assert.AreEqual(Globals.DMSServer.ToLower(), target.Server.ToLower());
+            Assert.AreEqual(Globals.DMSUser.ToLower(), target.Username.ToLower());
+            Assert.AreEqual(Globals.DMSUserPassword.ToLower(), target.Password.ToLower());
             Assert.AreEqual("SELECT * FROM V_Mage_Analysis_Jobs WHERE Dataset LIKE '%sarc_ms%' ORDER BY Job ASC", target.SQLText);
         }
 
