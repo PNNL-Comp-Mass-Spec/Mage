@@ -689,7 +689,7 @@ namespace Mage
         /// Return a SqlCommand suitable for calling the given stored procedure
         /// with the given argument values
         /// </summary>
-        /// <param name="dbTools"></param>
+        /// <param name="dbTools">DBTools instance</param>
         /// <param name="sprocName">Stored procedure name; can optionally contain a schema name, e.g. mc.get_manager_parameters</param>
         /// <param name="sprocParams">Dictionary where keys are stored procedure argument names and values are the value for each argument</param>
         private DbCommand GetSprocCmd(IDBTools dbTools, string sprocName, IReadOnlyDictionary<string, string> sprocParams)
@@ -710,6 +710,12 @@ namespace Mage
                     "numeric_precision",
                     "numeric_scale"
                 };
+
+                if (isPostgres)
+                {
+                    // This column is used to look for citext arguments
+                    columnNames.Add("udt_name");
+                }
 
                 // Map from column name to column index
                 var columnIndexMap = new Dictionary<string, int>();
@@ -774,13 +780,44 @@ namespace Mage
                 foreach (var resultRow in queryResults)
                 {
                     var parameterName = resultRow[columnIndexMap["parameter_name"]];
-                    var dataTypeName = resultRow[columnIndexMap["data_type"]].ToLower();
+                    var dataType = resultRow[columnIndexMap["data_type"]].ToLower();
+
+                    string dataTypeName;
+
+                    if (dataType.Equals("user-defined") && isPostgres)
+                    {
+                        // Check for a citext argument
+                        var udtName = resultRow[columnIndexMap["udt_name"]].ToLower();
+
+                        dataTypeName = udtName.Equals("citext") ? "text" : dataType;
+                    }
+                    else
+                    {
+                        dataTypeName = dataType;
+                    }
+
                     var parameterMode = resultRow[columnIndexMap["parameter_mode"]];
                     var parameterSizeText = resultRow[columnIndexMap["character_maximum_length"]];
 
                     var parameterSize = int.TryParse(parameterSizeText, out var parsedArgSize) ? parsedArgSize : 0;
 
                     var direction = ParamDirection(parameterMode);
+
+                    // ReSharper disable once StringLiteralTypo
+                    if (dataTypeName.Equals("refcursor"))
+                    {
+                        // Skip this parameter, since dbTools auto-handles cursor arguments
+                        continue;
+                    }
+
+                    if (dataTypeName.Equals("user-defined"))
+                    {
+                        // Skip this parameter
+                        OnStatusMessageUpdated(new MageStatusEventArgs(
+                            string.Format("Skipping argument {0} for procedure {1} since its data type is 'user-defined'", parameterName, sprocName)));
+
+                        continue;
+                    }
 
                     var parameter = AddParameter(dbTools, command, parameterName, dataTypeName, direction, paramNames, sprocParams, parameterSize);
 
@@ -820,6 +857,7 @@ namespace Mage
         {
             return argMode is "INOUT" or "OUT" ? ParameterDirection.InputOutput : ParameterDirection.Input;
         }
+
     }
 }
 
