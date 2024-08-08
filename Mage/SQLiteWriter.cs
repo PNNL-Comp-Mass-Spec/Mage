@@ -428,9 +428,7 @@ namespace Mage
             }
             // builder.PageSize = 4096
             // builder.UseUTF16Encoding = True
-            var connectionString = builder.ConnectionString;
-
-            return connectionString;
+            return builder.ConnectionString;
         }
 
         /// <summary>
