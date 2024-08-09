@@ -84,7 +84,7 @@ namespace MageFileProcessor
 
             if (cols.Count == 0)
             {
-                Console.WriteLine("Did not retrieve data from database {0} on server {1} using {2}", serverName, databaseName, expectedSqlOrSProc);
+                Console.WriteLine("Did not retrieve data from database {0} on server {1} using {2}", databaseName, serverName, expectedSqlOrSProc);
             }
 
             // Did the test sink module get the expected number of data rows

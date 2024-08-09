@@ -631,7 +631,7 @@ namespace MageUnitTests
 
             if (actualColumns.Count == 0)
             {
-                Assert.Fail("Did not retrieve data from database {0} on server {1} using {2}", serverName, databaseName, expectedSqlOrSProc);
+                Assert.Fail("Did not retrieve data from database {0} on server {1} using {2}", databaseName, serverName, expectedSqlOrSProc);
             }
 
             Assert.AreEqual(expectedColumnNames.Count, actualColumns.Count, "Column count mismatch " + errorMessage);
