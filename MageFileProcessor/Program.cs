@@ -15,6 +15,8 @@ namespace MageFileProcessor
         [STAThread]
         private static void Main()
         {
+            // Ignore Spelling: Mage
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
@@ -46,7 +48,9 @@ namespace MageFileProcessor
         }
 
         // ReSharper disable once UnusedMember.Local
+#pragma warning disable RCS1213, IDE0051
         private static void DMSSprocReadTest(string serverName, string databaseName, bool isPostgres, string username, string password)
+#pragma warning restore RCS1213,IDE0051
         {
             // Create SQLReader module and test sink module
             // and connect together (no pipeline object used)

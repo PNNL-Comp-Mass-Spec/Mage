@@ -13,7 +13,7 @@ namespace MageUnitTests
     {
         // ReSharper disable CommentTypo
 
-        // Ignore Spelling: borked, dos, sarc, tres, uno
+        // Ignore Spelling: borked, dos, Mage, sarc, Sproc, tres, uno
 
         // ReSharper restore CommentTypo
 
