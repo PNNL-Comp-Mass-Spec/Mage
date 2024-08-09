@@ -138,8 +138,8 @@ namespace MageUnitTests
 
             target.Run(null);
 
-            var colList = new[] { "Dataset", "Dataset_ID", "Factor", "Value" };
-            CheckQueryResults(sink, maxRows, colList, target.Server, target.Database, username, expectedSql);
+            var expectedColumnNames = new[] { "Dataset", "Dataset_ID", "Factor", "Value" };
+            CheckQueryResults(sink, maxRows, expectedColumnNames, target.Server, target.Database, username, expectedSql);
         }
 
         /// <summary>
@@ -189,8 +189,8 @@ namespace MageUnitTests
             reader.DataRowAvailable += sink.HandleDataRow;
 
             // Define query
-            var colList = new[] { "dataset", "dataset_id", "factor", "value" };
-            var colNames = string.Join(", ", colList);
+            var columnList = new[] { "dataset", "dataset_id", "factor", "value" };
+            var colNames = string.Join(", ", columnList);
 
             var builder = new SQLBuilder
             {
@@ -206,7 +206,7 @@ namespace MageUnitTests
 
             reader.Run(null);
 
-            CheckQueryResults(sink, maxRows, colList, serverName, databaseName, username, reader.SQLText);
+            CheckQueryResults(sink, maxRows, columnList, serverName, databaseName, username, reader.SQLText);
         }
 
         /// <summary>
@@ -247,13 +247,14 @@ namespace MageUnitTests
             // Define and run a database query
 
             // Define columns (normally not needed for production code, but necessary for unit test)
-            var colList = new[] {
+            var columnList = new[] {
                 "DatasetID", "volName", "path", "datasetFolder", "resultsFolder",
                 "datasetName", "JobId", "ColumnID", "AcquisitionTime", "Labelling",
                 "InstrumentName", "ToolID", "BlockNum", "ReplicateName", "ExperimentID",
                 "RunOrder", "BatchID", "ArchPath", "DatasetFullPath", "Organism", "Campaign",
                 "ParameterFileName", "SettingsFileName" };
-            var colNames = string.Join(", ", colList);
+
+            var colNames = string.Join(", ", columnList);
 
             // Define query
             var builder = new SQLBuilder
@@ -267,7 +268,7 @@ namespace MageUnitTests
 
             target.Run(null);
 
-            CheckQueryResults(sink, maxRows, colList, serverName, databaseName, username, target.SQLText);
+            CheckQueryResults(sink, maxRows, columnList, serverName, databaseName, username, target.SQLText);
         }
 
         /// <summary>
@@ -311,8 +312,8 @@ namespace MageUnitTests
             // Define and run a database query
 
             // Define columns (normally not needed for production code, but necessary for unit test)
-            var colList = new[] { "server_name", "mt_db_id", "mt_db_name", "state_id", "state" };
-            var colNames = string.Join(", ", colList);
+            var columnList = new[] { "server_name", "mt_db_id", "mt_db_name", "state_id", "state" };
+            var colNames = string.Join(", ", columnList);
 
             // Define query
             var builder = new SQLBuilder
@@ -325,7 +326,7 @@ namespace MageUnitTests
 
             target.Run(null);
 
-            CheckQueryResults(sink, maxRows, colList, serverName, databaseName, username, target.SQLText);
+            CheckQueryResults(sink, maxRows, columnList, serverName, databaseName, username, target.SQLText);
         }
 
         /// <summary>
@@ -365,8 +366,8 @@ namespace MageUnitTests
             target.DataRowAvailable += sink.HandleDataRow;
 
             // Define columns (normally not needed for production code, but necessary for unit test)
-            var colList = new[] { "Job", "State", "Dataset", "Dataset_ID", "Tool", "Parameter_File", "Settings_File", "Instrument", "Experiment", "Campaign" };
-            var colNames = string.Join(", ", colList);
+            var columnList = new[] { "Job", "State", "Dataset", "Dataset_ID", "Tool", "Parameter_File", "Settings_File", "Instrument", "Experiment", "Campaign" };
+            var colNames = string.Join(", ", columnList);
 
             // Define and run a database query
             // Defaults are prismdb2 and dms
@@ -383,7 +384,7 @@ namespace MageUnitTests
 
             target.Run(null);
 
-            CheckQueryResults(sink, maxRows, colList, serverName, databaseName, username, target.SQLText);
+            CheckQueryResults(sink, maxRows, columnList, serverName, databaseName, username, target.SQLText);
         }
 
         [Test]
@@ -426,7 +427,7 @@ namespace MageUnitTests
             target.Run(null);
 
             // Define columns (normally not needed for production code, but necessary for unit test)
-            var colList = new List<string> {
+            var expectedColumnNames = new List<string> {
                 "step", "level", "seq", "predefine_id", "next_lvl", "trigger_mode", "export_mode", "action", "reason", "notes", "analysis_tool",
                 "instrument_class_criteria", "instrument_criteria", "instrument_exclusion", "campaign_criteria", "campaign_exclusion",
                 "experiment_criteria", "experiment_exclusion", "organism_criteria", "dataset_criteria", "dataset_exclusion", "dataset_type",
@@ -437,11 +438,11 @@ namespace MageUnitTests
 
             if (!isPostgres)
             {
-                colList.Add("processor_group");
+                expectedColumnNames.Add("processor_group");
             }
 
             var sprocInfo = "procedure " + target.SprocName + " in " + target.Database;
-            CheckQueryResults(sink, maxRows, colList, serverName, databaseName, username, sprocInfo);
+            CheckQueryResults(sink, maxRows, expectedColumnNames, serverName, databaseName, username, sprocInfo);
         }
 
         [Test]
@@ -490,7 +491,7 @@ namespace MageUnitTests
             target.Run(null);
 
             // Define columns (normally not needed for production code, but necessary for unit test)
-            var colList = new[] {
+            var expectedColumnNames = new[] {
                 "Mass_Tag_ID", "Peptide", "Monoisotopic_Mass", "NET_Value_to_Use", "NET_Obs_Count", "PNET",
                 "High_Normalized_Score", "StD_GANET", "High_Discriminant_Score", "Peptide_Obs_Count_Passing_Filter",
                 "Mod_Count", "Mod_Description", "High_Peptide_Prophet_Probability", "ObsCount_CS1", "ObsCount_CS2",
@@ -499,7 +500,7 @@ namespace MageUnitTests
                 "PepProphet_FScore_Avg_CS1", "PepProphet_FScore_Avg_CS2", "PepProphet_FScore_Avg_CS3", "Cleavage_State" };
 
             var sprocInfo = "procedure " + target.SprocName + " in " + target.Database;
-            CheckQueryResults(sink, maxRows, colList, target.Server, target.Database, username, sprocInfo);
+            CheckQueryResults(sink, maxRows, expectedColumnNames, target.Server, target.Database, username, sprocInfo);
         }
 
         [Test]
@@ -549,7 +550,7 @@ namespace MageUnitTests
             target.Run(null);
 
             // Define columns (normally not needed for production code, but necessary for unit test)
-            var colList = new[] {
+            var expectedColumnNames = new[] {
                 "Mass_Tag_ID", "Peptide", "Monoisotopic_Mass", "NET_Value_to_Use", "NET_Obs_Count", "PNET",
                 "High_Normalized_Score", "StD_GANET", "High_Discriminant_Score", "Peptide_Obs_Count_Passing_Filter",
                 "Mod_Count", "Mod_Description", "High_Peptide_Prophet_Probability", "ObsCount_CS1", "ObsCount_CS2",
@@ -558,7 +559,7 @@ namespace MageUnitTests
                 "PepProphet_FScore_Avg_CS1", "PepProphet_FScore_Avg_CS2", "PepProphet_FScore_Avg_CS3", "Cleavage_State" };
 
             var sprocInfo = "procedure " + target.SprocName + " in " + target.Database;
-            CheckQueryResults(sink, maxRows, colList, serverName, databaseName, username, sprocInfo);
+            CheckQueryResults(sink, maxRows, expectedColumnNames, serverName, databaseName, username, sprocInfo);
         }
 
         [Test]
@@ -600,16 +601,16 @@ namespace MageUnitTests
             target.Run(null);
 
             // Define columns (normally not needed for production code, but necessary for unit test)
-            var colList = new[] { "Name", "Description", "Organism", "Campaign" };
+            var expectedColumnNames = new[] { "Name", "Description", "Organism", "Campaign" };
 
             var sprocInfo = "procedure " + target.SprocName + " in " + target.Database;
-            CheckQueryResults(sink, maxRows, colList, serverName, databaseName, username, sprocInfo);
+            CheckQueryResults(sink, maxRows, expectedColumnNames, serverName, databaseName, username, sprocInfo);
         }
 
         private static void CheckQueryResults(
             SimpleSink sink,
             int maxRows,
-            IReadOnlyList<string> colList,
+            IReadOnlyList<string> expectedColumnNames,
             string serverName,
             string databaseName,
             string username,
@@ -626,17 +627,17 @@ namespace MageUnitTests
             }
 
             // Did the test sink module get the expected row definitions
-            var cols = sink.Columns;
+            var actualColumns = sink.Columns;
 
-            if (cols.Count == 0)
+            if (actualColumns.Count == 0)
             {
                 Assert.Fail("Did not retrieve data from database {0} on server {1} using {2}", serverName, databaseName, expectedSqlOrSProc);
             }
 
-            Assert.AreEqual(colList.Count, cols.Count, "Column count mismatch " + errorMessage);
-            for (var i = 0; i < cols.Count; i++)
+            Assert.AreEqual(expectedColumnNames.Count, actualColumns.Count, "Column count mismatch " + errorMessage);
+            for (var i = 0; i < actualColumns.Count; i++)
             {
-                Assert.AreEqual(colList[i], cols[i].Name, "Did not get the expected row definitions " + errorMessage);
+                Assert.AreEqual(expectedColumnNames[i], actualColumns[i].Name, "Did not get the expected row definitions " + errorMessage);
             }
 
             // Did the test sink module get the expected number of data rows
@@ -648,7 +649,7 @@ namespace MageUnitTests
             // Keys in this dictionary are column index; values are the maximum length of the data in that column
             var columnWidths = new Dictionary<int, int>();
 
-            var headerNames = (from item in cols.Take(COL_COUNT_TO_SHOW) select item.Name).ToList();
+            var headerNames = (from item in actualColumns.Take(COL_COUNT_TO_SHOW) select item.Name).ToList();
             for (var i = 0; i < headerNames.Count; i++)
             {
                 columnWidths.Add(i, headerNames[i].Length);
@@ -683,7 +684,7 @@ namespace MageUnitTests
             Assert.AreEqual(maxRows, rows.Count, "Did not get the expected number of data rows " + errorMessage);
 
             // Are there the expected number of fields in the data row?
-            Assert.AreEqual(colList.Count, rows[0].Length, "Data rows do not have the expected number of fields " + errorMessage);
+            Assert.AreEqual(expectedColumnNames.Count, rows[0].Length, "Data rows do not have the expected number of fields " + errorMessage);
         }
 
         private static List<string> PadData(IReadOnlyList<string> dataValues, IReadOnlyDictionary<int, int> columnWidths)
