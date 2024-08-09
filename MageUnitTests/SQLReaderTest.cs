@@ -426,13 +426,19 @@ namespace MageUnitTests
             target.Run(null);
 
             // Define columns (normally not needed for production code, but necessary for unit test)
-            var colList = new[] {
+            var colList = new List<string> {
                 "step", "level", "seq", "predefine_id", "next_lvl", "trigger_mode", "export_mode", "action", "reason", "notes", "analysis_tool",
                 "instrument_class_criteria", "instrument_criteria", "instrument_exclusion", "campaign_criteria", "campaign_exclusion",
                 "experiment_criteria", "experiment_exclusion", "organism_criteria", "dataset_criteria", "dataset_exclusion", "dataset_type",
-                "exp_comment_criteria", "labelling_inclusion", "labelling_exclusion", "separation_type_criteria", "scan_count_min", "scan_count_max",
-                "param_file", "settings_file", "organism", "protein_collections", "protein_options", "organism_db", "special_processing", "priority"
+                "scan_type_criteria", "scan_type_exclusion", "exp_comment_criteria", "labelling_inclusion", "labelling_exclusion",
+                "separation_type_criteria", "scan_count_min", "scan_count_max", "param_file", "settings_file", "organism",
+                "protein_collections", "protein_options", "organism_db", "special_processing", "priority"
             };
+
+            if (!isPostgres)
+            {
+                colList.Add("processor_group");
+            }
 
             var sprocInfo = "procedure " + target.SprocName + " in " + target.Database;
             CheckQueryResults(sink, maxRows, colList, serverName, databaseName, username, sprocInfo);
