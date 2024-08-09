@@ -177,7 +177,7 @@ FROM (
         {
             var sql = queryTemplate.Replace("@", dataPackageId);
 
-            // Typically prismdb2 and dms
+            // Typically prismdb2.emsl.pnl.gov and dms
             var dbr = new SQLReader
             {
                 Server = Globals.DMSServer,

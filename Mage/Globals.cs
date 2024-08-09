@@ -21,7 +21,7 @@ namespace Mage
         /// <summary>
         /// Default DMS server
         /// </summary>
-        public const string DEFAULT_DMS_SERVER = "prismdb2";
+        public const string DEFAULT_DMS_SERVER = "prismdb2.emsl.pnl.gov";
 
         /// <summary>
         /// Default DMS database

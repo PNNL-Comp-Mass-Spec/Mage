@@ -199,7 +199,7 @@ namespace MageUnitTests
             Assert.AreEqual("SQLiteWriter", mod.GetType().Name);
         }
 
-        // Default server info: prismdb2 and dms
+        // Default server info: prismdb2.emsl.pnl.gov and dms
         private readonly string pipelineXML = @"
 <pipeline name='Test_Pipeline' >
     <module name='Reader' type='SQLReader'>

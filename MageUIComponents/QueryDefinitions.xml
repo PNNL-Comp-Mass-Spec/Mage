@@ -2,13 +2,13 @@
 <queries>
 
   <query name="Data_Package_Details">
-    <connection server="prismdb2" postgres="true" database="dms" user="dmsreader" password="dms4fun"/>
+    <connection server="prismdb2.emsl.pnl.gov" postgres="true" database="dms" user="dmsreader" password="dms4fun"/>
     <table name="V_Mage_Data_Package_List" cols="*"/>
     <predicate rel="AND" col="ID" cmp="InList" val=""/>
   </query>
  
   <query name="Jobs">
-    <connection server="prismdb2" postgres="true" database="dms" user="dmsreader" password="dms4fun"/>
+    <connection server="prismdb2.emsl.pnl.gov" postgres="true" database="dms" user="dmsreader" password="dms4fun"/>
     <table name="V_Mage_FPkg_Analysis_Jobs" cols="*"/>
     <predicate rel="AND" col="Dataset" cmp="ContainsText" val=""/>
     <predicate rel="AND" col="Tool" cmp="ContainsText" val=""/>
@@ -17,43 +17,43 @@
   </query>
 
   <query name="Job_ID_List">
-    <connection server="prismdb2" postgres="true" database="dms" user="dmsreader" password="dms4fun"/>
+    <connection server="prismdb2.emsl.pnl.gov" postgres="true" database="dms" user="dmsreader" password="dms4fun"/>
     <table name="V_Mage_FPkg_Analysis_Jobs" cols="*"/>
     <predicate rel="AND" col="Job" cmp="InList" val=""/>
   </query>
 
   <query name="Data_Package">
-    <connection server="prismdb2" postgres="true" database="dms" user="dmsreader" password="dms4fun"/>
+    <connection server="prismdb2.emsl.pnl.gov" postgres="true" database="dms" user="dmsreader" password="dms4fun"/>
     <table name="V_Mage_FPkg_Data_Package_Analysis_Jobs" cols="*"/>
     <predicate rel="AND" col="Data_Package_ID" cmp="Equals" val=""/>
   </query>
 
   <query name="Data_Package_Datasets">
-    <connection server="prismdb2" postgres="true" database="dms" user="dmsreader" password="dms4fun"/>
+    <connection server="prismdb2.emsl.pnl.gov" postgres="true" database="dms" user="dmsreader" password="dms4fun"/>
     <table name="V_Mage_FPkg_Data_Package_Datasets" cols="*"/>
     <predicate rel="AND" col="Data_Package_ID" cmp="Equals" val=""/>
   </query>
 
   <query name="Datasets">
-    <connection server="prismdb2" postgres="true" database="dms" user="dmsreader" password="dms4fun"/>
+    <connection server="prismdb2.emsl.pnl.gov" postgres="true" database="dms" user="dmsreader" password="dms4fun"/>
     <table name="V_Mage_FPkg_Dataset_List" cols="*"/>
     <predicate rel="AND" col="Dataset" cmp="ContainsText" val=""/>
   </query>
 
   <query name="Dataset_List">
-    <connection server="prismdb2" postgres="true" database="dms" user="dmsreader" password="dms4fun"/>
+    <connection server="prismdb2.emsl.pnl.gov" postgres="true" database="dms" user="dmsreader" password="dms4fun"/>
     <table name="V_Mage_FPkg_Dataset_List" cols="*"/>
     <predicate rel="AND" col="Dataset_ID" cmp="InList" val=""/>
   </query>
 
   <query name="Jobs_From_Dataset_List">
-    <connection server="prismdb2" postgres="true" database="dms" user="dmsreader" password="dms4fun"/>
+    <connection server="prismdb2.emsl.pnl.gov" postgres="true" database="dms" user="dmsreader" password="dms4fun"/>
     <table name="V_Mage_FPkg_Analysis_Jobs" cols="*"/>
     <predicate rel="AND" col="Dataset_ID" cmp="InList" val=""/>
   </query>
 
   <query name="Job_Flex_Query">
-    <connection server="prismdb2" postgres="true" database="dms" user="dmsreader" password="dms4fun"/>
+    <connection server="prismdb2.emsl.pnl.gov" postgres="true" database="dms" user="dmsreader" password="dms4fun"/>
     <table name="V_Mage_FPkg_Analysis_Jobs" cols="*"/>
   </query>
 

@@ -157,7 +157,7 @@ namespace MageUnitTests
         /// Test to get factors for dataset name
         /// </summary>
         [Test]
-        [TestCase("prismdb2", "dms", DMS_READER, DMS_READER_PASSWORD, true)]
+        [TestCase("prismdb2.emsl.pnl.gov", "dms", DMS_READER, DMS_READER_PASSWORD, true)]
         [Category("DatabaseNamedUser")]
         public void QueryDatasetFactorsNamedUser(string serverName, string databaseName, string userName, string userPassword, bool isPostgres)
         {
@@ -166,7 +166,7 @@ namespace MageUnitTests
 
         private void QueryDatasetFactors(string serverName, string databaseName, string username, string password, bool isPostgres)
         {
-            // Default server is prismdb2
+            // Default server is prismdb2.emsl.pnl.gov
             if (string.IsNullOrWhiteSpace(serverName))
             {
                 serverName = Globals.DMSServer;
@@ -370,7 +370,7 @@ namespace MageUnitTests
             var colNames = string.Join(", ", columnList);
 
             // Define and run a database query
-            // Defaults are prismdb2 and dms
+            // Defaults are prismdb2.emsl.pnl.gov and dms
 
             // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
             if (isPostgres)
@@ -420,7 +420,7 @@ namespace MageUnitTests
             target.DataRowAvailable += sink.HandleDataRow;
 
             // Define and run a database stored procedure query
-            // Defaults are prismdb2 and dms
+            // Defaults are prismdb2.emsl.pnl.gov and dms
             target.SprocName = "predefined_analysis_rules_proc";
             target.SetSprocParam("@datasetName", "QC_Mam_19_01_d_09Aug22_Pippin_WBEH-22-02-04-50u");
 

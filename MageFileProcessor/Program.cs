@@ -63,7 +63,7 @@ namespace MageFileProcessor
             target.DataRowAvailable += sink.HandleDataRow;
 
             // Define and run a database stored procedure query
-            // Defaults are prismdb2 and dms
+            // Defaults are prismdb2.emsl.pnl.gov and dms
             target.SprocName = "predefined_analysis_rules_proc";
             target.SetSprocParam("@datasetName", "QC_Mam_19_01_d_09Aug22_Pippin_WBEH-22-02-04-50u");
 

@@ -279,7 +279,7 @@ namespace MageDisplayLib
             {
                 // Example node XML:
                 // <query name='Jobs'>
-                //     <connection server='prismdb2' database='dms' postgres='true' user='d3l243' /
+                //     <connection server='prismdb2.emsl.pnl.gov' database='dms' postgres='true' user='d3l243' /
 
                 if (query.Attributes == null)
                 {

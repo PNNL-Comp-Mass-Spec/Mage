@@ -52,7 +52,7 @@ namespace MageFilePackager
             SetAboutText();
 
             // These settings are loaded from file MageFilePackager.exe.config
-            // Typically prismdb2 and dms
+            // Typically prismdb2.emsl.pnl.gov and dms
             Globals.DMSServer = Settings.Default.DMSServer;
             Globals.DMSDatabase = Settings.Default.DMSDatabase;
             Globals.DMSUser = Settings.Default.DMSUser;

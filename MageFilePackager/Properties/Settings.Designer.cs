@@ -25,7 +25,7 @@ namespace MageFilePackager.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("prismdb2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("prismdb2.emsl.pnl.gov")]
         public string DMSServer {
             get {
                 return ((string)(this["DMSServer"]));

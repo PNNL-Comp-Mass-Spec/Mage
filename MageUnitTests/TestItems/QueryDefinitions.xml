@@ -2,7 +2,7 @@
 <queries>
   <query name='Mage_Analysis_Jobs'>
     <description>Get selected list of analysis jobs</description>
-    <connection server='prismdb2' postgres='true' database='dms' user='dmsreader' password='dms4fun'/>
+    <connection server='prismdb2.emsl.pnl.gov' postgres='true' database='dms' user='dmsreader' password='dms4fun'/>
     <table name='V_Mage_Analysis_Jobs' cols='Job, State, Dataset, Dataset_ID, Tool, Parameter_File, Settings_File, Instrument, Experiment, Campaign, Organism, Organism_DB, Protein_Collection_List, Protein_Options, Comment, Results_Folder, Folder, Dataset_Created, Job_Finish, Dataset_Rating, Separation_Type, Dataset_Type, Request_ID'/>
     <predicate rel='AND' col='Job' cmp='Equals' val=''>Descriptive text for Job</predicate>
     <predicate rel='AND' col='Dataset' cmp='ContainsText' val=''>Descriptive text for Dataset</predicate>
@@ -28,7 +28,7 @@
 
   <query name='Factors_List_Report'>
     <description>Get factors for selected datasets</description>
-    <connection server='prismdb2' postgres='true' database='dms' user='dmsreader' password='dms4fun'/>
+    <connection server='prismdb2.emsl.pnl.gov' postgres='true' database='dms' user='dmsreader' password='dms4fun'/>
     <table name='V_Custom_Factors_List_Report' cols='Dataset, Dataset_ID, Factor, Value'/>
     <predicate rel='AND' col='Dataset' cmp='ContainsText' val=''>Descriptive text for Dataset</predicate>
     <predicate rel='AND' col='Dataset_ID' cmp='Equals' val=''/>

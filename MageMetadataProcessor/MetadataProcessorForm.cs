@@ -24,7 +24,7 @@ namespace MageMetadataProcessor
             InitializeComponent();
 
             // These settings are loaded from file MageMetadataProcessor.exe.config
-            // Typically prismdb2 and dms
+            // Typically prismdb2.emsl.pnl.gov and dms
             Globals.DMSServer = Settings.Default.DMSServer;
             Globals.DMSDatabase = Settings.Default.DMSDatabase;
             Globals.DMSUser = Settings.Default.DMSUser;
@@ -114,7 +114,7 @@ namespace MageMetadataProcessor
             var mode = (command.Mode == "selected") ? DisplaySourceMode.Selected : DisplaySourceMode.All;
             ISinkModule display;
 
-            // Typically prismdb2 and dms
+            // Typically prismdb2.emsl.pnl.gov and dms
             var server = Globals.DMSServer;
             var database = Globals.DMSDatabase;
 

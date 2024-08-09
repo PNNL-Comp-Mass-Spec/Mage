@@ -84,7 +84,7 @@ namespace MageExtContentFilters
         /// </summary>
         private void SetupXTFilter()
         {
-            // Create Mage module to query DMS (typically on prismdb2)
+            // Create Mage module to query DMS (typically on prismdb2.emsl.pnl.gov)
             var reader = new SQLReader
             {
                 Database = Globals.DMSDatabase,
