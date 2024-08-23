@@ -208,7 +208,9 @@ namespace MageMetadataProcessor
             }
             if (!string.IsNullOrEmpty(dataPackageNumber))
             {
-                sql += filter + "Dataset IN ( SELECT Dataset FROM S_V_Data_Package_Datasets_Export WHERE Data_Package_ID = " + dataPackageNumber + " )";
+                // SQL Server view: S_V_Data_Package_Datasets_Export
+                // PostgreSQL view: V_Data_Package_Datasets_Export
+                sql += filter + "Dataset IN ( SELECT Dataset FROM V_Data_Package_Datasets_Export WHERE Data_Package_ID = " + dataPackageNumber + " )";
             }
             return sql;
         }
