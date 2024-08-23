@@ -11,12 +11,12 @@ namespace Mage
         /// <summary>
         /// Program date
         /// </summary>
-        public const string PROGRAM_DATE = "August 9, 2024";
+        public const string PROGRAM_DATE = "August 22, 2024";
 
         /// <summary>
         /// Program date, short yyyy-MM-dd format
         /// </summary>
-        public const string PROGRAM_DATE_SHORT = "2024-08-09";
+        public const string PROGRAM_DATE_SHORT = "2024-08-22";
 
         /// <summary>
         /// Default DMS server

@@ -13,7 +13,7 @@ namespace Mage
     public class FileProcessingBase : BaseModule
     {
         // ReSharper disable once CommentTypo
-        // Ignore Spelling: dmsarch, downloader, gov\archive
+        // Ignore Spelling: dmsarch, downloader, gov\archive, Mage, MyEMSL
 
         /// <summary>
         /// Directory name to use when caching MyEMSL files locally

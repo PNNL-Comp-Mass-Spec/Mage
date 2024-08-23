@@ -48,7 +48,7 @@ namespace MageDisplayLib
         private bool mAllowDisableShiftClickMode = true;
 
         /// <summary>
-        /// Defines whether or not checkbox "Use Shift+Click, Ctrl+Click" is visible
+        /// Defines if checkbox "Use Shift+Click, Ctrl+Click" is visible
         /// </summary>
         public bool AllowDisableShiftClickMode
         {
@@ -74,7 +74,7 @@ namespace MageDisplayLib
         public bool AutoSizeColumnWidths { get; set; }
 
         /// <summary>
-        /// Defines whether or not multiple items can be selected in the data grid view
+        /// Defines if multiple items can be selected in the data grid view
         /// </summary>
         public bool MultiSelect
         {
@@ -572,12 +572,12 @@ namespace MageDisplayLib
             private readonly Hashtable myHashTable = new();
 
             /// <summary>
-            /// Defines whether or not user can delete rows using the right-click menu
+            /// Defines if the user can delete rows using the right-click menu
             /// </summary>
             public bool AllowDelete { get; set; } = true;
 
             /// <summary>
-            /// Toggles whether or not Shift+Click is supported
+            /// Toggles if Shift+Click is supported
             /// When Shift+Click is supported, then persistence of row selection is disabled
             /// </summary>
             public bool ShiftClickSelect { get; set; }

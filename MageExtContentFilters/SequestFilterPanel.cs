@@ -8,7 +8,7 @@ namespace MageExtContentFilters
     [Mage(MageAttribute.FILTER_PANEL_MODULE, "SEQUEST", "SEQUEST Filter", "Parameters for SEQUEST Filter")]
     public partial class SequestFilterPanel : Form, IModuleParameters
     {
-        // Ignore Spelling: Mage
+        // Ignore Spelling: Mage, Sequest
 
         private readonly Dictionary<string, string> mParameters = new();
 

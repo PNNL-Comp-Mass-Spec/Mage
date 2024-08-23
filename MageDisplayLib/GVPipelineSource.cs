@@ -22,9 +22,8 @@ namespace MageDisplayLib
         private GridViewDisplayControl myListControl;
 
         /// <summary>
-        /// Whether or not we are outputting all the rows
-        /// in our associated display grid view or only
-        /// the currently selected rows
+        /// Tracks if we are outputting all the rows in our associated display grid view
+        /// or only the currently selected rows
         /// </summary>
         private readonly DisplaySourceMode mInputMode;
 

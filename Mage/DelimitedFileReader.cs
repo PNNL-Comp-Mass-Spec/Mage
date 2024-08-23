@@ -31,7 +31,7 @@ namespace Mage
         public string FilePath { get; set; }
 
         /// <summary>
-        /// Whether or not input file has a header line ("Yes" or "No")
+        /// Whether the input file has a header line ("Yes" or "No")
         /// </summary>
         public string Header { get; set; }
 

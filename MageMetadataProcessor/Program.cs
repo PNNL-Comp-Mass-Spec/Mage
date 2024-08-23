@@ -5,6 +5,8 @@ namespace MageMetadataProcessor
 {
     internal static class Program
     {
+        // Ignore Spelling: Mage
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>

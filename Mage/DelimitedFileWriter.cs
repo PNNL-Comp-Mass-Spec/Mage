@@ -32,7 +32,7 @@ namespace Mage
         public string Header { get; set; }
 
         /// <summary>
-        /// Whether or not output file should be overwritten or appended to
+        /// Whether output file should be overwritten or appended to
         /// if it exists ("Yes" or "No")
         /// </summary>
         public string Append { get; set; }

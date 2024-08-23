@@ -14,18 +14,18 @@ namespace Mage
     /// Its FileContentProcessor base class provides the basic functionality
     /// </para>
     /// <para>
-    /// The OutputMode parameter tells this module whether or not to append a prefix to
+    /// The OutputMode parameter tells this module whether a prefix should be appended to
     /// each output file name to avoid name collisions when input files can come from
     /// more than one input directory
     /// </para>
     /// <para>
     /// If IDColumnName parameter is set, it specifies a column in the standard input data
-    /// whose value should be used in the prefix.  Otherwise the prefix is generated.
+    /// whose value should be used in the prefix. Otherwise, the prefix is generated.
     /// </para>
     /// </summary>
     public class FileCopy : FileContentProcessor
     {
-        // Ignore Spelling: downloader, Mage
+        // Ignore Spelling: dest, downloader, Mage
 
         // Used to provide unique prefix for duplicate file names
         private int tagIndex;
@@ -36,7 +36,7 @@ namespace Mage
         public string ColumnToUseForPrefix { get; set; }
 
         /// <summary>
-        /// Whether or not to apply prefix to output file ("Yes" or "No")
+        /// Whether to apply prefix to output file ("Yes" or "No")
         /// </summary>
         public string ApplyPrefixToFileName { set; get; }
 
@@ -46,12 +46,12 @@ namespace Mage
         public string PrefixLeader { set; get; }
 
         /// <summary>
-        /// Whether or not to overwrite existing files ("Yes" or "No")
+        /// Whether to overwrite existing files ("Yes" or "No")
         /// </summary>
         public bool OverwriteExistingFiles { set; get; }
 
         /// <summary>
-        /// Whether or not to open CacheInfo.txt files, read the file pointer, and copy the target file
+        /// When true, open CacheInfo.txt files, read the file pointer, and copy the target file
         /// </summary>
         public bool ResolveCacheInfoFiles { set; get; }
 

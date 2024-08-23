@@ -10,7 +10,7 @@ namespace MageDisplayLib
     /// </summary>
     public class ListViewCellEditor
     {
-        // Ignore Spelling: subitem
+        // Ignore Spelling: Mage, subitem
 
         /// <summary>
         /// Default cell editor
@@ -57,8 +57,7 @@ namespace MageDisplayLib
         private readonly Dictionary<int, int> mColumnPickers = new();
 
         /// <summary>
-        /// Defines whether or not the cell editor
-        /// can make changes to underlying cell
+        /// Defines whether the cell editor can make changes to underlying cell
         /// </summary>
         public bool Editable
         {

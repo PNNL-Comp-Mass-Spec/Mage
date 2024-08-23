@@ -13,7 +13,7 @@ namespace MageFileProcessor
     /// </summary>
     internal class GridViewDisplayActions
     {
-        // Ignore Spelling: cbdms
+        // Ignore Spelling: cbdms, DMS, Mage
 
         public string BaseDmsUrl
         {

@@ -12,7 +12,7 @@ namespace MageExtContentFilters
     [Mage(MageAttribute.FILTER_MODULE, "XTFilter", "XT filter", "Uses filter criteria defined in DMS")]
     internal class XTFilter : ContentFilter
     {
-        // Ignore Spelling: Mage, precalculated
+        // Ignore Spelling: Defs, Mage, precalculated
 
         private FilterXTResults mXTFilter;
 
@@ -56,7 +56,7 @@ namespace MageExtContentFilters
         /// PrecalculateFieldIndexes() at startup.
         /// </summary>
         /// <param name="fields">Row, as array of fields</param>
-        /// <returns>Whether or not row should be included in output</returns>
+        /// <returns>Whether the row should be included in output</returns>
         protected override bool CheckFilter(ref string[] fields)
         {
             var peptideSequence = GetColumnValue(fields, peptideSequenceIndex, string.Empty);

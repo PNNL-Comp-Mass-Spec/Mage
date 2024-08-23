@@ -12,6 +12,8 @@ namespace MageUnitTestsForFileProcessor
     [TestFixture]
     public class PipelinesTest
     {
+        // Ignore Spelling: Mage
+
         private readonly int maxRows = 5;
         private readonly int rows = 3;
         private readonly int cols = 5;

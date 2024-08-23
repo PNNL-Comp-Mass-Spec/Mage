@@ -99,7 +99,7 @@ namespace MageUIComponents
         }
 
         /// <summary>
-        /// Number or rows to show in row preview
+        /// Number of rows to show in row preview
         /// </summary>
         public int PreviewRowLimit { get; }
 
@@ -251,7 +251,7 @@ namespace MageUIComponents
 
         /// <summary>
         /// Check given name against existing column mappings in list,
-        /// and return indication of whether or not it is unique
+        /// and return indication of whether it is unique
         /// </summary>
         /// <param name="name"></param>
         /// <returns>true if name is not in list</returns>
@@ -780,9 +780,10 @@ namespace MageUIComponents
 
         private static void ImputeColumnTypes(SimpleSink sink)
         {
-            // a) If it has letters, then is text/varchar
-            // b) If has a decimal point, then it's a float
-            // c) Otherwise, it's an int
+            // 1) If it has letters, it is text/varchar
+            // 2) If it has a decimal point, it's a float
+            // 3) Otherwise, it's an int
+
             for (var i = 0; i < sink.Columns.Count; i++)
             {
                 var intType = true;

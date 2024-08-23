@@ -7,6 +7,8 @@ namespace MageUIComponents
 {
     public partial class FileProcessingPanel : UserControl
     {
+        // Ignore Spelling: Mage
+
         public FileProcessingPanel()
         {
             InitializeComponent();
@@ -135,7 +137,7 @@ namespace MageUIComponents
         /// <summary>
         /// Enable and disable the button that brings up parameter panel
         /// that is associated with currently selected filter
-        /// according to whether or not such a panel exists
+        /// according to whether such a panel exists
         /// </summary>
         private void AdjustFilterParameterAccessButton()
         {

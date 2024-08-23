@@ -11,6 +11,8 @@ namespace Mage
     /// </summary>
     public class MyEMSLSinkWrapper : FileProcessingBase
     {
+        // Ignore Spelling: Mage, Predownload
+
         private readonly SimpleSink mSink;
 
         /// <summary>

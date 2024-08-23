@@ -13,7 +13,7 @@ namespace MageExtContentFilters
     // ReSharper disable once UnusedMember.Global
     internal class SequestFilter : ContentFilter
     {
-        // Ignore Spelling: Mage, pre, Sequest
+        // Ignore Spelling: Defs, Mage, pre, Sequest
 
         /// <summary>
         /// Working copy of SEQUEST filter object
@@ -67,7 +67,7 @@ namespace MageExtContentFilters
         /// PrecalculateFieldIndexes() at startup.
         /// </summary>
         /// <param name="fields">Row, as array of fields</param>
-        /// <returns>Whether or not row should be included in output</returns>
+        /// <returns>Whether the row should be included in output</returns>
         protected override bool CheckFilter(ref string[] fields)
         {
             var peptideSequence = GetColumnValue(fields, peptideSequenceIndex, string.Empty);
