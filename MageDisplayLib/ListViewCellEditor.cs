@@ -150,7 +150,7 @@ namespace MageDisplayLib
             cellEditor?.Hide();
         }
 
-        private void InitializeEditingTextBox(TextBox editBox)
+        private void InitializeEditingTextBox(TextBoxBase editBox)
         {
             mListView.Controls.AddRange(new Control[] { editBox });
             editBox.Size = new Size(0, 0);
@@ -224,9 +224,10 @@ namespace MageDisplayLib
             var cellEndPos = cellParams[2] - mLastScrollX;
 
             Control cellEditor = mDefaultCellEditor;
-            if (mColumnPickers.ContainsKey(mSubItemUnderEdit))
+
+            if (mColumnPickers.TryGetValue(mSubItemUnderEdit, out var picker))
             {
-                cellEditor = mPickers[mColumnPickers[mSubItemUnderEdit]];
+                cellEditor = mPickers[picker];
             }
             // columnEditors[mSubItemUnderEdit];
             ShowCellEditor(cellStartPos, cellEndPos, mListViewItemUnderEdit, mSubItemUnderEdit, cellEditor);

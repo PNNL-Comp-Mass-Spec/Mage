@@ -139,16 +139,14 @@ namespace MageDisplayLib
             switch (mInputMode)
             {
                 case DisplaySourceMode.All:
-                    var allRows = myListControl.List.Rows;
-                    foreach (DataGridViewRow row in allRows)
+                    foreach (DataGridViewRow row in myListControl.List.Rows)
                     {
                         var vals = GetOutputRowFromGridRow(row);
                         mRowBuffer.Add(vals);
                     }
                     break;
                 case DisplaySourceMode.Selected:
-                    var selRows = myListControl.List.SelectedRows;
-                    foreach (DataGridViewRow row in selRows)
+                    foreach (DataGridViewRow row in myListControl.List.SelectedRows)
                     {
                         var vals = GetOutputRowFromGridRow(row);
                         mRowBuffer.Add(vals);

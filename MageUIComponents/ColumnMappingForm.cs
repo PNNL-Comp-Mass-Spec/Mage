@@ -74,9 +74,9 @@ namespace MageUIComponents
             get
             {
                 var selectedColMapping = ColumnMappingDisplayList.SelectedItemFields;
-                if (selectedColMapping?.ContainsKey("name") == true)
+                if (selectedColMapping?.TryGetValue("name", out var columnMap) is true)
                 {
-                    return selectedColMapping["name"];
+                    return columnMap;
                 }
                 return string.Empty;
             }
@@ -90,9 +90,9 @@ namespace MageUIComponents
             get
             {
                 var selectedColMapping = ColumnMappingDisplayList.SelectedItemFields;
-                if (selectedColMapping?.ContainsKey("column_list") == true)
+                if (selectedColMapping?.TryGetValue("column_list", out var columnList) is true)
                 {
-                    return selectedColMapping["column_list"];
+                    return columnList;
                 }
                 return string.Empty;
             }
@@ -186,9 +186,11 @@ namespace MageUIComponents
         {
             var dGen = new DataGenerator
             {
-                AddAdHocRow = new[] { "name", "description", "column_list" }
+                AddAdHocRow = ["name", "description", "column_list"]
             };
-            dGen.AddAdHocRow = new[] { "Add Job Column", "Add new column that will contain Job number", "Job|+|text, *" };
+
+            dGen.AddAdHocRow = ["Add Job Column", "Add new column that will contain Job number", "Job|+|text, *"];
+
             var writer = new DelimitedFileWriter { FilePath = MappingConfigFilePath };
             var pipeline2 = ProcessingPipeline.Assemble("CreateColumnMapping", dGen, writer);
             pipeline2.RunRoot(null);
@@ -352,7 +354,7 @@ namespace MageUIComponents
             var colItems = new Collection<string[]>();
             foreach (var colDef in colDefs)
             {
-                colItems.Add(new[] { colDef.Name, "", colDef.DataType, colDef.Size });
+                colItems.Add([colDef.Name, "", colDef.DataType, colDef.Size]);
             }
             var colSpecs = GetColumnListFromColumnSpecItems(colItems);
             DisplayColumnListInEditingPanel(colSpecs, true);
@@ -688,13 +690,12 @@ namespace MageUIComponents
         private BaseModule GetReaderForInputPreview()
         {
             BaseModule rdr = null;
-            if (InputFileInfo.ContainsKey("Name") && InputFileInfo.ContainsKey("Folder"))
+            if (InputFileInfo.ContainsKey("Name") && InputFileInfo.TryGetValue("Folder", out var value))
             {
-                var reader = new DelimitedFileReader
+                rdr = new DelimitedFileReader
                 {
-                    FilePath = Path.Combine(InputFileInfo["Folder"], InputFileInfo["Name"])
+                    FilePath = Path.Combine(value, InputFileInfo["Name"])
                 };
-                rdr = reader;
                 mPreviewSourceLabel = Path.GetFileName(InputFileInfo["Name"]);
             }
             if (rdr == null)
