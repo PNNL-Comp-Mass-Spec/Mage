@@ -62,7 +62,6 @@ namespace MageUIComponents
             }
         }
 
-        private void LegendCtlClick(object sender, EventArgs e)
         private bool ValidateDataPackageIDs()
         {
             if (string.IsNullOrWhiteSpace(ItemListCtl.Text))

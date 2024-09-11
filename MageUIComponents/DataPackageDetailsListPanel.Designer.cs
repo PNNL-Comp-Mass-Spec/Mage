@@ -85,7 +85,6 @@
             this.LegendCtl.Size = new System.Drawing.Size(130, 17);
             this.LegendCtl.TabIndex = 9;
             this.LegendCtl.Text = "(Data package IDs)";
-            this.LegendCtl.Click += new System.EventHandler(this.LegendCtlClick);
             // 
             // DataPackageDetailsListPanel
             // 
