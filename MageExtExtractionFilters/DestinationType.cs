@@ -146,47 +146,44 @@ namespace MageExtExtractionFilters
         // Utility Methods
 
         /// <summary>
-        /// If the output is set to a concatenated output file, and it exists,
-        /// give user options.
+        /// If the output is set to a concatenated output file, and it exists, ask the user what to do
         /// </summary>
         public static bool VerifyDestinationOptionsWithUser(DestinationType destination)
         {
-            var ok = true;
-            if (!string.IsNullOrEmpty(destination.FilePath))
+            if (string.IsNullOrEmpty(destination.FilePath))
+                return true;
+
+            var sb = new StringBuilder();
+            sb.AppendFormat("A copy of file '{0}' exists.  What action do you wish to take?", destination.Name).AppendLine();
+            sb.AppendLine();
+            sb.AppendLine("Yes - delete existing file and continue with extraction");
+            sb.AppendLine("No - retain existing file and append extracted results to it");
+            sb.AppendLine("Cancel - retain existing file and abort extraction");
+
+            if (!File.Exists(destination.FilePath))
+                return true;
+
+            // ReSharper disable once SwitchStatementMissingSomeEnumCasesNoDefault
+            switch (MessageBox.Show(sb.ToString(), "Output file options", MessageBoxButtons.YesNoCancel))
             {
-                var sb = new StringBuilder();
-                sb.AppendFormat("A copy of file '{0}' exists.  What action do you wish to take?", destination.Name).AppendLine();
-                sb.AppendLine();
-                sb.AppendLine("Yes - delete existing file and continue with extraction");
-                sb.AppendLine("No - retain existing file and append extracted results to it");
-                sb.AppendLine("Cancel - retain existing file and abort extraction");
-                if (File.Exists(destination.FilePath))
-                {
-                    var dr = MessageBox.Show(sb.ToString(), "Output file options", MessageBoxButtons.YesNoCancel);
-                    switch (dr)
+                case DialogResult.Cancel:
+                    return false;
+                case DialogResult.No:
+                    break;
+                case DialogResult.Yes:
+                    try
                     {
-                        case DialogResult.Cancel:
-                            ok = false;
-                            break;
-                        case DialogResult.No:
-                            break;
-                        case DialogResult.Yes:
-                            try
-                            {
-                                File.Delete(destination.FilePath);
-                            }
-                            catch (IOException e)
-                            {
-                                MessageBox.Show(e.Message);
-                                ok = false;
-                            }
-                            break;
+                        File.Delete(destination.FilePath);
                     }
-                }
+                    catch (IOException e)
+                    {
+                        MessageBox.Show(e.Message);
+                        return false;
+                    }
+                    break;
             }
 
-            // TODO: check that dataset name is file and not directory
-            return ok;
+            return true;
         }
 
         /// <summary>
@@ -222,6 +219,7 @@ namespace MageExtExtractionFilters
                         Append = "Yes"
                     };
             }
+
             return null;
         }
     }
