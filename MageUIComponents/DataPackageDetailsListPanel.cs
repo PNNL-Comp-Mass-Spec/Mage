@@ -40,6 +40,9 @@ namespace MageUIComponents
 
         private void ItemListCtlClick(object sender, EventArgs e)
         {
+            if (!ValidateDataPackageIDs())
+                return;
+
             OnAction?.Invoke(this, new MageCommandEventArgs("get_entities_from_query", "Data Packages"));
         }
 
@@ -60,7 +63,33 @@ namespace MageUIComponents
         }
 
         private void LegendCtlClick(object sender, EventArgs e)
+        private bool ValidateDataPackageIDs()
         {
+            if (string.IsNullOrWhiteSpace(ItemListCtl.Text))
+            {
+                MessageBox.Show("Please enter one or more data package IDs", "Missing Data Package ID(s)",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation);
+
+                return false;
+            }
+
+            foreach (var dataPackageId in ItemListCtl.Text.Split(','))
+            {
+                if (string.IsNullOrWhiteSpace(dataPackageId))
+                    continue;
+
+                if (int.TryParse(dataPackageId, out _))
+                    continue;
+
+                MessageBox.Show(string.Format("Invalid data package ID '{0}'; must be an integer", dataPackageId.Trim()), "Invalid Data Package ID",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation);
+
+                return false;
+            }
+
+            return true;
         }
     }
 }

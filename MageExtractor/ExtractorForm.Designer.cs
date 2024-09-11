@@ -1,4 +1,6 @@
-﻿namespace MageExtractor
+﻿using MageUIComponents;
+
+namespace MageExtractor
 {
     partial class ExtractorForm
     {
@@ -159,7 +161,7 @@
             this.JobIDListPanel1.BackColor = System.Drawing.SystemColors.Control;
             this.JobIDListPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.JobIDListPanel1.Legend = "(Job IDs)";
-            this.JobIDListPanel1.ListName = "Job";
+            this.JobIDListPanel1.ListName = JobIDListPanel.LIST_NAME_JOB;
             this.JobIDListPanel1.Location = new System.Drawing.Point(4, 4);
             this.JobIDListPanel1.Margin = new System.Windows.Forms.Padding(5);
             this.JobIDListPanel1.Name = "JobIDListPanel1";
@@ -183,7 +185,7 @@
             //
             this.JobDatasetIDList1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.JobDatasetIDList1.Legend = "(Dataset IDs)";
-            this.JobDatasetIDList1.ListName = "Dataset_ID";
+            this.JobDatasetIDList1.ListName = JobIDListPanel.LIST_NAME_DATASET_ID;
             this.JobDatasetIDList1.Location = new System.Drawing.Point(4, 4);
             this.JobDatasetIDList1.Margin = new System.Windows.Forms.Padding(5);
             this.JobDatasetIDList1.Name = "JobDatasetIDList1";

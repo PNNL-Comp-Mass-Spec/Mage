@@ -40,6 +40,9 @@ namespace MageUIComponents
 
         private void GetDatasetsCtl_Click(object sender, EventArgs e)
         {
+            if (!ValidateDatasetIDs())
+                return;
+
             OnAction?.Invoke(this, new MageCommandEventArgs("get_entities_from_query", "Datasets"));
         }
 
@@ -57,6 +60,35 @@ namespace MageUIComponents
                 // Ctrl+A pressed
                 DatasetListCtl.SelectAll();
             }
+        }
+
+        private bool ValidateDatasetIDs()
+        {
+            if (string.IsNullOrWhiteSpace(DatasetListCtl.Text))
+            {
+                MessageBox.Show("Please enter one or more dataset IDs", "Missing Dataset ID(s)",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation);
+
+                return false;
+            }
+
+            foreach (var datasetID in DatasetListCtl.Text.Split(','))
+            {
+                if (string.IsNullOrWhiteSpace(datasetID))
+                    continue;
+
+                if (int.TryParse(datasetID, out _))
+                    continue;
+
+                MessageBox.Show(string.Format("Invalid dataset ID '{0}'; must be an integer", datasetID.Trim()), "Invalid Dataset ID",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation);
+
+                return false;
+            }
+
+            return true;
         }
     }
 }

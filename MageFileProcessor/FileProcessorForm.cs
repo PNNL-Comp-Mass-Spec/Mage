@@ -121,12 +121,12 @@ namespace MageFileProcessor
             FileProcessingPanel1.GetSelectedFileInfo += GetSelectedFileItem;
             FileProcessingPanel1.GetSelectedOutputInfo += GetSelectedOutputItem;
 
-            // This must called before restoring saved state
+            // This must be called before restoring saved state
             SetupFlexQueryPanels();
 
             // In addition, assure that the ListName for JobDatasetIDList1 is Dataset_ID
             JobDatasetIDList1.Legend = "(Dataset IDs)";
-            JobDatasetIDList1.ListName = "Dataset_ID";
+            JobDatasetIDList1.ListName = JobIDListPanel.LIST_NAME_DATASET_ID;
 
             try
             {

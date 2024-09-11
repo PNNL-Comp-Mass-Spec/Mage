@@ -10,6 +10,10 @@ namespace MageUIComponents
     {
         // Ignore Spelling: Ctrl
 
+        public const string LIST_NAME_DATASET_ID = "Dataset_ID";
+
+        public const string LIST_NAME_JOB = "Job";
+
         public event EventHandler<MageCommandEventArgs> OnAction;
 
         public string ListName { get; set; }
@@ -48,6 +52,9 @@ namespace MageUIComponents
 
         private void GetJobsCtl_Click(object sender, EventArgs e)
         {
+            if (!ValidateJobNumbers())
+                return;
+
             OnAction?.Invoke(this, new MageCommandEventArgs("get_entities_from_query", "Jobs"));
         }
 
@@ -65,6 +72,49 @@ namespace MageUIComponents
                 // Ctrl+A pressed
                 JobListCtl.SelectAll();
             }
+        }
+
+        private bool ValidateJobNumbers()
+        {
+            string itemDescription;
+            string itemDescriptionCapitalized;
+
+            if (ListName.Equals(LIST_NAME_DATASET_ID))
+            {
+                itemDescription = "dataset ID";
+                itemDescriptionCapitalized = "Dataset ID";
+            }
+            else
+            {
+                itemDescription = "job number";
+                itemDescriptionCapitalized = "Job Number";
+            }
+
+            if (string.IsNullOrWhiteSpace(JobListCtl.Text))
+            {
+                MessageBox.Show(string.Format("Please enter one or more {0}s", itemDescription), string.Format("Missing {0}(s)", itemDescriptionCapitalized),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation);
+
+                return false;
+            }
+
+            foreach (var jobNumber in JobListCtl.Text.Split(','))
+            {
+                if (string.IsNullOrWhiteSpace(jobNumber))
+                    continue;
+
+                if (int.TryParse(jobNumber, out _))
+                    continue;
+
+                MessageBox.Show(string.Format("Invalid {0} '{1}'; must be an integer", itemDescription, jobNumber.Trim()), string.Format("Invalid {0}", itemDescriptionCapitalized),
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation);
+
+                return false;
+            }
+
+            return true;
         }
     }
 }

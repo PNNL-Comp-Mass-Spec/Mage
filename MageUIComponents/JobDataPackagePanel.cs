@@ -64,11 +64,17 @@ namespace MageUIComponents
 
         private void GetJobsCtl_Click(object sender, EventArgs e)
         {
+            if (!ValidateDataPackageID())
+                return;
+
             OnAction?.Invoke(this, new MageCommandEventArgs("get_entities_from_query", "Jobs"));
         }
 
         private void GetDatasetsCtl_Click(object sender, EventArgs e)
         {
+            if (!ValidateDataPackageID())
+                return;
+
             OnAction?.Invoke(this, new MageCommandEventArgs("get_entities_from_query", "Datasets"));
         }
 
@@ -86,6 +92,29 @@ namespace MageUIComponents
                 pLocation.Y += 0;
             }
             GetDatasetsCtl.Location = pLocation;
+        }
+
+        private bool ValidateDataPackageID()
+        {
+            var dataPackageID = DataPackageIDCtl.Text;
+
+            if (string.IsNullOrWhiteSpace(dataPackageID))
+            {
+                MessageBox.Show("Please enter a data package ID", "Missing Data Package ID",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation);
+
+                return false;
+            }
+
+            if (int.TryParse(dataPackageID, out _))
+                return true;
+
+            MessageBox.Show(string.Format("Invalid data package ID '{0}'; must be an integer", dataPackageID.Trim()), "Invalid Data Package ID",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation);
+
+            return false;
         }
     }
 }

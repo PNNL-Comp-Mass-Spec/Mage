@@ -8,6 +8,7 @@ using MageDisplayLib;
 using System.Reflection;
 using MageFilePackager.Properties;
 using PRISM.Logging;
+using MageUIComponents;
 
 namespace MageFilePackager
 {
@@ -370,7 +371,7 @@ namespace MageFilePackager
             JobListDisplayControl.PageTitle = "Entities";
             FileListDisplayControl.PageTitle = "Files";
             JobDatasetIDList1.Legend = "(Dataset IDs)";
-            JobDatasetIDList1.ListName = "Dataset_ID";
+            JobDatasetIDList1.ListName = JobIDListPanel.LIST_NAME_DATASET_ID;
 
             // Disable certain UI component panels
             EntityFilePanel1.Enabled = false;
