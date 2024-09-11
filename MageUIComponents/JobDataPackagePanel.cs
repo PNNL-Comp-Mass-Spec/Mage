@@ -7,6 +7,8 @@ namespace MageUIComponents
 {
     public partial class JobDataPackagePanel : UserControl, IModuleParameters
     {
+        // Ignore Spelling: Mage
+
         public event EventHandler<MageCommandEventArgs> OnAction;
 
         protected bool mShowGetDatasets = true;

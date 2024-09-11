@@ -7,6 +7,8 @@ namespace MageMetadataProcessor
 {
     public partial class DatasetFactorsPanel : UserControl, IModuleParameters
     {
+        // Ignore Spelling: Mage
+
         public event EventHandler<MageCommandEventArgs> OnAction;
 
         public string DatasetName

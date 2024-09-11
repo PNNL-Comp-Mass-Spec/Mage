@@ -78,7 +78,7 @@ namespace MageExtContentFilters
         }
 
         /// <summary>
-        /// Setup a SEQUEST filter object with a set of filter criteria
+        /// Set up a SEQUEST filter object with a set of filter criteria
         /// that is obtained for the given FilterSetID from DMS
         /// my means of a Mage pipeline
         /// </summary>

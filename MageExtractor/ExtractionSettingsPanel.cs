@@ -8,6 +8,8 @@ namespace MageExtractor
 {
     public partial class ExtractionSettingsPanel : UserControl, IModuleParameters
     {
+        // Ignore Spelling: Mage
+
         public event EventHandler<MageCommandEventArgs> OnAction;
 
         private readonly Dictionary<string, ResultType> mResultTypes = ResultType.TypeList;

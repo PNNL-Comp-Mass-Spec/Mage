@@ -12,6 +12,8 @@ namespace MageDisplayLib
     /// </summary>
     public static class PanelSupport
     {
+        // Ignore Spelling: Mage
+
         /// <summary>
         /// Return control that implements Mage IModuleParameters interface
         /// that is contained in the given control or its descendent control hierarchy

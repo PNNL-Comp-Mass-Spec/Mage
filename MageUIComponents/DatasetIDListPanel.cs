@@ -8,7 +8,7 @@ namespace MageUIComponents
 {
     public partial class DatasetIDListPanel : UserControl, IModuleParameters
     {
-        // Ignore Spelling: Ctrl
+        // Ignore Spelling: Ctrl, Mage
 
         public event EventHandler<MageCommandEventArgs> OnAction;
 

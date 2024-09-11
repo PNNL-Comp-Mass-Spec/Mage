@@ -11,6 +11,8 @@ namespace MageExtExtractionFilters
     /// </summary>
     public class DestinationType
     {
+        // Ignore Spelling: Mage
+
         public enum Types { Unknown, File_Output, SQLite_Output }
 
         public Types Type { get; }
@@ -106,6 +108,12 @@ namespace MageExtExtractionFilters
             }
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="type">Type</param>
+        /// <param name="path">Path</param>
+        /// <param name="name">Name</param>
         public DestinationType(string type, string path, string name)
         {
             ContainerPath = path;

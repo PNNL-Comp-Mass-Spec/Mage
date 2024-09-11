@@ -14,6 +14,8 @@ namespace MageFileProcessor
     // ReSharper disable once UnusedMember.Global
     internal class ListDisplayActions
     {
+        // Ignore Spelling: Mage
+
         /// <summary>
         /// The particular ListDisplayControl object that this object is attached to
         /// and supplies context menu items for

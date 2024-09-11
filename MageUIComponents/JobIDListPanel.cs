@@ -8,7 +8,7 @@ namespace MageUIComponents
 {
     public partial class JobIDListPanel : UserControl, IModuleParameters
     {
-        // Ignore Spelling: Ctrl
+        // Ignore Spelling: Ctrl, Mage
 
         public const string LIST_NAME_DATASET_ID = "Dataset_ID";
 

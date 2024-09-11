@@ -145,7 +145,7 @@ namespace MageUIComponents
         }
         /*
                 /// <summary>
-                /// Build and setup an MSSQL reader from flex query panel
+                /// Build and set up an MSSQL reader from flex query panel
                 /// </summary>
                 /// <param name="queryTemplate"></param>
                 /// <param name="queryItems"></param>
