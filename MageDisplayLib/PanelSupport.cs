@@ -15,15 +15,14 @@ namespace MageDisplayLib
         // Ignore Spelling: Mage
 
         /// <summary>
-        /// Return control that implements Mage IModuleParameters interface
-        /// that is contained in the given control or its descendent control hierarchy
-        /// Note: Only return one if there are many (which current design approach should rule out)
+        /// Return the control that implements the Mage IModuleParameters interface and is contained in the given control or its descendant control hierarchy
         /// </summary>
-        /// <param name="ctrl"></param>
-        public static IModuleParameters GetParameterPanel(Control ctrl)
+        /// <remarks>Only return the first control found (in the current design approach, each panel should only have one control)</remarks>
+        /// <param name="controlToExamine"></param>
+        public static IModuleParameters GetParameterPanel(Control controlToExamine)
         {
             var userControlList = new List<Control>();
-            AddControlsToList(ctrl, typeof(UserControl), userControlList);
+            AddControlsToList(controlToExamine, typeof(UserControl), userControlList);
 
             foreach (var userControl in userControlList)
             {
