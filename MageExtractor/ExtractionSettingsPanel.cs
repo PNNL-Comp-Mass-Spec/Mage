@@ -101,7 +101,7 @@ namespace MageExtractor
                 ResultTypeNameCtl.SelectedIndex = indexToSelect;
             }
 
-            MSGFCutoffCtl.Items.AddRange(new object[] { ExtractionFilter.ALL_PASS_CUTOFF, "1E-8", "1E-9", "5E-9", "1E-10", "5E-10", "1E-11" });
+            MSGFCutoffCtl.Items.AddRange([ExtractionFilter.ALL_PASS_CUTOFF, "1E-8", "1E-9", "5E-9", "1E-10", "5E-10", "1E-11"]);
             MSGFCutoffCtl.Text = "1E-10";
         }
 
