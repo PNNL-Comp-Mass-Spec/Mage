@@ -204,13 +204,13 @@
       <Version>13.0.3</Version>
     </PackageReference>
     <PackageReference Include="PRISM-Library">
-      <Version>2.8.32</Version>
+      <Version>2.8.34</Version>
     </PackageReference>
     <PackageReference Include="SharpZipLib">
       <Version>1.4.2</Version>
     </PackageReference>
     <PackageReference Include="System.Data.SQLite.Core">
-      <Version>1.0.111</Version>
+      <Version>1.0.118</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
