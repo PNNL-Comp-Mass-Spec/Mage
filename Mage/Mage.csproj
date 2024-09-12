@@ -98,13 +98,6 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MyEMSLReader">
-      <HintPath>lib\MyEMSLReader.dll</HintPath>
-    </Reference>
-    <Reference Include="Pacifica, Version=2.1.31.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\Pacifica.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -159,6 +152,9 @@
     <Compile Include="Terminator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="MyEMSL-Reader">
+      <Version>2.1.113</Version>
+    </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.3</Version>
     </PackageReference>

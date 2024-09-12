@@ -103,13 +103,6 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MyEMSLReader, Version=1.0.5007.30861, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Mage\lib\MyEMSLReader.dll</HintPath>
-    </Reference>
-    <Reference Include="Pacifica">
-      <HintPath>..\Mage\lib\Pacifica.dll</HintPath>
-    </Reference>
     <Reference Include="ShFolderBrowser">
       <HintPath>..\Mage\lib\ShFolderBrowser.dll</HintPath>
     </Reference>
@@ -204,6 +197,9 @@
     <Content Include="wand.ico" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="MyEMSL-Reader">
+      <Version>2.1.113</Version>
+    </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.3</Version>
     </PackageReference>
