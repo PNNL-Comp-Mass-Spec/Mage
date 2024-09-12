@@ -7,12 +7,14 @@ using MyEMSLReader;
 namespace Mage
 {
     /// <summary>
-    /// This modules accepts a list of files on standard tabular input
-    /// looks for an associated file for each one and adds that file's
+    /// This module accepts a list of files on standard tabular input,
+    /// looks for an associated file for each one, and adds that file's
     /// name to standard output stream
     /// </summary>
     public class AddAssociatedFile : FileProcessingBase
     {
+        // Ignore Spelling: Mage
+
         /// <summary>
         /// Constructor
         /// </summary>
