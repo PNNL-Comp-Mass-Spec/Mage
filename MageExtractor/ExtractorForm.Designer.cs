@@ -30,7 +30,7 @@ namespace MageExtractor
         /// </summary>
         private void InitializeComponent()
         {
-            var resources = new System.ComponentModel.ComponentResourceManager(typeof(ExtractorForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExtractorForm));
             this.EntityListSourceTabs = new System.Windows.Forms.TabControl();
             this.QueryTabPage = new System.Windows.Forms.TabPage();
             this.JobSimpleQueryPanel = new MageUIComponents.JobListPanel();
@@ -76,9 +76,9 @@ namespace MageExtractor
             this.ProcessFilesToLocalTabPage.SuspendLayout();
             this.ProcessFileToSQLiteDBTabPage.SuspendLayout();
             this.SuspendLayout();
-            //
+            // 
             // EntityListSourceTabs
-            //
+            // 
             this.EntityListSourceTabs.AccessibleDescription = " ";
             this.EntityListSourceTabs.Controls.Add(this.QueryTabPage);
             this.EntityListSourceTabs.Controls.Add(this.JobsFlexQueryTabPage);
@@ -88,149 +88,149 @@ namespace MageExtractor
             this.EntityListSourceTabs.Controls.Add(this.AboutTabPage);
             this.EntityListSourceTabs.Dock = System.Windows.Forms.DockStyle.Top;
             this.EntityListSourceTabs.Location = new System.Drawing.Point(0, 0);
-            this.EntityListSourceTabs.Margin = new System.Windows.Forms.Padding(4);
+            this.EntityListSourceTabs.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.EntityListSourceTabs.Name = "EntityListSourceTabs";
             this.EntityListSourceTabs.SelectedIndex = 0;
-            this.EntityListSourceTabs.Size = new System.Drawing.Size(1225, 138);
+            this.EntityListSourceTabs.Size = new System.Drawing.Size(1838, 216);
             this.EntityListSourceTabs.TabIndex = 6;
             this.EntityListSourceTabs.Tag = "About";
-            //
+            // 
             // QueryTabPage
-            //
+            // 
             this.QueryTabPage.BackColor = System.Drawing.SystemColors.Control;
             this.QueryTabPage.Controls.Add(this.JobSimpleQueryPanel);
-            this.QueryTabPage.Location = new System.Drawing.Point(4, 25);
-            this.QueryTabPage.Margin = new System.Windows.Forms.Padding(4);
+            this.QueryTabPage.Location = new System.Drawing.Point(8, 39);
+            this.QueryTabPage.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.QueryTabPage.Name = "QueryTabPage";
-            this.QueryTabPage.Padding = new System.Windows.Forms.Padding(4);
-            this.QueryTabPage.Size = new System.Drawing.Size(1217, 109);
+            this.QueryTabPage.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.QueryTabPage.Size = new System.Drawing.Size(1822, 169);
             this.QueryTabPage.TabIndex = 0;
             this.QueryTabPage.Tag = "Jobs";
             this.QueryTabPage.Text = "Jobs From Query";
-            //
+            // 
             // JobSimpleQueryPanel
-            //
+            // 
             this.JobSimpleQueryPanel.BackColor = System.Drawing.SystemColors.Control;
             this.JobSimpleQueryPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.JobSimpleQueryPanel.Location = new System.Drawing.Point(4, 4);
-            this.JobSimpleQueryPanel.Margin = new System.Windows.Forms.Padding(5);
+            this.JobSimpleQueryPanel.Location = new System.Drawing.Point(6, 6);
+            this.JobSimpleQueryPanel.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.JobSimpleQueryPanel.Name = "JobSimpleQueryPanel";
-            this.JobSimpleQueryPanel.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
-            this.JobSimpleQueryPanel.Size = new System.Drawing.Size(1209, 101);
+            this.JobSimpleQueryPanel.Padding = new System.Windows.Forms.Padding(10, 9, 10, 9);
+            this.JobSimpleQueryPanel.Size = new System.Drawing.Size(1810, 157);
             this.JobSimpleQueryPanel.TabIndex = 0;
-            //
+            // 
             // JobsFlexQueryTabPage
-            //
+            // 
             this.JobsFlexQueryTabPage.BackColor = System.Drawing.SystemColors.Control;
             this.JobsFlexQueryTabPage.Controls.Add(this.JobFlexQueryPanel);
-            this.JobsFlexQueryTabPage.Location = new System.Drawing.Point(4, 25);
-            this.JobsFlexQueryTabPage.Margin = new System.Windows.Forms.Padding(4);
+            this.JobsFlexQueryTabPage.Location = new System.Drawing.Point(8, 39);
+            this.JobsFlexQueryTabPage.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.JobsFlexQueryTabPage.Name = "JobsFlexQueryTabPage";
-            this.JobsFlexQueryTabPage.Padding = new System.Windows.Forms.Padding(4);
-            this.JobsFlexQueryTabPage.Size = new System.Drawing.Size(1217, 109);
+            this.JobsFlexQueryTabPage.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.JobsFlexQueryTabPage.Size = new System.Drawing.Size(1822, 169);
             this.JobsFlexQueryTabPage.TabIndex = 6;
             this.JobsFlexQueryTabPage.Tag = "Job_Flex_Query";
             this.JobsFlexQueryTabPage.Text = "Jobs From Flex Query";
-            //
+            // 
             // JobFlexQueryPanel
-            //
+            // 
             this.JobFlexQueryPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.JobFlexQueryPanel.Location = new System.Drawing.Point(4, 4);
-            this.JobFlexQueryPanel.Margin = new System.Windows.Forms.Padding(5);
+            this.JobFlexQueryPanel.Location = new System.Drawing.Point(6, 6);
+            this.JobFlexQueryPanel.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.JobFlexQueryPanel.Name = "JobFlexQueryPanel";
-            this.JobFlexQueryPanel.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
+            this.JobFlexQueryPanel.Padding = new System.Windows.Forms.Padding(10, 9, 10, 9);
             this.JobFlexQueryPanel.QueryName = null;
-            this.JobFlexQueryPanel.Size = new System.Drawing.Size(1209, 101);
+            this.JobFlexQueryPanel.Size = new System.Drawing.Size(1810, 157);
             this.JobFlexQueryPanel.TabIndex = 0;
-            //
+            // 
             // JobListTabPage
-            //
+            // 
             this.JobListTabPage.BackColor = System.Drawing.SystemColors.Control;
             this.JobListTabPage.Controls.Add(this.JobIDListPanel1);
-            this.JobListTabPage.Location = new System.Drawing.Point(4, 25);
-            this.JobListTabPage.Margin = new System.Windows.Forms.Padding(4);
+            this.JobListTabPage.Location = new System.Drawing.Point(8, 39);
+            this.JobListTabPage.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.JobListTabPage.Name = "JobListTabPage";
-            this.JobListTabPage.Padding = new System.Windows.Forms.Padding(4);
-            this.JobListTabPage.Size = new System.Drawing.Size(1217, 109);
+            this.JobListTabPage.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.JobListTabPage.Size = new System.Drawing.Size(1822, 169);
             this.JobListTabPage.TabIndex = 1;
             this.JobListTabPage.Text = "Jobs From Job List";
-            //
+            // 
             // JobIDListPanel1
-            //
+            // 
             this.JobIDListPanel1.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.JobIDListPanel1.BackColor = System.Drawing.SystemColors.Control;
             this.JobIDListPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.JobIDListPanel1.Legend = "(Job IDs)";
-            this.JobIDListPanel1.ListName = JobIDListPanel.LIST_NAME_JOB;
-            this.JobIDListPanel1.Location = new System.Drawing.Point(4, 4);
-            this.JobIDListPanel1.Margin = new System.Windows.Forms.Padding(5);
+            this.JobIDListPanel1.ListName = "Job";
+            this.JobIDListPanel1.Location = new System.Drawing.Point(6, 6);
+            this.JobIDListPanel1.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.JobIDListPanel1.Name = "JobIDListPanel1";
-            this.JobIDListPanel1.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
-            this.JobIDListPanel1.Size = new System.Drawing.Size(1209, 101);
+            this.JobIDListPanel1.Padding = new System.Windows.Forms.Padding(10, 9, 10, 9);
+            this.JobIDListPanel1.Size = new System.Drawing.Size(1810, 157);
             this.JobIDListPanel1.TabIndex = 0;
-            //
+            // 
             // JobsFromDatasetIDTabPage
-            //
+            // 
             this.JobsFromDatasetIDTabPage.BackColor = System.Drawing.SystemColors.Control;
             this.JobsFromDatasetIDTabPage.Controls.Add(this.JobDatasetIDList1);
-            this.JobsFromDatasetIDTabPage.Location = new System.Drawing.Point(4, 25);
-            this.JobsFromDatasetIDTabPage.Margin = new System.Windows.Forms.Padding(4);
+            this.JobsFromDatasetIDTabPage.Location = new System.Drawing.Point(8, 39);
+            this.JobsFromDatasetIDTabPage.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.JobsFromDatasetIDTabPage.Name = "JobsFromDatasetIDTabPage";
-            this.JobsFromDatasetIDTabPage.Padding = new System.Windows.Forms.Padding(4);
-            this.JobsFromDatasetIDTabPage.Size = new System.Drawing.Size(1217, 109);
+            this.JobsFromDatasetIDTabPage.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.JobsFromDatasetIDTabPage.Size = new System.Drawing.Size(1822, 169);
             this.JobsFromDatasetIDTabPage.TabIndex = 5;
             this.JobsFromDatasetIDTabPage.Text = "Jobs From Dataset List";
-            //
+            // 
             // JobDatasetIDList1
-            //
+            // 
             this.JobDatasetIDList1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.JobDatasetIDList1.Legend = "(Dataset IDs)";
-            this.JobDatasetIDList1.ListName = JobIDListPanel.LIST_NAME_DATASET_ID;
-            this.JobDatasetIDList1.Location = new System.Drawing.Point(4, 4);
-            this.JobDatasetIDList1.Margin = new System.Windows.Forms.Padding(5);
+            this.JobDatasetIDList1.ListName = "Dataset_ID";
+            this.JobDatasetIDList1.Location = new System.Drawing.Point(6, 6);
+            this.JobDatasetIDList1.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.JobDatasetIDList1.Name = "JobDatasetIDList1";
-            this.JobDatasetIDList1.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
-            this.JobDatasetIDList1.Size = new System.Drawing.Size(1209, 101);
+            this.JobDatasetIDList1.Padding = new System.Windows.Forms.Padding(10, 9, 10, 9);
+            this.JobDatasetIDList1.Size = new System.Drawing.Size(1810, 157);
             this.JobDatasetIDList1.TabIndex = 0;
-            //
+            // 
             // DataPackageTabPage
-            //
+            // 
             this.DataPackageTabPage.BackColor = System.Drawing.SystemColors.Control;
             this.DataPackageTabPage.Controls.Add(this.JobDataPackagePanel1);
-            this.DataPackageTabPage.Location = new System.Drawing.Point(4, 25);
-            this.DataPackageTabPage.Margin = new System.Windows.Forms.Padding(4);
+            this.DataPackageTabPage.Location = new System.Drawing.Point(8, 39);
+            this.DataPackageTabPage.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.DataPackageTabPage.Name = "DataPackageTabPage";
-            this.DataPackageTabPage.Padding = new System.Windows.Forms.Padding(4);
-            this.DataPackageTabPage.Size = new System.Drawing.Size(1217, 109);
+            this.DataPackageTabPage.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.DataPackageTabPage.Size = new System.Drawing.Size(1822, 169);
             this.DataPackageTabPage.TabIndex = 2;
             this.DataPackageTabPage.Text = "Jobs From Data Package";
-            //
+            // 
             // JobDataPackagePanel1
-            //
+            // 
             this.JobDataPackagePanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.JobDataPackagePanel1.Location = new System.Drawing.Point(4, 4);
-            this.JobDataPackagePanel1.Margin = new System.Windows.Forms.Padding(5);
+            this.JobDataPackagePanel1.Location = new System.Drawing.Point(6, 6);
+            this.JobDataPackagePanel1.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.JobDataPackagePanel1.Name = "JobDataPackagePanel1";
-            this.JobDataPackagePanel1.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
+            this.JobDataPackagePanel1.Padding = new System.Windows.Forms.Padding(10, 9, 10, 9);
             this.JobDataPackagePanel1.ShowGetDatasets = false;
             this.JobDataPackagePanel1.ShowGetJobs = true;
-            this.JobDataPackagePanel1.Size = new System.Drawing.Size(1209, 101);
+            this.JobDataPackagePanel1.Size = new System.Drawing.Size(1810, 157);
             this.JobDataPackagePanel1.TabIndex = 0;
-            //
+            // 
             // AboutTabPage
-            //
+            // 
             this.AboutTabPage.Controls.Add(this.pnlAbout);
-            this.AboutTabPage.Location = new System.Drawing.Point(4, 25);
-            this.AboutTabPage.Margin = new System.Windows.Forms.Padding(4);
+            this.AboutTabPage.Location = new System.Drawing.Point(8, 39);
+            this.AboutTabPage.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.AboutTabPage.Name = "AboutTabPage";
-            this.AboutTabPage.Padding = new System.Windows.Forms.Padding(4);
-            this.AboutTabPage.Size = new System.Drawing.Size(1217, 109);
+            this.AboutTabPage.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.AboutTabPage.Size = new System.Drawing.Size(1822, 169);
             this.AboutTabPage.TabIndex = 7;
             this.AboutTabPage.Text = "About";
             this.AboutTabPage.UseVisualStyleBackColor = true;
-            //
+            // 
             // pnlAbout
-            //
+            // 
             this.pnlAbout.BackColor = System.Drawing.SystemColors.Control;
             this.pnlAbout.Controls.Add(this.txtServer);
             this.pnlAbout.Controls.Add(this.txtVersion);
@@ -239,241 +239,241 @@ namespace MageExtractor
             this.pnlAbout.Controls.Add(this.txtAbout2);
             this.pnlAbout.Controls.Add(this.txtAbout1);
             this.pnlAbout.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlAbout.Location = new System.Drawing.Point(4, 4);
-            this.pnlAbout.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlAbout.Location = new System.Drawing.Point(6, 6);
+            this.pnlAbout.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.pnlAbout.Name = "pnlAbout";
-            this.pnlAbout.Size = new System.Drawing.Size(1209, 101);
+            this.pnlAbout.Size = new System.Drawing.Size(1810, 157);
             this.pnlAbout.TabIndex = 0;
-            //
+            // 
             // txtServer
-            //
+            // 
             this.txtServer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtServer.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtServer.Location = new System.Drawing.Point(696, 78);
-            this.txtServer.Margin = new System.Windows.Forms.Padding(4);
+            this.txtServer.Location = new System.Drawing.Point(1040, 120);
+            this.txtServer.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.txtServer.Multiline = true;
             this.txtServer.Name = "txtServer";
             this.txtServer.ReadOnly = true;
-            this.txtServer.Size = new System.Drawing.Size(190, 20);
+            this.txtServer.Size = new System.Drawing.Size(376, 33);
             this.txtServer.TabIndex = 10;
             this.txtServer.Text = "Server";
-            //
+            // 
             // txtVersion
-            //
+            // 
             this.txtVersion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtVersion.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtVersion.Location = new System.Drawing.Point(903, 78);
-            this.txtVersion.Margin = new System.Windows.Forms.Padding(4);
+            this.txtVersion.Location = new System.Drawing.Point(1428, 120);
+            this.txtVersion.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.txtVersion.Multiline = true;
             this.txtVersion.Name = "txtVersion";
             this.txtVersion.ReadOnly = true;
-            this.txtVersion.Size = new System.Drawing.Size(302, 20);
+            this.txtVersion.Size = new System.Drawing.Size(375, 33);
             this.txtVersion.TabIndex = 9;
             this.txtVersion.Text = "Version";
-            //
+            // 
             // txtAbout3
-            //
+            // 
             this.txtAbout3.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtAbout3.Location = new System.Drawing.Point(16, 78);
-            this.txtAbout3.Margin = new System.Windows.Forms.Padding(4);
+            this.txtAbout3.Location = new System.Drawing.Point(24, 122);
+            this.txtAbout3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.txtAbout3.Multiline = true;
             this.txtAbout3.Name = "txtAbout3";
             this.txtAbout3.ReadOnly = true;
-            this.txtAbout3.Size = new System.Drawing.Size(229, 20);
+            this.txtAbout3.Size = new System.Drawing.Size(344, 31);
             this.txtAbout3.TabIndex = 4;
             this.txtAbout3.Text = "For usage instructions, please see";
-            //
+            // 
             // lblAboutLink
-            //
+            // 
             this.lblAboutLink.AutoSize = true;
-            this.lblAboutLink.Location = new System.Drawing.Point(253, 77);
-            this.lblAboutLink.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblAboutLink.Location = new System.Drawing.Point(380, 120);
+            this.lblAboutLink.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lblAboutLink.Name = "lblAboutLink";
-            this.lblAboutLink.Size = new System.Drawing.Size(85, 17);
+            this.lblAboutLink.Size = new System.Drawing.Size(130, 25);
             this.lblAboutLink.TabIndex = 3;
             this.lblAboutLink.TabStop = true;
             this.lblAboutLink.Text = "lblAboutLink";
-            //
+            // 
             // txtAbout2
-            //
-            this.txtAbout2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            // 
+            this.txtAbout2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtAbout2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtAbout2.Location = new System.Drawing.Point(16, 54);
-            this.txtAbout2.Margin = new System.Windows.Forms.Padding(4);
+            this.txtAbout2.Location = new System.Drawing.Point(24, 84);
+            this.txtAbout2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.txtAbout2.Multiline = true;
             this.txtAbout2.Name = "txtAbout2";
             this.txtAbout2.ReadOnly = true;
-            this.txtAbout2.Size = new System.Drawing.Size(1174, 18);
+            this.txtAbout2.Size = new System.Drawing.Size(1757, 28);
             this.txtAbout2.TabIndex = 2;
             this.txtAbout2.Text = "Written by ...";
-            //
+            // 
             // txtAbout1
-            //
-            this.txtAbout1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            // 
+            this.txtAbout1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtAbout1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtAbout1.Location = new System.Drawing.Point(16, 12);
-            this.txtAbout1.Margin = new System.Windows.Forms.Padding(4);
+            this.txtAbout1.Location = new System.Drawing.Point(24, 19);
+            this.txtAbout1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.txtAbout1.Multiline = true;
             this.txtAbout1.Name = "txtAbout1";
             this.txtAbout1.ReadOnly = true;
-            this.txtAbout1.Size = new System.Drawing.Size(1174, 44);
+            this.txtAbout1.Size = new System.Drawing.Size(1757, 69);
             this.txtAbout1.TabIndex = 0;
             this.txtAbout1.Text = "Mage Extractor can ...";
-            //
+            // 
             // panel1
-            //
+            // 
             this.panel1.Controls.Add(this.JobListDisplayCtl);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 138);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4);
+            this.panel1.Location = new System.Drawing.Point(0, 216);
+            this.panel1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
-            this.panel1.Size = new System.Drawing.Size(1225, 239);
+            this.panel1.Padding = new System.Windows.Forms.Padding(10, 9, 10, 9);
+            this.panel1.Size = new System.Drawing.Size(1838, 373);
             this.panel1.TabIndex = 7;
-            //
+            // 
             // JobListDisplayCtl
-            //
+            // 
             this.JobListDisplayCtl.AllowDisableShiftClickMode = true;
             this.JobListDisplayCtl.AutoSizeColumnWidths = false;
             this.JobListDisplayCtl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.JobListDisplayCtl.HeaderVisible = true;
             this.JobListDisplayCtl.ItemBlockSize = 100;
-            this.JobListDisplayCtl.Location = new System.Drawing.Point(7, 6);
-            this.JobListDisplayCtl.Margin = new System.Windows.Forms.Padding(5);
+            this.JobListDisplayCtl.Location = new System.Drawing.Point(10, 9);
+            this.JobListDisplayCtl.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.JobListDisplayCtl.MultiSelect = true;
             this.JobListDisplayCtl.Name = "JobListDisplayCtl";
             this.JobListDisplayCtl.Notice = "";
             this.JobListDisplayCtl.PageTitle = "Jobs";
-            this.JobListDisplayCtl.Size = new System.Drawing.Size(1211, 227);
+            this.JobListDisplayCtl.Size = new System.Drawing.Size(1818, 355);
             this.JobListDisplayCtl.TabIndex = 1;
-            //
+            // 
             // statusPanel1
-            //
+            // 
             this.statusPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.statusPanel1.EnableCancel = true;
-            this.statusPanel1.Location = new System.Drawing.Point(0, 245);
-            this.statusPanel1.Margin = new System.Windows.Forms.Padding(5);
+            this.statusPanel1.Location = new System.Drawing.Point(0, 383);
+            this.statusPanel1.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.statusPanel1.Name = "statusPanel1";
             this.statusPanel1.OwnerControl = this;
-            this.statusPanel1.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
+            this.statusPanel1.Padding = new System.Windows.Forms.Padding(10, 9, 10, 9);
             this.statusPanel1.ShowCancel = true;
-            this.statusPanel1.Size = new System.Drawing.Size(1225, 52);
+            this.statusPanel1.Size = new System.Drawing.Size(1838, 81);
             this.statusPanel1.TabIndex = 8;
-            //
+            // 
             // panel5
-            //
+            // 
             this.panel5.Controls.Add(this.extractionSettingsPanel1);
             this.panel5.Controls.Add(this.statusPanel1);
             this.panel5.Controls.Add(this.panel4);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel5.Location = new System.Drawing.Point(0, 377);
-            this.panel5.Margin = new System.Windows.Forms.Padding(4);
+            this.panel5.Location = new System.Drawing.Point(0, 589);
+            this.panel5.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(1225, 297);
+            this.panel5.Size = new System.Drawing.Size(1838, 464);
             this.panel5.TabIndex = 19;
-            //
+            // 
             // extractionSettingsPanel1
-            //
+            // 
             this.extractionSettingsPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.extractionSettingsPanel1.KeepAllResults = "No";
-            this.extractionSettingsPanel1.Location = new System.Drawing.Point(0, 135);
-            this.extractionSettingsPanel1.Margin = new System.Windows.Forms.Padding(5);
+            this.extractionSettingsPanel1.Location = new System.Drawing.Point(0, 211);
+            this.extractionSettingsPanel1.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.extractionSettingsPanel1.MSGFCutoff = "1E-8";
             this.extractionSettingsPanel1.Name = "extractionSettingsPanel1";
-            this.extractionSettingsPanel1.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
+            this.extractionSettingsPanel1.Padding = new System.Windows.Forms.Padding(10, 9, 10, 9);
             this.extractionSettingsPanel1.ResultFilterSetID = "All Pass";
             this.extractionSettingsPanel1.ResultTypeName = "Sequest Synopsis";
-            this.extractionSettingsPanel1.Size = new System.Drawing.Size(1225, 110);
+            this.extractionSettingsPanel1.Size = new System.Drawing.Size(1838, 172);
             this.extractionSettingsPanel1.TabIndex = 18;
-            //
+            // 
             // panel4
-            //
+            // 
             this.panel4.Controls.Add(this.FilterOutputTabs);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(0, 0);
-            this.panel4.Margin = new System.Windows.Forms.Padding(4);
+            this.panel4.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.panel4.Name = "panel4";
-            this.panel4.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
-            this.panel4.Size = new System.Drawing.Size(1225, 135);
+            this.panel4.Padding = new System.Windows.Forms.Padding(10, 9, 10, 9);
+            this.panel4.Size = new System.Drawing.Size(1838, 211);
             this.panel4.TabIndex = 17;
-            //
+            // 
             // FilterOutputTabs
-            //
+            // 
             this.FilterOutputTabs.Controls.Add(this.ProcessFilesToLocalTabPage);
             this.FilterOutputTabs.Controls.Add(this.ProcessFileToSQLiteDBTabPage);
             this.FilterOutputTabs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.FilterOutputTabs.Location = new System.Drawing.Point(7, 6);
-            this.FilterOutputTabs.Margin = new System.Windows.Forms.Padding(4);
+            this.FilterOutputTabs.Location = new System.Drawing.Point(10, 9);
+            this.FilterOutputTabs.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.FilterOutputTabs.Name = "FilterOutputTabs";
             this.FilterOutputTabs.SelectedIndex = 0;
-            this.FilterOutputTabs.Size = new System.Drawing.Size(1211, 123);
+            this.FilterOutputTabs.Size = new System.Drawing.Size(1818, 193);
             this.FilterOutputTabs.TabIndex = 15;
-            //
+            // 
             // ProcessFilesToLocalTabPage
-            //
+            // 
             this.ProcessFilesToLocalTabPage.BackColor = System.Drawing.SystemColors.Control;
             this.ProcessFilesToLocalTabPage.Controls.Add(this.FolderDestinationPanel1);
-            this.ProcessFilesToLocalTabPage.Location = new System.Drawing.Point(4, 25);
-            this.ProcessFilesToLocalTabPage.Margin = new System.Windows.Forms.Padding(4);
+            this.ProcessFilesToLocalTabPage.Location = new System.Drawing.Point(8, 39);
+            this.ProcessFilesToLocalTabPage.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.ProcessFilesToLocalTabPage.Name = "ProcessFilesToLocalTabPage";
-            this.ProcessFilesToLocalTabPage.Padding = new System.Windows.Forms.Padding(4);
-            this.ProcessFilesToLocalTabPage.Size = new System.Drawing.Size(1203, 94);
+            this.ProcessFilesToLocalTabPage.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.ProcessFilesToLocalTabPage.Size = new System.Drawing.Size(1802, 146);
             this.ProcessFilesToLocalTabPage.TabIndex = 0;
             this.ProcessFilesToLocalTabPage.Tag = "File_Output";
             this.ProcessFilesToLocalTabPage.Text = "Extract Results To File";
-            //
+            // 
             // FolderDestinationPanel1
-            //
+            // 
             this.FolderDestinationPanel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.FolderDestinationPanel1.Location = new System.Drawing.Point(4, 4);
-            this.FolderDestinationPanel1.Margin = new System.Windows.Forms.Padding(5);
+            this.FolderDestinationPanel1.Location = new System.Drawing.Point(6, 6);
+            this.FolderDestinationPanel1.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.FolderDestinationPanel1.Name = "FolderDestinationPanel1";
-            this.FolderDestinationPanel1.OutputFile = "";
             this.FolderDestinationPanel1.OutputDirectory = "C:\\Data\\Junk";
-            this.FolderDestinationPanel1.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
+            this.FolderDestinationPanel1.OutputFile = "";
+            this.FolderDestinationPanel1.Padding = new System.Windows.Forms.Padding(10, 9, 10, 9);
             this.FolderDestinationPanel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.FolderDestinationPanel1.Size = new System.Drawing.Size(1195, 86);
+            this.FolderDestinationPanel1.Size = new System.Drawing.Size(1790, 134);
             this.FolderDestinationPanel1.TabIndex = 13;
-            //
+            // 
             // ProcessFileToSQLiteDBTabPage
-            //
+            // 
             this.ProcessFileToSQLiteDBTabPage.BackColor = System.Drawing.SystemColors.Control;
             this.ProcessFileToSQLiteDBTabPage.Controls.Add(this.SQLiteDestinationPanel1);
-            this.ProcessFileToSQLiteDBTabPage.Location = new System.Drawing.Point(4, 25);
-            this.ProcessFileToSQLiteDBTabPage.Margin = new System.Windows.Forms.Padding(4);
+            this.ProcessFileToSQLiteDBTabPage.Location = new System.Drawing.Point(8, 39);
+            this.ProcessFileToSQLiteDBTabPage.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.ProcessFileToSQLiteDBTabPage.Name = "ProcessFileToSQLiteDBTabPage";
-            this.ProcessFileToSQLiteDBTabPage.Padding = new System.Windows.Forms.Padding(4);
-            this.ProcessFileToSQLiteDBTabPage.Size = new System.Drawing.Size(1203, 94);
+            this.ProcessFileToSQLiteDBTabPage.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.ProcessFileToSQLiteDBTabPage.Size = new System.Drawing.Size(1800, 145);
             this.ProcessFileToSQLiteDBTabPage.TabIndex = 1;
             this.ProcessFileToSQLiteDBTabPage.Tag = "SQLite_Output";
             this.ProcessFileToSQLiteDBTabPage.Text = "Extract Results To SQLite Database";
-            //
+            // 
             // SQLiteDestinationPanel1
-            //
+            // 
             this.SQLiteDestinationPanel1.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.SQLiteDestinationPanel1.DatabaseName = "C:\\Data\\test.db";
             this.SQLiteDestinationPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SQLiteDestinationPanel1.Location = new System.Drawing.Point(4, 4);
-            this.SQLiteDestinationPanel1.Margin = new System.Windows.Forms.Padding(5);
+            this.SQLiteDestinationPanel1.Location = new System.Drawing.Point(6, 6);
+            this.SQLiteDestinationPanel1.Margin = new System.Windows.Forms.Padding(8, 8, 8, 8);
             this.SQLiteDestinationPanel1.Name = "SQLiteDestinationPanel1";
-            this.SQLiteDestinationPanel1.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
+            this.SQLiteDestinationPanel1.Padding = new System.Windows.Forms.Padding(10, 9, 10, 9);
             this.SQLiteDestinationPanel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.SQLiteDestinationPanel1.Size = new System.Drawing.Size(1195, 86);
+            this.SQLiteDestinationPanel1.Size = new System.Drawing.Size(1788, 133);
             this.SQLiteDestinationPanel1.TabIndex = 14;
             this.SQLiteDestinationPanel1.TableName = "Extracted_Results";
-            //
+            // 
             // ExtractorForm
-            //
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1225, 674);
+            this.ClientSize = new System.Drawing.Size(1838, 1053);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.EntityListSourceTabs);
             this.Controls.Add(this.panel5);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "ExtractorForm";
             this.Text = "Mage Extractor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ClearTempFiles);

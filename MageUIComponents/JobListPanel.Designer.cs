@@ -50,7 +50,7 @@
             this.panel1.Controls.Add(this.GetJobsCtl);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(10, 9);
-            this.panel1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.panel1.Margin = new System.Windows.Forms.Padding(6);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1396, 132);
             this.panel1.TabIndex = 0;
@@ -73,7 +73,7 @@
             this.tableLayoutPanel1.Controls.Add(this.ParameterFileCtl, 3, 1);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(6);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.81967F));
@@ -87,7 +87,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.DatasetCtl.Location = new System.Drawing.Point(134, 6);
-            this.DatasetCtl.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.DatasetCtl.Margin = new System.Windows.Forms.Padding(6);
             this.DatasetCtl.Name = "DatasetCtl";
             this.DatasetCtl.Size = new System.Drawing.Size(532, 31);
             this.DatasetCtl.TabIndex = 4;
@@ -130,7 +130,7 @@
             this.ToolCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ToolCtl.Location = new System.Drawing.Point(134, 71);
-            this.ToolCtl.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.ToolCtl.Margin = new System.Windows.Forms.Padding(6);
             this.ToolCtl.Name = "ToolCtl";
             this.ToolCtl.Size = new System.Drawing.Size(532, 31);
             this.ToolCtl.TabIndex = 6;
@@ -140,7 +140,7 @@
             this.SettingsFileCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.SettingsFileCtl.Location = new System.Drawing.Point(866, 6);
-            this.SettingsFileCtl.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.SettingsFileCtl.Margin = new System.Windows.Forms.Padding(6);
             this.SettingsFileCtl.Name = "SettingsFileCtl";
             this.SettingsFileCtl.Size = new System.Drawing.Size(352, 31);
             this.SettingsFileCtl.TabIndex = 7;
@@ -150,7 +150,7 @@
             this.ParameterFileCtl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ParameterFileCtl.Location = new System.Drawing.Point(866, 71);
-            this.ParameterFileCtl.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.ParameterFileCtl.Margin = new System.Windows.Forms.Padding(6);
             this.ParameterFileCtl.Name = "ParameterFileCtl";
             this.ParameterFileCtl.Size = new System.Drawing.Size(352, 31);
             this.ParameterFileCtl.TabIndex = 8;
@@ -170,7 +170,7 @@
             // 
             this.GetJobsCtl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.GetJobsCtl.Location = new System.Drawing.Point(1236, 80);
-            this.GetJobsCtl.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.GetJobsCtl.Margin = new System.Windows.Forms.Padding(6);
             this.GetJobsCtl.Name = "GetJobsCtl";
             this.GetJobsCtl.Size = new System.Drawing.Size(152, 44);
             this.GetJobsCtl.TabIndex = 6;
@@ -183,7 +183,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel1);
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "JobListPanel";
             this.Padding = new System.Windows.Forms.Padding(10, 9, 10, 9);
             this.Size = new System.Drawing.Size(1416, 150);
