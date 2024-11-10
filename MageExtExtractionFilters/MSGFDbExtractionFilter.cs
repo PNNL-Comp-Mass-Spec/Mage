@@ -50,7 +50,7 @@ namespace MageExtExtractionFilters
         {
             // ResultType.MergeFile mfMap = mMergeFiles["ResultToSeqMap"];
             // ResultType.MergeFile mfProt = mMergeFiles["SeqToProteinMap"];
-            mProteinMerger = new MergeProteinData(MergeProteinData.MergeModeConstants.InspectOrMSGFDB);
+            mProteinMerger = new MergeProteinData(MergeProteinData.MergeModeConstants.MSGFPlus);
             mOutputAllProteins = mExtractionType.RType.ResultName == ResultType.MSGFDB_SYN_ALL_PROTEINS;
             mDataWrittenRowTags = new SortedSet<string>();
         }

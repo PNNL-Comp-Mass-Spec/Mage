@@ -32,7 +32,7 @@ namespace MageExtExtractionFilters
         {
             // ResultType.MergeFile mfMap = mMergeFiles["ResultToSeqMap"];
             // ResultType.MergeFile mfProt = mMergeFiles["SeqToProteinMap"];
-            mProteinMerger = new MergeProteinData(MergeProteinData.MergeModeConstants.InspectOrMSGFDB);
+            mProteinMerger = new MergeProteinData(MergeProteinData.MergeModeConstants.MSGFPlus);
             mOutputAllProteins = mExtractionType.RType.ResultName == ResultType.INSPECT_SYN_ALL_PROTEINS;
         }
 

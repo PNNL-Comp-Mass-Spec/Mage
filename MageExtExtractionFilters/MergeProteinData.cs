@@ -14,8 +14,8 @@ namespace MageExtExtractionFilters
         public enum MergeModeConstants
         {
             XTandem = 0,
-            InspectOrMSGFDB = 1,         // Used by Inspect and MS-GF+
-            MSPathFinder = 2
+            MSGFPlus = 1,         // Used by Inspect, MS-GF+, and MSFragger
+            MSPathFinder = 2,
         }
 
         // Reference to row in protein buffer
@@ -58,7 +58,7 @@ namespace MageExtExtractionFilters
                 ODX_Protein_Intensity_Log = colPos["Protein_Intensity_Log(I)"];
             }
 
-            if (MergeMode == MergeModeConstants.InspectOrMSGFDB)
+            if (MergeMode == MergeModeConstants.MSGFPlus)
             {
                 // The Protein column is present in the original _msgfplus_syn.txt file
                 // We are replacing the protein name listed with the name from the _msgfplus_syn_SeqToProteinMap.txt file
