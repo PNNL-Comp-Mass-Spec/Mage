@@ -71,7 +71,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
-    <NoWarn>IDE0028</NoWarn>
+    <NoWarn>IDE0028, IDE0290</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <OutputPath>bin\Release\</OutputPath>
@@ -82,7 +82,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
-    <NoWarn>IDE0028</NoWarn>
+    <NoWarn>IDE0028, IDE0290</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -105,7 +105,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AllPassFilter.cs" />
+    <Compile Include="FilterDiannResults.cs" />
     <Compile Include="FilterInspectResults.cs" />
+    <Compile Include="FilterMSFraggerResults.cs" />
     <Compile Include="FilterMSGFDbResults.cs" />
     <Compile Include="FilterMSPathFinderResults.cs" />
     <Compile Include="FilterResultsBase.cs" />

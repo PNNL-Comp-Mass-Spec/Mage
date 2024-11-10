@@ -16,6 +16,7 @@ namespace MageExtExtractionFilters
             XTandem = 0,
             MSGFPlus = 1,         // Used by Inspect, MS-GF+, and MSFragger
             MSPathFinder = 2,
+            DiaNN = 3
         }
 
         // Reference to row in protein buffer
@@ -67,9 +68,16 @@ namespace MageExtExtractionFilters
 
             if (MergeMode == MergeModeConstants.MSPathFinder)
             {
-                // The Protein column is present in the original _msgfplus_syn.txt file;
-                // We are replacing the protein name listed with the name from the _msgfplus_syn_SeqToProteinMap.txt file
+                // The ProteinName column is present in the original _msgfplus_syn.txt file;
+                // We are replacing the protein name listed with the name from the _mspathfinder_syn_SeqToProteinMap.txt file
                 ODX_Protein_Name = colPos["ProteinName"];
+            }
+
+            if (MergeMode == MergeModeConstants.DiaNN)
+            {
+                // The ProteinGroup column is present in the original _diann_syn.txt file;
+                // We are replacing the protein name listed with the name from the _diann_syn_SeqToProteinMap.txt file
+                ODX_Protein_Name = colPos["ProteinGroup"];
             }
         }
 
