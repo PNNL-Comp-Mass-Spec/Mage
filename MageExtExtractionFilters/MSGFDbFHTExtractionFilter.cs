@@ -128,22 +128,22 @@ namespace MageExtExtractionFilters
 
         private void PrecalculateFieldIndexes(Dictionary<string, int> columnPos)
         {
-            MSGFDbExtractionFilter.DetermineFieldIndexes(columnPos, out var dctColumnMapping);
+            MSGFDbExtractionFilter.DetermineFieldIndexes(columnPos, out var columnMapping);
 
-            peptideSequenceIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.Peptide);
-            chargeStateIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.Charge);
-            peptideMassIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.MH);
+            peptideSequenceIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(columnMapping, MSGFDbExtractionFilter.MSGFDBColumns.Peptide);
+            chargeStateIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(columnMapping, MSGFDbExtractionFilter.MSGFDBColumns.Charge);
+            peptideMassIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(columnMapping, MSGFDbExtractionFilter.MSGFDBColumns.MH);
 
-            msgfDbSpecProbValueIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.MSGFDB_SpecProbOrEValue);
+            msgfDbSpecProbValueIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(columnMapping, MSGFDbExtractionFilter.MSGFDBColumns.MSGFDB_SpecProbOrEValue);
             // rankMSGFDbSpecProbIndex = 1;
 
-            pValueIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.PValueOrEValue);
+            pValueIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(columnMapping, MSGFDbExtractionFilter.MSGFDBColumns.PValueOrEValue);
 
             // Note that FDR and PepFDR may not be present
-            FDRIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.FDROrQValue);
-            pepFDRIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.PepFDROrPepQValue);
+            FDRIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(columnMapping, MSGFDbExtractionFilter.MSGFDBColumns.FDROrQValue);
+            pepFDRIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(columnMapping, MSGFDbExtractionFilter.MSGFDBColumns.PepFDROrPepQValue);
 
-            msgfSpecProbIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(dctColumnMapping, MSGFDbExtractionFilter.MSGFDBColumns.MSGF_SpecProb);
+            msgfSpecProbIndex = MSGFDbExtractionFilter.GetMSGFDBColumnIndex(columnMapping, MSGFDbExtractionFilter.MSGFDBColumns.MSGF_SpecProb);
         }
 
         /// <summary>

@@ -26,8 +26,8 @@ namespace MageExtExtractionFilters
         private int peptideMassIndex;
         private int specEValueIndex;
         private int eValueIndex;
-        private int qValueIndex;        // Aka FDR
-        private int pepqValueIndex;     // Aka peptide-level FDR
+        private int qValueIndex;    // Aka FDR
+        private int pepQValueIndex; // Aka peptide-level FDR
 
         private MergeProteinData mProteinMerger;
         private bool mOutputAllProteins;
@@ -166,7 +166,7 @@ namespace MageExtExtractionFilters
                 var specEValue = GetColumnValue(vals, specEValueIndex, -1d);
                 var eValue = GetColumnValue(vals, eValueIndex, -1d);
                 var qValue = GetColumnValue(vals, qValueIndex, -1d);
-                var pepQValue = GetColumnValue(vals, pepqValueIndex, -1d);
+                var pepQValue = GetColumnValue(vals, pepQValueIndex, -1d);
 
                 var pass = ResultChecker.EvaluateMSPathFinder(peptideSequence, chargeState, peptideMass, specEValue, eValue, qValue, pepQValue);
 
@@ -186,9 +186,9 @@ namespace MageExtExtractionFilters
             return accept;
         }
 
-        public static void DetermineFieldIndexes(Dictionary<string, int> columnHeaders, out Dictionary<MSPathFinderColumns, int> dctColumnMapping)
+        public static void DetermineFieldIndexes(Dictionary<string, int> columnHeaders, out Dictionary<MSPathFinderColumns, int> columnMapping)
         {
-            dctColumnMapping = new Dictionary<MSPathFinderColumns, int>
+            columnMapping = new Dictionary<MSPathFinderColumns, int>
             {
                 {MSPathFinderColumns.Scan, GetColumnIndex(columnHeaders, "Scan")},
                 {MSPathFinderColumns.Peptide, GetColumnIndex(columnHeaders, "Sequence")},
@@ -228,19 +228,19 @@ namespace MageExtExtractionFilters
 
         private void PrecalculateFieldIndexes(Dictionary<string, int> columnPos)
         {
-            DetermineFieldIndexes(columnPos, out var dctColumnMapping);
+            DetermineFieldIndexes(columnPos, out var columnMapping);
 
-            mColumnIndices.ScanNumber = GetColumnIndex(dctColumnMapping, MSPathFinderColumns.Scan);
-            mColumnIndices.PeptideSequence = GetColumnIndex(dctColumnMapping, MSPathFinderColumns.Peptide);
-            mColumnIndices.ChargeState = GetColumnIndex(dctColumnMapping, MSPathFinderColumns.Charge);
-            peptideMassIndex = GetColumnIndex(dctColumnMapping, MSPathFinderColumns.Mass);
-            mColumnIndices.Protein = GetColumnIndex(dctColumnMapping, MSPathFinderColumns.Protein);
+            mColumnIndices.ScanNumber = GetColumnIndex(columnMapping, MSPathFinderColumns.Scan);
+            mColumnIndices.PeptideSequence = GetColumnIndex(columnMapping, MSPathFinderColumns.Peptide);
+            mColumnIndices.ChargeState = GetColumnIndex(columnMapping, MSPathFinderColumns.Charge);
+            peptideMassIndex = GetColumnIndex(columnMapping, MSPathFinderColumns.Mass);
+            mColumnIndices.Protein = GetColumnIndex(columnMapping, MSPathFinderColumns.Protein);
 
-            specEValueIndex = GetColumnIndex(dctColumnMapping, MSPathFinderColumns.SpecEValue);
-            eValueIndex = GetColumnIndex(dctColumnMapping, MSPathFinderColumns.EValue);
+            specEValueIndex = GetColumnIndex(columnMapping, MSPathFinderColumns.SpecEValue);
+            eValueIndex = GetColumnIndex(columnMapping, MSPathFinderColumns.EValue);
 
-            qValueIndex = GetColumnIndex(dctColumnMapping, MSPathFinderColumns.QValue);
-            pepqValueIndex = GetColumnIndex(dctColumnMapping, MSPathFinderColumns.PepQValue);
+            qValueIndex = GetColumnIndex(columnMapping, MSPathFinderColumns.QValue);
+            pepQValueIndex = GetColumnIndex(columnMapping, MSPathFinderColumns.PepQValue);
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace MageExtExtractionFilters
             var pipeline = ProcessingPipeline.Assemble("GetFilterCriteria", reader, filterCriteria);
             pipeline.RunRoot(null);
 
-            // Create new MS-GF+ filter object with retrieved filter criteria
+            // Create new MSPathFinder filter object with retrieved filter criteria
             return new FilterMSPathFinderResults(filterCriteria.Rows, FilterSetID);
         }
     }
