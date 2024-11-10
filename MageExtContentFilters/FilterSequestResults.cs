@@ -5,6 +5,13 @@ namespace MageExtContentFilters
 {
     public class FilterSequestResults : FilterResultsBase
     {
+        // Ignore Spelling: Sequest
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="filterCriteria">Filter criteria</param>
+        /// <param name="filterSetID">Filter set ID</param>
         public FilterSequestResults(IEnumerable<string[]> filterCriteria, string filterSetID)
             : base(filterCriteria, filterSetID)
         {
@@ -33,6 +40,7 @@ namespace MageExtContentFilters
             foreach (var filterGroupID in m_FilterGroups.Keys)
             {
                 passesFilter = true;
+
                 foreach (var filterRow in m_FilterGroups[filterGroupID])
                 {
                     var currentCriteriaName = filterRow.CriteriaName;

@@ -10,7 +10,7 @@ namespace MageExtExtractionFilters
     /// </summary>
     public class ResultType
     {
-        // Ignore Spelling: fht, msgfplus, msgfdb, mspathfinder, sequest, xt, xtandem
+        // Ignore Spelling: fht, MSFragger, msgfplus, msgfdb, mspathfinder, sequest, xt, xtandem
 
         public const string XTANDEM_ALL_PROTEINS = "X!Tandem All Proteins";
         public const string MSGFDB_SYN_ALL_PROTEINS = "MSGF+ Synopsis All Proteins";
