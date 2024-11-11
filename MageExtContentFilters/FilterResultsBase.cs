@@ -10,11 +10,11 @@ namespace MageExtContentFilters
     {
         // Ignore Spelling: Mage, Regex
 
-        protected static int CriteriaGroupIDIndex = 0;
-        protected static int CriteriaNameIndex = 1;
-        protected static int CriteriaOperatorIndex = 2;
-        protected static int CriteriaValueIntIndex = 3;
-        protected static int CriterionIDIndex = 4;
+        protected static int mCriteriaGroupIDIndex = 0;
+        protected static int mCriteriaNameIndex = 1;
+        protected static int mCriteriaOperatorIndex = 2;
+        protected static int mCriteriaValueIntIndex = 3;
+        protected static int mCriterionIDIndex = 4;
 
         // Internal class
         protected class FilterCriteriaDef
@@ -27,15 +27,15 @@ namespace MageExtContentFilters
 
             public FilterCriteriaDef(IReadOnlyList<string> criteria)
             {
-                CriteriaName = criteria[CriteriaNameIndex].Trim();
-                CriteriaOperator = criteria[CriteriaOperatorIndex].Trim();
-                var value = criteria[CriteriaValueIntIndex];
+                CriteriaName = criteria[mCriteriaNameIndex].Trim();
+                CriteriaOperator = criteria[mCriteriaOperatorIndex].Trim();
+                var value = criteria[mCriteriaValueIntIndex];
                 int.TryParse(value, out CriteriaValueInt);
                 float.TryParse(value, out CriteriaValueFloat);
 
                 if (criteria.Count > 4)
                 {
-                    value = criteria[CriterionIDIndex].Trim();
+                    value = criteria[mCriterionIDIndex].Trim();
                     int.TryParse(value, out CriterionID);
                 }
                 else
@@ -75,7 +75,7 @@ namespace MageExtContentFilters
             {
                 var fc = new FilterCriteriaDef(criteria);
 
-                var groupID = criteria[CriteriaGroupIDIndex];
+                var groupID = criteria[mCriteriaGroupIDIndex];
                 if (!m_FilterGroups.ContainsKey(groupID))
                 {
                     m_FilterGroups[groupID] = new List<FilterCriteriaDef>();
