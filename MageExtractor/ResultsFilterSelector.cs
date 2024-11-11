@@ -62,7 +62,8 @@ namespace MageExtractor
             {
                 Database = Globals.DMSDatabase,
                 Server = Globals.DMSServer,
-                SQLText = "SELECT Filter_Set_ID, Name, Description FROM V_PDE_Filter_Sets"
+                SQLText = "SELECT Filter_Set_ID, Name, Description FROM V_PDE_Filter_Sets",
+                IsPostgres = Globals.PostgresDMS
             };
 
             // Create Mage module to receive query results
