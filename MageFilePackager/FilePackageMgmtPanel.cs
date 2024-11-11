@@ -9,7 +9,7 @@ namespace MageFilePackager
 {
     public partial class FilePackageMgmtPanel : UserControl, IModuleParameters
     {
-        // Ignore Spelling: Mage, txt
+        // Ignore Spelling: Mage, Mgmt, txt
 
         // Path for local copy of manifest file
         private string mOutputPath;
