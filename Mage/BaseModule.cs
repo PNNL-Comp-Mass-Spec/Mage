@@ -789,20 +789,20 @@ namespace Mage
         /// this function will create an output row according to output column
         /// definition
         /// </summary>
-        /// <param name="vals">An input data row with fields according to input column definitions</param>
-        protected string[] MapDataRow(string[] vals)
+        /// <param name="values">An input data row with fields according to input column definitions</param>
+        protected string[] MapDataRow(string[] values)
         {
             // Remap results according to our output column definitions
             var outRow = new string[OutputColumnDefs.Count];
 
-            var actualCount = vals.Length;
+            var actualCount = values.Length;
 
             // Copy over values from remapped input columns
             foreach (var colMap in OutputToInputColumnPosMap)
             {
                 if (colMap.Value < actualCount)
                 {
-                    outRow[colMap.Key] = vals[colMap.Value];
+                    outRow[colMap.Key] = values[colMap.Value];
                 }
                 else
                 {

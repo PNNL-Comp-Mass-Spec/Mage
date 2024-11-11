@@ -58,11 +58,11 @@ namespace Mage
             if (args.DataAvailable)
             {
                 // Do filtering here
-                var vals = args.Fields;
-                if (CheckFilter(ref vals))
+                var values = args.Fields;
+                if (CheckFilter(ref values))
                 {
                     passedRowsCounter++;
-                    OnDataRowAvailable(new MageDataEventArgs(vals));
+                    OnDataRowAvailable(new MageDataEventArgs(values));
                 }
                 // Report progress
                 if (++totalRowsCounter % reportRowBlockSize == 0)
@@ -84,8 +84,8 @@ namespace Mage
         /// <summary>
         /// This function should be overridden by subclasses to do the actual filtering
         /// </summary>
-        /// <param name="vals"></param>
-        protected virtual bool CheckFilter(ref string[] vals)
+        /// <param name="values"></param>
+        protected virtual bool CheckFilter(ref string[] values)
         {
             const bool accepted = false;
 

@@ -11,8 +11,8 @@ namespace Mage
     /// <remarks>This filter is used by the Analysis Manager's Phospho_FDR_Aggregator PlugIn</remarks>
     public class MergeFromLookup : ContentFilter
     {
-        private int _keyColIdx;
-        private int _mergeColIdx;
+        private int mKeyColIdx;
+        private int mMergeColIdx;
 
         /// <summary>
         /// Key-value lookup for merged value
@@ -42,35 +42,35 @@ namespace Mage
         /// <remarks>This code will be executed after the column definitions have been created</remarks>
         protected override void ColumnDefsFinished()
         {
-            if (!OutputColumnPos.TryGetValue(KeyColName, out _keyColIdx))
+            if (!OutputColumnPos.TryGetValue(KeyColName, out mKeyColIdx))
                 throw new Exception("Key column '" + KeyColName + "' not found in the output columns, " + string.Join(",", OutputColumnPos.Keys));
 
-            if (!OutputColumnPos.TryGetValue(MergeColName, out _mergeColIdx))
+            if (!OutputColumnPos.TryGetValue(MergeColName, out mMergeColIdx))
                 throw new Exception("Merge column '" + MergeColName + "' not found in the output columns, " + string.Join(",", OutputColumnPos.Keys));
         }
 
         /// <summary>
         /// Pass all rows, apply column mapping, and merge lookup value
         /// </summary>
-        protected override bool CheckFilter(ref string[] vals)
+        protected override bool CheckFilter(ref string[] values)
         {
             if (OutputColumnDefs != null)
             {
-                var outRow = MapDataRow(vals);
+                var outRow = MapDataRow(values);
 
-                if (LookupKV.TryGetValue(outRow[_keyColIdx], out var columnValue))
+                if (LookupKV.TryGetValue(outRow[mKeyColIdx], out var columnValue))
                 {
-                    outRow[_mergeColIdx] = columnValue;
+                    outRow[mMergeColIdx] = columnValue;
                 }
                 else
                 {
                     if (ThrowExceptionIfLookupFails)
-                        throw new Exception("Key '" + outRow[_keyColIdx] + "' not found in the LookupKV dictionary");
+                        throw new Exception("Key '" + outRow[mKeyColIdx] + "' not found in the LookupKV dictionary");
 
-                    outRow[_mergeColIdx] = string.Empty;
+                    outRow[mMergeColIdx] = string.Empty;
                 }
 
-                vals = outRow;
+                values = outRow;
             }
             return true;
         }

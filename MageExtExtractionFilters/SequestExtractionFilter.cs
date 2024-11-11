@@ -74,28 +74,28 @@ namespace MageExtExtractionFilters
         /// and annotate the appropriate column in the result (if one is specified)
         /// and pass on result if it passed the filter
         /// </summary>
-        /// <param name="vals"></param>
-        protected bool CheckFilter(string[] vals)
+        /// <param name="values"></param>
+        protected bool CheckFilter(string[] values)
         {
             var accept = true;
             if (ResultChecker == null)
             {
                 if (mFilterResultsColIdx >= 0)
                 {
-                    vals[mFilterResultsColIdx] = "Not Checked";
+                    values[mFilterResultsColIdx] = "Not Checked";
                 }
             }
             else
             {
-                var peptideSequence = GetColumnValue(vals, peptideSequenceIndex, "");
-                var xCorrValue = GetColumnValue(vals, xCorrValueIndex, -1d);
-                var delCNValue = GetColumnValue(vals, delCNValueIndex, -1d);
-                var delCN2Value = GetColumnValue(vals, delCN2ValueIndex, -1d);
-                var chargeState = GetColumnValue(vals, chargeStateIndex, -1);
-                var peptideMass = GetColumnValue(vals, peptideMassIndex, -1d);
-                var cleavageState = GetColumnValue(vals, cleavageStateIndex, -1);
-                var msgfSpecProb = GetColumnValue(vals, msgfSpecProbIndex, -1d);
-                var rankXC = GetColumnValue(vals, rankXCIndex, -1);
+                var peptideSequence = GetColumnValue(values, peptideSequenceIndex, "");
+                var xCorrValue = GetColumnValue(values, xCorrValueIndex, -1d);
+                var delCNValue = GetColumnValue(values, delCNValueIndex, -1d);
+                var delCN2Value = GetColumnValue(values, delCN2ValueIndex, -1d);
+                var chargeState = GetColumnValue(values, chargeStateIndex, -1);
+                var peptideMass = GetColumnValue(values, peptideMassIndex, -1d);
+                var cleavageState = GetColumnValue(values, cleavageStateIndex, -1);
+                var msgfSpecProb = GetColumnValue(values, msgfSpecProbIndex, -1d);
+                var rankXC = GetColumnValue(values, rankXCIndex, -1);
 
                 // Legacy columns; no longer used
                 const int spectrumCount = -1;
@@ -107,7 +107,7 @@ namespace MageExtExtractionFilters
                 accept = pass || mKeepAllResults;
                 if (mFilterResultsColIdx >= 0)
                 {
-                    vals[mFilterResultsColIdx] = (pass ? "Passed-" : "Failed-") + mExtractionType.ResultFilterSetID;
+                    values[mFilterResultsColIdx] = (pass ? "Passed-" : "Failed-") + mExtractionType.ResultFilterSetID;
                 }
             }
             return accept;

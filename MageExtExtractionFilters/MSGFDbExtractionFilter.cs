@@ -175,42 +175,42 @@ namespace MageExtExtractionFilters
         /// and annotate the appropriate column in the result (if one is specified)
         /// and pass on result if it passed the filter
         /// </summary>
-        /// <param name="vals"></param>
-        protected bool CheckFilter(string[] vals)
+        /// <param name="values"></param>
+        protected bool CheckFilter(string[] values)
         {
             var accept = true;
             if (ResultChecker == null)
             {
                 if (mFilterResultsColIdx >= 0)
                 {
-                    vals[mFilterResultsColIdx] = "Not Checked";
+                    values[mFilterResultsColIdx] = "Not Checked";
                 }
             }
             else
             {
-                var peptideSequence = GetColumnValue(vals, mColumnIndices.PeptideSequence, "");
-                var chargeState = GetColumnValue(vals, mColumnIndices.ChargeState, 0);
-                var peptideMass = GetColumnValue(vals, peptideMassIndex, -1d);
-                var specEValue = GetColumnValue(vals, msgfDbSpecEValueIndex, -1d);
-                var eValue = GetColumnValue(vals, eValueIndex, -1d);
-                var FDR = GetColumnValue(vals, FDRIndex, -1d);
-                var PepFDR = GetColumnValue(vals, pepFDRIndex, -1d);
-                var msgfSpecProb = GetColumnValue(vals, msgfSpecProbIndex, -1d);
-                var rankMSGFDbSpecProb = GetColumnValue(vals, rankMSGFDbSpecProbIndex, -1);
+                var peptideSequence = GetColumnValue(values, mColumnIndices.PeptideSequence, "");
+                var chargeState = GetColumnValue(values, mColumnIndices.ChargeState, 0);
+                var peptideMass = GetColumnValue(values, peptideMassIndex, -1d);
+                var specEValue = GetColumnValue(values, msgfDbSpecEValueIndex, -1d);
+                var eValue = GetColumnValue(values, eValueIndex, -1d);
+                var FDR = GetColumnValue(values, FDRIndex, -1d);
+                var PepFDR = GetColumnValue(values, pepFDRIndex, -1d);
+                var msgfSpecProb = GetColumnValue(values, msgfSpecProbIndex, -1d);
+                var rankMSGFDbSpecProb = GetColumnValue(values, rankMSGFDbSpecProbIndex, -1);
 
                 var pass = ResultChecker.EvaluateMSGFDB(peptideSequence, chargeState, peptideMass, specEValue, eValue, FDR, PepFDR, msgfSpecProb, rankMSGFDbSpecProb);
 
                 accept = pass || mKeepAllResults;
                 if (mFilterResultsColIdx >= 0)
                 {
-                    vals[mFilterResultsColIdx] = (pass ? "Passed-" : "Failed-") + mExtractionType.ResultFilterSetID;
+                    values[mFilterResultsColIdx] = (pass ? "Passed-" : "Failed-") + mExtractionType.ResultFilterSetID;
                 }
             }
 
             if (accept)
             {
                 mPassedRowsCounter++;
-                OnDataRowAvailable(new MageDataEventArgs(vals));
+                OnDataRowAvailable(new MageDataEventArgs(values));
             }
 
             return accept;

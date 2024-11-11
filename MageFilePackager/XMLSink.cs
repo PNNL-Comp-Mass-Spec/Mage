@@ -8,9 +8,9 @@ namespace MageFilePackager
     {
         // Ignore Spelling: Mage
 
-        private readonly StringBuilder _text = new();
+        private readonly StringBuilder mText = new();
 
-        public string Text => _text.ToString();
+        public string Text => mText.ToString();
 
         public Dictionary<string, string> Prefixes { get; set; }
 
@@ -49,7 +49,7 @@ namespace MageFilePackager
             {
                 foreach (var kv in Parameters)
                 {
-                    _text.AppendFormat("<parameter name='{0}' value='{1}' />\n", kv.Key, kv.Value);
+                    mText.AppendFormat("<parameter name='{0}' value='{1}' />\n", kv.Key, kv.Value);
                 }
             }
         }
@@ -60,7 +60,7 @@ namespace MageFilePackager
             {
                 foreach (var kv in Prefixes)
                 {
-                    _text.AppendFormat("<prefix source='{0}' value='{1}' />\n", kv.Key, kv.Value);
+                    mText.AppendFormat("<prefix source='{0}' value='{1}' />\n", kv.Key, kv.Value);
                 }
             }
         }
@@ -69,14 +69,14 @@ namespace MageFilePackager
         {
         }
 
-        private void OutputDataRow(IReadOnlyList<string> vals)
+        private void OutputDataRow(IReadOnlyList<string> values)
         {
-            _text.Append("<path ");
+            mText.Append("<path ");
             for (var i = 0; i < InputColumnDefs.Count; i++)
             {
-                _text.AppendFormat("{0}='{1}' ", InputColumnDefs[i].Name, vals[i]);
+                mText.AppendFormat("{0}='{1}' ", InputColumnDefs[i].Name, values[i]);
             }
-            _text.Append(" />\n");
+            mText.Append(" />\n");
         }
     }
 }

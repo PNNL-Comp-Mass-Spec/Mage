@@ -106,15 +106,15 @@ namespace MageDisplayLib
         private static string[] GetOutputRowFromGridRow(DataGridViewRow row)
         {
             var n = row.Cells.Count;
-            var vals = new string[n];
+            var values = new string[n];
             for (var i = 0; i < n; i++)
             {
                 if (row.Cells[i].Value == null)
-                    vals[i] = string.Empty;
+                    values[i] = string.Empty;
                 else
-                    vals[i] = row.Cells[i].Value.ToString();
+                    values[i] = row.Cells[i].Value.ToString();
             }
-            return vals;
+            return values;
         }
 
         /// <summary>
@@ -140,15 +140,15 @@ namespace MageDisplayLib
                 case DisplaySourceMode.All:
                     foreach (DataGridViewRow row in myListControl.List.Rows)
                     {
-                        var vals = GetOutputRowFromGridRow(row);
-                        mRowBuffer.Add(vals);
+                        var values = GetOutputRowFromGridRow(row);
+                        mRowBuffer.Add(values);
                     }
                     break;
                 case DisplaySourceMode.Selected:
                     foreach (DataGridViewRow row in myListControl.List.SelectedRows)
                     {
-                        var vals = GetOutputRowFromGridRow(row);
-                        mRowBuffer.Add(vals);
+                        var values = GetOutputRowFromGridRow(row);
+                        mRowBuffer.Add(values);
                     }
                     break;
             }

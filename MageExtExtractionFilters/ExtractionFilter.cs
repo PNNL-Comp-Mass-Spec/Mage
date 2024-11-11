@@ -98,14 +98,14 @@ namespace MageExtExtractionFilters
         }
 
         protected string CreateRowTag(
-            string[] vals,
+            string[] values,
             bool includeProtein,
             ColumnIndices columnIndices)
         {
-            var scanNumber = GetColumnValue(vals, columnIndices.ScanNumber, -1);
-            var chargeState = GetColumnValue(vals, columnIndices.ChargeState, 0);
-            var peptideSequence = GetColumnValue(vals, columnIndices.PeptideSequence, string.Empty);
-            var proteinName = GetColumnValue(vals, columnIndices.Protein, string.Empty);
+            var scanNumber = GetColumnValue(values, columnIndices.ScanNumber, -1);
+            var chargeState = GetColumnValue(values, columnIndices.ChargeState, 0);
+            var peptideSequence = GetColumnValue(values, columnIndices.PeptideSequence, string.Empty);
+            var proteinName = GetColumnValue(values, columnIndices.Protein, string.Empty);
 
             if (includeProtein)
             {

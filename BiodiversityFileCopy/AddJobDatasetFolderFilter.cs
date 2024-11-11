@@ -22,15 +22,15 @@ namespace BiodiversityFileCopy
             JobResultsDirectoryIndex = OutputColumnPos[JobResultsDirectoryColName];
         }
 
-        protected override bool CheckFilter(ref string[] vals)
+        protected override bool CheckFilter(ref string[] values)
         {
             if (OutputColumnDefs != null)
             {
-                var outRow = MapDataRow(vals);
+                var outRow = MapDataRow(values);
 
                 var resultsDirectoryPath = outRow[JobResultsDirectoryIndex];
                 outRow[DatasetDirectoryIndex] = Path.GetDirectoryName(resultsDirectoryPath);
-                vals = outRow;
+                values = outRow;
             }
             return true;
         }

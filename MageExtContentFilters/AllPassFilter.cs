@@ -17,12 +17,12 @@ namespace MageExtContentFilters
         /// <summary>
         /// Pass all rows and apply column mapping
         /// </summary>
-        protected override bool CheckFilter(ref string[] vals)
+        protected override bool CheckFilter(ref string[] values)
         {
             if (OutputColumnDefs != null)
             {
-                var outRow = MapDataRow(vals);
-                vals = outRow;
+                var outRow = MapDataRow(values);
+                values = outRow;
             }
             return true;
         }

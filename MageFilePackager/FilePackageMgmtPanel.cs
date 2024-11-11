@@ -12,7 +12,7 @@ namespace MageFilePackager
         // Ignore Spelling: Mage, txt
 
         // Path for local copy of manifest file
-        private string _outputPath;
+        private string mOutputPath;
 
         public FilePackageMgmtPanel()
         {
@@ -62,15 +62,15 @@ namespace MageFilePackager
         {
             get
             {
-                if (!string.IsNullOrEmpty(_outputPath) && !Path.HasExtension(_outputPath))
+                if (!string.IsNullOrEmpty(mOutputPath) && !Path.HasExtension(mOutputPath))
                 {
-                    if (_outputPath.EndsWith("\\"))
-                        _outputPath += "download_pkg";
-                    _outputPath += ".xml";
+                    if (mOutputPath.EndsWith("\\"))
+                        mOutputPath += "download_pkg";
+                    mOutputPath += ".xml";
                 }
-                return _outputPath;
+                return mOutputPath;
             }
-            set => _outputPath = value;
+            set => mOutputPath = value;
         }
 
         private void ClearPackageList()
@@ -207,7 +207,7 @@ namespace MageFilePackager
             var saveFileDialog = new SaveFileDialog
             {
                 DefaultExt = "txt",
-                FileName = _outputPath,
+                FileName = mOutputPath,
                 RestoreDirectory = true
             };
 
@@ -221,7 +221,7 @@ namespace MageFilePackager
             try
             {
                 IBaseModule source = new GVPipelineSource(packageListDisplayControl1, "All");
-                var writer = new DelimitedFileWriter { FilePath = _outputPath };
+                var writer = new DelimitedFileWriter { FilePath = mOutputPath };
                 ProcessingPipeline.Assemble("SaveListDisplayPipeline", source, writer).RunRoot(null);
             }
             catch (MageException ex)
@@ -252,7 +252,7 @@ namespace MageFilePackager
             OutputFilePath = fileDialog.FileName;
             try
             {
-                var reader = new DelimitedFileReader { FilePath = _outputPath };
+                var reader = new DelimitedFileReader { FilePath = mOutputPath };
                 ProcessingPipeline.Assemble("RestoreListDisplayPipeline", reader, packageListDisplayControl1).RunRoot(null);
                 TotalSizeDisplay = TotalGB(TotalKB());
             }

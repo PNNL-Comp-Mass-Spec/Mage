@@ -24,15 +24,15 @@ namespace BiodiversityFileCopy
             OrgNameIdx = OutputColumnPos[OrgNameColName];
         }
 
-        protected override bool CheckFilter(ref string[] vals)
+        protected override bool CheckFilter(ref string[] values)
         {
             if (OutputColumnDefs != null)
             {
-                var outRow = MapDataRow(vals);
+                var outRow = MapDataRow(values);
 
                 var ogName = OrganismLookup[outRow[PkgIdIdx]];
                 outRow[OrgNameIdx] = ogName;
-                vals = outRow;
+                values = outRow;
             }
             return true;
         }

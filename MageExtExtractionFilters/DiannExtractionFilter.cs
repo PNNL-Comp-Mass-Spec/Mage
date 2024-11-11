@@ -145,38 +145,38 @@ namespace MageExtExtractionFilters
         /// and annotate the appropriate column in the result (if one is specified)
         /// and pass on result if it passed the filter
         /// </summary>
-        /// <param name="vals"></param>
-        protected bool CheckFilter(string[] vals)
+        /// <param name="values"></param>
+        protected bool CheckFilter(string[] values)
         {
             var accept = true;
             if (ResultChecker == null)
             {
                 if (mFilterResultsColIdx >= 0)
                 {
-                    vals[mFilterResultsColIdx] = "Not Checked";
+                    values[mFilterResultsColIdx] = "Not Checked";
                 }
             }
             else
             {
-                var peptideSequence = GetColumnValue(vals, mColumnIndices.PeptideSequence, "");
-                var chargeState = GetColumnValue(vals, mColumnIndices.ChargeState, 0);
-                var peptideMass = GetColumnValue(vals, peptideMassIndex, -1d);
-                var qValue = GetColumnValue(vals, qValueIndex, -1d);
-                var pepQValue = GetColumnValue(vals, pepQValueIndex, -1d);
+                var peptideSequence = GetColumnValue(values, mColumnIndices.PeptideSequence, "");
+                var chargeState = GetColumnValue(values, mColumnIndices.ChargeState, 0);
+                var peptideMass = GetColumnValue(values, peptideMassIndex, -1d);
+                var qValue = GetColumnValue(values, qValueIndex, -1d);
+                var pepQValue = GetColumnValue(values, pepQValueIndex, -1d);
 
                 var pass = ResultChecker.EvaluateDiann(peptideSequence, chargeState, peptideMass, qValue, pepQValue);
 
                 accept = pass || mKeepAllResults;
                 if (mFilterResultsColIdx >= 0)
                 {
-                    vals[mFilterResultsColIdx] = (pass ? "Passed-" : "Failed-") + mExtractionType.ResultFilterSetID;
+                    values[mFilterResultsColIdx] = (pass ? "Passed-" : "Failed-") + mExtractionType.ResultFilterSetID;
                 }
             }
 
             if (accept)
             {
                 mPassedRowsCounter++;
-                OnDataRowAvailable(new MageDataEventArgs(vals));
+                OnDataRowAvailable(new MageDataEventArgs(values));
             }
 
             return accept;

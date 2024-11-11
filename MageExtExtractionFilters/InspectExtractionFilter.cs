@@ -119,44 +119,44 @@ namespace MageExtExtractionFilters
         /// and annotate the appropriate column in the result (if one is specified)
         /// and pass on result if it passed the filter
         /// </summary>
-        /// <param name="vals"></param>
-        protected bool CheckFilter(string[] vals)
+        /// <param name="values"></param>
+        protected bool CheckFilter(string[] values)
         {
             var accept = true;
             if (ResultChecker == null)
             {
                 if (mFilterResultsColIdx >= 0)
                 {
-                    vals[mFilterResultsColIdx] = "Not Checked";
+                    values[mFilterResultsColIdx] = "Not Checked";
                 }
             }
             else
             {
-                var peptideSequence = GetColumnValue(vals, peptideSequenceIndex, "");
-                var chargeState = GetColumnValue(vals, chargeStateIndex, 0);
-                var peptideMass = GetColumnValue(vals, peptideMassIndex, -1d);
+                var peptideSequence = GetColumnValue(values, peptideSequenceIndex, "");
+                var chargeState = GetColumnValue(values, chargeStateIndex, 0);
+                var peptideMass = GetColumnValue(values, peptideMassIndex, -1d);
 
-                var MQScore = GetColumnValue(vals, mqScoreIndex, -1d);
-                var TotalPRMScore = GetColumnValue(vals, totalPRMScoreIndex, -1d);
-                var FScore = GetColumnValue(vals, fScoreIndex, -1d);
-                var PValue = GetColumnValue(vals, pValueIndex, -1d);
+                var MQScore = GetColumnValue(values, mqScoreIndex, -1d);
+                var TotalPRMScore = GetColumnValue(values, totalPRMScoreIndex, -1d);
+                var FScore = GetColumnValue(values, fScoreIndex, -1d);
+                var PValue = GetColumnValue(values, pValueIndex, -1d);
 
-                var msgfSpecProb = GetColumnValue(vals, msgfSpecProbIndex, -1d);
-                var rankTotalPRMScore = GetColumnValue(vals, rankTotalPRMScoreIndex, -1);
+                var msgfSpecProb = GetColumnValue(values, msgfSpecProbIndex, -1d);
+                var rankTotalPRMScore = GetColumnValue(values, rankTotalPRMScoreIndex, -1);
 
                 var pass = ResultChecker.EvaluateInspect(peptideSequence, chargeState, peptideMass, MQScore, TotalPRMScore, FScore, PValue, msgfSpecProb, rankTotalPRMScore);
 
                 accept = pass || mKeepAllResults;
                 if (mFilterResultsColIdx >= 0)
                 {
-                    vals[mFilterResultsColIdx] = (pass ? "Passed-" : "Failed-") + mExtractionType.ResultFilterSetID;
+                    values[mFilterResultsColIdx] = (pass ? "Passed-" : "Failed-") + mExtractionType.ResultFilterSetID;
                 }
             }
 
             if (accept)
             {
                 mPassedRowsCounter++;
-                OnDataRowAvailable(new MageDataEventArgs(vals));
+                OnDataRowAvailable(new MageDataEventArgs(values));
             }
 
             return accept;

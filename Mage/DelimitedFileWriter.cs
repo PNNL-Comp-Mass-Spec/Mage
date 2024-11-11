@@ -184,16 +184,16 @@ namespace Mage
             mOutFile.WriteLine(string.Join(Delimiter, h));
         }
 
-        private void OutputDataRow(string[] vals)
+        private void OutputDataRow(string[] values)
         {
             var delimiter = string.Empty;
 
             // Remap results according to our output column definitions, if we have them
             // Otherwise just use the as-delivered format
-            var outRow = vals;
+            var outRow = values;
             if (OutputColumnDefs != null)
             {
-                outRow = MapDataRow(vals);
+                outRow = MapDataRow(values);
             }
 
             foreach (var item in outRow)

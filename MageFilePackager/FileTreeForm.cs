@@ -17,8 +17,8 @@ namespace MageFilePackager
         }
 
         // Column information for the standard file package format
-        private List<MageColumnDef> _columnDefs;
-        private Dictionary<string, int> _columnPos;
+        private List<MageColumnDef> mColumnDefs;
+        private Dictionary<string, int> mColumnPos;
 
         // Mage display source from which to load the tree view
         public GVPipelineSource FileListSource { get; set; }
@@ -53,8 +53,8 @@ namespace MageFilePackager
             {
                 ProcessingPipeline.Assemble("z", FileListSource, PackageFilter, builder).RunRoot(null);
             }
-            _columnDefs = builder.ColumnDefs;
-            _columnPos = builder.ColumnPos;
+            mColumnDefs = builder.ColumnDefs;
+            mColumnPos = builder.ColumnPos;
             treeView1.Refresh();
         }
 
@@ -63,22 +63,22 @@ namespace MageFilePackager
         /// </summary>
         public BaseModule GetSource()
         {
-            return new TreeSource { ColumnDefs = _columnDefs, FileTree = treeView1 };
+            return new TreeSource { ColumnDefs = mColumnDefs, FileTree = treeView1 };
         }
 
-        private float _checkedSizeTotal;
-        private int _numChecked;
+        private float mCheckedSizeTotal;
+        private int mNumChecked;
 
         private void CalculateCheckedTotalSize()
         {
-            _checkedSizeTotal = 0;
-            _numChecked = 0;
+            mCheckedSizeTotal = 0;
+            mNumChecked = 0;
             // Walk the tree and output a row for each checked file
             foreach (TreeNode node in treeView1.Nodes)
             {
                 float runningTally = 0;
                 SizeCheckedItems(node, ref runningTally);
-                TotalCheckedSizedCtl.Text = string.Format("{0:###,###,##0.0} MB [{1}]", _checkedSizeTotal / 1024, _numChecked);
+                TotalCheckedSizedCtl.Text = string.Format("{0:###,###,##0.0} MB [{1}]", mCheckedSizeTotal / 1024, mNumChecked);
             }
         }
         private void SizeCheckedItems(TreeNode node, ref float runningTally)
@@ -88,10 +88,10 @@ namespace MageFilePackager
             if (node.Tag != null && node.Checked)
             {
                 var row = (object[])node.Tag;
-                var idx = _columnPos["KB"];
+                var idx = mColumnPos["KB"];
                 float.TryParse(row[idx].ToString(), out var sizeKB);
-                _checkedSizeTotal += sizeKB;
-                _numChecked++;
+                mCheckedSizeTotal += sizeKB;
+                mNumChecked++;
                 myTally += sizeKB;
             }
 
@@ -183,9 +183,9 @@ namespace MageFilePackager
         /// </summary>
         public class TreeBuilder : ContentFilter
         {
-            private int _pathIdx;
-            private int _nameIdx;
-            private int _kbIdx;
+            private int mPathIdx;
+            private int mNameIdx;
+            private int mKbIdx;
 
             public TreeView FileTree;
 
@@ -195,18 +195,18 @@ namespace MageFilePackager
             // Precalculate field indexes
             protected override void ColumnDefsFinished()
             {
-                //  _itemIdx = InputColumnPos["Item"];
-                _nameIdx = InputColumnPos["Name"];
-                _kbIdx = InputColumnPos["KB"];
-                _pathIdx = InputColumnPos["Path"];
+                //  mItemIdx = InputColumnPos["Item"];
+                mNameIdx = InputColumnPos["Name"];
+                mKbIdx = InputColumnPos["KB"];
+                mPathIdx = InputColumnPos["Path"];
                 ColumnDefs = InputColumnDefs;
                 ColumnPos = InputColumnPos;
             }
 
-            protected override bool CheckFilter(ref string[] vals)
+            protected override bool CheckFilter(ref string[] values)
             {
-                var path = vals[_pathIdx];
-                var sizeKBText = vals[_kbIdx];
+                var path = values[mPathIdx];
+                var sizeKBText = values[mKbIdx];
 
                 // Break directory path into segments
                 var directoryParts = path.Split('\\');
@@ -237,8 +237,8 @@ namespace MageFilePackager
 
                 // Add file to bottom directory in path
                 float.TryParse(sizeKBText, out var sizeKB);
-                var label = string.Format("{0} [{1:###,###,##0.0} KB]", vals[_nameIdx], sizeKB);
-                var fileNode = new TreeNode { Text = label, Tag = vals };
+                var label = string.Format("{0} [{1:###,###,##0.0} KB]", values[mNameIdx], sizeKB);
+                var fileNode = new TreeNode { Text = label, Tag = values };
                 curNodeList.Add(fileNode);
                 return true;
             }

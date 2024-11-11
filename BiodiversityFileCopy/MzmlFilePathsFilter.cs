@@ -12,20 +12,20 @@ namespace BiodiversityFileCopy
     {
         // Ignore Spelling: Mage
 
-        private int ItemIdx;
-        private int FileIdx;
+        private int mItemIdx;
+        private int mFileIdx;
 
         public Dictionary<string, MzMLPath> MzMLPaths { get; } = new Dictionary<string, MzMLPath>();
 
-        private int _datasetIdIdx;
+        private int mDatasetIdIdx;
         private const string MzmlGenPattern = "MSXML_Gen";
 
         public override void HandleColumnDef(object sender, MageColumnEventArgs args)
         {
             base.HandleColumnDef(sender, args);
-            ItemIdx = OutputColumnPos["Item"];
-            FileIdx = OutputColumnPos["File"];
-            _datasetIdIdx = OutputColumnPos["Dataset_ID"];
+            mItemIdx = OutputColumnPos["Item"];
+            mFileIdx = OutputColumnPos["File"];
+            mDatasetIdIdx = OutputColumnPos["Dataset_ID"];
         }
 
         public override bool BuildPaths(string[] outRow, ref string srcFilePath, ref string destFilepath)
@@ -35,12 +35,12 @@ namespace BiodiversityFileCopy
             // if it is not refinery and dataset is in not refinery set, output it.
 
             // Skip input rows that don't actually specify a file
-            if (outRow[ItemIdx] == "file")
+            if (outRow[mItemIdx] == "file")
             {
                 // Save mzML cache file path for dataset based on tool
                 // to internal buffer
-                var datasetId = outRow[_datasetIdIdx];
-                var cacheFilePath = Path.Combine(outRow[SourceDirectoryIdx], outRow[FileIdx]);
+                var datasetId = outRow[mDatasetIdIdx];
+                var cacheFilePath = Path.Combine(outRow[SourceDirectoryIdx], outRow[mFileIdx]);
                 var gen = cacheFilePath.Contains(MzmlGenPattern);
 
                 if (!MzMLPaths.ContainsKey(datasetId))
@@ -89,7 +89,7 @@ namespace BiodiversityFileCopy
 
                 Debug.Assert(row != null, "row is null in MzmlFilePathsFilter.CorrectFilePaths");
 
-                var cacheFilePath = Path.Combine(row[SourceDirectoryIdx], row[FileIdx]);
+                var cacheFilePath = Path.Combine(row[SourceDirectoryIdx], row[mFileIdx]);
 
                 var cacheFileLines = File.ReadAllLines(cacheFilePath);
 

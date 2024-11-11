@@ -39,11 +39,11 @@ namespace BiodiversityFileCopy
             OrgNameIdx = OutputColumnPos[OrganismNameColumn];
         }
 
-        protected override bool CheckFilter(ref string[] vals)
+        protected override bool CheckFilter(ref string[] values)
         {
             if (OutputColumnDefs != null)
             {
-                var outRow = MapDataRow(vals);
+                var outRow = MapDataRow(values);
                 var destFilepath = string.Empty;
                 var srcFilePath = string.Empty;
 
@@ -52,7 +52,7 @@ namespace BiodiversityFileCopy
                 {
                     outRow[SourceFileIdx] = srcFilePath;
                     outRow[DestFileIdx] = destFilepath;
-                    vals = outRow;
+                    values = outRow;
                 }
                 return go;
             }

@@ -8,31 +8,31 @@ namespace MageFilePackager
     internal class AfterSearchFilter : ContentFilter
     {
         // Indexes into the row field data array
-        private int _itemIdx;
+        private int mItemIdx;
 
         // Precalculate field indexes
         protected override void ColumnDefsFinished()
         {
             // Set up indexes into fields array
-            if (!InputColumnPos.TryGetValue("Item", out _itemIdx))
-                _itemIdx = -1;
+            if (!InputColumnPos.TryGetValue("Item", out mItemIdx))
+                mItemIdx = -1;
         }
 
         /// <summary>
         /// Filter each row
         /// </summary>
-        /// <param name="vals"></param>
-        protected override bool CheckFilter(ref string[] vals)
+        /// <param name="values"></param>
+        protected override bool CheckFilter(ref string[] values)
         {
             // Reject any "file not found" rows
-            if (string.IsNullOrEmpty(vals[_itemIdx]))
+            if (string.IsNullOrEmpty(values[mItemIdx]))
                 return false;
 
             // Apply field mapping to output
             if (OutputColumnDefs != null)
             {
-                var outRow = MapDataRow(vals);
-                vals = outRow;
+                var outRow = MapDataRow(values);
+                values = outRow;
             }
             return true;
         }

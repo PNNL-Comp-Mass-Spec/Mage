@@ -27,22 +27,22 @@ namespace MageFilePackager
         private const string FileListLabelPrefix = "Files From ";
 
         // Current Mage pipeline that is running or has most recently run
-        private ProcessingPipeline _mCurrentPipeline;
+        private ProcessingPipeline mCurrentPipeline;
 
         // Current command that is being executed or has most recently been executed
-        private MageCommandEventArgs _mCurrentCmd;
+        private MageCommandEventArgs mCurrentCmd;
 
         // Object that sent the current command
-        private object _mCurrentCmdSender;
+        private object mCurrentCmdSender;
 
         /// <summary>
         /// Constructor
         /// </summary>
         public FilePackagerForm()
         {
-            _mCurrentCmdSender = null;
-            _mCurrentCmd = null;
-            _mCurrentPipeline = null;
+            mCurrentCmdSender = null;
+            mCurrentCmd = null;
+            mCurrentPipeline = null;
 
             InitializeComponent();
 
@@ -178,25 +178,25 @@ namespace MageFilePackager
         public void DoCommand(object sender, MageCommandEventArgs command)
         {
             // Remember who sent us the command
-            _mCurrentCmdSender = sender;
+            mCurrentCmdSender = sender;
 
             // ReSharper disable once ConvertIfStatementToSwitchStatement
             if (command.Action == "display_reloaded")
             {
-                _mCurrentCmd = command;
+                mCurrentCmd = command;
                 AdjustPostCommandUIState(null);
                 return;
             }
 
             // Cancel the currently running pipeline
-            if (command.Action == "cancel_operation" && _mCurrentPipeline?.Running == true)
+            if (command.Action == "cancel_operation" && mCurrentPipeline?.Running == true)
             {
-                _mCurrentPipeline.Cancel();
+                mCurrentPipeline.Cancel();
                 return;
             }
 
             // Don't allow another pipeline if one is currently running
-            if (_mCurrentPipeline?.Running == true)
+            if (mCurrentPipeline?.Running == true)
             {
                 MessageBox.Show("Pipeline is already active", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -238,7 +238,7 @@ namespace MageFilePackager
                             return;
                         }
                         sink = JobListDisplayControl.MakeSink(command.Mode);
-                        _mCurrentPipeline = Pipelines.MakeJobQueryPipeline(sink, queryDefXML, queryParameters);
+                        mCurrentPipeline = Pipelines.MakeJobQueryPipeline(sink, queryDefXML, queryParameters);
 
                         break;
 
@@ -251,12 +251,12 @@ namespace MageFilePackager
                         {
                             var reader = new SQLReader(builder);
                             sink = JobListDisplayControl.MakeSink("Jobs");
-                            _mCurrentPipeline = ProcessingPipeline.Assemble("Get Jobs", reader, sink);
+                            mCurrentPipeline = ProcessingPipeline.Assemble("Get Jobs", reader, sink);
                         }
                         else
                         {
                             MessageBox.Show("You must define one or more search criteria before searching", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                            _mCurrentPipeline = null;
+                            mCurrentPipeline = null;
                             return;
                         }
 
@@ -267,26 +267,26 @@ namespace MageFilePackager
                         var runtimeParams = GetRuntimeParamsForEntityFileType(entityType);
                         var source = new GVPipelineSource(JobListDisplayControl, mode);
                         sink = FileListDisplayControl.MakeSink("Files");
-                        _mCurrentPipeline = Pipelines.MakeFileListPipeline(source, sink, runtimeParams);
+                        mCurrentPipeline = Pipelines.MakeFileListPipeline(source, sink, runtimeParams);
                         break;
 
                     default:
                         return;
                 }
 
-                if (_mCurrentPipeline != null)
+                if (mCurrentPipeline != null)
                 {
-                    _mCurrentCmd = command;
+                    mCurrentCmd = command;
 
                     // Clear any warnings
                     statusPanel1.ClearWarnings();
 
-                    _mCurrentPipeline.OnStatusMessageUpdated += statusPanel1.HandleStatusMessageUpdated;
-                    _mCurrentPipeline.OnWarningMessageUpdated += statusPanel1.HandleWarningMessageUpdated;
-                    _mCurrentPipeline.OnRunCompleted += statusPanel1.HandleCompletionMessageUpdate;
-                    _mCurrentPipeline.OnRunCompleted += HandlePipelineCompletion;
+                    mCurrentPipeline.OnStatusMessageUpdated += statusPanel1.HandleStatusMessageUpdated;
+                    mCurrentPipeline.OnWarningMessageUpdated += statusPanel1.HandleWarningMessageUpdated;
+                    mCurrentPipeline.OnRunCompleted += statusPanel1.HandleCompletionMessageUpdate;
+                    mCurrentPipeline.OnRunCompleted += HandlePipelineCompletion;
                     EnableCancel(true);
-                    _mCurrentPipeline.Run();
+                    mCurrentPipeline.Run();
                 }
             }
             catch (Exception e)
@@ -395,7 +395,7 @@ namespace MageFilePackager
         /// <param name="status"></param>
         private void AdjustPostCommandUIState(object status)
         {
-            if (_mCurrentCmd == null)
+            if (mCurrentCmd == null)
                 return;
 
             EnableCancel(false);
@@ -434,7 +434,7 @@ namespace MageFilePackager
         /// </summary>
         private void AdjustFileListLabels()
         {
-            switch (_mCurrentCmd.Action)
+            switch (mCurrentCmd.Action)
             {
                 case "get_files_from_entities":
                     FileListDisplayControl.PageTitle = FileListLabelPrefix + JobListDisplayControl.PageTitle;
@@ -457,7 +457,7 @@ namespace MageFilePackager
         /// </summary>
         private void AdjustEntityFileTabLabels()
         {
-            switch (_mCurrentCmd.Action)
+            switch (mCurrentCmd.Action)
             {
                 case "get_entities_from_query":
                     GetEntityFilesTabPage.Text = string.Format("Get Files From {0}", JobListDisplayControl.PageTitle);
@@ -473,8 +473,8 @@ namespace MageFilePackager
         /// </summary>
         private void AdjustListDisplayTitleFromColumnDefs()
         {
-            if (_mCurrentCmd.Action is "reload_list_display" or "display_reloaded" &&
-                _mCurrentCmdSender is IMageDisplayControl ldc)
+            if (mCurrentCmd.Action is "reload_list_display" or "display_reloaded" &&
+                mCurrentCmdSender is IMageDisplayControl ldc)
             {
                 var type = ldc.PageTitle;
                 var colNames = ldc.ColumnNames;
