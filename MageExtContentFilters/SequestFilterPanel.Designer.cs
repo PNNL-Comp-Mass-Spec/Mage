@@ -1,5 +1,8 @@
-﻿namespace MageExtContentFilters
+﻿using System;
+
+namespace MageExtContentFilters
 {
+    [Obsolete("Deprecated in 2024")]
     partial class SequestFilterPanel
     {
         /// <summary>

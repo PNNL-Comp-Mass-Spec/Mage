@@ -39,6 +39,8 @@ namespace MageExtContentFilters
         private void GetFilterSetList()
         {
             // Create Mage module to query DMS (typically on prismdb2.emsl.pnl.gov)
+            // Note that V_PDE_Filter_Sets was deprecated in 2024
+
             var reader = new SQLReader
             {
                 Database = Globals.DMSDatabase,

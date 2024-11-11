@@ -11,7 +11,7 @@ namespace MageExtExtractionFilters
         public string KeepAllResults { get; set; }
 
         /// <summary>
-        /// Which result filter set (from DMS) to use
+        /// Which result filter set (from DMS) to use (deprecated in 2024)
         /// </summary>
         public string ResultFilterSetID { get; set; }
 

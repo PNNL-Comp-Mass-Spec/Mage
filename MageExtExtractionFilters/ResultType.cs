@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using MageExtContentFilters;
 using System.Collections.ObjectModel;
+using System;
 
 namespace MageExtExtractionFilters
 {
@@ -185,6 +186,7 @@ namespace MageExtExtractionFilters
         /// <summary>
         /// Return an extraction filter object for the current filter type
         /// </summary>
+        [Obsolete("Deprecated in 2024")]
         public ExtractionFilter GetExtractionFilter(FilterResultsBase resultsChecker)
         {
             return Filter switch
@@ -206,6 +208,7 @@ namespace MageExtExtractionFilters
         /// and given filter set
         /// </summary>
         /// <param name="filterSetID">Filter set ID</param>
+        [Obsolete("Deprecated in 2024")]
         public FilterResultsBase GetResultsChecker(string filterSetID)
         {
             return Filter switch

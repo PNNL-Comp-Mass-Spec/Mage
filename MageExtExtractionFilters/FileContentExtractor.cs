@@ -18,6 +18,7 @@ namespace MageExtExtractionFilters
 
         private int mCurrentFileCount;
 
+        [Obsolete("Deprecated in 2024")]
         private FilterResultsBase mResultsChecker;
 
         private string mCurrentProgressText = string.Empty;
@@ -83,7 +84,9 @@ namespace MageExtExtractionFilters
             OnColumnDefAvailable(new MageColumnEventArgs(columnDefs.ToArray()));
             PrecalculateColumnIndexes();
             PrecalculateMergeFileColumnIndexes();
-            SetupCurrentResultsChecker();
+
+            // Deprecated in 2024
+            // SetupCurrentResultsChecker();
         }
 
         /// <summary>
@@ -204,9 +207,8 @@ namespace MageExtExtractionFilters
                             FilePath = inputFilePath
                         };
 
-                        // Note that MSPathFinder jobs will not have an MSGF file, but we
-                        // still need to include the MSGFExtractionFilter in the pipeline so that
-                        // the data gets filtered
+                        // Note that MSPathFinder jobs will not have an MSGF file, but we still need to include
+                        // the MSGFExtractionFilter in the pipeline so that the data gets filtered
                         ExtractionFilter msgfFilter = new MSGFExtractionFilter
                         {
                             Job = job,
@@ -215,22 +217,33 @@ namespace MageExtExtractionFilters
                             ExtractionType = ExtractionParms
                         };
 
+                        // resultsFilter was deprecated in 2024
+                        /*
                         var resultsFilter = ExtractionParms.RType.GetExtractionFilter(mResultsChecker);
                         resultsFilter.Job = job;
                         resultsFilter.ResultsDirectoryPath = resultsDirectoryPath;
                         resultsFilter.MergeFiles = mMergeFiles;
                         resultsFilter.ExtractionType = ExtractionParms;
+                        */
 
                         var writer = Destination.GetDestinationWriterModule(job, inputFilePath);
-                        var pipeline = ProcessingPipeline.Assemble("Extract File Contents", resultsFileReader, msgfFilter, resultsFilter, writer);
+
+                        // resultsFilter was deprecated in 2024
+                        // var pipeline = ProcessingPipeline.Assemble("Extract File Contents", resultsFileReader, msgfFilter, resultsFilter, writer);
+                        var pipeline = ProcessingPipeline.Assemble("Extract File Contents", resultsFileReader, msgfFilter, writer);
 
                         pipeline.OnWarningMessageUpdated += Pipeline_OnWarningMessageUpdated;
                         pipeline.OnStatusMessageUpdated += Pipeline_OnStatusMessageUpdated;
 
                         pipeline.RunRoot(null);
 
-                        SendResultsUpdate(ExtractionParms.RType.ResultName, job, resultsFilter.ProcessedRows, resultsFilter.PassedRows);
-                        SendResultsUpdate("MSGF", job, msgfFilter.ProcessedRows, msgfFilter.PassedRows);
+                        // resultsFilter was deprecated in 2024
+                        // SendResultsUpdate(ExtractionParms.RType.ResultName, job, resultsFilter.ProcessedRows, resultsFilter.PassedRows);
+
+                        SendResultsUpdate(ExtractionParms.RType.ResultName, job, msgfFilter.ProcessedRows, msgfFilter.PassedRows);
+
+                        // This status message is obsolete after deprecating resultsFilter was deprecated in 2024
+                        // SendResultsUpdate("MSGF", job, msgfFilter.ProcessedRows, msgfFilter.PassedRows);
                     }
                 }
 
@@ -271,9 +284,12 @@ namespace MageExtExtractionFilters
             OnStatusMessageUpdated(new MageStatusEventArgs(string.Format("{3} stats for job {0} Total:{1} Passed:{2}", job, total, passed, type)));
         }
 
+        // ReSharper disable once UnusedMember.Local
+
         /// <summary>
         /// Set up an appropriate filter checker based on current result type
         /// </summary>
+        [Obsolete("Deprecated in 2024")]
         private void SetupCurrentResultsChecker()
         {
             if (!string.Equals(ExtractionParms.ResultFilterSetID, ExtractionFilter.ALL_PASS_CUTOFF, StringComparison.OrdinalIgnoreCase))
@@ -290,7 +306,7 @@ namespace MageExtExtractionFilters
         /// </summary>
         /// <param name="resultsDirectoryPath"></param>
         /// <param name="job"></param>
-        // ReSharper disable once UnusedMember.Local
+        [Obsolete("Deprecated in 2024")]
         private ExtractionFilter GetExtractionFilterModule(string resultsDirectoryPath, string job)
         {
             var resultsFilter = ExtractionParms.RType.GetExtractionFilter(mResultsChecker);
