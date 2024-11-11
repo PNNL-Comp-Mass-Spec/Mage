@@ -6,6 +6,7 @@
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Leave for reference", Scope = "member", Target = "~M:MageExtExtractionFilters.FileContentExtractor.GetExtractionFilterModule(System.String,System.String)~MageExtExtractionFilters.ExtractionFilter")]
+[assembly: SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Deprecated method", Scope = "member", Target = "~M:MageExtExtractionFilters.FileContentExtractor.SetupCurrentResultsChecker")]
 [assembly: SuppressMessage("Redundancy", "RCS1213:Remove unused member declaration.", Justification = "Leave for reference", Scope = "member", Target = "~M:MageExtExtractionFilters.FileContentExtractor.GetExtractionFilterModule(System.String,System.String)~MageExtExtractionFilters.ExtractionFilter")]
 [assembly: SuppressMessage("Style", "IDE0305:Simplify collection initialization", Justification = "Leave as-is for readability", Scope = "member", Target = "~M:MageExtExtractionFilters.MSFraggerExtractionFilter.HandleColumnDef(System.Object,Mage.MageColumnEventArgs)")]
 [assembly: SuppressMessage("Style", "IDE0305:Simplify collection initialization", Justification = "Leave as-is for readability", Scope = "member", Target = "~M:MageExtExtractionFilters.DiannExtractionFilter.HandleColumnDef(System.Object,Mage.MageColumnEventArgs)")]
