@@ -154,7 +154,7 @@ namespace MageExtractor
             // Note that method GetSQLBuilder in class FlexQueryPanel will replace spaces with underscores for the names in this list
             JobFlexQueryPanel.SetColumnPickList(["Job", "State", "Dataset", "Dataset_ID", "Tool", "Parameter_File", "Settings_File", "Instrument", "Experiment", "Campaign", "Organism", "Organism DB", "Protein Collection List", "Protein Options", "Comment", "Results Folder", "Folder", "Dataset_Created", "Job_Finish", "Request_ID"]);
 
-            JobFlexQueryPanel.SetComparisionPickList(["ContainsText", "DoesNotContainText", "StartsWithText", "MatchesText", "MatchesTextOrBlank", "Equals", "NotEqual", "GreaterThan", "GreaterThanOrEqualTo", "LessThan", "LessThanOrEqualTo", "MostRecentWeeks", "LaterThan", "EarlierThan", "InList"]);
+            JobFlexQueryPanel.SetComparisonPickList(["ContainsText", "DoesNotContainText", "StartsWithText", "MatchesText", "MatchesTextOrBlank", "Equals", "NotEqual", "GreaterThan", "GreaterThanOrEqualTo", "LessThan", "LessThanOrEqualTo", "MostRecentWeeks", "LaterThan", "EarlierThan", "InList"]);
         }
 
         private void ConnectPanelsToCommandHandlers()

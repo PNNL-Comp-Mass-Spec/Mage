@@ -82,7 +82,7 @@ namespace MageUIComponents
             }
         }
 
-        public void SetComparisionPickList(string[] items)
+        public void SetComparisonPickList(string[] items)
         {
             foreach (var pnl in QueryItemPanels)
             {
