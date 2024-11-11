@@ -14,7 +14,7 @@ namespace MageExtExtractionFilters
     /// </summary>
     public class FileContentExtractor : FileProcessingBase
     {
-        // Ignore Spelling: Mage
+        // Ignore Spelling: Mage, Parms
 
         private int mCurrentFileCount;
 

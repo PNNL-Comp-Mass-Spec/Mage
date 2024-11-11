@@ -3,6 +3,8 @@ namespace MageExtExtractionFilters
 {
     public class ExtractionType
     {
+        // Ignore Spelling: Mage
+
         public ResultType RType { get; set; }
 
         /// <summary>

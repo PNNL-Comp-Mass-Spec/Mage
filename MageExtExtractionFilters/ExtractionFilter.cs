@@ -10,6 +10,8 @@ namespace MageExtExtractionFilters
     /// </summary>
     public class ExtractionFilter : BaseModule
     {
+        // Ignore Spelling: Mage
+
         public const string ALL_PASS_CUTOFF = "All Pass";
 
         protected struct ColumnIndices
@@ -159,7 +161,7 @@ namespace MageExtExtractionFilters
         {
             if (mTotalRowsCounter % mReportRowBlockSize == 0)
             {
-                var msg = "Processed " + mTotalRowsCounter.ToString() + " total rows, passed " + mPassedRowsCounter.ToString();
+                var msg = "Processed " + mTotalRowsCounter + " total rows, passed " + mPassedRowsCounter;
                 if (DateTime.UtcNow.Subtract(mLastReportTimeUTC).TotalMilliseconds >= mMinimumReportIntervalMsec)
                 {
                     OnStatusMessageUpdated(new MageStatusEventArgs(msg));
