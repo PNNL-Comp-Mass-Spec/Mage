@@ -11,6 +11,8 @@ namespace MageExtExtractionFilters
     /// </summary>
     internal class MergeProteinData
     {
+        // Ignore Spelling: mage
+
         public enum MergeModeConstants
         {
             XTandem = 0,

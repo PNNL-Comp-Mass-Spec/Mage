@@ -5,7 +5,7 @@ namespace MageExtContentFilters
 {
     public class FilterMSFraggerResults : FilterResultsBase
     {
-        // Ignore Spelling: Fragger
+        // Ignore Spelling: Fragger, Mage
 
         /// <summary>
         /// Constructor

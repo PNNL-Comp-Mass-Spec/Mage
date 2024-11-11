@@ -9,6 +9,8 @@ namespace MageUIComponents
 {
     public partial class FlexQueryPanel : UserControl, IModuleParameters
     {
+        // Ignore Spelling: Mage, Postgres
+
         public event EventHandler<MageCommandEventArgs> OnAction;
 
         private readonly List<FlexQueryItemPanel> QueryItemPanels = new();

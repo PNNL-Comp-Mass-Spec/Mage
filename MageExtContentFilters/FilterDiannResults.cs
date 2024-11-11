@@ -5,6 +5,8 @@ namespace MageExtContentFilters
 {
     public class FilterDiannResults : FilterResultsBase
     {
+        // Ignore Spelling: mage
+
         /// <summary>
         /// Constructor
         /// </summary>

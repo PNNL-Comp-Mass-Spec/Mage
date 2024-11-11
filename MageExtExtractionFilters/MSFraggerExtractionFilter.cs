@@ -6,7 +6,7 @@ namespace MageExtExtractionFilters
 {
     internal class MSFraggerExtractionFilter : ExtractionFilter
     {
-        // Ignore Spelling: Mage
+        // Ignore Spelling: Fragger, Mage
 
         public enum MSFraggerColumns
         {
