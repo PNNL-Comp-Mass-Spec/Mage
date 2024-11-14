@@ -129,7 +129,9 @@
             this.SelectFilterBtn.TabIndex = 2;
             this.SelectFilterBtn.Text = "Select...";
             this.SelectFilterBtn.UseVisualStyleBackColor = true;
+#pragma warning disable CS0618 // Type or member is obsolete
             this.SelectFilterBtn.Click += new System.EventHandler(this.SelectFilterBtn_Click);
+#pragma warning restore CS0618 // Type or member is obsolete
             // 
             // FilterSetIDCtl
             // 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Mage;
 using MageExtContentFilters;
 
@@ -7,6 +8,7 @@ namespace MageExtExtractionFilters
     /// <summary>
     /// MSGFDb Extraction Filter
     /// </summary>
+    [Obsolete("Deprecated in 2024")]
     public class MSGFDbFHTExtractionFilter : ExtractionFilter
     {
         // Ignore Spelling: Mage

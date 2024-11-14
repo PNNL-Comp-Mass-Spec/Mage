@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Mage;
 using MageExtContentFilters;
 
 namespace MageExtExtractionFilters
 {
+    [Obsolete("Deprecated in 2024")]
     public class MSGFDbExtractionFilter : ExtractionFilter
     {
         // Ignore Spelling: Mage

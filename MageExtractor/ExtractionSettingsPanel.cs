@@ -138,6 +138,7 @@ namespace MageExtractor
             }
         }
 
+        [Obsolete("Deprecated in 2024")]
         private void SelectFilterBtn_Click(object sender, EventArgs e)
         {
             var selectionForm = new ResultsFilterSelector
