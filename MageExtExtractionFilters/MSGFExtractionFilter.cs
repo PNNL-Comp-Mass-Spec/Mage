@@ -7,6 +7,8 @@ namespace MageExtExtractionFilters
 {
     internal class MSGFExtractionFilter : ExtractionFilter
     {
+        // Ignore Spelling: Mage
+
         private MergeMSGFData mMSGFMerger;
 
         // Input column that contains key for looking up score to merge
@@ -152,7 +154,7 @@ namespace MageExtExtractionFilters
                 var accepted = true;
                 if (mMergeValueLookup == null)
                 {
-                    // MSGF values were not loaded (this will be true for MSPathFinder results)
+                    // MSGF values were not loaded (this will be true for MSPathFinder, MSFragger, and DIANN results)
                     return true;
                 }
 

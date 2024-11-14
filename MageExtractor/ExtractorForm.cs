@@ -228,7 +228,9 @@ namespace MageExtractor
                 if (!CheckForJobsToProcess()) return;
 
                 var mode = (command.Mode == "all") ? DisplaySourceMode.All : DisplaySourceMode.Selected;
+
                 var msg = ExtractionPipelines.CheckJobResultType(new GVPipelineSource(JobListDisplayCtl, mode), "Tool", mExtractionParams);
+
                 if (!string.IsNullOrEmpty(msg))
                 {
                     MessageBox.Show(msg, "Invalid Selection", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -449,11 +451,13 @@ namespace MageExtractor
         private void ExtractFileContents(BaseModule jobList)
         {
             mPipelineQueue = ExtractionPipelines.MakePipelineQueueToExtractFromJobList(jobList, mExtractionParams, mDestination);
+
             foreach (var p in mPipelineQueue.Pipelines.ToArray())
             {
                 ConnectPipelineToStatusDisplay(p);
                 mFinalPipelineName = p.PipelineName;
             }
+
             ConnectPipelineQueueToStatusDisplay(mPipelineQueue);
             EnableCancel(true);
             mPipelineQueue.Run();
@@ -576,11 +580,13 @@ namespace MageExtractor
         private bool CheckForJobsToProcess()
         {
             var ok = true;
+
             if (JobListDisplayCtl.List.Rows.Count == 0)
             {
                 MessageBox.Show("There are no jobs to process", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 ok = false;
             }
+
             return ok;
         }
 
