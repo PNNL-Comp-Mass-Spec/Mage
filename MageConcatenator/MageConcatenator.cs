@@ -279,7 +279,7 @@ namespace MageConcatenator
 
                 if (File.Exists(mCombineFilesTargetFilePath))
                 {
-                    var response = MessageBox.Show("Overwrite existing file at " + PRISM.PathUtils.CompactPathString(mCombineFilesTargetFilePath, 60),
+                    var response = MessageBox.Show("Overwrite existing file at " + PRISM.PathUtils.CompactPathString(mCombineFilesTargetFilePath, 100),
                                                    "Warning", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
                     if (response != DialogResult.Yes)
