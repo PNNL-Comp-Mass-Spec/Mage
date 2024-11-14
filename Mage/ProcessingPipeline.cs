@@ -744,6 +744,15 @@ namespace Mage
             }
             return Assemble(pipelineName, namedModuleList);
         }
+
+        /// <summary>
+        /// Show the Mage processing pipeline name
+        /// </summary>
+        /// <returns>Pipeline name</returns>
+        public override string ToString()
+        {
+            return string.Format("Mage.ProcessingPipeline: {0}", PipelineName);
+        }
     }
 
     /// <summary>
