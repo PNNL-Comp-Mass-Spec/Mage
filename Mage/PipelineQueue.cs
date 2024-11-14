@@ -67,7 +67,16 @@ namespace Mage
             if (!IsRunning)
             {
                 IsRunning = true;
-                ThreadPool.QueueUserWorkItem(RunPipelinesInQueue);
+
+                const bool USE_THREADING = true;
+
+                // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+                if (USE_THREADING)
+                    ThreadPool.QueueUserWorkItem(RunPipelinesInQueue);
+                else
+#pragma warning disable CS0162 // Unreachable code detected
+                    RunPipelinesInQueue(null);
+#pragma warning restore CS0162 // Unreachable code detected
             }
         }
 
