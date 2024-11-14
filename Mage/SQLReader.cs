@@ -310,12 +310,12 @@ namespace Mage
             }
 
             if (string.IsNullOrWhiteSpace(username))
-                return string.Format("Data Source={0};Initial Catalog={1};Integrated Security=SSPI;", server, database);
+                return string.Format("Data Source={0};Initial Catalog={1};Integrated Security=SSPI;Encrypt=False", server, database);
 
             if (string.IsNullOrWhiteSpace(password))
                 return string.Format("Data Source={0};Initial Catalog={1};User={2};", server, database, username);
 
-            return string.Format("Data Source={0};Initial Catalog={1};User={2};Password={3};", server, database, username, password);
+            return string.Format("Data Source={0};Initial Catalog={1};User={2};Password={3};Encrypt=False", server, database, username, password);
         }
 
         private string GetPgSqlConnectionString(string server, string database, string username, string password)
@@ -885,6 +885,7 @@ namespace Mage
         {
             OnWarningMessage(new MageStatusEventArgs(string.Format("DBTools Error: {0}", message)));
         }
+
         private void OnErrorEvent(string message, Exception ex)
         {
             OnWarningMessage(new MageStatusEventArgs(string.Format("DBTools Error: {0}", message)));
