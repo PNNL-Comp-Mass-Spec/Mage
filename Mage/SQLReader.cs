@@ -346,6 +346,7 @@ namespace Mage
             try
             {
                 var success = dbTools.GetQueryResultsDataTable(cmd, out var queryResults);
+
                 if (!success)
                 {
                     var ex = ReportMageException("GetQueryResultsDataTable returned false running query " + SQLText);

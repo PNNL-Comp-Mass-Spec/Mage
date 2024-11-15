@@ -101,6 +101,8 @@ namespace MageUnitTests
         [Test]
         [TestCase(@"..\..\..\TestItems\QueryDefinitions.xml")]
         [Category("DatabaseNamedUser")]
+        [Ignore("NUnit reports error \"The type initializer for 'Npgsql.NpgsqlDataSourceBuilder' threw an exception\" when querying V_Custom_Factors_List_Report; " +
+                "in contrast, the query succeeds when run using method QueryDatasetFactorsNamedUser in class DatabaseQueryTests in MageFileProcessor")]
         public void XMLQueryDatasetFactorsNamedUser(string queryDefinitionsPath)
         {
             XMLQueryDatasetFactors(queryDefinitionsPath, DMS_READER, DMS_READER_PASSWORD, true);
@@ -159,6 +161,8 @@ namespace MageUnitTests
         [Test]
         [TestCase("prismdb2.emsl.pnl.gov", "dms", DMS_READER, DMS_READER_PASSWORD, true)]
         [Category("DatabaseNamedUser")]
+        [Ignore("NUnit reports error \"The type initializer for 'Npgsql.NpgsqlDataSourceBuilder' threw an exception\" when querying V_Custom_Factors_List_Report; " +
+                "in contrast, the query succeeds when run using method QueryDatasetFactorsNamedUser in class DatabaseQueryTests in MageFileProcessor")]
         public void QueryDatasetFactorsNamedUser(string serverName, string databaseName, string userName, string userPassword, bool isPostgres)
         {
             QueryDatasetFactors(serverName, databaseName, userName, userPassword, isPostgres);
@@ -227,6 +231,8 @@ namespace MageUnitTests
         /// </summary>
         [Test]
         [Category("DatabaseNamedUser")]
+        [Ignore("NUnit reports error \"The type initializer for 'Npgsql.NpgsqlDataSourceBuilder' threw an exception\" when querying V_Analysis_Job_Export_MultiAlign; " +
+                "in contrast, the query succeeds when run using method QueryDatasetFactorsNamedUser in class DatabaseQueryTests in MageFileProcessor")]
         public void QueryWithSQLBuilderTestNamedUser()
         {
             QueryWithSQLBuilderTest(Globals.DMSServer, Globals.DMSDatabase, Globals.PostgresDMS, DMS_READER, DMS_READER_PASSWORD);
@@ -345,6 +351,8 @@ namespace MageUnitTests
         /// </summary>
         [Test]
         [Category("DatabaseNamedUser")]
+        [Ignore("NUnit reports error \"The type initializer for 'Npgsql.NpgsqlDataSourceBuilder' threw an exception\" when querying V_Mage_Analysis_Jobs; " +
+                "in contrast, the query succeeds when run using method QueryDatasetFactorsNamedUser in class DatabaseQueryTests in MageFileProcessor")]
         public void QueryTestNamedUser()
         {
             QueryTest(Globals.DMSServer, Globals.DMSDatabase, Globals.PostgresDMS, DMS_READER, DMS_READER_PASSWORD);
@@ -616,7 +624,10 @@ namespace MageUnitTests
             string username,
             string expectedSqlOrSProc)
         {
+            Console.WriteLine();
+
             string errorMessage;
+
             if (string.IsNullOrWhiteSpace(username))
             {
                 errorMessage = "using integrated authentication, for " + expectedSqlOrSProc;
@@ -650,6 +661,7 @@ namespace MageUnitTests
             var columnWidths = new Dictionary<int, int>();
 
             var headerNames = (from item in actualColumns.Take(COL_COUNT_TO_SHOW) select item.Name).ToList();
+
             for (var i = 0; i < headerNames.Count; i++)
             {
                 columnWidths.Add(i, headerNames[i].Length);
@@ -672,6 +684,7 @@ namespace MageUnitTests
 
             // Show the column headers
             var paddedHeaderNames = PadData(headerNames, columnWidths);
+
             Console.WriteLine(string.Join("  ", paddedHeaderNames));
 
             // Show the column values
