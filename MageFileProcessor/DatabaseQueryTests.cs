@@ -9,6 +9,13 @@ namespace MageFileProcessor
     // ReSharper disable once UnusedMember.Global
     internal class DatabaseQueryTests
     {
+        // ReSharper disable UnusedMember.Global
+
+        internal const string DMS_READER = "dmsreader";
+        internal const string DMS_READER_PASSWORD = "dms4fun";
+
+        // ReSharper restore UnusedMember.Global
+
         private static void CheckQueryResults(
             SimpleSink sink,
             int expectedRows,
@@ -207,6 +214,63 @@ namespace MageFileProcessor
             }
 
             return paddedData;
+        }
+
+        // ReSharper disable once UnusedMember.Global
+
+        /// <summary>
+        /// Get factors for dataset name
+        /// </summary>
+#pragma warning disable RCS1213, IDE0051
+        internal void QueryDatasetFactorsNamedUser(string serverName, string databaseName, bool isPostgres, string username, string password)
+#pragma warning restore RCS1213,IDE0051
+        {
+            QueryDatasetFactors(serverName, databaseName, username, password, isPostgres);
+        }
+
+        private void QueryDatasetFactors(string serverName, string databaseName, string username, string password, bool isPostgres)
+        {
+            // Default server is prismdb2.emsl.pnl.gov
+            if (string.IsNullOrWhiteSpace(serverName))
+            {
+                serverName = Globals.DMSServer;
+            }
+
+            // Default database is dms
+            if (string.IsNullOrWhiteSpace(databaseName))
+            {
+                databaseName = Globals.DMSDatabase;
+            }
+
+            // Create SQLReader module and test sink module
+            // and connect together
+            var reader = new SQLReader(serverName, databaseName, username, password, isPostgres);
+            RegisterEvents(reader);
+
+            const int maxRows = 7;
+            var sink = new SimpleSink(maxRows);
+            reader.ColumnDefAvailable += sink.HandleColumnDef;
+            reader.DataRowAvailable += sink.HandleDataRow;
+
+            // Define query
+            var columnList = new[] { "dataset", "dataset_id", "factor", "value" };
+            var colNames = string.Join(", ", columnList);
+
+            var builder = new SQLBuilder
+            {
+                Table = "V_Custom_Factors_List_Report",
+                Columns = colNames,
+                IsPostgres = isPostgres
+            };
+
+            // The query builder will convert the following predicate to "Dataset LIKE '%sarc%'"
+            builder.AddPredicateItem("dataset", "sarc");
+
+            reader.SQLText = builder.BuildQuerySQL();
+
+            reader.Run(null);
+
+            CheckQueryResults(sink, maxRows, columnList, serverName, databaseName, username, reader.SQLText);
         }
 
         private static void RegisterEvents(IBaseModule mageModule)

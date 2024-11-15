@@ -19,13 +19,15 @@ namespace MageFileProcessor
 
             try
             {
-                // Uncomment to debug calling procedure predefined_analysis_rules_proc
+                // Uncomment to debug querying view V_Custom_Factors_List_Report and calling procedure predefined_analysis_rules_proc
                 // (to see the console messages, change the Output Type of this project to Console Application)
 
                 /*
                 var queryTests = new DatabaseQueryTests();
 
-                queryTests.DMSSprocReadTest(Globals.DMSServer, Globals.DMSDatabase, Globals.PostgresDMS, "dmsreader", "dms4fun");
+                queryTests.QueryDatasetFactorsNamedUser(Globals.DMSServer, Globals.DMSDatabase, Globals.PostgresDMS, DatabaseQueryTests.DMS_READER, DatabaseQueryTests.DMS_READER_PASSWORD);
+
+                queryTests.DMSSprocReadTest(Globals.DMSServer, Globals.DMSDatabase, Globals.PostgresDMS, DatabaseQueryTests.DMS_READER, DatabaseQueryTests.DMS_READER_PASSWORD);
                 */
 
                 Application.Run(new FileProcessorForm());
