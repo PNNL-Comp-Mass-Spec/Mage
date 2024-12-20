@@ -59,11 +59,13 @@ namespace Mage
             {
                 // Do filtering here
                 var values = args.Fields;
+
                 if (CheckFilter(ref values))
                 {
                     passedRowsCounter++;
                     OnDataRowAvailable(new MageDataEventArgs(values));
                 }
+
                 // Report progress
                 if (++totalRowsCounter % reportRowBlockSize == 0)
                 {

@@ -120,6 +120,7 @@ namespace Mage
                 {
                     Console.Write(item + "|");
                 }
+
                 Console.WriteLine();
             }
 
@@ -164,10 +165,12 @@ namespace Mage
         public override void Run(object state)
         {
             OnColumnDefAvailable(new MageColumnEventArgs(InputColumnDefs.ToArray()));
+
             foreach (var row in SavedRows)
             {
                 OnDataRowAvailable(new MageDataEventArgs(row));
             }
+
             OnDataRowAvailable(new MageDataEventArgs(null));
         }
 

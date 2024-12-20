@@ -160,6 +160,7 @@ namespace Mage
         {
             // Make a temporary copy of the event to avoid possibility of a race condition
             var handler = DataRowAvailable;
+
             if (handler != null && !Abort)
             {
                 handler(this, e);
@@ -386,6 +387,7 @@ namespace Mage
                     throw ex;
                 }
             }
+
             SetupOutputColumns();
             SetupOutputColumnToContextMapping();
         }
@@ -655,6 +657,7 @@ namespace Mage
                         outColIdx = MapOutputColumnsForUnmappedInputColumns(outColIdx);
                         continue;
                     }
+
                     if (inputColName == "+")
                     {
                         // Output column is new column not found in input
@@ -712,6 +715,7 @@ namespace Mage
                     outColIdx++;
                 }
             }
+
             return outColIdx;
         }
 
@@ -732,6 +736,7 @@ namespace Mage
             {
                 OutputColumnDefs[outColIdx].Name = name;
             }
+
             if (!string.IsNullOrEmpty(type))
             {
                 OutputColumnDefs[outColIdx].DataType = type;
@@ -818,6 +823,7 @@ namespace Mage
                     outRow[newCol.Value] = Context[newCol.Key];
                 }
             }
+
             return outRow;
         }
 
