@@ -11,7 +11,7 @@ namespace MageUnitTests
     public class DelimitedFileReaderTest
     {
         // ReSharper disable once CommentTypo
-        // Ignore Spelling: fwhm
+        // Ignore Spelling: fwhm, isos
 
         /// <summary>
         /// A test for Header

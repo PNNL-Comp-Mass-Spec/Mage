@@ -11,6 +11,8 @@ namespace MageUnitTests
     [TestFixture]
     public class FileCopyTest
     {
+        // Ignore Spelling: accessors, dest
+
         /// <summary>
         /// <para>
         /// A class to provide access to private member variables of FileCopy.

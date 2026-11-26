@@ -6,6 +6,8 @@ namespace MageUnitTests
 {
     internal class TestFileContentProcessorModule : FileContentProcessor
     {
+        // Ignore Spelling: Dest
+
         public string ExpectedSourceFile { get; set; }
         public string ExpectedSourcePath { get; set; }
         public string ExpectedDestPath { get; set; }

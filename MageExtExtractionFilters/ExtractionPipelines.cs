@@ -13,7 +13,7 @@ namespace MageExtExtractionFilters
     /// </summary>
     public static class ExtractionPipelines
     {
-        // Ignore Spelling: Mage, msgfdb, msgfplus, Sequest
+        // Ignore Spelling: Mage, msgfdb, msgfplus, parms, Sequest
 
         // ReSharper disable once UnusedMember.Global
         public static PipelineQueue MakePipelineQueueToExtractFromFileList(SimpleSink fileList, ExtractionType extractionParms, DestinationType destination)
@@ -159,7 +159,7 @@ namespace MageExtExtractionFilters
             if (tools.Count > 1)
             {
                 var toolRollup = "(" + string.Join(", ", tools.Keys) + ")";
-               return "Cannot work on a mix of job types " + toolRollup + Environment.NewLine + "Select only Sequest, X!Tandem, Inspect, or MSGFPlus jobs";
+                return "Cannot work on a mix of job types " + toolRollup + Environment.NewLine + "Select only Sequest, X!Tandem, Inspect, or MSGFPlus jobs";
             }
 
             var filterName = extractionParams.RType.Filter;

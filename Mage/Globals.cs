@@ -6,17 +6,17 @@ namespace Mage
     /// </summary>
     public static class Globals
     {
-        // Ignore Spelling: DMS, Mage, Postgres, yyyy-MM-dd
+        // Ignore Spelling: dms, dmsreader, Globals, Mage, Postgres, yyyy-MM-dd
 
         /// <summary>
         /// Program date
         /// </summary>
-        public const string PROGRAM_DATE = "April 22, 2025";
+        public const string PROGRAM_DATE = "November 25, 2026";
 
         /// <summary>
         /// Program date, short yyyy-MM-dd format
         /// </summary>
-        public const string PROGRAM_DATE_SHORT = "2025-04-22";
+        public const string PROGRAM_DATE_SHORT = "2026-11-25";
 
         /// <summary>
         /// Default DMS server

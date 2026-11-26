@@ -9,6 +9,8 @@ namespace MageFileProcessor
     // ReSharper disable once UnusedMember.Global
     internal class DatabaseQueryTests
     {
+        // Ignore Spelling: dms, dmsreader
+
         // ReSharper disable UnusedMember.Global
 
         internal const string DMS_READER = "dmsreader";
