@@ -33,6 +33,7 @@ namespace MageUnitTests
 
             // Did the test sink object get the expected row definitions
             var cols = sink.Columns;
+
             for (var i = 0; i < cols.Count; i++)
             {
                 Assert.That(colList[i], Is.EqualTo(cols[i].Name));
@@ -41,6 +42,7 @@ namespace MageUnitTests
             // Did the test sink object get the expected number of data rows
             // on its standard tabular input?
             var rows = sink.Rows;
+
             Assert.That(rows, Has.Count.EqualTo(maxRows));
 
             // Are there the expected number of fields in the data row?
@@ -89,6 +91,7 @@ namespace MageUnitTests
             // Did the test sink object get the expected row definitions
             var colList = new[] { "Dataset", "Dataset_ID", "Factor", "Value" };
             var cols = result.Columns;
+
             for (var i = 0; i < cols.Count; i++)
             {
                 Assert.That(colList[i], Is.EqualTo(cols[i].Name));
@@ -96,6 +99,7 @@ namespace MageUnitTests
 
             // Did the test sink object get the expected number of data rows on its standard tabular input?
             var rows = result.Rows;
+
             Assert.That(rows, Has.Count.EqualTo(maxRows));
 
             // Are there the expected number of fields in the data row?
@@ -174,6 +178,7 @@ namespace MageUnitTests
             ModuleDiscovery.QueryDefinitionFileName = queryDefsFile.FullName;
 
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("Factors");
+
             Assert.That(queryDefXML, Is.Not.Empty);
 
             // Create SQLReader module initialized from XML definition
@@ -189,6 +194,7 @@ namespace MageUnitTests
 
             // Create sink module to accumulate columns and rows
             var result = new SimpleSink(maxRows);
+
             Assert.That(result, Is.Not.Null);
 
             // Create pipeline to run the query, and run it
@@ -216,6 +222,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.Database = expected;
             var actual = target.Database;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -229,6 +236,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.SQLText = expected;
             var actual = target.SQLText;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
     }

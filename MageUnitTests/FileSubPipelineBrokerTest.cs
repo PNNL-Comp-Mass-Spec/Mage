@@ -56,6 +56,7 @@ namespace MageUnitTests
                 OutputDirectoryPath = destDirectory,
                 OutputColumnList = string.Format("{0}|+|text, {1}", fileColName, directoryColName)
             };
+
             target.SetPipelineMaker(MakeTestSubPipeline);
             target.SetOutputFileNamer(RenameOutputFile);
 
@@ -66,13 +67,13 @@ namespace MageUnitTests
             pipeline.ConnectModules("Gen", "Target");
             pipeline.RunRoot(null);
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(mPipelineResults, Is.EqualTo("Kilroy was here"), "SubPipeline creation.");
                 Assert.That(mPipelineInputFilePath, Is.EqualTo(Path.Combine(testDirectoryPath, testInputFileName)), "SubPipeline input file path");
                 Assert.That(mPipelineOutputFilePath, Is.EqualTo(Path.Combine(destDirectory, RenameOutputFile(testInputFileName, null, null))), "SubPipeline output file path");
                 Assert.That(mPipelineDummyModuleResults, Is.EqualTo("Kilroy was here too"), "Dummy module results");
-            });
+            }
         }
 
         // This function builds the a file processing pipeline
@@ -116,6 +117,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.DatabaseName = expected;
             var actual = target.DatabaseName;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -129,6 +131,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.FileFilterModuleName = expected;
             var actual = target.FileFilterModuleName;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -149,6 +152,7 @@ namespace MageUnitTests
             target.SetFileFilterParameters(expected);
 
             var actual = target.GetFileFilterParameters();
+
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -163,6 +167,7 @@ namespace MageUnitTests
             target.TableName = expected;
 
             var actual = target.TableName;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
 

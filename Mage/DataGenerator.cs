@@ -143,6 +143,7 @@ namespace Mage
         public static string[] MakeSimulatedHeaderRow(int numCols)
         {
             var row = new string[numCols];
+
             for (var j = 0; j < numCols; j++)
             {
                 row[j] = string.Format(SimulatedHeaderTemplate, j + 1);
@@ -158,6 +159,7 @@ namespace Mage
         public static string[] MakeSimulatedDataRow(int i, int numCols)
         {
             var row = new string[numCols];
+
             for (var j = 0; j < numCols; j++)
             {
                 row[j] = string.Format(SimulatedDataTemplate, i + 1, j + 1);

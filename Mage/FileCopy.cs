@@ -268,6 +268,7 @@ namespace Mage
                 {
                     sourceFile = fi.Name;
                     sourcePath = fi.FullName;
+
                     var fiSafe = GetFileInfo(fi.FullName);
                     var destPath = Path.Combine(target.FullName, fi.Name);
                     var destSafe = GetFileSafeLongPath(destPath);

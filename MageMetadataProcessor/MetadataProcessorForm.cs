@@ -111,6 +111,7 @@ namespace MageMetadataProcessor
         private void BuildAndRunPipeline(MageCommandEventArgs command)
         {
             mCurrentPipeline = null;
+
             var mode = (command.Mode == "selected") ? DisplaySourceMode.Selected : DisplaySourceMode.All;
             ISinkModule display;
 

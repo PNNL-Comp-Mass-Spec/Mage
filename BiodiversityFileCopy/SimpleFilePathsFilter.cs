@@ -21,6 +21,7 @@ namespace BiodiversityFileCopy
             if (outRow[ItemIdx] == "file")
             {
                 srcFilePath = Path.Combine(outRow[SourceDirectoryIdx], outRow[FileIdx]);
+
                 var msgfFileName = outRow[FileIdx];
                 var ogName = outRow[OrgNameIdx];
                 destFilepath = Path.Combine(DestinationRootDirectoryPath, ogName, OutputSubdirectoryName, msgfFileName);

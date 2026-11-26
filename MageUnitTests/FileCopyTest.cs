@@ -57,6 +57,7 @@ namespace MageUnitTests
             var fieldPosTest1 = target.InputColumnPosAccessor;
             var expectedTest1 = idColNameTest1 + "_" + fields[target.InputColumnPosAccessor[target.ColumnToUseForPrefix]] + "_" + sourceFile;
             var actualTest1 = target.GetDestFileAccessor(sourceFile, fieldPosTest1, fields);
+
             Assert.That(actualTest1, Is.EqualTo(expectedTest1), "Typical usage");
 
             // ID column in column list and ApplyPrefixToFileName set to "No"
@@ -94,6 +95,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.ColumnToUseForPrefix = expected;
             var actual = target.ColumnToUseForPrefix;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -107,6 +109,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.ApplyPrefixToFileName = expected;
             var actual = target.ApplyPrefixToFileName;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
     }

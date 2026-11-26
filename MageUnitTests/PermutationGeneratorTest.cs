@@ -21,6 +21,7 @@ namespace MageUnitTests
             target.AddParamColumn("three", "1", "1", "1");
 
             var actual = target.ParamCount;
+
             Assert.That(actual, Is.EqualTo(3), "Number of parameters did not match");
         }
 
@@ -31,8 +32,8 @@ namespace MageUnitTests
         public void PredictedOutputRowCountTest()
         {
             var target = new PermutationGenerator();
-
             var actual = target.ParamCount;
+
             Assert.That(actual, Is.Zero);
 
             target.AddParamColumn("one", "1", "5", "1");
@@ -53,6 +54,7 @@ namespace MageUnitTests
             var expected = false;
             target.IncludeHeaderInOutput = expected;
             var actual = target.IncludeHeaderInOutput;
+
             Assert.That(actual, Is.EqualTo(expected));
 
             expected = true;
@@ -81,6 +83,7 @@ namespace MageUnitTests
 
             var expected = target.ParamCount;
             var actual = sink.Columns.Count;
+
             Assert.That(actual, Is.EqualTo(expected), "Number of columns did not match");
 
             actual = sink.Rows.Count;
@@ -110,6 +113,7 @@ namespace MageUnitTests
 
             var expected = target.ParamCount;
             var actual = sink.Columns.Count;
+
             Assert.That(actual, Is.EqualTo(5), "Number of columns did not match");
 
             actual = sink.Rows.Count;

@@ -156,8 +156,8 @@ namespace MageExtractorTest
 
             var testCaseFilePath = Path.Combine(testRootDirectory.FullName, Path.Combine(mTestCasesFolder, "FileListTestCases.txt"));
             var cases = GetFileContentsToSink(testCaseFilePath);
-
             var extractionParms = new ExtractionType();
+
             foreach (var testCase in cases.Rows)
             {
                 var jobListFile = testCase[0];

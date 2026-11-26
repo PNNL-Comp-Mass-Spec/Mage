@@ -202,6 +202,7 @@ namespace Mage
                 myReader.GetValues(a);
 
                 var dataVals = new string[a.Length];
+
                 for (var i = 0; i < a.Length; i++)
                 {
                     dataVals[i] = a[i].ToString();

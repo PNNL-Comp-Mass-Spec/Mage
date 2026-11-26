@@ -367,6 +367,7 @@ namespace Mage
                             }
 
                             fileName = DatasetInfoBase.AppendMyEMSLFileID(archiveFileInfo.Filename, myEMSLFileID);
+
                             var myEMSLFile = new FileInfo(MYEMSL_PATH_FLAG + "\\" + archiveFileInfo.PathWithInstrumentAndDatasetWindows);
 
                             directoryPath = myEMSLFile.Directory != null ? myEMSLFile.Directory.FullName : string.Empty;

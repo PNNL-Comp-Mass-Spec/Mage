@@ -37,6 +37,7 @@ namespace MageUnitTests
 
             const string expected = "SELECT * FROM T_X WHERE Bob = 'Your uncle' AND [Peggy Sue] LIKE '%Your aunt%' AND (Paul = 42 OR NOT John = 0)";
             var actual = target.BuildQuerySQL();
+
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -49,6 +50,7 @@ namespace MageUnitTests
             var target = new SQLBuilder { Table = "T_X" };
             const string expected = "SELECT * FROM T_X";
             var actual = target.BuildQuerySQL();
+
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -84,6 +86,7 @@ namespace MageUnitTests
             target.Table = "T_X";
             const string expected = "SELECT * FROM T_X ORDER BY Bob ASC";
             var actual = target.BuildQuerySQL();
+
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -98,6 +101,7 @@ namespace MageUnitTests
             target.AddPredicateItem("AND", "Bob", "MatchesText", "Your uncle");
             var expected = "SELECT * FROM T_X WHERE Bob = 'Your uncle'";
             var actual = target.BuildQuerySQL();
+
             Assert.That(actual, Is.EqualTo(expected));
 
             target.AddPredicateItem("AND", "Sue", "ContainsText", "Your aunt");
@@ -128,6 +132,7 @@ namespace MageUnitTests
             // Get XML query definition by name
             ModuleDiscovery.QueryDefinitionFileName = queryDefsFile.FullName;
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("Factors_List_Report");
+
             Assert.That(queryDefXML, Is.Not.Empty);
 
             var target = new SQLBuilder(queryDefXML, runtimeParameters);
@@ -137,15 +142,16 @@ namespace MageUnitTests
 
             var specialArgs = target.SpecialArgs;
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(specialArgs[SQLBuilder.SERVER_NAME_KEY].ToLower(), Is.EqualTo(Globals.DMSServer.ToLower()));
                 Assert.That(specialArgs[SQLBuilder.DATABASE_NAME_KEY], Is.EqualTo(testDB));
                 Assert.That(target.SprocName, Is.Empty);
-            });
+            }
 
             const string expected = "SELECT Dataset, Dataset_ID, Factor, Value FROM V_Custom_Factors_List_Report WHERE Dataset LIKE '%sarc%'";
             var actual = target.BuildQuerySQL();
+
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -167,18 +173,20 @@ namespace MageUnitTests
             // Get XML query definition by name
             ModuleDiscovery.QueryDefinitionFileName = queryDefsFile.FullName;
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("GetMassTagsPlusPepProphetStats");
+
             Assert.That(queryDefXML, Is.Not.Empty);
 
             var target = new SQLBuilder(queryDefXML, runtimeParameters);
+
             Assert.That(target.SprocName, Is.EqualTo("GetMassTagsPlusPepProphetStats"));
 
             var sprocParams = target.SprocParameters;
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(sprocParams[testParam], Is.EqualTo(testValue));
                 Assert.That(sprocParams[defParam], Is.EqualTo(defValue));
-            });
+            }
         }
 
         [Test]
@@ -190,15 +198,16 @@ namespace MageUnitTests
             // Get XML query definition by name
             ModuleDiscovery.QueryDefinitionFileName = queryDefsFile.FullName;
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("GetMassTagsPlusPepProphetStats");
+
             Assert.That(queryDefXML, Is.Not.Empty);
 
             var descriptions = SQLBuilder.GetDescriptionsFromXML(queryDefXML);
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(descriptions["@MinimumHighDiscriminantScore"], Is.Empty);
                 Assert.That(descriptions["@MassCorrectionIDFilterList"], Is.EqualTo("Descriptive text for MassCorrectionIDFilterList"));
-            });
+            }
 
             // Get XML query definition by name
             queryDefXML = ModuleDiscovery.GetQueryXMLDef("Factors_List_Report");
@@ -206,12 +215,12 @@ namespace MageUnitTests
 
             descriptions = SQLBuilder.GetDescriptionsFromXML(queryDefXML);
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(descriptions["Dataset_ID"], Is.Empty);
                 Assert.That(descriptions["Dataset"], Is.EqualTo("Descriptive text for Dataset"));
                 Assert.That(descriptions[":Description:"], Is.EqualTo("Get factors for selected datasets"));
-            });
+            }
         }
     }
 }

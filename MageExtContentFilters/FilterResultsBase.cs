@@ -29,6 +29,7 @@ namespace MageExtContentFilters
             {
                 CriteriaName = criteria[mCriteriaNameIndex].Trim();
                 CriteriaOperator = criteria[mCriteriaOperatorIndex].Trim();
+
                 var value = criteria[mCriteriaValueIntIndex];
                 int.TryParse(value, out CriteriaValueInt);
                 float.TryParse(value, out CriteriaValueFloat);

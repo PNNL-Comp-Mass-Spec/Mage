@@ -23,6 +23,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.Header = expected;
             var actual = target.Header;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -36,6 +37,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.FilePath = expected;
             var actual = target.FilePath;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -49,6 +51,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.Delimiter = expected;
             var actual = target.Delimiter;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -78,6 +81,7 @@ namespace MageUnitTests
                 "frame_num", "ims_scan_num", "charge", "abundance", "mz", "fit", "average_mw",
                 "monoisotopic_mw", "mostabundant_mw", "fwhm", "signal_noise", "mono_abundance",
                 "mono_plus2_abundance", "orig_intensity", "TIA_orig_intensity", "drift_time", "flag" };
+
             var cols = sink.Columns;
 
             Assert.That(colList, Has.Length.EqualTo(cols.Count));
@@ -90,6 +94,7 @@ namespace MageUnitTests
             // Did the test sink object get the expected number of data rows
             // on its standard tabular input?
             var rows = sink.Rows;
+
             Assert.That(rows, Has.Count.EqualTo(maxRows));
 
             // Are there the expected number of fields in the data row?
@@ -101,14 +106,13 @@ namespace MageUnitTests
         public void ReadTabDelimitedFileTest(string delimitedFilePath)
         {
             var dataFile = General.GetTestFile(delimitedFilePath);
-
             var result = ReadDelimitedFile(dataFile.FullName);
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(result.Columns, Has.Count.EqualTo(4));
                 Assert.That(result.Rows, Has.Count.EqualTo(17));
-            });
+            }
         }
 
 #pragma warning disable IDE0079 // Remove unnecessary suppression

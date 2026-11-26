@@ -24,16 +24,15 @@ namespace MageUnitTests
             };
 
             var source = WriteDelimitedFileWithTestData(testFile, dGen);
-
             var result = DelimitedFileReaderTest.ReadDelimitedFile(testFile);
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(source.Rows, Has.Count.EqualTo(rows), "Source row count does not match");
                 Assert.That(source.Columns, Has.Count.EqualTo(cols), "Source column count does not match");
                 Assert.That(result.Rows, Has.Count.EqualTo(rows), "Result row count does not match");
                 Assert.That(result.Columns, Has.Count.EqualTo(cols), "Result column count does not match");
-            });
+            }
             General.CompareSinks(source, result);
         }
 
@@ -65,6 +64,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.Header = expected;
             var actual = target.Header;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -78,6 +78,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.FilePath = expected;
             var actual = target.FilePath;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -91,6 +92,7 @@ namespace MageUnitTests
             const string expected = ",";
             target.Delimiter = expected;
             var actual = target.Delimiter;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
     }

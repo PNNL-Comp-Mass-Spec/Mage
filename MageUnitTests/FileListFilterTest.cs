@@ -26,6 +26,7 @@ namespace MageUnitTests
                 SourceDirectoryColumnName = "Directory",
                 FileTypeColumnName = "Item"
             };
+
             target.OutputColumnList = string.Format("{0}|+|text, {1}|+|text, {2}|+|text", target.FileTypeColumnName, target.FileColumnName, target.SourceDirectoryColumnName);
             target.IncludeFilesOrDirectories = "File";
 
@@ -34,10 +35,11 @@ namespace MageUnitTests
             target.FileSelectorMode = "RegEx";
 
             var sink = new SimpleSink();
-
             var pipeline = new ProcessingPipeline("RunAsSource");
+
             const string sourceModName = "Source";
             const string sinkModName = "Sink";
+
             pipeline.RootModule = pipeline.AddModule(sourceModName, target);
             pipeline.AddModule(sinkModName, sink);
             pipeline.ConnectModules(sourceModName, sinkModName);
@@ -55,11 +57,11 @@ namespace MageUnitTests
                     ++hits;
             }
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(sink.Rows, Has.Count.EqualTo(2), "Expected total of files found did not match");
                 Assert.That(hits, Is.EqualTo(2), "Expected specific files found did not match");
-            });
+            }
         }
 
         /// <summary>
@@ -77,6 +79,7 @@ namespace MageUnitTests
                 SourceDirectoryColumnName = "Directory",
                 FileTypeColumnName = "Item"
             };
+
             target.OutputColumnList = string.Format("{0}|+|text, {1}|+|text, {2}|+|text", target.FileTypeColumnName, target.FileColumnName, target.SourceDirectoryColumnName);
             target.IncludeFilesOrDirectories = "File";
 
@@ -106,11 +109,11 @@ namespace MageUnitTests
                     ++hits;
             }
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(sink.Rows, Has.Count.EqualTo(2), "Expected total of files found did not match");
                 Assert.That(hits, Is.EqualTo(2), "Expected specific files found did not match");
-            });
+            }
         }
 
         /// <summary>
@@ -138,6 +141,7 @@ namespace MageUnitTests
             var parms = new Dictionary<string, string> {
                 { "DirectoryPath", "TestDirectoryPath"}
             };
+
             target.SetParameters(parms);
 
             parms.Clear();
@@ -145,6 +149,7 @@ namespace MageUnitTests
             target.SetParameters(parms);
 
             var outputBuffer = target.OutputBuffer;
+
             Assert.That(outputBuffer, Has.Count.EqualTo(1));
         }
 
@@ -152,7 +157,6 @@ namespace MageUnitTests
         public void PropertiesSetTest()
         {
             var parms = new Dictionary<string, string>();
-
             var target = new FileListFilter();
 
             var expected = "Test01";
@@ -160,6 +164,7 @@ namespace MageUnitTests
             parms.Add("FileColumnName", expected);
             target.SetParameters(parms);
             var actual = target.FileColumnName;
+
             Assert.That(actual, Is.EqualTo(expected));
 
             expected = "Test03";
@@ -180,6 +185,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.FileColumnName = expected;
             var actual = target.FileColumnName;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -193,6 +199,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.SourceDirectoryColumnName = expected;
             var actual = target.SourceDirectoryColumnName;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
     }

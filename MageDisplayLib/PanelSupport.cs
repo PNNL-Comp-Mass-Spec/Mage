@@ -104,6 +104,7 @@ namespace MageDisplayLib
             rawList = rawList.Replace("\t", ",");
             rawList = rawList.Replace(" ", ",");
             rawList = rawList.Replace(Environment.NewLine, ", ").TrimEnd(',', ' ');
+
             var cleanList = string.Empty;
 
             var items = new Dictionary<string, string>();

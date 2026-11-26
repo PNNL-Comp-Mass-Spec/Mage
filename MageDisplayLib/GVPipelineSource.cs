@@ -107,6 +107,7 @@ namespace MageDisplayLib
         {
             var n = row.Cells.Count;
             var values = new string[n];
+
             for (var i = 0; i < n; i++)
             {
                 if (row.Cells[i].Value == null)

@@ -214,6 +214,7 @@ namespace Mage
             else
             {
                 var outRow = MapDataRow(fields);
+
                 for (var i = 0; i < outRow.Length; i++)
                 {
                     outRow[i] ??= string.Empty;
@@ -360,6 +361,7 @@ namespace Mage
                 else
                 {
                     var current = LowerBound;
+
                     for (var j = 0; current <= UpperBound; j++)
                     {
                         current = LowerBound + j * Step;

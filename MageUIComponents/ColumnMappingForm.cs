@@ -244,6 +244,7 @@ namespace MageUIComponents
 
             MappingName = fields["name"];
             MappingDescription = fields["description"];
+
             var colSpecs = fields["column_list"];
 
             DisplayColumnListInEditingPanel(colSpecs, false);
@@ -334,6 +335,7 @@ namespace MageUIComponents
                 {
                     var specFields = colSpec.Trim().Split('|');
                     var row = new[] { "", "", "", "" };
+
                     for (var i = 0; i < specFields.Length; i++)
                     {
                         row[i] = specFields[i];
@@ -496,6 +498,7 @@ namespace MageUIComponents
             foreach (DataGridViewRow lvi in ColumnSpecEditingDisplayList.List.Rows)
             {
                 var colItem = new[] { "", "", "", "" };
+
                 for (var i = 0; i < 4; i++)
                 {
                     if (lvi.Cells[i].Value != null)

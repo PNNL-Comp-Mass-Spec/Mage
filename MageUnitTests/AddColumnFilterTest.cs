@@ -25,6 +25,7 @@ namespace MageUnitTests
             {
                 AddAdHocRow = initialColumns    // Header
             };
+
             gen.AddAdHocRow = ["A1", "B1", "C1"];
             gen.AddAdHocRow = ["A2", "B2", "C2"];
 
@@ -32,14 +33,17 @@ namespace MageUnitTests
             {
                 OutputColumnList = string.Join(", ", expectedColumns)
             };
+
             target.SetContext(new Dictionary<string, string> { { "Added1", "Overwrite1" }, { "Added2", "Overwrite2" } });
 
             var sink = new SimpleSink();
 
             var pipeline = new ProcessingPipeline("AddColumnFilterConstructorTest");
+
             const string sourceModName = "Generator";
             const string filterModName = "Filter";
             const string sinkModName = "Sink";
+
             pipeline.RootModule = pipeline.AddModule(sourceModName, gen);
             pipeline.AddModule(filterModName, target);
             pipeline.AddModule(sinkModName, sink);
@@ -48,20 +52,20 @@ namespace MageUnitTests
 
             pipeline.RunRoot(null);
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(sink.Columns, Has.Count.EqualTo(expectedColumns.Length), "Expected number of columns did not match");
 
                 Assert.That(sink.Rows, Has.Count.Not.EqualTo(gen.AdHocRows.Count), "Expected number of rows did not match");
-            });
+            }
 
             var rows = sink.Rows;
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(rows[0][1], Is.EqualTo("Overwrite1"), "Expected overwritten values did not match");
                 Assert.That(rows[0][3], Is.EqualTo("Overwrite2"), "Expected overwritten values did not match");
-            });
+            }
         }
     }
 }

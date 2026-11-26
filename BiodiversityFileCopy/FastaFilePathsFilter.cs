@@ -14,6 +14,7 @@ namespace BiodiversityFileCopy
             var sourceDirectory = outRow[SourceDirectoryIdx];
             var fastaFileName = outRow[DatasetIdx];
             srcFilePath = Path.Combine(sourceDirectory, fastaFileName);
+
             var ogName = outRow[OrgNameIdx];
             destFilepath = Path.Combine(DestinationRootDirectoryPath, ogName, OutputSubdirectoryName, fastaFileName);
             return true;

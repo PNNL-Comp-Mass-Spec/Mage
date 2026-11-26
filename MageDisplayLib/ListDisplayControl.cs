@@ -186,6 +186,7 @@ namespace MageDisplayLib
                 if (lvQueryResults.SelectedItems.Count > 0)
                 {
                     var item = lvQueryResults.SelectedItems[0];
+
                     for (var i = 0; i < ColumnDefs.Count; i++)
                     {
                         var colName = ColumnDefs[i].Name;

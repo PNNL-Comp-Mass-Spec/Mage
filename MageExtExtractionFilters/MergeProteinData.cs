@@ -292,7 +292,9 @@ namespace MageExtExtractionFilters
 
             // Index relating Unique_Seq_ID to index of first occurrence row in proteinData
             mFirstOccurrenceIndex = new Dictionary<int, int>(mProteinDataSorted.Count);
+
             var currentSeqID = 0;
+
             for (var rowIdx = 0; rowIdx < mProteinDataSorted.Count; rowIdx++)
             {
                 if (mProteinDataSorted[rowIdx].Unique_Seq_ID <= currentSeqID)

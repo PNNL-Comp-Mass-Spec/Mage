@@ -553,6 +553,7 @@ namespace Mage
 
             // Parse the XML definition of the module parameters
             pipelineModuleParams = "<root>" + pipelineModuleParams + "</root>";
+
             var doc = new XmlDocument();
             doc.LoadXml(pipelineModuleParams);
 

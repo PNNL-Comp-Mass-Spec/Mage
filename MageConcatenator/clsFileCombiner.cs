@@ -124,6 +124,7 @@ namespace MageConcatenator
                                 if (DateTime.UtcNow.Subtract(dtLastStatus).TotalSeconds >= 0.5)
                                 {
                                     dtLastStatus = DateTime.UtcNow;
+
                                     var percentCompleteOverall = percentComplete + bytesRead / (float)fileSizeBytes / lstFilePaths.Count * 100;
                                     ReportStatus(percentCompleteOverall.ToString("0") + "% complete, processing " + filePath);
                                 }

@@ -24,6 +24,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.OutputColumnList = expected;
             var actual = target.OutputColumnList;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -37,6 +38,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.ModuleName = expected;
             var actual = target.ModuleName;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -64,6 +66,7 @@ namespace MageUnitTests
             {
                 AddAdHocRow = ["Larry", "Moe", "Curly"]
             };
+
             dGen.AddAdHocRow = ["11", "22", "33"];
 
             var target = new TestModule();
@@ -74,7 +77,7 @@ namespace MageUnitTests
 
             dGen.Run(null);
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(target.OutColDefs[0].Name, Is.EqualTo("Larry"), "First column name mapping did not match");
                 Assert.That(target.OutColDefs[0].DataType, Is.EqualTo("varchar"), "First column type mapping did not match");
@@ -87,7 +90,7 @@ namespace MageUnitTests
                 Assert.That(target.OutColDefs[2].Name, Is.EqualTo("Curly"), "Third column name mapping did not match");
                 Assert.That(target.OutColDefs[2].DataType, Is.EqualTo("text"), "Third column type mapping did not match");
                 Assert.That(target.OutColDefs[2].Size, Is.EqualTo("10"), "Third column size mapping did not match");
-            });
+            }
         }
 
         /// <summary>
@@ -99,9 +102,10 @@ namespace MageUnitTests
             const int rows = 11;
             const int cols = 7;
             const string insertedColumnName = "NewColName";
-            var dGen = new DataGenerator(rows, cols);
 
+            var dGen = new DataGenerator(rows, cols);
             var target = new TestModule();
+
             dGen.ColumnDefAvailable += target.HandleColumnDef;
             dGen.DataRowAvailable += target.HandleDataRow;
 
@@ -135,7 +139,9 @@ namespace MageUnitTests
                 }
             }
             var actual = target.OutColDefs;
+
             Assert.That(actual, Has.Count.EqualTo(outColNames.Count), "Number of output columns does not match.");
+
             for (var i = 0; i < actual.Count; i++)
             {
                 Assert.That(actual[i].Name, Is.EqualTo(outColNames[i]), "Output column name does not match");
@@ -144,6 +150,7 @@ namespace MageUnitTests
             // Compare output column position index
             // against expected position index
             var outColPos = new Dictionary<string, int>();
+
             for (var i = 0; i < outColNames.Count; i++)
             {
                 outColPos[outColNames[i]] = i;
@@ -162,9 +169,10 @@ namespace MageUnitTests
         {
             const int rows = 11;
             const int cols = 7;
-            var dGen = new DataGenerator(rows, cols);
 
+            var dGen = new DataGenerator(rows, cols);
             var target = new TestModule();
+
             dGen.ColumnDefAvailable += target.HandleColumnDef;
             dGen.DataRowAvailable += target.HandleDataRow;
 
@@ -176,6 +184,7 @@ namespace MageUnitTests
             Shuffle(outColNames);
             var outColList = string.Join(", ", outColNames);
             var outColPos = new Dictionary<string, int>();
+
             for (var i = 0; i < outColNames.Count; i++)
             {
                 outColPos[outColNames[i]] = i;
@@ -187,7 +196,9 @@ namespace MageUnitTests
             // Compare output column definitions from target module
             // against expected output column list
             var actual = target.OutColDefs;
+
             Assert.That(actual, Has.Count.EqualTo(inColNames.Count), "Number of output columns does not match.");
+
             for (var i = 0; i < actual.Count; i++)
             {
                 Assert.That(actual[i].Name, Is.EqualTo(outColNames[i]), "Output column name does not match");
@@ -203,6 +214,7 @@ namespace MageUnitTests
             // Check remapped data rows
             var inputRows = target.Rows;
             var mappedRows = target.MappedRows;
+
             Assert.That(mappedRows, Has.Count.EqualTo(inputRows.Count), "Input rows and mapped rows count does not match.");
 
             for (var i = 0; i < inputRows.Count; i++)

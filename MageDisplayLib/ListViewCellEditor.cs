@@ -219,6 +219,7 @@ namespace MageDisplayLib
         {
             var cellParams = GetSubitemIndexFromXPos(mLastClickX + mLastScrollX, mListView);
             mSubItemUnderEdit = cellParams[0];
+
             var cellStartPos = cellParams[1] - mLastScrollX;
             var cellEndPos = cellParams[2] - mLastScrollX;
 
@@ -242,6 +243,7 @@ namespace MageDisplayLib
             var results = new int[3];
             var cellStartPos = 0;
             var cellEndPos = 0;
+
             for (var i = 0; i < lv.Columns.Count; i++)
             {
                 var cellWidth = lv.Columns[i].Width;

@@ -32,8 +32,8 @@ namespace MageUnitTests
             if (localFile.Directory?.Parent != null)
             {
                 var parentDirectoryName = localFile.Directory.Parent.Name;
-
                 var remoteFileAlt = new FileInfo(Path.Combine(REMOTE_UNIT_TEST_DIRECTORY, parentDirectoryName, localFile.Name));
+
                 if (remoteFileAlt.Exists)
                     return remoteFileAlt;
             }
@@ -55,8 +55,8 @@ namespace MageUnitTests
             if (localDirectory.Parent != null)
             {
                 var parentDirectoryName = localDirectory.Parent.Name;
-
                 var remoteDirectoryAlt = new DirectoryInfo(Path.Combine(REMOTE_UNIT_TEST_DIRECTORY, parentDirectoryName, localDirectory.Name));
+
                 if (remoteDirectoryAlt.Exists)
                     return remoteDirectoryAlt;
             }
@@ -81,11 +81,11 @@ namespace MageUnitTests
             dGen.DataRowAvailable += sink.HandleDataRow;
             dGen.Run(null);
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(sink.Rows, Has.Count.EqualTo(rows));
                 Assert.That(sink.Columns, Has.Count.EqualTo(cols));
-            });
+            }
         }
 
 #pragma warning disable IDE0079 // Remove unnecessary suppression
@@ -98,11 +98,11 @@ namespace MageUnitTests
             var sourceRows = source.Rows;
             var resultRows = result.Rows;
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(resultCols, Has.Count.EqualTo(sourceCols.Count));
                 Assert.That(resultRows, Has.Count.EqualTo(sourceRows.Count));
-            });
+            }
 
             for (var i = 0; i < sourceCols.Count; i++)
             {

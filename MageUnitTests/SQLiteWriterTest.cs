@@ -17,6 +17,7 @@ namespace MageUnitTests
             const int rows = 21;
             const string dbPath = "write_test_2.db";
             const string tableName = "t_test";
+
             var sqlText = string.Format("SELECT * FROM {0}", tableName);
 
             var dGen = new DataGenerator
@@ -28,13 +29,13 @@ namespace MageUnitTests
             var source1 = WriteSQLiteDBWithTestData(dbPath, tableName, dGen);
             var result1 = SQLiteReaderTest.ReadSQLiteDB(rows, sqlText, dbPath);
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(source1.Rows, Has.Count.EqualTo(rows), "Source row count does not match");
                 Assert.That(source1.Columns, Has.Count.EqualTo(cols), "Source column count does not match");
                 Assert.That(result1.Rows, Has.Count.EqualTo(rows), "Result row count does not match");
                 Assert.That(result1.Columns, Has.Count.EqualTo(cols), "Result column count does not match");
-            });
+            }
             General.CompareSinks(source1, result1);
 
             dGen = new DataGenerator
@@ -42,16 +43,17 @@ namespace MageUnitTests
                 Rows = rows,
                 Cols = cols
             };
+
             var source2 = WriteSQLiteDBWithTestData(dbPath, tableName, dGen);
             var result2 = SQLiteReaderTest.ReadSQLiteDB(rows, sqlText, dbPath);
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(source2.Rows, Has.Count.EqualTo(rows), "Source row count does not match");
                 Assert.That(source2.Columns, Has.Count.EqualTo(cols), "Source column count does not match");
                 Assert.That(result2.Rows, Has.Count.EqualTo(rows), "Result row count does not match");
                 Assert.That(result2.Columns, Has.Count.EqualTo(cols), "Result column count does not match");
-            });
+            }
             //            General.CompareSinks(source2, result2);
 
         }
@@ -63,6 +65,7 @@ namespace MageUnitTests
             const int rows = 21;
             const string dbPath = "write_test.db";
             const string tableName = "t_test";
+
             var sqlText = string.Format("SELECT * FROM {0}", tableName);
 
             var dGen = new DataGenerator
@@ -75,13 +78,13 @@ namespace MageUnitTests
 
             var result = SQLiteReaderTest.ReadSQLiteDB(rows, sqlText, dbPath);
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(source.Rows, Has.Count.EqualTo(rows), "Source row count does not match");
                 Assert.That(source.Columns, Has.Count.EqualTo(cols), "Source column count does not match");
                 Assert.That(result.Rows, Has.Count.EqualTo(rows), "Result row count does not match");
                 Assert.That(result.Columns, Has.Count.EqualTo(cols), "Result column count does not match");
-            });
+            }
             General.CompareSinks(source, result);
         }
 
@@ -118,6 +121,7 @@ namespace MageUnitTests
             const string expected = "42";
             target.BlockSize = expected;
             var actual = target.BlockSize;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -131,6 +135,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.DbPassword = expected;
             var actual = target.DbPassword;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -144,6 +149,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.DbPath = expected;
             var actual = target.DbPath;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -157,6 +163,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.TableName = expected;
             var actual = target.TableName;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
     }

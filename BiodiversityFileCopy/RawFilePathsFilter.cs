@@ -15,6 +15,7 @@ namespace BiodiversityFileCopy
             var dataset = outRow[DatasetIdx];
             var datasetFile = dataset + ".RAW";
             srcFilePath = Path.Combine(sourceDirectory, datasetFile);
+
             var ogName = outRow[OrgNameIdx];
             destFilepath = Path.Combine(DestinationRootDirectoryPath, ogName, OutputSubdirectoryName, datasetFile);
             return true;

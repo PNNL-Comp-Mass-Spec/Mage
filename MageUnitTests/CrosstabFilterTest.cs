@@ -58,6 +58,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.FactorValueCol = expected;
             var actual = target.FactorValueCol;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -71,6 +72,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.FactorNameCol = expected;
             var actual = target.FactorNameCol;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -84,6 +86,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.EntityNameCol = expected;
             var actual = target.EntityNameCol;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -97,6 +100,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.EntityIDCol = expected;
             var actual = target.EntityIDCol;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
     }

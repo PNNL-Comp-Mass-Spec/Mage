@@ -203,6 +203,7 @@ namespace MageDisplayLib
                 if (gvQueryResults.SelectedRows.Count > 0)
                 {
                     var item = gvQueryResults.SelectedRows[0];
+
                     for (var i = 0; i < ColumnDefs.Count; i++)
                     {
                         var colName = ColumnDefs[i].Name;

@@ -308,6 +308,7 @@ namespace Mage
                     insert.Connection = mConnection;
                     insert.Transaction = tx;
                     var paramNames = new List<string>();
+
                     for (var j = 0; j <= mSchema.Columns.Count - 1; j++)
                     {
                         // Check for the row having fewer columns of data than the header
@@ -472,6 +473,7 @@ namespace Mage
             sb.Append(") VALUES (");
 
             var paramNames = new List<string>();
+
             for (var i = 0; i <= ts.Columns.Count - 1; i++)
             {
                 var paramName = "@" + GetNormalizedName(ts.Columns[i].ColumnName, paramNames);
@@ -503,6 +505,7 @@ namespace Mage
         private string GetNormalizedName(string str, ICollection<string> names)
         {
             var sb = new StringBuilder();
+
             for (var i = 0; i <= str.Length - 1; i++)
             {
                 if (char.IsLetterOrDigit(str[i]) || str[i] == '_')

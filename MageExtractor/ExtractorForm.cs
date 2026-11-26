@@ -478,6 +478,7 @@ namespace MageExtractor
             if (builder.HasPredicate)
             {
                 result = true;
+
                 var reader = new SQLReader(builder);
                 var pipeline = ProcessingPipeline.Assemble("Get Jobs", reader, JobListDisplayCtl);
                 ConnectPipelineToStatusDisplay(pipeline);

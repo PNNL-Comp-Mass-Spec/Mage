@@ -48,19 +48,20 @@ namespace MageUnitTestsForFileProcessor
             Assert.That(pipeline, Is.Not.Null);
 
             var source = pipeline.GetModule("SQLReader1");
+
             Assert.That(source, Is.Not.Null);
             Assert.That(source, Is.InstanceOf(typeof(SQLReader)));
 
             var target = (SQLReader)source;
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(target.Database.ToLower(), Is.EqualTo(Globals.DMSDatabase.ToLower()));
                 Assert.That(target.Server.ToLower(), Is.EqualTo(Globals.DMSServer.ToLower()));
                 Assert.That(target.Username.ToLower(), Is.EqualTo(Globals.DMSUser.ToLower()));
                 Assert.That(target.Password.ToLower(), Is.EqualTo(Globals.DMSUserPassword.ToLower()));
                 Assert.That(target.SQLText, Is.EqualTo("SELECT * FROM V_Mage_Analysis_Jobs WHERE Dataset LIKE '%sarc_ms%' ORDER BY Job ASC"));
-            });
+            }
         }
 
         /// <summary>
@@ -81,10 +82,12 @@ namespace MageUnitTestsForFileProcessor
             Assert.That(pipeline, Is.Not.Null);
 
             var source = pipeline.GetModule("FileListFilter1");
+
             Assert.That(source, Is.Not.Null);
             Assert.That(source, Is.InstanceOf(typeof(FileListFilter)));
 
             var target = (FileListFilter)source;
+
             Assert.That(target.FileNameSelector, Is.EqualTo("TestVal"));
         }
 
@@ -105,10 +108,12 @@ namespace MageUnitTestsForFileProcessor
             Assert.That(pipeline, Is.Not.Null);
 
             var source = pipeline.GetModule("DelimitedFileReader1");
+
             Assert.That(source, Is.Not.Null);
             Assert.That(source, Is.InstanceOf(typeof(DelimitedFileReader)));
 
             var target = (DelimitedFileReader)source;
+
             Assert.That(target.FilePath, Is.EqualTo("TestVal"));
 
             source = pipeline.GetModule("NullFilter2");
@@ -141,6 +146,7 @@ namespace MageUnitTestsForFileProcessor
             Assert.That(pipeline, Is.Not.Null);
 
             var module = pipeline.GetModule("DataGenerator1");
+
             Assert.That(module, Is.Not.Null);
             Assert.That(module, Is.InstanceOf(typeof(DataGenerator)));
 
@@ -152,17 +158,18 @@ namespace MageUnitTestsForFileProcessor
             Assert.That(module, Is.InstanceOf(typeof(FileSubPipelineBroker)));
             var broker = (FileSubPipelineBroker)module;
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(broker.FileFilterModuleName, Is.EqualTo("Bogus"));
                 Assert.That(broker.DatabaseName, Is.Empty);
                 Assert.That(broker.TableName, Is.Empty);
-            });
+            }
 
             module = pipeline.GetModule("DelimitedFileWriter3");
             Assert.That(module, Is.Not.Null);
             Assert.That(module, Is.InstanceOf(typeof(DelimitedFileWriter)));
             var writer = (DelimitedFileWriter)module;
+
             Assert.That(writer.FilePath, Does.Contain("RunLog_Bogus_"), "Unexpected FilePath for writer: " + writer.FilePath);
 
             // For mode "SQLite_Output":
@@ -188,11 +195,11 @@ namespace MageUnitTestsForFileProcessor
             Assert.That(module, Is.InstanceOf(typeof(FileSubPipelineBroker)));
             broker = (FileSubPipelineBroker)module;
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(broker.DatabaseName, Is.EqualTo("--"));
                 Assert.That(broker.TableName, Is.EqualTo("--"));
-            });
+            }
         }
 
         /// <summary>

@@ -273,6 +273,7 @@ namespace MageFilePackager
                     var tagData = (object[])node.Tag;
 
                     var tagVals = new string[tagData.Length];
+
                     for (var i = 0; i < tagData.Length; i++)
                         tagVals[i] = tagData[i].ToString();
 

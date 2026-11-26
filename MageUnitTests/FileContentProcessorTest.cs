@@ -62,6 +62,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.OutputFileColumnName = expected;
             var actual = target.OutputFileColumnName;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -75,6 +76,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.OutputDirectoryPath = expected;
             var actual = target.OutputDirectoryPath;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -88,6 +90,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.SourceFileColumnName = expected;
             var actual = target.SourceFileColumnName;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -101,6 +104,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.SourceDirectoryColumnName = expected;
             var actual = target.SourceDirectoryColumnName;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
     }

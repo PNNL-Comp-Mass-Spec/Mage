@@ -142,6 +142,7 @@ namespace Ranger
             {
                 // Connect pipeline and run it
                 ran = true;
+
                 var pipeline = ptg.GetPipeline();
                 pipeline.OnStatusMessageUpdated += HandleStatusMessageUpdated;
                 pipeline.OnRunCompleted += HandlePipelineCompletion;

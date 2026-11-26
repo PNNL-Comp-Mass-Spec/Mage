@@ -28,11 +28,11 @@ namespace MageUnitTests
             const string tVal2 = "Dummy Value";
             target.SetModuleParameter("TM", "Dummy", tVal2);
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(tm.OutputColumnList, Is.EqualTo(tVal1));
                 Assert.That(tm.Dummy, Is.EqualTo(tVal2));
-            });
+            }
         }
 
         /// <summary>
@@ -148,6 +148,7 @@ namespace MageUnitTests
                 new("Moe", "NullFilter"),
                 new("Curly", "SimpleSink")
             };
+
             var pipeline = ProcessingPipeline.Assemble(pipelineName, namedModuleList);
 
             Assert.That(pipeline, Is.Not.Null, "Pipeline not created");
@@ -183,6 +184,7 @@ namespace MageUnitTests
                 new("Moe", "NullFilter"),
                 new("Curly", writer)
             };
+
             var pipeline = ProcessingPipeline.Assemble(pipelineName, namedModuleList);
 
             Assert.That(pipeline, Is.Not.Null, "Pipeline not created");
@@ -226,11 +228,11 @@ namespace MageUnitTests
 
             Assert.That(target, Is.Not.Null);
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(Globals.DMSServer, Is.EqualTo(target.Server));
                 Assert.That(pipeline.PipelineName, Is.EqualTo("Test_Pipeline"));
-            });
+            }
         }
 
         private readonly string pipelineXML2 = @"
@@ -264,11 +266,11 @@ namespace MageUnitTests
             var mod = pipeline.GetModule("Module1");
             var target = mod as DelimitedFileReader;
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(target, Is.Not.Null);
                 Assert.That(dataFile.FullName, Is.EqualTo(target.FilePath));
-            });
+            }
 
             pipeline.RunRoot(null);
 
@@ -308,13 +310,14 @@ namespace MageUnitTests
         public void AssembleComplexXML()
         {
             var pipeline = ProcessingPipeline.Assemble(pipelineXML3);
+
             Assert.That(pipeline.ModuleList, Has.Count.EqualTo(2), "Module list should have 2 modules");
 
-            Assert.Multiple(() =>
+            using (Assert.EnterMultipleScope())
             {
                 Assert.That(pipeline.ModuleList[0].ToString(), Is.EqualTo("Mage.FileListFilter"), "Unexpected module type for Module " + pipeline.ModuleList[0]);
                 Assert.That(pipeline.ModuleList[1].ToString(), Is.EqualTo("Mage.FileSubPipelineBroker"), "Unexpected module type for Module " + pipeline.ModuleList[1]);
-            });
+            }
 
             foreach (var module in pipeline.ModuleList)
             {

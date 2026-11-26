@@ -38,6 +38,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.SQLText = expected;
             var actual = target.SQLText;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -53,6 +54,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.SprocName = expected;
             var actual = target.SprocName;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -68,6 +70,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.Server = expected;
             var actual = target.Server;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -83,6 +86,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.Database = expected;
             var actual = target.Database;
+
             Assert.That(actual, Is.EqualTo(expected));
         }
 
@@ -122,10 +126,12 @@ namespace MageUnitTests
 
             // Get XML query definition by name
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("Factors_List_Report");
+
             Assert.That(queryDefXML, Is.Not.Empty);
 
             // Create SQLReader module initialized from XML definition
             var target = new SQLReader(queryDefXML, runtimeParameters, username, password, isPostgres);
+
             Assert.That(target, Is.Not.Null);
             RegisterEvents(target);
 
@@ -269,6 +275,7 @@ namespace MageUnitTests
                 Columns = colNames,
                 IsPostgres = isPostgres
             };
+
             builder.AddPredicateItem("datasetName", "ContainsText", "sarc_ms");
             target.SQLText = builder.BuildQuerySQL();
 
@@ -328,6 +335,7 @@ namespace MageUnitTests
                 Columns = colNames,
                 IsPostgres = isPostgres
             };
+
             target.SQLText = builder.BuildQuerySQL();
 
             target.Run(null);
@@ -480,10 +488,12 @@ namespace MageUnitTests
 
             // Get XML query definition by name
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("GetMassTagsPlusPepProphetStats");
+
             Assert.That(queryDefXML, Is.Not.Empty);
 
             // Create SQLReader module initialized from XML definition
             var target = new SQLReader(queryDefXML, runtimeParameters, username, password);
+
             Assert.That(target, Is.Not.Null);
             RegisterEvents(target);
 
