@@ -34,10 +34,10 @@ namespace MageUnitTests
             // Set up data generator
             var dGen = new DataGenerator(2, 4)
             {
-                AddAdHocRow = new[] { directoryColName, fileColName, idColumnName }
+                AddAdHocRow = [directoryColName, fileColName, idColumnName]
             };
 
-            dGen.AddAdHocRow = new[] { testDirectoryPath, testInputFileName, idColContents };
+            dGen.AddAdHocRow = [testDirectoryPath, testInputFileName, idColContents];
 
             // Create the test input file
             var testFile = new FileInfo(Path.Combine(testDirectoryPath, testInputFileName));

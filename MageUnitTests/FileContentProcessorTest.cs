@@ -24,10 +24,10 @@ namespace MageUnitTests
             // Set up data generator
             var dGen = new DataGenerator(2, 4)
             {
-                AddAdHocRow = new[] { directoryColName, fileColName, "Padding" }
+                AddAdHocRow = [directoryColName, fileColName, "Padding"]
             };
 
-            dGen.AddAdHocRow = new[] { currentDir, file, "Padding" };
+            dGen.AddAdHocRow = [currentDir, file, "Padding"];
 
             // Set up test harness (subclass of file processor module)
             var target = new TestFileContentProcessorModule
