@@ -38,7 +38,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.SQLText = expected;
             var actual = target.SQLText;
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.SprocName = expected;
             var actual = target.SprocName;
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.Server = expected;
             var actual = target.Server;
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.Database = expected;
             var actual = target.Database;
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         /*
@@ -122,15 +122,15 @@ namespace MageUnitTests
 
             // Get XML query definition by name
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("Factors_List_Report");
-            Assert.AreNotEqual("", queryDefXML);
+            Assert.That(queryDefXML, Is.Not.Empty);
 
             // Create SQLReader module initialized from XML definition
             var target = new SQLReader(queryDefXML, runtimeParameters, username, password, isPostgres);
-            Assert.AreNotEqual(null, target);
+            Assert.That(target, Is.Not.Null);
             RegisterEvents(target);
 
             const string expectedSql = "SELECT Dataset, Dataset_ID, Factor, Value FROM V_Custom_Factors_List_Report WHERE Dataset LIKE '%sarc%'";
-            Assert.AreEqual(expectedSql, target.SQLText);
+            Assert.That(target.SQLText, Is.EqualTo(expectedSql));
 
             // Create test sink module and connect to SQLReader module
             const int maxRows = 7;
@@ -480,15 +480,15 @@ namespace MageUnitTests
 
             // Get XML query definition by name
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("GetMassTagsPlusPepProphetStats");
-            Assert.AreNotEqual("", queryDefXML);
+            Assert.That(queryDefXML, Is.Not.Empty);
 
             // Create SQLReader module initialized from XML definition
             var target = new SQLReader(queryDefXML, runtimeParameters, username, password);
-            Assert.AreNotEqual(null, target);
+            Assert.That(target, Is.Not.Null);
             RegisterEvents(target);
 
             const string expected = "GetMassTagsPlusPepProphetStats";
-            Assert.AreEqual(expected, target.SprocName);
+            Assert.That(target.SprocName, Is.EqualTo(expected));
 
             // Create test sink module and connect to SQLReader module
             const int maxRows = 7;
@@ -642,13 +642,14 @@ namespace MageUnitTests
 
             if (actualColumns.Count == 0)
             {
-                Assert.Fail("Did not retrieve data from database {0} on server {1} using {2}", databaseName, serverName, expectedSqlOrSProc);
+                Assert.Fail(string.Format("Did not retrieve data from database {0} on server {1} using {2}", databaseName, serverName, expectedSqlOrSProc));
             }
 
-            Assert.AreEqual(expectedColumnNames.Count, actualColumns.Count, "Column count mismatch " + errorMessage);
+            Assert.That(actualColumns, Has.Count.EqualTo(expectedColumnNames.Count), "Column count mismatch " + errorMessage);
+
             for (var i = 0; i < actualColumns.Count; i++)
             {
-                Assert.AreEqual(expectedColumnNames[i], actualColumns[i].Name, "Did not get the expected row definitions " + errorMessage);
+                Assert.That(actualColumns[i].Name, Is.EqualTo(expectedColumnNames[i]), "Did not get the expected row definitions " + errorMessage);
             }
 
             // Did the test sink module get the expected number of data rows
@@ -694,10 +695,10 @@ namespace MageUnitTests
                 Console.WriteLine(string.Join("  ", dataValues));
             }
 
-            Assert.AreEqual(maxRows, rows.Count, "Did not get the expected number of data rows " + errorMessage);
+            Assert.That(rows, Has.Count.EqualTo(maxRows), "Did not get the expected number of data rows " + errorMessage);
 
             // Are there the expected number of fields in the data row?
-            Assert.AreEqual(expectedColumnNames.Count, rows[0].Length, "Data rows do not have the expected number of fields " + errorMessage);
+            Assert.That(rows[0], Has.Length.EqualTo(expectedColumnNames.Count), "Data rows do not have the expected number of fields " + errorMessage);
         }
 
         private static List<string> PadData(IReadOnlyList<string> dataValues, IReadOnlyDictionary<int, int> columnWidths)

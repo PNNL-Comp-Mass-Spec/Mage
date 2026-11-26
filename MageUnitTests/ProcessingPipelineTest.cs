@@ -28,8 +28,11 @@ namespace MageUnitTests
             const string tVal2 = "Dummy Value";
             target.SetModuleParameter("TM", "Dummy", tVal2);
 
-            Assert.AreEqual(tVal1, tm.OutputColumnList);
-            Assert.AreEqual(tVal2, tm.Dummy);
+            Assert.Multiple(() =>
+            {
+                Assert.That(tm.OutputColumnList, Is.EqualTo(tVal1));
+                Assert.That(tm.Dummy, Is.EqualTo(tVal2));
+            });
         }
 
         /// <summary>
@@ -91,18 +94,18 @@ namespace MageUnitTests
             var moduleList = new Collection<object> { reader, filter, writer };
             var pipeline = ProcessingPipeline.Assemble(pipelineName, moduleList);
 
-            Assert.AreNotEqual(null, pipeline, "Pipeline not created");
-            Assert.AreEqual(pipelineName, pipeline.PipelineName, "Pipeline name does not match");
+            Assert.That(pipeline, Is.Not.Null, "Pipeline not created");
+            Assert.That(pipeline.PipelineName, Is.EqualTo(pipelineName), "Pipeline name does not match");
 
             // ReSharper disable once JoinDeclarationAndInitializer
             IBaseModule mod;
 
             mod = pipeline.GetModule("DelimitedFileReader1");
-            Assert.NotNull(mod);
+            Assert.That(mod, Is.Not.Null);
             mod = pipeline.GetModule("NullFilter2");
-            Assert.NotNull(mod);
+            Assert.That(mod, Is.Not.Null);
             mod = pipeline.GetModule("SQLiteWriter3");
-            Assert.NotNull(mod);
+            Assert.That(mod, Is.Not.Null);
         }
 
         /// <summary>
@@ -116,18 +119,18 @@ namespace MageUnitTests
             var moduleList = new Collection<object> { "DelimitedFileReader", "NullFilter", "SimpleSink" };
             var pipeline = ProcessingPipeline.Assemble(pipelineName, moduleList);
 
-            Assert.AreNotEqual(null, pipeline, "Pipeline not created");
-            Assert.AreEqual(pipelineName, pipeline.PipelineName, "Pipeline name does not match");
+            Assert.That(pipeline, Is.Not.Null, "Pipeline not created");
+            Assert.That(pipeline.PipelineName, Is.EqualTo(pipelineName), "Pipeline name does not match");
 
             // ReSharper disable once JoinDeclarationAndInitializer
             IBaseModule mod;
 
             mod = pipeline.GetModule("DelimitedFileReader1");
-            Assert.NotNull(mod);
+            Assert.That(mod, Is.Not.Null);
             mod = pipeline.GetModule("NullFilter2");
-            Assert.NotNull(mod);
+            Assert.That(mod, Is.Not.Null);
             mod = pipeline.GetModule("SimpleSink3");
-            Assert.NotNull(mod);
+            Assert.That(mod, Is.Not.Null);
         }
 
         /// <summary>
@@ -147,18 +150,18 @@ namespace MageUnitTests
             };
             var pipeline = ProcessingPipeline.Assemble(pipelineName, namedModuleList);
 
-            Assert.AreNotEqual(null, pipeline, "Pipeline not created");
-            Assert.AreEqual(pipelineName, pipeline.PipelineName, "Pipeline name does not match");
+            Assert.That(pipeline, Is.Not.Null, "Pipeline not created");
+            Assert.That(pipeline.PipelineName, Is.EqualTo(pipelineName), "Pipeline name does not match");
 
             // ReSharper disable once JoinDeclarationAndInitializer
             IBaseModule mod;
 
             mod = pipeline.GetModule("Larry");
-            Assert.NotNull(mod);
+            Assert.That(mod, Is.Not.Null);
             mod = pipeline.GetModule("Moe");
-            Assert.NotNull(mod);
+            Assert.That(mod, Is.Not.Null);
             mod = pipeline.GetModule("Curly");
-            Assert.NotNull(mod);
+            Assert.That(mod, Is.Not.Null);
         }
 
         /// <summary>
@@ -182,21 +185,21 @@ namespace MageUnitTests
             };
             var pipeline = ProcessingPipeline.Assemble(pipelineName, namedModuleList);
 
-            Assert.AreNotEqual(null, pipeline, "Pipeline not created");
-            Assert.AreEqual(pipelineName, pipeline.PipelineName, "Pipeline name does not match");
+            Assert.That(pipeline, Is.Not.Null, "Pipeline not created");
+            Assert.That(pipeline.PipelineName, Is.EqualTo(pipelineName), "Pipeline name does not match");
 
             // ReSharper disable once JoinDeclarationAndInitializer
             IBaseModule mod;
 
             mod = pipeline.GetModule("Larry");
-            Assert.NotNull(mod);
-            Assert.AreEqual("DelimitedFileReader", mod.GetType().Name);
+            Assert.That(mod, Is.Not.Null);
+            Assert.That(mod.GetType().Name, Is.EqualTo("DelimitedFileReader"));
             mod = pipeline.GetModule("Moe");
-            Assert.NotNull(mod);
-            Assert.AreEqual("NullFilter", mod.GetType().Name);
+            Assert.That(mod, Is.Not.Null);
+            Assert.That(mod.GetType().Name, Is.EqualTo("NullFilter"));
             mod = pipeline.GetModule("Curly");
-            Assert.NotNull(mod);
-            Assert.AreEqual("SQLiteWriter", mod.GetType().Name);
+            Assert.That(mod, Is.Not.Null);
+            Assert.That(mod.GetType().Name, Is.EqualTo("SQLiteWriter"));
         }
 
         // Default server info: prismdb2.emsl.pnl.gov and dms
@@ -220,9 +223,14 @@ namespace MageUnitTests
 
             var mod = pipeline.GetModule("Reader");
             var target = mod as SQLReader;
-            Assert.IsTrue(target != null);
-            Assert.AreEqual(target.Server, Globals.DMSServer);
-            Assert.AreEqual(pipeline.PipelineName, "Test_Pipeline");
+
+            Assert.That(target, Is.Not.Null);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(Globals.DMSServer, Is.EqualTo(target.Server));
+                Assert.That(pipeline.PipelineName, Is.EqualTo("Test_Pipeline"));
+            });
         }
 
         private readonly string pipelineXML2 = @"
@@ -255,8 +263,12 @@ namespace MageUnitTests
 
             var mod = pipeline.GetModule("Module1");
             var target = mod as DelimitedFileReader;
-            Assert.IsTrue(target != null);
-            Assert.AreEqual(target.FilePath, dataFile.FullName);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(target, Is.Not.Null);
+                Assert.That(dataFile.FullName, Is.EqualTo(target.FilePath));
+            });
 
             pipeline.RunRoot(null);
 
@@ -265,7 +277,7 @@ namespace MageUnitTests
             var rows = sink.Rows;
 
             Console.WriteLine("Pipeline returned {0} rows of data", rows.Count);
-            Assert.AreEqual(maxRows, rows.Count, "Sink did not receive the expected number of rows");
+            Assert.That(rows, Has.Count.EqualTo(maxRows), "Sink did not receive the expected number of rows");
         }
 
         private readonly string pipelineXML3 = @"<?xml version='1.0' encoding='UTF-8'?><!-- to get filtered list of files in local directory -->
@@ -296,10 +308,13 @@ namespace MageUnitTests
         public void AssembleComplexXML()
         {
             var pipeline = ProcessingPipeline.Assemble(pipelineXML3);
-            Assert.AreEqual(2, pipeline.ModuleList.Count, "Module list should have 2 modules");
+            Assert.That(pipeline.ModuleList, Has.Count.EqualTo(2), "Module list should have 2 modules");
 
-            Assert.AreEqual("Mage.FileListFilter", pipeline.ModuleList[0].ToString(), "Unexpected module type for Module " + pipeline.ModuleList[0]);
-            Assert.AreEqual("Mage.FileSubPipelineBroker", pipeline.ModuleList[1].ToString(), "Unexpected module type for Module " + pipeline.ModuleList[1]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(pipeline.ModuleList[0].ToString(), Is.EqualTo("Mage.FileListFilter"), "Unexpected module type for Module " + pipeline.ModuleList[0]);
+                Assert.That(pipeline.ModuleList[1].ToString(), Is.EqualTo("Mage.FileSubPipelineBroker"), "Unexpected module type for Module " + pipeline.ModuleList[1]);
+            });
 
             foreach (var module in pipeline.ModuleList)
             {

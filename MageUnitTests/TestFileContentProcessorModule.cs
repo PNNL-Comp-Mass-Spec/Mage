@@ -14,9 +14,12 @@ namespace MageUnitTests
 
         protected override void ProcessFile(string sourceFile, string sourcePath, string destPath, Dictionary<string, string> context)
         {
-            Assert.AreEqual(ExpectedSourceFile, sourceFile);
-            Assert.AreEqual(ExpectedSourcePath, sourcePath);
-            Assert.AreEqual(ExpectedDestPath, destPath);
+            Assert.Multiple(() =>
+            {
+                Assert.That(sourceFile, Is.EqualTo(ExpectedSourceFile));
+                Assert.That(sourcePath, Is.EqualTo(ExpectedSourcePath));
+                Assert.That(destPath, Is.EqualTo(ExpectedDestPath));
+            });
         }
     }
 }

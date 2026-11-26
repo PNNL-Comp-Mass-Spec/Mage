@@ -45,18 +45,22 @@ namespace MageUnitTestsForFileProcessor
             };
 
             pipeline = Pipelines.MakeJobQueryPipeline(sinkObject, queryDefXML, runtimeParms);
-            Assert.AreNotEqual(null, pipeline);
+            Assert.That(pipeline, Is.Not.Null);
 
             var source = pipeline.GetModule("SQLReader1");
-            Assert.AreNotEqual(null, source);
-            Assert.IsInstanceOf(typeof(SQLReader), source);
+            Assert.That(source, Is.Not.Null);
+            Assert.That(source, Is.InstanceOf(typeof(SQLReader)));
 
             var target = (SQLReader)source;
-            Assert.AreEqual(Globals.DMSDatabase.ToLower(), target.Database.ToLower());
-            Assert.AreEqual(Globals.DMSServer.ToLower(), target.Server.ToLower());
-            Assert.AreEqual(Globals.DMSUser.ToLower(), target.Username.ToLower());
-            Assert.AreEqual(Globals.DMSUserPassword.ToLower(), target.Password.ToLower());
-            Assert.AreEqual("SELECT * FROM V_Mage_Analysis_Jobs WHERE Dataset LIKE '%sarc_ms%' ORDER BY Job ASC", target.SQLText);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(target.Database.ToLower(), Is.EqualTo(Globals.DMSDatabase.ToLower()));
+                Assert.That(target.Server.ToLower(), Is.EqualTo(Globals.DMSServer.ToLower()));
+                Assert.That(target.Username.ToLower(), Is.EqualTo(Globals.DMSUser.ToLower()));
+                Assert.That(target.Password.ToLower(), Is.EqualTo(Globals.DMSUserPassword.ToLower()));
+                Assert.That(target.SQLText, Is.EqualTo("SELECT * FROM V_Mage_Analysis_Jobs WHERE Dataset LIKE '%sarc_ms%' ORDER BY Job ASC"));
+            });
         }
 
         /// <summary>
@@ -74,14 +78,14 @@ namespace MageUnitTestsForFileProcessor
             };
 
             pipeline = Pipelines.MakePipelineToGetLocalFileList(sinkObject, runtimeParms);
-            Assert.AreNotEqual(null, pipeline);
+            Assert.That(pipeline, Is.Not.Null);
 
             var source = pipeline.GetModule("FileListFilter1");
-            Assert.AreNotEqual(null, source);
-            Assert.IsInstanceOf(typeof(FileListFilter), source);
+            Assert.That(source, Is.Not.Null);
+            Assert.That(source, Is.InstanceOf(typeof(FileListFilter)));
 
             var target = (FileListFilter)source;
-            Assert.AreEqual("TestVal", target.FileNameSelector);
+            Assert.That(target.FileNameSelector, Is.EqualTo("TestVal"));
         }
 
         /// <summary>
@@ -98,18 +102,18 @@ namespace MageUnitTestsForFileProcessor
             };
 
             pipeline = Pipelines.MakePipelineToGetFilesFromManifest(sinkObject, runtimeParms);
-            Assert.AreNotEqual(null, pipeline);
+            Assert.That(pipeline, Is.Not.Null);
 
             var source = pipeline.GetModule("DelimitedFileReader1");
-            Assert.AreNotEqual(null, source);
-            Assert.IsInstanceOf(typeof(DelimitedFileReader), source);
+            Assert.That(source, Is.Not.Null);
+            Assert.That(source, Is.InstanceOf(typeof(DelimitedFileReader)));
 
             var target = (DelimitedFileReader)source;
-            Assert.AreEqual("TestVal", target.FilePath);
+            Assert.That(target.FilePath, Is.EqualTo("TestVal"));
 
             source = pipeline.GetModule("NullFilter2");
-            Assert.AreNotEqual(null, source);
-            Assert.IsInstanceOf(typeof(NullFilter), source);
+            Assert.That(source, Is.Not.Null);
+            Assert.That(source, Is.InstanceOf(typeof(NullFilter)));
         }
 
         /// <summary>
@@ -134,28 +138,32 @@ namespace MageUnitTestsForFileProcessor
             };
 
             pipeline = Pipelines.MakePipelineToFilterSelectedFiles(sourceObject, runtimeParms, filterParms);
-            Assert.AreNotEqual(null, pipeline);
+            Assert.That(pipeline, Is.Not.Null);
 
             var module = pipeline.GetModule("DataGenerator1");
-            Assert.AreNotEqual(null, module);
-            Assert.IsInstanceOf(typeof(DataGenerator), module);
+            Assert.That(module, Is.Not.Null);
+            Assert.That(module, Is.InstanceOf(typeof(DataGenerator)));
 
             // ReSharper disable once UnusedVariable
             var target = (DataGenerator)module;
 
             module = pipeline.GetModule("FileSubPipelineBroker2");
-            Assert.AreNotEqual(null, module);
-            Assert.IsInstanceOf(typeof(FileSubPipelineBroker), module);
+            Assert.That(module, Is.Not.Null);
+            Assert.That(module, Is.InstanceOf(typeof(FileSubPipelineBroker)));
             var broker = (FileSubPipelineBroker)module;
-            Assert.AreEqual("Bogus", broker.FileFilterModuleName);
-            Assert.AreEqual("", broker.DatabaseName);
-            Assert.AreEqual("", broker.TableName);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(broker.FileFilterModuleName, Is.EqualTo("Bogus"));
+                Assert.That(broker.DatabaseName, Is.Empty);
+                Assert.That(broker.TableName, Is.Empty);
+            });
 
             module = pipeline.GetModule("DelimitedFileWriter3");
-            Assert.AreNotEqual(null, module);
-            Assert.IsInstanceOf(typeof(DelimitedFileWriter), module);
+            Assert.That(module, Is.Not.Null);
+            Assert.That(module, Is.InstanceOf(typeof(DelimitedFileWriter)));
             var writer = (DelimitedFileWriter)module;
-            Assert.IsTrue(writer.FilePath.Contains("RunLog_Bogus_"), "Unexpected FilePath for writer: " + writer.FilePath);
+            Assert.That(writer.FilePath, Does.Contain("RunLog_Bogus_"), "Unexpected FilePath for writer: " + writer.FilePath);
 
             // For mode "SQLite_Output":
 
@@ -173,14 +181,18 @@ namespace MageUnitTestsForFileProcessor
             };
 
             pipeline = Pipelines.MakePipelineToFilterSelectedFiles(sourceObject, runtimeParms, filterParms);
-            Assert.AreNotEqual(null, pipeline, "Failed to make pipeline for SQLite mode");
+            Assert.That(pipeline, Is.Not.Null, "Failed to make pipeline for SQLite mode");
 
             module = pipeline.GetModule("FileSubPipelineBroker2");
-            Assert.AreNotEqual(null, module);
-            Assert.IsInstanceOf(typeof(FileSubPipelineBroker), module);
+            Assert.That(module, Is.Not.Null);
+            Assert.That(module, Is.InstanceOf(typeof(FileSubPipelineBroker)));
             broker = (FileSubPipelineBroker)module;
-            Assert.AreEqual("--", broker.DatabaseName);
-            Assert.AreEqual("--", broker.TableName);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(broker.DatabaseName, Is.EqualTo("--"));
+                Assert.That(broker.TableName, Is.EqualTo("--"));
+            });
         }
 
         /// <summary>
@@ -207,7 +219,7 @@ namespace MageUnitTestsForFileProcessor
             };
 
             pipeline = Pipelines.MakeFileListPipeline(sourceObject, sinkObject, runtimeParms);
-            Assert.AreNotEqual(null, pipeline);
+            Assert.That(pipeline, Is.Not.Null);
         }
 
         /// <summary>
@@ -233,7 +245,7 @@ namespace MageUnitTestsForFileProcessor
             };
 
             pipeline = Pipelines.MakeFileCopyPipeline(sourceObject, runtimeParms);
-            Assert.AreNotEqual(null, pipeline);
+            Assert.That(pipeline, Is.Not.Null);
         }
     }
 }

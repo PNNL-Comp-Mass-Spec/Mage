@@ -66,10 +66,13 @@ namespace MageUnitTests
             pipeline.ConnectModules("Gen", "Target");
             pipeline.RunRoot(null);
 
-            Assert.AreEqual("Kilroy was here", mPipelineResults, "SubPipeline creation.");
-            Assert.AreEqual(Path.Combine(testDirectoryPath, testInputFileName), mPipelineInputFilePath, "SubPipeline input file path");
-            Assert.AreEqual(Path.Combine(destDirectory, RenameOutputFile(testInputFileName, null, null)), mPipelineOutputFilePath, "SubPipeline output file path");
-            Assert.AreEqual("Kilroy was here too", mPipelineDummyModuleResults, "Dummy module results");
+            Assert.Multiple(() =>
+            {
+                Assert.That(mPipelineResults, Is.EqualTo("Kilroy was here"), "SubPipeline creation.");
+                Assert.That(mPipelineInputFilePath, Is.EqualTo(Path.Combine(testDirectoryPath, testInputFileName)), "SubPipeline input file path");
+                Assert.That(mPipelineOutputFilePath, Is.EqualTo(Path.Combine(destDirectory, RenameOutputFile(testInputFileName, null, null))), "SubPipeline output file path");
+                Assert.That(mPipelineDummyModuleResults, Is.EqualTo("Kilroy was here too"), "Dummy module results");
+            });
         }
 
         // This function builds the a file processing pipeline
@@ -113,7 +116,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.DatabaseName = expected;
             var actual = target.DatabaseName;
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         /// <summary>
@@ -126,7 +129,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.FileFilterModuleName = expected;
             var actual = target.FileFilterModuleName;
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         /// <summary>
@@ -146,7 +149,7 @@ namespace MageUnitTests
             target.SetFileFilterParameters(expected);
 
             var actual = target.GetFileFilterParameters();
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         /// <summary>
@@ -160,7 +163,7 @@ namespace MageUnitTests
             target.TableName = expected;
 
             var actual = target.TableName;
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         /// <summary>

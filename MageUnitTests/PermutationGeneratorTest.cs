@@ -21,7 +21,7 @@ namespace MageUnitTests
             target.AddParamColumn("three", "1", "1", "1");
 
             var actual = target.ParamCount;
-            Assert.AreEqual(3, actual, "Number of parameters did not match");
+            Assert.That(actual, Is.EqualTo(3), "Number of parameters did not match");
         }
 
         /// <summary>
@@ -33,14 +33,14 @@ namespace MageUnitTests
             var target = new PermutationGenerator();
 
             var actual = target.ParamCount;
-            Assert.AreEqual(0, actual);
+            Assert.That(actual, Is.Zero);
 
             target.AddParamColumn("one", "1", "5", "1");
             target.AddParamColumn("two", "0", "2", "1");
             target.AddParamColumn("three", "1", "1", "1");
 
             actual = target.PredictedOutputRowCount;
-            Assert.AreEqual(15, actual, "Number of rows did not match");
+            Assert.That(actual, Is.EqualTo(15), "Number of rows did not match");
         }
 
         /// <summary>
@@ -53,12 +53,12 @@ namespace MageUnitTests
             var expected = false;
             target.IncludeHeaderInOutput = expected;
             var actual = target.IncludeHeaderInOutput;
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
 
             expected = true;
             target.IncludeHeaderInOutput = expected;
             actual = target.IncludeHeaderInOutput;
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         /// <summary>
@@ -81,10 +81,10 @@ namespace MageUnitTests
 
             var expected = target.ParamCount;
             var actual = sink.Columns.Count;
-            Assert.AreEqual(expected, actual, "Number of columns did not match");
+            Assert.That(actual, Is.EqualTo(expected), "Number of columns did not match");
 
             actual = sink.Rows.Count;
-            Assert.AreEqual(15, actual, "Number of rows did not match");
+            Assert.That(actual, Is.EqualTo(15), "Number of rows did not match");
         }
 
         /// <summary>
@@ -110,10 +110,10 @@ namespace MageUnitTests
 
             var expected = target.ParamCount;
             var actual = sink.Columns.Count;
-            Assert.AreEqual(5, actual, "Number of columns did not match");
+            Assert.That(actual, Is.EqualTo(5), "Number of columns did not match");
 
             actual = sink.Rows.Count;
-            Assert.AreEqual(15, actual, "Number of rows did not match");
+            Assert.That(actual, Is.EqualTo(15), "Number of rows did not match");
         }
 
         [Test]
@@ -142,7 +142,7 @@ namespace MageUnitTests
             pipeline.ConnectModules("Gen", "Writer");
             pipeline.RunRoot(null);
 
-            Assert.AreEqual("", pipeline.CompletionCode, "Completion code did not match");
+            Assert.That(pipeline.CompletionCode, Is.Empty, "Completion code did not match");
         }
 
         [Test]
@@ -167,7 +167,7 @@ namespace MageUnitTests
             pipeline.ConnectModules("Gen", "Writer");
             pipeline.RunRoot(null);
 
-            Assert.AreEqual("", pipeline.CompletionCode, "Completion code did not match");
+            Assert.That(pipeline.CompletionCode, Is.Empty, "Completion code did not match");
         }
     }
 }

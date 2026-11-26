@@ -35,7 +35,7 @@ namespace MageUnitTests
                     return remoteFileAlt;
             }
 
-            Assert.Fail("Test file {0} not found locally or at {1}", testFilePath, REMOTE_UNIT_TEST_DIRECTORY);
+            Assert.Fail(string.Format("Test file {0} not found locally or at {1}", testFilePath, REMOTE_UNIT_TEST_DIRECTORY));
             return new FileInfo(localFile.Name);
         }
 
@@ -58,7 +58,7 @@ namespace MageUnitTests
                     return remoteDirectoryAlt;
             }
 
-            Assert.Fail("Test DIRECTORY {0} not found locally or at {1}", testDirectoryPath, REMOTE_UNIT_TEST_DIRECTORY);
+            Assert.Fail(string.Format("Test DIRECTORY {0} not found locally or at {1}", testDirectoryPath, REMOTE_UNIT_TEST_DIRECTORY));
             return new DirectoryInfo(localDirectory.Name);
         }
 
@@ -74,8 +74,12 @@ namespace MageUnitTests
             dGen.ColumnDefAvailable += sink.HandleColumnDef;
             dGen.DataRowAvailable += sink.HandleDataRow;
             dGen.Run(null);
-            Assert.AreEqual(rows, sink.Rows.Count);
-            Assert.AreEqual(cols, sink.Columns.Count);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(sink.Rows, Has.Count.EqualTo(rows));
+                Assert.That(sink.Columns, Has.Count.EqualTo(cols));
+            });
         }
 
         public static void CompareSinks(SimpleSink source, SimpleSink result)
@@ -85,21 +89,25 @@ namespace MageUnitTests
             var sourceRows = source.Rows;
             var resultRows = result.Rows;
 
-            Assert.AreEqual(sourceCols.Count, resultCols.Count);
-            Assert.AreEqual(sourceRows.Count, resultRows.Count);
+            Assert.Multiple(() =>
+            {
+                Assert.That(resultCols, Has.Count.EqualTo(sourceCols.Count));
+                Assert.That(resultRows, Has.Count.EqualTo(sourceRows.Count));
+            });
 
             for (var i = 0; i < sourceCols.Count; i++)
             {
-                Assert.AreEqual(sourceCols[i].Name, resultCols[i].Name, "Column names do not match");
+                Assert.That(resultCols[i].Name, Is.EqualTo(sourceCols[i].Name), "Column names do not match");
             }
 
             for (var i = 0; i < sourceRows.Count; i++)
             {
                 for (var j = 0; j < sourceCols.Count; j++)
                 {
-                    Assert.AreEqual(sourceRows[i][j], resultRows[i][j], string.Format("Row {0} cell {1} content does not match", i, j));
+                    Assert.That(resultRows[i][j], Is.EqualTo(sourceRows[i][j]), string.Format("Row {0} cell {1} content does not match", i, j));
                 }
             }
         }
+
     }
 }

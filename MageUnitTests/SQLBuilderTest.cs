@@ -37,7 +37,7 @@ namespace MageUnitTests
 
             const string expected = "SELECT * FROM T_X WHERE Bob = 'Your uncle' AND [Peggy Sue] LIKE '%Your aunt%' AND (Paul = 42 OR NOT John = 0)";
             var actual = target.BuildQuerySQL();
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace MageUnitTests
             var target = new SQLBuilder { Table = "T_X" };
             const string expected = "SELECT * FROM T_X";
             var actual = target.BuildQuerySQL();
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         /// <summary>
@@ -60,12 +60,14 @@ namespace MageUnitTests
         {
             var target = new SQLBuilder();
 
-            Assert.IsNotNull(target);
+            Assert.That(target, Is.Not.Null);
+
             target.Table = "T_X";
             target.Columns = "Uno, Dos, Tres";
             const string expected = "SELECT Uno, Dos, Tres FROM T_X";
             var actual = target.BuildQuerySQL();
-            Assert.AreEqual(expected, actual);
+
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         /// <summary>
@@ -82,7 +84,7 @@ namespace MageUnitTests
             target.Table = "T_X";
             const string expected = "SELECT * FROM T_X ORDER BY Bob ASC";
             var actual = target.BuildQuerySQL();
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         /// <summary>
@@ -96,19 +98,19 @@ namespace MageUnitTests
             target.AddPredicateItem("AND", "Bob", "MatchesText", "Your uncle");
             var expected = "SELECT * FROM T_X WHERE Bob = 'Your uncle'";
             var actual = target.BuildQuerySQL();
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
 
             target.AddPredicateItem("AND", "Sue", "ContainsText", "Your aunt");
             expected = "SELECT * FROM T_X WHERE Bob = 'Your uncle' AND Sue LIKE '%Your aunt%'";
             actual = target.BuildQuerySQL();
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
 
             target.AddPredicateItem("OR", "Paul", "Equals", "42");
             target.AddPredicateItem("OR", "John", "NotEqual", "0");
 
             expected = "SELECT * FROM T_X WHERE Bob = 'Your uncle' AND Sue LIKE '%Your aunt%' AND (Paul = 42 OR NOT John = 0)";
             actual = target.BuildQuerySQL();
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [Test]
@@ -126,20 +128,25 @@ namespace MageUnitTests
             // Get XML query definition by name
             ModuleDiscovery.QueryDefinitionFileName = queryDefsFile.FullName;
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("Factors_List_Report");
-            Assert.AreNotEqual("", queryDefXML);
+            Assert.That(queryDefXML, Is.Not.Empty);
 
             var target = new SQLBuilder(queryDefXML, runtimeParameters);
+
             // SQLBuilder target = new SQLBuilder();
             // target.InitializeFromXML(queryDefXML, ref runtimeParameters);
+
             var specialArgs = target.SpecialArgs;
 
-            Assert.AreEqual(Globals.DMSServer.ToLower(), specialArgs[SQLBuilder.SERVER_NAME_KEY].ToLower());
-            Assert.AreEqual(testDB, specialArgs[SQLBuilder.DATABASE_NAME_KEY]);
-            Assert.AreEqual("", target.SprocName);
+            Assert.Multiple(() =>
+            {
+                Assert.That(specialArgs[SQLBuilder.SERVER_NAME_KEY].ToLower(), Is.EqualTo(Globals.DMSServer.ToLower()));
+                Assert.That(specialArgs[SQLBuilder.DATABASE_NAME_KEY], Is.EqualTo(testDB));
+                Assert.That(target.SprocName, Is.Empty);
+            });
 
             const string expected = "SELECT Dataset, Dataset_ID, Factor, Value FROM V_Custom_Factors_List_Report WHERE Dataset LIKE '%sarc%'";
             var actual = target.BuildQuerySQL();
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         [Test]
@@ -160,14 +167,18 @@ namespace MageUnitTests
             // Get XML query definition by name
             ModuleDiscovery.QueryDefinitionFileName = queryDefsFile.FullName;
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("GetMassTagsPlusPepProphetStats");
-            Assert.AreNotEqual("", queryDefXML);
+            Assert.That(queryDefXML, Is.Not.Empty);
 
             var target = new SQLBuilder(queryDefXML, runtimeParameters);
-            Assert.AreEqual("GetMassTagsPlusPepProphetStats", target.SprocName);
+            Assert.That(target.SprocName, Is.EqualTo("GetMassTagsPlusPepProphetStats"));
 
             var sprocParams = target.SprocParameters;
-            Assert.AreEqual(testValue, sprocParams[testParam]);
-            Assert.AreEqual(defValue, sprocParams[defParam]);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(sprocParams[testParam], Is.EqualTo(testValue));
+                Assert.That(sprocParams[defParam], Is.EqualTo(defValue));
+            });
         }
 
         [Test]
@@ -179,22 +190,28 @@ namespace MageUnitTests
             // Get XML query definition by name
             ModuleDiscovery.QueryDefinitionFileName = queryDefsFile.FullName;
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("GetMassTagsPlusPepProphetStats");
-            Assert.AreNotEqual("", queryDefXML);
+            Assert.That(queryDefXML, Is.Not.Empty);
 
             var descriptions = SQLBuilder.GetDescriptionsFromXML(queryDefXML);
 
-            Assert.AreEqual("", descriptions["@MinimumHighDiscriminantScore"]);
-            Assert.AreEqual("Descriptive text for MassCorrectionIDFilterList", descriptions["@MassCorrectionIDFilterList"]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(descriptions["@MinimumHighDiscriminantScore"], Is.Empty);
+                Assert.That(descriptions["@MassCorrectionIDFilterList"], Is.EqualTo("Descriptive text for MassCorrectionIDFilterList"));
+            });
 
             // Get XML query definition by name
             queryDefXML = ModuleDiscovery.GetQueryXMLDef("Factors_List_Report");
-            Assert.AreNotEqual("", queryDefXML);
+            Assert.That(queryDefXML, Is.Not.Empty);
 
             descriptions = SQLBuilder.GetDescriptionsFromXML(queryDefXML);
 
-            Assert.AreEqual("", descriptions["Dataset_ID"]);
-            Assert.AreEqual("Descriptive text for Dataset", descriptions["Dataset"]);
-            Assert.AreEqual("Get factors for selected datasets", descriptions[":Description:"]);
+            Assert.Multiple(() =>
+            {
+                Assert.That(descriptions["Dataset_ID"], Is.Empty);
+                Assert.That(descriptions["Dataset"], Is.EqualTo("Descriptive text for Dataset"));
+                Assert.That(descriptions[":Description:"], Is.EqualTo("Get factors for selected datasets"));
+            });
         }
     }
 }

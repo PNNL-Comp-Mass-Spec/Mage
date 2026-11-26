@@ -57,7 +57,7 @@ namespace MageUnitTests
             var fieldPosTest1 = target.InputColumnPosAccessor;
             var expectedTest1 = idColNameTest1 + "_" + fields[target.InputColumnPosAccessor[target.ColumnToUseForPrefix]] + "_" + sourceFile;
             var actualTest1 = target.GetDestFileAccessor(sourceFile, fieldPosTest1, fields);
-            Assert.AreEqual(expectedTest1, actualTest1, "Typical usage");
+            Assert.That(actualTest1, Is.EqualTo(expectedTest1), "Typical usage");
 
             // ID column in column list and ApplyPrefixToFileName set to "No"
             const string idColNameTest2 = "Third";
@@ -69,7 +69,7 @@ namespace MageUnitTests
             const string expectedTest2 = sourceFile;
             var actualTest2 = target.GetDestFileAccessor(sourceFile, fieldPosTest2, fields);
 
-            Assert.AreEqual(expectedTest2, actualTest2, "No prefix");
+            Assert.That(actualTest2, Is.EqualTo(expectedTest2), "No prefix");
 
             // ID column NOT in column list and ApplyPrefixToFileName set to "Yes"
             const string idColNameTest3 = "Third";
@@ -81,7 +81,7 @@ namespace MageUnitTests
             const string expectedTest3 = "Tag_0_" + sourceFile;
             var actualTest3 = target.GetDestFileAccessor(sourceFile, fieldPosTest3, fields);
 
-            Assert.AreEqual(expectedTest3, actualTest3, "Missing ID column");
+            Assert.That(actualTest3, Is.EqualTo(expectedTest3), "Missing ID column");
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.ColumnToUseForPrefix = expected;
             var actual = target.ColumnToUseForPrefix;
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.ApplyPrefixToFileName = expected;
             var actual = target.ApplyPrefixToFileName;
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
     }
 }

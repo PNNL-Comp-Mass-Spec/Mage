@@ -28,10 +28,13 @@ namespace MageUnitTests
             var source1 = WriteSQLiteDBWithTestData(dbPath, tableName, dGen);
             var result1 = SQLiteReaderTest.ReadSQLiteDB(rows, sqlText, dbPath);
 
-            Assert.AreEqual(rows, source1.Rows.Count, "Source row count does not match");
-            Assert.AreEqual(cols, source1.Columns.Count, "Source column count does not match");
-            Assert.AreEqual(rows, result1.Rows.Count, "Result row count does not match");
-            Assert.AreEqual(cols, result1.Columns.Count, "Result column count does not match");
+            Assert.Multiple(() =>
+            {
+                Assert.That(source1.Rows, Has.Count.EqualTo(rows), "Source row count does not match");
+                Assert.That(source1.Columns, Has.Count.EqualTo(cols), "Source column count does not match");
+                Assert.That(result1.Rows, Has.Count.EqualTo(rows), "Result row count does not match");
+                Assert.That(result1.Columns, Has.Count.EqualTo(cols), "Result column count does not match");
+            });
             General.CompareSinks(source1, result1);
 
             dGen = new DataGenerator
@@ -42,10 +45,13 @@ namespace MageUnitTests
             var source2 = WriteSQLiteDBWithTestData(dbPath, tableName, dGen);
             var result2 = SQLiteReaderTest.ReadSQLiteDB(rows, sqlText, dbPath);
 
-            Assert.AreEqual(rows, source2.Rows.Count, "Source row count does not match");
-            Assert.AreEqual(cols, source2.Columns.Count, "Source column count does not match");
-            Assert.AreEqual(rows, result2.Rows.Count, "Result row count does not match");
-            Assert.AreEqual(cols, result2.Columns.Count, "Result column count does not match");
+            Assert.Multiple(() =>
+            {
+                Assert.That(source2.Rows, Has.Count.EqualTo(rows), "Source row count does not match");
+                Assert.That(source2.Columns, Has.Count.EqualTo(cols), "Source column count does not match");
+                Assert.That(result2.Rows, Has.Count.EqualTo(rows), "Result row count does not match");
+                Assert.That(result2.Columns, Has.Count.EqualTo(cols), "Result column count does not match");
+            });
             //            General.CompareSinks(source2, result2);
 
         }
@@ -69,14 +75,17 @@ namespace MageUnitTests
 
             var result = SQLiteReaderTest.ReadSQLiteDB(rows, sqlText, dbPath);
 
-            Assert.AreEqual(rows, source.Rows.Count, "Source row count does not match");
-            Assert.AreEqual(cols, source.Columns.Count, "Source column count does not match");
-            Assert.AreEqual(rows, result.Rows.Count, "Result row count does not match");
-            Assert.AreEqual(cols, result.Columns.Count, "Result column count does not match");
+            Assert.Multiple(() =>
+            {
+                Assert.That(source.Rows, Has.Count.EqualTo(rows), "Source row count does not match");
+                Assert.That(source.Columns, Has.Count.EqualTo(cols), "Source column count does not match");
+                Assert.That(result.Rows, Has.Count.EqualTo(rows), "Result row count does not match");
+                Assert.That(result.Columns, Has.Count.EqualTo(cols), "Result column count does not match");
+            });
             General.CompareSinks(source, result);
         }
 
-        public SimpleSink WriteSQLiteDBWithTestData(string dbPath, string tableName, IBaseModule dGen)
+        private SimpleSink WriteSQLiteDBWithTestData(string dbPath, string tableName, IBaseModule dGen)
         {
             var pipeline = new ProcessingPipeline("SQLiteWriter");
 
@@ -109,7 +118,7 @@ namespace MageUnitTests
             const string expected = "42";
             target.BlockSize = expected;
             var actual = target.BlockSize;
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         /// <summary>
@@ -122,7 +131,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.DbPassword = expected;
             var actual = target.DbPassword;
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         /// <summary>
@@ -135,7 +144,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.DbPath = expected;
             var actual = target.DbPath;
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         /// <summary>
@@ -148,7 +157,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.TableName = expected;
             var actual = target.TableName;
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
     }
 }

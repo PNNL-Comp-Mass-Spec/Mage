@@ -24,7 +24,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.OutputColumnList = expected;
             var actual = target.OutputColumnList;
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.ModuleName = expected;
             var actual = target.ModuleName;
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace MageUnitTests
             const string val = "Test Value";
             var parameters = new Dictionary<string, string> { { key, val } };
             target.SetParameters(parameters);
-            Assert.AreEqual(val, target.OutputColumnList);
+            Assert.That(target.OutputColumnList, Is.EqualTo(val));
         }
 
         /// <summary>
@@ -62,30 +62,32 @@ namespace MageUnitTests
         {
             var dGen = new DataGenerator
             {
-                AddAdHocRow = new[] { "Larry", "Moe", "Curly" }
+                AddAdHocRow = ["Larry", "Moe", "Curly"]
             };
-            dGen.AddAdHocRow = new[] { "11", "22", "33" };
+            dGen.AddAdHocRow = ["11", "22", "33"];
 
             var target = new TestModule();
             dGen.ColumnDefAvailable += target.HandleColumnDef;
             dGen.DataRowAvailable += target.HandleDataRow;
 
-            var outColList = string.Join(", ", "Larry||varchar|256", "Morris|Moe|int", "Curly");
-            target.OutputColumnList = outColList;
+            target.OutputColumnList = string.Join(", ", "Larry||varchar|256", "Morris|Moe|int", "Curly");
 
             dGen.Run(null);
 
-            Assert.AreEqual("Larry", target.OutColDefs[0].Name, "First column name mapping did not match");
-            Assert.AreEqual("varchar", target.OutColDefs[0].DataType, "First column type mapping did not match");
-            Assert.AreEqual("256", target.OutColDefs[0].Size, "First column size mapping did not match");
+            Assert.Multiple(() =>
+            {
+                Assert.That(target.OutColDefs[0].Name, Is.EqualTo("Larry"), "First column name mapping did not match");
+                Assert.That(target.OutColDefs[0].DataType, Is.EqualTo("varchar"), "First column type mapping did not match");
+                Assert.That(target.OutColDefs[0].Size, Is.EqualTo("256"), "First column size mapping did not match");
 
-            Assert.AreEqual("Morris", target.OutColDefs[1].Name, "Second column name mapping did not match");
-            Assert.AreEqual("int", target.OutColDefs[1].DataType, "Second column type mapping did not match");
-            Assert.AreEqual("", target.OutColDefs[1].Size, "Second column size mapping did not match");
+                Assert.That(target.OutColDefs[1].Name, Is.EqualTo("Morris"), "Second column name mapping did not match");
+                Assert.That(target.OutColDefs[1].DataType, Is.EqualTo("int"), "Second column type mapping did not match");
+                Assert.That(target.OutColDefs[1].Size, Is.Empty, "Second column size mapping did not match");
 
-            Assert.AreEqual("Curly", target.OutColDefs[2].Name, "Third column name mapping did not match");
-            Assert.AreEqual("text", target.OutColDefs[2].DataType, "Third column type mapping did not match");
-            Assert.AreEqual("10", target.OutColDefs[2].Size, "Third column size mapping did not match");
+                Assert.That(target.OutColDefs[2].Name, Is.EqualTo("Curly"), "Third column name mapping did not match");
+                Assert.That(target.OutColDefs[2].DataType, Is.EqualTo("text"), "Third column type mapping did not match");
+                Assert.That(target.OutColDefs[2].Size, Is.EqualTo("10"), "Third column size mapping did not match");
+            });
         }
 
         /// <summary>
@@ -133,10 +135,10 @@ namespace MageUnitTests
                 }
             }
             var actual = target.OutColDefs;
-            Assert.AreEqual(outColNames.Count, actual.Count, "Number of output columns does not match.");
+            Assert.That(actual, Has.Count.EqualTo(outColNames.Count), "Number of output columns does not match.");
             for (var i = 0; i < actual.Count; i++)
             {
-                Assert.AreEqual(outColNames[i], actual[i].Name, "Output column name does not match");
+                Assert.That(actual[i].Name, Is.EqualTo(outColNames[i]), "Output column name does not match");
             }
 
             // Compare output column position index
@@ -148,7 +150,7 @@ namespace MageUnitTests
             }
             foreach (var item in target.OutColPos.Keys)
             {
-                Assert.AreEqual(outColPos[item], target.OutColPos[item], "Column position map index does not match");
+                Assert.That(target.OutColPos[item], Is.EqualTo(outColPos[item]), "Column position map index does not match");
             }
         }
 
@@ -185,29 +187,29 @@ namespace MageUnitTests
             // Compare output column definitions from target module
             // against expected output column list
             var actual = target.OutColDefs;
-            Assert.AreEqual(inColNames.Count, actual.Count, "Number of output columns does not match.");
+            Assert.That(actual, Has.Count.EqualTo(inColNames.Count), "Number of output columns does not match.");
             for (var i = 0; i < actual.Count; i++)
             {
-                Assert.AreEqual(outColNames[i], actual[i].Name, "Output column name does not match");
+                Assert.That(actual[i].Name, Is.EqualTo(outColNames[i]), "Output column name does not match");
             }
 
             // Compare output column position index
             // against expected position index
             foreach (var item in target.OutColPos.Keys)
             {
-                Assert.AreEqual(outColPos[item], target.OutColPos[item], "Column position map index does not match");
+                Assert.That(target.OutColPos[item], Is.EqualTo(outColPos[item]), "Column position map index does not match");
             }
 
             // Check remapped data rows
             var inputRows = target.Rows;
             var mappedRows = target.MappedRows;
-            Assert.AreEqual(inputRows.Count, mappedRows.Count, "Input rows and mapped rows count does not match.");
+            Assert.That(mappedRows, Has.Count.EqualTo(inputRows.Count), "Input rows and mapped rows count does not match.");
 
             for (var i = 0; i < inputRows.Count; i++)
             {
                 foreach (var colMap in target.OutToInPosMap)
                 {
-                    Assert.AreEqual(mappedRows[i][colMap.Key], inputRows[i][colMap.Value], "Mapped data does not match");
+                    Assert.That(inputRows[i][colMap.Value], Is.EqualTo(mappedRows[i][colMap.Key]), "Mapped data does not match");
                 }
             }
         }

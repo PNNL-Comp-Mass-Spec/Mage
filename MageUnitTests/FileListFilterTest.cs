@@ -55,8 +55,11 @@ namespace MageUnitTests
                     ++hits;
             }
 
-            Assert.AreEqual(2, sink.Rows.Count, "Expected total of files found did not match");
-            Assert.AreEqual(2, hits, "Expected specific files found did not match");
+            Assert.Multiple(() =>
+            {
+                Assert.That(sink.Rows, Has.Count.EqualTo(2), "Expected total of files found did not match");
+                Assert.That(hits, Is.EqualTo(2), "Expected specific files found did not match");
+            });
         }
 
         /// <summary>
@@ -103,8 +106,11 @@ namespace MageUnitTests
                     ++hits;
             }
 
-            Assert.AreEqual(2, sink.Rows.Count, "Expected total of files found did not match");
-            Assert.AreEqual(2, hits, "Expected specific files found did not match");
+            Assert.Multiple(() =>
+            {
+                Assert.That(sink.Rows, Has.Count.EqualTo(2), "Expected total of files found did not match");
+                Assert.That(hits, Is.EqualTo(2), "Expected specific files found did not match");
+            });
         }
 
         /// <summary>
@@ -139,7 +145,7 @@ namespace MageUnitTests
             target.SetParameters(parms);
 
             var outputBuffer = target.OutputBuffer;
-            Assert.AreEqual(1, outputBuffer.Count);
+            Assert.That(outputBuffer, Has.Count.EqualTo(1));
         }
 
         [Test]
@@ -154,14 +160,14 @@ namespace MageUnitTests
             parms.Add("FileColumnName", expected);
             target.SetParameters(parms);
             var actual = target.FileColumnName;
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
 
             expected = "Test03";
             parms.Clear();
             parms.Add("SourceDirectoryColumnName", expected);
             target.SetParameters(parms);
             actual = target.SourceDirectoryColumnName;
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         /// <summary>
@@ -174,7 +180,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.FileColumnName = expected;
             var actual = target.FileColumnName;
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         /// <summary>
@@ -187,7 +193,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.SourceDirectoryColumnName = expected;
             var actual = target.SourceDirectoryColumnName;
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
     }
 }

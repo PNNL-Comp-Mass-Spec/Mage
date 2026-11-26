@@ -35,16 +35,16 @@ namespace MageUnitTests
             var cols = sink.Columns;
             for (var i = 0; i < cols.Count; i++)
             {
-                Assert.AreEqual(cols[i].Name, colList[i]);
+                Assert.That(colList[i], Is.EqualTo(cols[i].Name));
             }
 
             // Did the test sink object get the expected number of data rows
             // on its standard tabular input?
             var rows = sink.Rows;
-            Assert.AreEqual(maxRows, rows.Count);
+            Assert.That(rows, Has.Count.EqualTo(maxRows));
 
             // Are there the expected number of fields in the data row?
-            Assert.AreEqual(colList.Length, rows[0].Length);
+            Assert.That(rows[0], Has.Length.EqualTo(colList.Length));
         }
 
         public static SimpleSink ReadSQLiteDB(int maxRows, string sqlText, string filePath)
@@ -91,15 +91,15 @@ namespace MageUnitTests
             var cols = result.Columns;
             for (var i = 0; i < cols.Count; i++)
             {
-                Assert.AreEqual(cols[i].Name, colList[i]);
+                Assert.That(colList[i], Is.EqualTo(cols[i].Name));
             }
 
             // Did the test sink object get the expected number of data rows on its standard tabular input?
             var rows = result.Rows;
-            Assert.AreEqual(maxRows, rows.Count);
+            Assert.That(rows, Has.Count.EqualTo(maxRows));
 
             // Are there the expected number of fields in the data row?
-            Assert.AreEqual(colList.Length, rows[0].Length);
+            Assert.That(rows[0], Has.Length.EqualTo(colList.Length));
 
             Console.WriteLine("Factors");
             Console.WriteLine();
@@ -174,7 +174,7 @@ namespace MageUnitTests
             ModuleDiscovery.QueryDefinitionFileName = queryDefsFile.FullName;
 
             var queryDefXML = ModuleDiscovery.GetQueryXMLDef("Factors");
-            Assert.AreNotEqual(string.Empty, queryDefXML);
+            Assert.That(queryDefXML, Is.Not.Empty);
 
             // Create SQLReader module initialized from XML definition
             var reader = new SQLiteReader(queryDefXML, runtimeParameters)
@@ -182,14 +182,14 @@ namespace MageUnitTests
                 Database = dbFile.FullName
             };
 
-            Assert.AreNotEqual(null, reader);
+            Assert.That(reader, Is.Not.Null);
 
             const string expected = "SELECT * FROM factors WHERE Factor = 'Group'";
-            Assert.AreEqual(expected, reader.SQLText);
+            Assert.That(reader.SQLText, Is.EqualTo(expected));
 
             // Create sink module to accumulate columns and rows
             var result = new SimpleSink(maxRows);
-            Assert.AreNotEqual(null, result);
+            Assert.That(result, Is.Not.Null);
 
             // Create pipeline to run the query, and run it
             var pipeline = new ProcessingPipeline("SQLite_Reader");
@@ -216,7 +216,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.Database = expected;
             var actual = target.Database;
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.SQLText = expected;
             var actual = target.SQLText;
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
     }
 }

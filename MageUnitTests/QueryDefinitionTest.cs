@@ -22,7 +22,7 @@ namespace MageUnitTests
             ModuleDiscovery.QueryDefinitionFileName = queryDefsFile.FullName;
 
             var actual = ModuleDiscovery.GetQueryXMLDef(queryName);
-            Assert.AreNotEqual("", actual);
+            Assert.That(actual, Is.Not.Empty);
         }
     }
 }

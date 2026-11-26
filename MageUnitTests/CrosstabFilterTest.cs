@@ -44,8 +44,8 @@ namespace MageUnitTests
 
             pipeline.RunRoot(null);
 
-            Assert.AreEqual(151, sink.Rows.Count, "Expected row count did not match");
-            Assert.AreEqual(10, sink.Rows[0].Length, "Expected column count did not match");
+            Assert.That(sink.Rows, Has.Count.EqualTo(151), "Expected row count did not match");
+            Assert.That(sink.Rows[0], Has.Length.EqualTo(10), "Expected column count did not match");
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.FactorValueCol = expected;
             var actual = target.FactorValueCol;
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.FactorNameCol = expected;
             var actual = target.FactorNameCol;
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.EntityNameCol = expected;
             var actual = target.EntityNameCol;
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.EntityIDCol = expected;
             var actual = target.EntityIDCol;
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
     }
 }

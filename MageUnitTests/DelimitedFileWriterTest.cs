@@ -27,10 +27,13 @@ namespace MageUnitTests
 
             var result = DelimitedFileReaderTest.ReadDelimitedFile(testFile);
 
-            Assert.AreEqual(rows, source.Rows.Count, "Source row count does not match");
-            Assert.AreEqual(cols, source.Columns.Count, "Source column count does not match");
-            Assert.AreEqual(rows, result.Rows.Count, "Result row count does not match");
-            Assert.AreEqual(cols, result.Columns.Count, "Result column count does not match");
+            Assert.Multiple(() =>
+            {
+                Assert.That(source.Rows, Has.Count.EqualTo(rows), "Source row count does not match");
+                Assert.That(source.Columns, Has.Count.EqualTo(cols), "Source column count does not match");
+                Assert.That(result.Rows, Has.Count.EqualTo(rows), "Result row count does not match");
+                Assert.That(result.Columns, Has.Count.EqualTo(cols), "Result column count does not match");
+            });
             General.CompareSinks(source, result);
         }
 
@@ -63,7 +66,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.Header = expected;
             var actual = target.Header;
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         /// <summary>
@@ -76,7 +79,7 @@ namespace MageUnitTests
             const string expected = "Test Value";
             target.FilePath = expected;
             var actual = target.FilePath;
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
 
         /// <summary>
@@ -89,7 +92,7 @@ namespace MageUnitTests
             const string expected = ",";
             target.Delimiter = expected;
             var actual = target.Delimiter;
-            Assert.AreEqual(expected, actual);
+            Assert.That(actual, Is.EqualTo(expected));
         }
     }
 }
