@@ -91,7 +91,7 @@ namespace MageUnitTests
         }
 
         // Delegate that handles renaming of source file to output file
-        public string RenameOutputFile(string sourceFile, Dictionary<string, int> fieldPos, string[] fields)
+        private string RenameOutputFile(string sourceFile, Dictionary<string, int> fieldPos, string[] fields)
         {
             return "out_" + sourceFile;
         }

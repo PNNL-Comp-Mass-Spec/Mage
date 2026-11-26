@@ -111,6 +111,9 @@ namespace MageUnitTests
             });
         }
 
+#pragma warning disable IDE0079 // Remove unnecessary suppression
+#pragma warning disable NUnit1028 // The non-test method is public
+
         public static SimpleSink ReadDelimitedFile(string filePath)
         {
             var pipeline = new ProcessingPipeline("Delimited_File_Reader");
@@ -124,8 +127,11 @@ namespace MageUnitTests
 
             pipeline.RunRoot(null);
 
-            var result = (SimpleSink)pipeline.GetModule("Results");
-            return result;
+            return (SimpleSink)pipeline.GetModule("Results");
         }
+
+#pragma warning restore NUnit1028 // The non-test method is public
+#pragma warning restore IDE0079 // Remove unnecessary suppression
+
     }
 }

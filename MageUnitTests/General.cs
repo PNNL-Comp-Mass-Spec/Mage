@@ -16,6 +16,9 @@ namespace MageUnitTests
 
         private const string REMOTE_UNIT_TEST_DIRECTORY = @"\\proto-2\UnitTest_Files\Mage";
 
+#pragma warning disable IDE0079 // Remove unnecessary suppression
+#pragma warning disable NUnit1028 // The non-test method is public
+
         public static FileInfo GetTestFile(string testFilePath)
         {
             var localFile = new FileInfo(testFilePath);
@@ -62,6 +65,9 @@ namespace MageUnitTests
             return new DirectoryInfo(localDirectory.Name);
         }
 
+#pragma warning disable NUnit1028 // The non-test method is public
+#pragma warning disable IDE0079 // Remove unnecessary suppression
+
         [Test]
         public void DataGeneratorTest()
         {
@@ -81,6 +87,9 @@ namespace MageUnitTests
                 Assert.That(sink.Columns, Has.Count.EqualTo(cols));
             });
         }
+
+#pragma warning disable IDE0079 // Remove unnecessary suppression
+#pragma warning disable NUnit1028 // The non-test method is public
 
         public static void CompareSinks(SimpleSink source, SimpleSink result)
         {
@@ -108,6 +117,9 @@ namespace MageUnitTests
                 }
             }
         }
+
+#pragma warning restore NUnit1028 // The non-test method is public
+#pragma warning restore IDE0079 // Remove unnecessary suppression
 
     }
 }

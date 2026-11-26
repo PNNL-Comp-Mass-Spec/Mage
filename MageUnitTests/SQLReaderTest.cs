@@ -108,7 +108,7 @@ namespace MageUnitTests
             XMLQueryDatasetFactors(queryDefinitionsPath, DMS_READER, DMS_READER_PASSWORD, true);
         }
 
-        public void XMLQueryDatasetFactors(string queryDefinitionsPath, string username, string password, bool isPostgres)
+        private void XMLQueryDatasetFactors(string queryDefinitionsPath, string username, string password, bool isPostgres)
         {
             var queryDefsFile = General.GetTestFile(queryDefinitionsPath);
 

@@ -37,7 +37,7 @@ namespace MageUnitTests
             General.CompareSinks(source, result);
         }
 
-        public SimpleSink WriteDelimitedFileWithTestData(string filePath, IBaseModule dGen)
+        private SimpleSink WriteDelimitedFileWithTestData(string filePath, IBaseModule dGen)
         {
             var pipeline = new ProcessingPipeline("Delimited_File_Writer");
 
@@ -52,8 +52,7 @@ namespace MageUnitTests
 
             pipeline.RunRoot(null);
 
-            var result = (SimpleSink)pipeline.GetModule("Results");
-            return result;
+            return (SimpleSink)pipeline.GetModule("Results");
         }
 
         /// <summary>
