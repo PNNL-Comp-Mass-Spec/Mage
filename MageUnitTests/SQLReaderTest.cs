@@ -289,6 +289,7 @@ namespace MageUnitTests
         /// using SQLBuilder to make the SQL
         /// </summary>
         [Test]
+        [Ignore("MTS servers have been retired")]
         [Category("DatabaseIntegrated")]
         public void QueryAllMTDBsIntegrated()
         {
@@ -300,6 +301,7 @@ namespace MageUnitTests
         /// using SQLBuilder to make the SQL
         /// </summary>
         [Test]
+        [Ignore("MTS servers have been retired")]
         [Category("DatabaseNamedUser")]
         public void QueryAllMTDBsNamedUser()
         {
@@ -462,6 +464,7 @@ namespace MageUnitTests
         }
 
         [Test]
+        [Ignore("MTS servers have been retired")]
         [TestCase(@"..\..\..\TestItems\QueryDefinitions.xml")]
         [Category("DatabaseIntegrated")]
         public void XMLMTSSprocReadTestIntegrated(string queryDefinitionsPath)
@@ -470,6 +473,7 @@ namespace MageUnitTests
         }
 
         [Test]
+        [Ignore("MTS servers have been retired")]
         [TestCase(@"..\..\..\TestItems\QueryDefinitions.xml")]
         [Category("DatabaseNamedUser")]
         public void XMLMTSSprocReadTestNamedUser(string queryDefinitionsPath)
@@ -522,6 +526,7 @@ namespace MageUnitTests
         }
 
         [Test]
+        [Ignore("MTS servers have been retired")]
         [Category("DatabaseIntegrated")]
         public void MTSSprocReadTestIntegrated()
         {
@@ -529,6 +534,7 @@ namespace MageUnitTests
         }
 
         [Test]
+        [Ignore("MTS servers have been retired")]
         [Category("DatabaseNamedUser")]
         public void MTSSprocReadTestNamedUser()
         {
@@ -581,6 +587,7 @@ namespace MageUnitTests
         }
 
         [Test]
+        [Ignore("MTS servers have been retired")]
         [Category("DatabaseIntegrated")]
         public void MTSDatabaseTestIntegrated()
         {
@@ -588,6 +595,7 @@ namespace MageUnitTests
         }
 
         [Test]
+        [Ignore("MTS servers have been retired")]
         [Category("DatabaseNamedUser")]
         public void MTSDatabaseTestNamedUser()
         {
